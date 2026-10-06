@@ -1,15 +1,17 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState, useCallback } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
-import { router } from 'expo-router';
+import { router, useFocusEffect } from 'expo-router';
 import { getProfiles, ChildProfile } from '../storage/db';
 
 export default function ProfileSelectionScreen() {
   const [profiles, setProfiles] = useState<ChildProfile[]>([]);
 
-  useEffect(() => {
-    // Refresh profiles whenever the screen is focused (for now, just on mount)
-    getProfiles().then(setProfiles);
-  }, []);
+  useFocusEffect(
+    useCallback(() => {
+      // Refresh profiles whenever the screen is focused
+      getProfiles().then(setProfiles);
+    }, [])
+  );
 
   return (
     <View style={styles.container}>
@@ -40,7 +42,7 @@ export default function ProfileSelectionScreen() {
         style={styles.parentBtn}
         onPress={() => router.push('/parent')}
       >
-        <Text style={styles.parentText}>🔒 Parent Dashboard</Text>
+        <Text style={styles.parentText}>⚙️ Parent Dashboard</Text>
       </TouchableOpacity>
     </View>
   );

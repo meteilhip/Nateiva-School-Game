@@ -6,13 +6,19 @@ import { saveProfile, ChildProfile } from '../storage/db';
 export default function CreateProfileScreen() {
   const [name, setName] = useState('');
   const [age, setAge] = useState('');
-  const [avatar, setAvatar] = useState('👦');
+  const [avatar, setAvatar] = useState('🦊');
+  const [errorMsg, setErrorMsg] = useState('');
 
-  const avatars = ['👦', '👧', '🦁', '🐵', '🦊', '🐢'];
+  const avatars = ['🦊', '🦁', '🐶', '🐱', '🐸', '🐼'];
 
   const handleSave = async () => {
-    if (!name.trim()) return;
+    if (!name.trim()) {
+      setErrorMsg('Veuillez entrer un nom / Please enter a name');
+      return;
+    }
     
+    setErrorMsg('Sauvegarde en cours...'); // Loading state
+
     const newProfile: ChildProfile = {
       id: Date.now().toString(),
       name,
@@ -27,6 +33,7 @@ export default function CreateProfileScreen() {
     };
 
     await saveProfile(newProfile);
+    // Use dismissAll to clear stack or replace to force re-render
     router.replace('/');
   };
 
@@ -39,7 +46,7 @@ export default function CreateProfileScreen() {
         <TextInput 
           style={styles.input} 
           value={name} 
-          onChangeText={setName} 
+          onChangeText={(text) => { setName(text); setErrorMsg(''); }} 
           placeholder="Musa" 
         />
 
@@ -65,6 +72,8 @@ export default function CreateProfileScreen() {
           ))}
         </View>
 
+        {errorMsg ? <Text style={styles.errorText}>{errorMsg}</Text> : null}
+
         <TouchableOpacity style={styles.saveBtn} onPress={handleSave}>
           <Text style={styles.saveBtnText}>Sauvegarder / Save</Text>
         </TouchableOpacity>
@@ -87,7 +96,8 @@ const styles = StyleSheet.create({
   avatarBtn: { padding: 10, borderWidth: 2, borderColor: '#E2E8F0', borderRadius: 16 },
   avatarBtnSelected: { borderColor: '#4F46E5', backgroundColor: '#EEF2FF' },
   avatarText: { fontSize: 32 },
-  saveBtn: { backgroundColor: '#10B981', padding: 16, borderRadius: 16, alignItems: 'center', marginTop: 30 },
+  errorText: { color: 'red', marginTop: 15, textAlign: 'center', fontWeight: 'bold' },
+  saveBtn: { backgroundColor: '#10B981', padding: 16, borderRadius: 16, alignItems: 'center', marginTop: 20 },
   saveBtnText: { color: 'white', fontSize: 18, fontWeight: 'bold' },
   cancelBtn: { padding: 16, alignItems: 'center', marginTop: 10 },
   cancelBtnText: { color: '#64748B', fontSize: 16, fontWeight: 'bold' }
