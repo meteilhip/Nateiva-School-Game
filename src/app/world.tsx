@@ -1,22 +1,38 @@
-import React from 'react';
+import React, { useState, useCallback } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
-import { router } from 'expo-router';
+import { router, useFocusEffect } from 'expo-router';
+import { getProfiles, ChildProfile } from '../storage/db';
 
 export default function WorldScreen() {
+  const [profile, setProfile] = useState<ChildProfile | null>(null);
+
+  useFocusEffect(
+    useCallback(() => {
+      loadProfile();
+    }, [])
+  );
+
+  const loadProfile = async () => {
+    const profiles = await getProfiles();
+    if (profiles.length > 0) {
+      setProfile(profiles[0]);
+    }
+  };
+
   return (
     <View style={styles.container}>
       <View style={styles.header}>
         <TouchableOpacity onPress={() => router.replace('/')} style={styles.backBtn}>
-          <Text style={styles.backText}>⬅️ Changer de Profil</Text>
+          <Text style={styles.backText}>🔄 Changer de Profil</Text>
         </TouchableOpacity>
         <View style={styles.stats}>
-          <Text style={styles.statText}>⭐ 120</Text>
-          <Text style={styles.statText}>🔥 3 Jours</Text>
+          <Text style={styles.statText}>🪙 {profile?.coins || 0}</Text>
+          <Text style={styles.statText}>🔥 {profile?.streak || 0} Jours</Text>
         </View>
       </View>
 
       <ScrollView contentContainerStyle={styles.scroll}>
-        <Text style={styles.title}>Choisis ton monde !</Text>
+        <Text style={styles.title}>Choisis ton monde, {profile?.name} !</Text>
         <Text style={styles.subtitle}>Choose your world!</Text>
 
         <TouchableOpacity style={[styles.worldCard, { backgroundColor: '#DBEAFE', borderColor: '#3B82F6' }]} onPress={() => router.push('/levels/math')}>
@@ -26,13 +42,13 @@ export default function WorldScreen() {
         </TouchableOpacity>
 
         <TouchableOpacity style={[styles.worldCard, { backgroundColor: '#FEF3C7', borderColor: '#F59E0B' }]} onPress={() => router.push('/levels/reading')}>
-          <Text style={styles.worldIcon}>📚</Text>
+          <Text style={styles.worldIcon}>📖</Text>
           <Text style={styles.worldTitle}>Reading Forest</Text>
           <Text style={styles.worldDesc}>Lecture et compréhension</Text>
         </TouchableOpacity>
 
         <TouchableOpacity style={[styles.worldCard, { backgroundColor: '#D1FAE5', borderColor: '#10B981' }]} onPress={() => router.push('/levels/science')}>
-          <Text style={styles.worldIcon}>🌿</Text>
+          <Text style={styles.worldIcon}>🔬</Text>
           <Text style={styles.worldTitle}>Science Lab</Text>
           <Text style={styles.worldDesc}>Éveil, nature et corps humain</Text>
         </TouchableOpacity>

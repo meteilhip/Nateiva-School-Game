@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
+﻿import React, { useState, useEffect, useCallback } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
-import { useLocalSearchParams, router } from 'expo-router';
+import { useLocalSearchParams, router, useFocusEffect } from 'expo-router';
 import * as Speech from 'expo-speech';
 
 import { CountAndTap, NumberMatch, TenFrame, AdditionBuilder } from '../../games/MathEngines';
@@ -8,37 +8,48 @@ import { PhonemeMatch, WordBuilder, ReadAloud } from '../../games/LanguageEngine
 import { ClassificationLab } from '../../games/ScienceEngines';
 import { TutorOverlay } from '../../components/TutorOverlay';
 
-// Helper to generate dynamic questions based on skill
-const generateQuestionsForSkill = (skillId: string, subject: string) => {
+import { getProfiles, getMastery, saveMastery, saveProfile } from '../../storage/db';
+import { calculateNewMastery, SkillMastery } from '../../adaptive/engine';
+
+const generateQuestionsForSkill = (skillId: string, difficulty: number) => {
   if (skillId === 'math_count_1_10') {
-    return [
-      { id: '1', type: 'COUNT_AND_TAP', q: 'Combien y a-t-il de pommes ?', ans: '3', options: ['2','3','4','5'], hint: 'Compte chaque pomme une par une.' },
-      { id: '2', type: 'TEN_FRAME', q: 'Combien de points rouges ?', ans: '7', options: ['6','7','8','9'], hint: 'Regarde la grille de dix.' },
-      { id: '3', type: 'NUMBER_MATCH', q: 'Choisis le nombre "Cinq"', ans: '5', options: ['3','4','5','6'], hint: 'Cinq a un ventre.' },
-    ];
+    if (difficulty === 1) {
+      return [
+        { id: '1', type: 'COUNT_AND_TAP', q: 'Combien y a-t-il de pommes ?', ans: '3', options: ['2','3','4','5'], hint: 'Compte chaque pomme une par une.' },
+        { id: '2', type: 'TEN_FRAME', q: 'Combien de points rouges ?', ans: '4', options: ['2','3','4','5'], hint: 'Regarde la grille.' },
+      ];
+    } else {
+      return [
+        { id: '1', type: 'COUNT_AND_TAP', q: 'Combien y a-t-il de pommes ?', ans: '8', options: ['6','7','8','9'], hint: 'Il y en a beaucoup.' },
+        { id: '2', type: 'TEN_FRAME', q: 'Combien de points rouges ?', ans: '9', options: ['7','8','9','10'], hint: 'Presque plein.' },
+        { id: '3', type: 'NUMBER_MATCH', q: 'Choisis le nombre Neuf', ans: '9', options: ['6','7','8','9'], hint: 'Neuf.' },
+      ];
+    }
   }
   if (skillId === 'math_add_10') {
-    return [
-      { id: '1', type: 'ADDITION_BUILDER', q: 'Résous l\'addition :', equation: '3 + 2 = ?', ans: '5', options: ['4','5','6','7'], hint: 'Mets 3 dans ta tête et ajoute 2.' },
-      { id: '2', type: 'ADDITION_BUILDER', q: 'Résous l\'addition :', equation: '4 + 4 = ?', ans: '8', options: ['6','7','8','9'], hint: 'C\'est un double !' },
-    ];
+    if (difficulty === 1) {
+      return [
+        { id: '1', type: 'ADDITION_BUILDER', q: 'Résous l addition :', equation: '2 + 1 = ?', ans: '3', options: ['2','3','4','5'], hint: 'Juste après 2.' },
+        { id: '2', type: 'ADDITION_BUILDER', q: 'Résous l addition :', equation: '3 + 2 = ?', ans: '5', options: ['4','5','6','7'], hint: 'Ajoute 2 à 3.' },
+      ];
+    } else {
+      return [
+        { id: '1', type: 'ADDITION_BUILDER', q: 'Résous l addition :', equation: '5 + 4 = ?', ans: '9', options: ['7','8','9','10'], hint: 'Presque 5+5.' },
+        { id: '2', type: 'ADDITION_BUILDER', q: 'Résous l addition :', equation: '6 + 3 = ?', ans: '9', options: ['7','8','9','10'], hint: 'Ajoute 3 à 6.' },
+      ];
+    }
   }
   if (skillId === 'fr_read_vowels') {
     return [
-      { id: '1', type: 'PHONEME_MATCH', q: 'Quel mot contient le son "O" ?', ans: 'Moto', options: ['Moto', 'Lit', 'Sac', 'Mur'], hint: 'Écoute le son Ooooo.' },
-      { id: '2', type: 'READ_ALOUD', q: 'Lis cette voyelle à voix haute :', ans: 'A', options: [], hint: 'Ouvre grand la bouche : Aaaa.' },
+      { id: '1', type: 'PHONEME_MATCH', q: 'Quel mot contient le son O ?', ans: 'Moto', options: ['Moto', 'Lit', 'Sac', 'Mur'], hint: 'Ecoute O.' },
     ];
   }
   if (skillId === 'sci_animal_habitat') {
     return [
-      { id: '1', type: 'CLASSIFICATION', q: 'Lequel de ces animaux vit dans l\'eau ?', ans: 'Poisson', options: ['Chat', 'Chien', 'Poisson', 'Poule'], hint: 'Il a des nageoires.' },
+      { id: '1', type: 'CLASSIFICATION', q: 'Lequel vit dans l eau ?', ans: 'Poisson', options: ['Chat', 'Chien', 'Poisson', 'Poule'], hint: 'Nageoires.' },
     ];
   }
-  
-  // Fallback if no skill matched
-  return [
-    { id: 'fallback', type: 'NUMBER_MATCH', q: 'Jeu en développement. Retourne à la carte.', ans: 'OK', options: ['OK'], hint: 'Choisis OK.' }
-  ];
+  return [{ id: 'fallback', type: 'NUMBER_MATCH', q: 'Jeu a venir.', ans: 'OK', options: ['OK'], hint: 'Choisis OK.' }];
 };
 
 export default function GameActivityScreen() {
@@ -50,16 +61,79 @@ export default function GameActivityScreen() {
   const [feedback, setFeedback] = useState<string | null>(null);
   const [errorsOnCurrent, setErrorsOnCurrent] = useState(0);
   const [showTutor, setShowTutor] = useState(false);
+  
+  const [isFinished, setIsFinished] = useState(false);
+  const [coinsEarned, setCoinsEarned] = useState(0);
+  const [difficultyLevel, setDifficultyLevel] = useState(1);
+  const [responses, setResponses] = useState<{isCorrect: boolean, attempts: number}[]>([]);
 
-  useEffect(() => {
-    if (subject && skillId) {
-      setQuestions(generateQuestionsForSkill(skillId as string, subject as string));
+  useFocusEffect(
+    useCallback(() => {
+      loadInitialData();
+    }, [skillId])
+  );
+
+  const loadInitialData = async () => {
+    try {
+      const profiles = await getProfiles();
+      const profile = profiles.length > 0 ? profiles[0] : null;
+      let diff = 1;
+      
+      if (profile && skillId) {
+        const allMastery = await getMastery(profile.id);
+        const skillMastery = allMastery[skillId as string];
+        if (skillMastery && skillMastery.probabilityMastered > 0.5) {
+          diff = 2;
+        }
+      }
+      
+      setDifficultyLevel(diff);
+      if (skillId) {
+        setQuestions(generateQuestionsForSkill(skillId as string, diff));
+      }
+    } catch (e) {
+      setQuestions(generateQuestionsForSkill(skillId as string, 1));
     }
-  }, [subject, skillId]);
+  };
 
   const speak = (text: string) => {
     Speech.stop();
     Speech.speak(text, { language: 'fr-FR', rate: 0.9 });
+  };
+
+  const completeLevel = async () => {
+    const correctCount = responses.filter(r => r.isCorrect && r.attempts === 0).length; 
+    const earned = (correctCount * 10) * difficultyLevel; 
+    setCoinsEarned(earned);
+    setIsFinished(true);
+
+    try {
+      const profiles = await getProfiles();
+      const profile = profiles.length > 0 ? profiles[0] : null;
+      if (profile) {
+        profile.coins += earned;
+        await saveProfile(profile);
+
+        if (skillId) {
+          const allMastery = await getMastery(profile.id);
+          let currentSkillMastery = allMastery[skillId as string] || {
+            skillId: skillId as string,
+            probabilityMastered: 0.2,
+            attemptsCount: 0,
+            consecutiveSuccesses: 0,
+            isMastered: false,
+            lastReviewedAt: new Date().toISOString()
+          };
+
+          for (const res of responses) {
+            currentSkillMastery = calculateNewMastery(currentSkillMastery, res.isCorrect);
+          }
+          
+          allMastery[skillId as string] = currentSkillMastery;
+          await saveMastery(profile.id, allMastery);
+        }
+      }
+    } catch (e) { }
   };
 
   const handleAnswer = (selected: string) => {
@@ -67,17 +141,21 @@ export default function GameActivityScreen() {
     const q = questions[qIndex];
     
     if (selected === q.ans) {
-      setFeedback('Correct ! 🎉');
+      setFeedback('Correct !');
       speak('Correct !');
+      
+      const isPerfect = errorsOnCurrent === 0;
+      setResponses(prev => [...prev, { isCorrect: isPerfect, attempts: errorsOnCurrent }]);
+
       setTimeout(() => {
         setFeedback(null);
         setErrorsOnCurrent(0); 
+        
         if (qIndex + 1 < questions.length) {
           setQIndex(qIndex + 1);
           speak(questions[qIndex + 1].q);
         } else {
-          // Finished level!
-          router.replace(`/levels/${subject}`);
+          completeLevel();
         }
       }, 1500);
     } else {
@@ -85,13 +163,15 @@ export default function GameActivityScreen() {
       setErrorsOnCurrent(newErrors);
       setLives(prev => prev - 1);
       
+      setResponses(prev => [...prev, { isCorrect: false, attempts: newErrors }]);
+      
       if (newErrors === 1) {
-        setFeedback(`Presque ! ${q.hint}`);
-        speak(`Presque ! ${q.hint}`);
+        setFeedback('Presque ! ' + q.hint);
+        speak('Presque ! ' + q.hint);
         setTimeout(() => setFeedback(null), 2500);
       } else if (newErrors === 2) {
-        setFeedback(`Essaie encore. Regarde bien l'indice.`);
-        speak(`Essaie encore.`);
+        setFeedback('Essaie encore.');
+        speak('Essaie encore.');
         setTimeout(() => setFeedback(null), 2500);
       } else {
         setFeedback(null);
@@ -101,6 +181,21 @@ export default function GameActivityScreen() {
   };
 
   if (questions.length === 0) return <View style={styles.container}><Text>Chargement...</Text></View>;
+
+  if (isFinished) {
+    return (
+      <View style={styles.container}>
+        <View style={styles.card}>
+          <Text style={styles.title}>Niveau Termine !</Text>
+          <Text style={styles.coinsText}>+{coinsEarned} Coins</Text>
+          <Text style={styles.feedback}>Niveau de difficulte : {difficultyLevel}</Text>
+          <TouchableOpacity style={styles.continueBtn} onPress={() => router.replace('/levels/' + subject)}>
+            <Text style={styles.continueText}>Continuer</Text>
+          </TouchableOpacity>
+        </View>
+      </View>
+    );
+  }
 
   const currentQ = questions[qIndex];
 
@@ -113,7 +208,7 @@ export default function GameActivityScreen() {
       case 'PHONEME_MATCH': return <PhonemeMatch question={currentQ} onAnswer={handleAnswer} />;
       case 'READ_ALOUD': return <ReadAloud question={currentQ} onAnswer={handleAnswer} />;
       case 'CLASSIFICATION': return <ClassificationLab question={currentQ} onAnswer={handleAnswer} />;
-      default: return <Text>Engine non trouvé</Text>;
+      default: return <Text>Engine non trouve</Text>;
     }
   };
 
@@ -121,9 +216,10 @@ export default function GameActivityScreen() {
     <View style={styles.container}>
       <View style={styles.header}>
         <TouchableOpacity onPress={() => router.back()} style={styles.backBtn}>
-          <Text style={styles.backText}>⬅️ Retour</Text>
+          <Text style={styles.backText}>Retour</Text>
         </TouchableOpacity>
-        <Text style={styles.stats}>Vies: {"❤️".repeat(Math.max(0, lives))}</Text>
+        <Text style={styles.stats}>Niveau {difficultyLevel}</Text>
+        <Text style={styles.stats}>Vies: {lives}</Text>
         <Text style={styles.stats}>{qIndex + 1} / {questions.length}</Text>
       </View>
 
@@ -131,7 +227,7 @@ export default function GameActivityScreen() {
         {renderGameEngine()}
 
         <TouchableOpacity style={styles.hintBtn} onPress={() => speak(currentQ.hint)}>
-          <Text style={styles.hintText}>💡 Indice / Hint</Text>
+          <Text style={styles.hintText}>Indice</Text>
         </TouchableOpacity>
 
         {feedback && <Text style={styles.feedback}>{feedback}</Text>}
@@ -151,13 +247,17 @@ export default function GameActivityScreen() {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: '#F8FAFC', padding: 20 },
+  container: { flex: 1, backgroundColor: '#F8FAFC', padding: 20, justifyContent: 'center' },
   header: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: 20, marginTop: 20 },
   backBtn: { padding: 10, backgroundColor: '#E2E8F0', borderRadius: 10 },
   backText: { fontWeight: 'bold' },
-  stats: { fontSize: 18, fontWeight: 'bold' },
-  card: { backgroundColor: 'white', padding: 10, borderRadius: 20, alignItems: 'center', shadowColor: '#000', shadowOpacity: 0.1, shadowRadius: 10, elevation: 5, flex: 1 },
+  stats: { fontSize: 16, fontWeight: 'bold', color: '#475569' },
+  card: { backgroundColor: 'white', padding: 20, borderRadius: 20, alignItems: 'center', shadowColor: '#000', shadowOpacity: 0.1, shadowRadius: 10, elevation: 5, flex: 1, justifyContent: 'center' },
   hintBtn: { backgroundColor: '#FEF3C7', padding: 10, borderRadius: 10, marginBottom: 20, marginTop: 20 },
   hintText: { color: '#B45309', fontWeight: 'bold' },
-  feedback: { fontSize: 18, fontWeight: 'bold', color: '#EF4444', marginBottom: 20, textAlign: 'center' }
+  feedback: { fontSize: 18, fontWeight: 'bold', color: '#10B981', marginBottom: 20, textAlign: 'center' },
+  title: { fontSize: 32, fontWeight: 'bold', color: '#1E293B', marginBottom: 20 },
+  coinsText: { fontSize: 48, fontWeight: 'bold', color: '#F59E0B', marginBottom: 20 },
+  continueBtn: { backgroundColor: '#3B82F6', padding: 20, borderRadius: 16, width: '100%', alignItems: 'center', marginTop: 20 },
+  continueText: { color: 'white', fontSize: 20, fontWeight: 'bold' }
 });
