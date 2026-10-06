@@ -6,6 +6,7 @@ import * as Speech from 'expo-speech';
 import { CountAndTap, NumberMatch } from '../../games/MathEngines';
 import { PhonemeMatch, WordBuilder } from '../../games/LanguageEngines';
 import { ClassificationLab } from '../../games/ScienceEngines';
+import { TutorOverlay } from '../../components/TutorOverlay';
 
 const MOCK_QUESTIONS = {
   math: [
@@ -25,7 +26,10 @@ export default function GameActivityScreen() {
   const [questions, setQuestions] = useState<any[]>([]);
   const [qIndex, setQIndex] = useState(0);
   const [lives, setLives] = useState(3);
+  
   const [feedback, setFeedback] = useState<string | null>(null);
+  const [errorsOnCurrent, setErrorsOnCurrent] = useState(0);
+  const [showTutor, setShowTutor] = useState(false);
 
   useEffect(() => {
     if (subject && MOCK_QUESTIONS[subject as keyof typeof MOCK_QUESTIONS]) {
@@ -39,7 +43,7 @@ export default function GameActivityScreen() {
   };
 
   const handleAnswer = (selected: string) => {
-    if (feedback) return;
+    if (feedback || showTutor) return;
     const q = questions[qIndex];
     
     if (selected === q.ans) {
@@ -47,6 +51,7 @@ export default function GameActivityScreen() {
       speak('Correct !');
       setTimeout(() => {
         setFeedback(null);
+        setErrorsOnCurrent(0); // Reset errors for next question
         if (qIndex + 1 < questions.length) {
           setQIndex(qIndex + 1);
           speak(questions[qIndex + 1].q);
@@ -55,10 +60,24 @@ export default function GameActivityScreen() {
         }
       }, 1500);
     } else {
-      setFeedback(`Faux. ${q.hint}`);
-      speak(q.hint);
+      const newErrors = errorsOnCurrent + 1;
+      setErrorsOnCurrent(newErrors);
       setLives(prev => prev - 1);
-      setTimeout(() => setFeedback(null), 2500);
+      
+      // Three-Stage Remediation Logic
+      if (newErrors === 1) {
+        setFeedback(`Presque ! ${q.hint}`);
+        speak(`Presque ! ${q.hint}`);
+        setTimeout(() => setFeedback(null), 2500);
+      } else if (newErrors === 2) {
+        setFeedback(`Essaie encore. Regarde bien l'indice.`);
+        speak(`Essaie encore.`);
+        setTimeout(() => setFeedback(null), 2500);
+      } else {
+        // Third error -> Trigger Tutor
+        setFeedback(null);
+        setShowTutor(true);
+      }
     }
   };
 
@@ -95,6 +114,16 @@ export default function GameActivityScreen() {
 
         {feedback && <Text style={styles.feedback}>{feedback}</Text>}
       </View>
+
+      {showTutor && (
+        <TutorOverlay 
+          question={currentQ} 
+          onClose={() => {
+            setShowTutor(false);
+            setErrorsOnCurrent(0); // Optional: reset to give them another normal chance
+          }} 
+        />
+      )}
     </View>
   );
 }
@@ -108,5 +137,5 @@ const styles = StyleSheet.create({
   card: { backgroundColor: 'white', padding: 10, borderRadius: 20, alignItems: 'center', shadowColor: '#000', shadowOpacity: 0.1, shadowRadius: 10, elevation: 5, flex: 1 },
   hintBtn: { backgroundColor: '#FEF3C7', padding: 10, borderRadius: 10, marginBottom: 20 },
   hintText: { color: '#B45309', fontWeight: 'bold' },
-  feedback: { fontSize: 18, fontWeight: 'bold', color: '#10B981', marginBottom: 20, textAlign: 'center' }
+  feedback: { fontSize: 18, fontWeight: 'bold', color: '#EF4444', marginBottom: 20, textAlign: 'center' }
 });
