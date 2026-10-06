@@ -57,8 +57,8 @@ export default function ParentDashboardScreen() {
 
         <View style={styles.card}>
           <Text style={styles.title}>Maîtrise (Adaptive Engine)</Text>
-          <Text style={styles.statLine}>Addition <10: SECURE (95%)</Text>
-          <Text style={styles.statLine}>Addition >10: LEARNING (40%)</Text>
+          <Text style={styles.statLine}>Addition &lt;10: SECURE (95%)</Text>
+          <Text style={styles.statLine}>Addition &gt;10: LEARNING (40%)</Text>
           <Text style={styles.statLine}>Lecture Syllabes: DEVELOPING (65%)</Text>
         </View>
 

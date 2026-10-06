@@ -21,23 +21,43 @@ export interface ChildProfile {
 }
 
 export async function getProfiles(): Promise<ChildProfile[]> {
-  const data = await AsyncStorage.getItem(KEYS.PROFILES);
-  return data ? JSON.parse(data) : [];
+  try {
+    const data = await AsyncStorage.getItem(KEYS.PROFILES);
+    if (!data) return [];
+    const parsed = JSON.parse(data);
+    return Array.isArray(parsed) ? parsed : [];
+  } catch (e) {
+    console.error("Error reading profiles", e);
+    return [];
+  }
 }
 
 export async function saveProfile(profile: ChildProfile): Promise<void> {
-  const profiles = await getProfiles();
-  const index = profiles.findIndex(p => p.id === profile.id);
-  if (index >= 0) profiles[index] = profile;
-  else profiles.push(profile);
-  await AsyncStorage.setItem(KEYS.PROFILES, JSON.stringify(profiles));
+  try {
+    const profiles = await getProfiles();
+    const index = profiles.findIndex(p => p.id === profile.id);
+    if (index >= 0) profiles[index] = profile;
+    else profiles.push(profile);
+    await AsyncStorage.setItem(KEYS.PROFILES, JSON.stringify(profiles));
+  } catch (e) {
+    console.error("Error saving profile", e);
+  }
 }
 
 export async function getMastery(learnerId: string): Promise<Record<string, SkillMastery>> {
-  const data = await AsyncStorage.getItem(`${KEYS.MASTERY}_${learnerId}`);
-  return data ? JSON.parse(data) : {};
+  try {
+    const data = await AsyncStorage.getItem(`${KEYS.MASTERY}_${learnerId}`);
+    return data ? JSON.parse(data) : {};
+  } catch (e) {
+    console.error("Error reading mastery", e);
+    return {};
+  }
 }
 
 export async function saveMastery(learnerId: string, mastery: Record<string, SkillMastery>): Promise<void> {
-  await AsyncStorage.setItem(`${KEYS.MASTERY}_${learnerId}`, JSON.stringify(mastery));
+  try {
+    await AsyncStorage.setItem(`${KEYS.MASTERY}_${learnerId}`, JSON.stringify(mastery));
+  } catch (e) {
+    console.error("Error saving mastery", e);
+  }
 }
