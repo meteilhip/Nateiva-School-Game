@@ -1,0 +1,863 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+  <meta name="theme-color" content="#4F46E5" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <title>EduKids – Aventure Éducative Bilingue</title>
+  
+  <style>
+    :root {
+      --primary: #4F46E5;
+      --primary-hover: #4338CA;
+      --secondary: #10B981;
+      --accent: #F59E0B;
+      --danger: #EF4444;
+      --bg: #F8FAFC;
+      --card-bg: #FFFFFF;
+      --text-main: #0F172A;
+      --text-muted: #64748B;
+      --border: #E2E8F0;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: linear-gradient(135deg, #EEF2FF 0%, #F0FDF4 100%);
+      color: var(--text-main);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: stretch;
+      user-select: none;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    /* Responsive Shell: Mobile-first card, expanding on Desktop */
+    .app-shell {
+      width: 100%;
+      max-width: 900px;
+      margin: 0 auto;
+      padding: clamp(12px, 3vw, 24px);
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    header {
+      background: var(--primary);
+      color: white;
+      padding: 14px 20px;
+      border-radius: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 8px 20px rgba(79, 70, 229, 0.2);
+      margin-bottom: 18px;
+    }
+
+    header h1 { font-size: clamp(1.1rem, 2vw, 1.4rem); font-weight: 800; display: flex; align-items: center; gap: 8px; }
+
+    .header-actions { display: flex; gap: 8px; align-items: center; }
+
+    .chip-btn {
+      background: rgba(255, 255, 255, 0.2);
+      border: 1px solid rgba(255, 255, 255, 0.35);
+      color: white;
+      padding: 6px 14px;
+      border-radius: 999px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: background 0.15s ease;
+    }
+    .chip-btn:hover { background: rgba(255, 255, 255, 0.3); }
+
+    .screen { display: none; flex-direction: column; flex: 1; }
+    .screen.active { display: flex; animation: slideUp 0.25s ease-out; }
+
+    @keyframes slideUp {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .card {
+      background: var(--card-bg);
+      border-radius: 24px;
+      padding: clamp(16px, 3vw, 28px);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.04);
+      border: 1px solid var(--border);
+      margin-bottom: 16px;
+    }
+
+    /* Offline AI Companion Prompt */
+    .companion-banner {
+      background: #EEF2FF;
+      border: 2px solid #C7D2FE;
+      border-radius: 18px;
+      padding: 12px 16px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 16px;
+      cursor: pointer;
+      transition: transform 0.1s;
+    }
+    .companion-banner:hover { transform: translateY(-2px); }
+    .companion-avatar { font-size: 2.2rem; flex-shrink: 0; }
+    .companion-bubble { font-size: 0.95rem; font-weight: 600; color: #3730A3; line-height: 1.4; }
+
+    /* Subject Selection Layout */
+    .subject-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 14px;
+      margin-top: 14px;
+    }
+
+    .subject-box {
+      background: white;
+      border: 2px solid var(--border);
+      border-radius: 20px;
+      padding: 20px 14px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+    .subject-box:hover {
+      border-color: var(--primary);
+      transform: translateY(-3px);
+      box-shadow: 0 8px 16px rgba(79, 70, 229, 0.1);
+    }
+    .subject-box .icon { font-size: 2.6rem; display: block; margin-bottom: 8px; }
+    .subject-box h3 { font-size: 1.1rem; margin-bottom: 4px; }
+    .subject-box p { font-size: 0.8rem; color: var(--text-muted); }
+
+    /* Interactive Gameplay UI */
+    .game-stats {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #F1F5F9;
+      border-radius: 14px;
+      padding: 10px 16px;
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+
+    .meter-bar {
+      height: 10px;
+      background: #E2E8F0;
+      border-radius: 999px;
+      overflow: hidden;
+      margin-bottom: 16px;
+    }
+    .meter-progress {
+      height: 100%;
+      background: linear-gradient(90deg, var(--secondary), #34D399);
+      width: 0%;
+      transition: width 0.3s ease;
+    }
+
+    .visual-board {
+      min-height: 80px;
+      font-size: clamp(2.4rem, 6vw, 3.8rem);
+      margin: 12px 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .passage-card {
+      background: #FFFBEB;
+      border-left: 6px solid var(--accent);
+      border-radius: 14px;
+      padding: 16px;
+      font-size: clamp(1rem, 2vw, 1.2rem);
+      line-height: 1.5;
+      text-align: left;
+      margin: 12px 0;
+      color: #78350F;
+    }
+
+    .query-text {
+      font-size: clamp(1.2rem, 3vw, 1.45rem);
+      font-weight: 800;
+      margin: 14px 0;
+      line-height: 1.35;
+    }
+
+    .options-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 12px;
+      margin-top: 16px;
+    }
+
+    .option-button {
+      background: white;
+      border: 2px solid #CBD5E1;
+      border-radius: 16px;
+      padding: clamp(14px, 2.5vw, 20px) 12px;
+      font-size: clamp(1.1rem, 2.5vw, 1.35rem);
+      font-weight: 700;
+      cursor: pointer;
+      color: var(--text-main);
+      transition: all 0.15s;
+    }
+    .option-button:hover:not(:disabled) {
+      border-color: var(--primary);
+      background: #EEF2FF;
+    }
+    .option-button.correct {
+      background: #D1FAE5 !important;
+      border-color: var(--secondary) !important;
+      color: #065F46 !important;
+    }
+    .option-button.incorrect {
+      background: #FEE2E2 !important;
+      border-color: var(--danger) !important;
+      color: #991B1B !important;
+    }
+
+    .feedback-note {
+      min-height: 32px;
+      font-weight: 800;
+      font-size: 1.1rem;
+      margin-top: 12px;
+      text-align: center;
+    }
+    .feedback-note.good { color: var(--secondary); }
+    .feedback-note.bad { color: var(--danger); }
+
+    .btn-action {
+      background: var(--primary);
+      color: white;
+      border: none;
+      padding: 14px 24px;
+      border-radius: 16px;
+      font-size: 1.05rem;
+      font-weight: 700;
+      cursor: pointer;
+      width: 100%;
+      margin-top: 10px;
+      transition: background 0.15s;
+    }
+    .btn-action:hover { background: var(--primary-hover); }
+    .btn-action.outline {
+      background: transparent;
+      border: 2px solid var(--border);
+      color: var(--text-muted);
+    }
+    .btn-action.outline:hover { background: #F1F5F9; color: var(--text-main); }
+  
+    #confettiCanvas {
+      position: fixed;
+      top: 0; left: 0; width: 100%; height: 100%;
+      pointer-events: none; z-index: 9999;
+    }
+
+  
+    .parent-lock {
+      position: fixed; bottom: 20px; right: 20px;
+      background: rgba(0,0,0,0.1); width: 44px; height: 44px;
+      border-radius: 22px; display: flex; justify-content: center; align-items: center;
+      font-size: 1.5rem; cursor: pointer; z-index: 100;
+      transition: background 0.2s;
+    }
+    .parent-lock:hover { background: rgba(0,0,0,0.2); }
+    
+    .modal-overlay {
+      position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(0,0,0,0.5); z-index: 1000; display: none;
+      justify-content: center; align-items: center;
+    }
+    .modal-overlay.active { display: flex; }
+    .modal-content {
+      background: white; padding: 24px; border-radius: 20px; width: 90%; max-width: 400px;
+      text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    }
+    .modal-input { width: 100%; padding: 12px; margin: 10px 0; border-radius: 10px; border: 2px solid #ccc; font-size: 1.2rem; text-align: center; }
+
+  </style>
+</head>
+<body>
+  <canvas id="confettiCanvas"></canvas>
+
+  
+  <div class="parent-lock" onclick="openParentModal()">🔒</div>
+  <div class="modal-overlay" id="parentModal">
+    <div class="modal-content">
+      <h2>Parent Portal 👨‍👩‍👧</h2>
+      <p style="margin-top:10px; color:#666;">Pour accéder, résolvez : <strong style="color:var(--primary)">12 × 12 = ?</strong></p>
+      <input type="number" id="pinInput" class="modal-input" placeholder="Réponse / Answer" />
+      <button class="btn-action" onclick="verifyPin()">Déverrouiller / Unlock</button>
+      <button class="btn-action outline" onclick="closeParentModal()">Fermer / Close</button>
+      
+      <div id="parentDashboard" style="display:none; margin-top:20px; border-top: 2px solid #eee; padding-top:20px;">
+        <h3>📊 Statistiques / Stats</h3>
+        <p style="margin: 10px 0;">Total Points: <strong id="pdScore">0</strong> ⭐</p>
+        <p style="margin: 10px 0;">Leçons complétées: <strong id="pdLessons">0</strong></p>
+        <button class="btn-action" style="background:var(--danger)" onclick="hardReset()">Effacer les données / Wipe Data</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="app-shell">
+    <header>
+      <h1><span>🎒</span> EduKids Explorer</h1>
+      <div class="header-actions">
+        <button class="chip-btn" id="langSwitch" onclick="toggleLanguage()">FR 🇨🇲</button>
+        <button class="chip-btn" id="audioSwitch" onclick="toggleAudioEngine()">🔊 Audio</button>
+      </div>
+    </header>
+
+    <!-- SCREEN: HOME -->
+    <div id="homeScreen" class="screen active">
+      <div class="companion-banner" onclick="narrateWelcome()">
+        <div class="companion-avatar">🤖</div>
+        <div class="companion-bubble" id="welcomeSpeech">
+          Bienvenue ! Choisis une matière ci-dessous pour t'amuser et apprendre même sans connexion !
+        </div>
+      </div>
+
+      <div class="card">
+        <h2 id="sectionTitle">Matières Fondamentales</h2>
+        <div class="subject-grid">
+          <div class="subject-box" onclick="launchSubject('math')">
+            <span class="icon">🧮</span>
+            <h3 id="subjectMath">Calcul & Maths</h3>
+            <p id="descMath">Numération, additions et logique</p>
+          </div>
+          <div class="subject-box" onclick="launchSubject('reading')">
+            <span class="icon">📚</span>
+            <h3 id="subjectReading">Lecture & Texte</h3>
+            <p id="descReading">Compréhension et décodage</p>
+          </div>
+          <div class="subject-box" onclick="launchSubject('science')">
+            <span class="icon">🌿</span>
+            <h3 id="subjectScience">Éveil & Sciences</h3>
+            <p id="descScience">Corps humain, nature et monde</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="card" style="display: flex; justify-content: space-between; align-items: center;">
+        <div>
+          <h4 id="scoreTitle">Progression Globale</h4>
+          <p id="statsLine" style="color: var(--text-muted); font-size: 0.9rem; margin-top: 4px;">Points accumulés : 0 ⭐</p>
+        </div>
+        <button class="chip-btn" style="background: var(--primary); color: white;" onclick="resetProgress()" id="resetBtn">Réinitialiser</button>
+      </div>
+    </div>
+
+    <!-- SCREEN: GAMEPLAY -->
+    <div id="gameScreen" class="screen">
+      <div class="game-stats">
+        <div id="livesCounter">❤️❤️❤️</div>
+        <div id="scoreCounter">⭐ 0</div>
+        <div id="progressCounter">1 / 5</div>
+      </div>
+
+      <div class="meter-bar">
+        <div class="meter-progress" id="progressBar"></div>
+      </div>
+
+      <div class="card" style="text-align: center;">
+        <div class="companion-banner" onclick="readActiveHint()">
+          <div class="companion-avatar">💡</div>
+          <div class="companion-bubble" id="hintBubble">Touche ici si tu as besoin d'un indice oral !</div>
+        </div>
+
+        <div class="visual-board" id="visualAnchor"></div>
+        <div class="passage-card" id="passageAnchor" style="display: none;"></div>
+        <div class="query-text" id="queryAnchor"></div>
+
+        <div class="feedback-note" id="feedbackAnchor"></div>
+        <div class="options-grid" id="optionsAnchor"></div>
+      </div>
+
+      <button class="btn-action outline" onclick="returnHome()" id="exitBtn">Retour au menu</button>
+    </div>
+
+    <!-- SCREEN: SUMMARY -->
+    <div id="summaryScreen" class="screen">
+      <div class="card" style="text-align: center; padding: 36px 20px;">
+        <div style="font-size: 4.5rem; margin-bottom: 12px;" id="summaryBadge">🏆</div>
+        <h2 id="summaryHeading" style="font-size: 1.6rem; margin-bottom: 8px;">Activité Terminée !</h2>
+        <p id="summaryScore" style="color: var(--text-muted); font-size: 1.15rem; margin-bottom: 24px;"></p>
+        <button class="btn-action" onclick="replaySubject()" id="retryBtn">Recommencer</button>
+        <button class="btn-action outline" onclick="returnHome()" id="homeBtn">Changer de matière</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    
+    // --- SOUND FX SYNTHESIS ---
+    const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    function playTone(freq, type, duration, vol=0.1) {
+      if (!appState.soundOn) return;
+      const osc = audioCtx.createOscillator();
+      const gain = audioCtx.createGain();
+      osc.type = type;
+      osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+      gain.gain.setValueAtTime(vol, audioCtx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + duration);
+      osc.connect(gain);
+      gain.connect(audioCtx.destination);
+      osc.start();
+      osc.stop(audioCtx.currentTime + duration);
+    }
+    function playCorrectSFX() {
+      playTone(600, 'sine', 0.1, 0.2);
+      setTimeout(() => playTone(800, 'sine', 0.2, 0.2), 100);
+    }
+    function playWrongSFX() {
+      playTone(300, 'sawtooth', 0.3, 0.2);
+      setTimeout(() => playTone(200, 'sawtooth', 0.4, 0.2), 150);
+    }
+    function playWinSFX() {
+      [400, 500, 600, 800, 1000].forEach((freq, i) => {
+        setTimeout(() => playTone(freq, 'square', 0.1, 0.1), i * 100);
+      });
+    }
+
+    // --- CONFETTI ENGINE ---
+    const canvas = document.getElementById('confettiCanvas');
+    const ctx = canvas.getContext('2d');
+    let particles = [];
+    function resizeCanvas() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
+    window.addEventListener('resize', resizeCanvas);
+    resizeCanvas();
+    
+    function fireConfetti() {
+      for(let i=0; i<100; i++) {
+        particles.push({
+          x: canvas.width/2, y: canvas.height/2,
+          r: Math.random()*6+2,
+          dx: Math.random()*10-5, dy: Math.random()*-10-5,
+          color: 'hsl('+Math.random()*360+', 100%, 50%)'
+        });
+      }
+      requestAnimationFrame(renderConfetti);
+    }
+    function renderConfetti() {
+      if(particles.length === 0) return;
+      ctx.clearRect(0,0,canvas.width,canvas.height);
+      particles.forEach((p, i) => {
+        p.x += p.dx; p.y += p.dy; p.dy += 0.3; // gravity
+        ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, Math.PI*2); ctx.fillStyle = p.color; ctx.fill();
+        if(p.y > canvas.height) particles.splice(i, 1);
+      });
+      requestAnimationFrame(renderConfetti);
+    }
+
+    // --- PARENT DASHBOARD ---
+    function openParentModal() { document.getElementById('parentModal').classList.add('active'); }
+    function closeParentModal() { document.getElementById('parentModal').classList.remove('active'); document.getElementById('pinInput').value=''; document.getElementById('parentDashboard').style.display='none'; }
+    function verifyPin() {
+      if(document.getElementById('pinInput').value === '144') {
+        document.getElementById('parentDashboard').style.display='block';
+        document.getElementById('pdScore').innerText = appState.score;
+        document.getElementById('pdLessons').innerText = localStorage.getItem('edukids_lessons') || '0';
+      } else { alert('Code incorrect / Incorrect PIN'); }
+    }
+    function hardReset() {
+      if(confirm('Are you sure? This deletes all progress.')) {
+        localStorage.clear(); appState.score = 0; refreshUI(); closeParentModal();
+      }
+    }
+
+    // --- LOCAL CURRICULUM DATA (Fully Offline, Multilingual) ---
+    const CURRICULUM = {
+      math: [
+        {
+          visual: "🍌 🍌 🍌 🍌",
+          fr: {
+            q: "Combien de bananes vois-tu dans le panier ?",
+            hint: "Compte une à une : 1, 2, 3 et 4 !",
+            explain: "Il y a 4 bananes au total.",
+            options: ["3", "4", "5", "6"],
+            ans: "4"
+          },
+          en: {
+            q: "How many bananas do you count?",
+            hint: "Count them step by step: 1, 2, 3, and 4!",
+            explain: "There are 4 bananas altogether.",
+            options: ["3", "4", "5", "6"],
+            ans: "4"
+          }
+        },
+        {
+          visual: "⭐ 6 + 3",
+          fr: {
+            q: "Combien font 6 + 3 ?",
+            hint: "Pars de 6 et ajoute 3 : 7, 8, 9 !",
+            explain: "Six unités plus trois unités font neuf.",
+            options: ["8", "9", "10", "11"],
+            ans: "9"
+          },
+          en: {
+            q: "What is 6 + 3?",
+            hint: "Start at 6 and count forward 3: 7, 8, 9!",
+            explain: "Six plus three equals nine.",
+            options: ["8", "9", "10", "11"],
+            ans: "9"
+          }
+        },
+        {
+          visual: "📦 12 - 4",
+          fr: {
+            q: "Tu as 12 mangues. Tu en vends 4. Combien en reste-t-il ?",
+            hint: "Retranche 4 de 12.",
+            explain: "12 moins 4 donne 8 mangues restantes.",
+            options: ["7", "8", "9", "10"],
+            ans: "8"
+          },
+          en: {
+            q: "You have 12 mangoes and sell 4. How many remain?",
+            hint: "Take 4 away from 12.",
+            explain: "12 minus 4 leaves 8 mangoes.",
+            options: ["7", "8", "9", "10"],
+            ans: "8"
+          }
+        }
+      ],
+      reading: [
+        {
+          visual: "🦁",
+          passage: null,
+          fr: {
+            q: "Quel est le premier son du mot « Lion » ?",
+            hint: "Prononce lentement : Lllll-ion.",
+            explain: "Le mot Lion commence par la lettre et le son L.",
+            options: ["L", "P", "T", "M"],
+            ans: "L"
+          },
+          en: {
+            q: "What is the first sound in 'Lion'?",
+            hint: "Say it slowly: Lllll-ion.",
+            explain: "The word Lion starts with the letter L.",
+            options: ["L", "P", "T", "M"],
+            ans: "L"
+          }
+        },
+        {
+          visual: "📖 ☀️",
+          passage: {
+            fr: "Musa marche vers le marché sous un grand soleil pour acheter du pain chaud.",
+            en: "Musa walks to the market under the warm sun to buy fresh bread."
+          },
+          fr: {
+            q: "Pourquoi Musa va-t-il au marché ?",
+            hint: "Relis attentivement la fin de la phrase.",
+            explain: "Le texte indique que Musa veut acheter du pain chaud.",
+            options: ["Pour du pain", "Pour dormir", "Pour nager", "Pour jouer au ballon"],
+            ans: "Pour du pain"
+          },
+          en: {
+            q: "Why does Musa visit the market?",
+            hint: "Look at the last part of the sentence.",
+            explain: "The story states Musa is going to buy fresh bread.",
+            options: ["To buy bread", "To sleep", "To swim", "To play football"],
+            ans: "To buy bread"
+          }
+        }
+      ],
+      science: [
+        {
+          visual: "👀 👃 👂",
+          fr: {
+            q: "Quel organe de ton corps te permet d'entendre la cloche de l'école ?",
+            hint: "Ce sont les deux organes situés de chaque côté de ta tête.",
+            explain: "Nous entendons tous les bruits grâce à nos oreilles.",
+            options: ["Les oreilles", "Les yeux", "Le nez", "La bouche"],
+            ans: "Les oreilles"
+          },
+          en: {
+            q: "Which sense organ allows you to hear the school bell ringing?",
+            hint: "They are located on both sides of your head.",
+            explain: "We hear sounds with our ears.",
+            options: ["Ears", "Eyes", "Nose", "Mouth"],
+            ans: "Ears"
+          }
+        },
+        {
+          visual: "🌱 ☀️ 💧",
+          fr: {
+            q: "De quoi une petite graine a-t-elle besoin pour germer et grandir ?",
+            hint: "Pense à ce qui vient du ciel et des arrosoirs.",
+            explain: "Une plante a besoin de terre, de soleil et d'eau.",
+            options: ["De l'eau et du soleil", "Du jus et du pain", "De glace seule", "D'obscurité totale"],
+            ans: "De l'eau et du soleil"
+          },
+          en: {
+            q: "What does a green seed need to grow into a plant?",
+            hint: "Think about daylight and rain.",
+            explain: "Plants require water, sunlight, and nutrients.",
+            options: ["Water and sun", "Juice and cake", "Only darkness", "Ice cream"],
+            ans: "Water and sun"
+          }
+        }
+      ]
+    };
+
+    // --- APPLICATION STATE ---
+    const appState = {
+      lang: 'fr',
+      soundOn: true,
+      currentSubject: 'math',
+      deck: [],
+      currentIndex: 0,
+      score: parseInt(localStorage.getItem('edukids_score') || '0', 10),
+      lives: 3
+    };
+
+    const STRINGS = {
+      fr: {
+        welcome: "Bienvenue ! Choisis une matière ci-dessous pour t'amuser et apprendre même sans connexion !",
+        math: "Calcul & Maths", mathDesc: "Numération, additions et logique",
+        reading: "Lecture & Texte", readingDesc: "Compréhension et décodage",
+        science: "Éveil & Sciences", scienceDesc: "Corps humain, nature et monde",
+        pts: "Points accumulés : ",
+        hintDefault: "Touche ici si tu as besoin d'un indice oral !",
+        back: "Retour au menu",
+        win: "🎉 Excellent travail !",
+        retry: "❌ Écoute bien l'explication :",
+        finishTitle: "Activité Terminée !",
+        againBtn: "Recommencer",
+        homeBtn: "Changer de matière"
+      },
+      en: {
+        welcome: "Welcome! Choose a topic below to start learning offline anywhere!",
+        math: "Math & Numbers", mathDesc: "Counting, additions and logic",
+        reading: "Reading & Stories", readingDesc: "Comprehension & phonics",
+        science: "Discovery & Science", scienceDesc: "Human body and nature",
+        pts: "Earned Stars: ",
+        hintDefault: "Tap here if you need a spoken hint!",
+        back: "Back to Menu",
+        win: "🎉 Excellent job!",
+        retry: "❌ Listen closely to the hint:",
+        finishTitle: "Activity Complete!",
+        againBtn: "Play Again",
+        homeBtn: "Choose Topic"
+      }
+    };
+
+    // --- SOUND & SPEECH SYNTHESIS ENGINE ---
+    function speak(text) {
+      if (!appState.soundOn || !('speechSynthesis' in window)) return;
+      window.speechSynthesis.cancel();
+      const utterance = new SpeechSynthesisUtterance(text);
+      utterance.lang = appState.lang === 'fr' ? 'fr-FR' : 'en-US';
+      utterance.rate = 0.88; // Slightly reduced speed for clarity in classrooms
+      utterance.pitch = 1.05;
+      window.speechSynthesis.speak(utterance);
+    }
+
+    function toggleAudioEngine() {
+      appState.soundOn = !appState.soundOn;
+      document.getElementById('audioSwitch').innerText = appState.soundOn ? "🔊 Audio" : "🔇 Muet";
+      if (!appState.soundOn && 'speechSynthesis' in window) {
+        window.speechSynthesis.cancel();
+      }
+    }
+
+    function toggleLanguage() {
+      appState.lang = appState.lang === 'fr' ? 'en' : 'fr';
+      document.getElementById('langSwitch').innerText = appState.lang === 'fr' ? 'FR 🇨🇲' : 'EN 🇬🇧';
+      refreshUI();
+      if (document.getElementById('gameScreen').classList.contains('active')) {
+        renderCard();
+      }
+    }
+
+    function refreshUI() {
+      const s = STRINGS[appState.lang];
+      document.getElementById('welcomeSpeech').innerText = s.welcome;
+      document.getElementById('subjectMath').innerText = s.math;
+      document.getElementById('descMath').innerText = s.mathDesc;
+      document.getElementById('subjectReading').innerText = s.reading;
+      document.getElementById('descReading').innerText = s.readingDesc;
+      document.getElementById('subjectScience').innerText = s.science;
+      document.getElementById('descScience').innerText = s.scienceDesc;
+      document.getElementById('statsLine').innerText = `${s.pts} ${appState.score} ⭐`;
+      document.getElementById('exitBtn').innerText = s.back;
+      document.getElementById('retryBtn').innerText = s.againBtn;
+      document.getElementById('homeBtn').innerText = s.homeBtn;
+    }
+
+    function narrateWelcome() {
+      speak(STRINGS[appState.lang].welcome);
+    }
+
+    // --- GAME ENGINE LOGIC ---
+    function switchScreen(id) {
+      document.querySelectorAll('.screen').forEach(el => el.classList.remove('active'));
+      document.getElementById(id).classList.add('active');
+      window.scrollTo(0, 0);
+    }
+
+    function launchSubject(subKey) {
+      appState.currentSubject = subKey;
+      appState.deck = [...CURRICULUM[subKey]].sort(() => Math.random() - 0.5);
+      appState.currentIndex = 0;
+      appState.lives = 3;
+      switchScreen('gameScreen');
+      renderCard();
+    }
+
+    function renderCard() {
+      const q = appState.deck[appState.currentIndex];
+      if (!q) {
+        completeActivity();
+        return;
+      }
+
+      const loc = q[appState.lang];
+      document.getElementById('livesCounter').innerText = "❤️".repeat(Math.max(0, appState.lives));
+      document.getElementById('scoreCounter').innerText = `⭐ ${appState.score}`;
+      document.getElementById('progressCounter').innerText = `${appState.currentIndex + 1} / ${appState.deck.length}`;
+      document.getElementById('progressBar').style.width = `${(appState.currentIndex / appState.deck.length) * 100}%`;
+      document.getElementById('feedbackAnchor').innerText = "";
+
+      document.getElementById('visualAnchor').innerText = q.visual || "";
+      
+      const passageBox = document.getElementById('passageAnchor');
+      if (q.passage) {
+        passageBox.style.display = 'block';
+        passageBox.innerText = q.passage[appState.lang];
+      } else {
+        passageBox.style.display = 'none';
+      }
+
+      document.getElementById('queryAnchor').innerText = loc.q;
+      document.getElementById('hintBubble').innerText = loc.hint;
+
+      const optsBox = document.getElementById('optionsAnchor');
+      optsBox.innerHTML = '';
+      loc.options.forEach(opt => {
+        const btn = document.createElement('button');
+        btn.className = 'option-button';
+        btn.innerText = opt;
+        btn.onclick = () => verifyChoice(btn, opt, loc.ans, loc.explain);
+        optsBox.appendChild(btn);
+      });
+
+      const audioSpeech = q.passage ? `${q.passage[appState.lang]}. ${loc.q}` : loc.q;
+      speak(audioSpeech);
+    }
+
+    function verifyChoice(button, selected, correct, rationale) {
+      const allBtns = document.querySelectorAll('.option-button');
+      allBtns.forEach(b => b.disabled = true);
+      const feedback = document.getElementById('feedbackAnchor');
+
+      if (selected === correct) {
+        button.classList.add('correct');
+        if(audioCtx.state === 'suspended') audioCtx.resume();
+        playCorrectSFX();
+        feedback.className = 'feedback-note good';
+        feedback.innerText = STRINGS[appState.lang].win;
+        appState.score += 10;
+        localStorage.setItem('edukids_score', appState.score.toString());
+        speak(STRINGS[appState.lang].win);
+
+        setTimeout(() => {
+          appState.currentIndex++;
+          renderCard();
+        }, 1300);
+      } else {
+        button.classList.add('incorrect');
+        if(audioCtx.state === 'suspended') audioCtx.resume();
+        playWrongSFX();
+        feedback.className = 'feedback-note bad';
+        feedback.innerText = STRINGS[appState.lang].retry;
+        appState.lives--;
+        document.getElementById('livesCounter').innerText = "❤️".repeat(Math.max(0, appState.lives));
+        
+        speak(`${rationale} ${appState.deck[appState.currentIndex][appState.lang].hint}`);
+
+        setTimeout(() => {
+          if (appState.lives <= 0) {
+            completeActivity();
+          } else {
+            allBtns.forEach(b => {
+              b.disabled = false;
+              b.classList.remove('incorrect');
+            });
+          }
+        }, 2400);
+      }
+    }
+
+    function readActiveHint() {
+      const item = appState.deck[appState.currentIndex];
+      if (item) speak(item[appState.lang].hint);
+    }
+
+    function completeActivity() {
+      switchScreen('summaryScreen');
+      const won = appState.lives > 0;
+      if(won) { if(audioCtx.state === 'suspended') audioCtx.resume(); playWinSFX(); fireConfetti(); let l = parseInt(localStorage.getItem('edukids_lessons')||'0')+1; localStorage.setItem('edukids_lessons', l); }
+      document.getElementById('summaryBadge').innerText = won ? "🏆" : "💪";
+      document.getElementById('summaryHeading').innerText = STRINGS[appState.lang].finishTitle;
+      document.getElementById('summaryScore').innerText = `${STRINGS[appState.lang].pts} ${appState.score} ⭐`;
+      speak(won ? "Félicitations, mission réussie !" : "Bel effort, continue de t'entraîner !");
+    }
+
+    function replaySubject() {
+      launchSubject(appState.currentSubject);
+    }
+
+    function returnHome() {
+      if ('speechSynthesis' in window) window.speechSynthesis.cancel();
+      refreshUI();
+      switchScreen('homeScreen');
+    }
+
+    function resetProgress() {
+      localStorage.setItem('edukids_score', '0');
+      appState.score = 0;
+      refreshUI();
+    }
+
+    // --- EMBEDDED SERVICE WORKER (100% Offline Capability) ---
+    function registerDynamicOfflineSW() {
+      if ('serviceWorker' in navigator) {
+        const swScript = `
+          const CACHE_NAME = 'edukids-v1';
+          self.addEventListener('install', (e) => {
+            self.skipWaiting();
+          });
+          self.addEventListener('activate', (e) => {
+            e.waitUntil(clients.claim());
+          });
+          self.addEventListener('fetch', (e) => {
+            e.respondWith(
+              fetch(e.request).catch(() => caches.match(e.request))
+            );
+          });
+        `;
+        const blob = new Blob([swScript], { type: 'application/javascript' });
+        const swUrl = URL.createObjectURL(blob);
+        navigator.serviceWorker.register(swUrl).catch(() => {
+          // Graceful fallback if blob workers are restricted by local file protocol
+        });
+      }
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+      refreshUI();
+      registerDynamicOfflineSW();
+    });
+  </script>
+</body>
+</html>

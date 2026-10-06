@@ -1,0 +1,18 @@
+{
+  "translation": {
+    "welcome": "Welcome to EduKids!",
+    "math": "Math",
+    "reading": "Reading",
+    "comprehension": "Comprehension",
+    "start": "Start Learning",
+    "progress": "My Progress",
+    "level_1": "Grade 1 (SIL)",
+    "level_2": "Grade 2 (CP)",
+    "level_3": "Grade 3 (CE1)",
+    "level_4": "Grade 4 (CE2)",
+    "level_5": "Grade 5 (CM1)",
+    "level_6": "Grade 6 (CM2)",
+    "xp": "XP",
+    "choose_level": "Choose your Grade!"
+  }
+}
