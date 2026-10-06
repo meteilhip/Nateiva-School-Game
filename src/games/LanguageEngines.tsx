@@ -1,5 +1,6 @@
 import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import { SpeechInputAdapter } from '../speech/SpeechInputAdapter';
 
 export function PhonemeMatch({ question, onAnswer }: { question: any, onAnswer: (ans: string) => void }) {
   return (
@@ -27,6 +28,20 @@ export function WordBuilder({ question, onAnswer }: { question: any, onAnswer: (
           </TouchableOpacity>
         ))}
       </View>
+    </View>
+  );
+}
+
+export function ReadAloud({ question, onAnswer }: { question: any, onAnswer: (ans: string) => void }) {
+  return (
+    <View style={styles.container}>
+      <Text style={styles.title}>{question.q}</Text>
+      <SpeechInputAdapter 
+        expectedText={question.ans} 
+        onResult={(isCorrect, spokenText) => {
+          onAnswer(isCorrect ? question.ans : spokenText); // Send back expected if correct, else send what they said (which is wrong)
+        }} 
+      />
     </View>
   );
 }

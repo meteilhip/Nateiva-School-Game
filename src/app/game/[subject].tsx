@@ -4,7 +4,7 @@ import { useLocalSearchParams, router } from 'expo-router';
 import * as Speech from 'expo-speech';
 
 import { CountAndTap, NumberMatch } from '../../games/MathEngines';
-import { PhonemeMatch, WordBuilder } from '../../games/LanguageEngines';
+import { PhonemeMatch, WordBuilder, ReadAloud } from '../../games/LanguageEngines';
 import { ClassificationLab } from '../../games/ScienceEngines';
 import { TutorOverlay } from '../../components/TutorOverlay';
 
@@ -91,6 +91,7 @@ export default function GameActivityScreen() {
       case 'NUMBER_MATCH': return <NumberMatch question={currentQ} onAnswer={handleAnswer} />;
       case 'PHONEME_MATCH': return <PhonemeMatch question={currentQ} onAnswer={handleAnswer} />;
       case 'CLASSIFICATION': return <ClassificationLab question={currentQ} onAnswer={handleAnswer} />;
+      case 'READ_ALOUD': return <ReadAloud question={currentQ} onAnswer={handleAnswer} />;
       default: return <Text>Engine non trouvé</Text>;
     }
   };

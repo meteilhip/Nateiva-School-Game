@@ -17,9 +17,9 @@ const styles = StyleSheet.create({
 // Math Games
 export const NumberOrder = (props: any) => <PlaceholderEngine name="NUMBER_ORDER" {...props} />;
 export const NumberLine = (props: any) => <PlaceholderEngine name="NUMBER_LINE" {...props} />;
-export const TenFrame = (props: any) => <PlaceholderEngine name="TEN_FRAME" {...props} />;
+export { TenFrame } from './MathEngines';
 export const PlaceValueBuilder = (props: any) => <PlaceholderEngine name="PLACE_VALUE_BUILDER" {...props} />;
-export const AdditionBuilder = (props: any) => <PlaceholderEngine name="ADDITION_BUILDER" {...props} />;
+export { AdditionBuilder } from './MathEngines';
 export const SubtractionBuilder = (props: any) => <PlaceholderEngine name="SUBTRACTION_BUILDER" {...props} />;
 export const MultiplicationArrays = (props: any) => <PlaceholderEngine name="MULTIPLICATION_ARRAYS" {...props} />;
 export const DivisionSharing = (props: any) => <PlaceholderEngine name="DIVISION_SHARING" {...props} />;
