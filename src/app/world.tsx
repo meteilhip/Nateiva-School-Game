@@ -19,19 +19,19 @@ export default function WorldScreen() {
         <Text style={styles.title}>Choisis ton monde !</Text>
         <Text style={styles.subtitle}>Choose your world!</Text>
 
-        <TouchableOpacity style={[styles.worldCard, { backgroundColor: '#DBEAFE', borderColor: '#3B82F6' }]} onPress={() => router.push('/game/math')}>
+        <TouchableOpacity style={[styles.worldCard, { backgroundColor: '#DBEAFE', borderColor: '#3B82F6' }]} onPress={() => router.push('/levels/math')}>
           <Text style={styles.worldIcon}>🧮</Text>
           <Text style={styles.worldTitle}>Math Kingdom</Text>
           <Text style={styles.worldDesc}>Calcul, géométrie, logique</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity style={[styles.worldCard, { backgroundColor: '#FEF3C7', borderColor: '#F59E0B' }]} onPress={() => router.push('/game/reading')}>
+        <TouchableOpacity style={[styles.worldCard, { backgroundColor: '#FEF3C7', borderColor: '#F59E0B' }]} onPress={() => router.push('/levels/reading')}>
           <Text style={styles.worldIcon}>📚</Text>
           <Text style={styles.worldTitle}>Reading Forest</Text>
           <Text style={styles.worldDesc}>Lecture et compréhension</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity style={[styles.worldCard, { backgroundColor: '#D1FAE5', borderColor: '#10B981' }]} onPress={() => router.push('/game/science')}>
+        <TouchableOpacity style={[styles.worldCard, { backgroundColor: '#D1FAE5', borderColor: '#10B981' }]} onPress={() => router.push('/levels/science')}>
           <Text style={styles.worldIcon}>🌿</Text>
           <Text style={styles.worldTitle}>Science Lab</Text>
           <Text style={styles.worldDesc}>Éveil, nature et corps humain</Text>
