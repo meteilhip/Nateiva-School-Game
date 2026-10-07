@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+﻿import React, { useState, useCallback } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
 import { useLocalSearchParams, router, useFocusEffect } from 'expo-router';
 import { CameroonMathSkills, CameroonReadingSkills, CameroonScienceSkills } from '../../curriculum/cameroon/data';
@@ -19,7 +19,6 @@ export default function LevelSelectionScreen() {
   );
 
   const loadData = async () => {
-    // For simplicity, just use the first profile or a mock profile if none selected
     const profiles = await getProfiles();
     const currentProfile = profiles.length > 0 ? profiles[0] : null;
     setProfile(currentProfile);
@@ -34,23 +33,8 @@ export default function LevelSelectionScreen() {
     if (subject === 'reading') allSkills = CameroonReadingSkills;
     if (subject === 'science') allSkills = CameroonScienceSkills;
     
-    // Sort by age and difficulty
     allSkills.sort((a, b) => a.recommendedAgeMin - b.recommendedAgeMin || a.difficultyRange[0] - b.difficultyRange[0]);
     setSkills(allSkills);
-  };
-
-  const isSkillUnlocked = (skill: CurriculumSkill) => {
-    // If no prerequisites, it's unlocked
-    if (!skill.prerequisiteSkillIds || skill.prerequisiteSkillIds.length === 0) return true;
-    
-    // Check if all prerequisites are mastered
-    for (const prereqId of skill.prerequisiteSkillIds) {
-      const prereqMastery = mastery[prereqId];
-      if (!prereqMastery || !prereqMastery.isMastered) {
-        return false;
-      }
-    }
-    return true;
   };
 
   const getSubjectColor = () => {
@@ -71,49 +55,39 @@ export default function LevelSelectionScreen() {
     <View style={styles.container}>
       <View style={styles.header}>
         <TouchableOpacity onPress={() => router.back()} style={styles.backBtn}>
-          <Text style={styles.backText}>⬅️ Retour</Text>
+          <Text style={styles.backText}>Retour</Text>
         </TouchableOpacity>
         <Text style={[styles.title, { color: getSubjectColor() }]}>{getSubjectTitle()}</Text>
-        {profile && <Text style={styles.profileAge}>Âge: {profile.age}</Text>}
+        {profile && <Text style={styles.profileAge}>Age: {profile.age}</Text>}
       </View>
 
       <ScrollView contentContainerStyle={styles.grid}>
         {skills.map((skill) => {
-          const unlocked = isSkillUnlocked(skill);
           const skillMastery = mastery[skill.skillId];
           const isMastered = skillMastery?.isMastered;
           
           return (
             <View 
               key={skill.skillId} 
-              style={[
-                styles.card, 
-                { borderColor: unlocked ? getSubjectColor() : '#CBD5E1', opacity: unlocked ? 1 : 0.6 }
-              ]}
+              style={[styles.card, { borderColor: getSubjectColor() }]}
             >
               <View style={styles.cardHeader}>
-                <Text style={styles.levelBadge}>{skill.level} (Âge {skill.recommendedAgeMin}-{skill.recommendedAgeMax})</Text>
-                {isMastered && <Text style={styles.masteredBadge}>⭐ MAÎTRISÉ</Text>}
-                {!unlocked && <Text style={styles.lockedBadge}>🔒 VERROUILLÉ</Text>}
+                <Text style={styles.levelBadge}>{skill.level} (Age {skill.recommendedAgeMin}-{skill.recommendedAgeMax})</Text>
+                {isMastered && <Text style={styles.masteredBadge}>MAITRISE</Text>}
               </View>
               
               <Text style={styles.skillName}>{skill.skillNameFrench}</Text>
               <Text style={styles.skillDesc}>{skill.descriptionFrench}</Text>
               
               <TouchableOpacity 
-                style={[styles.playBtn, { backgroundColor: unlocked ? getSubjectColor() : '#94A3B8' }]}
-                disabled={!unlocked}
-                onPress={() => router.push(`/game/${subject}?skillId=${skill.skillId}`)}
+                style={[styles.playBtn, { backgroundColor: getSubjectColor() }]}
+                onPress={() => router.push('/game/' + subject + '?skillId=' + skill.skillId)}
               >
-                <Text style={styles.playText}>{unlocked ? '▶️ Jouer' : '🔒 Terminer les niveaux précédents'}</Text>
+                <Text style={styles.playText}>Jouer</Text>
               </TouchableOpacity>
             </View>
           );
         })}
-
-        {skills.length === 0 && (
-          <Text style={styles.empty}>Chargement des niveaux...</Text>
-        )}
       </ScrollView>
     </View>
   );
@@ -131,7 +105,6 @@ const styles = StyleSheet.create({
   cardHeader: { flexDirection: 'row', justifyContent: 'space-between', marginBottom: 10 },
   levelBadge: { backgroundColor: '#E2E8F0', paddingHorizontal: 10, paddingVertical: 4, borderRadius: 10, fontWeight: 'bold', color: '#475569' },
   masteredBadge: { backgroundColor: '#FEF08A', paddingHorizontal: 10, paddingVertical: 4, borderRadius: 10, fontWeight: 'bold', color: '#854D0E' },
-  lockedBadge: { backgroundColor: '#FEE2E2', paddingHorizontal: 10, paddingVertical: 4, borderRadius: 10, fontWeight: 'bold', color: '#991B1B' },
   skillName: { fontSize: 20, fontWeight: 'bold', color: '#1E293B', marginBottom: 5 },
   skillDesc: { fontSize: 14, color: '#64748B', marginBottom: 20 },
   playBtn: { padding: 15, borderRadius: 12, alignItems: 'center' },
