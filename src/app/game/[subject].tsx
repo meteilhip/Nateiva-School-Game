@@ -43,6 +43,7 @@ import AudioManager from '../../audio/AudioManager';
 import { TutorOverlay } from '../../components/TutorOverlay';
 import { getProfiles, getMastery, saveMastery, saveProfile, saveAttemptEvent, ChildProfile } from '../../storage/db';
 import { calculateNewMastery, SkillMastery } from '../../adaptive/engine';
+import { createLearner, nextProblem, recordAttempt, tutorSteps as coreTutorSteps, Learner, GradeBand } from '../../core/learningCore';
 
 // Procedural question generator mapped directly to Cameroon Skills
 const generateQuestionsForSkill = (skillId: string, difficulty: number = 1): any[] => {
@@ -228,6 +229,7 @@ export default function GameActivityScreen() {
   const [responses, setResponses] = useState<{ isCorrect: boolean, attempts: number }[]>([]);
   const [learnerId, setLearnerId] = useState<string>('guest_child');
   const [questionStartTime, setQuestionStartTime] = useState<number>(Date.now());
+  const [learnerInstance, setLearnerInstance] = useState<Learner>(() => createLearner({ band: 'sil_cp', language: 'fr' }));
 
   useFocusEffect(
     useCallback(() => {
@@ -254,15 +256,57 @@ export default function GameActivityScreen() {
           diff = 2;
         }
       }
-      
       setDifficultyLevel(diff);
-      const generated = generateQuestionsForSkill(skillId as string || 'math_count_1_10', diff);
-      
-      // If user selected a specific game mechanic, apply it to all questions in this session
-      if (gameKey && generated.length > 0) {
-        generated.forEach(q => {
-          q.type = gameKey as string;
-        });
+
+      let band: GradeBand = 'sil_cp';
+      const gradeStr = (profile?.grade || '').toLowerCase();
+      if (gradeStr.includes('nursery') || gradeStr.includes('maternelle')) band = 'nursery';
+      else if (gradeStr.includes('sil') || gradeStr.includes('cp') || gradeStr.includes('class 1') || gradeStr.includes('class 2')) band = 'sil_cp';
+      else if (gradeStr.includes('ce1') || gradeStr.includes('ce2') || gradeStr.includes('class 3') || gradeStr.includes('class 4')) band = 'ce1_ce2';
+      else if (gradeStr.includes('cm1') || gradeStr.includes('cm2') || gradeStr.includes('class 5') || gradeStr.includes('class 6')) band = 'cm1_cm2';
+
+      const learner = createLearner({ id: profile?.id || 'child', band, language: (profile?.learningLanguage || 'fr') as any });
+      setLearnerInstance(learner);
+
+      const targetSkill = (skillId as string) || 'math_count_1_10';
+      const isMath = targetSkill.startsWith('math_') || subject === 'math' || targetSkill === 'count' || targetSkill === 'add';
+
+      let generated: any[] = [];
+      if (isMath) {
+        let coreSkill = 'add';
+        if (targetSkill.includes('count')) coreSkill = 'count';
+        else if (targetSkill.includes('compare')) coreSkill = 'compare';
+        else if (targetSkill.includes('shape')) coreSkill = 'shapes';
+        else if (targetSkill.includes('sub')) coreSkill = 'subtract';
+        else if (targetSkill.includes('mult')) coreSkill = 'multiply';
+        else if (targetSkill.includes('div')) coreSkill = 'divide';
+        else if (targetSkill.includes('frac')) coreSkill = 'fractions';
+        else if (targetSkill.includes('dec')) coreSkill = 'decimals';
+        else if (targetSkill.includes('number_order') || targetSkill.includes('numberline')) coreSkill = 'numberline';
+
+        for (let i = 0; i < 3; i++) {
+          const prob = nextProblem(learner, coreSkill);
+          generated.push({
+            id: prob.id,
+            type: (gameKey as string) || (band === 'nursery' ? 'BLOCK_STACK' : (band === 'cm1_cm2' ? 'DECIMAL_RALLY' : 'BLOCK_STACK')),
+            q: prob.skill === 'count' ? `Compte les ${prob.a} objets :` : (prob.skill === 'fractions' ? `Montre la fraction ${prob.answer} :` : `${prob.display} = ?`),
+            equation: `${prob.display} = ?`,
+            ans: String(prob.answer),
+            options: prob.options,
+            a: prob.a,
+            b: prob.b,
+            level: prob.level,
+            coreProblem: prob,
+            hint: coreTutorSteps(prob, 'fr')[0]?.speech || 'Prends ton temps.'
+          });
+        }
+      } else {
+        generated = generateQuestionsForSkill(targetSkill, diff);
+        if (gameKey && generated.length > 0) {
+          generated.forEach(q => {
+            q.type = gameKey as string;
+          });
+        }
       }
       
       setQuestions(generated);
@@ -347,6 +391,15 @@ export default function GameActivityScreen() {
       misconceptionCode: !isCorrect ? (q.misconceptionCode || 'MISC_INCORRECT_ATTEMPT') : undefined,
       timestamp: Date.now()
     }).catch(err => console.error('Failed to log attempt event', err));
+
+    if (q.coreProblem) {
+      recordAttempt(learnerInstance, q.coreProblem, {
+        response: selected,
+        assisted: errorsOnCurrent > 0 || showTutor || tutorUsedOnCurrentQ,
+        gameId: (gameKey as string) || q.type || 'UNKNOWN_GAME',
+        elapsedMs: timeSpent
+      });
+    }
 
     if (isCorrect) {
       setFeedbackColor('#10B981');
@@ -443,7 +496,8 @@ export default function GameActivityScreen() {
   }
 
   const currentQ = questions[qIndex];
-  const activeType = currentQ.type;
+  const rawType = (gameKey as string) || currentQ.type || 'BLOCK_STACK';
+  const activeType = rawType.toUpperCase().replace(/-/g, '_');
 
   // Master Engine Router for all 60 Distinct Games
   const renderEngine = () => {
@@ -469,6 +523,7 @@ export default function GameActivityScreen() {
       // Foundation (16-30)
       case 'MATH_RACING': return <MathCarRacing question={currentQ} onAnswer={handleAnswer} />;
       case 'TREASURE_HUNT': return <TreasureHunt question={currentQ} onAnswer={handleAnswer} />;
+      case 'TOY_FACTORY':
       case 'ROBOT_FACTORY': return <RobotFactory question={currentQ} onAnswer={handleAnswer} />;
       case 'WORD_CASTLE': return <WordCastle question={currentQ} onAnswer={handleAnswer} />;
       case 'SYLLABLE_JUMP': return <SyllableJump question={currentQ} onAnswer={handleAnswer} />;
@@ -480,6 +535,7 @@ export default function GameActivityScreen() {
       case 'CLOCK_QUEST': return <ClockQuest question={currentQ} onAnswer={handleAnswer} />;
       case 'SENTENCE_TRAIN': return <SentenceTrain question={currentQ} onAnswer={handleAnswer} />;
       case 'READING_RESCUE': return <ReadingRescue question={currentQ} onAnswer={handleAnswer} />;
+      case 'SEED_LAB':
       case 'SCIENCE_GARDEN': return <ScienceGarden question={currentQ} onAnswer={handleAnswer} />;
       case 'PHONICS_FISHING': return <PhonicsFishing question={currentQ} onAnswer={handleAnswer} />;
 
@@ -502,9 +558,11 @@ export default function GameActivityScreen() {
 
       // Advanced (46-60)
       case 'FRACTION_SPACE': return <FractionSpaceMission question={currentQ} onAnswer={handleAnswer} />;
+      case 'DECIMAL_RALLY':
       case 'DECIMAL_RACING': return <DecimalRacing question={currentQ} onAnswer={handleAnswer} />;
       case 'BUDGET_TYCOON': return <BudgetTycoon question={currentQ} onAnswer={handleAnswer} />;
       case 'SCIENCE_QUEST': return <ScienceDiscoveryQuest question={currentQ} onAnswer={handleAnswer} />;
+      case 'DETECTIVE_STORIES':
       case 'READING_AGENCY': return <ReadingDetectiveAgency question={currentQ} onAnswer={handleAnswer} />;
       case 'LOGIC_LABYRINTH': return <LogicLabyrinth question={currentQ} onAnswer={handleAnswer} />;
       case 'GEO_CONSTRUCTION_SITE': return <GeometryConstructionSite question={currentQ} onAnswer={handleAnswer} />;

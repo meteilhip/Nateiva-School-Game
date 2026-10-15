@@ -85,14 +85,14 @@ export default function LevelSelectionScreen() {
   };
 
   const getSubjectTitle = () => {
-    if (subject === 'math') return '🧮 Math Kingdom';
-    if (subject === 'reading') return '📖 Reading Forest';
-    if (subject === 'comprehension') return '📜 Text Comprehension';
-    if (subject === 'pronunciation') return '🗣️ Pronunciation Studio';
-    if (subject === 'science') return '🔬 Science Lab';
-    if (subject === 'logic' || subject === 'logic_puzzles') return '🧩 Logic & Puzzles';
-    if (subject === 'creative' || subject === 'creative_play') return '🎨 Creative Play';
-    if (subject === 'memory') return '🧩 Memory Village';
+    if (subject === 'math') return '🧮 Math Arcade • Calcul';
+    if (subject === 'reading') return '📖 Lecture • Reading Forest';
+    if (subject === 'comprehension') return '📜 Compréhension • Story';
+    if (subject === 'pronunciation') return '🗣️ Prononciation • Studio';
+    if (subject === 'science') return '🔬 Sciences & Nature • Lab';
+    if (subject === 'logic' || subject === 'logic_puzzles') return '🧩 Logique & Puzzles';
+    if (subject === 'creative' || subject === 'creative_play') return '🎨 Jeu Créatif';
+    if (subject === 'memory') return '🧩 Mémoire & Paires';
     return 'Niveaux d\'Apprentissage';
   };
 
