@@ -19,41 +19,42 @@
   --gold: #FFB800;
   --green: #00C48C;
   --blue: #0084FF;
-  --purple: #7928CA;
-  --coral: #FF6B4A;
+  --purple: #8B5CF6;
+  --shadow-sm: 0 2px 8px rgba(23, 35, 61, 0.06);
+  --shadow-md: 0 6px 20px rgba(23, 35, 61, 0.10);
+  --shadow-lg: 0 12px 36px rgba(23, 35, 61, 0.16);
   --radius-sm: 12px;
   --radius-md: 18px;
   --radius-lg: 26px;
-  --shadow-sm: 0 2px 8px rgba(23, 35, 61, 0.06);
-  --shadow-md: 0 8px 24px rgba(23, 35, 61, 0.10);
-  --shadow-lg: 0 16px 40px rgba(229, 37, 42, 0.16);
 }
 
 * {
   box-sizing: border-box;
-  -webkit-tap-highlight-color: transparent;
-  user-select: none;
   margin: 0;
   padding: 0;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-tap-highlight-color: transparent;
 }
 
 body {
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
   background: var(--bg-canvas);
   color: var(--text-main);
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+  overflow-x: hidden;
 }
 
-/* HEADER WITH PROMINENT HOME BUTTON */
+/* TOP APP HEADER */
 header {
   background: var(--surface);
   border-bottom: 2px solid #EAEFF6;
-  padding: 10px 18px;
+  padding: 10px 16px;
   display: flex;
-  justify-content: space-between;
   align-items: center;
+  justify-content: space-between;
   position: sticky;
   top: 0;
   z-index: 100;
@@ -69,40 +70,44 @@ header {
 .btn-home {
   background: var(--red-light);
   color: var(--red-primary);
-  border: 2px solid var(--red-primary);
+  border: 2px solid rgba(229, 37, 42, 0.25);
   border-radius: var(--radius-sm);
   padding: 8px 14px;
-  font-size: 14px;
+  font-size: 13.5px;
   font-weight: 900;
+  cursor: pointer;
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  box-shadow: 0 2px 8px rgba(229, 37, 42, 0.15);
-  cursor: pointer;
-  transition: all 0.15s;
+  transition: all 0.15s ease;
 }
 
 .btn-home:hover {
   background: var(--red-primary);
   color: white;
+  transform: translateY(-1px);
+}
+
+.btn-home:active {
+  transform: scale(0.96);
 }
 
 .brand-row {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 8px;
 }
 
 .mascot-avatar {
-  width: 44px;
-  height: 44px;
+  width: 42px;
+  height: 42px;
   border-radius: 50%;
-  background: var(--red-light);
-  border: 2px solid var(--red-primary);
+  background: #FFF3E0;
+  border: 2px solid var(--gold);
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 26px;
+  font-size: 24px;
   cursor: pointer;
   animation: floatMascot 3s ease-in-out infinite;
 }
@@ -113,14 +118,14 @@ header {
 }
 
 .brand-text h1 {
-  font-size: 18px;
+  font-size: 17px;
   font-weight: 900;
   letter-spacing: -0.3px;
   color: var(--red-primary);
 }
 
 .brand-subtitle {
-  font-size: 10.5px;
+  font-size: 10px;
   font-weight: 700;
   color: var(--text-muted);
 }
@@ -178,39 +183,38 @@ main {
 #view-hub {
   display: flex;
   flex-direction: column;
-  gap: 14px;
+  gap: 16px;
 }
 
 .hub-hero {
   background: linear-gradient(135deg, #17233D 0%, #202F52 100%);
-  color: white;
   border-radius: var(--radius-lg);
-  padding: 18px 22px;
+  padding: 20px 24px;
+  color: white;
   display: flex;
   align-items: center;
   justify-content: space-between;
   box-shadow: var(--shadow-md);
+  position: relative;
+  overflow: hidden;
 }
 
 .hub-hero-text h2 {
-  font-size: 22px;
+  font-size: 21px;
   font-weight: 900;
   margin-bottom: 4px;
-  color: #FFFFFF;
 }
 
 .hub-hero-text p {
   font-size: 13px;
-  color: #FFD233;
-  font-weight: 700;
+  opacity: 0.85;
 }
 
 .hub-hero-avatar {
-  font-size: 44px;
-  animation: floatMascot 2.5s infinite ease-in-out;
+  font-size: 46px;
 }
 
-/* GRADE BAR */
+/* 4 GRADE BANDS */
 .grade-bar {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -219,12 +223,12 @@ main {
 
 .pill-grade {
   background: #FFFFFF;
-  color: var(--navy-dark);
-  border-radius: var(--radius-md);
-  padding: 12px 8px;
-  font-size: 13px;
-  font-weight: 800;
   border: 2px solid #E2E8F0;
+  border-radius: var(--radius-md);
+  padding: 10px 6px;
+  font-size: 12.5px;
+  font-weight: 800;
+  color: var(--navy-dark);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -421,9 +425,9 @@ main {
 /* QUESTION BANNER */
 .question-banner {
   background: linear-gradient(135deg, #17233D 0%, #202F52 100%);
-  color: white;
   border-radius: var(--radius-md);
   padding: 14px 18px;
+  color: white;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -431,11 +435,10 @@ main {
 }
 
 .question-equation {
-  font-size: 21px;
+  font-size: 18px;
   font-weight: 900;
-  color: #FFFFFF;
-  letter-spacing: -0.2px;
   margin-bottom: 4px;
+  letter-spacing: 0.2px;
 }
 
 .concrete-dots {
@@ -799,19 +802,20 @@ canvas#tutorCanvas {
       <div class="pointer-hand" id="pointer-hand">👆</div>
     </div>
 
+    <!-- Feedback Message Box -->
     <div class="feedback-box" id="feedback-msg"></div>
 
-    <!-- Interactive Mobile Controls Pad -->
+    <!-- Directional / Action Controls Pad for Touch Accessibility -->
     <div class="controls-pad" id="controls-pad">
-      <button class="pad-btn" id="btn-left">⬅️</button>
-      <button class="pad-btn" id="btn-action">🎯 Action</button>
-      <button class="pad-btn" id="btn-right">➡️</button>
+      <button class="pad-btn" id="btn-left">◀ Gauche</button>
+      <button class="pad-btn" id="btn-action" style="background:var(--red-primary);color:white;border-color:var(--red-hover);">⚡ Action</button>
+      <button class="pad-btn" id="btn-right">Droite ▶</button>
     </div>
 
     <!-- Bottom Actions -->
     <div class="bottom-actions-row">
-      <button class="btn-action-main" id="btn-play-restart">▶ Réessayer</button>
-      <button class="btn-action-tutor" id="btn-open-tutor">🦉 Montre-moi !</button>
+      <button class="btn-action-main" id="btn-play-restart">🔄 Rejouer</button>
+      <button class="btn-action-tutor" id="btn-open-tutor">🦉 Tuteur Animé</button>
     </div>
   </div>
 </main>
@@ -911,50 +915,71 @@ const AudioEngine = {
       const gain = this.ctx.createGain();
       osc.type = type || "sine";
       osc.frequency.setValueAtTime(freq, this.ctx.currentTime);
-      gain.gain.setValueAtTime(gainVal || 0.1, this.ctx.currentTime);
-      gain.gain.exponentialRampToValueAtTime(0.001, this.ctx.currentTime + duration);
+      gain.gain.setValueAtTime(gainVal || 0.15, this.ctx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.0001, this.ctx.currentTime + duration);
       osc.connect(gain);
       gain.connect(this.ctx.destination);
       osc.start();
       osc.stop(this.ctx.currentTime + duration);
     } catch (e) {}
   },
-  playClick() { this.playTone(600, "sine", 0.05, 0.08); },
+  playPop() { this.playTone(480, "sine", 0.09, 0.18); },
+  playDrop() { this.playTone(260, "triangle", 0.14, 0.22); },
+  playClick() { this.playTone(600, "sine", 0.04, 0.12); },
   playSuccess() {
-    this.playTone(523.25, "triangle", 0.1, 0.15);
-    setTimeout(() => this.playTone(659.25, "triangle", 0.1, 0.15), 100);
-    setTimeout(() => this.playTone(783.99, "triangle", 0.25, 0.2), 200);
+    this.playTone(523.25, "sine", 0.12, 0.15); // C5
+    setTimeout(() => this.playTone(659.25, "sine", 0.12, 0.18), 110); // E5
+    setTimeout(() => this.playTone(783.99, "sine", 0.22, 0.22), 220); // G5
   },
   playMistake() {
-    this.playTone(220, "sawtooth", 0.2, 0.15);
-    setTimeout(() => this.playTone(180, "sawtooth", 0.25, 0.15), 120);
+    this.playTone(220, "sawtooth", 0.18, 0.15);
+    setTimeout(() => this.playTone(196, "sawtooth", 0.25, 0.18), 140);
   },
   playCoin() {
-    this.playTone(987.77, "sine", 0.08, 0.15);
-    setTimeout(() => this.playTone(1318.51, "sine", 0.2, 0.15), 80);
+    this.playTone(987.77, "sine", 0.08, 0.16);
+    setTimeout(() => this.playTone(1318.51, "sine", 0.20, 0.20), 80);
   },
-  playPop() { this.playTone(520, "sine", 0.08, 0.12); },
-  playDrop() { this.playTone(330, "square", 0.08, 0.08); },
-  playDrum() { this.playTone(130, "triangle", 0.15, 0.3); },
-  playSplash() { this.playTone(280, "sine", 0.12, 0.15); },
+  playDrum() {
+    this.playTone(120, "triangle", 0.22, 0.35);
+  },
+  playSplash() {
+    this.playTone(320, "sine", 0.15, 0.20);
+  },
   playVictory() {
-    this.playTone(523.25, "triangle", 0.12, 0.2);
-    setTimeout(() => this.playTone(659.25, "triangle", 0.12, 0.2), 120);
-    setTimeout(() => this.playTone(783.99, "triangle", 0.12, 0.2), 240);
-    setTimeout(() => this.playTone(1046.50, "triangle", 0.4, 0.25), 360);
+    [523.25, 659.25, 783.99, 1046.50].forEach((f, i) => {
+      setTimeout(() => this.playTone(f, "triangle", 0.28, 0.22), i * 130);
+    });
   }
 };
 
-// Web Speech Synthesizer with immediate cancellation
+// Natural Voice Engine with Language-Matching Voice Selection
 const VoiceEngine = {
   lang: "fr",
+  voices: [],
+  init() {
+    if ("speechSynthesis" in window) {
+      const load = () => {
+        this.voices = window.speechSynthesis.getVoices();
+      };
+      load();
+      window.speechSynthesis.onvoiceschanged = load;
+    }
+  },
   speak(text, slow) {
     if (!AudioEngine.soundEnabled || !("speechSynthesis" in window)) return;
     window.speechSynthesis.cancel();
     if (!text) return;
     const u = new SpeechSynthesisUtterance(text);
+    const targetLang = this.lang === "fr" ? "fr" : "en";
     u.lang = this.lang === "fr" ? "fr-FR" : "en-US";
-    u.rate = slow ? 0.65 : 0.85;
+
+    if (this.voices.length === 0) this.voices = window.speechSynthesis.getVoices();
+    const matchedVoice = this.voices.find(v => v.lang && v.lang.toLowerCase().startsWith(targetLang));
+    if (matchedVoice) {
+      u.voice = matchedVoice;
+    }
+
+    u.rate = slow ? 0.72 : 0.88;
     u.pitch = 1.05;
     window.speechSynthesis.speak(u);
   },
@@ -3285,14 +3310,19 @@ const state = {
   // Engine specific actors
   items: [],
   fruits: [],
+  fallingFruit: null,
   fishList: [],
   lilypads: [],
   frogIndex: 0,
+  frogAnim: { active: false, startX: 0, startY: 0, targetX: 0, targetY: 0, progress: 0 },
   raceLane: 1,
   balanceCoins: [],
   magnifierX: 250,
   magnifierY: 190,
   plantStage: 0,
+  drumHitTime: 0,
+  drumSyllables: [],
+  drumActiveSylIdx: 0,
   particles: []
 };
 
@@ -3315,8 +3345,8 @@ function spawnParticles(x, y, color, count) {
       vy: Math.sin(angle) * speed - 20,
       color,
       radius: 3 + Math.random() * 4,
-      life: 0.8 + Math.random() * 0.4,
-      maxLife: 1.2
+      life: 0.6 + Math.random() * 0.4,
+      maxLife: 1.0
     });
   }
 }
@@ -3334,6 +3364,7 @@ function showHub() {
   const tutorModal = $("tutor-modal");
   if (tutorModal) tutorModal.classList.remove("open");
   state.lives = 3;
+  state.roundAdvancing = false;
 
   $("view-hub").style.display = "flex";
   $("view-game").style.display = "none";
@@ -3350,6 +3381,8 @@ function showGame(category, gameId) {
   const tutorModal = $("tutor-modal");
   if (tutorModal) tutorModal.classList.remove("open");
   state.lives = 3;
+  state.round = 1;
+  state.roundAdvancing = false;
 
   if (category) state.category = category;
   if (gameId) state.game = gameId;
@@ -3481,7 +3514,6 @@ function generateDynamicQuestion() {
       { nameFr: "goyaves sucrées", nameEn: "sweet guavas", icon: "🍏" },
       { nameFr: "noix de coco", nameEn: "coconuts", icon: "🥥" }
     ];
-    // Rotate fruit index based on round + level to guarantee fresh fruit every time
     const fruitIndex = (round - 1 + (level - 1) * 3) % fruitsCatalog.length;
     const chosenFruit = fruitsCatalog[fruitIndex];
 
@@ -3503,6 +3535,7 @@ function generateDynamicQuestion() {
       ans: String(count),
       options: [String(count), String(count === maxCount ? count - 1 : count + 1), String(count === minCount ? count + 2 : count - 1)].sort(() => Math.random() - 0.5),
       icon: chosenFruit.icon,
+      fruitName: isFR ? chosenFruit.nameFr : chosenFruit.nameEn,
       dots: dots,
       speech: speech,
       mathType: "count",
@@ -3645,6 +3678,7 @@ function generateDynamicQuestion() {
       ans: item.letter,
       options: [item.letter, wrongs[0], wrongs[1]].sort(() => Math.random() - 0.5),
       icon: item.icon,
+      word: item.word,
       dots: item.icon + " " + item.word + " commence par [" + item.letter + "]",
       speech: speech
     };
@@ -3674,29 +3708,31 @@ function generateDynamicQuestion() {
       ans: targetSyl,
       options: [targetSyl, wrongs[0], wrongs[1]].sort(() => Math.random() - 0.5),
       icon: item.icon,
+      word: item.word,
+      syllables: item.syllables,
       dots: "🐸 Mot : " + item.word + " (" + item.syllables.join(" • ") + ")",
       speech: speech
     };
   }
 
-  // 8. DJEMBE RHYTHM
+  // 8. DJEMBE RHYTHM (Pronunciation)
   if (eng === "djembe") {
     const djembeList = [
-      { word: "LION", count: 1, icon: "🦁" },
-      { word: "CHAT", count: 1, icon: "🐱" },
-      { word: "MA-MAN", count: 2, icon: "👩" },
-      { word: "VÉ-LO", count: 2, icon: "🚲" },
-      { word: "BA-NANE", count: 2, icon: "🍌" },
-      { word: "PA-PI-LLON", count: 3, icon: "🦋" },
-      { word: "TO-MA-TE", count: 3, icon: "🍅" },
-      { word: "A-NA-NAS", count: 3, icon: "🍍" },
-      { word: "E-LE-PHANT", count: 3, icon: "🐘" },
-      { word: "OR-DI-NA-TEUR", count: 4, icon: "💻" }
+      { word: "LION", syllables: ["LION"], count: 1, icon: "🦁" },
+      { word: "CHAT", syllables: ["CHAT"], count: 1, icon: "🐱" },
+      { word: "MA-MAN", syllables: ["MA", "MAN"], count: 2, icon: "👩" },
+      { word: "VÉ-LO", syllables: ["VÉ", "LO"], count: 2, icon: "🚲" },
+      { word: "BA-NANE", syllables: ["BA", "NANE"], count: 2, icon: "🍌" },
+      { word: "PA-PI-LLON", syllables: ["PA", "PI", "LLON"], count: 3, icon: "🦋" },
+      { word: "TO-MA-TE", syllables: ["TO", "MA", "TE"], count: 3, icon: "🍅" },
+      { word: "A-NA-NAS", syllables: ["A", "NA", "NAS"], count: 3, icon: "🍍" },
+      { word: "E-LE-PHANT", syllables: ["É", "LÉ", "PHANT"], count: 3, icon: "🐘" },
+      { word: "OR-DI-NA-TEUR", syllables: ["OR", "DI", "NA", "TEUR"], count: 4, icon: "💻" }
     ];
     const item = djembeList[(round - 1 + (level - 1) * 2) % djembeList.length];
     const qText = isFR
-      ? "Frappe " + item.count + " coup" + (item.count > 1 ? "s" : "") + " sur le djembe pour : " + item.word + " !"
-      : "Tap " + item.count + " beat" + (item.count > 1 ? "s" : "") + " on the djembe for: " + item.word + "!";
+      ? "Frappe " + item.count + " coup" + (item.count > 1 ? "s" : "") + " sur le djembe pour : " + item.word + " " + item.icon + " !"
+      : "Tap " + item.count + " beat" + (item.count > 1 ? "s" : "") + " on the djembe for: " + item.word + " " + item.icon + "!";
     const speech = isFR
       ? "Frappe exactement " + item.count + " coups de djembe en rythme pour " + item.word + " !"
       : "Tap exactly " + item.count + " beats on the drum for " + item.word + "!";
@@ -3704,7 +3740,9 @@ function generateDynamicQuestion() {
       q: qText,
       ans: String(item.count),
       options: ["1", "2", "3", "4"].filter(o => o !== String(item.count)).slice(0, 2).concat([String(item.count)]).sort(() => Math.random() - 0.5),
-      icon: "🪘",
+      icon: item.icon,
+      word: item.word,
+      syllables: item.syllables,
       dots: "👏 " + item.word + " ➡️ " + "🥁 ".repeat(item.count),
       speech: speech
     };
@@ -3816,10 +3854,12 @@ function initActiveEngine() {
   if (!q) return;
   state.items = [];
   state.fruits = [];
+  state.fallingFruit = null;
   state.fishList = [];
   state.lilypads = [];
   state.balanceCoins = [];
   state.plantStage = 0;
+  state.drumHitTime = 0;
 
   const eng = state.engineType;
   const options = q.options.length >= 3 ? q.options.slice(0, 3) : q.options;
@@ -3828,38 +3868,36 @@ function initActiveEngine() {
 
   // 1. FRUIT ORCHARD (Nursery Tactile Picking)
   if (eng === "fruit") {
-    const targetCount = parseInt(q.ans) || 4;
-    // Spawn 7 hanging fruits on tree
-    const icons = ["🥭", "🍌", "🍍", "🍏", "🍊"];
+    // Spawn 7 hanging fruits strictly matching the question's icon!
     for (let i = 0; i < 7; i++) {
       state.fruits.push({
         id: i + 1,
         x: 80 + (i % 4) * 95 + (Math.random() * 20 - 10),
         y: 80 + Math.floor(i / 4) * 65 + (Math.random() * 15 - 7),
-        icon: q.icon || icons[i % icons.length],
+        icon: q.icon || "🥭",
         picked: false,
-        radius: 26,
+        radius: 28,
         wobble: Math.random() * 6
       });
     }
   }
   // 2. PHONICS FISHING (SIL/CP River Swimming Fish)
   else if (eng === "fishing") {
-    // 3 Swimming fish carrying options
     state.fishList = options.map((opt, i) => ({
       val: opt,
       x: 60 + i * 140,
-      y: 190 + (i % 2 === 0 ? -30 : 30),
+      y: 200 + (i % 2 === 0 ? -30 : 30),
       vx: (i % 2 === 0 ? 1 : -1) * 20,
       w: 90,
-      h: 45,
+      h: 48,
       hooked: false
     }));
-    state.playerX = 250; // boat canoe position
+    state.playerX = 250;
   }
   // 3. LILYPAD FROG (SIL/CP Sequence Platformer)
   else if (eng === "frog") {
     state.frogIndex = 0;
+    state.frogAnim = { active: false, startX: 75, startY: 200, targetX: 75, targetY: 200, progress: 1 };
     state.lilypads = options.map((opt, i) => ({
       val: opt,
       x: 75 + i * 150,
@@ -3876,7 +3914,7 @@ function initActiveEngine() {
       x: 55 + i * 150,
       y: 80,
       w: 130,
-      h: 50
+      h: 52
     }));
   }
   // 5. CFA COIN SCALE BALANCE (CM1/CM2)
@@ -3902,30 +3940,30 @@ function initActiveEngine() {
       revealed: false
     }));
   }
-  // 7. BOTANY GROWTH (Science Sandbox)
+  // 7. BOTANY LAB (Science)
   else if (eng === "botany") {
-    state.plantStage = 0;
-    // 3 Tools: Water, Sun, Soil
     state.items = [
       { id: "water", icon: "💧", label: state.lang === "fr" ? "Eau" : "Water", x: 90, y: 310, radius: 32 },
       { id: "sun", icon: "☀️", label: state.lang === "fr" ? "Soleil" : "Sun", x: 250, y: 310, radius: 32 },
       { id: "food", icon: "🌱", label: state.lang === "fr" ? "Terreau" : "Soil", x: 410, y: 310, radius: 32 }
     ];
   }
-  // 8. TANGRAM & SHAPES (Logic & Creative)
-  else if (eng === "shapes" || eng === "tangram") {
+  // 8. WOOD SHAPES SORTER (Logic)
+  else if (eng === "shapes") {
     state.items = options.map((opt, i) => ({
       val: opt,
-      x: 65 + i * 145,
-      y: 190,
-      w: 125,
-      h: 60,
+      x: 70 + i * 135,
+      y: 300,
+      w: 90,
+      h: 55,
       shape: i === 0 ? "triangle" : i === 1 ? "circle" : "square"
     }));
   }
   // 9. DJEMBE RHYTHM (Pronunciation)
   else if (eng === "djembe") {
     state.playerX = 0; // drum taps count
+    state.drumSyllables = q.syllables || (q.word ? q.word.split("-") : ["SYL"]);
+    state.drumActiveSylIdx = 0;
   }
   // 10. DEFAULT / GENERAL CARDS
   else {
@@ -4013,12 +4051,12 @@ function triggerGameOver() {
 }
 
 // ============================================================================
-// CANVAS DRAW ENGINES (GENUINELY DISTINCT GAME LOGIC & ANIMATIONS)
+// CANVAS DRAW ENGINES (IMAGE ANIMATIONS PERFECTLY MATCH SPOKEN WORDS & PRONUNCIATION)
 // ============================================================================
 function draw(time) {
   ctx.clearRect(0, 0, W, H);
 
-  // Background
+  // Background gradient
   const bg = ctx.createLinearGradient(0, 0, 0, H);
   bg.addColorStop(0, "#17233D");
   bg.addColorStop(1, "#202F52");
@@ -4026,117 +4064,175 @@ function draw(time) {
   ctx.fillRect(0, 0, W, H);
 
   const eng = state.engineType;
+  const q = state.question;
+  if (!q) return;
 
-  // 1. FRUIT ORCHARD (Nursery)
+  // 1. FRUIT ORCHARD (Nursery tactile fruit harvest)
   if (eng === "fruit") {
-    // Tree trunk & foliage
+    // Tree trunk & leafy green foliage
     ctx.fillStyle = "#78350F";
-    ctx.fillRect(230, 180, 40, 170);
+    ctx.fillRect(230, 170, 40, 150);
     ctx.fillStyle = "#059669";
     ctx.beginPath();
-    ctx.arc(250, 120, 140, 0, Math.PI * 2);
+    ctx.arc(250, 115, 135, 0, Math.PI * 2);
     ctx.fill();
 
-    // Fruits on tree
+    // Ripe fruits on branches matching question icon exactly!
     state.fruits.forEach(f => {
       if (!f.picked) {
-        ctx.font = "34px system-ui";
+        ctx.font = "32px system-ui";
         ctx.textAlign = "center";
         const wobbleY = Math.sin(time * 0.005 + f.wobble) * 3;
         ctx.fillText(f.icon, f.x, f.y + wobbleY);
       }
     });
 
-    // Basket with picked count
+    // Plucked animated falling fruit moving to basket
+    if (state.fallingFruit) {
+      ctx.font = "34px system-ui";
+      ctx.textAlign = "center";
+      ctx.fillText(state.fallingFruit.icon, state.fallingFruit.x, state.fallingFruit.y);
+      state.fallingFruit.y += 12;
+      if (state.fallingFruit.y >= 315) {
+        state.fallingFruit = null;
+      }
+    }
+
+    // Woven harvest basket with current count
     const pickedCount = state.fruits.filter(f => f.picked).length;
+    const targetCount = parseInt(q.ans) || 4;
     ctx.fillStyle = "#D97706";
     ctx.beginPath();
-    ctx.roundRect(190, 305, 120, 60, [10, 10, 25, 25]);
+    ctx.roundRect(185, 295, 130, 65, [10, 10, 25, 25]);
     ctx.fill();
+    ctx.strokeStyle = "#B45309";
+    ctx.lineWidth = 3;
+    ctx.stroke();
+
     ctx.fillStyle = "#FFFFFF";
     ctx.font = "bold 15px system-ui";
     ctx.textAlign = "center";
-    ctx.fillText("🧺 " + pickedCount + " / " + (state.question.ans || 4), 250, 342);
+    ctx.fillText("🧺 " + pickedCount + " / " + targetCount + " " + (q.fruitName || ""), 250, 335);
   }
-  // 2. PHONICS FISHING (SIL/CP River)
+  // 2. PHONICS FISHING (River with target word banner & Swimming Tilapias)
   else if (eng === "fishing") {
+    // Target banner on shore
+    ctx.fillStyle = "rgba(255, 255, 255, 0.12)";
+    ctx.beginPath();
+    ctx.roundRect(40, 10, 420, 60, 14);
+    ctx.fill();
+    ctx.fillStyle = "#FFD233";
+    ctx.font = "bold 19px system-ui";
+    ctx.textAlign = "center";
+    ctx.fillText((q.icon || "🐟") + " " + (q.word || "Mot") + " : Cherche [" + q.ans + "]", 250, 46);
+
     // River water
     ctx.fillStyle = "#0284C7";
-    ctx.fillRect(0, 120, W, H - 120);
-    // Waves
-    ctx.fillStyle = "rgba(255, 255, 255, 0.2)";
+    ctx.fillRect(0, 85, W, H - 85);
+
+    // Animated water wave lines
+    ctx.fillStyle = "rgba(255, 255, 255, 0.18)";
     for (let i = 0; i < 6; i++) {
-      const wx = (i * 100 + time * 0.04) % (W + 100) - 50;
-      ctx.fillRect(wx, 160 + (i % 3) * 45, 60, 4);
+      const wx = (i * 95 + time * 0.04) % (W + 100) - 50;
+      ctx.fillRect(wx, 130 + (i % 3) * 50, 55, 4);
     }
 
-    // Canoe boat
-    ctx.fillStyle = "#92400E";
-    ctx.beginPath();
-    ctx.roundRect(state.playerX - 45, 75, 90, 35, [0, 0, 16, 16]);
-    ctx.fill();
-    ctx.fillStyle = "#FFFFFF";
-    ctx.font = "20px system-ui";
-    ctx.fillText("🛶", state.playerX, 70);
+    // Swimming fish carrying letters
+    state.fishList.forEach((fish, idx) => {
+      fish.x += fish.vx * 0.05;
+      if (fish.x > W - 80 || fish.x < 20) fish.vx *= -1;
 
-    // Fishing line
-    ctx.strokeStyle = "#FFFFFF";
-    ctx.lineWidth = 2;
-    ctx.beginPath();
-    ctx.moveTo(state.playerX, 105);
-    ctx.lineTo(state.playerX, 230);
-    ctx.stroke();
-    ctx.fillStyle = "#FFB800";
-    ctx.fillText("🪝", state.playerX, 245);
-
-    // Swimming fish carrying syllables
-    state.fishList.forEach(fish => {
-      ctx.fillStyle = "#38BDF8";
+      // Fish body
+      ctx.fillStyle = fish.val === q.ans ? "#059669" : "#D97706";
       ctx.beginPath();
-      ctx.roundRect(fish.x, fish.y, fish.w, fish.h, 16);
+      ctx.ellipse(fish.x + fish.w / 2, fish.y, 44, 22, 0, 0, Math.PI * 2);
       ctx.fill();
-      ctx.strokeStyle = "#FFFFFF";
-      ctx.lineWidth = 2;
-      ctx.stroke();
+
+      // Fish tail wagging
+      const tailWag = Math.sin(time * 0.01 + idx) * 6;
+      ctx.beginPath();
+      ctx.moveTo(fish.vx > 0 ? fish.x : fish.x + fish.w, fish.y);
+      ctx.lineTo(fish.vx > 0 ? fish.x - 18 : fish.x + fish.w + 18, fish.y - 14 + tailWag);
+      ctx.lineTo(fish.vx > 0 ? fish.x - 18 : fish.x + fish.w + 18, fish.y + 14 + tailWag);
+      ctx.fill();
+
+      // Glowing Letter badge
+      ctx.fillStyle = "#FFFFFF";
+      ctx.beginPath();
+      ctx.arc(fish.x + fish.w / 2, fish.y, 16, 0, Math.PI * 2);
+      ctx.fill();
 
       ctx.fillStyle = "#17233D";
       ctx.font = "bold 18px system-ui";
       ctx.textAlign = "center";
-      ctx.fillText("🐟 " + fish.val, fish.x + fish.w / 2, fish.y + 28);
+      ctx.fillText(fish.val, fish.x + fish.w / 2, fish.y + 6);
     });
-  }
-  // 3. LILYPAD FROG (SIL/CP Pond)
-  else if (eng === "frog") {
-    // Pond water
-    ctx.fillStyle = "#0F766E";
-    ctx.fillRect(0, 0, W, H);
 
-    // Lilypads
-    state.lilypads.forEach((pad, i) => {
-      ctx.fillStyle = "#10B981";
+    // Fishing canoe & line
+    ctx.fillStyle = "#78350F";
+    ctx.beginPath();
+    ctx.roundRect(state.playerX - 45, 75, 90, 24, 8);
+    ctx.fill();
+    ctx.strokeStyle = "#FFFFFF";
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    ctx.moveTo(state.playerX, 85);
+    ctx.lineTo(state.playerX, 190);
+    ctx.stroke();
+    // Hook
+    ctx.strokeStyle = "#FFD233";
+    ctx.lineWidth = 3;
+    ctx.beginPath();
+    ctx.arc(state.playerX, 195, 6, 0, Math.PI);
+    ctx.stroke();
+  }
+  // 3. LILYPAD FROG (Syllables hopping platformer)
+  else if (eng === "frog") {
+    // Word banner on shore
+    ctx.fillStyle = "rgba(255, 255, 255, 0.12)";
+    ctx.beginPath();
+    ctx.roundRect(40, 15, 420, 65, 14);
+    ctx.fill();
+    ctx.fillStyle = "#FFD233";
+    ctx.font = "bold 20px system-ui";
+    ctx.textAlign = "center";
+    ctx.fillText((q.icon || "🐸") + " " + (q.word || "") + " ➡️ Touche [" + q.ans + "]", 250, 52);
+
+    // Pond water
+    ctx.fillStyle = "#0369A1";
+    ctx.fillRect(0, 95, W, H - 95);
+
+    // Green lilypads
+    state.lilypads.forEach(pad => {
+      ctx.fillStyle = "#059669";
       ctx.beginPath();
       ctx.arc(pad.x, pad.y, pad.radius, 0, Math.PI * 2);
       ctx.fill();
-      ctx.strokeStyle = "#34D399";
+      ctx.strokeStyle = "#10B981";
       ctx.lineWidth = 4;
       ctx.stroke();
 
       ctx.fillStyle = "#FFFFFF";
-      ctx.font = "bold 22px system-ui";
+      ctx.font = "bold 24px system-ui";
       ctx.textAlign = "center";
       ctx.fillText(pad.val, pad.x, pad.y + 8);
     });
 
-    // Animated frog
+    // Frog position
+    let frogX = 75, frogY = 160;
     const curPad = state.lilypads[state.frogIndex] || state.lilypads[0];
-    ctx.font = "38px system-ui";
+    if (curPad) {
+      frogX = curPad.x;
+      frogY = curPad.y - 36;
+    }
+    ctx.font = "42px system-ui";
     ctx.textAlign = "center";
-    ctx.fillText("🐸", curPad.x, curPad.y - 35);
+    ctx.fillText("🐸", frogX, frogY);
   }
-  // 4. TURBO RACING (CE1/CE2 Highway)
+  // 4. TURBO RACING (3-Lane Highway speed calculation)
   else if (eng === "racing") {
     // 3 Highway lanes
-    ctx.strokeStyle = "rgba(255, 255, 255, 0.2)";
+    ctx.strokeStyle = "rgba(255, 255, 255, 0.25)";
     ctx.lineWidth = 3;
     ctx.setLineDash([16, 16]);
     ctx.beginPath();
@@ -4145,7 +4241,7 @@ function draw(time) {
     ctx.stroke();
     ctx.setLineDash([]);
 
-    // Lane gates
+    // Lane gates with answers
     state.items.forEach(target => {
       ctx.fillStyle = "#FFFFFF";
       ctx.beginPath();
@@ -4156,12 +4252,12 @@ function draw(time) {
       ctx.stroke();
 
       ctx.fillStyle = "#17233D";
-      ctx.font = "bold 18px system-ui";
+      ctx.font = "bold 20px system-ui";
       ctx.textAlign = "center";
-      ctx.fillText(String(target.val), target.x + target.w / 2, target.y + 32);
+      ctx.fillText(String(target.val), target.x + target.w / 2, target.y + 33);
     });
 
-    // Player car (steered by child)
+    // Player racing car steered by child
     const carX = 55 + state.raceLane * 150 + 40;
     ctx.fillStyle = "#FFB800";
     ctx.beginPath();
@@ -4170,50 +4266,58 @@ function draw(time) {
     ctx.fillStyle = "#E5252A";
     ctx.fillRect(carX + 10, 305, 30, 35);
     ctx.fillStyle = "#FFFFFF";
-    ctx.font = "bold 13px system-ui";
+    ctx.font = "bold 14px system-ui";
     ctx.textAlign = "center";
     ctx.fillText("🏎️", carX + 25, 328);
   }
   // 5. CFA COIN SCALE BALANCE (CM1/CM2)
   else if (eng === "balance") {
-    // Brass balance beam
-    const targetAmt = parseInt(state.question.ans) || 250;
+    const targetAmt = parseInt(q.ans) || 250;
     const currentAmt = state.balanceCoins.reduce((a, b) => a + b, 0);
+
+    // Balance beam tilt angle
+    const tilt = Math.max(-0.25, Math.min(0.25, (currentAmt - targetAmt) * 0.0015));
+
+    ctx.save();
+    ctx.translate(250, 160);
+    ctx.rotate(tilt);
 
     ctx.strokeStyle = "#CBD5E1";
     ctx.lineWidth = 8;
     ctx.beginPath();
-    ctx.moveTo(100, 160);
-    ctx.lineTo(400, 160);
+    ctx.moveTo(-150, 0);
+    ctx.lineTo(150, 0);
     ctx.stroke();
-
-    // Fulcrum triangle
-    ctx.fillStyle = "#E5252A";
-    ctx.beginPath();
-    ctx.moveTo(250, 160); ctx.lineTo(230, 220); ctx.lineTo(270, 220);
-    ctx.fill();
 
     // Left pan (Target)
     ctx.fillStyle = "#FFFFFF";
     ctx.beginPath();
-    ctx.roundRect(90, 180, 120, 60, 12);
+    ctx.roundRect(-160, 20, 110, 50, 10);
     ctx.fill();
     ctx.fillStyle = "#17233D";
     ctx.font = "bold 15px system-ui";
     ctx.textAlign = "center";
-    ctx.fillText(targetAmt + " CFA", 150, 215);
+    ctx.fillText(targetAmt + " CFA", -105, 52);
 
-    // Right pan (Deposited)
+    // Right pan (Current coins)
     ctx.fillStyle = currentAmt === targetAmt ? "#D1FAE5" : "#FFFFFF";
     ctx.beginPath();
-    ctx.roundRect(290, 180, 120, 60, 12);
+    ctx.roundRect(50, 20, 110, 50, 10);
     ctx.fill();
     ctx.strokeStyle = currentAmt === targetAmt ? "#00C48C" : "#E2E8F0";
     ctx.stroke();
-    ctx.fillStyle = "var(--red-primary)";
-    ctx.fillText(currentAmt + " CFA", 350, 215);
+    ctx.fillStyle = currentAmt === targetAmt ? "#065F46" : "#E5252A";
+    ctx.fillText(currentAmt + " CFA", 105, 52);
 
-    // Coins on table
+    ctx.restore();
+
+    // Fulcrum
+    ctx.fillStyle = "#E5252A";
+    ctx.beginPath();
+    ctx.moveTo(250, 160); ctx.lineTo(230, 225); ctx.lineTo(270, 225);
+    ctx.fill();
+
+    // Coins on table to click
     state.items.forEach(c => {
       ctx.fillStyle = "#FFB800";
       ctx.beginPath();
@@ -4223,89 +4327,101 @@ function draw(time) {
       ctx.lineWidth = 2.5;
       ctx.stroke();
       ctx.fillStyle = "#78350F";
-      ctx.font = "bold 13px system-ui";
+      ctx.font = "bold 14px system-ui";
       ctx.textAlign = "center";
       ctx.fillText(c.coin + "F", c.x, c.y + 5);
     });
   }
-  // 6. DETECTIVE MAGNIFIER (Comprehension)
-  else if (eng === "magnifier") {
-    // Dark room with blueprint
-    ctx.fillStyle = "#0F172A";
-    ctx.fillRect(0, 0, W, H);
+  // 6. DJEMBE RHYTHM (Pronunciation - Perfect Syllable Highlight & Sync)
+  else if (eng === "djembe") {
+    // Top Banner displaying the illustrated word and syllables
+    ctx.fillStyle = "rgba(255, 255, 255, 0.12)";
+    ctx.beginPath();
+    ctx.roundRect(30, 12, 440, 75, 14);
+    ctx.fill();
 
-    // Clue evidence cards
-    state.items.forEach(item => {
-      ctx.fillStyle = "#1E293B";
+    ctx.font = "38px system-ui";
+    ctx.textAlign = "center";
+    ctx.fillText(q.icon || "🪘", 80, 60);
+
+    // Render Syllables with dynamic highlight based on current tap!
+    const syllables = state.drumSyllables || ["MOT"];
+    const startSylX = 140;
+    syllables.forEach((syl, i) => {
+      const isPastOrCurrent = i < state.playerX;
+      ctx.fillStyle = isPastOrCurrent ? "#FFD233" : "rgba(255, 255, 255, 0.4)";
       ctx.beginPath();
-      ctx.roundRect(item.x, item.y, item.w, item.h, 14);
+      ctx.roundRect(startSylX + i * 80, 25, 70, 48, 10);
       ctx.fill();
 
-      // If near magnifier, reveal clearly!
-      const dist = Math.hypot((item.x + item.w / 2) - state.magnifierX, (item.y + item.h / 2) - state.magnifierY);
-      if (dist < 80) {
-        ctx.fillStyle = "#FFFFFF";
-        ctx.beginPath();
-        ctx.roundRect(item.x, item.y, item.w, item.h, 14);
-        ctx.fill();
-        ctx.strokeStyle = "#FFB800";
-        ctx.lineWidth = 3;
-        ctx.stroke();
-        ctx.fillStyle = "#17233D";
-      } else {
-        ctx.fillStyle = "rgba(255, 255, 255, 0.3)";
-      }
-      ctx.font = "bold 16px system-ui";
+      ctx.fillStyle = isPastOrCurrent ? "#17233D" : "#FFFFFF";
+      ctx.font = "bold 20px system-ui";
       ctx.textAlign = "center";
-      ctx.fillText(item.val, item.x + item.w / 2, item.y + item.h / 2 + 6);
+      ctx.fillText(syl, startSylX + i * 80 + 35, 56);
     });
 
-    // Circular magnifying glass lens
+    // Traditional Djembe Drum
+    const drumScale = (Date.now() - state.drumHitTime < 180) ? 1.05 : 1.0;
     ctx.save();
-    ctx.strokeStyle = "#FFB800";
-    ctx.lineWidth = 6;
+    ctx.translate(250, 220);
+    ctx.scale(drumScale, drumScale);
+
+    // Drum wood base
+    ctx.fillStyle = "#92400E";
     ctx.beginPath();
-    ctx.arc(state.magnifierX, state.magnifierY, 60, 0, Math.PI * 2);
-    ctx.stroke();
-    // Glass handle
-    ctx.strokeStyle = "#78350F";
-    ctx.lineWidth = 10;
+    ctx.moveTo(-60, -90); ctx.lineTo(60, -90); ctx.lineTo(25, 20); ctx.lineTo(40, 90); ctx.lineTo(-40, 90); ctx.lineTo(-25, 20);
+    ctx.fill();
+
+    // Drum skin head
+    ctx.fillStyle = "#FEF3C7";
     ctx.beginPath();
-    ctx.moveTo(state.magnifierX + 42, state.magnifierY + 42);
-    ctx.lineTo(state.magnifierX + 85, state.magnifierY + 85);
+    ctx.ellipse(0, -90, 65, 22, 0, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.strokeStyle = "#B45309";
+    ctx.lineWidth = 3;
     ctx.stroke();
+
     ctx.restore();
+
+    // Tap instruction
+    ctx.fillStyle = "#FFFFFF";
+    ctx.font = "bold 16px system-ui";
+    ctx.textAlign = "center";
+    ctx.fillText("Touche le tam-tam pour rythmer (" + state.playerX + " / " + q.ans + ")", 250, 350);
   }
-  // 7. BOTANY GROWTH (Science Lab)
+  // 7. BOTANY LAB (Science)
   else if (eng === "botany") {
     // Soil pot
     ctx.fillStyle = "#78350F";
     ctx.beginPath();
-    ctx.moveTo(180, 220); ctx.lineTo(320, 220); ctx.lineTo(290, 310); ctx.lineTo(210, 310);
+    ctx.moveTo(180, 210); ctx.lineTo(320, 210); ctx.lineTo(290, 290); ctx.lineTo(210, 290);
     ctx.fill();
 
-    // Growing plant stage
-    if (state.plantStage >= 1) {
-      // Little sprout
+    // Plant stages
+    if (state.plantStage === 0) {
+      ctx.fillStyle = "#92400E";
+      ctx.beginPath();
+      ctx.arc(250, 205, 8, 0, Math.PI * 2);
+      ctx.fill();
+    } else if (state.plantStage >= 1) {
       ctx.strokeStyle = "#10B981";
       ctx.lineWidth = 6;
       ctx.beginPath();
-      ctx.moveTo(250, 220); ctx.lineTo(250, 160);
+      ctx.moveTo(250, 210); ctx.lineTo(250, 150);
       ctx.stroke();
       ctx.fillStyle = "#10B981";
       ctx.beginPath();
-      ctx.arc(235, 175, 12, 0, Math.PI * 2);
-      ctx.arc(265, 175, 12, 0, Math.PI * 2);
+      ctx.arc(235, 165, 12, 0, Math.PI * 2);
+      ctx.arc(265, 165, 12, 0, Math.PI * 2);
       ctx.fill();
     }
     if (state.plantStage >= 2) {
-      // Blooming sunflower
       ctx.font = "46px system-ui";
       ctx.textAlign = "center";
-      ctx.fillText("🌻", 250, 140);
+      ctx.fillText("🌻", 250, 130);
     }
 
-    // Tools at bottom
+    // Tools
     state.items.forEach(tool => {
       ctx.fillStyle = "#FFFFFF";
       ctx.beginPath();
@@ -4319,29 +4435,42 @@ function draw(time) {
       ctx.fillText(tool.icon, tool.x, tool.y + 8);
     });
   }
-  // 8. DJEMBE DRUM (Pronunciation)
-  else if (eng === "djembe") {
-    // Large traditional African Djembe drum
-    ctx.fillStyle = "#92400E";
-    ctx.beginPath();
-    ctx.moveTo(180, 100); ctx.lineTo(320, 100); ctx.lineTo(270, 230); ctx.lineTo(290, 310); ctx.lineTo(210, 310); ctx.lineTo(230, 230);
-    ctx.fill();
-    // Drum head
-    ctx.fillStyle = "#FEF3C7";
-    ctx.beginPath();
-    ctx.ellipse(250, 100, 70, 25, 0, 0, Math.PI * 2);
-    ctx.fill();
-    ctx.strokeStyle = "#B45309";
-    ctx.lineWidth = 3;
-    ctx.stroke();
+  // 8. DETECTIVE MAGNIFIER
+  else if (eng === "magnifier") {
+    state.items.forEach(item => {
+      const dist = Math.hypot((item.x + item.w / 2) - state.magnifierX, (item.y + item.h / 2) - state.magnifierY);
+      const isLit = dist < 75;
 
-    // Tap count indicator
-    ctx.fillStyle = "#FFFFFF";
-    ctx.font = "bold 24px system-ui";
-    ctx.textAlign = "center";
-    ctx.fillText("👏 Coups : " + state.playerX + " / " + state.question.ans, 250, 60);
+      ctx.fillStyle = isLit ? "#FFFFFF" : "#1E293B";
+      ctx.beginPath();
+      ctx.roundRect(item.x, item.y, item.w, item.h, 14);
+      ctx.fill();
+      if (isLit) {
+        ctx.strokeStyle = "#FFB800";
+        ctx.lineWidth = 3;
+        ctx.stroke();
+      }
+
+      ctx.fillStyle = isLit ? "#17233D" : "rgba(255, 255, 255, 0.3)";
+      ctx.font = "bold 16px system-ui";
+      ctx.textAlign = "center";
+      ctx.fillText(item.val, item.x + item.w / 2, item.y + item.h / 2 + 6);
+    });
+
+    // Magnifying glass lens
+    ctx.strokeStyle = "#FFB800";
+    ctx.lineWidth = 6;
+    ctx.beginPath();
+    ctx.arc(state.magnifierX, state.magnifierY, 60, 0, Math.PI * 2);
+    ctx.stroke();
+    ctx.strokeStyle = "#78350F";
+    ctx.lineWidth = 10;
+    ctx.beginPath();
+    ctx.moveTo(state.magnifierX + 42, state.magnifierY + 42);
+    ctx.lineTo(state.magnifierX + 85, state.magnifierY + 85);
+    ctx.stroke();
   }
-  // 9. GENERAL INTERACTIVE CARDS
+  // 9. GENERAL / OTHER ENGINES
   else {
     state.items.forEach(item => {
       ctx.fillStyle = "#FFFFFF";
@@ -4386,42 +4515,34 @@ function updateHandPointer() {
 }
 
 // ============================================================================
-// ANIMATION TICK (ZERO AUTOPLAY)
+// GAME LOOP (0 AUTOPLAY - ONLY ANIMATIONS & TICK)
 // ============================================================================
 function tick(time) {
-  const dt = Math.min((time - (state.lastTime || time)) / 1000, 0.1);
+  if (!state.lastTime) state.lastTime = time;
+  const dt = (time - state.lastTime) / 1000;
   state.lastTime = time;
 
-  if (state.currentView === "game" && !state.tutorOpen) {
+  if (state.running) {
     state.idleTime += dt;
 
-    // Swimming fish swim smoothly left/right without answering
-    if (state.engineType === "fishing") {
-      state.fishList.forEach(fish => {
-        fish.x += fish.vx * dt;
-        if (fish.x < 30 || fish.x > W - 120) {
-          fish.vx *= -1;
-        }
-      });
-    }
-
-    // Particles decay
-    state.particles.forEach(p => {
+    // Update Particles
+    for (let i = state.particles.length - 1; i >= 0; i--) {
+      const p = state.particles[i];
       p.x += p.vx * dt;
       p.y += p.vy * dt;
       p.life -= dt;
-    });
-    state.particles = state.particles.filter(p => p.life > 0);
-  }
+      if (p.life <= 0) state.particles.splice(i, 1);
+    }
 
-  if (state.currentView === "game") {
-    draw(time);
+    if (state.currentView === "game" && state.question) {
+      draw(time);
+    }
   }
   requestAnimationFrame(tick);
 }
 
 // ============================================================================
-// VOICE-FIRST VISUAL TUTOR (EXACT PROBLEM BREAKDOWN)
+// ANIMATED STEP-BY-STEP VISUAL TUTOR (PERFECTLY TAILORED TO ACTIVE EXERCISE)
 // ============================================================================
 function drawTutorScene() {
   const q = state.question;
@@ -4432,57 +4553,141 @@ function drawTutorScene() {
   tctx.fillRect(0, 0, 480, 200);
 
   const isFR = state.lang === "fr";
+  const eng = state.engineType;
+  const mode = state.tutorMode;
 
-  if (state.category === "math_arcade") {
-    const a = q.a || 3, b = q.b || 2, total = q.ans;
-    const speech = isFR 
-      ? ("Regarde bien : " + a + " et " + b + " font au total " + total + " !")
-      : ("Look closely: " + a + " and " + b + " make " + total + " in total!");
+  // 1. FRUIT TUTOR
+  if (eng === "fruit") {
+    const count = parseInt(q.ans) || 3;
+    const fruitIcon = q.icon || "🥭";
+    const fruitName = q.fruitName || "fruits";
+    let speech = "";
+
+    if (mode === "WATCH") {
+      speech = isFR
+        ? "Regarde bien : on cueille exactement " + count + " " + fruitName + " pour les mettre dans le panier !"
+        : "Watch closely: we pick exactly " + count + " " + fruitName + " to place into the basket!";
+    } else if (mode === "TOGETHER") {
+      speech = isFR
+        ? "Comptons ensemble : 1, 2, 3... jusqu'à " + count + " " + fruitName + " !"
+        : "Let's count together: 1, 2, 3... up to " + count + " " + fruitName + "!";
+    } else if (mode === "STRATEGY") {
+      speech = isFR
+        ? "Astuce : touche les fruits un par un calmement sans te presser !"
+        : "Tip: touch the fruits one by one calmly without rushing!";
+    } else {
+      speech = isFR
+        ? "En cueillant " + count + " " + fruitName + ", tu réussis l'objectif de dénombrement !"
+        : "By picking " + count + " " + fruitName + ", you master counting!";
+    }
+
     $("tutor-speech-text").textContent = "« " + speech + " »";
     VoiceEngine.speak(speech);
 
-    for (let i = 0; i < a; i++) {
-      tctx.font = "28px system-ui";
-      tctx.fillText(q.icon || "🥭", 35 + i * 36, 80);
-    }
-    tctx.fillStyle = "#0084FF";
-    tctx.font = "bold 30px system-ui";
-    tctx.fillText("➕", 35 + a * 36 + 10, 80);
+    // Draw the fruits being counted into basket
+    for (let i = 0; i < count; i++) {
+      tctx.font = "34px system-ui";
+      tctx.textAlign = "center";
+      tctx.fillText(fruitIcon, 60 + i * 55, 80);
 
-    for (let j = 0; j < b; j++) {
-      tctx.font = "28px system-ui";
-      tctx.fillText("🍏", 35 + a * 36 + 50 + j * 36, 80);
+      tctx.fillStyle = "#10B981";
+      tctx.font = "bold 16px system-ui";
+      tctx.fillText("✔ " + (i + 1), 60 + i * 55, 120);
     }
 
-    tctx.fillStyle = "#00C48C";
+    tctx.fillStyle = "#D97706";
     tctx.font = "bold 20px system-ui";
-    tctx.fillText((isFR ? "Total = " : "Total sum = ") + total + " ! 🌟", 240, 150);
-  } else if (state.category === "reading") {
-    const speech = isFR 
-      ? ("Observe bien la lettre : " + q.ans + " comme dans " + (q.dots || q.ans) + " !")
-      : ("Look at the letter sound: " + q.ans + " as in " + (q.dots || q.ans) + "!");
+    tctx.fillText("🧺 Total = " + count + " " + fruitName + " 🌟", 240, 170);
+  }
+  // 2. DJEMBE PRONUNCIATION TUTOR
+  else if (eng === "djembe") {
+    const syllables = q.syllables || ["PA", "PI", "LLON"];
+    const speech = isFR
+      ? "Pour le mot " + q.word + ", on écoute les syllabes : " + syllables.join("... ") + ". On tape " + q.ans + " fois !"
+      : "For the word " + q.word + ", listen to the syllables: " + syllables.join("... ") + ". We tap " + q.ans + " times!";
+
+    $("tutor-speech-text").textContent = "« " + speech + " »";
+    VoiceEngine.speak(speech, true);
+
+    tctx.font = "42px system-ui";
+    tctx.textAlign = "center";
+    tctx.fillText(q.icon || "🪘", 80, 100);
+
+    syllables.forEach((s, idx) => {
+      tctx.fillStyle = "#FFECEE";
+      tctx.beginPath();
+      tctx.roundRect(140 + idx * 95, 55, 80, 50, 10);
+      tctx.fill();
+      tctx.strokeStyle = "#E5252A";
+      tctx.lineWidth = 2;
+      tctx.stroke();
+
+      tctx.fillStyle = "#E5252A";
+      tctx.font = "bold 22px system-ui";
+      tctx.fillText(s, 140 + idx * 95 + 40, 88);
+
+      tctx.fillStyle = "#78350F";
+      tctx.font = "bold 15px system-ui";
+      tctx.fillText("🥁 Coup " + (idx + 1), 140 + idx * 95 + 40, 135);
+    });
+
+    tctx.fillStyle = "#10B981";
+    tctx.font = "bold 18px system-ui";
+    tctx.fillText("Total : " + q.ans + " syllabes rythmées ! 🌟", 240, 175);
+  }
+  // 3. READING PHONICS TUTOR
+  else if (eng === "fishing" || state.category === "reading") {
+    const speech = isFR
+      ? "Écoute bien le phonème : [" + q.ans + "] comme dans " + (q.word || q.ans) + " !"
+      : "Listen carefully to the sound: [" + q.ans + "] as in " + (q.word || q.ans) + "!";
     $("tutor-speech-text").textContent = "« " + speech + " »";
     VoiceEngine.speak(speech, true);
 
     tctx.fillStyle = "#E5252A";
-    tctx.font = "bold 50px system-ui";
+    tctx.font = "bold 56px system-ui";
     tctx.textAlign = "center";
     tctx.fillText(String(q.ans), 140, 95);
 
-    tctx.font = "42px system-ui";
-    tctx.fillText(q.icon || "📖", 240, 95);
+    tctx.font = "50px system-ui";
+    tctx.fillText(q.icon || "📖", 250, 95);
 
     tctx.fillStyle = "#17233D";
-    tctx.font = "bold 22px system-ui";
-    tctx.fillText(q.dots || q.ans, 340, 95);
-  } else {
+    tctx.font = "bold 24px system-ui";
+    tctx.fillText(q.word || q.dots || q.ans, 360, 95);
+
+    tctx.fillStyle = "#5A6A85";
+    tctx.font = "bold 16px system-ui";
+    tctx.fillText("La lettre [" + q.ans + "] chante le son du mot !", 240, 155);
+  }
+  // 4. GENERAL MATH / SPEED RACING TUTOR
+  else if (state.category === "math_arcade" || eng === "racing") {
+    const a = q.a !== null ? q.a : 3;
+    const b = q.b !== null ? q.b : 2;
+    const total = q.ans;
+    const speech = isFR 
+      ? ("Regarde l'opération : " + a + " et " + b + " font " + total + " !")
+      : ("Look at the calculation: " + a + " and " + b + " make " + total + "!");
+    $("tutor-speech-text").textContent = "« " + speech + " »";
+    VoiceEngine.speak(speech);
+
+    tctx.fillStyle = "#0084FF";
+    tctx.font = "bold 44px system-ui";
+    tctx.textAlign = "center";
+    tctx.fillText(q.q || (a + " + " + b + " = " + total), 240, 90);
+
+    tctx.fillStyle = "#00C48C";
+    tctx.font = "bold 24px system-ui";
+    tctx.fillText("✔ Réponse exacte = " + total + " ! 🌟", 240, 145);
+  }
+  // 5. DEFAULT TUTOR
+  else {
     const speech = isFR
       ? ("La bonne réponse est : " + q.ans + ". " + q.q)
       : ("The correct answer is: " + q.ans + ". " + q.q);
     $("tutor-speech-text").textContent = "« " + speech + " »";
     VoiceEngine.speak(speech);
 
-    tctx.font = "44px system-ui";
+    tctx.font = "46px system-ui";
     tctx.textAlign = "center";
     tctx.fillText(q.icon || "💡", 240, 70);
 
@@ -4500,6 +4705,8 @@ function drawTutorScene() {
 // EVENT LISTENERS & TOUCH CONTROLS
 // ============================================================================
 window.addEventListener("DOMContentLoaded", () => {
+  VoiceEngine.init();
+
   // Home buttons
   $("btn-header-home").onclick = () => showHub();
   $("btn-back-to-hub").onclick = () => showHub();
@@ -4615,6 +4822,7 @@ window.addEventListener("DOMContentLoaded", () => {
   $("btn-play-restart").onclick = () => {
     state.round = 1;
     state.lives = 3;
+    state.roundAdvancing = false;
     updateStatsDOM();
     generateQuestion();
   };
@@ -4628,7 +4836,6 @@ window.addEventListener("DOMContentLoaded", () => {
     if (nextGame) {
       showGame(state.category, nextGame.id);
     } else {
-      // Completed all games in this world! Return to hub
       showHub();
       VoiceEngine.speak(state.lang === "fr" ? "Félicitations ! Tu as complété ce monde avec succès ! Choisis un autre monde." : "Congratulations! You completed this world! Choose another world.");
     }
@@ -4638,6 +4845,7 @@ window.addEventListener("DOMContentLoaded", () => {
     $("victory-modal").classList.remove("open");
     state.level++;
     state.round = 1;
+    state.roundAdvancing = false;
     updateStatsDOM();
     generateQuestion();
   };
@@ -4651,6 +4859,7 @@ window.addEventListener("DOMContentLoaded", () => {
     $("gameover-modal").classList.remove("open");
     state.lives = 3;
     state.round = 1;
+    state.roundAdvancing = false;
     updateStatsDOM();
     generateQuestion();
   };
@@ -4685,14 +4894,28 @@ window.addEventListener("DOMContentLoaded", () => {
       const hit = state.items.find(it => it.lane === state.raceLane);
       if (hit) handleAnswer(hit.val);
     } else if (state.engineType === "fishing") {
-      // Catch fish near hook
       const hit = state.fishList.find(f => Math.abs(f.x + f.w / 2 - state.playerX) < 55);
       if (hit) {
         AudioEngine.playSplash();
         handleAnswer(hit.val);
       }
+    } else if (state.engineType === "djembe") {
+      handleDjembeTap();
     }
   };
+
+  function handleDjembeTap() {
+    AudioEngine.playDrum();
+    state.drumHitTime = Date.now();
+    state.playerX++;
+    const syllables = state.drumSyllables || [];
+    const currentSyl = syllables[state.playerX - 1] || String(state.playerX);
+    VoiceEngine.speak(currentSyl);
+    const targetCount = parseInt(state.question.ans) || 3;
+    if (state.playerX === targetCount) {
+      setTimeout(() => handleAnswer(state.question.ans), 350);
+    }
+  }
 
   // Canvas Tactile Touches
   canvas.addEventListener("pointerdown", (e) => {
@@ -4708,18 +4931,23 @@ window.addEventListener("DOMContentLoaded", () => {
       if (f) {
         f.picked = true;
         AudioEngine.playPop();
+        // Trigger falling fruit animation
+        state.fallingFruit = { icon: f.icon, x: f.x, y: f.y };
         const currentPicked = state.fruits.filter(fr => fr.picked).length;
-        VoiceEngine.speak(String(currentPicked));
+        const fruitName = state.question.fruitName || "fruit";
+        VoiceEngine.speak(currentPicked + " " + fruitName);
         const targetCount = parseInt(state.question.ans) || 4;
         if (currentPicked === targetCount) {
           handleAnswer(state.question.ans);
+        } else if (currentPicked > targetCount) {
+          handleAnswer(-1);
         }
       }
     }
     // 2. Fishing
     else if (eng === "fishing") {
       state.playerX = Math.max(60, Math.min(440, x));
-      const hit = state.fishList.find(f => x >= f.x && x <= f.x + f.w && y >= f.y && y <= f.y + f.h);
+      const hit = state.fishList.find(f => x >= f.x && x <= f.x + f.w && y >= f.y - 20 && y <= f.y + f.h);
       if (hit) {
         AudioEngine.playSplash();
         handleAnswer(hit.val);
@@ -4729,39 +4957,42 @@ window.addEventListener("DOMContentLoaded", () => {
     else if (eng === "frog") {
       const pad = state.lilypads.find(p => Math.hypot(p.x - x, p.y - y) < p.radius + 10);
       if (pad) {
-        AudioEngine.playSplash();
+        AudioEngine.playDrop();
         state.frogIndex = state.lilypads.indexOf(pad);
         handleAnswer(pad.val);
       }
     }
-    // 4. Racing Lanes
+    // 4. Turbo Racing
     else if (eng === "racing") {
       if (x < 170) state.raceLane = 0;
       else if (x < 330) state.raceLane = 1;
       else state.raceLane = 2;
-      const hit = state.items.find(it => it.lane === state.raceLane);
-      if (hit && y < 200) {
+
+      const hit = state.items.find(it => it.lane === state.raceLane && y <= 150);
+      if (hit) {
         handleAnswer(hit.val);
       }
     }
-    // 5. Balance Coins
+    // 5. CFA Coin Balance
     else if (eng === "balance") {
-      const coin = state.items.find(c => Math.hypot(c.x - x, c.y - y) < c.radius + 8);
-      if (coin) {
+      const hitCoin = state.items.find(c => Math.hypot(c.x - x, c.y - y) < c.radius + 8);
+      if (hitCoin) {
         AudioEngine.playCoin();
-        state.balanceCoins.push(coin.coin);
-        const curTotal = state.balanceCoins.reduce((a, b) => a + b, 0);
-        VoiceEngine.speak(coin.coin + " Francs !");
+        state.balanceCoins.push(hitCoin.coin);
+        const currentAmt = state.balanceCoins.reduce((a, b) => a + b, 0);
+        VoiceEngine.speak(currentAmt + " Francs CFA");
         const targetAmt = parseInt(state.question.ans) || 250;
-        if (curTotal >= targetAmt) {
-          handleAnswer(String(curTotal));
+        if (currentAmt === targetAmt) {
+          handleAnswer(state.question.ans);
+        } else if (currentAmt > targetAmt) {
+          handleAnswer(-1);
         }
       }
     }
-    // 6. Magnifier Lens
+    // 6. Detective Magnifier
     else if (eng === "magnifier") {
-      state.magnifierX = x;
-      state.magnifierY = y;
+      state.magnifierX = Math.max(70, Math.min(430, x));
+      state.magnifierY = Math.max(70, Math.min(310, y));
       const hit = state.items.find(it => x >= it.x && x <= it.x + it.w && y >= it.y && y <= it.y + it.h);
       if (hit) {
         handleAnswer(hit.val);
@@ -4781,14 +5012,8 @@ window.addEventListener("DOMContentLoaded", () => {
     }
     // 8. Djembe Drum
     else if (eng === "djembe") {
-      if (Math.hypot(250 - x, 130 - y) < 85) {
-        AudioEngine.playDrum();
-        state.playerX++;
-        VoiceEngine.speak(String(state.playerX));
-        const targetCount = parseInt(state.question.ans) || 3;
-        if (state.playerX === targetCount) {
-          handleAnswer(state.question.ans);
-        }
+      if (Math.hypot(250 - x, 220 - y) < 95) {
+        handleDjembeTap();
       }
     }
     // 9. General Cards

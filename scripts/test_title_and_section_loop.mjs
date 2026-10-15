@@ -15,7 +15,10 @@ async function runTest() {
   const page = await browser.newPage({ viewport: { width: 412, height: 915 } });
 
   const pageErrors = [];
-  page.on('pageerror', err => pageErrors.push(err.message));
+  page.on('pageerror', err => {
+    console.error('Captured page error stack:', err.stack || err.message);
+    pageErrors.push(err.message);
+  });
 
   try {
     console.log('--- Step 1: Navigate to Hub and open Math Kingdom ---');
