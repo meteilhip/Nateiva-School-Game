@@ -213,7 +213,7 @@ export function HygieneNutritionSort({ question, onAnswer }: { question: any, on
 }
 
 // 6. CAUSE AND EFFECT LAB
-export function CauseAndEffectLab({ question, onAnswer }: { question: any, onAnswer: (ans: string) => void }) {
+export function ScienceCauseAndEffectLab({ question, onAnswer }: { question: any, onAnswer: (ans: string) => void }) {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>{question.q || 'Que se passe-t-il si la plante manque d\'eau ?'}</Text>

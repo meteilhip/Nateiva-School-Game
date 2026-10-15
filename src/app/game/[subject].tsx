@@ -21,15 +21,25 @@ import {
   FractionSpaceMission, DecimalRacing, BudgetTycoon, ScienceDiscoveryQuest, ReadingDetectiveAgency,
   LogicLabyrinth, GeometryConstructionSite, GrammarKingdom, WordMeaningDuel, DataDetective,
   MathStrategyTower, PlanetExplorer, StoryCreator, VirtualClassroomChallenge, GrandAdventure,
+  // 15 Math Families
+  FallingBlockBuilder, RocketRacing, BubbleBlaster, RobotAssembly, TreasurePlatformer,
+  FractionKitchen, MathPinball, MarbleMaze, CFAMarketSimulator, GeometryConstruction,
+  NumberRhythm, TrainDispatcher, PuzzleEscapeRoom, SpaceDefense, ToyFactory,
+  // Reading, Comprehension, Pronunciation & Science Engines
+  AlphabetSafariHunt, SyllableLilypadJump, SentenceRailroad, WordBlacksmithAnvil,
+  StorySequenceMosaic, DetectiveClueDossier, CauseAndEffectLab,
+  ListenAndRepeatStudio, MinimalPairsChamber,
+  PlantGrowthLab, HabitatTerrarium, WaterCycleCloudClimber,
   // Classic Engines
   CountAndTap, NumberMatch, NumberOrder, NumberLine, TenFrame, PlaceValueBuilder,
   AdditionBuilder, SubtractionBuilder, MultiplicationArrays, DivisionSharing, FractionBuilder,
   MoneyShop, ClockGame, MeasurementLab, ShapePuzzle, AlphabetRecognition, PhonemeMatch,
   SyllableBuilder, PictureWordMatch, SpellingDictation, SentenceOrder, GrammarSort,
   ReadAloud, StoryComprehension, LivingClassification, HabitatExplorer, PlantGrowthSequence,
-  BodyAndSensesLab, HygieneNutritionSort, CauseAndEffectLab, MemoryCardGame, TapToPair, SortingBaskets
+  BodyAndSensesLab, HygieneNutritionSort, MemoryCardGame, TapToPair, SortingBaskets
 } from '../../games/GameRegistry';
 
+import AudioManager from '../../audio/AudioManager';
 import { TutorOverlay } from '../../components/TutorOverlay';
 import { getProfiles, getMastery, saveMastery, saveProfile, saveAttemptEvent, ChildProfile } from '../../storage/db';
 import { calculateNewMastery, SkillMastery } from '../../adaptive/engine';
@@ -222,6 +232,9 @@ export default function GameActivityScreen() {
   useFocusEffect(
     useCallback(() => {
       loadInitialData();
+      return () => {
+        AudioManager.cancel();
+      };
     }, [skillId, gameKey])
   );
 
@@ -245,9 +258,11 @@ export default function GameActivityScreen() {
       setDifficultyLevel(diff);
       const generated = generateQuestionsForSkill(skillId as string || 'math_count_1_10', diff);
       
-      // If user selected a specific game mechanic, apply it to the first question
+      // If user selected a specific game mechanic, apply it to all questions in this session
       if (gameKey && generated.length > 0) {
-        generated[0].type = gameKey as string;
+        generated.forEach(q => {
+          q.type = gameKey as string;
+        });
       }
       
       setQuestions(generated);
@@ -257,8 +272,7 @@ export default function GameActivityScreen() {
   };
 
   const speak = (text: string) => {
-    Speech.stop();
-    Speech.speak(text, { language: 'fr-FR', rate: 0.9 });
+    AudioManager.play({ text, contentId: 'game_prompt' });
   };
 
   const completeLevel = async () => {
@@ -493,7 +507,7 @@ export default function GameActivityScreen() {
       case 'SCIENCE_QUEST': return <ScienceDiscoveryQuest question={currentQ} onAnswer={handleAnswer} />;
       case 'READING_AGENCY': return <ReadingDetectiveAgency question={currentQ} onAnswer={handleAnswer} />;
       case 'LOGIC_LABYRINTH': return <LogicLabyrinth question={currentQ} onAnswer={handleAnswer} />;
-      case 'GEO_CONSTRUCTION': return <GeometryConstructionSite question={currentQ} onAnswer={handleAnswer} />;
+      case 'GEO_CONSTRUCTION_SITE': return <GeometryConstructionSite question={currentQ} onAnswer={handleAnswer} />;
       case 'GRAMMAR_KINGDOM': return <GrammarKingdom question={currentQ} onAnswer={handleAnswer} />;
       case 'WORD_MEANING_DUEL': return <WordMeaningDuel question={currentQ} onAnswer={handleAnswer} />;
       case 'DATA_DETECTIVE': return <DataDetective question={currentQ} onAnswer={handleAnswer} />;
@@ -502,6 +516,43 @@ export default function GameActivityScreen() {
       case 'STORY_CREATOR': return <StoryCreator question={currentQ} onAnswer={handleAnswer} />;
       case 'VIRTUAL_CLASSROOM': return <VirtualClassroomChallenge question={currentQ} onAnswer={handleAnswer} />;
       case 'GRAND_ADVENTURE': return <GrandAdventure question={currentQ} onAnswer={handleAnswer} />;
+
+      // 15 Math Families
+      case 'BLOCK_BUILDER': return <FallingBlockBuilder question={currentQ} onAnswer={handleAnswer} />;
+      case 'ROCKET_RACING': return <RocketRacing question={currentQ} onAnswer={handleAnswer} />;
+      case 'BUBBLE_BLASTER': return <BubbleBlaster question={currentQ} onAnswer={handleAnswer} />;
+      case 'ROBOT_ASSEMBLY': return <RobotAssembly question={currentQ} onAnswer={handleAnswer} />;
+      case 'TREASURE_PLATFORMER': return <TreasurePlatformer question={currentQ} onAnswer={handleAnswer} />;
+      case 'FRACTION_KITCHEN': return <FractionKitchen question={currentQ} onAnswer={handleAnswer} />;
+      case 'MATH_PINBALL': return <MathPinball question={currentQ} onAnswer={handleAnswer} />;
+      case 'MARBLE_MAZE': return <MarbleMaze question={currentQ} onAnswer={handleAnswer} />;
+      case 'CFA_MARKET': return <CFAMarketSimulator question={currentQ} onAnswer={handleAnswer} />;
+      case 'GEO_CONSTRUCTION': return <GeometryConstruction question={currentQ} onAnswer={handleAnswer} />;
+      case 'NUMBER_RHYTHM': return <NumberRhythm question={currentQ} onAnswer={handleAnswer} />;
+      case 'TRAIN_DISPATCHER': return <TrainDispatcher question={currentQ} onAnswer={handleAnswer} />;
+      case 'MATH_ESCAPE': return <PuzzleEscapeRoom question={currentQ} onAnswer={handleAnswer} />;
+      case 'SPACE_DEFENSE': return <SpaceDefense question={currentQ} onAnswer={handleAnswer} />;
+      case 'TOY_FACTORY': return <ToyFactory question={currentQ} onAnswer={handleAnswer} />;
+
+      // Reading & Phonics
+      case 'ALPHABET_HUNT': return <AlphabetSafariHunt question={currentQ} onAnswer={handleAnswer} />;
+      case 'SYLLABLE_LILYPAD': return <SyllableLilypadJump question={currentQ} onAnswer={handleAnswer} />;
+      case 'SENTENCE_TRAIN': return <SentenceRailroad question={currentQ} onAnswer={handleAnswer} />;
+      case 'WORD_ANVIL': return <WordBlacksmithAnvil question={currentQ} onAnswer={handleAnswer} />;
+
+      // Comprehension
+      case 'STORY_SEQUENCE': return <StorySequenceMosaic question={currentQ} onAnswer={handleAnswer} />;
+      case 'DETECTIVE_CLUES': return <DetectiveClueDossier question={currentQ} onAnswer={handleAnswer} />;
+      case 'CAUSE_EFFECT_LAB': return <CauseAndEffectLab question={currentQ} onAnswer={handleAnswer} />;
+
+      // Pronunciation
+      case 'LISTEN_REPEAT': return <ListenAndRepeatStudio question={currentQ} onAnswer={handleAnswer} />;
+      case 'SOUND_DISCRIMINATION': return <MinimalPairsChamber question={currentQ} onAnswer={handleAnswer} />;
+
+      // Interactive Science
+      case 'PLANT_GROWTH_LAB': return <PlantGrowthLab question={currentQ} onAnswer={handleAnswer} />;
+      case 'HABITAT_TERRARIUM': return <HabitatTerrarium question={currentQ} onAnswer={handleAnswer} />;
+      case 'WATER_CYCLE_LAB': return <WaterCycleCloudClimber question={currentQ} onAnswer={handleAnswer} />;
 
       // Classic fallbacks
       case 'COUNT_AND_TAP': return <CountAndTap question={currentQ} onAnswer={handleAnswer} />;
@@ -518,7 +569,7 @@ export default function GameActivityScreen() {
       case 'LIVING_CLASSIFICATION': return <LivingClassification question={currentQ} onAnswer={handleAnswer} />;
 
       default:
-        return <MathCarRacing question={currentQ} onAnswer={handleAnswer} />;
+        return <FallingBlockBuilder question={currentQ} onAnswer={handleAnswer} />;
     }
   };
 

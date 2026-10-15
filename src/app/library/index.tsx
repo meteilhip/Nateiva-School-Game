@@ -1,21 +1,23 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, ScrollView, TextInput, Platform } from 'react-native';
-import { router, useFocusEffect } from 'expo-router';
+import { router, useFocusEffect, useLocalSearchParams } from 'expo-router';
 import * as Speech from 'expo-speech';
+import AudioManager from '../../audio/AudioManager';
 import { GAME_CATALOG, GameCatalogItem } from '../../games/GameRegistry';
 import { getProfiles, ChildProfile } from '../../storage/db';
 import { PersistentBottomNav } from '../../components/PersistentBottomNav';
 
 export default function GameLibraryScreen() {
+  const { grade, subject } = useLocalSearchParams();
   const [profile, setProfile] = useState<ChildProfile | null>(null);
   const [lang, setLang] = useState<'fr' | 'en'>('fr');
   const [soundEnabled, setSoundEnabled] = useState<boolean>(true);
   const [entryMode, setEntryMode] = useState<'ALL' | 'RECOMMENDED' | 'PRACTICE'>('ALL');
   
   // Grade-band filter (4 required bands)
-  const [selectedGradeBand, setSelectedGradeBand] = useState<string>('ALL');
+  const [selectedGradeBand, setSelectedGradeBand] = useState<string>((grade as string) || 'ALL');
   // 7 Subject tabs filter
-  const [selectedSubject, setSelectedSubject] = useState<string>('ALL');
+  const [selectedSubject, setSelectedSubject] = useState<string>((subject as string) || 'ALL');
   // Category filter
   const [selectedCategory, setSelectedCategory] = useState<string>('ALL');
   // Selected Card for highlighting
@@ -25,7 +27,9 @@ export default function GameLibraryScreen() {
   useFocusEffect(
     useCallback(() => {
       loadProfile();
-    }, [])
+      if (grade) setSelectedGradeBand(grade as string);
+      if (subject) setSelectedSubject(subject as string);
+    }, [grade, subject])
   );
 
   const loadProfile = async () => {
@@ -37,8 +41,7 @@ export default function GameLibraryScreen() {
 
   const speakText = (text: string) => {
     if (!soundEnabled) return;
-    Speech.stop();
-    Speech.speak(text, { language: lang === 'fr' ? 'fr-FR' : 'en-US', rate: 0.85 });
+    AudioManager.play({ text, contentId: 'library_voice' });
   };
 
   const gradeBands = [
@@ -155,12 +158,22 @@ export default function GameLibraryScreen() {
 
   const handleLaunchGame = (game: GameCatalogItem) => {
     let defaultSkill = 'math_count_1_10';
-    if (game.subject === 'french_reading') defaultSkill = 'fr_syllable_blends';
-    else if (game.subject === 'science') defaultSkill = 'sci_living_nonliving';
-    else if (game.world === 'WORLD_C' || game.world === 'WORLD_D') defaultSkill = 'math_add_10';
+    if (game.subject === 'reading' || game.subject === 'french_reading') {
+      defaultSkill = game.world === 'WORLD_A' ? 'reading_nursery_letters' : 'fr_syllable_blends';
+    } else if (game.subject === 'comprehension') {
+      defaultSkill = 'comp_sil_sequence';
+    } else if (game.subject === 'pronunciation') {
+      defaultSkill = 'pron_sil_syllables';
+    } else if (game.subject === 'science') {
+      defaultSkill = 'sci_living_nonliving';
+    } else if (game.world === 'WORLD_C') {
+      defaultSkill = 'math_mult_arrays';
+    } else if (game.world === 'WORLD_D') {
+      defaultSkill = 'math_fractions_basic';
+    }
 
     speakText(game.title + ' ! ' + game.description);
-    router.push(`/game/${game.subject}?skillId=${defaultSkill}&gameKey=${game.gameKey}`);
+    router.push(`/game/${game.subject}?skillId=${defaultSkill}&gameKey=${game.gameKey}` as any);
   };
 
   return (

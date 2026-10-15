@@ -82,6 +82,12 @@ export * from './MathEngines';
 export * from './LanguageEngines';
 export * from './ScienceEngines';
 export * from './MemoryEngines';
+export * from './Math15Engines';
+export * from './ReadingEngines';
+export * from './ComprehensionEngines';
+export * from './PronunciationEngines';
+export * from './InteractiveScienceEngines';
+export * from './GameDefinition';
 
 // Master Catalog Item Interface
 export interface GameCatalogItem {
@@ -91,7 +97,7 @@ export interface GameCatalogItem {
   icon: string;
   category: 'Adventure' | 'Puzzle' | 'Creative' | 'Action' | 'Story' | 'Simulation';
   world: 'WORLD_A' | 'WORLD_B' | 'WORLD_C' | 'WORLD_D';
-  subject: 'mathematics' | 'french_reading' | 'english_reading' | 'science' | 'cross_subject';
+  subject: 'mathematics' | 'french_reading' | 'english_reading' | 'science' | 'cross_subject' | 'reading' | 'comprehension' | 'pronunciation';
   recommendedAges: string;
   description: string;
 }

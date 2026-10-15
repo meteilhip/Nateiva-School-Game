@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
 import * as Speech from 'expo-speech';
+import AudioManager from '../audio/AudioManager';
 import { TutorMode } from '../games/types';
 
 export type TutorSubjectCategory = 
@@ -69,15 +70,18 @@ export function TutorOverlay({ question, onClose, onPracticeSimilar }: TutorOver
   const [hasSoil, setHasSoil] = useState<boolean>(true);
 
   const speak = (text: string) => {
-    Speech.stop();
-    Speech.speak(text, { 
-      language: 'fr-FR', 
+    AudioManager.play({ 
+      text, 
+      contentId: 'tutor_speech',
       rate: isSlowSpeech ? 0.65 : 0.85 
     });
   };
 
   useEffect(() => {
     speakIntro(activeCategory);
+    return () => {
+      AudioManager.onTutorToggle();
+    };
   }, [activeCategory]);
 
   const speakIntro = (cat: TutorSubjectCategory) => {

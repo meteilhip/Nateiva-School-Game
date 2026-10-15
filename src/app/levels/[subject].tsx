@@ -1,7 +1,7 @@
 import React, { useState, useCallback } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
 import { useLocalSearchParams, router, useFocusEffect } from 'expo-router';
-import { CameroonMathSkills, CameroonReadingSkills, CameroonScienceSkills } from '../../curriculum/cameroon/data';
+import { CameroonMathSkills, CameroonReadingSkills, CameroonScienceSkills, CurriculumMatrix28 } from '../../curriculum/cameroon/data';
 import { CurriculumSkill } from '../../curriculum/models';
 import { getProfiles, getMastery, ChildProfile } from '../../storage/db';
 import { SkillMastery } from '../../adaptive/engine';
@@ -34,7 +34,15 @@ export default function LevelSelectionScreen() {
     if (subject === 'math') allSkills = CameroonMathSkills;
     else if (subject === 'reading') allSkills = CameroonReadingSkills;
     else if (subject === 'science') allSkills = CameroonScienceSkills;
-    else if (subject === 'memory') {
+    else if (subject === 'comprehension') {
+      allSkills = CurriculumMatrix28.filter(c => c.category === 'comprehension').map(c => c.skill);
+    } else if (subject === 'pronunciation') {
+      allSkills = CurriculumMatrix28.filter(c => c.category === 'pronunciation').map(c => c.skill);
+    } else if (subject === 'logic' || subject === 'logic_puzzles') {
+      allSkills = CurriculumMatrix28.filter(c => c.category === 'logic_puzzles').map(c => c.skill);
+    } else if (subject === 'creative' || subject === 'creative_play') {
+      allSkills = CurriculumMatrix28.filter(c => c.category === 'creative_play').map(c => c.skill);
+    } else if (subject === 'memory') {
       allSkills = [
         {
           curriculumId: 'cm_mem_001',
@@ -67,7 +75,11 @@ export default function LevelSelectionScreen() {
   const getSubjectColor = () => {
     if (subject === 'math') return '#2563EB';
     if (subject === 'reading') return '#D97706';
+    if (subject === 'comprehension') return '#E5252A';
+    if (subject === 'pronunciation') return '#9A78F2';
     if (subject === 'science') return '#059669';
+    if (subject === 'logic' || subject === 'logic_puzzles') return '#FFC83D';
+    if (subject === 'creative' || subject === 'creative_play') return '#38CFA4';
     if (subject === 'memory') return '#7C3AED';
     return '#4F46E5';
   };
@@ -75,7 +87,11 @@ export default function LevelSelectionScreen() {
   const getSubjectTitle = () => {
     if (subject === 'math') return '🧮 Math Kingdom';
     if (subject === 'reading') return '📖 Reading Forest';
+    if (subject === 'comprehension') return '📜 Text Comprehension';
+    if (subject === 'pronunciation') return '🗣️ Pronunciation Studio';
     if (subject === 'science') return '🔬 Science Lab';
+    if (subject === 'logic' || subject === 'logic_puzzles') return '🧩 Logic & Puzzles';
+    if (subject === 'creative' || subject === 'creative_play') return '🎨 Creative Play';
     if (subject === 'memory') return '🧩 Memory Village';
     return 'Niveaux d\'Apprentissage';
   };
