@@ -151,4 +151,32 @@ This document tracks the verified implementation status of Nateiva EduKids again
   * Reading: Tap-to-speak syllable chunk assembler with phonetic readout and word reward
   * Science: Interactive cause-and-effect plant growth lab with toggles for Sun and Water
 
+## Part 18: Premium Library UI, Arcade Defect Overhaul & 9-Subject Visual Tutor Models
+- **Arcade Defect Overhaul (`arcade.html`, `public/arcade.html`, `index.html`):** `COMPLETE_AND_TESTED`
+  * Solved spawning imbalance: correct answer guaranteed in target and falling blocks; 0% impossible rounds
+  * Full modal overlays: Pause (`⏸️`), Game Over (`💥`), Victory celebration (`🏆`), and How-To-Play Guide (`❓`)
+  * Line clears trigger celebratory particle bursts and victory fanfare
+  * Visual demonstrations for all 4 basic operations (+, -, ×, ÷) with spoken French math terms
+- **7-Subject Grade-Band Game Library (`src/app/library/index.tsx`):** `COMPLETE_AND_TESTED`
+  * 4 Grade Bands (Nursery 1-2, SIL/CP, CE1/CE2, CM1/CM2)
+  * 7 Subject Tabs (Math, Reading, Comprehension, Pronunciation, Science, Logic, Creative Play)
+  * 3+ distinct game mechanics per subject and grade band
+  * Voice readout button (`🔊`) reading game descriptions aloud for non-readers
+  * Audio toggle (`🔊/🔇`), avatar tap-to-speak greeting, and language toggle (`🇨🇲 FR / 🇬🇧 EN`)
+- **9-Category Visual Tutor Models (`src/components/TutorOverlay.tsx`):** `COMPLETE_AND_TESTED`
+  * Addition & Base 10: Tens rods, unit cubes, ten-frames, interactive touch fusion
+  * Subtraction: Concrete items, interactive cross-out (`❌`), remainder count
+  * Multiplication: Equal groups, rows × columns 2D arrays, repeated addition
+  * Division: Fair sharing into plates/baskets, equal portions
+  * Fractions: Pizza/cake slicing, bar models, numerator/denominator explanation
+  * Shapes: Geometric frames, corner/vertex tallying
+  * Reading & Phonics: Syllable bubbles, sound buttons, phonics blending
+  * Comprehension: Chronological story sequence cards (Beginning 🌅 -> Middle ☀️ -> End 🌙)
+  * Science: Controlled experiments (Sunlight ☀️, Water 💧, Soil 🪴)
+- **7-Step Pedagogical State Machine & Independent Transfer (`src/app/game/[subject].tsx`):** `COMPLETE_AND_TESTED`
+  * Error progression: Hint 1 -> Hint 2 -> Auto-launch Tutor
+  * Assisted attempts strictly logged as `independent: false`
+  * Transfer challenge resets to `independent: true` only upon unassisted solution
+
+
 
