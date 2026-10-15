@@ -55,15 +55,16 @@ h1 {
 .top-actions {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 6px;
+  flex-wrap: wrap;
 }
 button {
   cursor: pointer;
   border: 0;
-  border-radius: 16px;
-  padding: 10px 14px;
+  border-radius: 14px;
+  padding: 8px 12px;
   font-weight: 800;
-  font-size: 14px;
+  font-size: 13px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -162,9 +163,11 @@ main {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  font-size: 15px;
+  font-size: 14px;
   font-weight: 900;
   padding: 4px 8px 10px 8px;
+  flex-wrap: wrap;
+  gap: 6px;
 }
 .stat-item {
   display: flex;
@@ -182,7 +185,7 @@ main {
   overflow: hidden;
 }
 .question-equation {
-  font-size: clamp(26px, 6vw, 38px);
+  font-size: clamp(24px, 5.5vw, 36px);
   font-weight: 900;
   color: #fde047;
   display: flex;
@@ -198,6 +201,7 @@ main {
   justify-content: center;
   margin-top: 4px;
   min-height: 24px;
+  flex-wrap: wrap;
 }
 .concrete-dot {
   font-size: 18px;
@@ -267,7 +271,7 @@ main {
 }
 .pad-btn {
   width: 72px;
-  height: 58px;
+  height: 56px;
   font-size: 26px;
   background: #334155;
   border: 2px solid #475569;
@@ -298,8 +302,9 @@ main {
   padding: 12px 18px;
   font-size: 15px;
 }
-/* Voice-First Interactive Tutor Modal */
-#tutor-modal {
+
+/* Modals */
+.modal-overlay {
   display: none;
   position: fixed;
   inset: 0;
@@ -310,20 +315,38 @@ main {
   justify-content: center;
   padding: 16px;
 }
-#tutor-modal.open {
+.modal-overlay.open {
   display: flex;
 }
-.tutor-card {
+.modal-card {
   background: #ffffff;
   color: #0f172a;
   border-radius: 28px;
   width: 100%;
   max-width: 520px;
-  padding: 18px;
+  padding: 22px;
   box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 14px;
+  text-align: center;
+}
+.modal-title {
+  font-size: 24px;
+  font-weight: 900;
+  color: #1e3a8a;
+  margin: 0;
+}
+.modal-desc {
+  font-size: 14px;
+  color: #475569;
+  line-height: 1.4;
+  margin: 0;
+}
+
+/* Tutor Card styles */
+.tutor-card {
+  text-align: left;
 }
 .tutor-header {
   display: flex;
@@ -346,7 +369,7 @@ main {
   flex: 1;
 }
 .tutor-speech-text {
-  font-size: 16px;
+  font-size: 15px;
   font-weight: 800;
   color: #1e3a8a;
   line-height: 1.3;
@@ -411,13 +434,15 @@ main {
     </div>
   </div>
   <div class="top-actions">
+    <button class="btn-sound" id="pause-btn">⏸️ Pause</button>
+    <button class="btn-sound" id="guide-btn">❓ Guide</button>
     <button class="btn-sound" id="lang-btn">🇨🇲 FR</button>
     <button class="btn-sound" id="sound-btn">🔊 Son</button>
   </div>
 </header>
 
 <main>
-  <!-- Grade Level Selector & Game Type Carousel -->
+  <!-- Grade Level Selector -->
   <div class="panel">
     <div class="selectors-bar">
       <div class="pills-group" id="grade-pills">
@@ -462,6 +487,7 @@ main {
     <div class="stats-bar">
       <div class="stat-item">⭐ <span id="stat-score">0</span></div>
       <div class="stat-item">🏆 Niveau <span id="stat-level">1</span></div>
+      <div class="stat-item">🎯 Étape <span id="stat-round">1/5</span></div>
       <div class="stat-item">🪙 <span id="stat-coins">15</span> CFA</div>
       <div class="stat-item">❤️ <span id="stat-lives">3</span></div>
     </div>
@@ -495,9 +521,9 @@ main {
   </div>
 </main>
 
-<!-- Voice-First 5-Mode Animated Tutor Modal -->
-<div id="tutor-modal">
-  <div class="tutor-card">
+<!-- 1. Voice-First 5-Mode Animated Tutor Modal -->
+<div class="modal-overlay" id="tutor-modal">
+  <div class="modal-card tutor-card">
     <div class="tutor-header">
       <div class="tutor-mascot-row">
         <div class="tutor-mascot-icon">🦉</div>
@@ -528,6 +554,59 @@ main {
   </div>
 </div>
 
+<!-- 2. Pause Modal -->
+<div class="modal-overlay" id="pause-modal">
+  <div class="modal-card">
+    <div style="font-size:48px;">⏸️</div>
+    <h2 class="modal-title">Jeu en Pause</h2>
+    <p class="modal-desc">Prends ton temps ! Quand tu es prêt à continuer, touche Reprendre.</p>
+    <div style="display:flex;gap:10px;justify-content:center;margin-top:10px;">
+      <button class="btn-action-main" id="btn-resume" style="flex:1;">▶ Reprendre</button>
+      <button class="btn-gold" id="btn-restart-paused" style="flex:1;">🔄 Recommencer</button>
+    </div>
+  </div>
+</div>
+
+<!-- 3. Victory Modal -->
+<div class="modal-overlay" id="victory-modal">
+  <div class="modal-card">
+    <div style="font-size:56px;">🏆</div>
+    <h2 class="modal-title" style="color:#15803d;">Victoire ! Niveau Terminé !</h2>
+    <div style="font-size:32px;">⭐⭐⭐</div>
+    <p class="modal-desc" id="victory-stats-text">Tu as réussi toutes les étapes avec succès !</p>
+    <div style="background:#fef08a;padding:12px;border-radius:18px;border:2px solid #eab308;font-weight:900;font-size:18px;color:#854d0e;">
+      +25 🪙 Pièces CFA gagnées !
+    </div>
+    <div style="display:flex;gap:10px;justify-content:center;margin-top:10px;">
+      <button class="btn-action-main" id="btn-next-level" style="flex:1;">🚀 Niveau Suivant</button>
+      <button class="btn-gold" id="btn-replay-level" style="flex:1;">🔄 Rejouer</button>
+    </div>
+  </div>
+</div>
+
+<!-- 4. Game Over Modal -->
+<div class="modal-overlay" id="gameover-modal">
+  <div class="modal-card">
+    <div style="font-size:56px;">❤️‍🩹</div>
+    <h2 class="modal-title" style="color:#dc2626;">Plus de vies !</h2>
+    <p class="modal-desc">Ce n'est pas grave ! Dans les jeux Nateiva, chaque erreur t'aide à devenir plus fort.</p>
+    <div style="display:flex;gap:10px;justify-content:center;margin-top:10px;">
+      <button class="btn-action-main" id="btn-try-again" style="flex:1;">🔄 Réessayer</button>
+      <button class="btn-action-tutor" id="btn-gameover-tutor" style="flex:1;">🦉 Voir le Tuteur</button>
+    </div>
+  </div>
+</div>
+
+<!-- 5. How to Play Guide Modal -->
+<div class="modal-overlay" id="guide-modal">
+  <div class="modal-card">
+    <div style="font-size:48px;" id="guide-icon">🎮</div>
+    <h2 class="modal-title" id="guide-title">Comment Jouer ?</h2>
+    <p class="modal-desc" id="guide-text">Touche la cible correspondante à la bonne réponse.</p>
+    <button class="btn-action-main" id="btn-close-guide" style="width:100%;margin-top:10px;">Compris ! Jouer 👍</button>
+  </div>
+</div>
+
 <script>
 "use strict";
 
@@ -545,7 +624,10 @@ function getAudioContext() {
 
 const AudioEngine = {
   soundEnabled: true,
-  playTone(freq, type = 'sine', duration = 0.15, gainVal = 0.12) {
+  playTone(freq, type, duration, gainVal) {
+    type = type || 'sine';
+    duration = duration || 0.15;
+    gainVal = gainVal || 0.12;
     if (!this.soundEnabled) return;
     try {
       const ctx = getAudioContext();
@@ -579,6 +661,12 @@ const AudioEngine = {
   },
   playWhoosh() {
     this.playTone(440, 'sine', 0.1, 0.1);
+  },
+  playVictory() {
+    this.playTone(523.25, 'triangle', 0.12, 0.2);
+    setTimeout(() => this.playTone(659.25, 'triangle', 0.12, 0.2), 120);
+    setTimeout(() => this.playTone(783.99, 'triangle', 0.12, 0.2), 240);
+    setTimeout(() => this.playTone(1046.50, 'triangle', 0.4, 0.25), 360);
   }
 };
 
@@ -603,8 +691,11 @@ const state = {
   score: 0,
   coins: 15,
   level: 1,
+  round: 1,
+  maxRoundsPerLevel: 5,
   lives: 3,
   running: false,
+  isPaused: false,
   question: null,
   errorCount: 0,
   playerX: 250,
@@ -617,7 +708,8 @@ const state = {
   targetPrice: 500,
   // Tetris Math Drop Grid
   tetrisBlock: null,
-  tetrisGrid: [], // 10 cols x 8 rows
+  // Particles system
+  particles: [],
   // Idle pointer guide
   idleTime: 0,
   // Tutor
@@ -635,18 +727,13 @@ const i18n = {
     ce1_ce2: 'CE1 / CE2',
     cm1_cm2: 'CM1 / CM2',
     catch: 'Attrape la bonne réponse !',
-    drop: 'Empile le bloc avec le bon chiffre !',
+    drop: 'Guide le bloc vers la bonne colonne !',
     fruit: 'Touche l\'arbre pour cueillir les fruits !',
     match: 'Touche deux cartes qui vont ensemble !',
     racing: 'Change de voie pour prendre le turbo !',
     market: 'Dépose les pièces CFA sur le plateau !',
     good: 'Bravo petit champion ! 🌟',
-    again: 'Regarde bien, essaie encore ! 💡',
-    tutor_watch: 'Regarde comment on groupe les objets.',
-    tutor_together: 'Touche l\'écran pour réunir les deux paquets.',
-    tutor_transfer: 'Maintenant, résous ce nouvel exemple tout seul !',
-    tutor_trick: 'Astuce : complète d\'abord dix pour aller plus vite !',
-    tutor_why: 'Pourquoi ? Chaque fois qu\'on a 10 unités, on fait une dizaine !'
+    again: 'Regarde bien, essaie encore ! 💡'
   },
   en: {
     nursery: 'Nursery',
@@ -654,18 +741,13 @@ const i18n = {
     ce1_ce2: 'Class 3-4',
     cm1_cm2: 'Class 5-6',
     catch: 'Catch the matching star!',
-    drop: 'Drop the falling block on the right target!',
+    drop: 'Steer the falling block to the right column!',
     fruit: 'Tap the tree to harvest the fruits!',
     match: 'Flip and match the identical pairs!',
     racing: 'Switch lanes to hit the turbo boost!',
     market: 'Place the CFA coins on the scale!',
     good: 'Great job, champion! 🌟',
-    again: 'Look closely, try again! 💡',
-    tutor_watch: 'Watch how we group the items together.',
-    tutor_together: 'Tap the screen to combine both groups.',
-    tutor_transfer: 'Now solve this new challenge by yourself!',
-    tutor_trick: 'Trick: make ten first to calculate faster!',
-    tutor_why: 'Why? Every time you get 10 units, you build 1 ten-rod!'
+    again: 'Look closely, try again! 💡'
   }
 };
 const t = (k) => (i18n[VoiceEngine.lang] && i18n[VoiceEngine.lang][k]) || k;
@@ -678,7 +760,26 @@ const tutorCanvas = $('tutorCanvas');
 const tctx = tutorCanvas.getContext('2d');
 const W = 500, H = 400;
 
-// Question Generator with concrete fruit icons
+// Particle System
+function spawnParticles(x, y, color, count) {
+  color = color || '#facc15';
+  count = count || 20;
+  for (let i = 0; i < count; i++) {
+    const angle = Math.random() * Math.PI * 2;
+    const speed = 40 + Math.random() * 120;
+    state.particles.push({
+      x, y,
+      vx: Math.cos(angle) * speed,
+      vy: Math.sin(angle) * speed - 30,
+      color,
+      radius: 3 + Math.random() * 4,
+      life: 0.6 + Math.random() * 0.4,
+      maxLife: 1.0
+    });
+  }
+}
+
+// Question Generator with concrete fruit icons & multi-operations
 function generateQuestion() {
   const grade = state.grade;
   let a, b, op = '+', ans;
@@ -691,26 +792,27 @@ function generateQuestion() {
     b = Math.floor(Math.random() * 2) + 1;
     ans = a + b;
   } else if (grade === 1) {
-    // SIL/CP: up to 10
-    a = Math.floor(Math.random() * 5) + 2;
-    b = Math.floor(Math.random() * 4) + 1;
-    if (Math.random() < 0.35 && a > b) {
+    // SIL/CP: up to 10 (+ and -)
+    a = Math.floor(Math.random() * 5) + 3;
+    b = Math.floor(Math.random() * 3) + 1;
+    if (Math.random() < 0.4 && a > b) {
       op = '-';
       ans = a - b;
     } else {
       ans = a + b;
     }
   } else if (grade === 2) {
-    // CE1/CE2: up to 30, multiplication beginnings
-    if (Math.random() < 0.4) {
+    // CE1/CE2: up to 30 (+, -, ×)
+    const roll = Math.random();
+    if (roll < 0.4) {
       op = '×';
-      a = Math.floor(Math.random() * 5) + 2;
+      a = Math.floor(Math.random() * 4) + 2;
       b = Math.floor(Math.random() * 4) + 2;
       ans = a * b;
-    } else if (Math.random() < 0.3) {
+    } else if (roll < 0.7 && a > b) {
       op = '-';
       a = Math.floor(Math.random() * 15) + 10;
-      b = Math.floor(Math.random() * 8) + 1;
+      b = Math.floor(Math.random() * 8) + 2;
       ans = a - b;
     } else {
       a = Math.floor(Math.random() * 14) + 6;
@@ -718,8 +820,14 @@ function generateQuestion() {
       ans = a + b;
     }
   } else {
-    // CM1/CM2: up to 100
-    if (Math.random() < 0.5) {
+    // CM1/CM2: (+, -, ×, ÷)
+    const roll = Math.random();
+    if (roll < 0.3) {
+      op = '÷';
+      ans = Math.floor(Math.random() * 6) + 2;
+      b = Math.floor(Math.random() * 5) + 2;
+      a = ans * b; // guarantees exact integer division
+    } else if (roll < 0.6) {
       op = '×';
       a = Math.floor(Math.random() * 8) + 3;
       b = Math.floor(Math.random() * 8) + 3;
@@ -736,12 +844,12 @@ function generateQuestion() {
   state.idleTime = 0;
 
   // Render question equation
-  $('display-equation').textContent = `${a} ${op} ${b} = ?`;
+  $('display-equation').textContent = a + ' ' + op + ' ' + b + ' = ?';
 
   // Render concrete fruit dots for non-readers
   const dotsContainer = $('concrete-dots');
   dotsContainer.innerHTML = '';
-  if (ans <= 15) {
+  if (op === '+' && ans <= 15) {
     for (let i = 0; i < a; i++) {
       const s = document.createElement('span');
       s.className = 'concrete-dot';
@@ -751,7 +859,7 @@ function generateQuestion() {
     const sep = document.createElement('span');
     sep.style.margin = '0 6px';
     sep.style.fontWeight = 'bold';
-    sep.textContent = op;
+    sep.textContent = '+';
     dotsContainer.appendChild(sep);
     for (let i = 0; i < b; i++) {
       const s = document.createElement('span');
@@ -759,11 +867,25 @@ function generateQuestion() {
       s.textContent = '🍏';
       dotsContainer.appendChild(s);
     }
+  } else if (op === '-' && a <= 15) {
+    for (let i = 0; i < a; i++) {
+      const s = document.createElement('span');
+      s.className = 'concrete-dot';
+      s.textContent = i < (a - b) ? icon : '❌';
+      dotsContainer.appendChild(s);
+    }
+  } else if (op === '×' && a * b <= 20) {
+    for (let i = 0; i < a * b; i++) {
+      const s = document.createElement('span');
+      s.className = 'concrete-dot';
+      s.textContent = icon;
+      dotsContainer.appendChild(s);
+    }
   }
 
-  // Speak question
   speakCurrentQuestion();
   initActiveGameMode();
+  updateStatsDOM();
 }
 
 function speakCurrentQuestion() {
@@ -771,84 +893,80 @@ function speakCurrentQuestion() {
   if (!q) return;
   const opWord = q.op === '+' ? (VoiceEngine.lang === 'fr' ? 'plus' : 'plus') :
                  q.op === '-' ? (VoiceEngine.lang === 'fr' ? 'moins' : 'minus') :
-                 (VoiceEngine.lang === 'fr' ? 'fois' : 'times');
-  VoiceEngine.speak(`${q.a} ${opWord} ${q.b} ! ${t(state.game)}`);
+                 q.op === '×' ? (VoiceEngine.lang === 'fr' ? 'fois' : 'times') :
+                 (VoiceEngine.lang === 'fr' ? 'divisé par' : 'divided by');
+  VoiceEngine.speak(q.a + ' ' + opWord + ' ' + q.b + ' ! ' + t(state.game));
   
   const repeatBtn = $('repeat-audio-btn');
   repeatBtn.classList.add('pulse');
   setTimeout(() => repeatBtn.classList.remove('pulse'), 2000);
 }
 
-function getAnswerOptions(correct, count = 4) {
+function getAnswerOptions(correct, count) {
+  count = count || 3;
   const set = new Set([correct]);
   while (set.size < count) {
-    const offset = Math.floor(Math.random() * 9) - 4;
-    const val = Math.max(0, correct + (offset === 0 ? 1 : offset));
+    const offset = Math.floor(Math.random() * 7) - 3;
+    const val = Math.max(1, correct + (offset === 0 ? 1 : offset));
     set.add(val);
   }
   return [...set].sort(() => Math.random() - 0.5);
 }
 
-// Initialize specific game mode mechanics
 function initActiveGameMode() {
   const q = state.question;
   state.items = [];
 
   if (state.game === 'drop') {
-    // Tetris Math Drop: Spawn falling blocks with answer options
     const options = getAnswerOptions(q.ans, 3);
     state.tetrisBlock = {
-      val: options[Math.floor(Math.random() * options.length)],
+      val: q.ans,
       x: 210,
       y: 10,
       w: 80,
       h: 40,
-      vy: 60 + state.level * 8,
+      vy: 55 + state.level * 8,
       color: '#3b82f6'
     };
-    // Base targets at the bottom
     state.items = options.map((opt, idx) => ({
       val: opt,
-      x: 55 + idx * 150,
-      y: 340,
-      w: 120,
-      h: 45,
+      x: 45 + idx * 150,
+      y: 335,
+      w: 130,
+      h: 50,
       isBase: true,
       color: opt === q.ans ? '#10b981' : '#334155'
     }));
   } else if (state.game === 'catch') {
-    // Space Rocket Catch: spawn orbital gates moving across screen
     const options = getAnswerOptions(q.ans, 3);
     state.items = options.map((opt, idx) => ({
       val: opt,
       x: 70 + idx * 150,
       y: 70,
       radius: 36,
-      vx: (idx % 2 === 0 ? 1 : -1) * 35,
+      vx: (idx % 2 === 0 ? 1 : -1) * (35 + state.level * 5),
       wobble: Math.random() * 6.28
     }));
     state.playerX = 250;
   } else if (state.game === 'fruit') {
-    // Tree Fruit Harvester: Bouncing fruit hanging on branches
     const fruitCount = q.ans;
     state.items = [];
     for (let i = 0; i < fruitCount; i++) {
       state.items.push({
         val: i + 1,
-        x: 90 + (i % 5) * 75 + Math.random() * 20,
-        y: 80 + Math.floor(i / 5) * 55 + Math.random() * 15,
+        x: 80 + (i % 5) * 78 + Math.random() * 15,
+        y: 80 + Math.floor(i / 5) * 55 + Math.random() * 10,
         harvested: false,
         icon: q.icon,
         radius: 24
       });
     }
   } else if (state.game === 'match') {
-    // Memory Card Duo: pairs of cards (number and fruit dots)
     const pairs = [
-      { id: 1, type: 'num', val: q.ans, label: `${q.ans}` },
-      { id: 1, type: 'dots', val: q.ans, label: `${q.icon} × ${q.ans}` },
-      { id: 2, type: 'num', val: q.ans + 2, label: `${q.ans + 2}` },
-      { id: 2, type: 'dots', val: q.ans + 2, label: `${q.icon} × ${q.ans + 2}` }
+      { id: 1, type: 'num', val: q.ans, label: String(q.ans) },
+      { id: 1, type: 'dots', val: q.ans, label: q.icon + ' × ' + q.ans },
+      { id: 2, type: 'num', val: q.ans + 2, label: String(q.ans + 2) },
+      { id: 2, type: 'dots', val: q.ans + 2, label: q.icon + ' × ' + (q.ans + 2) }
     ].sort(() => Math.random() - 0.5);
 
     state.cards = pairs.map((c, i) => ({
@@ -861,19 +979,17 @@ function initActiveGameMode() {
       h: 100
     }));
   } else if (state.game === 'racing') {
-    // 3-lane Math Car Racing
     state.raceCarLane = 1;
     const options = getAnswerOptions(q.ans, 3);
     state.items = options.map((opt, i) => ({
       val: opt,
       lane: i,
-      x: 80 + i * 140,
-      y: 60,
-      vy: 120 + state.level * 15
+      x: 75 + i * 140,
+      y: 50,
+      vy: 110 + state.level * 15
     }));
   } else if (state.game === 'market') {
-    // Mokolo CFA Market scale
-    state.targetPrice = q.ans * 50; // In Francs CFA
+    state.targetPrice = q.ans * 50;
     state.marketCoinsInPlate = [];
     state.items = [50, 100, 250, 500].map((coin, i) => ({
       val: coin,
@@ -884,18 +1000,17 @@ function initActiveGameMode() {
   }
 }
 
-// Handle Answer correctness
 function handleAnswer(choice) {
-  if (!state.running || state.tutorOpen) return;
+  if (!state.running || state.tutorOpen || state.isPaused) return;
   const q = state.question;
   const isCorrect = choice === q.ans || choice === state.targetPrice;
 
   if (isCorrect) {
     AudioEngine.playSuccess();
     AudioEngine.playCoin();
+    spawnParticles(W / 2, H / 2, '#facc15', 30);
     state.score += 10;
     state.coins += 5;
-    state.level = 1 + Math.floor(state.score / 50);
     $('feedback-msg').style.color = '#10b981';
     $('feedback-msg').textContent = t('good');
     VoiceEngine.speak(t('good'));
@@ -903,44 +1018,61 @@ function handleAnswer(choice) {
 
     setTimeout(() => {
       $('feedback-msg').textContent = '';
-      generateQuestion();
+      state.round++;
+      if (state.round > state.maxRoundsPerLevel) {
+        triggerVictory();
+      } else {
+        generateQuestion();
+      }
     }, 1200);
   } else {
     AudioEngine.playMistake();
+    spawnParticles(W / 2, H / 2, '#ef4444', 15);
     state.lives = Math.max(0, state.lives - 1);
     state.errorCount++;
     $('feedback-msg').style.color = '#ef4444';
     $('feedback-msg').textContent = t('again');
     updateStatsDOM();
 
-    // After 2 mistakes, automatically trigger the friendly voice tutor!
-    if (state.errorCount >= 2 || state.lives <= 0) {
-      setTimeout(() => {
-        openTutor();
-      }, 700);
+    if (state.lives <= 0) {
+      setTimeout(() => triggerGameOver(), 600);
+    } else if (state.errorCount >= 2) {
+      setTimeout(() => openTutor(), 700);
     }
   }
+}
+
+function triggerVictory() {
+  state.running = false;
+  AudioEngine.playVictory();
+  VoiceEngine.speak('Victoire ! Bravo champion, tu as réussi toutes les étapes !');
+  $('victory-stats-text').textContent = 'Score : ' + state.score + ' ⭐ • Niveau ' + state.level + ' complété !';
+  $('victory-modal').classList.add('open');
+}
+
+function triggerGameOver() {
+  state.running = false;
+  VoiceEngine.speak('Plus de vies, mais ne t\'inquiète pas ! Regarde le tuteur ou réessaie.');
+  $('gameover-modal').classList.add('open');
 }
 
 function updateStatsDOM() {
   $('stat-score').textContent = state.score;
   $('stat-level').textContent = state.level;
+  $('stat-round').textContent = state.round + '/' + state.maxRoundsPerLevel;
   $('stat-coins').textContent = state.coins;
   $('stat-lives').textContent = state.lives;
 }
 
-// --- RENDERING LOOP ---
 function draw(time) {
   ctx.clearRect(0, 0, W, H);
 
-  // Background Starfield & Ground
   const bgGrad = ctx.createLinearGradient(0, 0, 0, H);
   bgGrad.addColorStop(0, '#0f172a');
   bgGrad.addColorStop(1, '#1e293b');
   ctx.fillStyle = bgGrad;
   ctx.fillRect(0, 0, W, H);
 
-  // Subtle star sparkles
   ctx.fillStyle = 'rgba(255, 255, 255, 0.4)';
   for (let i = 0; i < 15; i++) {
     const sx = (i * 73 + time * 0.005) % W;
@@ -948,7 +1080,6 @@ function draw(time) {
     ctx.fillRect(sx, sy, 2, 2);
   }
 
-  // Render active game
   if (state.game === 'drop') {
     renderMathDrop(time);
   } else if (state.game === 'catch') {
@@ -963,8 +1094,17 @@ function draw(time) {
     renderMarket(time);
   }
 
-  // Start Screen Overlay
-  if (!state.running && !state.tutorOpen) {
+  state.particles.forEach(p => {
+    ctx.save();
+    ctx.globalAlpha = Math.max(0, p.life / p.maxLife);
+    ctx.fillStyle = p.color;
+    ctx.beginPath();
+    ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.restore();
+  });
+
+  if (!state.running && !state.tutorOpen && !$('victory-modal').classList.contains('open') && !$('gameover-modal').classList.contains('open')) {
     ctx.fillStyle = 'rgba(15, 23, 42, 0.75)';
     ctx.fillRect(0, 0, W, H);
     ctx.fillStyle = '#fde047';
@@ -976,29 +1116,25 @@ function draw(time) {
     ctx.fillText('Arcade éducative animée pour enfants', W / 2, H / 2 + 35);
   }
 
-  // Update Idle Guide Pointer
   updateHandPointer();
 }
 
-// 1. Math Drop (Falling Tetris Blocks)
 function renderMathDrop(time) {
-  // Bases at the bottom
   state.items.forEach(base => {
     ctx.fillStyle = '#1e293b';
     ctx.beginPath();
     ctx.roundRect(base.x, base.y, base.w, base.h, 12);
     ctx.fill();
-    ctx.strokeStyle = '#38bdf8';
+    ctx.strokeStyle = base.val === state.question.ans ? '#38bdf8' : '#475569';
     ctx.lineWidth = 3;
     ctx.stroke();
 
     ctx.fillStyle = '#f8fafc';
-    ctx.font = 'bold 22px system-ui';
+    ctx.font = 'bold 24px system-ui';
     ctx.textAlign = 'center';
-    ctx.fillText(String(base.val), base.x + base.w / 2, base.y + 30);
+    ctx.fillText(String(base.val), base.x + base.w / 2, base.y + 34);
   });
 
-  // Falling block controlled by player
   const block = state.tetrisBlock;
   if (block) {
     ctx.save();
@@ -1020,9 +1156,7 @@ function renderMathDrop(time) {
   }
 }
 
-// 2. Rocket Catch
 function renderRocketCatch(time) {
-  // Moving orbital target gates
   state.items.forEach(gate => {
     ctx.save();
     ctx.translate(gate.x, gate.y);
@@ -1042,7 +1176,6 @@ function renderRocketCatch(time) {
     ctx.restore();
   });
 
-  // Flying Rocket
   ctx.save();
   ctx.translate(state.playerX, 330);
   ctx.fillStyle = '#facc15';
@@ -1054,15 +1187,12 @@ function renderRocketCatch(time) {
   ctx.closePath();
   ctx.fill();
 
-  // Thruster flames
   ctx.fillStyle = '#fb923c';
   ctx.fillRect(-7, 16, 14, 12 + Math.sin(time * 0.02) * 6);
   ctx.restore();
 }
 
-// 3. Fruit Harvester Tree
 function renderFruitCollector(time) {
-  // Big Tree trunk & foliage
   ctx.fillStyle = '#78350f';
   ctx.fillRect(225, 200, 50, 160);
   ctx.fillStyle = '#15803d';
@@ -1070,14 +1200,12 @@ function renderFruitCollector(time) {
   ctx.arc(250, 140, 150, 0, Math.PI * 2);
   ctx.fill();
 
-  // Bouncing harvestable fruits
   state.items.forEach(fruit => {
     ctx.font = '32px system-ui';
     ctx.textAlign = 'center';
     ctx.fillText(fruit.icon, fruit.x, fruit.y + Math.sin(time * 0.004 + fruit.x) * 4);
   });
 
-  // Harvest basket at the bottom
   ctx.fillStyle = '#92400e';
   ctx.beginPath();
   ctx.roundRect(190, 320, 120, 60, [10, 10, 30, 30]);
@@ -1088,7 +1216,6 @@ function renderFruitCollector(time) {
   ctx.fillText('🧺 Panier', 250, 355);
 }
 
-// 4. Memory Card Duo
 function renderMatchQuest(time) {
   state.cards.forEach(card => {
     ctx.save();
@@ -1103,7 +1230,7 @@ function renderMatchQuest(time) {
       ctx.stroke();
 
       ctx.fillStyle = '#1e293b';
-      ctx.font = 'bold 24px system-ui';
+      ctx.font = 'bold 22px system-ui';
       ctx.textAlign = 'center';
       ctx.fillText(card.label, card.w / 2, card.h / 2 + 8);
     } else {
@@ -1124,9 +1251,7 @@ function renderMatchQuest(time) {
   });
 }
 
-// 5. Math Car Racing
 function renderRacing(time) {
-  // 3 Lanes road
   ctx.fillStyle = '#1e293b';
   ctx.fillRect(40, 0, 420, H);
   ctx.strokeStyle = '#facc15';
@@ -1138,28 +1263,24 @@ function renderRacing(time) {
   ctx.stroke();
   ctx.setLineDash([]);
 
-  // Lane Targets
   state.items.forEach(target => {
     ctx.fillStyle = '#3b82f6';
     ctx.beginPath();
-    ctx.roundRect(target.x, target.y, 60, 45, 10);
+    ctx.roundRect(target.x, target.y, 70, 45, 10);
     ctx.fill();
     ctx.fillStyle = '#ffffff';
     ctx.font = 'bold 20px system-ui';
     ctx.textAlign = 'center';
-    ctx.fillText(String(target.val), target.x + 30, target.y + 28);
+    ctx.fillText(String(target.val), target.x + 35, target.y + 28);
   });
 
-  // Player Race Car
   const carX = [110, 250, 390][state.raceCarLane];
   ctx.font = '40px system-ui';
   ctx.textAlign = 'center';
   ctx.fillText('🏎️💨', carX, 350);
 }
 
-// 6. Mokolo CFA Market
 function renderMarket(time) {
-  // Market counter & scale
   ctx.fillStyle = '#334155';
   ctx.fillRect(40, 240, 420, 15);
   ctx.fillStyle = '#0f766e';
@@ -1177,9 +1298,8 @@ function renderMarket(time) {
   const currentTotal = state.marketCoinsInPlate.reduce((a, b) => a + b, 0);
   ctx.font = 'bold 26px system-ui';
   ctx.fillStyle = currentTotal === state.targetPrice ? '#4ade80' : '#fde047';
-  ctx.fillText(`${currentTotal} F / ${state.targetPrice} F`, 250, 205);
+  ctx.fillText(currentTotal + ' F / ' + state.targetPrice + ' F', 250, 205);
 
-  // Coins in purse to drag or tap
   state.items.forEach(coin => {
     ctx.fillStyle = '#eab308';
     ctx.beginPath();
@@ -1193,24 +1313,30 @@ function renderMarket(time) {
     ctx.font = 'bold 14px system-ui';
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
-    ctx.fillText(`${coin.val}F`, coin.x, coin.y);
+    ctx.fillText(coin.val + 'F', coin.x, coin.y);
   });
 }
 
-// Physics & Game Tick Loop
 function tick(time) {
   const dt = Math.min(0.04, (time - state.lastTime) / 1000 || 0);
   state.lastTime = time;
 
-  if (state.running && !state.tutorOpen) {
+  if (state.running && !state.tutorOpen && !state.isPaused) {
     state.idleTime += dt;
+
+    for (let i = state.particles.length - 1; i >= 0; i--) {
+      const p = state.particles[i];
+      p.x += p.vx * dt;
+      p.y += p.vy * dt;
+      p.life -= dt;
+      if (p.life <= 0) state.particles.splice(i, 1);
+    }
 
     if (state.game === 'drop') {
       const b = state.tetrisBlock;
       if (b) {
         b.y += b.vy * dt;
-        // Collision with base
-        if (b.y + b.h >= 340) {
+        if (b.y + b.h >= 335) {
           const hitBase = state.items.find(base => 
             b.x + b.w / 2 >= base.x && b.x + b.w / 2 <= base.x + base.w
           );
@@ -1219,9 +1345,7 @@ function tick(time) {
           } else {
             handleAnswer(-1);
           }
-          // Respawn new block
-          const options = getAnswerOptions(state.question.ans, 3);
-          b.val = options[Math.floor(Math.random() * options.length)];
+          b.val = state.question.ans;
           b.y = 10;
         }
       }
@@ -1236,7 +1360,7 @@ function tick(time) {
         if (target.y > 330 && target.y < 360) {
           if (target.lane === state.raceCarLane) {
             handleAnswer(target.val);
-            target.y = 600; // consumed
+            target.y = 600;
           }
         }
       });
@@ -1250,10 +1374,9 @@ function tick(time) {
   requestAnimationFrame(tick);
 }
 
-// Non-reader animated pointer guide
 function updateHandPointer() {
   const hand = $('pointer-hand');
-  if (!state.running || state.tutorOpen || state.idleTime < 2.5) {
+  if (!state.running || state.tutorOpen || state.isPaused || state.idleTime < 2.5) {
     hand.classList.remove('active');
     return;
   }
@@ -1264,24 +1387,23 @@ function updateHandPointer() {
   if (state.game === 'drop') {
     const correctBase = state.items.find(i => i.val === state.question.ans);
     if (correctBase) {
-      hand.style.left = `${(correctBase.x + correctBase.w / 2) * (rect.width / W)}px`;
-      hand.style.top = `${correctBase.y * (rect.height / H) - 40}px`;
+      hand.style.left = ((correctBase.x + correctBase.w / 2) * (rect.width / W)) + 'px';
+      hand.style.top = (correctBase.y * (rect.height / H) - 40) + 'px';
     }
   } else if (state.game === 'fruit') {
     if (state.items.length > 0) {
-      hand.style.left = `${state.items[0].x * (rect.width / W)}px`;
-      hand.style.top = `${state.items[0].y * (rect.height / H) - 30}px`;
+      hand.style.left = (state.items[0].x * (rect.width / W)) + 'px';
+      hand.style.top = (state.items[0].y * (rect.height / H) - 30) + 'px';
     }
   } else if (state.game === 'match') {
     const openCard = state.cards.find(c => !c.solved);
     if (openCard) {
-      hand.style.left = `${(openCard.x + openCard.w / 2) * (rect.width / W)}px`;
-      hand.style.top = `${openCard.y * (rect.height / H) - 30}px`;
+      hand.style.left = ((openCard.x + openCard.w / 2) * (rect.width / W)) + 'px';
+      hand.style.top = (openCard.y * (rect.height / H) - 30) + 'px';
     }
   }
 }
 
-// --- VOICE-FIRST ANIMATED TUTOR ENGINE ---
 function openTutor() {
   state.tutorOpen = true;
   state.tutorStep = 0;
@@ -1304,43 +1426,95 @@ function drawTutorScene() {
   if (!q) return;
   tctx.clearRect(0, 0, 480, 190);
 
-  // Background
-  tctx.fillStyle = '#f1f5f9';
+  tctx.fillStyle = '#f8fafc';
   tctx.fillRect(0, 0, 480, 190);
 
   const mode = state.tutorMode;
+  const op = q.op;
 
   if (mode === 'WATCH') {
-    // Mode 1: Watch Me (Animated grouping of two sets of fruit)
-    $('tutor-speech-text').textContent = `« Regarde : ${q.a} mangues réunies avec ${q.b} bananes font ${q.ans} ! »`;
-    VoiceEngine.speak(`Regarde bien : ${q.a} mangues réunies avec ${q.b} bananes font au total ${q.ans} !`);
+    if (op === '-') {
+      $('tutor-speech-text').textContent = '« On a ' + q.a + ' mangues. On en retire ' + q.b + ' (croix rouge). Il en reste ' + q.ans + ' ! »';
+      VoiceEngine.speak('Au départ nous avons ' + q.a + ' mangues. On en retire ' + q.b + '. Il en reste exactement ' + q.ans + ' !');
 
-    // Group A (blue)
-    for (let i = 0; i < q.a; i++) {
-      const x = 40 + i * 40;
-      tctx.font = '32px system-ui';
-      tctx.fillText(q.icon, x, 80);
+      for (let i = 0; i < q.a; i++) {
+        const x = 40 + i * 40;
+        tctx.font = '32px system-ui';
+        tctx.fillText(q.icon, x, 75);
+        if (i >= q.ans) {
+          tctx.fillStyle = '#ef4444';
+          tctx.font = 'bold 30px system-ui';
+          tctx.fillText('❌', x + 4, 75);
+        }
+      }
+      tctx.fillStyle = '#15803d';
+      tctx.font = 'bold 22px system-ui';
+      tctx.textAlign = 'center';
+      tctx.fillText('Reste = ' + q.ans + ' ! 🌟', 240, 145);
+
+    } else if (op === '×') {
+      $('tutor-speech-text').textContent = '« ' + q.a + ' fois ' + q.b + ' : c\'est ' + q.a + ' rangées de ' + q.b + ' objets = ' + q.ans + ' ! »';
+      VoiceEngine.speak(q.a + ' fois ' + q.b + ', c\'est ' + q.a + ' rangées de ' + q.b + ' objets. Au total, cela fait ' + q.ans + ' !');
+
+      for (let r = 0; r < q.a; r++) {
+        for (let c = 0; c < q.b; c++) {
+          tctx.font = '22px system-ui';
+          tctx.fillText(q.icon, 80 + c * 38, 45 + r * 30);
+        }
+      }
+      tctx.fillStyle = '#1e40af';
+      tctx.font = 'bold 20px system-ui';
+      tctx.textAlign = 'center';
+      tctx.fillText(q.a + ' × ' + q.b + ' = ' + q.ans + ' ! 🚀', 360, 95);
+
+    } else if (op === '÷') {
+      $('tutor-speech-text').textContent = '« On partage ' + q.a + ' fruits équitablement dans ' + q.b + ' paniers. Chaque panier en a ' + q.ans + ' ! »';
+      VoiceEngine.speak('On partage ' + q.a + ' fruits équitablement dans ' + q.b + ' paniers. Chaque panier en a ' + q.ans + ' !');
+
+      for (let p = 0; p < q.b; p++) {
+        tctx.fillStyle = '#fef3c7';
+        tctx.beginPath();
+        tctx.roundRect(50 + p * 100, 45, 80, 80, 14);
+        tctx.fill();
+        tctx.strokeStyle = '#f59e0b';
+        tctx.lineWidth = 2;
+        tctx.stroke();
+
+        tctx.font = '20px system-ui';
+        for (let item = 0; item < q.ans; item++) {
+          tctx.fillText(q.icon, 60 + p * 100 + (item % 2) * 28, 75 + Math.floor(item / 2) * 24);
+        }
+      }
+      tctx.fillStyle = '#16a34a';
+      tctx.font = 'bold 18px system-ui';
+      tctx.textAlign = 'center';
+      tctx.fillText(q.a + ' ÷ ' + q.b + ' = ' + q.ans + ' par panier !', 240, 160);
+
+    } else {
+      $('tutor-speech-text').textContent = '« Regarde : ' + q.a + ' mangues réunies avec ' + q.b + ' bananes font ' + q.ans + ' ! »';
+      VoiceEngine.speak('Regarde bien : ' + q.a + ' mangues réunies avec ' + q.b + ' bananes font au total ' + q.ans + ' !');
+
+      for (let i = 0; i < q.a; i++) {
+        tctx.font = '32px system-ui';
+        tctx.fillText(q.icon, 40 + i * 40, 80);
+      }
+      tctx.fillStyle = '#3b82f6';
+      tctx.font = 'bold 36px system-ui';
+      tctx.fillText('➕', 40 + q.a * 40 + 10, 80);
+
+      for (let j = 0; j < q.b; j++) {
+        tctx.font = '32px system-ui';
+        tctx.fillText('🍏', 40 + q.a * 40 + 60 + j * 40, 80);
+      }
+
+      tctx.fillStyle = '#10b981';
+      tctx.font = 'bold 22px system-ui';
+      tctx.fillText('Total = ' + q.ans + ' ! 🌟', 240, 150);
     }
-    // Plus
-    tctx.fillStyle = '#3b82f6';
-    tctx.font = 'bold 36px system-ui';
-    tctx.fillText('➕', 40 + q.a * 40 + 10, 80);
-
-    // Group B (gold)
-    for (let j = 0; j < q.b; j++) {
-      const x = 40 + q.a * 40 + 60 + j * 40;
-      tctx.fillText('🍏', x, 80);
-    }
-
-    // Arrow pointing to total
-    tctx.fillStyle = '#10b981';
-    tctx.font = 'bold 22px system-ui';
-    tctx.fillText(`Total = ${q.ans} ! 🌟`, 240, 150);
 
   } else if (mode === 'TOGETHER') {
-    // Mode 2: Interactive touch fusion
-    $('tutor-speech-text').textContent = '« Touche le rectangle vert pour fusionner les deux paquets ! »';
-    VoiceEngine.speak('Touche le rectangle vert pour fusionner les deux paquets !');
+    $('tutor-speech-text').textContent = '« Touche le bouton vert pour fusionner et vérifier le résultat ! »';
+    VoiceEngine.speak('Touche le bouton vert pour fusionner et vérifier le résultat !');
 
     tctx.fillStyle = '#dcfce7';
     tctx.beginPath();
@@ -1353,10 +1527,9 @@ function drawTutorScene() {
     tctx.fillStyle = '#15803d';
     tctx.font = 'bold 22px system-ui';
     tctx.textAlign = 'center';
-    tctx.fillText(`⚡ FUSIONNER (${q.a} + ${q.b})`, 240, 92);
+    tctx.fillText('⚡ FUSIONNER (' + q.a + ' ' + q.op + ' ' + q.b + ')', 240, 92);
 
   } else if (mode === 'TRANSFER') {
-    // Mode 3: Independent transfer problem
     $('tutor-speech-text').textContent = '« À ton tour ! Résous ce problème tout seul comme un grand ! »';
     VoiceEngine.speak('À ton tour ! Résous ce problème tout seul comme un grand !');
 
@@ -1371,14 +1544,12 @@ function drawTutorScene() {
     tctx.fillStyle = '#92400e';
     tctx.font = 'bold 28px system-ui';
     tctx.textAlign = 'center';
-    tctx.fillText(`Nouveau défi : ${q.a + 1} + ${q.b} = ?`, 240, 95);
+    tctx.fillText('Nouveau défi : ' + (q.a + 1) + ' ' + q.op + ' ' + q.b + ' = ?', 240, 95);
 
   } else if (mode === 'STRATEGY') {
-    // Mode 4: Ten-Frame Regrouping Astuce
     $('tutor-speech-text').textContent = '« Astuce magique : On complète d\'abord une boîte de 10 ! »';
     VoiceEngine.speak('Astuce magique : On complète d\'abord une boîte de 10 !');
 
-    // Draw Ten-Frame (2 rows of 5)
     tctx.strokeStyle = '#cbd5e1';
     tctx.lineWidth = 2;
     for (let c = 0; c < 5; c++) {
@@ -1391,7 +1562,6 @@ function drawTutorScene() {
       }
     }
   } else if (mode === 'WHY') {
-    // Mode 5: Why it works
     $('tutor-speech-text').textContent = '« Notre écriture compte par paquets de 10. Dès qu\'on a 10 unités, on fabrique 1 dizaine ! »';
     VoiceEngine.speak('Notre écriture compte par paquets de 10. Dès qu\'on a 10 unités, on fabrique une dizaine !');
 
@@ -1402,12 +1572,14 @@ function drawTutorScene() {
   }
 }
 
-// --- USER INPUT EVENT LISTENERS ---
+// --- USER INPUT & BUTTON EVENT LISTENERS ---
 $('btn-play-restart').onclick = () => {
   state.score = 0;
   state.lives = 3;
+  state.round = 1;
   state.level = 1;
   state.running = true;
+  state.isPaused = false;
   updateStatsDOM();
   generateQuestion();
 };
@@ -1417,9 +1589,70 @@ $('tutor-close-x').onclick = closeTutor;
 $('tutor-btn-solve').onclick = closeTutor;
 $('repeat-audio-btn').onclick = speakCurrentQuestion;
 
+// Pause controls
+$('pause-btn').onclick = () => {
+  state.isPaused = true;
+  $('pause-modal').classList.add('open');
+  if ('speechSynthesis' in window) window.speechSynthesis.cancel();
+};
+$('btn-resume').onclick = () => {
+  state.isPaused = false;
+  $('pause-modal').classList.remove('open');
+};
+$('btn-restart-paused').onclick = () => {
+  $('pause-modal').classList.remove('open');
+  $('btn-play-restart').click();
+};
+
+// Victory controls
+$('btn-next-level').onclick = () => {
+  $('victory-modal').classList.remove('open');
+  state.level++;
+  state.round = 1;
+  state.lives = 3;
+  state.running = true;
+  updateStatsDOM();
+  generateQuestion();
+};
+$('btn-replay-level').onclick = () => {
+  $('victory-modal').classList.remove('open');
+  $('btn-play-restart').click();
+};
+
+// Game Over controls
+$('btn-try-again').onclick = () => {
+  $('gameover-modal').classList.remove('open');
+  $('btn-play-restart').click();
+};
+$('btn-gameover-tutor').onclick = () => {
+  $('gameover-modal').classList.remove('open');
+  openTutor();
+};
+
+// Guide Modal controls
+$('guide-btn').onclick = () => {
+  const guideInfo = {
+    drop: { icon: '🧱', title: 'Math Drop (Tetris Blocs)', text: 'Fais glisser le bloc ou utilise les flèches pour le faire atterrir sur la colonne qui a la bonne réponse !' },
+    catch: { icon: '🚀', title: 'Fusée Espace', text: 'Pilote ta fusée à gauche ou à droite pour traverser l\'orbe cosmique avec la bonne solution.' },
+    fruit: { icon: '🥭', title: 'Arbre Fruitier', text: 'Touche directement les mangues dans l\'arbre pour les faire tomber dans le panier !' },
+    match: { icon: '🃏', title: 'Mémoire Duo', text: 'Touche deux cartes pour les retourner et associer le chiffre avec sa quantité.' },
+    racing: { icon: '🏎️', title: 'Course Turbo', text: 'Touche la voie de gauche, du milieu ou de droite pour foncer sur la bonne réponse et activer le turbo !' },
+    market: { icon: '🏪', title: 'Marché CFA', text: 'Touche les pièces de 50F, 100F, 250F ou 500F pour atteindre la somme exacte sur la balance.' }
+  }[state.game];
+
+  $('guide-icon').textContent = guideInfo.icon;
+  $('guide-title').textContent = guideInfo.title;
+  $('guide-text').textContent = guideInfo.text;
+  $('guide-modal').classList.add('open');
+  VoiceEngine.speak(guideInfo.text);
+};
+$('btn-close-guide').onclick = () => {
+  $('guide-modal').classList.remove('open');
+};
+
 $('sound-btn').onclick = () => {
   AudioEngine.soundEnabled = !AudioEngine.soundEnabled;
-  $('sound-btn').textContent = AudioEngine.soundEnabled ? '🔊 Son ON' : '🔇 Son OFF';
+  $('sound-btn').textContent = AudioEngine.soundEnabled ? '🔊 Son' : '🔇 Muet';
   if (!AudioEngine.soundEnabled && 'speechSynthesis' in window) {
     window.speechSynthesis.cancel();
   }
@@ -1432,13 +1665,11 @@ $('lang-btn').onclick = () => {
   generateQuestion();
 };
 
-// Mascot Tap interaction
 $('mascot-avatar').onclick = () => {
   AudioEngine.playSuccess();
   VoiceEngine.speak('Bonjour ! Je suis Hibou, ton tuteur malin. Prêt pour l\'aventure ?');
 };
 
-// Grade pills
 document.querySelectorAll('#grade-pills .pill-btn').forEach(btn => {
   btn.onclick = () => {
     document.querySelectorAll('#grade-pills .pill-btn').forEach(b => b.classList.remove('active'));
@@ -1449,7 +1680,6 @@ document.querySelectorAll('#grade-pills .pill-btn').forEach(btn => {
   };
 });
 
-// Game cards
 document.querySelectorAll('.game-card-btn').forEach(btn => {
   btn.onclick = () => {
     document.querySelectorAll('.game-card-btn').forEach(b => b.classList.remove('active'));
@@ -1461,7 +1691,6 @@ document.querySelectorAll('.game-card-btn').forEach(btn => {
   };
 });
 
-// Tutor mode tabs
 document.querySelectorAll('.tutor-tab').forEach(tab => {
   tab.onclick = () => {
     document.querySelectorAll('.tutor-tab').forEach(t => t.classList.remove('active'));
@@ -1494,7 +1723,6 @@ $('tutor-btn-prev').onclick = () => {
   drawTutorScene();
 };
 
-// On-screen tactile pad controls
 $('btn-left').onclick = () => {
   state.idleTime = 0;
   if (state.game === 'drop' && state.tetrisBlock) {
@@ -1520,15 +1748,13 @@ $('btn-right').onclick = () => {
 $('btn-action').onclick = () => {
   state.idleTime = 0;
   if (state.game === 'drop' && state.tetrisBlock) {
-    state.tetrisBlock.vy += 120; // Turbo drop
+    state.tetrisBlock.vy += 120;
   } else if (state.game === 'catch') {
-    // Check catch collision
     const near = state.items.find(g => Math.hypot(g.x - state.playerX, g.y - 330) < 60);
     if (near) handleAnswer(near.val);
   }
 };
 
-// Canvas Pointer Interaction (Tap / Click on elements)
 canvas.addEventListener('pointerdown', (e) => {
   state.idleTime = 0;
   const rect = canvas.getBoundingClientRect();
@@ -1543,18 +1769,16 @@ canvas.addEventListener('pointerdown', (e) => {
   }
 
   if (state.game === 'fruit') {
-    // Tap to harvest fruit
     const touched = state.items.find(f => Math.hypot(f.x - x, f.y - y) < f.radius + 15);
     if (touched) {
       AudioEngine.playDrop();
-      VoiceEngine.speak(`${touched.val}`);
+      VoiceEngine.speak(touched.val.toString());
       state.items = state.items.filter(f => f !== touched);
       if (state.items.length === 0) {
         handleAnswer(state.question.ans);
       }
     }
   } else if (state.game === 'match') {
-    // Tap to flip cards
     const card = state.cards.find(c => x >= c.x && x <= c.x + c.w && y >= c.y && y <= c.y + c.h);
     if (card && !card.flipped && !card.solved) {
       AudioEngine.playWhoosh();
@@ -1574,7 +1798,6 @@ canvas.addEventListener('pointerdown', (e) => {
       }
     }
   } else if (state.game === 'drop') {
-    // Touch column to position falling block directly
     if (state.tetrisBlock) {
       state.tetrisBlock.x = Math.max(30, Math.min(390, x - 40));
     }
@@ -1583,13 +1806,12 @@ canvas.addEventListener('pointerdown', (e) => {
     const near = state.items.find(g => Math.hypot(g.x - x, g.y - y) < g.radius + 15);
     if (near) handleAnswer(near.val);
   } else if (state.game === 'market') {
-    // Tap coin to deposit into scale
     const coin = state.items.find(c => Math.hypot(c.x - x, c.y - y) < c.radius + 10);
     if (coin) {
       AudioEngine.playCoin();
       state.marketCoinsInPlate.push(coin.val);
       const total = state.marketCoinsInPlate.reduce((a, b) => a + b, 0);
-      VoiceEngine.speak(`${coin.val} Francs déposés ! Total : ${total}`);
+      VoiceEngine.speak(coin.val + ' Francs déposés ! Total : ' + total);
       if (total >= state.targetPrice) {
         handleAnswer(total);
       }
@@ -1601,15 +1823,14 @@ canvas.addEventListener('pointerdown', (e) => {
   }
 });
 
-// Keyboard controls
 window.addEventListener('keydown', (e) => {
   state.idleTime = 0;
   if (e.key === 'ArrowLeft') $('btn-left').click();
   if (e.key === 'ArrowRight') $('btn-right').click();
   if (e.key === ' ' || e.key === 'ArrowDown') $('btn-action').click();
+  if (e.key === 'p' || e.key === 'P') $('pause-btn').click();
 });
 
-// Auto-start on first load
 generateQuestion();
 requestAnimationFrame(tick);
 </script>

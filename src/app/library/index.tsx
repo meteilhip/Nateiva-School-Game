@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, ScrollView, TextInput, Platform } from 'react-native';
 import { router, useFocusEffect } from 'expo-router';
+import * as Speech from 'expo-speech';
 import { GAME_CATALOG, GameCatalogItem } from '../../games/GameRegistry';
 import { getProfiles, ChildProfile } from '../../storage/db';
 import { PersistentBottomNav } from '../../components/PersistentBottomNav';
@@ -8,11 +9,12 @@ import { PersistentBottomNav } from '../../components/PersistentBottomNav';
 export default function GameLibraryScreen() {
   const [profile, setProfile] = useState<ChildProfile | null>(null);
   const [lang, setLang] = useState<'fr' | 'en'>('fr');
+  const [soundEnabled, setSoundEnabled] = useState<boolean>(true);
   const [entryMode, setEntryMode] = useState<'ALL' | 'RECOMMENDED' | 'PRACTICE'>('ALL');
   
-  // Grade-band filter
+  // Grade-band filter (4 required bands)
   const [selectedGradeBand, setSelectedGradeBand] = useState<string>('ALL');
-  // Subject tab filter
+  // 7 Subject tabs filter
   const [selectedSubject, setSelectedSubject] = useState<string>('ALL');
   // Category filter
   const [selectedCategory, setSelectedCategory] = useState<string>('ALL');
@@ -33,38 +35,60 @@ export default function GameLibraryScreen() {
     }
   };
 
+  const speakText = (text: string) => {
+    if (!soundEnabled) return;
+    Speech.stop();
+    Speech.speak(text, { language: lang === 'fr' ? 'fr-FR' : 'en-US', rate: 0.85 });
+  };
+
   const gradeBands = [
     { key: 'ALL', labelFr: 'Tous Niveaux', labelEn: 'All Grades' },
-    { key: 'WORLD_A', labelFr: '🐣 Maternelle 1-2 (4-5 ans)', labelEn: '🐣 Nursery 1-2 (Ages 4-5)' },
-    { key: 'WORLD_B', labelFr: '🦁 SIL / CP (5-7 ans)', labelEn: '🦁 Class 1-2 (Ages 5-7)' },
-    { key: 'WORLD_C', labelFr: '🚀 CE1 / CE2 (7-9 ans)', labelEn: '🚀 Class 3-4 (Ages 7-9)' },
-    { key: 'WORLD_D', labelFr: '👑 CM1 / CM2 (9-12 ans)', labelEn: '👑 Class 5-6 (Ages 9-12)' }
+    { key: 'WORLD_A', labelFr: '🐣 Nursery 1–2 (4-5 ans)', labelEn: '🐣 Nursery 1–2 (Ages 4-5)' },
+    { key: 'WORLD_B', labelFr: '🦁 SIL / CP (5-7 ans)', labelEn: '🦁 Class 1–2 (Ages 5-7)' },
+    { key: 'WORLD_C', labelFr: '🚀 CE1 / CE2 (7-9 ans)', labelEn: '🚀 Class 3–4 (Ages 7-9)' },
+    { key: 'WORLD_D', labelFr: '👑 CM1 / CM2 (9-12 ans)', labelEn: '👑 Class 5–6 (Ages 9-12)' }
   ];
 
+  // 7 Required Subject Tabs
   const subjectTabs = [
-    { key: 'ALL', labelFr: '🌟 Tous les Sujets', labelEn: '🌟 All Subjects' },
-    { key: 'mathematics', labelFr: '🧮 Mathématiques', labelEn: '🧮 Mathematics' },
-    { key: 'french_reading', labelFr: '📖 Lecture & Langues', labelEn: '📖 Reading & Phonics' },
-    { key: 'science', labelFr: '🔬 Sciences & Nature', labelEn: '🔬 Science & Nature' }
+    { key: 'ALL', labelFr: '🌟 Tous', labelEn: '🌟 All' },
+    { key: 'math', labelFr: '🧮 Math', labelEn: '🧮 Math' },
+    { key: 'reading', labelFr: '📖 Reading', labelEn: '📖 Reading' },
+    { key: 'comprehension', labelFr: '📜 Comprehension', labelEn: '📜 Comprehension' },
+    { key: 'pronunciation', labelFr: '🗣️ Pronunciation', labelEn: '🗣️ Pronunciation' },
+    { key: 'science', labelFr: '🔬 Science', labelEn: '🔬 Science' },
+    { key: 'logic', labelFr: '🧩 Logic', labelEn: '🧩 Logic' },
+    { key: 'creative', labelFr: '🎨 Creative Play', labelEn: '🎨 Creative Play' }
   ];
 
   const categories = [
-    { key: 'ALL', labelFr: 'Toutes Catégories', labelEn: 'All Categories' },
-    { key: 'Action', labelFr: '⚡ Action & Arcade', labelEn: '⚡ Action & Arcade' },
+    { key: 'ALL', labelFr: 'Toutes Mécaniques', labelEn: 'All Mechanics' },
+    { key: 'Action', labelFr: '⚡ Arcade & Course', labelEn: '⚡ Arcade & Racing' },
     { key: 'Adventure', labelFr: '🗺️ Aventure & Quête', labelEn: '🗺️ Adventure & Quest' },
-    { key: 'Simulation', labelFr: '🛠️ Créativité & Simulation', labelEn: '🛠️ Creative & Simulation' },
-    { key: 'Puzzle', labelFr: '🧩 Mémoire & Réflexion', labelEn: '🧩 Memory & Logic' },
-    { key: 'Story', labelFr: '📜 Histoires Narratives', labelEn: '📜 Illustrated Stories' }
+    { key: 'Simulation', labelFr: '🛠️ Simulation & Atelier', labelEn: '🛠️ Simulation & Workshop' },
+    { key: 'Puzzle', labelFr: '🧩 Réflexion & Énigmes', labelEn: '🧩 Logic & Puzzles' },
+    { key: 'Story', labelFr: '📜 Histoires Narrées', labelEn: '📜 Illustrated Stories' }
   ];
 
+  const matchesSubjectTab = (g: GameCatalogItem, tab: string) => {
+    if (tab === 'ALL') return true;
+    if (tab === 'math') return g.subject === 'mathematics';
+    if (tab === 'reading') return g.subject === 'french_reading' || g.subject === 'english_reading';
+    if (tab === 'comprehension') return g.category === 'Story' || ['12', '28', '36', '50', '58'].includes(g.id);
+    if (tab === 'pronunciation') return ['06', '11', '19', '20', '21', '30', '42', '54'].includes(g.id);
+    if (tab === 'science') return g.subject === 'science' || ['07', '14', '29', '37', '38', '43', '49', '57'].includes(g.id);
+    if (tab === 'logic') return g.category === 'Puzzle' || ['08', '10', '13', '41', '44', '51', '55'].includes(g.id);
+    if (tab === 'creative') return g.category === 'Creative' || g.category === 'Simulation' || ['01', '15', '18', '25', '33', '39', '48', '52'].includes(g.id);
+    return true;
+  };
+
   const filteredGames = GAME_CATALOG.filter((g) => {
-    // Mode filter
     if (entryMode === 'RECOMMENDED') {
       const isRec = ['16', '18', '20', '25', '29', '31', '33'].includes(g.id);
       if (!isRec) return false;
     }
     const matchesGrade = selectedGradeBand === 'ALL' || g.world === selectedGradeBand;
-    const matchesSubject = selectedSubject === 'ALL' || g.subject === selectedSubject;
+    const matchesSubject = matchesSubjectTab(g, selectedSubject);
     const matchesCategory = selectedCategory === 'ALL' || g.category === selectedCategory;
     const matchesQuery = searchQuery === '' || 
       g.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -89,32 +113,55 @@ export default function GameLibraryScreen() {
     else if (game.subject === 'science') defaultSkill = 'sci_living_nonliving';
     else if (game.world === 'WORLD_C' || game.world === 'WORLD_D') defaultSkill = 'math_add_10';
 
+    speakText(game.title + ' ! ' + game.description);
     router.push(`/game/${game.subject}?skillId=${defaultSkill}&gameKey=${game.gameKey}`);
   };
 
   return (
     <View style={styles.container}>
-      {/* Top Header */}
+      {/* Top Header with Profile Avatar, Stars, Progress & Audio Control */}
       <View style={styles.header}>
-        <View style={styles.headerMascotRow}>
-          <Text style={styles.mascotAnimation}>🦁✨</Text>
+        <TouchableOpacity 
+          style={styles.headerMascotRow}
+          onPress={() => speakText('Bonjour ! Choisis ton jeu préféré !')}
+        >
+          <Text style={styles.mascotAnimation}>{profile?.avatar || '🦁'}</Text>
           <View>
             <Text style={styles.headerTitle}>
-              {lang === 'fr' ? 'Choisis ton Aventure !' : 'Choose Your Adventure!'}
+              {lang === 'fr' ? 'Bibliothèque de Jeux' : 'Game Library'}
             </Text>
             <Text style={styles.headerSubtitle}>
-              {profile ? `${profile.avatar} ${profile.name} • ${profile.coins || 50} 🪙` : 'Élève Explorateur'}
+              {profile ? `${profile.name} • ${profile.coins || 50} 🪙` : 'Élève Explorateur'}
             </Text>
           </View>
-        </View>
+        </TouchableOpacity>
 
-        {/* Language & Parent Gate Switches */}
+        {/* Stars, Progress Gauge, Sound & Language */}
         <View style={styles.headerActions}>
+          <View style={styles.statChip}>
+            <Text style={styles.statChipText}>⭐ {profile?.coins ? Math.floor(profile.coins / 3) : 24}</Text>
+          </View>
+
+          <TouchableOpacity 
+            style={[styles.actionIconBtn, !soundEnabled && { backgroundColor: '#FEE2E2' }]} 
+            onPress={() => {
+              const next = !soundEnabled;
+              setSoundEnabled(next);
+              if (!next) Speech.stop();
+            }}
+          >
+            <Text style={{ fontSize: 16 }}>{soundEnabled ? '🔊' : '🔇'}</Text>
+          </TouchableOpacity>
+
           <TouchableOpacity 
             style={styles.langSwitchBtn} 
-            onPress={() => setLang(lang === 'fr' ? 'en' : 'fr')}
+            onPress={() => {
+              const nextLang = lang === 'fr' ? 'en' : 'fr';
+              setLang(nextLang);
+              speakText(nextLang === 'fr' ? 'Français activé' : 'English enabled');
+            }}
           >
-            <Text style={styles.langSwitchText}>{lang === 'fr' ? '🇫🇷 FR' : '🇬🇧 EN'}</Text>
+            <Text style={styles.langSwitchText}>{lang === 'fr' ? '🇨🇲 FR' : '🇬🇧 EN'}</Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -231,11 +278,21 @@ export default function GameLibraryScreen() {
                 ]}
                 onPress={() => setSelectedGameId(game.id)}
               >
-                {/* Card Top: Number badge & Category */}
+                {/* Card Top: Number badge, Voice read-out & Category */}
                 <View style={styles.cardTopRow}>
                   <Text style={styles.cardIdBadge}>#{game.id}</Text>
-                  <View style={[styles.cardCatBadge, { backgroundColor: accentColor }]}>
-                    <Text style={styles.cardCatText}>{game.category}</Text>
+                  
+                  <View style={{ flexDirection: 'row', alignItems: 'center', gap: 6 }}>
+                    <TouchableOpacity 
+                      style={styles.voiceCardBtn}
+                      onPress={() => speakText(game.title + ' : ' + game.description)}
+                    >
+                      <Text style={{ fontSize: 13 }}>🔊</Text>
+                    </TouchableOpacity>
+
+                    <View style={[styles.cardCatBadge, { backgroundColor: accentColor }]}>
+                      <Text style={styles.cardCatText}>{game.category}</Text>
+                    </View>
                   </View>
                 </View>
 
@@ -253,18 +310,31 @@ export default function GameLibraryScreen() {
                 
                 <View style={styles.skillDifficultyRow}>
                   <Text style={styles.skillTagText}>Âge {game.recommendedAges}</Text>
-                  <Text style={[styles.diffBadge, { color: accentColor }]}>Niveau ★★★</Text>
+                  <Text style={[styles.diffBadge, { color: accentColor }]}>Maîtrise ★★★</Text>
                 </View>
 
-                {/* Play Button */}
-                <TouchableOpacity 
-                  style={[styles.playButton, { backgroundColor: accentColor }]}
-                  onPress={() => handleLaunchGame(game)}
-                >
-                  <Text style={styles.playButtonText}>
-                    {lang === 'fr' ? 'JOUER ▶️' : 'PLAY ▶️'}
-                  </Text>
-                </TouchableOpacity>
+                {/* Card Buttons: Replay & Play */}
+                <View style={styles.cardButtonRow}>
+                  <TouchableOpacity 
+                    style={styles.replayButton}
+                    onPress={() => {
+                      speakText('Recommençons ' + game.title);
+                      handleLaunchGame(game);
+                    }}
+                    title="Rejouer"
+                  >
+                    <Text style={styles.replayButtonText}>🔄</Text>
+                  </TouchableOpacity>
+
+                  <TouchableOpacity 
+                    style={[styles.playButton, { backgroundColor: accentColor, flex: 1 }]}
+                    onPress={() => handleLaunchGame(game)}
+                  >
+                    <Text style={styles.playButtonText}>
+                      {lang === 'fr' ? 'JOUER 🚀' : 'PLAY 🚀'}
+                    </Text>
+                  </TouchableOpacity>
+                </View>
               </TouchableOpacity>
             );
           })}
@@ -290,14 +360,22 @@ export default function GameLibraryScreen() {
 const styles = StyleSheet.create({
   container: { flex: 1, backgroundColor: '#F8FAFC' },
 
-  header: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', padding: 16, paddingTop: 24, backgroundColor: 'white', borderBottomWidth: 1, borderBottomColor: '#E2E8F0' },
+  header: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', padding: 14, paddingTop: 20, backgroundColor: 'white', borderBottomWidth: 1, borderBottomColor: '#E2E8F0' },
   headerMascotRow: { flexDirection: 'row', alignItems: 'center', gap: 10 },
-  mascotAnimation: { fontSize: 36 },
-  headerTitle: { fontSize: 18, fontWeight: 'bold', color: '#1E293B' },
-  headerSubtitle: { fontSize: 12, color: '#64748B', fontWeight: 'bold' },
-  headerActions: { flexDirection: 'row', gap: 8 },
-  langSwitchBtn: { backgroundColor: '#F1F5F9', paddingVertical: 6, paddingHorizontal: 12, borderRadius: 12, borderWidth: 1, borderColor: '#CBD5E1' },
-  langSwitchText: { fontSize: 12, fontWeight: 'bold', color: '#334155' },
+  mascotAnimation: { fontSize: 34 },
+  headerTitle: { fontSize: 17, fontWeight: 'bold', color: '#1E293B' },
+  headerSubtitle: { fontSize: 11, color: '#64748B', fontWeight: 'bold' },
+  headerActions: { flexDirection: 'row', gap: 6, alignItems: 'center' },
+  statChip: { backgroundColor: '#FEF3C7', paddingVertical: 5, paddingHorizontal: 9, borderRadius: 12, borderWidth: 1, borderColor: '#FDE68A' },
+  statChipText: { fontSize: 12, fontWeight: 'bold', color: '#92400E' },
+  actionIconBtn: { backgroundColor: '#F1F5F9', padding: 6, borderRadius: 12, borderWidth: 1, borderColor: '#CBD5E1' },
+  langSwitchBtn: { backgroundColor: '#F1F5F9', paddingVertical: 6, paddingHorizontal: 10, borderRadius: 12, borderWidth: 1, borderColor: '#CBD5E1' },
+  langSwitchText: { fontSize: 11, fontWeight: 'bold', color: '#334155' },
+
+  voiceCardBtn: { backgroundColor: '#F1F5F9', padding: 4, borderRadius: 8, borderWidth: 1, borderColor: '#CBD5E1' },
+  cardButtonRow: { flexDirection: 'row', gap: 6, alignItems: 'center' },
+  replayButton: { backgroundColor: '#F1F5F9', paddingVertical: 10, paddingHorizontal: 12, borderRadius: 12, borderWidth: 1, borderColor: '#CBD5E1', alignItems: 'center', justifyContent: 'center' },
+  replayButtonText: { fontSize: 14 },
 
   entryPathsRow: { flexDirection: 'row', paddingHorizontal: 16, paddingVertical: 10, gap: 8, backgroundColor: 'white' },
   entryPathTab: { flex: 1, paddingVertical: 8, borderRadius: 12, backgroundColor: '#F1F5F9', alignItems: 'center' },

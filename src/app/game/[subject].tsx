@@ -210,6 +210,7 @@ export default function GameActivityScreen() {
   const [feedbackColor, setFeedbackColor] = useState<string>('#10B981');
   const [errorsOnCurrent, setErrorsOnCurrent] = useState(0);
   const [showTutor, setShowTutor] = useState(false);
+  const [tutorUsedOnCurrentQ, setTutorUsedOnCurrentQ] = useState(false);
   
   const [isFinished, setIsFinished] = useState(false);
   const [coinsEarned, setCoinsEarned] = useState(0);
@@ -327,7 +328,7 @@ export default function GameActivityScreen() {
       correct: isCorrect,
       difficulty: difficultyLevel,
       hintLevel: errorsOnCurrent,
-      independent: errorsOnCurrent === 0 && !showTutor,
+      independent: errorsOnCurrent === 0 && !showTutor && !tutorUsedOnCurrentQ,
       timeSpentMs: timeSpent,
       misconceptionCode: !isCorrect ? (q.misconceptionCode || 'MISC_INCORRECT_ATTEMPT') : undefined,
       timestamp: Date.now()
@@ -338,12 +339,13 @@ export default function GameActivityScreen() {
       setFeedback('Gagné ! Bravo champion ! 🎉');
       speak('Bravo ! C\'est la bonne réponse !');
       
-      const isPerfect = errorsOnCurrent === 0;
+      const isPerfect = errorsOnCurrent === 0 && !tutorUsedOnCurrentQ;
       setResponses(prev => [...prev, { isCorrect: isPerfect, attempts: errorsOnCurrent }]);
 
       setTimeout(() => {
         setFeedback(null);
         setErrorsOnCurrent(0); 
+        setTutorUsedOnCurrentQ(false);
         setQuestionStartTime(Date.now());
         
         if (qIndex + 1 < questions.length) {
@@ -375,12 +377,14 @@ export default function GameActivityScreen() {
       } else {
         setFeedback(null);
         setShowTutor(true);
+        setTutorUsedOnCurrentQ(true);
       }
     }
   };
 
   const handlePracticeSimilar = () => {
     setShowTutor(false);
+    setTutorUsedOnCurrentQ(false);
     setErrorsOnCurrent(0);
     setQuestionStartTime(Date.now());
     const refreshed = generateQuestionsForSkill(skillId as string, difficultyLevel);
@@ -533,7 +537,7 @@ export default function GameActivityScreen() {
           <Text style={styles.livesText}>{"❤️".repeat(Math.max(0, lives))}</Text>
         </View>
 
-        <TouchableOpacity style={styles.tutorHelpBtn} onPress={() => setShowTutor(true)}>
+        <TouchableOpacity style={styles.tutorHelpBtn} onPress={() => { setShowTutor(true); setTutorUsedOnCurrentQ(true); }}>
           <Text style={styles.tutorHelpText}>🦉 Tuteur</Text>
         </TouchableOpacity>
       </View>
