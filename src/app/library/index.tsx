@@ -119,7 +119,7 @@ export default function GameLibraryScreen() {
         </View>
       </View>
 
-      {/* Entry Paths: Recommended, Free Choice, Practice */}
+      {/* Entry Paths: Recommended, Free Choice, Practice, and Non-Reader Arcade */}
       <View style={styles.entryPathsRow}>
         <TouchableOpacity 
           style={[styles.entryPathTab, entryMode === 'ALL' && styles.entryPathActive]} 
@@ -127,6 +127,15 @@ export default function GameLibraryScreen() {
         >
           <Text style={[styles.entryPathText, entryMode === 'ALL' && styles.entryPathTextActive]}>
             {lang === 'fr' ? '🎮 Tous les 60 Jeux' : '🎮 All 60 Games'}
+          </Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity 
+          style={[styles.entryPathTab, { backgroundColor: '#FDE047', borderColor: '#EAB308' }]} 
+          onPress={() => router.push('/arcade')}
+        >
+          <Text style={[styles.entryPathText, { color: '#713F12', fontWeight: '900' }]}>
+            {lang === 'fr' ? '🕹️ Arcade Sans Lecture' : '🕹️ Voice Arcade'}
           </Text>
         </TouchableOpacity>
 

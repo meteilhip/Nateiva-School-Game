@@ -137,3 +137,18 @@ This document tracks the verified implementation status of Nateiva EduKids again
 - **ScienceGarden (Water, sun, compost, 4-stage plant growth):** `COMPLETE_AND_TESTED`
 - **WordCastle (Drawbridge lowering, stone wall defenses):** `COMPLETE_AND_TESTED`
 
+## Part 17: Zero-Reading Arcade Platform & Multi-Subject Visual Tutor
+- **Standalone HTML5/Canvas Arcade (`index.html`, `arcade.html`, `public/arcade.html`):** `COMPLETE_AND_TESTED`
+- **Expo Router Route (`/arcade` & Library Launch Button):** `COMPLETE_AND_TESTED`
+- **6 Genuine Mechanics (Tetris Math Drop, Rocket Catch, Fruit Tree, Match Duo, 3-Lane Highway, CFA Market Scale):** `COMPLETE_AND_TESTED`
+- **Zero-Reading Non-Reader First Support:** `COMPLETE_AND_TESTED`
+  * Concrete visual quantity icons alongside numbers (e.g. 🥭🥭 + 🍏🍏🍏)
+  * Automatic vocal prompt narration (Web Speech API, slow rate)
+  * Idle guidance with animated hand pointer (`👆`) pointing to interactive targets after 2.5s
+  * Synthesized Web Audio sound effects (success chime, error bonk, laser shoot, coin clink)
+- **Interactive Multi-Subject AI Mascot Tutor (`TutorOverlay.tsx`):** `COMPLETE_AND_TESTED`
+  * Math: 5 modes with base-10 ten-rods and unit cubes tactile fusion manipulative
+  * Reading: Tap-to-speak syllable chunk assembler with phonetic readout and word reward
+  * Science: Interactive cause-and-effect plant growth lab with toggles for Sun and Water
+
+

@@ -15,6 +15,14 @@ export function TutorOverlay({ question, onClose, onPracticeSimilar }: TutorOver
   const [regroupStep, setRegroupStep] = useState<number>(0);
   const [isSlowSpeech, setIsSlowSpeech] = useState(false);
 
+  // Non-reader interactive states
+  const [tappedSyllables, setTappedSyllables] = useState<number[]>([]);
+  const [hasSun, setHasSun] = useState<boolean>(false);
+  const [hasWater, setHasWater] = useState<boolean>(false);
+
+  const isMath = question.type?.includes('ADD') || question.type?.includes('MATH') || question.type?.includes('COUNT') || question.type?.includes('ROBOT');
+  const isScience = question.type?.includes('SCI') || question.type?.includes('HABITAT') || question.type?.includes('GARDEN') || question.type?.includes('LIVING');
+
   const speak = (text: string) => {
     Speech.stop();
     Speech.speak(text, { 
@@ -22,6 +30,16 @@ export function TutorOverlay({ question, onClose, onPracticeSimilar }: TutorOver
       rate: isSlowSpeech ? 0.65 : 0.85 
     });
   };
+
+  React.useEffect(() => {
+    if (isMath) {
+      speak('Bonjour ! Je suis ton tuteur malin. Regarde bien les barres de dix et les cubes.');
+    } else if (isScience) {
+      speak('Bonjour petit chercheur ! Découvrons ce qui donne vie à la plante.');
+    } else {
+      speak('Bonjour ! Écoute les sons et touche chaque syllabe pour former le mot.');
+    }
+  }, []);
 
   // 1. Math Regrouping Tutor (47 + 28 model)
   const renderMathContent = () => {
@@ -112,10 +130,22 @@ export function TutorOverlay({ question, onClose, onPracticeSimilar }: TutorOver
 
             <View style={styles.interactiveRegroupArea}>
               {regroupStep === 0 ? (
-                <TouchableOpacity style={styles.fusionButton} onPress={() => setRegroupStep(1)}>
-                  <Text style={{ fontSize: 40 }}>📦 10 Petits Cubes</Text>
-                  <Text style={styles.fusionBtnText}>⚡ Toucher pour Fusionner !</Text>
-                </TouchableOpacity>
+                <View style={{ alignItems: 'center' }}>
+                  <TouchableOpacity 
+                    style={styles.fusionButton} 
+                    onPress={() => {
+                      setRegroupStep(1);
+                      speak('Bravo ! Tu as fusionné 10 cubes pour former 1 nouvelle barre de dix !');
+                    }}
+                  >
+                    <Text style={{ fontSize: 40 }}>📦 10 Petits Cubes</Text>
+                    <Text style={styles.fusionBtnText}>⚡ Toucher pour Fusionner !</Text>
+                  </TouchableOpacity>
+                  <View style={styles.pointerGuideRow}>
+                    <Text style={styles.pointerGuideIcon}>👆</Text>
+                    <Text style={styles.pointerGuideText}>Touche ici !</Text>
+                  </View>
+                </View>
               ) : (
                 <View style={styles.fusedResultBox}>
                   <Text style={{ fontSize: 40 }}>🟦 1 Nouvelle Barre de 10 !</Text>
@@ -192,64 +222,194 @@ export function TutorOverlay({ question, onClose, onPracticeSimilar }: TutorOver
     );
   };
 
-  // 2. Reading Tutor (Phonemes, Syllable Chunks, Stories)
-  const renderReadingContent = () => (
-    <View style={styles.tutorBody}>
-      <View style={styles.modeCard}>
-        <Text style={styles.stepHeader}>Décodage Pas à Pas des Syllabes :</Text>
-        
-        <View style={styles.syllableDemoRow}>
-          <View style={styles.syllableBubble}><Text style={styles.syllableBubbleText}>BA</Text></View>
-          <Text style={styles.plusSymbol}>➕</Text>
-          <View style={styles.syllableBubble}><Text style={styles.syllableBubbleText}>NA</Text></View>
-          <Text style={styles.plusSymbol}>➕</Text>
-          <View style={styles.syllableBubble}><Text style={styles.syllableBubbleText}>NE</Text></View>
-        </View>
+  // 2. Reading Tutor (Phonemes, Interactive Syllables)
+  const renderReadingContent = () => {
+    const syllables = ['BA', 'NA', 'NE'];
+    const allDone = tappedSyllables.length === 3;
+    const nextIndex = syllables.findIndex((_, idx) => !tappedSyllables.includes(idx));
 
-        <TouchableOpacity 
-          style={styles.listenTutorBtn}
-          onPress={() => speak("B. A. fait Ba. N. A. fait Na. N. E. fait Ne. Ba-na-ne !")}
-        >
-          <Text style={styles.listenTutorBtnText}>🔊 Écouter le découpage syllabique lent</Text>
-        </TouchableOpacity>
-
-        <View style={styles.readingTrickBox}>
-          <Text style={styles.trickTitle}>💡 Règle de lecture :</Text>
-          <Text style={styles.trickText}>
-            Chaque syllabe commence par la consonne qui guide la bouche, suivie de la voyelle qui fait sonner la voix !
+    return (
+      <View style={styles.tutorBody}>
+        <View style={styles.modeCard}>
+          <Text style={styles.stepHeader}>🔤 Découpe et Assemble les Syllabes :</Text>
+          <Text style={styles.instructionText}>
+            Touche chaque bulle dans l'ordre pour écouter le son et former le mot !
           </Text>
+
+          <View style={styles.syllableDemoRow}>
+            {syllables.map((syl, idx) => {
+              const isTapped = tappedSyllables.includes(idx);
+              const isNext = idx === nextIndex;
+              return (
+                <React.Fragment key={syl}>
+                  {idx > 0 && <Text style={styles.plusSymbol}>➕</Text>}
+                  <TouchableOpacity
+                    style={[
+                      styles.syllableBubble,
+                      isTapped && styles.syllableBubbleActive,
+                      isNext && styles.syllableBubbleNext,
+                    ]}
+                    onPress={() => {
+                      if (!isTapped) {
+                        const newTapped = [...tappedSyllables, idx];
+                        setTappedSyllables(newTapped);
+                        if (newTapped.length === 3) {
+                          speak('Bravo ! B A fait Ba, N A fait Na, N E fait Ne. Ba-na-ne ! 🍌');
+                        } else {
+                          speak(`${syl} !`);
+                        }
+                      }
+                    }}
+                  >
+                    <Text style={[styles.syllableBubbleText, isTapped && styles.syllableBubbleTextActive]}>
+                      {syl}
+                    </Text>
+                    {isTapped && <Text style={styles.checkmarkIcon}>✓</Text>}
+                  </TouchableOpacity>
+                </React.Fragment>
+              );
+            })}
+          </View>
+
+          {nextIndex !== -1 && (
+            <View style={styles.pointerGuideRow}>
+              <Text style={styles.pointerGuideIcon}>👆</Text>
+              <Text style={styles.pointerGuideText}>Touche la bulle {syllables[nextIndex]} !</Text>
+            </View>
+          )}
+
+          {allDone && (
+            <View style={styles.celebrateWordBox}>
+              <Text style={{ fontSize: 50 }}>🍌</Text>
+              <Text style={styles.celebrateWordText}>BANANE</Text>
+              <Text style={styles.celebrateWordSub}>Miam ! Tu as lu le mot complet !</Text>
+            </View>
+          )}
+
+          <View style={{ flexDirection: 'row', gap: 10, marginTop: 12 }}>
+            <TouchableOpacity 
+              style={[styles.listenTutorBtn, { flex: 1 }]}
+              onPress={() => speak("B. A. fait Ba. N. A. fait Na. N. E. fait Ne. Ba-na-ne !")}
+            >
+              <Text style={styles.listenTutorBtnText}>🔊 Réécouter</Text>
+            </TouchableOpacity>
+
+            {tappedSyllables.length > 0 && (
+              <TouchableOpacity 
+                style={[styles.resetBtn, { flex: 1 }]}
+                onPress={() => {
+                  setTappedSyllables([]);
+                  speak("C'est reparti ! Touche la première syllabe Ba.");
+                }}
+              >
+                <Text style={styles.resetBtnText}>🔄 Recommencer</Text>
+              </TouchableOpacity>
+            )}
+          </View>
+
+          <View style={styles.readingTrickBox}>
+            <Text style={styles.trickTitle}>💡 Astuce du Hibou :</Text>
+            <Text style={styles.trickText}>
+              La consonne fait la forme de la bouche, la voyelle fait chanter la voix !
+            </Text>
+          </View>
         </View>
       </View>
-    </View>
-  );
+    );
+  };
 
   // 3. Science Tutor (Controlled Experiments, Cause & Effect)
-  const renderScienceContent = () => (
-    <View style={styles.tutorBody}>
-      <View style={styles.modeCard}>
-        <Text style={styles.stepHeader}>Méthode Scientifique : Plante avec ou sans Lumière</Text>
-        
-        <View style={styles.scienceSimulationBox}>
-          <View style={styles.simPlantItem}>
-            <Text style={{ fontSize: 45 }}>☀️🪴</Text>
-            <Text style={styles.simPlantLabel}>Avec Soleil : Plante verte et forte</Text>
+  const renderScienceContent = () => {
+    const isBlooming = hasSun && hasWater;
+
+    return (
+      <View style={styles.tutorBody}>
+        <View style={styles.modeCard}>
+          <Text style={styles.stepHeader}>🌱 Expérience : De quoi la plante a-t-elle besoin ?</Text>
+          <Text style={styles.instructionText}>
+            Active le soleil et l'eau pour observer ce qui fait grandir la plante !
+          </Text>
+
+          {/* Plant Visual State */}
+          <View style={styles.scienceSimulationBox}>
+            <View style={[styles.simPlantItem, isBlooming && styles.simPlantItemBlooming]}>
+              <Text style={{ fontSize: 60 }}>
+                {isBlooming ? '🌻🪴' : hasWater ? '💧🌱' : hasSun ? '☀️🥀' : '🌑🥀'}
+              </Text>
+              <Text style={styles.simPlantStatus}>
+                {isBlooming
+                  ? 'Plante épanouie et forte !'
+                  : hasWater
+                  ? 'Il y a de l’eau, mais il fait trop noir !'
+                  : hasSun
+                  ? 'Il y a du soleil, mais elle a soif !'
+                  : 'Dans le noir et sans eau, elle fane...'}
+              </Text>
+            </View>
           </View>
 
-          <View style={styles.simPlantItem}>
-            <Text style={{ fontSize: 45 }}>🌑🥀</Text>
-            <Text style={styles.simPlantLabel}>Dans le noir : Feuilles jaunes et flétries</Text>
+          {/* Interactive controls */}
+          <View style={styles.scienceControlsRow}>
+            <TouchableOpacity
+              style={[styles.scienceToggleBtn, hasSun && styles.scienceToggleBtnActive]}
+              onPress={() => {
+                const next = !hasSun;
+                setHasSun(next);
+                if (next && hasWater) {
+                  speak('Superbe ! Le soleil et l’eau permettent la photosynthèse, la fleur s’ouvre !');
+                } else if (next) {
+                  speak('Soleil activé ! Mais n’oublie pas de l’arroser.');
+                } else {
+                  speak('Soleil éteint.');
+                }
+              }}
+            >
+              <Text style={{ fontSize: 26 }}>☀️</Text>
+              <Text style={[styles.scienceToggleText, hasSun && styles.scienceToggleTextActive]}>
+                {hasSun ? 'Soleil : OUI' : 'Donner Soleil'}
+              </Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              style={[styles.scienceToggleBtn, hasWater && styles.scienceToggleBtnActive]}
+              onPress={() => {
+                const next = !hasWater;
+                setHasWater(next);
+                if (next && hasSun) {
+                  speak('Génial ! Soleil plus eau égale une plante forte et verte !');
+                } else if (next) {
+                  speak('Arrosage fait ! Maintenant, donne-lui de la lumière.');
+                } else {
+                  speak('Arrosage coupé.');
+                }
+              }}
+            >
+              <Text style={{ fontSize: 26 }}>💧</Text>
+              <Text style={[styles.scienceToggleText, hasWater && styles.scienceToggleTextActive]}>
+                {hasWater ? 'Eau : OUI' : 'Arroser d’Eau'}
+              </Text>
+            </TouchableOpacity>
+          </View>
+
+          {!isBlooming && (
+            <View style={styles.pointerGuideRow}>
+              <Text style={styles.pointerGuideIcon}>👆</Text>
+              <Text style={styles.pointerGuideText}>
+                {!hasSun ? 'Touche le soleil ☀️ !' : 'Touche l’eau 💧 !'}
+              </Text>
+            </View>
+          )}
+
+          <View style={styles.explanationBox}>
+            <Text style={styles.explanationTitle}>🔬 Découverte scientifique :</Text>
+            <Text style={styles.explanationDesc}>
+              La plante a besoin de deux choses vitales : de la lumière pour la chlorophylle et de l'eau absorbée par ses racines !
+            </Text>
           </View>
         </View>
-
-        <Text style={styles.explanationDesc}>
-          La plante utilise la lumière du soleil pour fabriquer sa propre sève verte (la chlorophylle). Sans soleil, elle ne peut pas se nourrir !
-        </Text>
       </View>
-    </View>
-  );
-
-  const isMath = question.type?.includes('ADD') || question.type?.includes('MATH') || question.type?.includes('COUNT') || question.type?.includes('ROBOT');
-  const isScience = question.type?.includes('SCI') || question.type?.includes('HABITAT') || question.type?.includes('GARDEN') || question.type?.includes('LIVING');
+    );
+  };
 
   return (
     <View style={styles.overlay}>
@@ -359,18 +519,39 @@ const styles = StyleSheet.create({
 
   // Reading
   syllableDemoRow: { flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: 10, marginVertical: 12 },
-  syllableBubble: { backgroundColor: '#EEF2FF', paddingVertical: 10, paddingHorizontal: 16, borderRadius: 16, borderWidth: 2, borderColor: '#6366F1' },
+  syllableBubble: { backgroundColor: '#EEF2FF', paddingVertical: 12, paddingHorizontal: 18, borderRadius: 18, borderWidth: 2, borderColor: '#6366F1', alignItems: 'center', minWidth: 64 },
+  syllableBubbleActive: { backgroundColor: '#DCFCE7', borderColor: '#22C55E' },
+  syllableBubbleNext: { borderColor: '#F59E0B', borderWidth: 3, transform: [{ scale: 1.05 }] },
   syllableBubbleText: { fontSize: 24, fontWeight: 'bold', color: '#4338CA' },
+  syllableBubbleTextActive: { color: '#15803D' },
+  checkmarkIcon: { fontSize: 13, color: '#16A34A', fontWeight: 'bold', marginTop: 2 },
+  celebrateWordBox: { backgroundColor: '#FEF08A', padding: 16, borderRadius: 20, alignItems: 'center', marginVertical: 12, borderWidth: 2, borderColor: '#EAB308' },
+  celebrateWordText: { fontSize: 26, fontWeight: 'bold', color: '#854D0E', letterSpacing: 2 },
+  celebrateWordSub: { fontSize: 13, color: '#A16207', fontWeight: 'bold', marginTop: 4 },
+  resetBtn: { backgroundColor: '#F1F5F9', padding: 12, borderRadius: 14, alignItems: 'center', borderWidth: 1, borderColor: '#CBD5E1', marginVertical: 10 },
+  resetBtnText: { color: '#475569', fontWeight: 'bold', fontSize: 13 },
   listenTutorBtn: { backgroundColor: '#FEF3C7', padding: 12, borderRadius: 14, alignItems: 'center', borderWidth: 1, borderColor: '#F59E0B', marginVertical: 10 },
   listenTutorBtnText: { color: '#92400E', fontWeight: 'bold', fontSize: 13 },
-  readingTrickBox: { backgroundColor: '#F0FDF4', padding: 12, borderRadius: 14, borderWidth: 1, borderColor: '#86EFAC' },
+  readingTrickBox: { backgroundColor: '#F0FDF4', padding: 12, borderRadius: 14, borderWidth: 1, borderColor: '#86EFAC', marginTop: 8 },
   trickTitle: { fontSize: 13, fontWeight: 'bold', color: '#166534', marginBottom: 2 },
   trickText: { fontSize: 12, color: '#14532D', lineHeight: 18 },
 
   // Science
-  scienceSimulationBox: { flexDirection: 'row', justifyContent: 'space-around', marginVertical: 12 },
-  simPlantItem: { alignItems: 'center', width: 140, backgroundColor: 'white', padding: 10, borderRadius: 14, borderWidth: 1, borderColor: '#CBD5E1' },
+  scienceSimulationBox: { alignItems: 'center', marginVertical: 14 },
+  simPlantItem: { alignItems: 'center', backgroundColor: '#F1F5F9', padding: 18, borderRadius: 22, borderWidth: 2, borderColor: '#CBD5E1', width: '100%', maxWidth: 320 },
+  simPlantItemBlooming: { backgroundColor: '#ECFDF5', borderColor: '#34D399' },
   simPlantLabel: { fontSize: 11, fontWeight: 'bold', color: '#334155', textAlign: 'center', marginTop: 6 },
+  simPlantStatus: { fontSize: 13, fontWeight: 'bold', color: '#1E293B', textAlign: 'center', marginTop: 8 },
+  scienceControlsRow: { flexDirection: 'row', gap: 12, justifyContent: 'center', marginVertical: 10 },
+  scienceToggleBtn: { flexDirection: 'row', alignItems: 'center', gap: 8, paddingVertical: 12, paddingHorizontal: 16, borderRadius: 18, backgroundColor: '#F1F5F9', borderWidth: 2, borderColor: '#CBD5E1' },
+  scienceToggleBtnActive: { backgroundColor: '#FEF3C7', borderColor: '#F59E0B' },
+  scienceToggleText: { fontSize: 13, fontWeight: 'bold', color: '#475569' },
+  scienceToggleTextActive: { color: '#B45309' },
+
+  // Pointer guide for non-readers
+  pointerGuideRow: { flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: 8, backgroundColor: '#FEF9C3', paddingVertical: 8, paddingHorizontal: 14, borderRadius: 16, borderWidth: 1, borderColor: '#FACC15', marginVertical: 8 },
+  pointerGuideIcon: { fontSize: 22 },
+  pointerGuideText: { fontSize: 13, fontWeight: 'bold', color: '#854D0E' },
 
   // Actions
   actionsFooter: { gap: 10 },
