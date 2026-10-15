@@ -421,6 +421,50 @@ main {
   flex: 2;
   font-size: 15px;
 }
+
+.category-tabs-row {
+  display: flex;
+  gap: 6px;
+  overflow-x: auto;
+  padding-bottom: 6px;
+  margin-bottom: 10px;
+  -webkit-overflow-scrolling: touch;
+}
+.cat-pill-btn {
+  background: #1e293b;
+  color: #94a3b8;
+  border: 1px solid #334155;
+  border-radius: 14px;
+  padding: 6px 12px;
+  font-size: 12px;
+  font-weight: 800;
+  white-space: nowrap;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  transition: all 0.2s;
+}
+.cat-pill-btn.active {
+  background: linear-gradient(135deg, #4f46e5 0%, #3b82f6 100%);
+  color: white;
+  border-color: #818cf8;
+  box-shadow: 0 2px 8px rgba(79, 70, 229, 0.4);
+}
+.matrix-topic-banner {
+  background: linear-gradient(90deg, #1e1b4b 0%, #312e81 100%);
+  border: 1px solid #6366f1;
+  border-radius: 12px;
+  padding: 6px 12px;
+  font-size: 12px;
+  color: #c7d2fe;
+  font-weight: 700;
+  margin-bottom: 8px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
 </style>
 </head>
 <body>
@@ -444,9 +488,27 @@ main {
 <main>
   <!-- Grade Level Selector -->
   <div class="panel">
+    
+    <!-- 7 Learning Categories Matrix Selector -->
+    <div class="category-tabs-row" id="category-pills">
+      <button class="cat-pill-btn active" data-cat="math_arcade">🧮 Math Arcade</button>
+      <button class="cat-pill-btn" data-cat="reading">📖 Reading</button>
+      <button class="cat-pill-btn" data-cat="comprehension">📜 Comprehension</button>
+      <button class="cat-pill-btn" data-cat="pronunciation">🗣️ Pronunciation</button>
+      <button class="cat-pill-btn" data-cat="science">🔬 Science</button>
+      <button class="cat-pill-btn" data-cat="logic_puzzles">🧩 Logic/Puzzles</button>
+      <button class="cat-pill-btn" data-cat="creative_play">🎨 Creative Play</button>
+    </div>
+
+    <!-- Active 28-Cell Matrix Curriculum Topic Indicator -->
+    <div class="matrix-topic-banner" id="matrix-topic-banner">
+      <span>🎯 Thème : <strong id="matrix-category-label" style="color:#ffffff;">Math Arcade</strong> • <span id="matrix-topic-label" style="color:#facc15;font-weight:900;">Counting</span></span>
+      <span id="matrix-grade-label" style="font-size:11px;background:#4338ca;padding:2px 8px;border-radius:8px;">🐣 Nursery</span>
+    </div>
+
     <div class="selectors-bar">
       <div class="pills-group" id="grade-pills">
-        <button class="pill-btn active" data-grade="0">🐣 Maternelle</button>
+        <button class="pill-btn active" data-grade="0">🐣 Nursery</button>
         <button class="pill-btn" data-grade="1">🦁 SIL / CP</button>
         <button class="pill-btn" data-grade="2">🚀 CE1 / CE2</button>
         <button class="pill-btn" data-grade="3">👑 CM1 / CM2</button>
@@ -687,7 +749,8 @@ const VoiceEngine = {
 // --- GAME STATE ---
 const state = {
   game: 'drop', // 'drop' | 'catch' | 'fruit' | 'match' | 'racing' | 'market'
-  grade: 0,     // 0: Maternelle (1-5), 1: SIL/CP (1-10), 2: CE1/CE2 (1-30), 3: CM1/CM2 (1-100)
+  grade: 0,
+  category: 'math_arcade',     // 0: Maternelle (1-5), 1: SIL/CP (1-10), 2: CE1/CE2 (1-30), 3: CM1/CM2 (1-100)
   score: 0,
   coins: 15,
   level: 1,
@@ -780,108 +843,265 @@ function spawnParticles(x, y, color, count) {
 }
 
 // Question Generator with concrete fruit icons & multi-operations
+
+// ============================================================================
+// 28-CELL MASTER CURRICULUM MATRIX & PROCEDURAL DATABASE
+// ============================================================================
+const MATRIX_CONFIG = {
+  'math_arcade': {
+    label: 'Math Arcade',
+    topics: ['Counting', 'Add/subtract', 'Multiply/divide', 'Fractions/decimals']
+  },
+  'reading': {
+    label: 'Reading',
+    topics: ['Letters/pictures', 'Phonics/words', 'Fluency', 'Advanced reading']
+  },
+  'comprehension': {
+    label: 'Comprehension',
+    topics: ['Spoken stories', 'Story sequence', 'Cause/effect', 'Inference/evidence']
+  },
+  'pronunciation': {
+    label: 'Pronunciation',
+    topics: ['Sounds', 'Syllables', 'Words/phrases', 'Oral reading']
+  },
+  'science': {
+    label: 'Science',
+    topics: ['Animals/plants', 'Habitats', 'Water/materials', 'Forces/energy']
+  },
+  'logic_puzzles': {
+    label: 'Logic/puzzles',
+    topics: ['Sorting', 'Patterns', 'Mazes', 'Strategy']
+  },
+  'creative_play': {
+    label: 'Creative play',
+    topics: ['Shapes/toys', 'Construction', 'Experiments', 'Engineering']
+  }
+};
+
+const MATRIX_BANK = {
+  'math_arcade': [
+    // 0: Nursery - Counting
+    [
+      { q: "Combien d'étoiles vois-tu ?", dots: '⭐⭐⭐⭐', ans: '4', options: ['3', '4', '5', '2'], icon: '⭐', speech: "Compte les étoiles ! Combien y en a-t-il ?" },
+      { q: "Compte les mangues mûres !", dots: '🥭🥭🥭', ans: '3', options: ['2', '3', '4', '1'], icon: '🥭', speech: "Compte les mangues du marché !" },
+      { q: "Combien d'ananas juteux ?", dots: '🍍🍍🍍🍍🍍', ans: '5', options: ['4', '5', '6', '3'], icon: '🍍', speech: "Compte les ananas !" }
+    ],
+    // 1: SIL/CP - Add/subtract
+    [
+      { q: "4 + 3 = ?", dots: '🥭🥭🥭🥭 + 🍏🍏🍏', ans: '7', options: ['6', '7', '8', '5'], icon: '🥭', speech: "4 plus 3 font combien ?" },
+      { q: "8 - 3 = ?", dots: '🍌🍌🍌🍌🍌 ❌❌❌', ans: '5', options: ['4', '5', '6', '3'], icon: '🍌', speech: "8 moins 3 font combien ?" },
+      { q: "5 + 4 = ?", dots: '🍍🍍🍍🍍🍍 + 🍏🍏🍏🍏', ans: '9', options: ['8', '9', '10', '7'], icon: '🍍', speech: "5 plus 4 font combien ?" }
+    ],
+    // 2: CE1/CE2 - Multiply/divide
+    [
+      { q: "3 × 4 = ?", dots: '⭐⭐⭐⭐ • ⭐⭐⭐⭐ • ⭐⭐⭐⭐', ans: '12', options: ['10', '12', '14', '16'], icon: '⭐', speech: "3 fois 4 font combien ?" },
+      { q: "15 ÷ 3 = ?", dots: '🧺 (5) | 🧺 (5) | 🧺 (5)', ans: '5', options: ['4', '5', '6', '3'], icon: '🐟', speech: "15 divisé par 3 fait combien ?" },
+      { q: "4 × 5 = ?", dots: '🥭🥭🥭🥭🥭 × 4', ans: '20', options: ['18', '20', '22', '25'], icon: '🥭', speech: "4 fois 5 font combien ?" }
+    ],
+    // 3: CM1/CM2 - Fractions/decimals
+    [
+      { q: "1/2 de 10 mangues = ?", dots: '🥭🥭🥭🥭🥭 | 🥭🥭🥭🥭🥭', ans: '5', options: ['4', '5', '6', '3'], icon: '🥭', speech: "La moitié de 10 mangues égale ?" },
+      { q: "2.5 + 1.5 = ?", dots: '2.5 + 1.5 en CFA', ans: '4', options: ['3.5', '4', '4.5', '5'], icon: '🪙', speech: "2 virgule 5 plus 1 virgule 5 font combien ?" },
+      { q: "3/4 d'un gâteau de 4 parts = ?", dots: '🍰🍰🍰 ⚪', ans: '3 parts', options: ['2 parts', '3 parts', '4 parts', '1 part'], icon: '🍰', speech: "3 quarts d'un gâteau font combien de parts ?" }
+    ]
+  ],
+
+  'reading': [
+    // 0: Nursery - Letters/pictures
+    [
+      { q: "Trouve la lettre de 🍍 Ananas :", dots: '🍍 Ananas', ans: 'A', options: ['A', 'B', 'M', 'P'], icon: '🍍', speech: "Trouve la lettre de Ananas !" },
+      { q: "Trouve la lettre de 🍌 Banane :", dots: '🍌 Banane', ans: 'B', options: ['B', 'D', 'P', 'T'], icon: '🍌', speech: "Trouve la lettre de Banane !" },
+      { q: "Trouve la lettre de 🥭 Mangue :", dots: '🥭 Mangue', ans: 'M', options: ['M', 'N', 'W', 'V'], icon: '🥭', speech: "Trouve la lettre de Mangue !" }
+    ],
+    // 1: SIL/CP - Phonics/words
+    [
+      { q: "Quel mot commence par le son B ?", dots: 'Son [B]', ans: 'Banane', options: ['Banane', 'Soleil', 'Maison', 'Table'], icon: '🍌', speech: "Quel mot commence par le son B ?" },
+      { q: "Lis le mot : L - I - T", dots: '🛏️ Meuble pour dormir', ans: 'Lit', options: ['Lit', 'Sac', 'Mur', 'Bus'], icon: '🛏️', speech: "L... I... T... quel est ce mot ?" },
+      { q: "La syllabe B + A se lit :", dots: 'B + A', ans: 'BA', options: ['BA', 'BO', 'BU', 'BE'], icon: '🔤', speech: "B plus A se lit comment ?" }
+    ],
+    // 2: CE1/CE2 - Fluency
+    [
+      { q: "Complète : L'oiseau vole dans le...", dots: '🦅 Dans les airs', ans: 'Ciel', options: ['Ciel', 'Sol', 'Mer', 'Feu'], icon: '🌤️', speech: "L'oiseau vole dans le quoi ?" },
+      { q: "Musa va à l'école avec son...", dots: '🎒 Sur le dos', ans: 'Cartable', options: ['Cartable', 'Vélo', 'Tambour', 'Ballon'], icon: '🎒', speech: "Musa va à l'école avec son quoi ?" },
+      { q: "Le poisson nage dans le...", dots: '🐟 Dans les flots', ans: 'Fleuve', options: ['Fleuve', 'Désert', 'Arbre', 'Toit'], icon: '🌊', speech: "Le poisson nage dans le quoi ?" }
+    ],
+    // 3: CM1/CM2 - Advanced reading
+    [
+      { q: "Quel est le synonyme de Vaillant ?", dots: '🦁 Grand courage', ans: 'Courageux', options: ['Courageux', 'Peur', 'Lent', 'Sombre'], icon: '🦁', speech: "Quel est le synonyme du mot Vaillant ?" },
+      { q: "Le mot 'Ardemment' signifie :", dots: '🔥 Avec grande intensité', ans: 'Avec passion', options: ['Avec passion', 'Faiblement', 'La nuit', 'Avec regret'], icon: '✨', speech: "Que signifie le mot ardemment ?" },
+      { q: "Quel mot exprime une grande joie ?", dots: '🎉 Bonheur immense', ans: 'Allégresse', options: ['Allégresse', 'Tristesse', 'Colère', 'Ennui'], icon: '🌟', speech: "Quel mot exprime une immense joie ?" }
+    ]
+  ],
+
+  'comprehension': [
+    // 0: Nursery - Spoken stories
+    [
+      { q: "Le singe monte tout en haut de l'arbre. Où est-il ?", dots: '🐒 Canopée', ans: 'Dans l\'arbre', options: ['Dans l\'arbre', 'Sous terre', 'Dans l\'eau', 'Au lit'], icon: '🐒', speech: "Le singe monte tout en haut de l'arbre. Où est-il ?" },
+      { q: "Musa croque une bonne mangue sucrée. Que mange Musa ?", dots: '🥭 Fruit mûr', ans: 'Une mangue', options: ['Une mangue', 'Un caillou', 'Un livre', 'Une table'], icon: '🥭', speech: "Musa mange une mangue sucrée. Que mange Musa ?" }
+    ],
+    // 1: SIL/CP - Story sequence
+    [
+      { q: "Que fait-on au RÉVEIL le matin ?", dots: '🌅 Début de journée', ans: 'Se réveiller', options: ['Se réveiller', 'Dormir la nuit', 'Sortir le soir'], icon: '🌅', speech: "Quelle est la première chose qu'on fait le matin ?" },
+      { q: "Dans l'histoire du papillon, quelle est la 1ère étape ?", dots: '🐛 Métamorphose', ans: 'La chenille', options: ['La chenille', 'Le papillon', 'Le cocon'], icon: '🐛', speech: "Quelle est la première étape du papillon ?" }
+    ],
+    // 2: CE1/CE2 - Cause/effect
+    [
+      { q: "Il a plu toute la nuit. Quelle est la conséquence ?", dots: '🌧️ Averse abondante', ans: 'Sol mouillé', options: ['Sol mouillé', 'Nuit noire', 'Feuilles brûlées'], icon: '🌧️', speech: "Il a plu toute la nuit. Quelle est la conséquence ?" },
+      { q: "Amina arrose sa plante tous les jours. Que se passe-t-il ?", dots: '💧 Soin quotidien', ans: 'Elle grandit', options: ['Elle grandit', 'Elle fane', 'Elle s\'envole'], icon: '🌻', speech: "Amina arrose bien sa plante. Que va-t-il se passer ?" }
+    ],
+    // 3: CM1/CM2 - Inference/evidence
+    [
+      { q: "Tous les enfants portent un sac et franchissent la grille. Où sont-ils ?", dots: '🎒 Entrée matinale', ans: 'À l\'école', options: ['À l\'école', 'À la plage', 'Au cinéma', 'En avion'], icon: '🏫', speech: "Tous les enfants portent un cartable et franchissent la grille. Où sont-ils ?" },
+      { q: "Le sol est boueux et les parapluies sont ouverts. On en déduit :", dots: '☔ Indices météo', ans: 'Il a plu', options: ['Il a plu', 'Il fait nuit', 'Grand soleil'], icon: '🌧️', speech: "Le sol est boueux et les parapluies sont ouverts. Que peut-on en déduire ?" }
+    ]
+  ],
+
+  'pronunciation': [
+    // 0: Nursery - Sounds
+    [
+      { q: "Écoute le son : [Aaa] ! Touche la bonne lettre :", dots: '👄 Bouche ouverte', ans: 'A', options: ['A', 'O', 'U', 'I'], icon: '🔤', speech: "Écoute bien : Aaaa ! Quelle lettre fait ce son ?" },
+      { q: "Quel animal fait 'Cocorico' le matin ?", dots: '🐓 Chant du matin', ans: 'Le Coq', options: ['Le Coq', 'Le Chien', 'Le Chat', 'Le Lion'], icon: '🐓', speech: "Quel animal chante cocorico le matin ?" }
+    ],
+    // 1: SIL/CP - Syllables
+    [
+      { q: "Combien de syllabes dans PA-PI-LLON ?", dots: '👏 PA • PI • LLON', ans: '3 syllabes', options: ['1 syllabe', '2 syllabes', '3 syllabes', '4 syllabes'], icon: '🦋', speech: "Combien de syllabes entends-tu dans pa-pi-llon ?" },
+      { q: "Combien de syllabes dans MA-MAN ?", dots: '👏 MA • MAN', ans: '2 syllabes', options: ['1 syllabe', '2 syllabes', '3 syllabes', '4 syllabes'], icon: '❤️', speech: "Combien de syllabes entends-tu dans ma-man ?" }
+    ],
+    // 2: CE1/CE2 - Words/phrases
+    [
+      { q: "Quel mot rime avec BATEAU ?", dots: '🎵 Même son -EAU', ans: 'CHÂTEAU', options: ['CHÂTEAU', 'MAISON', 'SOLEIL', 'ARBRE'], icon: '⛵', speech: "Quel mot rime avec bateau ?" },
+      { q: "Quel mot rime avec SOURIS ?", dots: '🎵 Même son -IS', ans: 'PARIS', options: ['PARIS', 'CHAT', 'BALLON', 'LUNE'], icon: '🐁', speech: "Quel mot rime avec souris ?" }
+    ],
+    // 3: CM1/CM2 - Oral reading
+    [
+      { q: "À la fin d'une phrase avec '!', le ton de la voix doit :", dots: '❗ Exclamation', ans: 'Monter', options: ['Monter', 'Descendre', 'Chuchoter'], icon: '❗', speech: "Quand une phrase se termine par un point d'exclamation, que fait la voix ?" },
+      { q: "À la virgule (,), on fait :", dots: '⏸️ Petite pause', ans: 'Courte pause', options: ['Courte pause', 'Arrêt total', 'Grand cri'], icon: '⏸️', speech: "Quand on rencontre une virgule dans un texte, que doit-on faire ?" }
+    ]
+  ],
+
+  'science': [
+    // 0: Nursery - Animals/plants
+    [
+      { q: "Qui est un être VIVANT qui respire et grandit ?", dots: '🌱 Monde vivant', ans: 'L\'Éléphant', options: ['L\'Éléphant', 'Le Caillou', 'Le Ballon', 'La Cuillère'], icon: '🐘', speech: "Qui est un être vivant qui respire et grandit ?" },
+      { q: "Quelle plante pousse dans les plantations du Cameroun ?", dots: '🌴 Plante', ans: 'Le Bananier', options: ['Le Bananier', 'Le Plastique', 'Le Ciment'], icon: '🍌', speech: "Quelle plante donne des fruits dans nos plantations ?" }
+    ],
+    // 1: SIL/CP - Habitats
+    [
+      { q: "Où vit le grand chimpanzé du Cameroun ?", dots: '🌳 Canopée', ans: 'Forêt', options: ['Forêt', 'Banquise', 'Désert'], icon: '🐒', speech: "Dans quel habitat naturel vit le chimpanzé ?" },
+      { q: "Où nagent les poissons du Cameroun ?", dots: '🌊 Eau douce', ans: 'Fleuve Wouri', options: ['Fleuve Wouri', 'Savane Waza', 'Mont Cameroun'], icon: '🐟', speech: "Où nagent les poissons d'eau douce au Cameroun ?" }
+    ],
+    // 2: CE1/CE2 - Water/materials
+    [
+      { q: "Quand l'eau chauffe très fort au soleil, elle devient :", dots: '♨️ Évaporation', ans: 'Vapeur', options: ['Vapeur', 'Glace', 'Pierre'], icon: '💨', speech: "Quand l'eau chauffe très fort au soleil, que devient-elle ?" },
+      { q: "Quand l'eau est congelée en glaçon, elle est à l'état :", dots: '🧊 Glaçon', ans: 'Solide', options: ['Solide', 'Liquide', 'Gazeux'], icon: '🧊', speech: "Sous quelle forme est l'eau dans un glaçon ?" }
+    ],
+    // 3: CM1/CM2 - Forces/energy
+    [
+      { q: "Quelle énergie propre est captée par les panneaux solaires ?", dots: '☀️ Rayons solaires', ans: 'Solaire', options: ['Solaire', 'Charbon', 'Plastique'], icon: '☀️', speech: "Quelle énergie naturelle est captée par les panneaux solaires ?" },
+      { q: "Quelle force attire les objets vers le sol de la Terre ?", dots: '🌍 Pesanteur', ans: 'Gravité', options: ['Gravité', 'Magnétisme', 'Son'], icon: '🌍', speech: "Quelle force attire tout vers le sol terrestre ?" }
+    ]
+  ],
+
+  'logic_puzzles': [
+    // 0: Nursery - Sorting
+    [
+      { q: "Trouve l'intrus qui n'est PAS un fruit :", dots: '🚫 Intrus', ans: 'Voiture', options: ['Voiture', 'Mangue', 'Banane', 'Ananas'], icon: '🚗', speech: "Trouve l'intrus qui n'est pas un fruit !" },
+      { q: "Lequel de ces animaux est le PLUS GRAND ?", dots: '📏 Taille', ans: 'Éléphant', options: ['Éléphant', 'Fourmi', 'Oiseau', 'Souris'], icon: '🐘', speech: "Lequel de ces animaux est le plus grand ?" }
+    ],
+    // 1: SIL/CP - Patterns
+    [
+      { q: "Suite logique : 🔴 🔵 🔴 🔵 ?", dots: '🔄 ABAB', ans: '🔴 Rouge', options: ['🔴 Rouge', '🔵 Bleu', '🟡 Jaune', '🟢 Vert'], icon: '🔴', speech: "Complète la suite logique : rouge, bleu, rouge, bleu, et ensuite ?" },
+      { q: "Suite logique : 🍎 🍌 🍎 🍌 ?", dots: '🔄 Fruits', ans: '🍎 Pomme', options: ['🍎 Pomme', '🍌 Banane', '🍇 Raisin', '🍍 Ananas'], icon: '🍎', speech: "Complète la suite : pomme, banane, pomme, banane, et ensuite ?" }
+    ],
+    // 2: CE1/CE2 - Mazes
+    [
+      { q: "Pour sortir d'une impasse dans un labyrinthe, il faut :", dots: '🔄 Demi-tour', ans: 'Demi-tour', options: ['Demi-tour', 'Casser le mur', 'Abandonner'], icon: '🔄', speech: "Face à une impasse dans un labyrinthe, que doit-on faire ?" },
+      { q: "Quel chemin est le plus court pour rejoindre le trésor ?", dots: '➡️ Direct', ans: 'Ligne droite', options: ['Ligne droite', 'Grand zigzag', 'Tourner en rond'], icon: '➡️', speech: "Quel est le chemin le plus court pour aller vers la sortie ?" }
+    ],
+    // 3: CM1/CM2 - Strategy
+    [
+      { q: "Pour faire monter le plateau de la balance à droite :", dots: '⚖️ Masse', ans: 'Alléger', options: ['Alléger', 'Alourdir', 'Tout retirer'], icon: '⚖️', speech: "Pour faire monter le plateau droit de la balance, que faut-il faire ?" },
+      { q: "Dans un jeu de stratégie, la meilleure action est de :", dots: '🧠 Planification', ans: 'Observer', options: ['Observer', 'Hasard', 'Fermer les yeux'], icon: '🧠', speech: "En stratégie, quelle est la clé du succès ?" }
+    ]
+  ],
+
+  'creative_play': [
+    // 0: Nursery - Shapes/toys
+    [
+      { q: "Quelle forme a 3 côtés comme le toit d'une case ?", dots: '🔺 3 côtés', ans: 'Triangle', options: ['Triangle', 'Carré', 'Cercle', 'Étoile'], icon: '🔺', speech: "Quelle forme a trois côtés comme un toit ?" },
+      { q: "Quelle forme est parfaitement ronde comme le soleil ?", dots: '🟡 Cercle', ans: 'Cercle', options: ['Cercle', 'Triangle', 'Carré'], icon: '🟡', speech: "Quelle forme est toute ronde comme le soleil ?" }
+    ],
+    // 1: SIL/CP - Construction
+    [
+      { q: "Pour construire un pont solide, on assemble des :", dots: '🏗️ Poutres', ans: 'Poutres', options: ['Poutres', 'Feuilles', 'Ficelles'], icon: '🏗️', speech: "Pour construire un pont solide au-dessus du fleuve, qu'utilise-t-on ?" },
+      { q: "Pour assembler un robot joueur, on commence par :", dots: '🤖 Base', ans: 'Le corps', options: ['Le corps', 'La peinture', 'L\'antenne'], icon: '🤖', speech: "Pour fabriquer le robot, par quoi commence-t-on l'assemblage ?" }
+    ],
+    // 2: CE1/CE2 - Experiments
+    [
+      { q: "Dans le laboratoire végétal, la plante a besoin de :", dots: '☀️ + 💧 Vital', ans: 'Soleil + Eau', options: ['Soleil + Eau', 'Chocolat + Jus', 'Sucre + Sel'], icon: '🌻', speech: "De quoi la plante a-t-elle absolument besoin pour grandir ?" },
+      { q: "Pour voir les couleurs de l'arc-en-ciel avec la lumière :", dots: '🌈 Prisme', ans: 'Un prisme', options: ['Un prisme', 'Un carton noir', 'Un pneu'], icon: '🌈', speech: "Comment peut-on décomposer la lumière du soleil ?" }
+    ],
+    // 3: CM1/CM2 - Engineering
+    [
+      { q: "Deux roues dentées qui s'engrènent tournent en sens :", dots: '⚙️ Engrenages', ans: 'Sens inverse', options: ['Sens inverse', 'Même sens', 'Ne bougent pas'], icon: '⚙️', speech: "Deux roues dentées qui se touchent tournent dans quel sens ?" },
+      { q: "Pour allumer une lampe, le circuit électrique doit être :", dots: '💡 Circuit', ans: 'Fermé', options: ['Fermé', 'Coupé', 'Débranché'], icon: '💡', speech: "Comment doit être le circuit électrique pour allumer l'ampoule ?" }
+    ]
+  ]
+};
+
 function generateQuestion() {
   const grade = state.grade;
-  let a, b, op = '+', ans;
-  const fruitIcons = ['🥭', '🍌', '🍍', '🥑', '🥥', '🌽'];
-  const icon = fruitIcons[Math.floor(Math.random() * fruitIcons.length)];
+  const category = state.category || 'math_arcade';
+  const gradeNames = ['🐣 Nursery', '🦁 SIL / CP', '🚀 CE1 / CE2', '👑 CM1 / CM2'];
 
-  if (grade === 0) {
-    // Nursery: 1 to 5 counting & small addition
-    a = Math.floor(Math.random() * 3) + 1;
-    b = Math.floor(Math.random() * 2) + 1;
-    ans = a + b;
-  } else if (grade === 1) {
-    // SIL/CP: up to 10 (+ and -)
-    a = Math.floor(Math.random() * 5) + 3;
-    b = Math.floor(Math.random() * 3) + 1;
-    if (Math.random() < 0.4 && a > b) {
-      op = '-';
-      ans = a - b;
-    } else {
-      ans = a + b;
-    }
-  } else if (grade === 2) {
-    // CE1/CE2: up to 30 (+, -, ×)
-    const roll = Math.random();
-    if (roll < 0.4) {
-      op = '×';
-      a = Math.floor(Math.random() * 4) + 2;
-      b = Math.floor(Math.random() * 4) + 2;
-      ans = a * b;
-    } else if (roll < 0.7 && a > b) {
-      op = '-';
-      a = Math.floor(Math.random() * 15) + 10;
-      b = Math.floor(Math.random() * 8) + 2;
-      ans = a - b;
-    } else {
-      a = Math.floor(Math.random() * 14) + 6;
-      b = Math.floor(Math.random() * 12) + 5;
-      ans = a + b;
-    }
-  } else {
-    // CM1/CM2: (+, -, ×, ÷)
-    const roll = Math.random();
-    if (roll < 0.3) {
-      op = '÷';
-      ans = Math.floor(Math.random() * 6) + 2;
-      b = Math.floor(Math.random() * 5) + 2;
-      a = ans * b; // guarantees exact integer division
-    } else if (roll < 0.6) {
-      op = '×';
-      a = Math.floor(Math.random() * 8) + 3;
-      b = Math.floor(Math.random() * 8) + 3;
-      ans = a * b;
-    } else {
-      a = Math.floor(Math.random() * 45) + 20;
-      b = Math.floor(Math.random() * 35) + 15;
-      ans = a + b;
-    }
+  // Update Topic Banner DOM
+  const conf = MATRIX_CONFIG[category] || MATRIX_CONFIG['math_arcade'];
+  if ($('matrix-category-label')) $('matrix-category-label').textContent = conf.label;
+  if ($('matrix-topic-label')) $('matrix-topic-label').textContent = conf.topics[grade] || conf.topics[0];
+  if ($('matrix-grade-label')) $('matrix-grade-label').textContent = gradeNames[grade] || gradeNames[0];
+
+  const bank = MATRIX_BANK[category] && MATRIX_BANK[category][grade];
+  let picked = null;
+  if (bank && bank.length > 0) {
+    picked = bank[Math.floor(Math.random() * bank.length)];
   }
 
-  state.question = { a, b, op, ans, icon };
+  if (picked) {
+    state.question = {
+      q: picked.q,
+      ans: picked.ans,
+      options: picked.options ? [...picked.options].sort(() => Math.random() - 0.5) : [picked.ans],
+      icon: picked.icon || '⭐',
+      dots: picked.dots || '',
+      speech: picked.speech || picked.q
+    };
+    $('display-equation').textContent = picked.q;
+    const dotsContainer = $('concrete-dots');
+    dotsContainer.innerHTML = '';
+    const span = document.createElement('span');
+    span.style.fontSize = '17px';
+    span.style.fontWeight = '700';
+    span.style.color = '#e0e7ff';
+    span.textContent = picked.dots;
+    dotsContainer.appendChild(span);
+  } else {
+    // Fallback math
+    const a = Math.floor(Math.random() * 5) + 1;
+    const b = Math.floor(Math.random() * 4) + 1;
+    const ans = String(a + b);
+    state.question = {
+      q: a + ' + ' + b + ' = ?',
+      ans: ans,
+      options: [ans, String(a + b + 1), String(Math.max(1, a + b - 1)), String(a + b + 2)].sort(() => Math.random() - 0.5),
+      icon: '🥭',
+      dots: a + ' + ' + b,
+      speech: a + ' plus ' + b + ' égale combien ?'
+    };
+    $('display-equation').textContent = state.question.q;
+  }
+
   state.errorCount = 0;
   state.idleTime = 0;
-
-  // Render question equation
-  $('display-equation').textContent = a + ' ' + op + ' ' + b + ' = ?';
-
-  // Render concrete fruit dots for non-readers
-  const dotsContainer = $('concrete-dots');
-  dotsContainer.innerHTML = '';
-  if (op === '+' && ans <= 15) {
-    for (let i = 0; i < a; i++) {
-      const s = document.createElement('span');
-      s.className = 'concrete-dot';
-      s.textContent = icon;
-      dotsContainer.appendChild(s);
-    }
-    const sep = document.createElement('span');
-    sep.style.margin = '0 6px';
-    sep.style.fontWeight = 'bold';
-    sep.textContent = '+';
-    dotsContainer.appendChild(sep);
-    for (let i = 0; i < b; i++) {
-      const s = document.createElement('span');
-      s.className = 'concrete-dot';
-      s.textContent = '🍏';
-      dotsContainer.appendChild(s);
-    }
-  } else if (op === '-' && a <= 15) {
-    for (let i = 0; i < a; i++) {
-      const s = document.createElement('span');
-      s.className = 'concrete-dot';
-      s.textContent = i < (a - b) ? icon : '❌';
-      dotsContainer.appendChild(s);
-    }
-  } else if (op === '×' && a * b <= 20) {
-    for (let i = 0; i < a * b; i++) {
-      const s = document.createElement('span');
-      s.className = 'concrete-dot';
-      s.textContent = icon;
-      dotsContainer.appendChild(s);
-    }
-  }
 
   speakCurrentQuestion();
   initActiveGameMode();
@@ -891,24 +1111,32 @@ function generateQuestion() {
 function speakCurrentQuestion() {
   const q = state.question;
   if (!q) return;
-  const opWord = q.op === '+' ? (VoiceEngine.lang === 'fr' ? 'plus' : 'plus') :
-                 q.op === '-' ? (VoiceEngine.lang === 'fr' ? 'moins' : 'minus') :
-                 q.op === '×' ? (VoiceEngine.lang === 'fr' ? 'fois' : 'times') :
-                 (VoiceEngine.lang === 'fr' ? 'divisé par' : 'divided by');
-  VoiceEngine.speak(q.a + ' ' + opWord + ' ' + q.b + ' ! ' + t(state.game));
-  
+  if (q.speech) {
+    VoiceEngine.speak(q.speech);
+  } else {
+    VoiceEngine.speak(q.q || 'Choisis la bonne réponse !');
+  }
   const repeatBtn = $('repeat-audio-btn');
-  repeatBtn.classList.add('pulse');
-  setTimeout(() => repeatBtn.classList.remove('pulse'), 2000);
+  if (repeatBtn) {
+    repeatBtn.classList.add('pulse');
+    setTimeout(() => repeatBtn.classList.remove('pulse'), 2000);
+  }
 }
 
 function getAnswerOptions(correct, count) {
   count = count || 3;
+  if (state.question && state.question.options && state.question.options.length >= count) {
+    const opts = state.question.options.slice(0, count);
+    if (!opts.includes(correct) && !opts.includes(String(correct))) {
+      opts[0] = correct;
+    }
+    return opts.sort(() => Math.random() - 0.5);
+  }
   const set = new Set([correct]);
   while (set.size < count) {
     const offset = Math.floor(Math.random() * 7) - 3;
-    const val = Math.max(1, correct + (offset === 0 ? 1 : offset));
-    set.add(val);
+    const val = Math.max(1, parseInt(correct) + (offset === 0 ? 1 : offset));
+    set.add(String(val));
   }
   return [...set].sort(() => Math.random() - 0.5);
 }
@@ -1003,7 +1231,7 @@ function initActiveGameMode() {
 function handleAnswer(choice) {
   if (!state.running || state.tutorOpen || state.isPaused) return;
   const q = state.question;
-  const isCorrect = choice === q.ans || choice === state.targetPrice;
+  const isCorrect = choice === q.ans || String(choice).trim().toLowerCase() === String(q.ans).trim().toLowerCase() || choice === state.targetPrice;
 
   if (isCorrect) {
     AudioEngine.playSuccess();
@@ -1670,7 +1898,19 @@ $('mascot-avatar').onclick = () => {
   VoiceEngine.speak('Bonjour ! Je suis Hibou, ton tuteur malin. Prêt pour l\'aventure ?');
 };
 
-document.querySelectorAll('#grade-pills .pill-btn').forEach(btn => {
+
+  // Category matrix tab listeners
+  document.querySelectorAll('#category-pills .cat-pill-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('#category-pills .cat-pill-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      state.category = btn.dataset.cat;
+      AudioEngine.playClick();
+      generateQuestion();
+    });
+  });
+
+  document.querySelectorAll('#grade-pills .pill-btn').forEach(btn => {
   btn.onclick = () => {
     document.querySelectorAll('#grade-pills .pill-btn').forEach(b => b.classList.remove('active'));
     btn.classList.add('active');

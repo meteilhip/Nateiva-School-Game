@@ -70,6 +70,52 @@ export default function GameLibraryScreen() {
     { key: 'Story', labelFr: '📜 Histoires Narrées', labelEn: '📜 Illustrated Stories' }
   ];
 
+  // 28-Cell Master Matrix Mapping
+  const MATRIX_TOPIC_LOOKUP: Record<string, Record<string, { fr: string, en: string }>> = {
+    'math': {
+      'WORLD_A': { en: 'Counting', fr: 'Dénombrement' },
+      'WORLD_B': { en: 'Add/subtract', fr: 'Addition & Soustraction' },
+      'WORLD_C': { en: 'Multiply/divide', fr: 'Multiplication & Division' },
+      'WORLD_D': { en: 'Fractions/decimals', fr: 'Fractions & Décimaux' }
+    },
+    'reading': {
+      'WORLD_A': { en: 'Letters/pictures', fr: 'Lettres & Images' },
+      'WORLD_B': { en: 'Phonics/words', fr: 'Phonèmes & Mots' },
+      'WORLD_C': { en: 'Fluency', fr: 'Fluidité de Lecture' },
+      'WORLD_D': { en: 'Advanced reading', fr: 'Lecture Approfondie' }
+    },
+    'comprehension': {
+      'WORLD_A': { en: 'Spoken stories', fr: 'Histoires Racontées' },
+      'WORLD_B': { en: 'Story sequence', fr: 'Ordre Chronologique' },
+      'WORLD_C': { en: 'Cause/effect', fr: 'Cause & Conséquence' },
+      'WORLD_D': { en: 'Inference/evidence', fr: 'Inférence & Indices' }
+    },
+    'pronunciation': {
+      'WORLD_A': { en: 'Sounds', fr: 'Sons & Articulation' },
+      'WORLD_B': { en: 'Syllables', fr: 'Rythme des Syllabes' },
+      'WORLD_C': { en: 'Words/phrases', fr: 'Mots & Phrases' },
+      'WORLD_D': { en: 'Oral reading', fr: 'Lecture Orale Expressive' }
+    },
+    'science': {
+      'WORLD_A': { en: 'Animals/plants', fr: 'Animaux & Plantes' },
+      'WORLD_B': { en: 'Habitats', fr: 'Habitats & Milieux' },
+      'WORLD_C': { en: 'Water/materials', fr: 'L\'Eau & Matériaux' },
+      'WORLD_D': { en: 'Forces/energy', fr: 'Forces & Énergie' }
+    },
+    'logic': {
+      'WORLD_A': { en: 'Sorting', fr: 'Tri & Catégories' },
+      'WORLD_B': { en: 'Patterns', fr: 'Suites & Motifs' },
+      'WORLD_C': { en: 'Mazes', fr: 'Labyrinthes & Chemins' },
+      'WORLD_D': { en: 'Strategy', fr: 'Stratégie & Déduction' }
+    },
+    'creative': {
+      'WORLD_A': { en: 'Shapes/toys', fr: 'Formes & Jouets' },
+      'WORLD_B': { en: 'Construction', fr: 'Atelier Construction' },
+      'WORLD_C': { en: 'Experiments', fr: 'Expérimentations' },
+      'WORLD_D': { en: 'Engineering', fr: 'Ingénierie & Mécanismes' }
+    }
+  };
+
   const matchesSubjectTab = (g: GameCatalogItem, tab: string) => {
     if (tab === 'ALL') return true;
     if (tab === 'math') return g.subject === 'mathematics';
@@ -250,6 +296,19 @@ export default function GameLibraryScreen() {
         ))}
       </ScrollView>
 
+      {/* Active 28-Cell Matrix Curriculum Topic Banner */}
+      {selectedSubject !== 'ALL' && selectedGradeBand !== 'ALL' && MATRIX_TOPIC_LOOKUP[selectedSubject]?.[selectedGradeBand] && (
+        <View style={styles.matrixTopicCard}>
+          <Text style={styles.matrixTopicTitle}>
+            🎯 {lang === 'fr' ? 'Thème du Programme :' : 'Curriculum Focus :'} <Text style={{ color: '#D97706', fontWeight: 'bold' }}>
+              {lang === 'fr' 
+                ? MATRIX_TOPIC_LOOKUP[selectedSubject][selectedGradeBand].fr 
+                : MATRIX_TOPIC_LOOKUP[selectedSubject][selectedGradeBand].en}
+            </Text>
+          </Text>
+        </View>
+      )}
+
       {/* Search Input */}
       <View style={styles.searchContainer}>
         <TextInput 
@@ -400,6 +459,9 @@ const styles = StyleSheet.create({
   categoryPillActive: { backgroundColor: '#F59E0B', borderColor: '#D97706' },
   categoryPillText: { fontSize: 11, fontWeight: 'bold', color: '#64748B' },
   categoryPillTextActive: { color: 'white' },
+
+  matrixTopicCard: { marginHorizontal: 16, marginTop: 4, marginBottom: 6, backgroundColor: '#FEF3C7', paddingVertical: 8, paddingHorizontal: 12, borderRadius: 14, borderWidth: 1.5, borderColor: '#F59E0B' },
+  matrixTopicTitle: { fontSize: 12, fontWeight: 'bold', color: '#92400E' },
 
   searchContainer: { paddingHorizontal: 16, paddingVertical: 6 },
   searchInput: { backgroundColor: 'white', borderWidth: 1.5, borderColor: '#CBD5E1', borderRadius: 14, padding: 10, fontSize: 13 },

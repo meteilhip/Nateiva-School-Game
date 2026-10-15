@@ -1,6 +1,15 @@
 // src/curriculum/models.ts
 
-export type Subject = 'mathematics' | 'science' | 'english_reading' | 'french_reading';
+export type Subject = 
+  | 'mathematics' 
+  | 'science' 
+  | 'english_reading' 
+  | 'french_reading' 
+  | 'reading'
+  | 'comprehension' 
+  | 'pronunciation' 
+  | 'logic' 
+  | 'creative';
 
 export interface CurriculumSkill {
   curriculumId: string;
