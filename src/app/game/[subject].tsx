@@ -31,7 +31,7 @@ import {
 } from '../../games/GameRegistry';
 
 import { TutorOverlay } from '../../components/TutorOverlay';
-import { getProfiles, getMastery, saveMastery, saveProfile, ChildProfile } from '../../storage/db';
+import { getProfiles, getMastery, saveMastery, saveProfile, saveAttemptEvent, ChildProfile } from '../../storage/db';
 import { calculateNewMastery, SkillMastery } from '../../adaptive/engine';
 
 // Procedural question generator mapped directly to Cameroon Skills
@@ -215,6 +215,8 @@ export default function GameActivityScreen() {
   const [coinsEarned, setCoinsEarned] = useState(0);
   const [difficultyLevel, setDifficultyLevel] = useState(1);
   const [responses, setResponses] = useState<{ isCorrect: boolean, attempts: number }[]>([]);
+  const [learnerId, setLearnerId] = useState<string>('guest_child');
+  const [questionStartTime, setQuestionStartTime] = useState<number>(Date.now());
 
   useFocusEffect(
     useCallback(() => {
@@ -226,6 +228,9 @@ export default function GameActivityScreen() {
     try {
       const profiles = await getProfiles();
       const profile = profiles.length > 0 ? profiles[0] : null;
+      if (profile) {
+        setLearnerId(profile.id);
+      }
       let diff = 1;
       
       if (profile && skillId) {
@@ -311,6 +316,22 @@ export default function GameActivityScreen() {
     const q = questions[qIndex];
     
     const isCorrect = selected === q.ans || q.ans === 'COMPLETED' || selected.toLowerCase().includes(q.ans?.toLowerCase());
+    const timeSpent = Math.max(500, Date.now() - questionStartTime);
+
+    // Persist full AttemptEvent with diagnostic metrics
+    saveAttemptEvent({
+      learnerId: learnerId || 'guest_child',
+      gameId: (gameKey as string) || q.type || 'UNKNOWN_GAME',
+      skillId: (skillId as string) || 'unknown_skill',
+      activityId: q.id || `q_${qIndex}`,
+      correct: isCorrect,
+      difficulty: difficultyLevel,
+      hintLevel: errorsOnCurrent,
+      independent: errorsOnCurrent === 0 && !showTutor,
+      timeSpentMs: timeSpent,
+      misconceptionCode: !isCorrect ? (q.misconceptionCode || 'MISC_INCORRECT_ATTEMPT') : undefined,
+      timestamp: Date.now()
+    }).catch(err => console.error('Failed to log attempt event', err));
 
     if (isCorrect) {
       setFeedbackColor('#10B981');
@@ -323,6 +344,7 @@ export default function GameActivityScreen() {
       setTimeout(() => {
         setFeedback(null);
         setErrorsOnCurrent(0); 
+        setQuestionStartTime(Date.now());
         
         if (qIndex + 1 < questions.length) {
           setQIndex(qIndex + 1);
@@ -360,6 +382,7 @@ export default function GameActivityScreen() {
   const handlePracticeSimilar = () => {
     setShowTutor(false);
     setErrorsOnCurrent(0);
+    setQuestionStartTime(Date.now());
     const refreshed = generateQuestionsForSkill(skillId as string, difficultyLevel);
     setQuestions(refreshed);
     setQIndex(0);

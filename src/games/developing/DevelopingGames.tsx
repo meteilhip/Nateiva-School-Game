@@ -60,17 +60,113 @@ export function DivisionPizzaShop({ question, onAnswer }: { question: any, onAns
 
 // --- GAME 33: FRACTION CHEF ---
 export function FractionChef({ question, onAnswer }: { question: any, onAnswer: (ans: string) => void }) {
-  const targetFraction = question.targetFraction || '1/2';
+  const targetFraction = question.targetFraction || question.ans || '1/2';
+  const [totalSlices, setTotalSlices] = useState<number>(4);
+  const [selectedSlices, setSelectedSlices] = useState<number[]>([]);
+  const [knifeActive, setKnifeActive] = useState<boolean>(false);
+
+  const handleCutCake = (cuts: number) => {
+    setTotalSlices(cuts);
+    setSelectedSlices([]);
+    setKnifeActive(true);
+    Speech.speak(`Gâteau découpé en ${cuts} parts égales !`, { language: 'fr-FR' });
+    setTimeout(() => setKnifeActive(false), 500);
+  };
+
+  const toggleSlice = (idx: number) => {
+    if (selectedSlices.includes(idx)) {
+      setSelectedSlices(selectedSlices.filter(i => i !== idx));
+    } else {
+      setSelectedSlices([...selectedSlices, idx]);
+    }
+  };
+
+  const handleServe = () => {
+    const fractionStr = `${selectedSlices.length}/${totalSlices}`;
+    Speech.speak(`Part servie : ${selectedSlices.length} sur ${totalSlices} !`, { language: 'fr-FR' });
+    onAnswer(fractionStr);
+  };
+
   return (
     <View style={styles.container}>
       <Text style={styles.gameTitle}>👨‍🍳 Le Chef des Fractions</Text>
-      <Text style={styles.promptText}>Prépare la recette en choisissant la part de <Text style={{ color: '#D97706', fontWeight: 'bold' }}>{targetFraction}</Text> :</Text>
+      <Text style={styles.promptText}>
+        Prépare la commande du client en servant la fraction <Text style={{ color: '#D97706', fontWeight: 'bold' }}>{targetFraction}</Text> :
+      </Text>
 
-      <View style={styles.recipeCard}>
-        <Text style={{ fontSize: 50 }}>🥧</Text>
-        <Text style={styles.recipeGoal}>Gâteau coupé en parts égales</Text>
+      {/* Bakery Kitchen Table & Cake Slicing Plate */}
+      <View style={styles.bakeryTable}>
+        <View style={styles.chefHeaderRow}>
+          <Text style={{ fontSize: 36 }}>👨‍🍳</Text>
+          <View style={styles.chefOrderBadge}>
+            <Text style={styles.chefOrderText}>Commande : {targetFraction}</Text>
+          </View>
+          <Text style={{ fontSize: 24 }}>{knifeActive ? '🔪 ✨' : '🥧'}</Text>
+        </View>
+
+        {/* Tactile Cake with Clickable Slices */}
+        <View style={styles.cakeDisplayArea}>
+          <View style={styles.cakePieContainer}>
+            {Array.from({ length: totalSlices }).map((_, idx) => {
+              const isSelected = selectedSlices.includes(idx);
+              return (
+                <TouchableOpacity
+                  key={`slice_${idx}`}
+                  style={[
+                    styles.cakeSliceItem,
+                    { width: `${Math.floor(100 / (totalSlices / 2)) - 4}%` },
+                    isSelected && styles.cakeSliceItemSelected
+                  ]}
+                  onPress={() => toggleSlice(idx)}
+                >
+                  <Text style={styles.sliceNumberText}>{isSelected ? '🍰' : '🥧'}</Text>
+                  <Text style={[styles.sliceFractionLabel, isSelected && { color: '#047857' }]}>
+                    1/{totalSlices}
+                  </Text>
+                </TouchableOpacity>
+              );
+            })}
+          </View>
+        </View>
+
+        {/* Interactive Knife Cutting Controls */}
+        <View style={styles.cutToolsRow}>
+          <Text style={styles.cutToolPrompt}>Couper en :</Text>
+          {[2, 3, 4, 6].map(num => (
+            <TouchableOpacity 
+              key={num} 
+              style={[styles.cutToolBtn, totalSlices === num && styles.cutToolBtnActive]}
+              onPress={() => handleCutCake(num)}
+            >
+              <Text style={[styles.cutToolBtnText, totalSlices === num && styles.cutToolBtnTextActive]}>
+                {num} parts
+              </Text>
+            </TouchableOpacity>
+          ))}
+        </View>
+
+        {/* Live Fraction Formula Display */}
+        <View style={styles.fractionFormulaBox}>
+          <Text style={styles.fractionNumeratorText}>
+            Parts choisies : <Text style={{ fontWeight: 'bold', color: '#D97706' }}>{selectedSlices.length}</Text>
+          </Text>
+          <View style={styles.fractionBarDivider} />
+          <Text style={styles.fractionDenominatorText}>
+            Nombre total de parts : <Text style={{ fontWeight: 'bold', color: '#1E40AF' }}>{totalSlices}</Text>
+          </Text>
+        </View>
+
+        <TouchableOpacity 
+          style={[styles.servePlateBtn, selectedSlices.length > 0 && { backgroundColor: '#10B981' }]}
+          onPress={handleServe}
+        >
+          <Text style={styles.servePlateBtnText}>
+            🍽️ Servir la part ({selectedSlices.length}/{totalSlices})
+          </Text>
+        </TouchableOpacity>
       </View>
 
+      <Text style={styles.directChoicePrompt}>Ou choisis directement la fraction correspondante :</Text>
       <View style={styles.optionsRow}>
         {(question.options || ['1/2', '1/3', '1/4', '3/4']).map((f: string) => (
           <TouchableOpacity key={f} style={styles.choiceBtn} onPress={() => onAnswer(f)}>
@@ -377,8 +473,29 @@ const styles = StyleSheet.create({
   pizzaSub: { fontSize: 14, fontWeight: 'bold', color: '#78350F', marginTop: 4 },
 
   // Fraction Chef
-  recipeCard: { backgroundColor: '#F0FDF4', padding: 16, borderRadius: 24, borderWidth: 3, borderColor: '#86EFAC', alignItems: 'center', width: 180, marginBottom: 20 },
-  recipeGoal: { fontSize: 12, fontWeight: 'bold', color: '#166534', marginTop: 4 },
+  bakeryTable: { backgroundColor: '#F0FDF4', padding: 16, borderRadius: 24, borderWidth: 3, borderColor: '#86EFAC', width: '100%', maxWidth: 420, alignItems: 'center', marginBottom: 16 },
+  chefHeaderRow: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', width: '100%', marginBottom: 10 },
+  chefOrderBadge: { backgroundColor: '#FEF3C7', paddingVertical: 6, paddingHorizontal: 14, borderRadius: 14, borderWidth: 1, borderColor: '#F59E0B' },
+  chefOrderText: { fontSize: 13, fontWeight: 'bold', color: '#92400E' },
+  cakeDisplayArea: { width: '100%', backgroundColor: 'white', padding: 12, borderRadius: 18, borderWidth: 1, borderColor: '#DCFCE7', marginVertical: 8, alignItems: 'center' },
+  cakePieContainer: { flexDirection: 'row', flexWrap: 'wrap', gap: 6, justifyContent: 'center', width: '100%' },
+  cakeSliceItem: { backgroundColor: '#FEF08A', borderWidth: 2, borderColor: '#CA8A04', paddingVertical: 10, paddingHorizontal: 4, borderRadius: 12, alignItems: 'center', justifyContent: 'center', minHeight: 65 },
+  cakeSliceItemSelected: { backgroundColor: '#BBF7D0', borderColor: '#16A34A', transform: [{ scale: 1.05 }] },
+  sliceNumberText: { fontSize: 24 },
+  sliceFractionLabel: { fontSize: 11, fontWeight: 'bold', color: '#78350F', marginTop: 2 },
+  cutToolsRow: { flexDirection: 'row', alignItems: 'center', gap: 6, marginVertical: 10, flexWrap: 'wrap', justifyContent: 'center' },
+  cutToolPrompt: { fontSize: 12, fontWeight: 'bold', color: '#166534' },
+  cutToolBtn: { paddingVertical: 6, paddingHorizontal: 10, backgroundColor: 'white', borderRadius: 10, borderWidth: 1, borderColor: '#86EFAC' },
+  cutToolBtnActive: { backgroundColor: '#16A34A', borderColor: '#15803D' },
+  cutToolBtnText: { fontSize: 12, fontWeight: 'bold', color: '#166534' },
+  cutToolBtnTextActive: { color: 'white' },
+  fractionFormulaBox: { backgroundColor: '#EFF6FF', paddingVertical: 8, paddingHorizontal: 16, borderRadius: 12, borderWidth: 1, borderColor: '#BFDBFE', alignItems: 'center', width: '100%', marginVertical: 8 },
+  fractionNumeratorText: { fontSize: 13, color: '#1E293B' },
+  fractionBarDivider: { height: 2, backgroundColor: '#94A3B8', width: '80%', marginVertical: 4 },
+  fractionDenominatorText: { fontSize: 13, color: '#1E293B' },
+  servePlateBtn: { backgroundColor: '#94A3B8', paddingVertical: 12, paddingHorizontal: 24, borderRadius: 16, elevation: 3, marginTop: 4 },
+  servePlateBtnText: { color: 'white', fontWeight: 'bold', fontSize: 14 },
+  directChoicePrompt: { fontSize: 13, color: '#475569', fontWeight: 'bold', marginVertical: 8 },
 
   // Grammar Detective
   caseFileCard: { backgroundColor: '#FEF2F2', padding: 16, borderRadius: 20, borderWidth: 2, borderColor: '#FECACA', width: '100%', maxWidth: 420, alignItems: 'center', marginBottom: 20 },

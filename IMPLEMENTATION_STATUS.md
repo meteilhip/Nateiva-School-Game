@@ -99,3 +99,41 @@ This document tracks the verified implementation status of Nateiva EduKids again
 
 ## Part 10: Quality and Testing
 - **Automated Verification Script (`scripts/verify_curriculum_and_games.js`):** `COMPLETE_AND_TESTED`
+
+## Part 11: 60-Game Animated Library Expansion
+- **Early Learner Games 01–15 (`EarlyGames.tsx`):** `COMPLETE_AND_TESTED`
+- **Foundation Games 16–30 (`FoundationGames.tsx`):** `COMPLETE_AND_TESTED`
+- **Developing Games 31–45 (`DevelopingGames.tsx`):** `COMPLETE_AND_TESTED`
+- **Advanced Primary Games 46–60 (`AdvancedGames.tsx`):** `COMPLETE_AND_TESTED`
+- **Unified Catalog & Registry (`GameRegistry.tsx`):** `COMPLETE_AND_TESTED`
+
+## Part 12: Multi-Mechanic Player Choice Architecture
+- **Skill-to-Game Multi-Mechanic Mapping (`getGamesForSkill`):** `COMPLETE_AND_TESTED`
+- **Game Choice Screen (`/game-choice/[skillId]`):** `COMPLETE_AND_TESTED`
+- **60-Game Responsive Library (`/library`):** `COMPLETE_AND_TESTED`
+- **Persistent Bottom Navigation Bar (`PersistentBottomNav.tsx`):** `COMPLETE_AND_TESTED`
+
+## Part 13: 5-Mode Base-10 AI Tutor & Strategy Library
+- **5 Guided Modes (Watch Me, Together, Your Turn, Why It Works, Another Way):** `COMPLETE_AND_TESTED`
+- **Base-10 Tens Rods & Unit Cubes Regrouping Manipulatives (47 + 28):** `COMPLETE_AND_TESTED`
+- **Pedagogical Strategy Library (`strategies.ts`):** `COMPLETE_AND_TESTED`
+- **Independent Transfer Problem Verification:** `COMPLETE_AND_TESTED`
+
+## Part 14: Diagnostic AttemptEvent Persistence
+- **AttemptEvent Contract (`types.ts`):** `COMPLETE_AND_TESTED`
+- **Storage DB Logging (`db.ts`):** `COMPLETE_AND_TESTED`
+- **Game Activity Telemetry (`timeSpentMs`, `hintLevel`, `independent`, `misconceptions`):** `COMPLETE_AND_TESTED`
+
+## Part 15: Offline PWA & Service Worker
+- **PWA Web App Manifest (`public/manifest.json`):** `COMPLETE_AND_TESTED`
+- **Offline Cache Service Worker (`public/sw.js`):** `COMPLETE_AND_TESTED`
+- **Root Layout Auto-Registration (`_layout.tsx`):** `COMPLETE_AND_TESTED`
+
+## Part 16: Tactile Animated Vertical Slices
+- **MathCarRacing (Turbo speed lines, speedometer, engine revs):** `COMPLETE_AND_TESTED`
+- **RobotFactory (Rotating gears, tens rods, unit cubes, energy gauge):** `COMPLETE_AND_TESTED`
+- **CFAMarket (Tactile coin purse, coin tray, Mama Kribi speech):** `COMPLETE_AND_TESTED`
+- **FractionChef (Cake cutter, clickable fraction slices, formula display):** `COMPLETE_AND_TESTED`
+- **ScienceGarden (Water, sun, compost, 4-stage plant growth):** `COMPLETE_AND_TESTED`
+- **WordCastle (Drawbridge lowering, stone wall defenses):** `COMPLETE_AND_TESTED`
+

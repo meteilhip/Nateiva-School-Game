@@ -4,15 +4,20 @@ import * as Speech from 'expo-speech';
 
 // --- GAME 16: MATH CAR RACING ---
 export function MathCarRacing({ question, onAnswer }: { question: any, onAnswer: (ans: string) => void }) {
-  const [carPos, setCarPos] = useState<number>(10);
+  const [carPos, setCarPos] = useState<number>(8);
+  const [speed, setSpeed] = useState<number>(45);
+  const [isBoosting, setIsBoosting] = useState<boolean>(false);
   const equation = question.equation || '4 + 3 = ?';
 
   const handlePickAnswer = (opt: string) => {
     if (opt === question.ans) {
-      setCarPos(80); // Zoom forward
-      Speech.speak('Vroooom ! En route !', { language: 'fr-FR' });
-      setTimeout(() => onAnswer(opt), 900);
+      setIsBoosting(true);
+      setSpeed(140);
+      setCarPos(85); // Zoom forward
+      Speech.speak('Vroooom ! Vitesse turbo activée !', { language: 'fr-FR' });
+      setTimeout(() => onAnswer(opt), 950);
     } else {
+      Speech.speak('Attention au dérapage ! Réessaie.', { language: 'fr-FR' });
       onAnswer(opt);
     }
   };
@@ -22,13 +27,32 @@ export function MathCarRacing({ question, onAnswer }: { question: any, onAnswer:
       <Text style={styles.gameTitle}>🏎️ Course de Voitures Mathématiques</Text>
       <Text style={styles.promptText}>Résous l'addition pour propulser ton bolide vers la ligne d'arrivée !</Text>
 
-      {/* Racetrack */}
+      {/* Racetrack with speed markings */}
       <View style={styles.racetrack}>
         <View style={styles.trackLine} />
-        <View style={[styles.raceCarWrapper, { left: `${carPos}%` }]}>
-          <Text style={styles.raceCar}>🏎️💨</Text>
+        
+        {/* Scenery checkpoints */}
+        <View style={styles.trackSceneryRow}>
+          <Text style={styles.sceneryItem}>🌴</Text>
+          <Text style={styles.sceneryItem}>🚩 50m</Text>
+          <Text style={styles.sceneryItem}>🌴</Text>
+          <Text style={styles.finishFlag}>🏁</Text>
         </View>
-        <Text style={styles.finishFlag}>🏁</Text>
+
+        {/* Animated Speed Lines */}
+        <View style={styles.speedLinesRow}>
+          <Text style={styles.speedLineText}>{isBoosting ? '⚡ ═ ═ ═ ⚡ ═ ═ ═ ⚡' : '— — — — — — —'}</Text>
+        </View>
+
+        {/* Race Car */}
+        <View style={[styles.raceCarWrapper, { left: `${carPos}%` }]}>
+          <Text style={styles.raceCar}>{isBoosting ? '🔥🏎️💨' : '🏎️💨'}</Text>
+        </View>
+      </View>
+
+      {/* Dashboard Speedometer */}
+      <View style={styles.speedometerBox}>
+        <Text style={styles.speedometerText}>⚡ Vitesse : {speed} km/h {isBoosting ? '🚀 TURBO !' : '🟢'}</Text>
       </View>
 
       <View style={styles.equationCard}>
@@ -75,41 +99,105 @@ export function TreasureHunt({ question, onAnswer }: { question: any, onAnswer: 
 export function RobotFactory({ question, onAnswer }: { question: any, onAnswer: (ans: string) => void }) {
   const [tens, setTens] = useState(0);
   const [ones, setOnes] = useState(0);
+  const [gearToggled, setGearToggled] = useState(false);
   const target = parseInt(question.ans) || 24;
 
   const total = tens * 10 + ones;
+  const progressPercent = Math.min(100, Math.round((total / Math.max(1, target)) * 100));
+
+  const handleAddTen = () => {
+    setTens(t => t + 1);
+    setGearToggled(g => !g);
+    Speech.speak('Dix unités ajoutées !', { language: 'fr-FR' });
+  };
+
+  const handleSubTen = () => {
+    setTens(t => Math.max(0, t - 1));
+    setGearToggled(g => !g);
+  };
+
+  const handleAddOne = () => {
+    setOnes(o => o + 1);
+    setGearToggled(g => !g);
+    Speech.speak('Une unité !', { language: 'fr-FR' });
+  };
+
+  const handleSubOne = () => {
+    setOnes(o => Math.max(0, o - 1));
+    setGearToggled(g => !g);
+  };
 
   return (
     <View style={styles.container}>
       <Text style={styles.gameTitle}>🤖 L'Usine à Robots</Text>
-      <Text style={styles.promptText}>Assemble les pièces de puissance pour fabriquer le robot n° <Text style={{ color: '#2563EB', fontWeight: 'bold' }}>{target}</Text> :</Text>
+      <Text style={styles.promptText}>Assemble les blocs de base 10 pour fabriquer le robot n° <Text style={{ color: '#2563EB', fontWeight: 'bold' }}>{target}</Text> :</Text>
 
+      {/* Robot Chamber with Rotating Gears & Visual Blocks */}
       <View style={styles.robotAssemblyBox}>
-        <Text style={styles.robotHeadIcon}>🤖</Text>
-        <Text style={styles.robotEnergyText}>Énergie actuelle : {total} / {target}</Text>
+        <View style={styles.robotHeaderRow}>
+          <Text style={styles.robotGearIcon}>{gearToggled ? '⚙️ ✨' : '✨ ⚙️'}</Text>
+          <Text style={styles.robotHeadIcon}>{total === target ? '🤖 ⚡' : '🤖'}</Text>
+          <Text style={styles.robotGearIcon}>{gearToggled ? '⚙️' : '⚙️ 💫'}</Text>
+        </View>
+
+        {/* Live Visual Manipulatives (Tens Rods & Ones Cubes) */}
+        <View style={styles.manipulativesBox}>
+          {/* Tens Rods */}
+          <View style={styles.tensRodsArea}>
+            {Array.from({ length: tens }).map((_, i) => (
+              <View key={`rod_${i}`} style={styles.blueTenRod}>
+                {Array.from({ length: 10 }).map((__, seg) => (
+                  <View key={`seg_${seg}`} style={styles.rodSegment} />
+                ))}
+              </View>
+            ))}
+            {tens === 0 && <Text style={styles.emptyManipText}>0 dizaine</Text>}
+          </View>
+
+          {/* Unit Cubes */}
+          <View style={styles.onesCubesArea}>
+            {Array.from({ length: ones }).map((_, i) => (
+              <View key={`cube_${i}`} style={styles.goldUnitCube}>
+                <Text style={styles.cubeLabel}>1</Text>
+              </View>
+            ))}
+            {ones === 0 && <Text style={styles.emptyManipText}>0 unité</Text>}
+          </View>
+        </View>
+
+        {/* Energy Meter Gauge */}
+        <View style={styles.gaugeContainer}>
+          <View style={[styles.gaugeFill, { width: `${progressPercent}%`, backgroundColor: total === target ? '#10B981' : '#3B82F6' }]} />
+        </View>
+        <Text style={styles.robotEnergyText}>
+          Énergie actuelle : <Text style={{ fontWeight: 'bold', color: total === target ? '#059669' : '#1D4ED8' }}>{total}</Text> / {target} ({progressPercent}%)
+        </Text>
       </View>
 
       <View style={styles.robotControlsRow}>
         <View style={styles.partCard}>
-          <Text style={styles.partLabel}>Piles de Dix (10)</Text>
+          <Text style={styles.partLabel}>Barres de Dix (10)</Text>
           <Text style={styles.partCountText}>{tens} ({tens * 10})</Text>
           <View style={styles.miniBtnRow}>
-            <TouchableOpacity style={styles.stepBtn} onPress={() => setTens(Math.max(0, tens - 1))}><Text style={styles.stepText}>-</Text></TouchableOpacity>
-            <TouchableOpacity style={styles.stepBtn} onPress={() => setTens(tens + 1)}><Text style={styles.stepText}>+</Text></TouchableOpacity>
+            <TouchableOpacity style={styles.stepBtn} onPress={handleSubTen}><Text style={styles.stepText}>-</Text></TouchableOpacity>
+            <TouchableOpacity style={styles.stepBtn} onPress={handleAddTen}><Text style={styles.stepText}>+</Text></TouchableOpacity>
           </View>
         </View>
 
         <View style={styles.partCard}>
-          <Text style={styles.partLabel}>Boulons d'Unité (1)</Text>
+          <Text style={styles.partLabel}>Cubes d'Unité (1)</Text>
           <Text style={styles.partCountText}>{ones} ({ones})</Text>
           <View style={styles.miniBtnRow}>
-            <TouchableOpacity style={styles.stepBtn} onPress={() => setOnes(Math.max(0, ones - 1))}><Text style={styles.stepText}>-</Text></TouchableOpacity>
-            <TouchableOpacity style={styles.stepBtn} onPress={() => setOnes(ones + 1)}><Text style={styles.stepText}>+</Text></TouchableOpacity>
+            <TouchableOpacity style={styles.stepBtn} onPress={handleSubOne}><Text style={styles.stepText}>-</Text></TouchableOpacity>
+            <TouchableOpacity style={styles.stepBtn} onPress={handleAddOne}><Text style={styles.stepText}>+</Text></TouchableOpacity>
           </View>
         </View>
       </View>
 
-      <TouchableOpacity style={styles.activateRobotBtn} onPress={() => onAnswer(total.toString())}>
+      <TouchableOpacity 
+        style={[styles.activateRobotBtn, total === target && { backgroundColor: '#059669', transform: [{ scale: 1.04 }] }]} 
+        onPress={() => onAnswer(total.toString())}
+      >
         <Text style={styles.activateRobotText}>⚡ Activer le Robot ! ({total})</Text>
       </TouchableOpacity>
     </View>
@@ -119,19 +207,41 @@ export function RobotFactory({ question, onAnswer }: { question: any, onAnswer: 
 // --- GAME 19: WORD CASTLE ---
 export function WordCastle({ question, onAnswer }: { question: any, onAnswer: (ans: string) => void }) {
   const targetWord = question.targetWord || 'ÉCOLE';
+  const [isUnlocked, setIsUnlocked] = useState(false);
+
+  const handlePickWord = (word: string) => {
+    if (word === targetWord || word === question.ans) {
+      setIsUnlocked(true);
+      Speech.speak('Sésame ouvre-toi ! Le pont-levis s\'abaisse !', { language: 'fr-FR' });
+      setTimeout(() => onAnswer(word), 800);
+    } else {
+      Speech.speak('Ce n\'est pas la bonne formule.', { language: 'fr-FR' });
+      onAnswer(word);
+    }
+  };
+
   return (
     <View style={styles.container}>
       <Text style={styles.gameTitle}>🏰 Le Château des Mots</Text>
-      <Text style={styles.promptText}>Prononce la formule magique pour ouvrir la herse :</Text>
+      <Text style={styles.promptText}>Trouve la formule magique pour abaisser le pont-levis :</Text>
 
-      <View style={styles.castleDoor}>
-        <Text style={styles.castleGateIcon}>🚪🔒</Text>
-        <Text style={styles.castleLockWord}>{targetWord}</Text>
+      {/* Castle Wall & Drawbridge */}
+      <View style={styles.castleCardBox}>
+        <View style={styles.castleWallTurrets}>
+          <Text style={{ fontSize: 24 }}>🛡️ 🏰 🛡️</Text>
+        </View>
+        <View style={[styles.castleDoor, isUnlocked && { backgroundColor: '#10B981', borderColor: '#FDE047' }]}>
+          <Text style={styles.castleGateIcon}>{isUnlocked ? '🚪✨ OUVERT !' : '🚪🔒 FERMÉ'}</Text>
+          <Text style={styles.castleLockWord}>{targetWord}</Text>
+        </View>
+        <Text style={styles.drawbridgeStatus}>
+          {isUnlocked ? '🌉 Pont-levis abaissé ! Bravo chevalier !' : '⛓️ Pont-levis relevé'}
+        </Text>
       </View>
 
       <View style={styles.optionsRow}>
         {(question.options || ['ÉCOLE', 'MAISON', 'LIVRE', 'ARBRE']).map((word: string) => (
-          <TouchableOpacity key={word} style={styles.choiceCard} onPress={() => onAnswer(word)}>
+          <TouchableOpacity key={word} style={styles.choiceCard} onPress={() => handlePickWord(word)}>
             <Text style={styles.choiceCardText}>🔑 {word}</Text>
           </TouchableOpacity>
         ))}
@@ -312,24 +422,91 @@ export function SubtractionNinja({ question, onAnswer }: { question: any, onAnsw
 
 // --- GAME 25: CFA MARKET ---
 export function CFAMarket({ question, onAnswer }: { question: any, onAnswer: (ans: string) => void }) {
-  const item = question.item || 'Poisson braisé';
-  const price = question.price || 500;
+  const item = question.item || 'Poisson braisé de Kribi';
+  const price = parseInt(question.ans) || parseInt(question.price) || 500;
+  const [basketCoins, setBasketCoins] = useState<number[]>([]);
+
+  const totalInBasket = basketCoins.reduce((sum, c) => sum + c, 0);
+
+  const handleAddCoin = (amount: number) => {
+    setBasketCoins(prev => [...prev, amount]);
+    Speech.speak(`${amount} Francs CFA déposés !`, { language: 'fr-FR' });
+  };
+
+  const handleClearBasket = () => {
+    setBasketCoins([]);
+  };
+
+  const handlePay = () => {
+    if (totalInBasket === price) {
+      Speech.speak('Merci mon grand ! Marché conclu !', { language: 'fr-FR' });
+    }
+    onAnswer(totalInBasket.toString());
+  };
+
   return (
     <View style={styles.container}>
       <Text style={styles.gameTitle}>🏪 Grand Marché de Mokolo</Text>
-      <Text style={styles.promptText}>Achète {item} au prix de <Text style={{ color: '#059669', fontWeight: 'bold' }}>{price} FCFA</Text> :</Text>
+      <Text style={styles.promptText}>
+        Achète <Text style={{ fontWeight: 'bold' }}>{item}</Text> au prix de <Text style={{ color: '#059669', fontWeight: 'bold' }}>{price} FCFA</Text> :
+      </Text>
 
-      <View style={styles.marketPlate}>
-        <Text style={{ fontSize: 50 }}>🐟</Text>
-        <Text style={styles.marketPriceLabel}>{price} Francs CFA</Text>
+      {/* Market Stall & Merchant Plate */}
+      <View style={styles.marketStallBox}>
+        <View style={styles.merchantRow}>
+          <Text style={{ fontSize: 36 }}>👩🏾‍🍳</Text>
+          <View style={styles.merchantSpeechBubble}>
+            <Text style={styles.merchantSpeechText}>
+              {totalInBasket === 0 && `« Bienvenue ! Le poisson coûte ${price} Francs. »`}
+              {totalInBasket > 0 && totalInBasket < price && `« Dépose encore ${price - totalInBasket} F ! »`}
+              {totalInBasket === price && '« C\'est la somme exacte ! Bravo ! »'}
+              {totalInBasket > price && `« Trop de sous ! Il faut exactement ${price} F ! »`}
+            </Text>
+          </View>
+        </View>
+
+        <View style={styles.marketPlate}>
+          <Text style={{ fontSize: 44 }}>🐟</Text>
+          <Text style={styles.marketPriceLabel}>Prix : {price} FCFA</Text>
+          
+          {/* Deposited Coins in Tray */}
+          <View style={styles.coinsTray}>
+            {basketCoins.map((c, idx) => (
+              <View key={idx} style={styles.miniTrayCoin}>
+                <Text style={styles.miniTrayCoinText}>🪙 {c}F</Text>
+              </View>
+            ))}
+            {basketCoins.length === 0 && <Text style={styles.emptyTrayText}>Plateau vide...</Text>}
+          </View>
+
+          <Text style={styles.totalDepositedText}>
+            Total versé : <Text style={{ fontWeight: 'bold', color: totalInBasket === price ? '#059669' : '#D97706' }}>{totalInBasket} FCFA</Text>
+          </Text>
+        </View>
       </View>
 
+      {/* Interactive Coin Purse */}
+      <Text style={styles.purseTitle}>👛 Pièces dans ton porte-monnaie :</Text>
       <View style={styles.optionsRow}>
-        {(question.options || ['500', '250', '1000', '100']).map((coin: string) => (
-          <TouchableOpacity key={coin} style={styles.cfaCoinBtn} onPress={() => onAnswer(coin)}>
-            <Text style={styles.cfaCoinText}>🪙 {coin} F</Text>
+        {[50, 100, 250, 500].map((coin) => (
+          <TouchableOpacity key={coin} style={styles.cfaCoinBtn} onPress={() => handleAddCoin(coin)}>
+            <Text style={styles.cfaCoinText}>🪙 +{coin} F</Text>
           </TouchableOpacity>
         ))}
+      </View>
+
+      <View style={styles.marketActionRow}>
+        {basketCoins.length > 0 && (
+          <TouchableOpacity style={styles.resetBtn} onPress={handleClearBasket}>
+            <Text style={styles.resetBtnText}>🔄 Vider le plateau</Text>
+          </TouchableOpacity>
+        )}
+        <TouchableOpacity 
+          style={[styles.payMerchantBtn, totalInBasket === price && { backgroundColor: '#059669', transform: [{ scale: 1.05 }] }]} 
+          onPress={handlePay}
+        >
+          <Text style={styles.payMerchantBtnText}>🤝 Payer {totalInBasket} F à la marchande</Text>
+        </TouchableOpacity>
       </View>
     </View>
   );
@@ -431,14 +608,71 @@ export function ReadingRescue({ question, onAnswer }: { question: any, onAnswer:
 
 // --- GAME 29: SCIENCE GARDEN ---
 export function ScienceGarden({ question, onAnswer }: { question: any, onAnswer: (ans: string) => void }) {
+  const [waterCount, setWaterCount] = useState<number>(0);
+  const [sunCount, setSunCount] = useState<number>(0);
+  const [fertilizerCount, setFertilizerCount] = useState<number>(0);
+
+  const growthStage = Math.min(3, Math.floor((waterCount + sunCount + fertilizerCount) / 2));
+  
+  const stageIcons = ['🌰', '🌱', '🌿', '🌽✨'];
+  const stageNames = [
+    'Graine dans la terre fertile',
+    'Petite pousse verte qui germe',
+    'Tige vigoureuse avec feuilles',
+    'Magnifique maïs mûr et prêt !'
+  ];
+
+  const handleWater = () => {
+    setWaterCount(w => Math.min(3, w + 1));
+    Speech.speak('Glou glou ! La terre absorbe l\'eau fraîche !', { language: 'fr-FR' });
+  };
+
+  const handleSun = () => {
+    setSunCount(s => Math.min(3, s + 1));
+    Speech.speak('Le doux soleil illumine les feuilles pour la photosynthèse !', { language: 'fr-FR' });
+  };
+
+  const handleFertilize = () => {
+    setFertilizerCount(f => Math.min(2, f + 1));
+    Speech.speak('Bons nutriments ajoutés !', { language: 'fr-FR' });
+  };
+
   return (
     <View style={styles.container}>
       <Text style={styles.gameTitle}>🌱 Le Jardin Botanique</Text>
-      <Text style={styles.promptText}>De quoi la jeune pousse de maïs a-t-elle besoin pour grandir ?</Text>
+      <Text style={styles.promptText}>Nourris la graine avec l'eau et le soleil, puis réponds à la question :</Text>
 
-      <View style={styles.gardenCenter}>
-        <Text style={{ fontSize: 60 }}>🪴</Text>
+      {/* Interactive Plant Simulation Chamber */}
+      <View style={styles.gardenSimBox}>
+        <View style={styles.gardenCenter}>
+          <Text style={{ fontSize: 65 }}>{stageIcons[growthStage]}</Text>
+        </View>
+        <Text style={styles.gardenStageLabel}>{stageNames[growthStage]}</Text>
+
+        {/* Meters */}
+        <View style={styles.gardenMetersRow}>
+          <Text style={styles.meterBadge}>💧 Eau : {waterCount}/2</Text>
+          <Text style={styles.meterBadge}>☀️ Soleil : {sunCount}/2</Text>
+          <Text style={styles.meterBadge}>🪱 Terreau : {fertilizerCount}/1</Text>
+        </View>
+
+        {/* Tactile Care Tools */}
+        <View style={styles.gardenToolsRow}>
+          <TouchableOpacity style={styles.gardenToolBtn} onPress={handleWater}>
+            <Text style={styles.gardenToolBtnText}>💧 Arroser</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.gardenToolBtn} onPress={handleSun}>
+            <Text style={styles.gardenToolBtnText}>☀️ Ensoleiller</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.gardenToolBtn} onPress={handleFertilize}>
+            <Text style={styles.gardenToolBtnText}>🪱 Nourrir</Text>
+          </TouchableOpacity>
+        </View>
       </View>
+
+      <Text style={styles.curriculumQuestionText}>
+        {question.q || 'De quoi la jeune pousse de maïs a-t-elle absolument besoin pour grandir ?'}
+      </Text>
 
       <View style={styles.optionsRow}>
         {(question.options || ['Eau et Soleil ☀️💧', 'Chocolat 🍫', 'Téléphone 📱', 'Pierres 🪨']).map((opt: string) => (
@@ -477,11 +711,17 @@ const styles = StyleSheet.create({
   promptText: { fontSize: 16, color: '#334155', textAlign: 'center', marginBottom: 20 },
 
   // Racing
-  racetrack: { width: '100%', maxWidth: 440, height: 70, backgroundColor: '#334155', borderRadius: 20, justifyContent: 'center', paddingHorizontal: 15, marginBottom: 20, position: 'relative' },
+  racetrack: { width: '100%', maxWidth: 440, height: 75, backgroundColor: '#334155', borderRadius: 20, justifyContent: 'center', paddingHorizontal: 15, marginBottom: 12, position: 'relative', overflow: 'hidden' },
   trackLine: { height: 2, backgroundColor: '#FDE047', borderStyle: 'dashed', borderWidth: 1, borderColor: '#FDE047', width: '100%' },
-  raceCarWrapper: { position: 'absolute', bottom: 10 },
-  raceCar: { fontSize: 36 },
-  finishFlag: { position: 'absolute', right: 12, fontSize: 30 },
+  trackSceneryRow: { position: 'absolute', top: 4, left: 12, right: 12, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' },
+  sceneryItem: { fontSize: 14, color: '#94A3B8' },
+  speedLinesRow: { position: 'absolute', bottom: 4, width: '100%', alignItems: 'center' },
+  speedLineText: { color: '#FCD34D', fontSize: 13, letterSpacing: 3, fontWeight: 'bold' },
+  raceCarWrapper: { position: 'absolute', bottom: 12 },
+  raceCar: { fontSize: 34 },
+  finishFlag: { fontSize: 26 },
+  speedometerBox: { backgroundColor: '#1E293B', paddingVertical: 6, paddingHorizontal: 14, borderRadius: 14, marginBottom: 16 },
+  speedometerText: { color: '#38BDF8', fontWeight: 'bold', fontSize: 14 },
   equationCard: { backgroundColor: '#EFF6FF', paddingVertical: 14, paddingHorizontal: 30, borderRadius: 20, borderWidth: 2, borderColor: '#93C5FD', marginBottom: 20 },
   equationBig: { fontSize: 36, fontWeight: 'bold', color: '#1E40AF' },
 
@@ -493,13 +733,25 @@ const styles = StyleSheet.create({
   islandValBadge: { backgroundColor: '#FDE68A', paddingHorizontal: 10, paddingVertical: 4, borderRadius: 10, fontWeight: 'bold', color: '#92400E' },
 
   // Robot Factory
-  robotAssemblyBox: { backgroundColor: '#F1F5F9', padding: 16, borderRadius: 24, borderWidth: 3, borderColor: '#CBD5E1', alignItems: 'center', width: 170, marginBottom: 15 },
-  robotHeadIcon: { fontSize: 50 },
-  robotEnergyText: { fontSize: 13, fontWeight: 'bold', color: '#475569', marginTop: 4 },
+  robotAssemblyBox: { backgroundColor: '#F8FAFC', padding: 16, borderRadius: 24, borderWidth: 3, borderColor: '#CBD5E1', alignItems: 'center', width: '100%', maxWidth: 380, marginBottom: 15 },
+  robotHeaderRow: { flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: 12, marginBottom: 8 },
+  robotGearIcon: { fontSize: 24 },
+  robotHeadIcon: { fontSize: 48 },
+  manipulativesBox: { flexDirection: 'row', justifyContent: 'space-around', width: '100%', backgroundColor: 'white', padding: 12, borderRadius: 16, borderWidth: 1, borderColor: '#E2E8F0', marginBottom: 10, minHeight: 70 },
+  tensRodsArea: { flexDirection: 'row', gap: 6, alignItems: 'center', justifyContent: 'center', minWidth: 120 },
+  blueTenRod: { width: 14, height: 60, backgroundColor: '#2563EB', borderRadius: 3, justifyContent: 'space-between', paddingVertical: 2 },
+  rodSegment: { height: 3, width: '100%', backgroundColor: '#93C5FD' },
+  onesCubesArea: { flexDirection: 'row', flexWrap: 'wrap', gap: 4, alignItems: 'center', justifyContent: 'center', maxWidth: 120 },
+  goldUnitCube: { width: 18, height: 18, backgroundColor: '#F59E0B', borderRadius: 4, alignItems: 'center', justifyContent: 'center', borderWidth: 1, borderColor: '#B45309' },
+  cubeLabel: { fontSize: 9, fontWeight: 'bold', color: 'white' },
+  emptyManipText: { fontSize: 12, color: '#94A3B8', fontStyle: 'italic', alignSelf: 'center' },
+  gaugeContainer: { width: '100%', height: 10, backgroundColor: '#E2E8F0', borderRadius: 5, overflow: 'hidden', marginVertical: 6 },
+  gaugeFill: { height: '100%' },
+  robotEnergyText: { fontSize: 13, color: '#475569' },
   robotControlsRow: { flexDirection: 'row', gap: 15, marginBottom: 15 },
-  partCard: { backgroundColor: '#EFF6FF', padding: 12, borderRadius: 16, borderWidth: 2, borderColor: '#BFDBFE', alignItems: 'center', width: 140 },
+  partCard: { backgroundColor: '#EFF6FF', padding: 12, borderRadius: 16, borderWidth: 2, borderColor: '#BFDBFE', alignItems: 'center', width: 150 },
   partLabel: { fontSize: 12, fontWeight: 'bold', color: '#1E40AF' },
-  partCountText: { fontSize: 20, fontWeight: 'bold', color: '#1D4ED8', marginVertical: 4 },
+  partCountText: { fontSize: 18, fontWeight: 'bold', color: '#1D4ED8', marginVertical: 4 },
   miniBtnRow: { flexDirection: 'row', gap: 12 },
   stepBtn: { width: 34, height: 34, borderRadius: 17, backgroundColor: '#3B82F6', alignItems: 'center', justifyContent: 'center' },
   stepText: { color: 'white', fontSize: 18, fontWeight: 'bold' },
@@ -507,9 +759,12 @@ const styles = StyleSheet.create({
   activateRobotText: { color: 'white', fontSize: 16, fontWeight: 'bold' },
 
   // Castle
-  castleDoor: { backgroundColor: '#334155', padding: 20, borderRadius: 24, alignItems: 'center', width: 160, marginBottom: 20 },
-  castleGateIcon: { fontSize: 40 },
-  castleLockWord: { fontSize: 22, fontWeight: 'bold', color: '#FDE047', marginTop: 6 },
+  castleCardBox: { alignItems: 'center', marginBottom: 20 },
+  castleWallTurrets: { marginBottom: 6 },
+  castleDoor: { backgroundColor: '#334155', padding: 18, borderRadius: 20, borderWidth: 3, borderColor: '#64748B', alignItems: 'center', width: 180, marginBottom: 8 },
+  castleGateIcon: { fontSize: 24, fontWeight: 'bold', color: 'white' },
+  castleLockWord: { fontSize: 22, fontWeight: 'bold', color: '#FDE047', marginTop: 4 },
+  drawbridgeStatus: { fontSize: 13, color: '#475569', fontWeight: 'bold' },
 
   // Syllable Jump
   lilyPadRow: { flexDirection: 'row', gap: 15, justifyContent: 'center', marginVertical: 20 },
@@ -547,10 +802,23 @@ const styles = StyleSheet.create({
   swordSlash: { position: 'absolute', fontSize: 22 },
 
   // CFA Market
-  marketPlate: { backgroundColor: '#ECFDF5', padding: 16, borderRadius: 24, borderWidth: 3, borderColor: '#A7F3D0', alignItems: 'center', width: 170, marginBottom: 20 },
-  marketPriceLabel: { fontSize: 16, fontWeight: 'bold', color: '#047857', marginTop: 4 },
-  cfaCoinBtn: { paddingVertical: 14, paddingHorizontal: 20, borderRadius: 20, backgroundColor: '#FEF08A', borderWidth: 2, borderColor: '#CA8A04' },
-  cfaCoinText: { fontSize: 18, fontWeight: 'bold', color: '#854D0E' },
+  marketStallBox: { width: '100%', maxWidth: 420, alignItems: 'center', marginBottom: 12 },
+  merchantRow: { flexDirection: 'row', alignItems: 'center', gap: 10, marginBottom: 10 },
+  merchantSpeechBubble: { backgroundColor: '#FEF3C7', paddingVertical: 8, paddingHorizontal: 14, borderRadius: 16, borderWidth: 1, borderColor: '#FDE68A', flex: 1 },
+  merchantSpeechText: { fontSize: 13, color: '#78350F', fontWeight: 'bold' },
+  marketPlate: { backgroundColor: '#ECFDF5', padding: 14, borderRadius: 22, borderWidth: 2, borderColor: '#A7F3D0', alignItems: 'center', width: '100%' },
+  marketPriceLabel: { fontSize: 14, fontWeight: 'bold', color: '#047857', marginTop: 2 },
+  coinsTray: { flexDirection: 'row', flexWrap: 'wrap', gap: 6, justifyContent: 'center', marginVertical: 8, minHeight: 34, alignItems: 'center' },
+  miniTrayCoin: { backgroundColor: '#FEF08A', paddingVertical: 4, paddingHorizontal: 8, borderRadius: 10, borderWidth: 1, borderColor: '#CA8A04' },
+  miniTrayCoinText: { fontSize: 12, fontWeight: 'bold', color: '#854D0E' },
+  emptyTrayText: { fontSize: 12, color: '#94A3B8', fontStyle: 'italic' },
+  totalDepositedText: { fontSize: 13, color: '#334155' },
+  purseTitle: { fontSize: 13, fontWeight: 'bold', color: '#475569', marginBottom: 6 },
+  cfaCoinBtn: { paddingVertical: 10, paddingHorizontal: 16, borderRadius: 18, backgroundColor: '#FEF08A', borderWidth: 2, borderColor: '#CA8A04' },
+  cfaCoinText: { fontSize: 15, fontWeight: 'bold', color: '#854D0E' },
+  marketActionRow: { flexDirection: 'row', gap: 12, alignItems: 'center', marginTop: 12 },
+  payMerchantBtn: { backgroundColor: '#10B981', paddingVertical: 12, paddingHorizontal: 20, borderRadius: 16, elevation: 3 },
+  payMerchantBtnText: { color: 'white', fontWeight: 'bold', fontSize: 14 },
 
   // Clock Quest
   questClock: { width: 140, height: 140, borderRadius: 70, backgroundColor: '#EFF6FF', borderWidth: 4, borderColor: '#3B82F6', alignItems: 'center', justifyContent: 'center', marginBottom: 20 },
@@ -569,7 +837,15 @@ const styles = StyleSheet.create({
   clueBody: { fontSize: 16, color: '#78350F', textAlign: 'center', lineHeight: 24 },
 
   // Science Garden
-  gardenCenter: { width: 130, height: 130, borderRadius: 65, backgroundColor: '#DCFCE7', alignItems: 'center', justifyContent: 'center', marginBottom: 20 },
+  gardenSimBox: { backgroundColor: '#F0FDF4', padding: 16, borderRadius: 22, borderWidth: 2, borderColor: '#86EFAC', alignItems: 'center', width: '100%', maxWidth: 400, marginBottom: 14 },
+  gardenCenter: { width: 110, height: 110, borderRadius: 55, backgroundColor: '#DCFCE7', alignItems: 'center', justifyContent: 'center', marginBottom: 8 },
+  gardenStageLabel: { fontSize: 13, fontWeight: 'bold', color: '#166534', marginBottom: 8 },
+  gardenMetersRow: { flexDirection: 'row', gap: 8, marginBottom: 12 },
+  meterBadge: { backgroundColor: 'white', paddingVertical: 4, paddingHorizontal: 8, borderRadius: 10, fontSize: 11, fontWeight: 'bold', color: '#15803D', borderWidth: 1, borderColor: '#BBF7D0' },
+  gardenToolsRow: { flexDirection: 'row', gap: 10 },
+  gardenToolBtn: { backgroundColor: '#DCFCE7', paddingVertical: 8, paddingHorizontal: 12, borderRadius: 12, borderWidth: 1, borderColor: '#4ADE80' },
+  gardenToolBtnText: { fontSize: 12, fontWeight: 'bold', color: '#14532D' },
+  curriculumQuestionText: { fontSize: 14, fontWeight: 'bold', color: '#1E293B', textAlign: 'center', marginBottom: 12 },
 
   // Phonics Fishing
   riverArea: { flexDirection: 'row', flexWrap: 'wrap', gap: 15, justifyContent: 'center', maxWidth: 360, marginVertical: 20 },

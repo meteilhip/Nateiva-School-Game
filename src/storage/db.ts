@@ -1,10 +1,12 @@
 // src/storage/db.ts
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { SkillMastery } from '../adaptive/engine';
+import { AttemptEvent } from '../games/types';
 
 const KEYS = {
   PROFILES: '@nateiva_profiles',
   MASTERY: '@nateiva_mastery',
+  ATTEMPTS: '@nateiva_attempts',
 };
 
 export interface ChildProfile {
@@ -61,3 +63,28 @@ export async function saveMastery(learnerId: string, mastery: Record<string, Ski
     console.error("Error saving mastery", e);
   }
 }
+
+export async function saveAttemptEvent(event: AttemptEvent): Promise<void> {
+  try {
+    const key = `${KEYS.ATTEMPTS}_${event.learnerId}`;
+    const data = await AsyncStorage.getItem(key);
+    const events: AttemptEvent[] = data ? JSON.parse(data) : [];
+    events.push(event);
+    // Keep last 500 events to prevent local storage overflow
+    const trimmed = events.slice(-500);
+    await AsyncStorage.setItem(key, JSON.stringify(trimmed));
+  } catch (e) {
+    console.error("Error saving attempt event", e);
+  }
+}
+
+export async function getAttemptEvents(learnerId: string): Promise<AttemptEvent[]> {
+  try {
+    const data = await AsyncStorage.getItem(`${KEYS.ATTEMPTS}_${learnerId}`);
+    return data ? JSON.parse(data) : [];
+  } catch (e) {
+    console.error("Error reading attempt events", e);
+    return [];
+  }
+}
+

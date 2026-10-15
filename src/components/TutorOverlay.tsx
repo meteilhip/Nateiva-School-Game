@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
 import * as Speech from 'expo-speech';
+import { TutorMode } from '../games/types';
+import { StrategyLibrary } from '../games/strategies';
 
 interface TutorOverlayProps {
   question: any;
@@ -9,220 +11,290 @@ interface TutorOverlayProps {
 }
 
 export function TutorOverlay({ question, onClose, onPracticeSimilar }: TutorOverlayProps) {
-  const [currentStepIndex, setCurrentStepIndex] = useState(0);
+  const [activeMode, setActiveMode] = useState<TutorMode>('WATCH_ME');
+  const [regroupStep, setRegroupStep] = useState<number>(0);
+  const [isSlowSpeech, setIsSlowSpeech] = useState(false);
 
-  const speakStep = (text: string) => {
+  const speak = (text: string) => {
     Speech.stop();
-    Speech.speak(text, { language: 'fr-FR', rate: 0.85 });
+    Speech.speak(text, { 
+      language: 'fr-FR', 
+      rate: isSlowSpeech ? 0.65 : 0.85 
+    });
   };
 
-  // Build specialized step-by-step pedagogy based on activity type
-  const getTutorialContent = () => {
-    const qType = question.type;
+  // 1. Math Regrouping Tutor (47 + 28 model)
+  const renderMathContent = () => {
+    return (
+      <View style={styles.tutorBody}>
+        {/* Mode Selector */}
+        <View style={styles.modeTabsRow}>
+          <TouchableOpacity 
+            style={[styles.modeTab, activeMode === 'WATCH_ME' && styles.modeTabActive]} 
+            onPress={() => { setActiveMode('WATCH_ME'); speak('Regarde bien la démonstration des barres de dix et des petits cubes.'); }}
+          >
+            <Text style={[styles.modeTabText, activeMode === 'WATCH_ME' && styles.modeTabTextActive]}>👀 Regarde-moi</Text>
+          </TouchableOpacity>
 
-    if (qType === 'ADDITION_BUILDER' || qType === 'ANIMATED_REGROUPING') {
-      const parts = (question.equation || '47 + 28 = ?').replace('?', '').split('+');
-      const a = parseInt(parts[0]) || 47;
-      const b = parseInt(parts[1]) || 28;
-      const aTens = Math.floor(a / 10);
-      const aOnes = a % 10;
-      const bTens = Math.floor(b / 10);
-      const bOnes = b % 10;
-      const sumOnes = aOnes + bOnes;
-      const total = a + b;
+          <TouchableOpacity 
+            style={[styles.modeTab, activeMode === 'LETS_DO_IT' && styles.modeTabActive]} 
+            onPress={() => { setActiveMode('LETS_DO_IT'); speak('À toi de jouer : touche pour fusionner les 10 cubes en une barre de dix.'); }}
+          >
+            <Text style={[styles.modeTabText, activeMode === 'LETS_DO_IT' && styles.modeTabTextActive]}>🤝 Ensemble</Text>
+          </TouchableOpacity>
 
-      return {
-        title: '🧮 L\'Addition pas à pas avec Retenue',
-        steps: [
-          {
-            title: 'Étape 1 : Séparer les Dizaines et les Unités',
-            desc: `On décompose chaque nombre :\n• ${a} = ${aTens} dizaines et ${aOnes} unités\n• ${b} = ${bTens} dizaines et ${bOnes} unités`,
-            visual: (
-              <View style={styles.tutorVisualBox}>
-                <Text style={styles.visualMathHighlight}>Dizaines : {aTens} + {bTens}  |  Unités : {aOnes} + {bOnes}</Text>
+          <TouchableOpacity 
+            style={[styles.modeTab, activeMode === 'YOUR_TURN' && styles.modeTabActive]} 
+            onPress={() => { setActiveMode('YOUR_TURN'); speak('À ton tour maintenant ! Résous ce problème tout seul.'); }}
+          >
+            <Text style={[styles.modeTabText, activeMode === 'YOUR_TURN' && styles.modeTabTextActive]}>🎯 À ton tour</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity 
+            style={[styles.modeTab, activeMode === 'ANOTHER_WAY' && styles.modeTabActive]} 
+            onPress={() => { setActiveMode('ANOTHER_WAY'); speak('Voici l\'astuce magique des amis de dix.'); }}
+          >
+            <Text style={[styles.modeTabText, activeMode === 'ANOTHER_WAY' && styles.modeTabTextActive]}>✨ Autre Façon</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity 
+            style={[styles.modeTab, activeMode === 'WHY_IT_WORKS' && styles.modeTabActive]} 
+            onPress={() => { setActiveMode('WHY_IT_WORKS'); speak('Pourquoi ça marche ? C\'est le principe de la base dix.'); }}
+          >
+            <Text style={[styles.modeTabText, activeMode === 'WHY_IT_WORKS' && styles.modeTabTextActive]}>🧠 Pourquoi ?</Text>
+          </TouchableOpacity>
+        </View>
+
+        {activeMode === 'WATCH_ME' && (
+          <View style={styles.modeCard}>
+            <Text style={styles.stepHeader}>Exemple concret : 47 + 28</Text>
+            
+            {/* Base 10 visual blocks */}
+            <View style={styles.concreteBlocksRow}>
+              <View style={styles.numberDecomp}>
+                <Text style={styles.numberDecompLabel}>47</Text>
+                <View style={styles.rodsContainer}>
+                  {Array.from({ length: 4 }).map((_, i) => <View key={i} style={styles.tenRodVisual} />)}
+                  <View style={styles.cubesGrid}>
+                    {Array.from({ length: 7 }).map((_, i) => <View key={i} style={styles.unitCubeVisual} />)}
+                  </View>
+                </View>
+                <Text style={styles.decompText}>4 dizaines + 7 unités</Text>
               </View>
-            )
-          },
-          {
-            title: 'Étape 2 : Additionner d\'abord les Unités',
-            desc: `${aOnes} unités + ${bOnes} unités = ${sumOnes} unités.\n${sumOnes >= 10 ? `Attention ! ${sumOnes} dépasse 10 : on fabrique 1 NOUVELLE dizaine avec 10 unités, et il reste ${sumOnes % 10} unités !` : `Il reste ${sumOnes} unités.`}`,
-            visual: (
-              <View style={styles.tutorVisualBox}>
-                <Text style={styles.visualRegroupText}>10 unités ➔ 1 Barre de Dix (Retenue = 1)</Text>
+
+              <Text style={styles.plusSymbol}>➕</Text>
+
+              <View style={styles.numberDecomp}>
+                <Text style={styles.numberDecompLabel}>28</Text>
+                <View style={styles.rodsContainer}>
+                  {Array.from({ length: 2 }).map((_, i) => <View key={i} style={styles.tenRodVisual} />)}
+                  <View style={styles.cubesGrid}>
+                    {Array.from({ length: 8 }).map((_, i) => <View key={i} style={styles.unitCubeVisual} />)}
+                  </View>
+                </View>
+                <Text style={styles.decompText}>2 dizaines + 8 unités</Text>
               </View>
-            )
-          },
-          {
-            title: 'Étape 3 : Additionner toutes les Dizaines',
-            desc: `${aTens} dizaines + ${bTens} dizaines + 1 dizaine de retenue = ${Math.floor(total / 10)} dizaines.\nRésultat final : ${total} !`,
-            visual: (
-              <View style={[styles.tutorVisualBox, { backgroundColor: '#DCFCE7' }]}>
-                <Text style={styles.visualAnswerBig}>Réponse : {total}</Text>
+            </View>
+
+            <View style={styles.explanationBox}>
+              <Text style={styles.explanationTitle}>Étape 1 : On rassemble les unités</Text>
+              <Text style={styles.explanationDesc}>
+                7 unités + 8 unités = 15 unités. Comme 15 dépasse 10, on fabrique 1 NOUVELLE barre de dix, et il reste 5 unités !
+              </Text>
+            </View>
+          </View>
+        )}
+
+        {activeMode === 'LETS_DO_IT' && (
+          <View style={styles.modeCard}>
+            <Text style={styles.stepHeader}>Interactive : Fabrique la dizaine !</Text>
+            <Text style={styles.instructionText}>Touche les 10 cubes pour les transformer en barre de dix :</Text>
+
+            <View style={styles.interactiveRegroupArea}>
+              {regroupStep === 0 ? (
+                <TouchableOpacity style={styles.fusionButton} onPress={() => setRegroupStep(1)}>
+                  <Text style={{ fontSize: 40 }}>📦 10 Petits Cubes</Text>
+                  <Text style={styles.fusionBtnText}>⚡ Toucher pour Fusionner !</Text>
+                </TouchableOpacity>
+              ) : (
+                <View style={styles.fusedResultBox}>
+                  <Text style={{ fontSize: 40 }}>🟦 1 Nouvelle Barre de 10 !</Text>
+                  <Text style={styles.fusedResultText}>+ 5 petits cubes restants = 15 unités</Text>
+                </View>
+              )}
+            </View>
+
+            <Text style={styles.finalTotalBig}>
+              Total des dizaines : 4 + 2 + 1 (retenue) = 7 dizaines. Total final = <Text style={{ color: '#16A34A' }}>75</Text> !
+            </Text>
+          </View>
+        )}
+
+        {activeMode === 'YOUR_TURN' && (
+          <View style={styles.modeCard}>
+            <Text style={styles.stepHeader}>Problème de Transfert Indépendant : 36 + 19</Text>
+            <Text style={styles.instructionText}>
+              Pour valider ta maîtrise, résous ce problème similaire avec de nouveaux nombres sans aide !
+            </Text>
+
+            <View style={styles.concreteBlocksRow}>
+              <View style={styles.numberDecomp}>
+                <Text style={styles.numberDecompLabel}>36</Text>
+                <Text style={styles.decompText}>3 barres + 6 cubes</Text>
               </View>
-            )
-          }
-        ]
-      };
-    }
+              <Text style={styles.plusSymbol}>➕</Text>
+              <View style={styles.numberDecomp}>
+                <Text style={styles.numberDecompLabel}>19</Text>
+                <Text style={styles.decompText}>1 barre + 9 cubes</Text>
+              </View>
+            </View>
 
-    if (qType === 'MONEY_SHOP') {
-      const price = question.price || 350;
-      return {
-        title: '🛒 Comment payer au Marché Camerounais',
-        steps: [
-          {
-            title: 'Étape 1 : Regarde le prix demandé',
-            desc: `L'article coûte ${price} Francs CFA. On doit rassembler la somme exacte ou donner un billet plus grand.`,
-            visual: <Text style={styles.visualBigEmoji}>🏷️ {price} FCFA</Text>
-          },
-          {
-            title: 'Étape 2 : Choisis les grosses pièces et billets',
-            desc: `Pour faire ${price} FCFA, commence par les plus grandes valeurs : par exemple une pièce de 500F ou plusieurs pièces de 100F.`,
-            visual: <Text style={styles.visualCoinsHighlight}>🪙 100F + 🪙 100F + 🪙 100F + 🪙 50F = {price}F</Text>
-          },
-          {
-            title: 'Étape 3 : Vérifie la monnaie',
-            desc: `Si tu donnes 500 FCFA pour un achat de ${price} FCFA, la vendeuse te rendra 500 - ${price} = ${500 - price} FCFA !`,
-            visual: <Text style={styles.visualAnswerBig}>Monnaie rendue = {Math.max(0, 500 - price)} FCFA</Text>
-          }
-        ]
-      };
-    }
+            <View style={styles.explanationBox}>
+              <Text style={styles.explanationTitle}>🎯 Indice de transfert :</Text>
+              <Text style={styles.explanationDesc}>
+                6 + 9 = 15 unités. On échange 10 unités contre 1 barre de 10. Il reste 5 unités.
+                Dizaines : 3 + 1 + 1 (retenue) = 5 dizaines. Total = 55 !
+              </Text>
+            </View>
 
-    if (qType === 'SYLLABLE_BUILDER' || qType === 'PHONEME_MATCH') {
-      return {
-        title: '📖 Décodage Phonétique des Syllabes',
-        steps: [
-          {
-            title: 'Étape 1 : Écoute le premier son (Consonne)',
-            desc: `La consonne donne le départ du son (Exemple : "Mmm" ou "Ppp").`,
-            visual: <Text style={styles.visualBigEmoji}>👂 M...</Text>
-          },
-          {
-            title: 'Étape 2 : Fais glisser la voyelle',
-            desc: `En associant la voyelle (A, E, I, O, U), la bouche change de forme et forme la syllabe : M + A = MA !`,
-            visual: <Text style={styles.visualAnswerBig}>M + A = MA</Text>
-          },
-          {
-            title: 'Étape 3 : Réunis les syllabes pour lire le mot',
-            desc: `MA + MAN = MAMAN. Bravo, tu sais lire le mot entier !`,
-            visual: <Text style={styles.visualAnswerBig}>MAMAN ❤️</Text>
-          }
-        ]
-      };
-    }
+            {onPracticeSimilar && (
+              <TouchableOpacity style={styles.practiceTransferBtn} onPress={onPracticeSimilar}>
+                <Text style={styles.practiceTransferBtnText}>🚀 Valider en mode Jeu Indépendant</Text>
+              </TouchableOpacity>
+            )}
+          </View>
+        )}
 
-    if (qType === 'LIVING_CLASSIFICATION' || qType === 'HABITAT_EXPLORER') {
-      return {
-        title: '🔬 Méthode d\'Observation Scientifique',
-        steps: [
-          {
-            title: 'Étape 1 : Pose-toi les 3 questions magiques',
-            desc: `1. Est-ce que ça respire ?\n2. Est-ce que ça grandit ?\n3. Est-ce que ça a besoin de manger ?`,
-            visual: <Text style={styles.visualBigEmoji}>❓🌱🐕</Text>
-          },
-          {
-            title: 'Étape 2 : Conclusion scientifique',
-            desc: `Si oui, c'est un ÊTRE VIVANT ! Si c'est un objet fabriqué par l'humain ou un minéral, c'est NON-VIVANT.`,
-            visual: <Text style={styles.visualAnswerBig}>Vivant vs Non-Vivant</Text>
-          }
-        ]
-      };
-    }
+        {activeMode === 'ANOTHER_WAY' && (
+          <View style={styles.modeCard}>
+            <Text style={styles.stepHeader}>L'Astuce des Amis de Dix :</Text>
+            <View style={styles.trickBox}>
+              <Text style={styles.trickFormula}>47 + 3 = 50 (Nombre rond !)</Text>
+              <Text style={styles.trickFormula}>Il reste 25 à ajouter (28 - 3 = 25)</Text>
+              <Text style={styles.trickFormulaFinal}>50 + 25 = 75 ! 🚀</Text>
+            </View>
+            <Text style={styles.trickExplain}>
+              Au lieu de poser l'opération, avance d'abord jusqu'à la dizaine suivante (50), puis ajoute le reste facilement de tête !
+            </Text>
+          </View>
+        )}
 
-    // Default universal tutor
-    return {
-      title: '🦉 Le Hibou Tuteur t\'aide !',
-      steps: [
-        {
-          title: 'Étape 1 : Bien comprendre la consigne',
-          desc: question.q || 'Lis attentivement la question posée.',
-          visual: <Text style={styles.visualBigEmoji}>💡</Text>
-        },
-        {
-          title: 'Étape 2 : L\'indice secret',
-          desc: question.hint || 'Prends ton temps et compte avec les doigts.',
-          visual: <Text style={styles.visualAnswerBig}>Indice : {question.hint || 'Regarde les détails'}</Text>
-        },
-        {
-          title: 'Étape 3 : La solution expliquée',
-          desc: `La bonne réponse est : "${question.ans}". Retiens bien cette méthode pour la prochaine question !`,
-          visual: <Text style={styles.visualAnswerBig}>Réponse : {question.ans}</Text>
-        }
-      ]
-    };
+        {activeMode === 'WHY_IT_WORKS' && (
+          <View style={styles.modeCard}>
+            <Text style={styles.stepHeader}>Le Principe Fondamental de la Base 10 :</Text>
+            <Text style={styles.explanationDesc}>
+              Notre système d'écriture des nombres ne peut contenir qu'un seul chiffre (0 à 9) dans la colonne des unités.
+              Dès qu'on atteint 10 unités, elles doivent obligatoirement changer de colonne et devenir 1 dizaine !
+            </Text>
+          </View>
+        )}
+      </View>
+    );
   };
 
-  const tutorial = getTutorialContent();
-  const currentStep = tutorial.steps[currentStepIndex] || tutorial.steps[0];
+  // 2. Reading Tutor (Phonemes, Syllable Chunks, Stories)
+  const renderReadingContent = () => (
+    <View style={styles.tutorBody}>
+      <View style={styles.modeCard}>
+        <Text style={styles.stepHeader}>Décodage Pas à Pas des Syllabes :</Text>
+        
+        <View style={styles.syllableDemoRow}>
+          <View style={styles.syllableBubble}><Text style={styles.syllableBubbleText}>BA</Text></View>
+          <Text style={styles.plusSymbol}>➕</Text>
+          <View style={styles.syllableBubble}><Text style={styles.syllableBubbleText}>NA</Text></View>
+          <Text style={styles.plusSymbol}>➕</Text>
+          <View style={styles.syllableBubble}><Text style={styles.syllableBubbleText}>NE</Text></View>
+        </View>
+
+        <TouchableOpacity 
+          style={styles.listenTutorBtn}
+          onPress={() => speak("B. A. fait Ba. N. A. fait Na. N. E. fait Ne. Ba-na-ne !")}
+        >
+          <Text style={styles.listenTutorBtnText}>🔊 Écouter le découpage syllabique lent</Text>
+        </TouchableOpacity>
+
+        <View style={styles.readingTrickBox}>
+          <Text style={styles.trickTitle}>💡 Règle de lecture :</Text>
+          <Text style={styles.trickText}>
+            Chaque syllabe commence par la consonne qui guide la bouche, suivie de la voyelle qui fait sonner la voix !
+          </Text>
+        </View>
+      </View>
+    </View>
+  );
+
+  // 3. Science Tutor (Controlled Experiments, Cause & Effect)
+  const renderScienceContent = () => (
+    <View style={styles.tutorBody}>
+      <View style={styles.modeCard}>
+        <Text style={styles.stepHeader}>Méthode Scientifique : Plante avec ou sans Lumière</Text>
+        
+        <View style={styles.scienceSimulationBox}>
+          <View style={styles.simPlantItem}>
+            <Text style={{ fontSize: 45 }}>☀️🪴</Text>
+            <Text style={styles.simPlantLabel}>Avec Soleil : Plante verte et forte</Text>
+          </View>
+
+          <View style={styles.simPlantItem}>
+            <Text style={{ fontSize: 45 }}>🌑🥀</Text>
+            <Text style={styles.simPlantLabel}>Dans le noir : Feuilles jaunes et flétries</Text>
+          </View>
+        </View>
+
+        <Text style={styles.explanationDesc}>
+          La plante utilise la lumière du soleil pour fabriquer sa propre sève verte (la chlorophylle). Sans soleil, elle ne peut pas se nourrir !
+        </Text>
+      </View>
+    </View>
+  );
+
+  const isMath = question.type?.includes('ADD') || question.type?.includes('MATH') || question.type?.includes('COUNT') || question.type?.includes('ROBOT');
+  const isScience = question.type?.includes('SCI') || question.type?.includes('HABITAT') || question.type?.includes('GARDEN') || question.type?.includes('LIVING');
 
   return (
     <View style={styles.overlay}>
       <View style={styles.card}>
+        {/* Header */}
         <View style={styles.headerRow}>
-          <Text style={styles.headerTitle}>{tutorial.title}</Text>
-          <TouchableOpacity onPress={onClose} style={styles.closeIconBtn}>
-            <Text style={styles.closeIconText}>✕</Text>
+          <View style={{ flexDirection: 'row', alignItems: 'center', gap: 10 }}>
+            <Text style={{ fontSize: 32 }}>🦉</Text>
+            <View>
+              <Text style={styles.headerTitle}>Le Hibou Tuteur Pédagogique</Text>
+              <Text style={styles.headerSubtitle}>Explication animée étape par étape</Text>
+            </View>
+          </View>
+
+          <TouchableOpacity onPress={onClose} style={styles.closeBtn}>
+            <Text style={styles.closeBtnText}>✕</Text>
           </TouchableOpacity>
         </View>
 
-        {/* Step Indicator */}
-        <View style={styles.stepIndicatorRow}>
-          {tutorial.steps.map((_, i) => (
-            <View 
-              key={i} 
-              style={[
-                styles.stepDot, 
-                i === currentStepIndex ? styles.stepDotActive : i < currentStepIndex ? styles.stepDotCompleted : styles.stepDotPending
-              ]} 
-            />
-          ))}
+        {/* Speed toggle */}
+        <View style={styles.speedRow}>
+          <TouchableOpacity 
+            style={[styles.speedToggle, isSlowSpeech && styles.speedToggleActive]} 
+            onPress={() => setIsSlowSpeech(!isSlowSpeech)}
+          >
+            <Text style={styles.speedToggleText}>🐢 Voix lente {isSlowSpeech ? 'ACTIVÉE' : 'DÉSACTIVÉE'}</Text>
+          </TouchableOpacity>
         </View>
 
-        <ScrollView style={styles.scrollContent}>
-          <Text style={styles.stepTitle}>{currentStep.title}</Text>
-          
-          <View style={styles.visualContainer}>
-            {currentStep.visual}
-          </View>
-
-          <Text style={styles.stepDescription}>{currentStep.desc}</Text>
+        {/* Scrollable pedagogical body */}
+        <ScrollView style={styles.scrollArea}>
+          {isMath ? renderMathContent() : isScience ? renderScienceContent() : renderReadingContent()}
         </ScrollView>
 
+        {/* Action Buttons */}
         <View style={styles.actionsFooter}>
           <TouchableOpacity 
-            style={styles.listenBtn} 
-            onPress={() => speakStep(`${currentStep.title}. ${currentStep.desc}`)}
+            style={styles.practiceTransferBtn}
+            onPress={() => {
+              onClose();
+              if (onPracticeSimilar) onPracticeSimilar();
+            }}
           >
-            <Text style={styles.listenBtnText}>🔊 Écouter l'explication</Text>
+            <Text style={styles.practiceTransferBtnText}>🎯 Pratiquer un NOUVEL exercice similaire !</Text>
           </TouchableOpacity>
-
-          <View style={styles.navRow}>
-            {currentStepIndex > 0 && (
-              <TouchableOpacity 
-                style={styles.navPrevBtn} 
-                onPress={() => setCurrentStepIndex(currentStepIndex - 1)}
-              >
-                <Text style={styles.navBtnText}>⬅️ Précédent</Text>
-              </TouchableOpacity>
-            )}
-
-            {currentStepIndex < tutorial.steps.length - 1 ? (
-              <TouchableOpacity 
-                style={styles.navNextBtn} 
-                onPress={() => setCurrentStepIndex(currentStepIndex + 1)}
-              >
-                <Text style={styles.navBtnText}>Suivant ➡️</Text>
-              </TouchableOpacity>
-            ) : (
-              <TouchableOpacity 
-                style={styles.finishBtn} 
-                onPress={onPracticeSimilar || onClose}
-              >
-                <Text style={styles.finishBtnText}>🚀 Pratiquer un exercice similaire !</Text>
-              </TouchableOpacity>
-            )}
-          </View>
         </View>
       </View>
     </View>
@@ -230,51 +302,78 @@ export function TutorOverlay({ question, onClose, onPracticeSimilar }: TutorOver
 }
 
 const styles = StyleSheet.create({
-  overlay: {
-    position: 'absolute', top: 0, left: 0, right: 0, bottom: 0,
-    backgroundColor: 'rgba(15, 23, 42, 0.75)',
-    justifyContent: 'center', alignItems: 'center',
-    padding: 16, zIndex: 1000
-  },
-  card: {
-    backgroundColor: '#FFFFFF',
-    borderRadius: 24,
-    padding: 24,
-    width: '100%',
-    maxWidth: 520,
-    maxHeight: '85%',
-    shadowColor: '#000', shadowOpacity: 0.25, shadowRadius: 20, elevation: 12
-  },
-  headerRow: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: 15 },
-  headerTitle: { fontSize: 20, fontWeight: 'bold', color: '#1E3A8A', flex: 1 },
-  closeIconBtn: { width: 36, height: 36, borderRadius: 18, backgroundColor: '#F1F5F9', alignItems: 'center', justifyContent: 'center' },
-  closeIconText: { fontSize: 18, fontWeight: 'bold', color: '#64748B' },
+  overlay: { position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, backgroundColor: 'rgba(15, 23, 42, 0.8)', justifyContent: 'center', alignItems: 'center', padding: 16, zIndex: 1000 },
+  card: { backgroundColor: 'white', borderRadius: 28, padding: 22, width: '100%', maxWidth: 540, maxHeight: '90%', elevation: 12 },
+  headerRow: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: 12 },
+  headerTitle: { fontSize: 19, fontWeight: 'bold', color: '#1E3A8A' },
+  headerSubtitle: { fontSize: 12, color: '#64748B' },
+  closeBtn: { width: 34, height: 34, borderRadius: 17, backgroundColor: '#F1F5F9', alignItems: 'center', justifyContent: 'center' },
+  closeBtnText: { fontSize: 16, fontWeight: 'bold', color: '#64748B' },
 
-  stepIndicatorRow: { flexDirection: 'row', gap: 8, justifyContent: 'center', marginBottom: 20 },
-  stepDot: { height: 6, borderRadius: 3, flex: 1 },
-  stepDotActive: { backgroundColor: '#3B82F6' },
-  stepDotCompleted: { backgroundColor: '#10B981' },
-  stepDotPending: { backgroundColor: '#E2E8F0' },
+  speedRow: { flexDirection: 'row', justifyContent: 'flex-end', marginBottom: 10 },
+  speedToggle: { paddingVertical: 4, paddingHorizontal: 10, borderRadius: 12, backgroundColor: '#F1F5F9', borderWidth: 1, borderColor: '#CBD5E1' },
+  speedToggleActive: { backgroundColor: '#FEF3C7', borderColor: '#F59E0B' },
+  speedToggleText: { fontSize: 11, fontWeight: 'bold', color: '#78350F' },
 
-  scrollContent: { marginBottom: 15 },
-  stepTitle: { fontSize: 18, fontWeight: 'bold', color: '#0F172A', marginBottom: 12 },
-  stepDescription: { fontSize: 16, color: '#334155', lineHeight: 26 },
+  scrollArea: { marginBottom: 15 },
+  tutorBody: { gap: 14 },
 
-  visualContainer: { marginVertical: 15, alignItems: 'center', justifyContent: 'center' },
-  tutorVisualBox: { padding: 16, backgroundColor: '#EFF6FF', borderRadius: 16, borderWidth: 2, borderColor: '#93C5FD', width: '100%', alignItems: 'center' },
-  visualMathHighlight: { fontSize: 17, fontWeight: 'bold', color: '#1E40AF' },
-  visualRegroupText: { fontSize: 18, fontWeight: 'bold', color: '#B45309' },
-  visualAnswerBig: { fontSize: 26, fontWeight: 'bold', color: '#15803D' },
-  visualBigEmoji: { fontSize: 50 },
-  visualCoinsHighlight: { fontSize: 18, fontWeight: 'bold', color: '#065F46' },
+  modeTabsRow: { flexDirection: 'row', gap: 6, flexWrap: 'wrap', marginBottom: 10 },
+  modeTab: { paddingVertical: 6, paddingHorizontal: 12, borderRadius: 14, backgroundColor: '#F1F5F9' },
+  modeTabActive: { backgroundColor: '#3B82F6' },
+  modeTabText: { fontSize: 12, fontWeight: 'bold', color: '#475569' },
+  modeTabTextActive: { color: 'white' },
 
+  modeCard: { backgroundColor: '#F8FAFC', padding: 16, borderRadius: 20, borderWidth: 2, borderColor: '#E2E8F0' },
+  stepHeader: { fontSize: 16, fontWeight: 'bold', color: '#0F172A', marginBottom: 12 },
+
+  // Base 10 visual blocks
+  concreteBlocksRow: { flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: 14, marginBottom: 16 },
+  numberDecomp: { alignItems: 'center', backgroundColor: 'white', padding: 10, borderRadius: 14, borderWidth: 1, borderColor: '#E2E8F0', width: 140 },
+  numberDecompLabel: { fontSize: 24, fontWeight: 'bold', color: '#1E40AF', marginBottom: 6 },
+  rodsContainer: { flexDirection: 'row', gap: 4, alignItems: 'flex-end', minHeight: 60, marginBottom: 6 },
+  tenRodVisual: { width: 10, height: 50, backgroundColor: '#3B82F6', borderRadius: 3 },
+  cubesGrid: { flexDirection: 'row', flexWrap: 'wrap', width: 35, gap: 3 },
+  unitCubeVisual: { width: 9, height: 9, backgroundColor: '#F59E0B', borderRadius: 2 },
+  decompText: { fontSize: 11, color: '#64748B', fontWeight: 'bold' },
+  plusSymbol: { fontSize: 24 },
+
+  explanationBox: { backgroundColor: '#EFF6FF', padding: 12, borderRadius: 14, borderWidth: 1, borderColor: '#BFDBFE' },
+  explanationTitle: { fontSize: 14, fontWeight: 'bold', color: '#1E40AF', marginBottom: 4 },
+  explanationDesc: { fontSize: 13, color: '#334155', lineHeight: 20 },
+
+  // Interactive Regrouping
+  instructionText: { fontSize: 13, color: '#475569', marginBottom: 12 },
+  interactiveRegroupArea: { alignItems: 'center', marginVertical: 12 },
+  fusionButton: { backgroundColor: '#FEF3C7', padding: 18, borderRadius: 20, borderWidth: 2, borderColor: '#F59E0B', alignItems: 'center' },
+  fusionBtnText: { color: '#B45309', fontWeight: 'bold', fontSize: 15, marginTop: 6 },
+  fusedResultBox: { backgroundColor: '#DCFCE7', padding: 16, borderRadius: 20, borderWidth: 2, borderColor: '#22C55E', alignItems: 'center' },
+  fusedResultText: { color: '#15803D', fontWeight: 'bold', fontSize: 14, marginTop: 4 },
+  finalTotalBig: { fontSize: 15, fontWeight: 'bold', color: '#1E293B', textAlign: 'center', marginTop: 12 },
+
+  // Tricks
+  trickBox: { backgroundColor: '#FFFBEB', padding: 14, borderRadius: 16, borderWidth: 2, borderColor: '#FDE68A', marginBottom: 10 },
+  trickFormula: { fontSize: 16, fontWeight: 'bold', color: '#B45309', marginVertical: 2 },
+  trickFormulaFinal: { fontSize: 18, fontWeight: 'bold', color: '#15803D', marginTop: 4 },
+  trickExplain: { fontSize: 13, color: '#64748B', lineHeight: 20 },
+
+  // Reading
+  syllableDemoRow: { flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: 10, marginVertical: 12 },
+  syllableBubble: { backgroundColor: '#EEF2FF', paddingVertical: 10, paddingHorizontal: 16, borderRadius: 16, borderWidth: 2, borderColor: '#6366F1' },
+  syllableBubbleText: { fontSize: 24, fontWeight: 'bold', color: '#4338CA' },
+  listenTutorBtn: { backgroundColor: '#FEF3C7', padding: 12, borderRadius: 14, alignItems: 'center', borderWidth: 1, borderColor: '#F59E0B', marginVertical: 10 },
+  listenTutorBtnText: { color: '#92400E', fontWeight: 'bold', fontSize: 13 },
+  readingTrickBox: { backgroundColor: '#F0FDF4', padding: 12, borderRadius: 14, borderWidth: 1, borderColor: '#86EFAC' },
+  trickTitle: { fontSize: 13, fontWeight: 'bold', color: '#166534', marginBottom: 2 },
+  trickText: { fontSize: 12, color: '#14532D', lineHeight: 18 },
+
+  // Science
+  scienceSimulationBox: { flexDirection: 'row', justifyContent: 'space-around', marginVertical: 12 },
+  simPlantItem: { alignItems: 'center', width: 140, backgroundColor: 'white', padding: 10, borderRadius: 14, borderWidth: 1, borderColor: '#CBD5E1' },
+  simPlantLabel: { fontSize: 11, fontWeight: 'bold', color: '#334155', textAlign: 'center', marginTop: 6 },
+
+  // Actions
   actionsFooter: { gap: 10 },
-  listenBtn: { backgroundColor: '#FEF3C7', paddingVertical: 12, borderRadius: 14, alignItems: 'center', borderWidth: 1, borderColor: '#F59E0B' },
-  listenBtnText: { color: '#92400E', fontWeight: 'bold', fontSize: 15 },
-  navRow: { flexDirection: 'row', gap: 10, marginTop: 4 },
-  navPrevBtn: { flex: 1, backgroundColor: '#F1F5F9', paddingVertical: 14, borderRadius: 14, alignItems: 'center' },
-  navNextBtn: { flex: 1, backgroundColor: '#3B82F6', paddingVertical: 14, borderRadius: 14, alignItems: 'center' },
-  navBtnText: { color: 'white', fontWeight: 'bold', fontSize: 16 },
-  finishBtn: { flex: 2, backgroundColor: '#10B981', paddingVertical: 14, borderRadius: 14, alignItems: 'center' },
-  finishBtnText: { color: 'white', fontWeight: 'bold', fontSize: 16 }
+  practiceTransferBtn: { backgroundColor: '#10B981', paddingVertical: 14, borderRadius: 16, alignItems: 'center', elevation: 3 },
+  practiceTransferBtnText: { color: 'white', fontWeight: 'bold', fontSize: 15 }
 });

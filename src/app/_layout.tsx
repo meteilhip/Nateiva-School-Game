@@ -29,6 +29,28 @@ class ErrorBoundary extends React.Component<any, { hasError: boolean, error: any
 export default function RootLayout() {
   useEffect(() => {
     SplashScreen.hideAsync().catch(() => {});
+
+    // Register PWA Service Worker on Web for 100% offline gameplay
+    if (Platform.OS === 'web' && typeof window !== 'undefined' && 'serviceWorker' in navigator) {
+      // Ensure manifest link is present in head
+      if (!document.querySelector('link[rel="manifest"]')) {
+        const link = document.createElement('link');
+        link.rel = 'manifest';
+        link.href = '/manifest.json';
+        document.head.appendChild(link);
+      }
+
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/sw.js').then(
+          (reg) => {
+            console.log('Nateiva EduKids Service Worker registered offline scope:', reg.scope);
+          },
+          (err) => {
+            console.warn('Service Worker registration failed:', err);
+          }
+        );
+      });
+    }
   }, []);
 
   return (
