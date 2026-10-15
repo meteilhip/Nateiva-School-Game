@@ -21,10 +21,10 @@ export default function WorldScreen() {
 
   return (
     <View style={styles.container}>
-      {/* Top Bar */}
+      {/* Top Header */}
       <View style={styles.header}>
         <TouchableOpacity onPress={() => router.replace('/')} style={styles.backBtn}>
-          <Text style={styles.backText}>🔄 Changer de Profil</Text>
+          <Text style={styles.backText}>🔄 Profil</Text>
         </TouchableOpacity>
 
         <View style={styles.profileInfo}>
@@ -37,7 +37,7 @@ export default function WorldScreen() {
 
         <View style={styles.stats}>
           <View style={styles.statPillCoins}>
-            <Text style={styles.statPillText}>🪙 {profile?.coins || 0}</Text>
+            <Text style={styles.statPillText}>🪙 {profile?.coins || 50}</Text>
           </View>
           <View style={styles.statPillStreak}>
             <Text style={styles.statPillText}>🔥 {profile?.streak || 1} j</Text>
@@ -46,78 +46,97 @@ export default function WorldScreen() {
       </View>
 
       <ScrollView contentContainerStyle={styles.scroll}>
-        <Text style={styles.heroTitle}>Choisis ton Monde d'Apprentissage !</Text>
-        <Text style={styles.heroSubtitle}>Programme officiel du Cameroun • En français et anglais</Text>
+        <Text style={styles.heroTitle}>Les Mondes d'Apprentissage Nateiva</Text>
+        <Text style={styles.heroSubtitle}>Chaque niveau propose différents types de jeux animés au choix !</Text>
 
-        {/* 1. Math Kingdom */}
+        {/* Global 60-Game Library Banner */}
+        <TouchableOpacity 
+          style={styles.libraryBanner}
+          onPress={() => router.push('/library')}
+        >
+          <Text style={styles.libraryIcon}>🎮</Text>
+          <View style={{ flex: 1 }}>
+            <Text style={styles.libraryTitle}>Bibliothèque des 60 Jeux Éducatifs</Text>
+            <Text style={styles.librarySubtitle}>Course de voitures, usine de robots, marché CFA, ninjas...</Text>
+          </View>
+          <Text style={styles.libraryAction}>Ouvrir 🚀</Text>
+        </TouchableOpacity>
+
+        {/* --- 4 MAJOR WORLDS --- */}
+
+        {/* WORLD A: EARLY EXPLORERS (4-5 yrs) */}
         <TouchableOpacity 
           style={[styles.worldCard, { backgroundColor: '#EFF6FF', borderColor: '#3B82F6' }]} 
           onPress={() => router.push('/levels/math')}
         >
           <View style={styles.cardHeader}>
-            <Text style={styles.worldIcon}>🧮</Text>
+            <Text style={styles.worldIcon}>🐣</Text>
             <View style={styles.cardInfo}>
-              <Text style={styles.worldTitle}>Math Kingdom</Text>
-              <Text style={styles.worldSubtitle}>Royaume des Mathématiques</Text>
+              <View style={styles.worldPill}><Text style={styles.worldPillText}>MONDE A • ÂGE 4-5 ANS</Text></View>
+              <Text style={styles.worldTitle}>Early Explorers</Text>
+              <Text style={styles.worldSubtitle}>Maternelle 1-2 / Nursery 1-2</Text>
             </View>
             <Text style={styles.arrowIcon}>➡️</Text>
           </View>
           <Text style={styles.worldDesc}>
-            Dénombrement, barres de 10, additions, soustractions avec retenue, monnaie FCFA au marché et géométrie !
+            Color Splash, Safari des Formes, Chenille logique, Bulles à éclater, Train de l'alphabet et Puzzles.
           </Text>
         </TouchableOpacity>
 
-        {/* 2. Reading Forest */}
+        {/* WORLD B: LITTLE HEROES (5-7 yrs) */}
         <TouchableOpacity 
           style={[styles.worldCard, { backgroundColor: '#FFFBEB', borderColor: '#F59E0B' }]} 
+          onPress={() => router.push('/levels/math')}
+        >
+          <View style={styles.cardHeader}>
+            <Text style={styles.worldIcon}>🦁</Text>
+            <View style={styles.cardInfo}>
+              <View style={[styles.worldPill, { backgroundColor: '#FEF3C7' }]}><Text style={[styles.worldPillText, { color: '#B45309' }]}>MONDE B • ÂGE 5-7 ANS</Text></View>
+              <Text style={styles.worldTitle}>Little Heroes</Text>
+              <Text style={styles.worldSubtitle}>SIL / CP / Class 1-2</Text>
+            </View>
+            <Text style={styles.arrowIcon}>➡️</Text>
+          </View>
+          <Text style={styles.worldDesc}>
+            Course de voitures mathématiques, Usine à robots, Chasse au trésor, Marché en FCFA, Ninja soustraction.
+          </Text>
+        </TouchableOpacity>
+
+        {/* WORLD C: SKILL ADVENTURERS (7-9 yrs) */}
+        <TouchableOpacity 
+          style={[styles.worldCard, { backgroundColor: '#ECFDF5', borderColor: '#10B981' }]} 
           onPress={() => router.push('/levels/reading')}
         >
           <View style={styles.cardHeader}>
-            <Text style={styles.worldIcon}>📖</Text>
+            <Text style={styles.worldIcon}>🚀</Text>
             <View style={styles.cardInfo}>
-              <Text style={styles.worldTitle}>Reading Forest</Text>
-              <Text style={styles.worldSubtitle}>Forêt de la Lecture & Langues</Text>
+              <View style={[styles.worldPill, { backgroundColor: '#D1FAE5' }]}><Text style={[styles.worldPillText, { color: '#047857' }]}>MONDE C • ÂGE 7-9 ANS</Text></View>
+              <Text style={styles.worldTitle}>Skill Adventurers</Text>
+              <Text style={styles.worldSubtitle}>CE1 / CE2 / Class 3-4</Text>
             </View>
             <Text style={styles.arrowIcon}>➡️</Text>
           </View>
           <Text style={styles.worldDesc}>
-            Sons, syllabes (BA, MA, PA), dictée interactive, lecture à voix haute et contes camerounais illustrés !
+            Bataille de multiplication, Pizzeria du partage, Chef des fractions, Escape Room et Détective de grammaire.
           </Text>
         </TouchableOpacity>
 
-        {/* 3. Science Lab */}
+        {/* WORLD D: MASTER EXPLORERS (9-12 yrs) */}
         <TouchableOpacity 
-          style={[styles.worldCard, { backgroundColor: '#ECFDF5', borderColor: '#10B981' }]} 
+          style={[styles.worldCard, { backgroundColor: '#FDF2F8', borderColor: '#EC4899' }]} 
           onPress={() => router.push('/levels/science')}
         >
           <View style={styles.cardHeader}>
-            <Text style={styles.worldIcon}>🔬</Text>
+            <Text style={styles.worldIcon}>👑</Text>
             <View style={styles.cardInfo}>
-              <Text style={styles.worldTitle}>Science Lab</Text>
-              <Text style={styles.worldSubtitle}>Laboratoire d'Éveil & Nature</Text>
+              <View style={[styles.worldPill, { backgroundColor: '#FCE7F3' }]}><Text style={[styles.worldPillText, { color: '#BE185D' }]}>MONDE D • ÂGE 9-12 ANS</Text></View>
+              <Text style={styles.worldTitle}>Master Explorers</Text>
+              <Text style={styles.worldSubtitle}>CM1 / CM2 / Class 5-6</Text>
             </View>
             <Text style={styles.arrowIcon}>➡️</Text>
           </View>
           <Text style={styles.worldDesc}>
-            Faune du Cameroun (Waza, Dja, Wouri), germination des plantes, 5 sens et prévention du paludisme.
-          </Text>
-        </TouchableOpacity>
-
-        {/* 4. Memory Village */}
-        <TouchableOpacity 
-          style={[styles.worldCard, { backgroundColor: '#F5F3FF', borderColor: '#8B5CF6' }]} 
-          onPress={() => router.push('/levels/memory')}
-        >
-          <View style={styles.cardHeader}>
-            <Text style={styles.worldIcon}>🧩</Text>
-            <View style={styles.cardInfo}>
-              <Text style={styles.worldTitle}>Memory Village</Text>
-              <Text style={styles.worldSubtitle}>Village de la Mémoire & Paires</Text>
-            </View>
-            <Text style={styles.arrowIcon}>➡️</Text>
-          </View>
-          <Text style={styles.worldDesc}>
-            Cartes mémoire, paniers de tri et associations logiques pour stimuler la concentration !
+            Mission spatiale des fractions, Grand Prix des décimaux, Budget Tycoon en FCFA, Enquêtes et Grand Trophée !
           </Text>
         </TouchableOpacity>
 
@@ -131,7 +150,7 @@ export default function WorldScreen() {
             <Text style={styles.diagnosticTitle}>Test de Positionnement Rapide</Text>
             <Text style={styles.diagnosticText}>Évalue le niveau exact de l'enfant pour adapter les exercices.</Text>
           </View>
-          <Text style={styles.diagnosticAction}>Commencer</Text>
+          <Text style={styles.diagnosticAction}>Tester</Text>
         </TouchableOpacity>
       </ScrollView>
     </View>
@@ -152,18 +171,26 @@ const styles = StyleSheet.create({
   statPillStreak: { backgroundColor: '#FEE2E2', paddingVertical: 6, paddingHorizontal: 12, borderRadius: 16, borderWidth: 1, borderColor: '#FECACA' },
   statPillText: { fontSize: 13, fontWeight: 'bold', color: '#1E293B' },
 
-  scroll: { padding: 20, paddingBottom: 50 },
-  heroTitle: { fontSize: 24, fontWeight: 'bold', color: '#1E293B', textAlign: 'center', marginTop: 6 },
-  heroSubtitle: { fontSize: 14, color: '#64748B', textAlign: 'center', marginBottom: 25 },
+  scroll: { padding: 20, paddingBottom: 60 },
+  heroTitle: { fontSize: 24, fontWeight: 'bold', color: '#1E293B', textAlign: 'center', marginTop: 4 },
+  heroSubtitle: { fontSize: 14, color: '#64748B', textAlign: 'center', marginBottom: 20 },
+
+  libraryBanner: { flexDirection: 'row', alignItems: 'center', backgroundColor: '#F5F3FF', borderWidth: 2.5, borderColor: '#8B5CF6', padding: 18, borderRadius: 24, marginBottom: 20, gap: 14, elevation: 3 },
+  libraryIcon: { fontSize: 44 },
+  libraryTitle: { fontSize: 17, fontWeight: 'bold', color: '#4C1D95' },
+  librarySubtitle: { fontSize: 12, color: '#6D28D9', marginTop: 2 },
+  libraryAction: { backgroundColor: '#7C3AED', color: 'white', paddingVertical: 8, paddingHorizontal: 14, borderRadius: 14, fontWeight: 'bold', fontSize: 13, overflow: 'hidden' },
 
   worldCard: { padding: 20, borderRadius: 24, borderWidth: 3, marginBottom: 16, shadowColor: '#000', shadowOpacity: 0.04, shadowRadius: 10, elevation: 3 },
   cardHeader: { flexDirection: 'row', alignItems: 'center', marginBottom: 10 },
   worldIcon: { fontSize: 44, marginRight: 15 },
   cardInfo: { flex: 1 },
-  worldTitle: { fontSize: 22, fontWeight: 'bold', color: '#1E293B' },
+  worldPill: { alignSelf: 'flex-start', backgroundColor: '#DBEAFE', paddingHorizontal: 8, paddingVertical: 2, borderRadius: 8, marginBottom: 4 },
+  worldPillText: { fontSize: 10, fontWeight: 'bold', color: '#1D4ED8' },
+  worldTitle: { fontSize: 20, fontWeight: 'bold', color: '#1E293B' },
   worldSubtitle: { fontSize: 13, color: '#64748B', fontWeight: '500' },
   arrowIcon: { fontSize: 20 },
-  worldDesc: { fontSize: 14, color: '#475569', lineHeight: 22 },
+  worldDesc: { fontSize: 13, color: '#475569', lineHeight: 20 },
 
   diagnosticBanner: { flexDirection: 'row', alignItems: 'center', backgroundColor: '#EEF2FF', padding: 18, borderRadius: 20, borderWidth: 2, borderColor: '#C7D2FE', marginTop: 10, gap: 12 },
   diagnosticIcon: { fontSize: 36 },

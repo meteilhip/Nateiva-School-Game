@@ -3,41 +3,31 @@ import { View, Text, StyleSheet, TouchableOpacity, ScrollView } from 'react-nati
 import { useLocalSearchParams, router, useFocusEffect } from 'expo-router';
 import * as Speech from 'expo-speech';
 
-// Import All 31 Real Engines from Registry
+// Import All 60 Game Components from Master Registry
 import {
-  CountAndTap,
-  NumberMatch,
-  NumberOrder,
-  NumberLine,
-  TenFrame,
-  PlaceValueBuilder,
-  AdditionBuilder,
-  SubtractionBuilder,
-  MultiplicationArrays,
-  DivisionSharing,
-  FractionBuilder,
-  MoneyShop,
-  ClockGame,
-  MeasurementLab,
-  ShapePuzzle,
-  AlphabetRecognition,
-  PhonemeMatch,
-  SyllableBuilder,
-  PictureWordMatch,
-  SpellingDictation,
-  SentenceOrder,
-  GrammarSort,
-  ReadAloud,
-  StoryComprehension,
-  LivingClassification,
-  HabitatExplorer,
-  PlantGrowthSequence,
-  BodyAndSensesLab,
-  HygieneNutritionSort,
-  CauseAndEffectLab,
-  MemoryCardGame,
-  TapToPair,
-  SortingBaskets
+  // Early (01-15)
+  ColorSplash, ShapeSafari, CountTheAnimals, BubbleNumbers, LetterTrain,
+  SoundDetective, AnimalHomes, PatternCaterpillar, FruitBasket, PictureMemory,
+  DancingLetters, StoryPuppetShow, SizeSorting, ShadowMatch, RainbowBridge,
+  // Foundation (16-30)
+  MathCarRacing, TreasureHunt, RobotFactory, WordCastle, SyllableJump,
+  SpellingBeeAdventure, NumberLineRunner, AdditionBridge, SubtractionNinja, CFAMarket,
+  ClockQuest, SentenceTrain, ReadingRescue, ScienceGarden, PhonicsFishing,
+  // Developing (31-45)
+  MultiplicationBattle, DivisionPizzaShop, FractionChef, GrammarDetective, VocabularyExplorer,
+  ReadingMystery, ScienceExperimentLab, EcosystemBuilder, GeometryArchitect, MeasurementChallenge,
+  MemoryMaze, WordScrambleAdventure, WaterCycleJourney, MathEscapeRoom, MapExplorer,
+  // Advanced (46-60)
+  FractionSpaceMission, DecimalRacing, BudgetTycoon, ScienceDiscoveryQuest, ReadingDetectiveAgency,
+  LogicLabyrinth, GeometryConstructionSite, GrammarKingdom, WordMeaningDuel, DataDetective,
+  MathStrategyTower, PlanetExplorer, StoryCreator, VirtualClassroomChallenge, GrandAdventure,
+  // Classic Engines
+  CountAndTap, NumberMatch, NumberOrder, NumberLine, TenFrame, PlaceValueBuilder,
+  AdditionBuilder, SubtractionBuilder, MultiplicationArrays, DivisionSharing, FractionBuilder,
+  MoneyShop, ClockGame, MeasurementLab, ShapePuzzle, AlphabetRecognition, PhonemeMatch,
+  SyllableBuilder, PictureWordMatch, SpellingDictation, SentenceOrder, GrammarSort,
+  ReadAloud, StoryComprehension, LivingClassification, HabitatExplorer, PlantGrowthSequence,
+  BodyAndSensesLab, HygieneNutritionSort, CauseAndEffectLab, MemoryCardGame, TapToPair, SortingBaskets
 } from '../../games/GameRegistry';
 
 import { TutorOverlay } from '../../components/TutorOverlay';
@@ -57,193 +47,161 @@ const generateQuestionsForSkill = (skillId: string, difficulty: number = 1): any
 
     case 'math_count_1_10':
       return [
-        { id: '1', type: 'COUNT_AND_TAP', q: 'Combien y a-t-il d\'ananas ?', icon: '🍍', ans: difficulty === 1 ? '6' : '9', options: ['6', '7', '8', '9'], hint: 'Compte doucement avec le doigt.' },
-        { id: '2', type: 'TEN_FRAME', q: 'Combien de jetons rouges dans la grille ?', displayCount: difficulty === 1 ? 7 : 8, ans: difficulty === 1 ? '7' : '8', options: ['6', '7', '8', '9'], hint: 'Une ligne complète fait 5 jetons.' },
+        { id: '1', type: 'COUNT_ANIMALS', q: 'Combien d\'éléphants vois-tu dans la savane ?', animalIcon: '🐘', ans: difficulty === 1 ? '4' : '6', options: ['3', '4', '5', '6'], hint: 'Touche chaque éléphant pour compter.' },
+        { id: '2', type: 'BUBBLE_NUMBERS', q: 'Éclate la bulle avec le nombre 5 !', ans: '5', options: ['2', '5', '8', '3'], hint: 'Reconnais le chiffre 5.' },
         { id: '3', type: 'NUMBER_ORDER', q: 'Range les nombres en ordre croissant :', options: ['2', '5', '7', '9'], ans: '2, 5, 7, 9', hint: 'Commence par le plus petit.' }
       ];
 
     case 'math_shapes_basic':
       return [
-        { id: '1', type: 'SHAPE_PUZZLE', q: 'Touche le TRIANGLE (3 côtés) :', shape: 'triangle', ans: 'Triangle', options: ['Triangle', 'Cercle', 'Carré', 'Rectangle'], hint: 'Il a 3 pointes comme une case traditionnelle.' },
-        { id: '2', type: 'SHAPE_PUZZLE', q: 'Touche le CERCLE (Rond comme un ballon) :', shape: 'circle', ans: 'Cercle', options: ['Cercle', 'Carré', 'Triangle', 'Rectangle'], hint: 'Il roule parfaitement sans coins.' }
+        { id: '1', type: 'SHAPE_SAFARI', q: 'Trouve les objets en forme de Cercle :', targetShape: 'Cercle', ans: 'Cercle', options: ['Cercle', 'Triangle', 'Carré'], hint: 'Le cercle est tout rond comme le soleil.' },
+        { id: '2', type: 'SHAPE_PUZZLE', q: 'Touche le Triangle (3 côtés) :', shape: 'triangle', ans: 'Triangle', options: ['Triangle', 'Cercle', 'Carré'], hint: 'Il a 3 pointes comme le mont Cameroun.' }
       ];
 
     case 'math_number_order_20':
       return [
-        { id: '1', type: 'NUMBER_LINE', q: 'Fais sauter la grenouille jusqu\'à 8 !', min: 0, max: 10, target: 8, ans: '8', hint: 'Avance pas à pas vers la droite.' },
+        { id: '1', type: 'NUMBER_LINE_RUNNER', q: 'Où se trouve le diamant à la position 7 ?', ans: '7', target: 7, hint: 'Avance sur la ligne graduée.' },
         { id: '2', type: 'NUMBER_ORDER', q: 'Range ces nombres du plus petit au plus grand :', options: ['11', '14', '17', '20'], ans: '11, 14, 17, 20', hint: 'Regarde le chiffre des unités.' }
       ];
 
     case 'math_add_10':
       return [
-        { id: '1', type: 'ADDITION_BUILDER', q: 'Résous l\'addition :', equation: difficulty === 1 ? '3 + 2 = ?' : '5 + 4 = ?', ans: difficulty === 1 ? '5' : '9', options: difficulty === 1 ? ['4', '5', '6', '7'] : ['7', '8', '9', '10'], hint: 'Mets le premier nombre dans ta tête et ajoute le deuxième.' },
-        { id: '2', type: 'ADDITION_BUILDER', q: 'Résous l\'addition :', equation: '4 + 4 = ?', ans: '8', options: ['6', '7', '8', '9'], hint: 'C\'est un double !' }
+        { id: '1', type: 'MATH_RACING', q: 'Résous l\'addition pour faire avancer la voiture :', equation: difficulty === 1 ? '4 + 3 = ?' : '6 + 3 = ?', ans: difficulty === 1 ? '7' : '9', options: difficulty === 1 ? ['6', '7', '8', '9'] : ['7', '8', '9', '10'], hint: 'Mets le premier nombre dans ta tête et ajoute le deuxième.' },
+        { id: '2', type: 'ROBOT_FACTORY', q: 'Assemble l\'énergie du robot :', ans: '15', target: 15, hint: 'Utilise 1 dizaine et 5 unités.' },
+        { id: '3', type: 'ADDITION_BRIDGE', q: 'Répare le pont avec la somme 5 + 3 = ?', equation: '5 + 3 = ?', ans: '8', options: ['7', '8', '9', '10'], hint: '5 et encore 3 font 8.' }
       ];
 
     case 'math_sub_10':
       return [
-        { id: '1', type: 'SUBTRACTION_BUILDER', q: 'Soustraction : Combien reste-t-il de bananes ?', equation: '6 - 2 = ?', ans: '4', options: ['2', '3', '4', '5'], hint: 'Retire 2 bananes barrées.' },
-        { id: '2', type: 'SUBTRACTION_BUILDER', q: 'Résous la soustraction :', equation: '8 - 3 = ?', ans: '5', options: ['4', '5', '6', '7'], hint: 'Compte ce qu\'il reste.' }
+        { id: '1', type: 'SUBTRACTION_NINJA', q: 'Le ninja tranche 2 cibles sur 6 !', total: 6, cut: 2, ans: '4', options: ['3', '4', '5', '6'], hint: '6 moins 2 font 4.' },
+        { id: '2', type: 'SUBTRACTION_BUILDER', q: 'Combien reste-t-il ?', equation: '7 - 3 = ?', ans: '4', options: ['3', '4', '5', '6'], hint: 'Retire 3 bananes.' }
       ];
 
     case 'math_place_value_100':
       return [
-        { id: '1', type: 'PLACE_VALUE_BUILDER', q: 'Fabrique le nombre 34 avec 3 dizaines et 4 unités :', target: 34, ans: '34', hint: 'Chaque barre bleue vaut 10.' },
-        { id: '2', type: 'PLACE_VALUE_BUILDER', q: 'Fabrique le nombre 52 avec 5 dizaines et 2 unités :', target: 52, ans: '52', hint: 'Ajoute 5 dizaines puis 2 unités.' }
+        { id: '1', type: 'ROBOT_FACTORY', q: 'Fabrique le robot n° 34 :', target: 34, ans: '34', hint: 'Prends 3 barres de dix et 4 unités.' },
+        { id: '2', type: 'PLACE_VALUE_BUILDER', q: 'Construis 52 :', target: 52, ans: '52', hint: '5 dizaines et 2 unités.' }
       ];
 
     case 'math_cfa_money':
       return [
-        { id: '1', type: 'MONEY_SHOP', item: 'Beignets chauds', itemIcon: '🥯', price: 250, ans: '250', hint: 'Utilise deux pièces de 100F et une pièce de 50F.' },
-        { id: '2', type: 'MONEY_SHOP', item: 'Poisson braisé de Douala', itemIcon: '🐟', price: 1000, ans: '1000', hint: 'Le billet vert vaut 1000 Francs CFA.' }
+        { id: '1', type: 'CFA_MARKET', item: 'Poisson braisé de Kribi', price: 500, ans: '500', options: ['250', '500', '1000', '100'], hint: 'La pièce dorée vaut 500 Francs CFA.' },
+        { id: '2', type: 'MONEY_SHOP', item: 'Beignets chauds', price: 250, ans: '250', hint: 'Deux pièces de 100F et une pièce de 50F.' }
       ];
 
     case 'math_mult_arrays':
       return [
-        { id: '1', type: 'MULTIPLICATION_ARRAYS', q: 'Combien de mangues au total ?', rows: 3, cols: 4, ans: '12', options: ['10', '12', '14', '16'], hint: 'Compte 3 lignes de 4 : 4 + 4 + 4.' }
+        { id: '1', type: 'MULTIPLICATION_BATTLE', rows: 4, cols: 3, ans: '12', options: ['10', '12', '14', '16'], hint: '4 lignes de 3 font 12.' },
+        { id: '2', type: 'MULTIPLICATION_ARRAYS', rows: 3, cols: 4, ans: '12', options: ['10', '12', '14', '16'], hint: '3 × 4 = 12.' }
       ];
 
     case 'math_division_sharing':
       return [
-        { id: '1', type: 'DIVISION_SHARING', q: 'Partage 6 poissons équitablement entre 2 enfants :', total: 6, plates: 2, ans: '3', hint: 'Chaque assiette doit avoir exactement le même nombre.' }
+        { id: '1', type: 'DIVISION_PIZZA', slices: 12, friends: 3, ans: '4', options: ['3', '4', '5', '6'], hint: '12 divisé par 3 fait 4.' },
+        { id: '2', type: 'DIVISION_SHARING', total: 6, plates: 2, ans: '3', hint: 'Chacun reçoit 3 poissons.' }
       ];
 
     case 'math_clock_time':
       return [
-        { id: '1', type: 'CLOCK_GAME', q: 'Quelle heure est-il sur l\'horloge ?', hour: 4, minute: 0, ans: '4h00', options: ['3h00', '4h00', '5h00', '12h20'], hint: 'La petite aiguille bleue indique l\'heure.' }
+        { id: '1', type: 'CLOCK_QUEST', hour: 8, ans: '8h00', options: ['7h00', '8h00', '9h00', '12h00'], hint: 'L\'école commence à 8 heures précises.' }
       ];
 
     case 'math_fractions_basic':
       return [
-        { id: '1', type: 'FRACTION_BUILDER', q: 'Quelle fraction représente une demi-part ?', slices: 2, ans: '1/2', options: ['1/2', '1/3', '1/4', '2/3'], hint: 'Le gâteau est coupé en deux moitiés.' }
+        { id: '1', type: 'FRACTION_CHEF', targetFraction: '1/2', ans: '1/2', options: ['1/2', '1/3', '1/4', '3/4'], hint: 'Une demi-portion égale à la moitié.' },
+        { id: '2', type: 'FRACTION_SPACE', problem: '2/5 + 1/5 = ?', ans: '3/5', options: ['3/5', '3/10', '2/5', '1/5'], hint: 'Additionne les numérateurs du haut : 2 + 1 = 3.' }
       ];
 
     case 'math_measurement_lab':
       return [
-        { id: '1', type: 'MEASUREMENT_LAB', q: 'Combien mesure ce crayon sur la règle ?', lengthCm: 7, ans: '7 cm', options: ['5 cm', '6 cm', '7 cm', '8 cm'], hint: 'Regarde le bout de la mine sur la graduation.' }
+        { id: '1', type: 'MEASUREMENT_CHALLENGE', ans: '50 Kilogrammes (kg)', options: ['50 Kilogrammes (kg)', '50 Grammes (g)', '50 Milligrammes (mg)'], hint: 'Un grand sac de manioc est lourd, il se pèse en kg.' }
       ];
 
     // --- READING & LANGUAGE ---
     case 'fr_alphabet_letters':
       return [
-        { id: '1', type: 'ALPHABET_RECOGNITION', targetLetter: 'A', q: 'Touche la lettre "A" comme Ananas :', ans: 'A', options: ['A', 'B', 'C', 'D'], hint: 'Elle a deux jambes et une barre au milieu.' },
-        { id: '2', type: 'ALPHABET_RECOGNITION', targetLetter: 'M', q: 'Touche la lettre "M" comme Maman :', ans: 'M', options: ['N', 'M', 'W', 'P'], hint: 'Elle a deux bosses comme deux montagnes.' }
+        { id: '1', type: 'LETTER_TRAIN', sequence: ['A', 'B', 'C', '?'], ans: 'D', options: ['D', 'F', 'M', 'P'], hint: 'Après C vient la lettre D.' },
+        { id: '2', type: 'DANCING_LETTERS', targetLetter: 'A', ans: 'A', options: ['A', 'E', 'I', 'O'], hint: 'Attrape la lettre A !' }
       ];
 
     case 'fr_read_vowels':
       return [
-        { id: '1', type: 'PHONEME_MATCH', q: 'Quel mot commence ou contient le son "O" ?', sound: 'O', ans: 'Moto', options: ['Moto', 'Lit', 'Sac', 'Mur'], hint: 'Écoute le son rond : Ooooo.' },
-        { id: '2', type: 'READ_ALOUD', q: 'Lis cette lettre à voix haute dans le micro :', ans: 'A', options: [], hint: 'Ouvre bien grand la bouche : Aaaa.' }
+        { id: '1', type: 'PHONICS_FISHING', targetSound: 'B', ans: 'B', options: ['B', 'D', 'P', 'T'], hint: 'Pêche la lettre B.' },
+        { id: '2', type: 'PHONEME_MATCH', q: 'Quel mot contient le son "O" ?', sound: 'O', ans: 'Moto', options: ['Moto', 'Lit', 'Sac', 'Mur'], hint: 'Écoute : Mo-to.' }
       ];
 
     case 'fr_syllable_blends':
       return [
-        { id: '1', type: 'SYLLABLE_BUILDER', q: 'Assemble les syllabes pour écrire MAMAN :', targetWord: 'MAMAN', syllables: ['MA', 'MAN'], options: ['MA', 'MAN', 'PA', 'TO'], ans: 'MAMAN', hint: 'Commence par MA, puis MAN.' },
-        { id: '2', type: 'PICTURE_WORD_MATCH', q: 'Quelle est cette image camerounaise ?', imageEmoji: '🥭', ans: 'Mangue', options: ['Mangue', 'Pirogue', 'Baobab', 'Lion'], hint: 'C\'est un fruit sucré et juteux.' }
+        { id: '1', type: 'SYLLABLE_JUMP', syllables: ['PA', 'PI', 'LLON'], ans: 'PAPILLON', options: ['PA', 'PI', 'LLON', 'MA', 'TO'], hint: 'Saute sur PA, puis PI, puis LLON.' },
+        { id: '2', type: 'SYLLABLE_BUILDER', targetWord: 'MAMAN', syllables: ['MA', 'MAN'], options: ['MA', 'MAN', 'PA', 'TO'], ans: 'MAMAN', hint: 'MA + MAN.' }
       ];
 
     case 'fr_spelling_cameroon':
       return [
-        { id: '1', type: 'SPELLING_DICTATION', targetWord: 'LION', letterPool: ['L', 'I', 'O', 'N', 'A', 'S'], ans: 'LION', hint: 'L - I - O - N.' }
+        { id: '1', type: 'SPELLING_BEE', targetWord: 'MANGUE', letters: ['M', 'A', 'N', 'G', 'U', 'E', 'O', 'S'], ans: 'MANGUE', hint: 'M - A - N - G - U - E.' }
       ];
 
     case 'fr_sentence_order':
       return [
-        { id: '1', type: 'SENTENCE_ORDER', q: 'Remets les mots dans l\'ordre :', words: ['Amina', 'mange', 'une', 'mangue.'], ans: 'Amina mange une mangue.', hint: 'Qui fait l\'action ? Amina !' },
-        { id: '2', type: 'GRAMMAR_SORT', word: 'Courir', ans: 'VERBE', hint: 'Est-ce une personne ou une action ?' }
+        { id: '1', type: 'SENTENCE_TRAIN', words: ['Musa', 'lit', 'un', 'livre.'], ans: 'Musa lit un livre.', hint: 'Sujet + Verbe + Complément.' },
+        { id: '2', type: 'GRAMMAR_DETECTIVE', sentence: 'Les enfant joue dans la cour.', ans: 'joue (doit être jouent)', options: ['enfant (doit prendre un s)', 'joue (doit être jouent)', 'cour (mal orthographié)'], hint: 'Le verbe s\'accorde avec le pluriel "Les enfants".' }
       ];
 
     case 'fr_story_amina':
       return [
         {
           id: '1',
-          type: 'STORY_COMPREHENSION',
-          story: {
-            title: 'Amina au Marché de Mokolo',
-            paragraphs: [
-              'Ce matin à Yaoundé, Amina accompagne sa mère au marché de Mokolo.',
-              'Elles achètent cinq belles mangues sucrées et du poisson du Wouri.',
-              'Amina aide à porter le panier fièrement jusqu\'à la maison.'
-            ]
-          },
-          q: 'Dans quelle ville du Cameroun se passe cette histoire ?',
+          type: 'READING_MYSTERY',
+          story: 'Amina et sa maman sont parties au marché de Mokolo à Yaoundé. Elles ont acheté du poisson frais pêché dans le fleuve Wouri.',
+          q: 'Dans quelle ville se trouve le marché de Mokolo ?',
           ans: 'Yaoundé',
           options: ['Yaoundé', 'Douala', 'Garoua', 'Bafoussam'],
-          hint: 'Relis la toute première ligne de l\'histoire !'
-        }
-      ];
-
-    case 'en_cvc_words':
-      return [
-        { id: '1', type: 'PICTURE_WORD_MATCH', q: 'What word matches this picture?', imageEmoji: '🐱', ans: 'CAT', options: ['CAT', 'DOG', 'PEN', 'SUN'], hint: 'It says Meow!' },
-        { id: '2', type: 'READ_ALOUD', q: 'Read this English word aloud:', ans: 'SUN', options: [], hint: 'S - U - N.' }
-      ];
-
-    case 'en_story_limbe':
-      return [
-        {
-          id: '1',
-          type: 'STORY_COMPREHENSION',
-          story: {
-            title: 'Tata at Limbe Beach',
-            paragraphs: [
-              'Tata traveled to Limbe with his family on a sunny Saturday.',
-              'He walked on the famous black volcanic sand and watched the fishermen boats.',
-              'In the evening, they enjoyed fresh roasted fish by the sea.'
-            ]
-          },
-          q: 'What color is the sand on Limbe beach?',
-          ans: 'Black',
-          options: ['Black', 'White', 'Yellow', 'Red'],
-          hint: 'Limbe has black volcanic sand from Mount Cameroon!'
+          hint: 'Mokolo est le célèbre grand marché de Yaoundé.'
         }
       ];
 
     // --- SCIENCE & NATURE ---
     case 'sci_living_nonliving':
       return [
-        { id: '1', type: 'LIVING_CLASSIFICATION', item: 'Éléphant du Waza', itemEmoji: '🐘', ans: 'VIVANT', hint: 'L\'éléphant boit de l\'eau, respire et grandit.' },
-        { id: '2', type: 'LIVING_CLASSIFICATION', item: 'Voiture / Moto', itemEmoji: '🚗', ans: 'NON_VIVANT', hint: 'Une voiture ne naît pas et ne grandit pas toute seule.' }
+        { id: '1', type: 'ANIMAL_HOMES', animal: { name: 'Chimpanzé', icon: '🐒' }, ans: 'Dans les arbres 🌳', options: ['Dans les arbres 🌳', 'Dans l\'eau 🌊', 'Sous terre 🕳️'], hint: 'Le chimpanzé vit dans la canopée de la forêt équatoriale.' },
+        { id: '2', type: 'LIVING_CLASSIFICATION', item: 'Éléphant du Waza', itemEmoji: '🐘', ans: 'VIVANT', hint: 'L\'éléphant respire, grandit et mange.' }
       ];
 
     case 'sci_body_senses':
       return [
-        { id: '1', type: 'BODY_SENSES_LAB', stimulus: 'La musique du balafon', stimulusIcon: '🎵', ans: 'OREILLES', hint: 'On écoute les sons avec...' },
-        { id: '2', type: 'BODY_SENSES_LAB', stimulus: 'Le parfum doux de la papaye', stimulusIcon: '👃', ans: 'NEZ', hint: 'On respire et sent les odeurs avec...' }
+        { id: '1', type: 'SOUND_DETECTIVE', soundName: 'Le Lion', soundPrompt: 'Roooaaar !', ans: 'Lion 🦁', options: ['Lion 🦁', 'Oiseau 🦜', 'Grenouille 🐸', 'Mouton 🐑'], hint: 'Écoute le grand rugissement du roi de la savane.' }
       ];
 
     case 'sci_animal_habitat':
       return [
-        { id: '1', type: 'HABITAT_EXPLORER', animal: 'Gorille du Dja', animalEmoji: '🦍', ans: 'FORET', hint: 'Le gorille vit dans les grands arbres de la forêt équatoriale.' },
-        { id: '2', type: 'HABITAT_EXPLORER', animal: 'Girafe du Nord', animalEmoji: '🦒', ans: 'SAVANE', hint: 'La girafe aime les plaines herbeuses de la savane de Waza.' }
+        { id: '1', type: 'HABITAT_EXPLORER', animal: 'Gorille du Dja', animalEmoji: '🦍', ans: 'FORET', hint: 'Le gorille vit dans les grands arbres de la forêt équatoriale.' }
       ];
 
     case 'sci_plant_growth':
       return [
-        { id: '1', type: 'PLANT_GROWTH_SEQUENCE', q: 'Mets dans l\'ordre le cycle du maïs :', ans: '1-2-3-4', hint: 'Tout commence par la graine mise en terre.' }
+        { id: '1', type: 'SCIENCE_GARDEN', ans: 'Eau et Soleil ☀️💧', options: ['Eau et Soleil ☀️💧', 'Chocolat 🍫', 'Téléphone 📱', 'Pierres 🪨'], hint: 'Les plantes ont besoin d\'eau et de lumière.' }
       ];
 
     case 'sci_hygiene_health':
       return [
-        { id: '1', type: 'HYGIENE_NUTRITION_SORT', habit: 'Dormir sous une moustiquaire imprégnée', habitIcon: '🛏️', ans: 'BON', hint: 'La moustiquaire protège des piqûres d\'anophèles et du paludisme.' },
-        { id: '2', type: 'HYGIENE_NUTRITION_SORT', habit: 'Manger des fruits sans les laver à l\'eau propre', habitIcon: '🍇', ans: 'MAUVAIS', hint: 'Il faut toujours laver les aliments pour éviter les microbes.' }
+        { id: '1', type: 'HYGIENE_NUTRITION_SORT', habit: 'Dormir sous une moustiquaire imprégnée', habitIcon: '🛏️', ans: 'BON', hint: 'La moustiquaire protège des moustiques qui transmettent le paludisme.' }
       ];
 
-    // --- MEMORY & MATCHING ---
+    // --- MEMORY ---
     case 'mem_cards':
       return [
-        { id: '1', type: 'MEMORY_CARD_GAME', ans: 'COMPLETED' }
+        { id: '1', type: 'PICTURE_MEMORY', ans: 'COMPLETED' }
       ];
 
     default:
       return [
-        { id: 'def_1', type: 'NUMBER_MATCH', q: 'Choisis le bon nombre :', ans: '5', displayNumber: '5', options: ['3', '4', '5', '6'], hint: 'Compte jusqu\'à 5.' }
+        { id: 'def_1', type: 'MATH_RACING', equation: '3 + 2 = ?', ans: '5', options: ['4', '5', '6', '7'], hint: '3 et encore 2 font 5.' }
       ];
   }
 };
 
 export default function GameActivityScreen() {
-  const { subject, skillId } = useLocalSearchParams();
+  const { subject, skillId, gameKey } = useLocalSearchParams();
   const [questions, setQuestions] = useState<any[]>([]);
   const [qIndex, setQIndex] = useState(0);
   const [lives, setLives] = useState(3);
@@ -261,7 +219,7 @@ export default function GameActivityScreen() {
   useFocusEffect(
     useCallback(() => {
       loadInitialData();
-    }, [skillId])
+    }, [skillId, gameKey])
   );
 
   const loadInitialData = async () => {
@@ -279,9 +237,14 @@ export default function GameActivityScreen() {
       }
       
       setDifficultyLevel(diff);
-      if (skillId) {
-        setQuestions(generateQuestionsForSkill(skillId as string, diff));
+      const generated = generateQuestionsForSkill(skillId as string || 'math_count_1_10', diff);
+      
+      // If user selected a specific game mechanic, apply it to the first question
+      if (gameKey && generated.length > 0) {
+        generated[0].type = gameKey as string;
       }
+      
+      setQuestions(generated);
     } catch (e) {
       setQuestions(generateQuestionsForSkill(skillId as string || 'math_count_1_10', 1));
     }
@@ -294,7 +257,7 @@ export default function GameActivityScreen() {
 
   const completeLevel = async () => {
     const perfectCount = responses.filter(r => r.isCorrect && r.attempts === 0).length; 
-    const earned = Math.max(10, perfectCount * 15 * difficultyLevel);
+    const earned = Math.max(15, perfectCount * 20 * difficultyLevel);
     setCoinsEarned(earned);
     setIsFinished(true);
 
@@ -310,7 +273,7 @@ export default function GameActivityScreen() {
           const allMastery = await getMastery(profile.id);
           let currentSkillMastery: SkillMastery = allMastery[skillId as string] || {
             skillId: skillId as string,
-            masteryValue: 0.2,
+            masteryValue: 0.25,
             state: 'LEARNING',
             consecutiveSuccesses: 0,
             consecutiveFailures: 0,
@@ -347,13 +310,12 @@ export default function GameActivityScreen() {
     if (feedback || showTutor) return;
     const q = questions[qIndex];
     
-    // Evaluate answer
-    const isCorrect = selected === q.ans || q.ans === 'COMPLETED';
+    const isCorrect = selected === q.ans || q.ans === 'COMPLETED' || selected.toLowerCase().includes(q.ans?.toLowerCase());
 
     if (isCorrect) {
       setFeedbackColor('#10B981');
-      setFeedback('Super ! Excellente réponse ! 🎉');
-      speak('Super ! C\'est la bonne réponse !');
+      setFeedback('Gagné ! Bravo champion ! 🎉');
+      speak('Bravo ! C\'est la bonne réponse !');
       
       const isPerfect = errorsOnCurrent === 0;
       setResponses(prev => [...prev, { isCorrect: isPerfect, attempts: errorsOnCurrent }]);
@@ -385,11 +347,10 @@ export default function GameActivityScreen() {
         setTimeout(() => setFeedback(null), 3000);
       } else if (newErrors === 2) {
         setFeedbackColor('#EA580C');
-        setFeedback('Regarde bien l\'indice fort ci-dessous, ou touche le Hibou Tuteur !');
-        speak('Essaie encore une fois ! Tu peux y arriver.');
+        setFeedback('Regarde bien l\'indice ou touche le Hibou Tuteur pour t\'aider !');
+        speak('Essaie encore une fois !');
         setTimeout(() => setFeedback(null), 3000);
       } else {
-        // Error 3: Trigger step-by-step AI Tutor
         setFeedback(null);
         setShowTutor(true);
       }
@@ -399,7 +360,6 @@ export default function GameActivityScreen() {
   const handlePracticeSimilar = () => {
     setShowTutor(false);
     setErrorsOnCurrent(0);
-    // Regenerate parallel question
     const refreshed = generateQuestionsForSkill(skillId as string, difficultyLevel);
     setQuestions(refreshed);
     setQIndex(0);
@@ -418,16 +378,16 @@ export default function GameActivityScreen() {
       <View style={styles.container}>
         <View style={styles.completionCard}>
           <Text style={styles.celebrationTrophy}>🏆</Text>
-          <Text style={styles.celebrationTitle}>Niveau Terminé avec Succès !</Text>
+          <Text style={styles.celebrationTitle}>Victoire ! Jeu Terminé !</Text>
           <Text style={styles.celebrationStars}>⭐⭐⭐</Text>
           
           <View style={styles.rewardBox}>
             <Text style={styles.coinsAmount}>+{coinsEarned} 🪙</Text>
-            <Text style={styles.rewardSubtitle}>Pièces d'or ajoutées à ta tirelire !</Text>
+            <Text style={styles.rewardSubtitle}>Pièces d'or gagnées pour ta tirelire !</Text>
           </View>
 
           <Text style={styles.statSummary}>
-            Difficulté maîtrisée : Niveau {difficultyLevel} | Vie restante : {lives} ❤️
+            Niveau Maîtrisé | Vies restantes : {lives} ❤️
           </Text>
 
           <TouchableOpacity 
@@ -442,53 +402,95 @@ export default function GameActivityScreen() {
   }
 
   const currentQ = questions[qIndex];
+  const activeType = currentQ.type;
 
-  // Dynamic Router for all 31 engines
+  // Master Engine Router for all 60 Distinct Games
   const renderEngine = () => {
-    switch (currentQ.type) {
-      // Math
+    switch (activeType) {
+      // Early (01-15)
+      case 'COLOR_SPLASH': return <ColorSplash question={currentQ} onAnswer={handleAnswer} />;
+      case 'SHAPE_SAFARI': return <ShapeSafari question={currentQ} onAnswer={handleAnswer} />;
+      case 'COUNT_ANIMALS': return <CountTheAnimals question={currentQ} onAnswer={handleAnswer} />;
+      case 'BUBBLE_NUMBERS': return <BubbleNumbers question={currentQ} onAnswer={handleAnswer} />;
+      case 'LETTER_TRAIN': return <LetterTrain question={currentQ} onAnswer={handleAnswer} />;
+      case 'SOUND_DETECTIVE': return <SoundDetective question={currentQ} onAnswer={handleAnswer} />;
+      case 'ANIMAL_HOMES': return <AnimalHomes question={currentQ} onAnswer={handleAnswer} />;
+      case 'PATTERN_CATERPILLAR': return <PatternCaterpillar question={currentQ} onAnswer={handleAnswer} />;
+      case 'FRUIT_BASKET': return <FruitBasket question={currentQ} onAnswer={handleAnswer} />;
+      case 'PICTURE_MEMORY': return <PictureMemory question={currentQ} onAnswer={handleAnswer} />;
+      case 'DANCING_LETTERS': return <DancingLetters question={currentQ} onAnswer={handleAnswer} />;
+      case 'STORY_PUPPET': return <StoryPuppetShow question={currentQ} onAnswer={handleAnswer} />;
+      case 'SIZE_SORTING': return <SizeSorting question={currentQ} onAnswer={handleAnswer} />;
+      case 'SHADOW_MATCH': return <ShadowMatch question={currentQ} onAnswer={handleAnswer} />;
+      case 'RAINBOW_BRIDGE': return <RainbowBridge question={currentQ} onAnswer={handleAnswer} />;
+
+      // Foundation (16-30)
+      case 'MATH_RACING': return <MathCarRacing question={currentQ} onAnswer={handleAnswer} />;
+      case 'TREASURE_HUNT': return <TreasureHunt question={currentQ} onAnswer={handleAnswer} />;
+      case 'ROBOT_FACTORY': return <RobotFactory question={currentQ} onAnswer={handleAnswer} />;
+      case 'WORD_CASTLE': return <WordCastle question={currentQ} onAnswer={handleAnswer} />;
+      case 'SYLLABLE_JUMP': return <SyllableJump question={currentQ} onAnswer={handleAnswer} />;
+      case 'SPELLING_BEE': return <SpellingBeeAdventure question={currentQ} onAnswer={handleAnswer} />;
+      case 'NUMBER_LINE_RUNNER': return <NumberLineRunner question={currentQ} onAnswer={handleAnswer} />;
+      case 'ADDITION_BRIDGE': return <AdditionBridge question={currentQ} onAnswer={handleAnswer} />;
+      case 'SUBTRACTION_NINJA': return <SubtractionNinja question={currentQ} onAnswer={handleAnswer} />;
+      case 'CFA_MARKET': return <CFAMarket question={currentQ} onAnswer={handleAnswer} />;
+      case 'CLOCK_QUEST': return <ClockQuest question={currentQ} onAnswer={handleAnswer} />;
+      case 'SENTENCE_TRAIN': return <SentenceTrain question={currentQ} onAnswer={handleAnswer} />;
+      case 'READING_RESCUE': return <ReadingRescue question={currentQ} onAnswer={handleAnswer} />;
+      case 'SCIENCE_GARDEN': return <ScienceGarden question={currentQ} onAnswer={handleAnswer} />;
+      case 'PHONICS_FISHING': return <PhonicsFishing question={currentQ} onAnswer={handleAnswer} />;
+
+      // Developing (31-45)
+      case 'MULTIPLICATION_BATTLE': return <MultiplicationBattle question={currentQ} onAnswer={handleAnswer} />;
+      case 'DIVISION_PIZZA': return <DivisionPizzaShop question={currentQ} onAnswer={handleAnswer} />;
+      case 'FRACTION_CHEF': return <FractionChef question={currentQ} onAnswer={handleAnswer} />;
+      case 'GRAMMAR_DETECTIVE': return <GrammarDetective question={currentQ} onAnswer={handleAnswer} />;
+      case 'VOCABULARY_EXPLORER': return <VocabularyExplorer question={currentQ} onAnswer={handleAnswer} />;
+      case 'READING_MYSTERY': return <ReadingMystery question={currentQ} onAnswer={handleAnswer} />;
+      case 'SCIENCE_EXPERIMENT': return <ScienceExperimentLab question={currentQ} onAnswer={handleAnswer} />;
+      case 'ECOSYSTEM_BUILDER': return <EcosystemBuilder question={currentQ} onAnswer={handleAnswer} />;
+      case 'GEOMETRY_ARCHITECT': return <GeometryArchitect question={currentQ} onAnswer={handleAnswer} />;
+      case 'MEASUREMENT_CHALLENGE': return <MeasurementChallenge question={currentQ} onAnswer={handleAnswer} />;
+      case 'MEMORY_MAZE': return <MemoryMaze question={currentQ} onAnswer={handleAnswer} />;
+      case 'WORD_SCRAMBLE': return <WordScrambleAdventure question={currentQ} onAnswer={handleAnswer} />;
+      case 'WATER_CYCLE': return <WaterCycleJourney question={currentQ} onAnswer={handleAnswer} />;
+      case 'MATH_ESCAPE_ROOM': return <MathEscapeRoom question={currentQ} onAnswer={handleAnswer} />;
+      case 'MAP_EXPLORER': return <MapExplorer question={currentQ} onAnswer={handleAnswer} />;
+
+      // Advanced (46-60)
+      case 'FRACTION_SPACE': return <FractionSpaceMission question={currentQ} onAnswer={handleAnswer} />;
+      case 'DECIMAL_RACING': return <DecimalRacing question={currentQ} onAnswer={handleAnswer} />;
+      case 'BUDGET_TYCOON': return <BudgetTycoon question={currentQ} onAnswer={handleAnswer} />;
+      case 'SCIENCE_QUEST': return <ScienceDiscoveryQuest question={currentQ} onAnswer={handleAnswer} />;
+      case 'READING_AGENCY': return <ReadingDetectiveAgency question={currentQ} onAnswer={handleAnswer} />;
+      case 'LOGIC_LABYRINTH': return <LogicLabyrinth question={currentQ} onAnswer={handleAnswer} />;
+      case 'GEO_CONSTRUCTION': return <GeometryConstructionSite question={currentQ} onAnswer={handleAnswer} />;
+      case 'GRAMMAR_KINGDOM': return <GrammarKingdom question={currentQ} onAnswer={handleAnswer} />;
+      case 'WORD_MEANING_DUEL': return <WordMeaningDuel question={currentQ} onAnswer={handleAnswer} />;
+      case 'DATA_DETECTIVE': return <DataDetective question={currentQ} onAnswer={handleAnswer} />;
+      case 'MATH_TOWER': return <MathStrategyTower question={currentQ} onAnswer={handleAnswer} />;
+      case 'PLANET_EXPLORER': return <PlanetExplorer question={currentQ} onAnswer={handleAnswer} />;
+      case 'STORY_CREATOR': return <StoryCreator question={currentQ} onAnswer={handleAnswer} />;
+      case 'VIRTUAL_CLASSROOM': return <VirtualClassroomChallenge question={currentQ} onAnswer={handleAnswer} />;
+      case 'GRAND_ADVENTURE': return <GrandAdventure question={currentQ} onAnswer={handleAnswer} />;
+
+      // Classic fallbacks
       case 'COUNT_AND_TAP': return <CountAndTap question={currentQ} onAnswer={handleAnswer} />;
       case 'NUMBER_MATCH': return <NumberMatch question={currentQ} onAnswer={handleAnswer} />;
       case 'NUMBER_ORDER': return <NumberOrder question={currentQ} onAnswer={handleAnswer} />;
-      case 'NUMBER_LINE': return <NumberLine question={currentQ} onAnswer={handleAnswer} />;
       case 'TEN_FRAME': return <TenFrame question={currentQ} onAnswer={handleAnswer} />;
       case 'PLACE_VALUE_BUILDER': return <PlaceValueBuilder question={currentQ} onAnswer={handleAnswer} />;
       case 'ADDITION_BUILDER': return <AdditionBuilder question={currentQ} onAnswer={handleAnswer} />;
       case 'SUBTRACTION_BUILDER': return <SubtractionBuilder question={currentQ} onAnswer={handleAnswer} />;
       case 'MULTIPLICATION_ARRAYS': return <MultiplicationArrays question={currentQ} onAnswer={handleAnswer} />;
       case 'DIVISION_SHARING': return <DivisionSharing question={currentQ} onAnswer={handleAnswer} />;
-      case 'FRACTION_BUILDER': return <FractionBuilder question={currentQ} onAnswer={handleAnswer} />;
       case 'MONEY_SHOP': return <MoneyShop question={currentQ} onAnswer={handleAnswer} />;
-      case 'CLOCK_GAME': return <ClockGame question={currentQ} onAnswer={handleAnswer} />;
-      case 'MEASUREMENT_LAB': return <MeasurementLab question={currentQ} onAnswer={handleAnswer} />;
-      case 'SHAPE_PUZZLE': return <ShapePuzzle question={currentQ} onAnswer={handleAnswer} />;
-      
-      // Language
-      case 'ALPHABET_RECOGNITION': return <AlphabetRecognition question={currentQ} onAnswer={handleAnswer} />;
-      case 'PHONEME_MATCH': return <PhonemeMatch question={currentQ} onAnswer={handleAnswer} />;
-      case 'SYLLABLE_BUILDER': return <SyllableBuilder question={currentQ} onAnswer={handleAnswer} />;
-      case 'PICTURE_WORD_MATCH': return <PictureWordMatch question={currentQ} onAnswer={handleAnswer} />;
-      case 'SPELLING_DICTATION': return <SpellingDictation question={currentQ} onAnswer={handleAnswer} />;
-      case 'SENTENCE_ORDER': return <SentenceOrder question={currentQ} onAnswer={handleAnswer} />;
-      case 'GRAMMAR_SORT': return <GrammarSort question={currentQ} onAnswer={handleAnswer} />;
-      case 'READ_ALOUD': return <ReadAloud question={currentQ} onAnswer={handleAnswer} />;
-      case 'STORY_COMPREHENSION': return <StoryComprehension question={currentQ} onAnswer={handleAnswer} />;
-
-      // Science
-      case 'LIVING_CLASSIFICATION': return <LivingClassification question={currentQ} onAnswer={handleAnswer} />;
       case 'HABITAT_EXPLORER': return <HabitatExplorer question={currentQ} onAnswer={handleAnswer} />;
-      case 'PLANT_GROWTH_SEQUENCE': return <PlantGrowthSequence question={currentQ} onAnswer={handleAnswer} />;
-      case 'BODY_SENSES_LAB': return <BodyAndSensesLab question={currentQ} onAnswer={handleAnswer} />;
-      case 'HYGIENE_NUTRITION_SORT': return <HygieneNutritionSort question={currentQ} onAnswer={handleAnswer} />;
-      case 'CAUSE_EFFECT_LAB': return <CauseAndEffectLab question={currentQ} onAnswer={handleAnswer} />;
-
-      // Memory & Matching
-      case 'MEMORY_CARD_GAME': return <MemoryCardGame question={currentQ} onAnswer={handleAnswer} />;
-      case 'TAP_TO_PAIR': return <TapToPair question={currentQ} onAnswer={handleAnswer} />;
-      case 'SORTING_BASKETS': return <SortingBaskets question={currentQ} onAnswer={handleAnswer} />;
+      case 'LIVING_CLASSIFICATION': return <LivingClassification question={currentQ} onAnswer={handleAnswer} />;
 
       default:
-        return <NumberMatch question={currentQ} onAnswer={handleAnswer} />;
+        return <MathCarRacing question={currentQ} onAnswer={handleAnswer} />;
     }
   };
 

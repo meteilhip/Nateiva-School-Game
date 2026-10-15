@@ -5,6 +5,7 @@ import { CameroonMathSkills, CameroonReadingSkills, CameroonScienceSkills } from
 import { CurriculumSkill } from '../../curriculum/models';
 import { getProfiles, getMastery, ChildProfile } from '../../storage/db';
 import { SkillMastery } from '../../adaptive/engine';
+import { getGamesForSkill } from '../../games/GameRegistry';
 
 export default function LevelSelectionScreen() {
   const { subject } = useLocalSearchParams();
@@ -79,7 +80,6 @@ export default function LevelSelectionScreen() {
     return 'Niveaux d\'Apprentissage';
   };
 
-  // Extract unique strands
   const strands = ['ALL', ...Array.from(new Set(skills.map(s => s.strand)))];
 
   const filteredSkills = selectedStrand === 'ALL' 
@@ -125,6 +125,7 @@ export default function LevelSelectionScreen() {
           const userMastery = mastery[skill.skillId];
           const masteryScore = userMastery ? Math.round(userMastery.masteryValue * 100) : 0;
           const isMastered = userMastery?.state === 'SECURE' || masteryScore >= 80;
+          const gameChoices = getGamesForSkill(skill.skillId);
 
           return (
             <View key={skill.skillId} style={[styles.levelCard, { borderLeftColor: getSubjectColor() }]}>
@@ -147,6 +148,14 @@ export default function LevelSelectionScreen() {
               <Text style={styles.skillTitleEnglish}>{skill.skillNameEnglish}</Text>
               <Text style={styles.skillDesc}>{skill.descriptionFrench}</Text>
 
+              {/* Game Mechanics Available */}
+              <View style={styles.mechanicsRow}>
+                <Text style={styles.mechanicsLabel}>Jeux disponibles :</Text>
+                {gameChoices.map((g) => (
+                  <Text key={g.id} style={styles.gameChoiceChip}>{g.icon} {g.title}</Text>
+                ))}
+              </View>
+
               <View style={styles.cardFooter}>
                 <View style={styles.tagsRow}>
                   {skill.tags.slice(0, 3).map((tag) => (
@@ -154,11 +163,12 @@ export default function LevelSelectionScreen() {
                   ))}
                 </View>
 
+                {/* Direct link to choose between multiple games for this skill */}
                 <TouchableOpacity 
                   style={[styles.playBtn, { backgroundColor: getSubjectColor() }]}
-                  onPress={() => router.push(`/game/${subject}?skillId=${skill.skillId}`)}
+                  onPress={() => router.push(`/game-choice/${skill.skillId}?subject=${subject}`)}
                 >
-                  <Text style={styles.playBtnText}>▶️ Jouer / Play</Text>
+                  <Text style={styles.playBtnText}>Choisir un Jeu 🎮</Text>
                 </TouchableOpacity>
               </View>
             </View>
@@ -198,12 +208,16 @@ const styles = StyleSheet.create({
 
   skillTitleFrench: { fontSize: 20, fontWeight: 'bold', color: '#1E293B', marginBottom: 2 },
   skillTitleEnglish: { fontSize: 14, color: '#64748B', fontStyle: 'italic', marginBottom: 8 },
-  skillDesc: { fontSize: 14, color: '#334155', lineHeight: 22, marginBottom: 16 },
+  skillDesc: { fontSize: 14, color: '#334155', lineHeight: 22, marginBottom: 12 },
+
+  mechanicsRow: { flexDirection: 'row', flexWrap: 'wrap', gap: 6, alignItems: 'center', marginBottom: 16, backgroundColor: '#F8FAFC', padding: 8, borderRadius: 12 },
+  mechanicsLabel: { fontSize: 12, fontWeight: 'bold', color: '#64748B' },
+  gameChoiceChip: { fontSize: 12, color: '#334155', backgroundColor: '#E2E8F0', paddingHorizontal: 8, paddingVertical: 4, borderRadius: 8, fontWeight: '500' },
 
   cardFooter: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' },
   tagsRow: { flexDirection: 'row', gap: 6, flexWrap: 'wrap', flex: 1 },
   tagPill: { fontSize: 11, color: '#94A3B8', backgroundColor: '#F8FAFC', paddingHorizontal: 6, paddingVertical: 2, borderRadius: 6 },
-  playBtn: { paddingVertical: 12, paddingHorizontal: 24, borderRadius: 14, elevation: 3 },
-  playBtnText: { color: 'white', fontWeight: 'bold', fontSize: 15 },
+  playBtn: { paddingVertical: 12, paddingHorizontal: 20, borderRadius: 14, elevation: 3 },
+  playBtnText: { color: 'white', fontWeight: 'bold', fontSize: 14 },
   emptyText: { textAlign: 'center', marginTop: 40, color: '#64748B', fontSize: 16 }
 });
