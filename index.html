@@ -4,11 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
 <meta name="theme-color" content="#E5252A">
-<title>Nateiva EduKids • Jeux Éducatifs & Arcade Animée</title>
+<title>Nateiva EduKids • Le Monde des Jeux Éducatifs</title>
 <style>
-/* ==========================================================================
-   PREMIUM CHILD-SAFE DESIGN SYSTEM: APPLE CLARITY + COCA-COLA WARMTH
-   ========================================================================== */
 :root {
   --red-primary: #E5252A;
   --red-hover: #CC1F24;
@@ -49,7 +46,7 @@ body {
   flex-direction: column;
 }
 
-/* HEADER */
+/* HEADER WITH PROMINENT HOME BUTTON */
 header {
   background: var(--surface);
   border-bottom: 2px solid #EAEFF6;
@@ -63,49 +60,72 @@ header {
   box-shadow: var(--shadow-sm);
 }
 
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.btn-home {
+  background: var(--red-light);
+  color: var(--red-primary);
+  border: 2px solid var(--red-primary);
+  border-radius: var(--radius-sm);
+  padding: 8px 14px;
+  font-size: 14px;
+  font-weight: 900;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  box-shadow: 0 2px 8px rgba(229, 37, 42, 0.15);
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.btn-home:hover {
+  background: var(--red-primary);
+  color: white;
+}
+
 .brand-row {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 10px;
 }
 
 .mascot-avatar {
-  width: 48px;
-  height: 48px;
+  width: 44px;
+  height: 44px;
   border-radius: 50%;
   background: var(--red-light);
   border: 2px solid var(--red-primary);
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 28px;
+  font-size: 26px;
   cursor: pointer;
   animation: floatMascot 3s ease-in-out infinite;
-  box-shadow: 0 4px 12px rgba(229, 37, 42, 0.2);
 }
 
 @keyframes floatMascot {
   0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-4px); }
+  50% { transform: translateY(-3px); }
 }
 
 .brand-text h1 {
-  font-size: 19px;
+  font-size: 18px;
   font-weight: 900;
   letter-spacing: -0.3px;
   color: var(--red-primary);
-  display: flex;
-  align-items: center;
-  gap: 6px;
 }
 
 .brand-subtitle {
-  font-size: 11px;
+  font-size: 10.5px;
   font-weight: 700;
   color: var(--text-muted);
 }
 
-.top-actions {
+.header-right {
   display: flex;
   align-items: center;
   gap: 8px;
@@ -137,11 +157,6 @@ button:active {
   box-shadow: var(--shadow-sm);
 }
 
-.btn-header:hover {
-  background: #F8FAFD;
-  border-color: #CBD5E1;
-}
-
 .btn-lang {
   background: var(--red-light);
   color: var(--red-primary);
@@ -149,47 +164,72 @@ button:active {
   font-weight: 900;
 }
 
-/* MAIN CONTAINER */
 main {
   max-width: 960px;
   width: 100%;
   margin: 0 auto;
   padding: 12px 16px 24px;
   flex: 1;
+}
+
+/* ==========================================================================
+   VIEW 1: WORLD ADVENTURE HUB (#view-hub)
+   ========================================================================== */
+#view-hub {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 14px;
 }
 
-/* CARDS & PANELS */
-.panel {
-  background: var(--surface);
-  border-radius: var(--radius-md);
-  padding: 14px 16px;
-  border: 1.5px solid #EBF0F7;
-  box-shadow: var(--shadow-sm);
+.hub-hero {
+  background: linear-gradient(135deg, #17233D 0%, #202F52 100%);
+  color: white;
+  border-radius: var(--radius-lg);
+  padding: 18px 22px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: var(--shadow-md);
 }
 
-/* GRADE LEVEL SELECTOR */
+.hub-hero-text h2 {
+  font-size: 22px;
+  font-weight: 900;
+  margin-bottom: 4px;
+  color: #FFFFFF;
+}
+
+.hub-hero-text p {
+  font-size: 13px;
+  color: #FFD233;
+  font-weight: 700;
+}
+
+.hub-hero-avatar {
+  font-size: 44px;
+  animation: floatMascot 2.5s infinite ease-in-out;
+}
+
+/* GRADE BAR */
 .grade-bar {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 8px;
-  margin-bottom: 12px;
 }
 
 .pill-grade {
-  background: #F1F5F9;
+  background: #FFFFFF;
   color: var(--navy-dark);
-  border-radius: var(--radius-sm);
-  padding: 10px 8px;
+  border-radius: var(--radius-md);
+  padding: 12px 8px;
   font-size: 13px;
   font-weight: 800;
-  border: 2px solid transparent;
+  border: 2px solid #E2E8F0;
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 4px;
+  box-shadow: var(--shadow-sm);
 }
 
 .pill-grade small {
@@ -202,47 +242,149 @@ main {
   background: var(--red-primary);
   color: white;
   border-color: var(--red-hover);
-  box-shadow: 0 4px 14px rgba(229, 37, 42, 0.35);
+  box-shadow: 0 6px 18px rgba(229, 37, 42, 0.35);
+  transform: translateY(-2px);
 }
 
-/* CATEGORY PILLS BAR */
-.category-tabs-row {
+/* 7 WORLDS GRID */
+.worlds-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 14px;
+}
+
+.world-card {
+  background: #FFFFFF;
+  border-radius: var(--radius-md);
+  border: 2px solid #EBF0F7;
+  padding: 16px;
+  box-shadow: var(--shadow-sm);
   display: flex;
-  gap: 8px;
-  overflow-x: auto;
-  padding-bottom: 6px;
-  margin-bottom: 10px;
-  -webkit-overflow-scrolling: touch;
+  flex-direction: column;
+  gap: 12px;
+  transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
 }
 
-.category-tabs-row::-webkit-scrollbar {
-  height: 4px;
-}
-.category-tabs-row::-webkit-scrollbar-thumb {
-  background: #CBD5E1;
-  border-radius: 4px;
+.world-card:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-md);
+  border-color: var(--red-primary);
 }
 
-.cat-pill-btn {
-  background: #F8FAFD;
-  color: var(--text-muted);
-  border: 1.5px solid #E2E8F0;
-  border-radius: 999px;
-  padding: 8px 16px;
-  font-size: 13px;
-  font-weight: 800;
-  white-space: nowrap;
+.world-card-top {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.world-card-icon {
+  width: 52px;
+  height: 52px;
+  border-radius: var(--radius-md);
+  background: var(--bg-canvas);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 30px;
+}
+
+.world-card-info h3 {
+  font-size: 16px;
+  font-weight: 900;
+  color: var(--navy-dark);
+}
+
+.world-card-info span {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--red-primary);
+}
+
+.world-games-chips {
+  display: flex;
+  flex-wrap: wrap;
   gap: 6px;
 }
 
-.cat-pill-btn.active {
-  background: var(--navy-dark);
-  color: white;
-  border-color: var(--navy-dark);
-  box-shadow: 0 4px 12px rgba(23, 35, 61, 0.25);
+.game-chip {
+  background: #F1F5F9;
+  color: var(--navy-dark);
+  border-radius: 999px;
+  padding: 5px 12px;
+  font-size: 11.5px;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  gap: 5px;
 }
 
-/* MATRIX TOPIC BANNER */
+/* ==========================================================================
+   VIEW 2: ACTIVE GAME ARENA (#view-game)
+   ========================================================================== */
+#view-game {
+  display: none;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.game-header-bar {
+  background: #FFFFFF;
+  border-radius: var(--radius-md);
+  padding: 10px 14px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border: 1.5px solid #EBF0F7;
+  box-shadow: var(--shadow-sm);
+}
+
+.btn-back-hub {
+  background: var(--bg-canvas);
+  color: var(--navy-dark);
+  border: 1.5px solid #CBD5E1;
+  border-radius: var(--radius-sm);
+  padding: 7px 12px;
+  font-size: 12.5px;
+  font-weight: 800;
+}
+
+.game-current-title {
+  font-size: 15px;
+  font-weight: 900;
+  color: var(--red-primary);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* CATEGORY & GAME SWITCHER BAR INSIDE ARENA */
+.game-switch-pills {
+  display: flex;
+  gap: 6px;
+  overflow-x: auto;
+  padding-bottom: 4px;
+}
+
+.game-switch-btn {
+  background: #FFFFFF;
+  border: 1.5px solid #E2E8F0;
+  border-radius: 999px;
+  padding: 6px 14px;
+  font-size: 12px;
+  font-weight: 800;
+  color: var(--navy-dark);
+  white-space: nowrap;
+}
+
+.game-switch-btn.active {
+  background: var(--red-primary);
+  color: white;
+  border-color: var(--red-hover);
+}
+
 .matrix-topic-banner {
   background: linear-gradient(90deg, #FDF2F2 0%, #FFF8E6 100%);
   border: 1.5px solid #FCD4D7;
@@ -254,65 +396,6 @@ main {
   font-size: 12.5px;
   color: var(--navy-dark);
   font-weight: 800;
-  margin-bottom: 12px;
-}
-
-.matrix-topic-banner span strong {
-  color: var(--red-primary);
-}
-
-.badge-grade {
-  background: var(--red-primary);
-  color: white;
-  padding: 3px 10px;
-  border-radius: 999px;
-  font-size: 11px;
-  font-weight: 900;
-}
-
-/* DYNAMIC GAME SELECTOR GRID */
-.game-selector-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
-  gap: 8px;
-}
-
-.game-card-btn {
-  background: #F8FAFD;
-  border: 1.5px solid #E2E8F0;
-  border-radius: var(--radius-sm);
-  padding: 10px 8px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 4px;
-  text-align: center;
-  color: var(--navy-dark);
-}
-
-.game-card-btn.active {
-  background: #FFFFFF;
-  border: 2.5px solid var(--red-primary);
-  box-shadow: 0 6px 18px rgba(229, 37, 42, 0.18);
-  transform: translateY(-2px);
-}
-
-.game-card-icon {
-  font-size: 26px;
-}
-
-.game-card-name {
-  font-size: 12px;
-  font-weight: 800;
-  line-height: 1.25;
-}
-
-.game-card-name small {
-  font-size: 10px;
-  font-weight: 600;
-  color: var(--text-muted);
-  display: block;
-  margin-top: 2px;
 }
 
 /* STATS BAR */
@@ -320,10 +403,9 @@ main {
   display: flex;
   justify-content: space-around;
   align-items: center;
-  background: #F8FAFD;
+  background: #FFFFFF;
   border-radius: var(--radius-sm);
   padding: 8px 12px;
-  margin-bottom: 12px;
   border: 1px solid #EAEFF6;
 }
 
@@ -342,21 +424,14 @@ main {
   color: white;
   border-radius: var(--radius-md);
   padding: 14px 18px;
-  margin-bottom: 12px;
   display: flex;
   align-items: center;
   justify-content: space-between;
   box-shadow: var(--shadow-md);
-  position: relative;
-  overflow: hidden;
-}
-
-.question-content {
-  flex: 1;
 }
 
 .question-equation {
-  font-size: 22px;
+  font-size: 21px;
   font-weight: 900;
   color: #FFFFFF;
   letter-spacing: -0.2px;
@@ -378,10 +453,6 @@ main {
   font-size: 20px;
   border: 1.5px solid rgba(255, 255, 255, 0.3);
   margin-left: 12px;
-}
-
-.audio-repeat-btn:hover {
-  background: rgba(255, 255, 255, 0.25);
 }
 
 .audio-repeat-btn.pulse {
@@ -434,7 +505,6 @@ canvas#arena {
 
 .feedback-box {
   min-height: 28px;
-  margin-top: 8px;
   font-size: 15px;
   font-weight: 900;
   text-align: center;
@@ -446,7 +516,6 @@ canvas#arena {
   display: flex;
   gap: 12px;
   justify-content: center;
-  margin-top: 10px;
 }
 
 .pad-btn {
@@ -456,7 +525,8 @@ canvas#arena {
   background: #FFFFFF;
   border: 2px solid #E2E8F0;
   border-radius: var(--radius-md);
-  font-size: 20px;
+  font-size: 19px;
+  font-weight: 900;
   color: var(--navy-dark);
   box-shadow: var(--shadow-sm);
 }
@@ -469,7 +539,6 @@ canvas#arena {
 .bottom-actions-row {
   display: flex;
   gap: 10px;
-  margin-top: 12px;
 }
 
 .btn-action-main {
@@ -483,10 +552,6 @@ canvas#arena {
   box-shadow: 0 4px 16px rgba(229, 37, 42, 0.35);
 }
 
-.btn-action-main:hover {
-  background: var(--red-hover);
-}
-
 .btn-action-tutor {
   flex: 1.2;
   background: #FFFFFF;
@@ -496,10 +561,6 @@ canvas#arena {
   padding: 14px;
   font-size: 15px;
   font-weight: 900;
-}
-
-.btn-action-tutor:hover {
-  background: var(--red-light);
 }
 
 /* MODALS */
@@ -562,7 +623,6 @@ canvas#arena {
   border-radius: var(--radius-md);
   padding: 10px 14px;
   flex: 1;
-  position: relative;
 }
 
 .tutor-speech-text {
@@ -628,32 +688,23 @@ canvas#tutorCanvas {
   font-size: 14px;
   font-weight: 900;
 }
-
-/* RESPONSIVE BREAKPOINTS */
-@media (max-width: 600px) {
-  header { padding: 8px 12px; }
-  .brand-text h1 { font-size: 17px; }
-  .btn-header { padding: 6px 9px; font-size: 11px; }
-  .pill-grade { font-size: 11.5px; padding: 8px 4px; }
-  .cat-pill-btn { font-size: 12px; padding: 6px 12px; }
-  .question-equation { font-size: 18px; }
-  .pad-btn { height: 46px; font-size: 18px; }
-  .btn-action-main, .btn-action-tutor { padding: 12px 8px; font-size: 14px; }
-}
 </style>
 </head>
 <body>
 
 <!-- HEADER -->
 <header>
-  <div class="brand-row">
-    <div class="mascot-avatar" id="mascot-avatar" title="Touche-moi !">🦉</div>
-    <div class="brand-text">
-      <h1>Nateiva EduKids</h1>
-      <span class="brand-subtitle" id="header-subtitle">Aventure Éducative • 100% Hors-Ligne</span>
+  <div class="header-left">
+    <button class="btn-home" id="btn-header-home" title="Retour à l'accueil">🏠 <span id="label-home-btn">Accueil</span></button>
+    <div class="brand-row">
+      <div class="mascot-avatar" id="mascot-avatar" title="Touche-moi !">🦉</div>
+      <div class="brand-text">
+        <h1>Nateiva EduKids</h1>
+        <span class="brand-subtitle" id="header-subtitle">Aventure Éducative • 100% Hors-Ligne</span>
+      </div>
     </div>
   </div>
-  <div class="top-actions">
+  <div class="header-right">
     <button class="btn-header btn-lang" id="lang-btn">🇨🇲 FR</button>
     <button class="btn-header" id="sound-btn">🔊 Son</button>
     <button class="btn-header" id="guide-btn">❓ Guide</button>
@@ -661,8 +712,19 @@ canvas#tutorCanvas {
 </header>
 
 <main>
-  <!-- SELECTORS PANEL -->
-  <div class="panel">
+  <!-- ===================================================================== -->
+  <!-- VIEW 1: WORLD ADVENTURE HUB (#view-hub)                               -->
+  <!-- ===================================================================== -->
+  <div id="view-hub">
+    <!-- Hero Banner -->
+    <div class="hub-hero">
+      <div class="hub-hero-text">
+        <h2 id="hub-welcome-title">Choisis ton Monde d'Aventure !</h2>
+        <p id="hub-welcome-sub">Explore, joue et apprends à ton propre rythme</p>
+      </div>
+      <div class="hub-hero-avatar">🦉✨</div>
+    </div>
+
     <!-- 4 Grade Bands -->
     <div class="grade-bar" id="grade-pills">
       <button class="pill-grade active" data-grade="0">
@@ -683,31 +745,36 @@ canvas#tutorCanvas {
       </button>
     </div>
 
-    <!-- 7 Learning Categories -->
-    <div class="category-tabs-row" id="category-pills">
-      <button class="cat-pill-btn active" data-cat="math_arcade">🧮 Math Arcade</button>
-      <button class="cat-pill-btn" data-cat="reading">📖 Lecture • Reading</button>
-      <button class="cat-pill-btn" data-cat="comprehension">📜 Compréhension</button>
-      <button class="cat-pill-btn" data-cat="pronunciation">🗣️ Prononciation</button>
-      <button class="cat-pill-btn" data-cat="science">🔬 Sciences & Nature</button>
-      <button class="cat-pill-btn" data-cat="logic_puzzles">🧩 Logique & Énigmes</button>
-      <button class="cat-pill-btn" data-cat="creative_play">🎨 Jeux Créatifs</button>
-    </div>
-
-    <!-- Matrix Active Topic Indicator -->
-    <div class="matrix-topic-banner" id="matrix-topic-banner">
-      <span>🎯 <span id="label-theme">Thème</span> : <strong id="matrix-category-label">Math Arcade</strong> • <span id="matrix-topic-label" style="color:var(--red-primary);font-weight:900;">Dénombrement</span></span>
-      <span class="badge-grade" id="matrix-grade-label">🐣 Maternelle</span>
-    </div>
-
-    <!-- Dynamic Category Game Selection Grid -->
-    <div class="game-selector-grid" id="game-selector-grid">
-      <!-- Populated dynamically per category -->
+    <!-- 7 Learning Worlds Portals Grid -->
+    <div class="worlds-grid" id="worlds-grid">
+      <!-- Populated dynamically via JS -->
     </div>
   </div>
 
-  <!-- MAIN ARCADE ARENA -->
-  <div class="panel">
+  <!-- ===================================================================== -->
+  <!-- VIEW 2: ACTIVE GAME ARENA (#view-game)                                -->
+  <!-- ===================================================================== -->
+  <div id="view-game">
+    <!-- Top breadcrumb bar -->
+    <div class="game-header-bar">
+      <button class="btn-back-hub" id="btn-back-to-hub">⬅️ 🏠 <span id="label-back-hub">Retour aux Mondes</span></button>
+      <div class="game-current-title">
+        <span id="current-game-icon">🧮</span>
+        <span id="current-game-name">Verger Gourmand</span>
+      </div>
+    </div>
+
+    <!-- Dynamic game pills inside the active category -->
+    <div class="game-switch-pills" id="game-switch-pills">
+      <!-- Populated dynamically per category -->
+    </div>
+
+    <!-- Topic indicator -->
+    <div class="matrix-topic-banner">
+      <span>🎯 <span id="label-theme">Thème</span> : <strong id="matrix-category-label">Royaume des Maths</strong> • <span id="matrix-topic-label" style="color:var(--red-primary);font-weight:900;">Dénombrement</span></span>
+      <span style="background:var(--red-primary);color:white;padding:3px 10px;border-radius:999px;font-size:11px;font-weight:900;" id="matrix-grade-label">🐣 Maternelle</span>
+    </div>
+
     <!-- Stats Bar -->
     <div class="stats-bar">
       <div class="stat-item">⭐ <span id="stat-score">0</span></div>
@@ -717,16 +784,16 @@ canvas#tutorCanvas {
       <div class="stat-item">❤️ <span id="stat-lives">3</span></div>
     </div>
 
-    <!-- Visual Question Banner -->
+    <!-- Question Banner -->
     <div class="question-banner">
-      <div class="question-content">
+      <div>
         <div class="question-equation" id="display-equation">2 + 3 = ?</div>
         <div class="concrete-dots" id="concrete-dots">⭐⭐⭐⭐⭐</div>
       </div>
       <button class="audio-repeat-btn" id="repeat-audio-btn" title="Écouter la consigne">🔊</button>
     </div>
 
-    <!-- Canvas Arcade Area -->
+    <!-- Canvas Arena -->
     <div class="arena-box">
       <canvas id="arena" width="500" height="380"></canvas>
       <div class="pointer-hand" id="pointer-hand">👆</div>
@@ -734,35 +801,34 @@ canvas#tutorCanvas {
 
     <div class="feedback-box" id="feedback-msg"></div>
 
-    <!-- Tactile On-Screen Pad -->
+    <!-- Interactive Mobile Controls Pad -->
     <div class="controls-pad" id="controls-pad">
       <button class="pad-btn" id="btn-left">⬅️</button>
-      <button class="pad-btn" id="btn-action">🎯</button>
+      <button class="pad-btn" id="btn-action">🎯 Action</button>
       <button class="pad-btn" id="btn-right">➡️</button>
     </div>
 
     <!-- Bottom Actions -->
     <div class="bottom-actions-row">
-      <button class="btn-action-main" id="btn-play-restart">▶ Jouer / Réessayer</button>
+      <button class="btn-action-main" id="btn-play-restart">▶ Réessayer</button>
       <button class="btn-action-tutor" id="btn-open-tutor">🦉 Montre-moi !</button>
     </div>
   </div>
 </main>
 
-<!-- VOICE-FIRST VISUAL TUTOR MODAL -->
+<!-- TUTOR MODAL -->
 <div class="modal-overlay" id="tutor-modal">
   <div class="modal-card">
     <div class="tutor-header">
       <div class="tutor-mascot-row">
         <div class="tutor-mascot-icon">🦉</div>
         <div class="tutor-speech-bubble">
-          <div class="tutor-speech-text" id="tutor-speech-text">« Regarde bien la démonstration pas-à-pas ! »</div>
+          <div class="tutor-speech-text" id="tutor-speech-text">« Regarde bien la démonstration ! »</div>
         </div>
       </div>
       <button style="background:#F1F5F9;color:#64748B;font-size:18px;border-radius:12px;padding:6px 10px;" id="tutor-close-x">✕</button>
     </div>
 
-    <!-- 5 Modes Tabs -->
     <div class="tutor-modes-tabs" id="tutor-modes-tabs">
       <button class="tutor-tab active" data-tutor-mode="WATCH">👀 REGARDE</button>
       <button class="tutor-tab" data-tutor-mode="TOGETHER">🤝 ENSEMBLE</button>
@@ -791,9 +857,9 @@ canvas#tutorCanvas {
       <button style="background:#F1F5F9;color:#64748B;font-size:18px;border-radius:12px;padding:6px 10px;" id="btn-close-guide">✕</button>
     </div>
     <div style="background:#F8FAFD;border:1.5px solid #E2E8F0;border-radius:var(--radius-md);padding:14px;font-size:14px;color:var(--navy-dark);line-height:1.45;" id="guide-text">
-      Touche les cibles à l'écran pour répondre aux questions !
+      Touche les objets à l'écran pour interagir et résoudre les énigmes !
     </div>
-    <button class="btn-action-main" id="btn-guide-ok" style="padding:12px;">Compris ! C'est parti !</button>
+    <button class="btn-action-main" id="btn-guide-ok" style="padding:12px;">C'est parti ! 🚀</button>
   </div>
 </div>
 
@@ -802,8 +868,8 @@ canvas#tutorCanvas {
   <div class="modal-card" style="text-align:center;align-items:center;">
     <div style="font-size:54px;animation:floatMascot 2s infinite ease-in-out;">🎉</div>
     <h2 style="font-size:22px;font-weight:900;color:var(--red-primary);">Victoire Éclatante !</h2>
-    <p style="font-size:14px;color:var(--text-muted);font-weight:700;" id="victory-stats-text">Tu as complété toutes les étapes avec succès !</p>
-    <button class="btn-action-main" id="btn-victory-next" style="width:100%;margin-top:10px;">Niveau Suivant 🚀</button>
+    <p style="font-size:14px;color:var(--text-muted);font-weight:700;" id="victory-stats-text">Tu as complété toutes les étapes avec brio !</p>
+    <button class="btn-action-main" id="btn-victory-next" style="width:100%;margin-top:10px;">Étape Suivante 🚀</button>
   </div>
 </div>
 
@@ -811,17 +877,19 @@ canvas#tutorCanvas {
 <div class="modal-overlay" id="gameover-modal">
   <div class="modal-card" style="text-align:center;align-items:center;">
     <div style="font-size:50px;">🦉💡</div>
-    <h2 style="font-size:20px;font-weight:900;color:var(--navy-dark);">Ne t'inquiète pas !</h2>
-    <p style="font-size:14px;color:var(--text-muted);font-weight:700;">Chaque erreur est une occasion d'apprendre. Regarde le tuteur ou réessaie !</p>
+    <h2 style="font-size:20px;font-weight:900;color:var(--navy-dark);">Prends ton temps !</h2>
+    <p style="font-size:14px;color:var(--text-muted);font-weight:700;">Le hibou tuteur est là pour t'aider. Regarde sa démonstration pas-à-pas !</p>
     <div style="display:flex;gap:10px;width:100%;margin-top:10px;">
       <button class="btn-action-tutor" id="btn-over-tutor" style="flex:1;">🦉 Tuteur</button>
-      <button class="btn-action-main" id="btn-over-retry" style="flex:1;">Rejouer 🔄</button>
+      <button class="btn-action-main" id="btn-over-retry" style="flex:1;">Réessayer 🔄</button>
     </div>
   </div>
 </div>
 
+<div id="root" style="display:none;"></div>
+
 <script>
-// Web Audio Synthesizer
+// Procedural Web Audio Synthesizer
 const AudioEngine = {
   ctx: null,
   soundEnabled: true,
@@ -861,8 +929,10 @@ const AudioEngine = {
     this.playTone(987.77, "sine", 0.08, 0.15);
     setTimeout(() => this.playTone(1318.51, "sine", 0.2, 0.15), 80);
   },
+  playPop() { this.playTone(520, "sine", 0.08, 0.12); },
   playDrop() { this.playTone(330, "square", 0.08, 0.08); },
-  playWhoosh() { this.playTone(440, "sine", 0.1, 0.1); },
+  playDrum() { this.playTone(130, "triangle", 0.15, 0.3); },
+  playSplash() { this.playTone(280, "sine", 0.12, 0.15); },
   playVictory() {
     this.playTone(523.25, "triangle", 0.12, 0.2);
     setTimeout(() => this.playTone(659.25, "triangle", 0.12, 0.2), 120);
@@ -889,12 +959,13 @@ const VoiceEngine = {
   }
 };
 
-// Full Curriculum Data injected safely via JSON
+// Full Curriculum Database
 const CURRICULUM = {
   "fr": {
     "categories": {
       "math_arcade": {
-        "label": "Math Arcade",
+        "label": "Royaume des Maths",
+        "icon": "🧮",
         "topics": [
           "Dénombrement (1–5)",
           "Addition & Soustraction",
@@ -903,7 +974,8 @@ const CURRICULUM = {
         ]
       },
       "reading": {
-        "label": "Lecture • Reading",
+        "label": "Forêt des Lettres",
+        "icon": "📖",
         "topics": [
           "Lettres & Sons",
           "Syllabes & Mots simples",
@@ -912,7 +984,8 @@ const CURRICULUM = {
         ]
       },
       "comprehension": {
-        "label": "Compréhension",
+        "label": "Vallée des Histoires",
+        "icon": "📜",
         "topics": [
           "Histoires parlées",
           "Ordre chronologique",
@@ -921,7 +994,8 @@ const CURRICULUM = {
         ]
       },
       "pronunciation": {
-        "label": "Prononciation",
+        "label": "Studio Vocal",
+        "icon": "🗣️",
         "topics": [
           "Sons & Phonèmes",
           "Répétition de syllabes",
@@ -930,7 +1004,8 @@ const CURRICULUM = {
         ]
       },
       "science": {
-        "label": "Sciences & Nature",
+        "label": "Labo Nature",
+        "icon": "🔬",
         "topics": [
           "Animaux & Plantes",
           "Habitats du Cameroun",
@@ -939,7 +1014,8 @@ const CURRICULUM = {
         ]
       },
       "logic_puzzles": {
-        "label": "Logique & Énigmes",
+        "label": "Temple des Énigmes",
+        "icon": "🧩",
         "topics": [
           "Tri de formes & couleurs",
           "Suites logiques (ABAB)",
@@ -948,7 +1024,8 @@ const CURRICULUM = {
         ]
       },
       "creative_play": {
-        "label": "Jeux Créatifs",
+        "label": "Atelier Créatif",
+        "icon": "🎨",
         "topics": [
           "Formes & Tangram",
           "Assemblage de robots",
@@ -960,177 +1037,200 @@ const CURRICULUM = {
     "games": {
       "math_arcade": [
         {
-          "id": "math_drop",
-          "name": "Math Drop",
-          "sub": "Blocs Chute",
-          "icon": "🧱",
-          "desc": "Guide le bloc vers la colonne de la bonne réponse !"
-        },
-        {
-          "id": "math_racing",
-          "name": "Course Turbo",
-          "sub": "3 Voies",
-          "icon": "🏎️",
-          "desc": "Change de voie pour foncer sur la bonne réponse et activer le turbo !"
-        },
-        {
-          "id": "fruit_harvest",
-          "name": "Cueillette",
-          "sub": "Arbre à Fruits",
+          "id": "fruit_orchard",
+          "name": "Verger Gourmand",
+          "sub": "Cueillette & Compte",
           "icon": "🥭",
-          "desc": "Touche les fruits mûrs un par un pour compter et récolter !"
+          "engine": "fruit",
+          "desc": "Touche les fruits mûrs un par un sur les branches pour les cueillir dans le panier et compter !"
         },
         {
-          "id": "math_match",
-          "name": "Mémoire Duo",
-          "sub": "Cartes Jumelles",
-          "icon": "🃏",
-          "desc": "Retourne deux cartes qui représentent la même valeur !"
+          "id": "tens_robot",
+          "name": "Robot Base-10",
+          "sub": "Barres & Cubes",
+          "icon": "🤖",
+          "engine": "base10",
+          "desc": "Assemble les barres de 10 et les cubes d'unités pour atteindre la puissance demandée !"
         },
         {
-          "id": "cfa_market",
-          "name": "Marché CFA",
-          "sub": "Comptoir Pièces",
-          "icon": "🪙",
-          "desc": "Dépose les pièces de 25F, 50F, 100F ou 500F pour payer le montant exact !"
+          "id": "turbo_racing",
+          "name": "Course Turbo",
+          "sub": "Rallye 3 Voies",
+          "icon": "🏎️",
+          "engine": "racing",
+          "desc": "Pilote le bolide et change de voie pour franchir la bonne porte de calcul !"
+        },
+        {
+          "id": "cfa_balance",
+          "name": "Balance du Marché",
+          "sub": "Pièces CFA",
+          "icon": "⚖️",
+          "engine": "balance",
+          "desc": "Dépose les pièces de monnaie (25F, 50F, 100F, 500F) pour équilibrer la balance !"
+        },
+        {
+          "id": "fraction_bakery",
+          "name": "Boulangerie",
+          "sub": "Découpe Fractions",
+          "icon": "🥧",
+          "engine": "fraction",
+          "desc": "Découpe et sélectionne les parts de gâteau pour représenter la fraction demandée !"
         }
       ],
       "reading": [
         {
-          "id": "letter_safari",
-          "name": "Safari Lettres",
-          "sub": "Sons & Animaux",
+          "id": "animal_safari",
+          "name": "Safari Sons",
+          "sub": "Lettres & Animaux",
           "icon": "🦁",
-          "desc": "Touche la bonne lettre ou le bon son qui correspond à l'image !"
+          "engine": "safari",
+          "desc": "Écoute le cri ou le nom de l'animal et touche la bonne lettre qui commence son nom !"
+        },
+        {
+          "id": "phonics_fishing",
+          "name": "Pêche aux Sons",
+          "sub": "Tilapias du Wouri",
+          "icon": "🎣",
+          "engine": "fishing",
+          "desc": "Descends la ligne de pêche dans le fleuve Wouri pour attraper le poisson qui porte la bonne syllabe !"
         },
         {
           "id": "syllable_frog",
-          "name": "Nénuphars",
-          "sub": "Sauts Syllabes",
+          "name": "Nénuphars Saut",
+          "sub": "Grenouille Savante",
           "icon": "🐸",
-          "desc": "Fais sauter la grenouille sur les nénuphars pour composer le mot !"
+          "engine": "frog",
+          "desc": "Fais sauter la grenouille de nénuphar en nénuphar dans le bon ordre pour former le mot !"
         },
         {
-          "id": "word_train",
-          "name": "Train des Mots",
-          "sub": "Wagons Syllabes",
-          "icon": "🚂",
-          "desc": "Accroche le wagon contenant la bonne syllabe pour finir le mot !"
-        },
-        {
-          "id": "fluency_catch",
-          "name": "Lecture Éclair",
+          "id": "sentence_coupler",
+          "name": "Train de Phrases",
           "sub": "Mots Flottants",
-          "icon": "📖",
-          "desc": "Attrape le mot exact qui complète la phrase affichée !"
+          "icon": "🚂",
+          "engine": "train",
+          "desc": "Accroche le bon wagon de mot pour compléter la phrase affichée !"
         }
       ],
       "comprehension": [
         {
-          "id": "story_mosaic",
-          "name": "Mosaïque Récit",
-          "sub": "Chronologie",
+          "id": "story_cards",
+          "name": "Récits Parlés",
+          "sub": "Écoute & Choix",
           "icon": "📜",
-          "desc": "Remets les étapes de l'histoire dans le bon ordre chronologique !"
+          "engine": "story",
+          "desc": "Écoute l'histoire racontée par le hibou et choisis l'illustration qui répond à la question !"
         },
         {
-          "id": "detective_clue",
-          "name": "Détective",
-          "sub": "Loupe & Indices",
+          "id": "chrono_mosaic",
+          "name": "Chrono Mosaïque",
+          "sub": "Ordre du Temps",
+          "icon": "🗂️",
+          "engine": "sequence",
+          "desc": "Range les étapes de l'histoire dans l'ordre chronologique (1, 2, 3) !"
+        },
+        {
+          "id": "detective_clues",
+          "name": "Loupe Détective",
+          "sub": "Indices Cachés",
           "icon": "🔍",
-          "desc": "Observe les indices pour trouver la réponse à l'énigme !"
-        },
-        {
-          "id": "cause_effect",
-          "name": "Cause & Effet",
-          "sub": "Balance Logique",
-          "icon": "⚖️",
-          "desc": "Associe l'événement déclencheur à sa conséquence directe !"
+          "engine": "magnifier",
+          "desc": "Déplace la loupe lumineuse sur la scène pour révéler les indices et résoudre l'énigme !"
         }
       ],
       "pronunciation": [
         {
-          "id": "sound_studio",
-          "name": "Studio Micro",
-          "sub": "Écoute & Répète",
-          "icon": "🎙️",
-          "desc": "Écoute bien la prononciation lente du mot et choisis le son entendu !"
-        },
-        {
-          "id": "minimal_pairs",
-          "name": "Paires Sons",
-          "sub": "Discrimination",
-          "icon": "🎧",
-          "desc": "Distingue les deux sons proches (comme P et B, ou S et Z) !"
-        },
-        {
-          "id": "djembe_beat",
-          "name": "Tam-Tam Beat",
+          "id": "djembe_drum",
+          "name": "Tam-Tam Djembe",
           "sub": "Rythme Syllabes",
           "icon": "🪘",
-          "desc": "Touche le tam-tam en rythme avec les syllabes prononcées !"
+          "engine": "djembe",
+          "desc": "Frappe sur le djembe en rythme pour compter et taper les syllabes du mot !"
+        },
+        {
+          "id": "voice_studio",
+          "name": "Studio Vocal",
+          "sub": "Écoute & Répète",
+          "icon": "🎙️",
+          "engine": "studio",
+          "desc": "Écoute l'articulation lente du phonème (0.65x) et choisis la sonorité correspondante !"
+        },
+        {
+          "id": "rhyme_match",
+          "name": "Paires de Rimes",
+          "sub": "Mêmes Sons",
+          "icon": "🎧",
+          "engine": "rhyme",
+          "desc": "Associe les deux mots qui partagent la même sonorité finale en rime !"
         }
       ],
       "science": [
         {
-          "id": "plant_lab",
-          "name": "Labo Plante",
-          "sub": "Soleil & Eau",
+          "id": "botany_growth",
+          "name": "Labo Botanique",
+          "sub": "Plante en Pot",
           "icon": "🌱",
-          "desc": "Arrose et donne du soleil à la graine pour la faire fleurir !"
+          "engine": "botany",
+          "desc": "Donne de l'eau, du soleil et du terreau à la graine pour observer sa croissance pas-à-pas !"
         },
         {
-          "id": "habitat_sort",
-          "name": "Terrarium",
+          "id": "habitat_biome",
+          "name": "Terrarium Nature",
           "sub": "Savane & Fleuve",
           "icon": "🌍",
-          "desc": "Place chaque animal dans son milieu de vie naturel au Cameroun !"
+          "engine": "habitat",
+          "desc": "Place chaque animal sauvage dans son habitat naturel au Cameroun !"
         },
         {
-          "id": "water_cycle",
+          "id": "water_cycle_lab",
           "name": "Cycle de l'Eau",
-          "sub": "Pluie & Vapeur",
+          "sub": "Vapeur & Pluie",
           "icon": "☁️",
-          "desc": "Suis le voyage de la goutte d'eau : pluie, fleuve, soleil et nuage !"
+          "engine": "water",
+          "desc": "Chauffe l'eau avec le soleil pour créer de la vapeur et déclencher la pluie !"
         }
       ],
       "logic_puzzles": [
         {
-          "id": "pattern_train",
-          "name": "Suites Motifs",
-          "sub": "Logique ABAB",
-          "icon": "🔴",
-          "desc": "Trouve la forme ou la couleur qui complète la suite logique !"
-        },
-        {
-          "id": "shape_sorter",
-          "name": "Trieur Formes",
-          "sub": "Géométrie",
+          "id": "shape_sorter_box",
+          "name": "Trieur en Bois",
+          "sub": "Formes Encastrées",
           "icon": "🔺",
-          "desc": "Glisse chaque forme géométrique dans son emplacement exact !"
+          "engine": "shapes",
+          "desc": "Glisse chaque forme géométrique dans son encoche sculptée correspondante !"
         },
         {
-          "id": "maze_runner",
-          "name": "Labyrinthe",
-          "sub": "Chemin Sortie",
+          "id": "pattern_train_game",
+          "name": "Suites Logiques",
+          "sub": "Motifs ABAB",
+          "icon": "🔴",
+          "engine": "pattern",
+          "desc": "Observe le rythme des couleurs et choisis l'élément qui continue la suite !"
+        },
+        {
+          "id": "smart_maze",
+          "name": "Labyrinthe Malin",
+          "sub": "Sortie Secrète",
           "icon": "🧭",
-          "desc": "Guide le hibou à travers le chemin pour récupérer le trophée !"
+          "engine": "maze",
+          "desc": "Oriente le hibou à travers les chemins pour trouver le trésor sans toucher les murs !"
         }
       ],
       "creative_play": [
         {
-          "id": "tangram_build",
+          "id": "tangram_studio",
           "name": "Tangram Magique",
-          "sub": "Assemblage",
+          "sub": "Silhouettes",
           "icon": "🧩",
-          "desc": "Assemble les polygones colorés pour reconstituer la silhouette !"
+          "engine": "tangram",
+          "desc": "Assemble les pièces géométriques pour reconstituer les animaux et objets !"
         },
         {
-          "id": "robot_factory",
-          "name": "Usine Robots",
-          "sub": "Création Robot",
-          "icon": "🤖",
-          "desc": "Choisis les pièces et assemble le robot joueur pas-à-pas !"
+          "id": "gear_engineering",
+          "name": "Engrenages Fous",
+          "sub": "Roues Dentées",
+          "icon": "⚙️",
+          "engine": "gears",
+          "desc": "Emboîte les roues dentées pour transmettre le mouvement et allumer la lampe solaire !"
         }
       ]
     },
@@ -1138,77 +1238,72 @@ const CURRICULUM = {
       "math_arcade": [
         [
           {
-            "q": "Combien d'étoiles vois-tu ?",
-            "dots": "⭐⭐⭐⭐",
+            "q": "Cueille 4 mangues mûres pour le panier !",
+            "dots": "🥭🥭🥭🥭",
             "ans": "4",
             "options": [
               "3",
               "4",
-              "5",
-              "2"
+              "5"
             ],
-            "icon": "⭐",
-            "speech": "Compte les étoiles ! Combien y en a-t-il ?",
+            "icon": "🥭",
+            "speech": "Touche et cueille exactement 4 mangues sur l'arbre !",
             "mathType": "count",
             "a": 4
           },
           {
-            "q": "Compte les mangues mûres !",
-            "dots": "🥭🥭🥭",
+            "q": "Cueille 3 bananes douces !",
+            "dots": "🍌🍌🍌",
             "ans": "3",
             "options": [
               "2",
               "3",
-              "4",
-              "1"
+              "4"
             ],
-            "icon": "🥭",
-            "speech": "Compte les mangues du marché !",
+            "icon": "🍌",
+            "speech": "Cueille 3 bananes sur les branches !",
             "mathType": "count",
             "a": 3
           },
           {
-            "q": "Combien d'ananas juteux ?",
+            "q": "Cueille 5 ananas juteux !",
             "dots": "🍍🍍🍍🍍🍍",
             "ans": "5",
             "options": [
               "4",
               "5",
-              "6",
-              "3"
+              "6"
             ],
             "icon": "🍍",
-            "speech": "Compte les ananas !",
+            "speech": "Cueille 5 ananas frais !",
             "mathType": "count",
             "a": 5
           }
         ],
         [
           {
-            "q": "4 + 3 = ?",
-            "dots": "🥭🥭🥭🥭 + 🍏🍏🍏",
+            "q": "4 mangues + 3 bananes = ?",
+            "dots": "🥭🥭🥭🥭 + 🍌🍌🍌",
             "ans": "7",
             "options": [
               "6",
               "7",
-              "8",
-              "5"
+              "8"
             ],
             "icon": "🥭",
-            "speech": "4 plus 3 font combien ?",
+            "speech": "Combien font 4 plus 3 ?",
             "mathType": "add",
             "a": 4,
             "b": 3
           },
           {
-            "q": "8 - 3 = ?",
+            "q": "8 fruits - 3 retirés = ?",
             "dots": "🍌🍌🍌🍌🍌 ❌❌❌",
             "ans": "5",
             "options": [
               "4",
               "5",
-              "6",
-              "3"
+              "6"
             ],
             "icon": "🍌",
             "speech": "8 moins 3 font combien ?",
@@ -1217,16 +1312,15 @@ const CURRICULUM = {
             "b": 3
           },
           {
-            "q": "5 + 4 = ?",
-            "dots": "🍍🍍🍍🍍🍍 + 🍏🍏🍏🍏",
+            "q": "5 étoiles + 4 étoiles = ?",
+            "dots": "⭐⭐⭐⭐⭐ + ⭐⭐⭐⭐",
             "ans": "9",
             "options": [
               "8",
               "9",
-              "10",
-              "7"
+              "10"
             ],
-            "icon": "🍍",
+            "icon": "⭐",
             "speech": "5 plus 4 font combien ?",
             "mathType": "add",
             "a": 5,
@@ -1235,46 +1329,43 @@ const CURRICULUM = {
         ],
         [
           {
-            "q": "3 × 4 = ?",
+            "q": "3 rangées de 4 étoiles = ?",
             "dots": "⭐⭐⭐⭐ • ⭐⭐⭐⭐ • ⭐⭐⭐⭐",
             "ans": "12",
             "options": [
               "10",
               "12",
-              "14",
-              "16"
+              "15"
             ],
             "icon": "⭐",
-            "speech": "3 fois 4 font combien ?",
+            "speech": "3 fois 4 font combien d'étoiles ?",
             "mathType": "mul",
             "a": 3,
             "b": 4
           },
           {
-            "q": "15 ÷ 3 = ?",
-            "dots": "🧺 (5) | 🧺 (5) | 🧺 (5)",
+            "q": "15 beignets partagés entre 3 enfants = ?",
+            "dots": "🍩 (5) | 🍩 (5) | 🍩 (5)",
             "ans": "5",
             "options": [
               "4",
               "5",
-              "6",
-              "3"
+              "6"
             ],
-            "icon": "🐟",
-            "speech": "15 divisé par 3 fait combien ?",
+            "icon": "🍩",
+            "speech": "15 partagé en 3 fait combien par enfant ?",
             "mathType": "div",
             "a": 15,
             "b": 3
           },
           {
-            "q": "4 × 5 = ?",
+            "q": "4 rangées de 5 mangues = ?",
             "dots": "🥭🥭🥭🥭🥭 × 4",
             "ans": "20",
             "options": [
-              "18",
+              "16",
               "20",
-              "22",
-              "25"
+              "24"
             ],
             "icon": "🥭",
             "speech": "4 fois 5 font combien ?",
@@ -1285,51 +1376,47 @@ const CURRICULUM = {
         ],
         [
           {
-            "q": "1/2 de 10 mangues = ?",
+            "q": "Combien fait la moitié (1/2) de 10 mangues ?",
             "dots": "🥭🥭🥭🥭🥭 | 🥭🥭🥭🥭🥭",
             "ans": "5",
             "options": [
               "4",
               "5",
-              "6",
-              "3"
+              "6"
             ],
             "icon": "🥭",
-            "speech": "La moitié de 10 mangues égale ?",
+            "speech": "Trouve la moitié de 10 mangues !",
             "mathType": "fraction",
             "a": 10,
             "b": 2
           },
           {
-            "q": "2.5 + 1.5 = ?",
-            "dots": "2.5 + 1.5 en CFA",
-            "ans": "4",
+            "q": "Paye 250 CFA avec les pièces :",
+            "dots": "100F + 100F + 50F",
+            "ans": "250",
             "options": [
-              "3.5",
-              "4",
-              "4.5",
-              "5"
+              "200",
+              "250",
+              "300"
             ],
             "icon": "🪙",
-            "speech": "2 virgule 5 plus 1 virgule 5 font combien ?",
-            "mathType": "decimal",
-            "a": 2.5,
-            "b": 1.5
+            "speech": "Équilibre la balance à 250 Francs CFA !",
+            "mathType": "cfa",
+            "a": 250
           },
           {
-            "q": "3/4 de 8 beignets = ?",
-            "dots": "🍩🍩 🍩🍩 🍩🍩 | ⚪⚪",
-            "ans": "6",
+            "q": "Quelle fraction représente 3 parts sur 4 ?",
+            "dots": "🥧 3 parts coloriées",
+            "ans": "3/4",
             "options": [
-              "5",
-              "6",
-              "7",
-              "4"
+              "1/4",
+              "1/2",
+              "3/4"
             ],
-            "icon": "🍩",
-            "speech": "Trois quarts de 8 beignets font combien ?",
+            "icon": "🥧",
+            "speech": "Trois parts sur quatre se note comment ?",
             "mathType": "fraction",
-            "a": 8,
+            "a": 3,
             "b": 4
           }
         ]
@@ -1337,199 +1424,187 @@ const CURRICULUM = {
       "reading": [
         [
           {
-            "q": "Quelle lettre commence 🍍 Ananas ?",
-            "dots": "🍍 [A]nanas",
+            "q": "Trouve le poisson avec la lettre de 🍍 Ananas :",
+            "dots": "🍍 Ananas commence par [A]",
             "ans": "A",
             "options": [
               "A",
               "B",
-              "M",
-              "P"
+              "M"
             ],
             "icon": "🍍",
-            "speech": "Trouve la première lettre du mot Ananas !"
+            "speech": "Attrape la lettre A comme Ananas !"
           },
           {
-            "q": "Quelle lettre commence 🍌 Banane ?",
-            "dots": "🍌 [B]anane",
+            "q": "Trouve le poisson avec la lettre de 🍌 Banane :",
+            "dots": "🍌 Banane commence par [B]",
             "ans": "B",
             "options": [
               "B",
-              "D",
               "P",
               "T"
             ],
             "icon": "🍌",
-            "speech": "Trouve la lettre qui fait le son B comme Banane !"
+            "speech": "Attrape la lettre B comme Banane !"
           },
           {
-            "q": "Quelle lettre commence 🥭 Mangue ?",
-            "dots": "🥭 [M]angue",
+            "q": "Trouve le poisson avec la lettre de 🥭 Mangue :",
+            "dots": "🥭 Mangue commence par [M]",
             "ans": "M",
             "options": [
               "M",
               "N",
-              "W",
               "V"
             ],
             "icon": "🥭",
-            "speech": "Trouve la lettre M comme Mangue !"
+            "speech": "Attrape la lettre M comme Mangue !"
           }
         ],
         [
           {
-            "q": "La syllabe B + A se lit :",
+            "q": "Fais sauter la grenouille sur B puis A pour former :",
             "dots": "B + A ➡️ ?",
             "ans": "BA",
             "options": [
               "BA",
               "BO",
-              "BU",
-              "BE"
+              "BU"
             ],
-            "icon": "🔤",
-            "speech": "B plus A s'unissent pour chanter : BA !"
+            "icon": "🐸",
+            "speech": "B et A s'unissent pour chanter BA !"
           },
           {
-            "q": "Lis le mot : L - I - T",
+            "q": "Lis les lettres et attrape le mot : L - I - T",
             "dots": "🛏️ Meuble pour dormir",
             "ans": "LIT",
             "options": [
               "LIT",
               "SAC",
-              "MUR",
-              "BUS"
+              "MUR"
             ],
             "icon": "🛏️",
-            "speech": "L... I... T... Quel est ce mot ?"
+            "speech": "L... I... T... forme le mot LIT !"
           },
           {
-            "q": "Quel mot commence par le son [M] ?",
-            "dots": "Son [Mmmm]",
-            "ans": "Maison",
+            "q": "Fais sauter la grenouille sur P puis A :",
+            "dots": "P + A ➡️ ?",
+            "ans": "PA",
             "options": [
-              "Maison",
-              "Soleil",
-              "Table",
-              "Livre"
+              "PA",
+              "PO",
+              "PU"
             ],
-            "icon": "🏡",
-            "speech": "Quel mot commence par le son M ?"
+            "icon": "🐸",
+            "speech": "P et A forment le son PA !"
           }
         ],
         [
           {
-            "q": "Complète : L'oiseau vole dans le...",
-            "dots": "🦅 Dans les airs",
+            "q": "Complète : L'oiseau vole haut dans le...",
+            "dots": "🦅 Dans les nuages",
             "ans": "Ciel",
             "options": [
               "Ciel",
               "Sol",
-              "Mer",
-              "Feu"
+              "Mer"
             ],
             "icon": "🌤️",
-            "speech": "L'oiseau vole dans le quoi ?"
+            "speech": "L'oiseau vole haut dans le quoi ?"
           },
           {
-            "q": "Musa va à l'école avec son...",
-            "dots": "🎒 Sur le dos",
-            "ans": "Cartable",
+            "q": "Musa prépare son cartable pour aller à...",
+            "dots": "🎒 Livres et cahiers",
+            "ans": "L'école",
             "options": [
-              "Cartable",
-              "Vélo",
-              "Tambour",
-              "Ballon"
+              "L'école",
+              "La lune",
+              "La plage"
             ],
-            "icon": "🎒",
-            "speech": "Musa va à l'école avec son quoi ?"
+            "icon": "🏫",
+            "speech": "Musa va à l'école !"
           },
           {
-            "q": "Le poisson nage dans le...",
+            "q": "Le poisson nage dans les eaux douces du...",
             "dots": "🐟 Dans les flots",
             "ans": "Fleuve",
             "options": [
               "Fleuve",
               "Désert",
-              "Arbre",
               "Toit"
             ],
             "icon": "🌊",
-            "speech": "Le poisson nage dans le quoi ?"
+            "speech": "Le poisson nage dans le fleuve !"
           }
         ],
         [
           {
-            "q": "Quel est le synonyme de Vaillant ?",
+            "q": "Quel mot signifie la même chose que 'Vaillant' ?",
             "dots": "🦁 Grand courage",
             "ans": "Courageux",
             "options": [
               "Courageux",
-              "Peur",
-              "Lent",
-              "Sombre"
+              "Peureux",
+              "Lent"
             ],
             "icon": "🦁",
-            "speech": "Quel est le synonyme du mot Vaillant ?"
+            "speech": "Trouve le synonyme du mot Vaillant !"
           },
           {
-            "q": "Le mot 'Ardemment' signifie :",
-            "dots": "🔥 Avec intensité",
+            "q": "Faire quelque chose avec 'Ardeur' signifie :",
+            "dots": "🔥 Avec énergie",
             "ans": "Avec passion",
             "options": [
               "Avec passion",
-              "Faiblement",
-              "La nuit",
-              "Avec regret"
+              "Avec ennui",
+              "Sans envie"
             ],
             "icon": "✨",
-            "speech": "Que signifie le mot ardemment ?"
+            "speech": "Que signifie avec ardeur ?"
           },
           {
-            "q": "Quel mot exprime une immense joie ?",
-            "dots": "🎉 Bonheur partagé",
+            "q": "Quel mot exprime un très grand bonheur ?",
+            "dots": "🎉 Joie immense",
             "ans": "Allégresse",
             "options": [
               "Allégresse",
               "Tristesse",
-              "Colère",
-              "Ennui"
+              "Colère"
             ],
             "icon": "🌟",
-            "speech": "Quel mot exprime une grande joie ?"
+            "speech": "Quel mot désigne une grande joie ?"
           }
         ]
       ],
       "comprehension": [
         [
           {
-            "q": "Le singe monte tout en haut de l'arbre. Où est-il ?",
+            "q": "Le petit singe monte tout en haut de l'arbre. Où est-il ?",
             "dots": "🐒 Canopée",
             "ans": "Dans l'arbre",
             "options": [
               "Dans l'arbre",
-              "Dans l'eau",
-              "Sous terre"
+              "Sous l'eau",
+              "Dans le lit"
             ],
             "icon": "🐒",
-            "speech": "Le singe monte en haut de l'arbre. Où est-il ?"
+            "speech": "Où se trouve le petit singe perché ?"
           },
           {
-            "q": "Musa croque une bonne mangue sucrée. Que mange Musa ?",
+            "q": "Amina mange une mangue bien sucrée. Que mange Amina ?",
             "dots": "🥭 Fruit mûr",
             "ans": "Une mangue",
             "options": [
               "Une mangue",
               "Un caillou",
-              "Un livre"
+              "Un cahier"
             ],
             "icon": "🥭",
-            "speech": "Musa mange une mangue sucrée. Que mange-t-il ?"
+            "speech": "Quel fruit Amina est-elle en train de manger ?"
           }
         ],
         [
           {
-            "q": "Dans l'histoire du papillon, quelle est la 1ère étape ?",
+            "q": "Dans l'histoire du papillon, quelle est la PREMIÈRE étape ?",
             "dots": "🐛 Métamorphose",
             "ans": "La chenille",
             "options": [
@@ -1538,37 +1613,37 @@ const CURRICULUM = {
               "Le papillon"
             ],
             "icon": "🐛",
-            "speech": "Quelle est la première étape du papillon ?"
+            "speech": "Au tout début, avant le papillon, il y a la chenille !"
           },
           {
-            "q": "Que fait-on au RÉVEIL le matin en premier ?",
-            "dots": "🌅 Début du jour",
-            "ans": "Se lever",
+            "q": "Quand le soleil se lève le matin, la première action est :",
+            "dots": "🌅 Matin",
+            "ans": "Se réveiller",
             "options": [
-              "Se lever",
-              "Dormir",
-              "Dîner le soir"
+              "Se réveiller",
+              "S'endormir",
+              "Dîner"
             ],
             "icon": "🌅",
-            "speech": "Quelle est la première action au réveil ?"
+            "speech": "Au lever du soleil, que fait-on ?"
           }
         ],
         [
           {
-            "q": "Il a plu toute la nuit. Quelle est la conséquence ?",
-            "dots": "🌧️ Averse abondante",
+            "q": "Il a plu très fort toute la nuit. Quelle est la conséquence ?",
+            "dots": "🌧️ Grosse averse",
             "ans": "Le sol est mouillé",
             "options": [
               "Le sol est mouillé",
-              "La nuit noire",
-              "Les feuilles brûlent"
+              "La nuit est noire",
+              "Il fait sécher"
             ],
             "icon": "🌧️",
-            "speech": "Il a plu toute la nuit. Quelle est la conséquence directe ?"
+            "speech": "La pluie est tombée : quelle est la conséquence directe ?"
           },
           {
-            "q": "Amina arrose bien sa plante tous les jours. Que se passe-t-il ?",
-            "dots": "💧 Soin quotidien",
+            "q": "Amina donne de l'eau à sa plante chaque jour. Que se passe-t-il ?",
+            "dots": "💧 Soin attentif",
             "ans": "Elle grandit bien",
             "options": [
               "Elle grandit bien",
@@ -1576,33 +1651,33 @@ const CURRICULUM = {
               "Elle s'envole"
             ],
             "icon": "🌻",
-            "speech": "Amina arrose bien sa plante. Que va-t-il se passer ?"
+            "speech": "La plante bien arrosée pousse et grandit !"
           }
         ],
         [
           {
-            "q": "Tous les enfants portent un cartable et franchissent la grille. Où sont-ils ?",
-            "dots": "🎒 Indice écoliers",
+            "q": "Les enfants ont des cartables et franchissent la grille le matin. Où sont-ils ?",
+            "dots": "🎒 Indice",
             "ans": "À l'école",
             "options": [
               "À l'école",
-              "À la plage",
-              "Au cinéma"
+              "Au cinéma",
+              "À la gare"
             ],
             "icon": "🏫",
-            "speech": "Les enfants portent un cartable et franchissent la grille. Où sont-ils ?"
+            "speech": "Où arrivent tous les élèves avec leurs sacs ?"
           },
           {
-            "q": "Le sol est boueux et les parapluies sont ouverts. On en déduit :",
-            "dots": "☔ Indices météo",
-            "ans": "Il pleut dehors",
+            "q": "La terre est boueuse et les parapluies sont ouverts. On en déduit :",
+            "dots": "☔ Déduction",
+            "ans": "Il a plu",
             "options": [
-              "Il pleut dehors",
-              "Il fait nuit",
-              "Grand soleil"
+              "Il a plu",
+              "C'est l'été sec",
+              "Il fait nuit"
             ],
             "icon": "🌧️",
-            "speech": "Le sol est boueux et les parapluies sont ouverts. Que déduit-on ?"
+            "speech": "Parapluies et boue montrent qu'il a plu !"
           }
         ]
       ],
@@ -1610,60 +1685,59 @@ const CURRICULUM = {
         [
           {
             "q": "Écoute le son : [Aaaa] ! Touche la bonne lettre :",
-            "dots": "👄 Bouche ouverte",
+            "dots": "👄 Bouche bien ouverte",
             "ans": "A",
             "options": [
               "A",
               "O",
-              "U",
-              "I"
+              "U"
             ],
             "icon": "🔤",
-            "speech": "Écoute bien : Aaaa ! Quelle lettre produit ce son ?"
+            "speech": "Écoute bien : Aaaa ! Quelle lettre chante ce son ?"
           },
           {
-            "q": "Quel animal chante 'Cocorico' au réveil ?",
-            "dots": "🐓 Chant matinal",
+            "q": "Quel animal chante 'Cocorico' au lever du soleil ?",
+            "dots": "🐓 Réveil matin",
             "ans": "Le Coq",
             "options": [
               "Le Coq",
               "Le Chien",
-              "Le Chat"
+              "Le Canard"
             ],
             "icon": "🐓",
-            "speech": "Quel animal chante cocorico le matin ?"
+            "speech": "Quel oiseau de la basse-cour chante cocorico ?"
           }
         ],
         [
           {
-            "q": "Combien de syllabes dans PA-PI-LLON ?",
+            "q": "Frappe sur le djembe : combien de syllabes dans PA-PI-LLON ?",
             "dots": "👏 PA • PI • LLON",
-            "ans": "3 syllabes",
+            "ans": "3",
             "options": [
-              "2 syllabes",
-              "3 syllabes",
-              "4 syllabes"
+              "2",
+              "3",
+              "4"
             ],
-            "icon": "🦋",
-            "speech": "Combien de syllabes entends-tu dans pa-pi-llon ?"
+            "icon": "🪘",
+            "speech": "Frappe 3 coups de djembe pour pa-pi-llon !"
           },
           {
-            "q": "Combien de syllabes dans MA-MAN ?",
+            "q": "Frappe sur le djembe : combien de syllabes dans MA-MAN ?",
             "dots": "👏 MA • MAN",
-            "ans": "2 syllabes",
+            "ans": "2",
             "options": [
-              "1 syllabe",
-              "2 syllabes",
-              "3 syllabes"
+              "1",
+              "2",
+              "3"
             ],
-            "icon": "❤️",
-            "speech": "Combien de syllabes entends-tu dans ma-man ?"
+            "icon": "🪘",
+            "speech": "Frappe 2 coups de djembe pour ma-man !"
           }
         ],
         [
           {
             "q": "Quel mot rime avec BATEAU ?",
-            "dots": "🎵 Même son final [-EAU]",
+            "dots": "🎵 Terminaison en [-EAU]",
             "ans": "CHÂTEAU",
             "options": [
               "CHÂTEAU",
@@ -1671,11 +1745,11 @@ const CURRICULUM = {
               "ARBRE"
             ],
             "icon": "⛵",
-            "speech": "Quel mot rime avec bateau ?"
+            "speech": "Quel mot se termine par le même son que bateau ?"
           },
           {
             "q": "Quel mot rime avec SOURIS ?",
-            "dots": "🎵 Même son final [-IS]",
+            "dots": "🎵 Terminaison en [-IS]",
             "ans": "PARIS",
             "options": [
               "PARIS",
@@ -1688,28 +1762,28 @@ const CURRICULUM = {
         ],
         [
           {
-            "q": "À la fin d'une phrase avec '!', la voix doit :",
-            "dots": "❗ Exclamation",
-            "ans": "Monter avec énergie",
+            "q": "À la fin d'une phrase avec '!', l'intonation de la voix doit :",
+            "dots": "❗ Énergie",
+            "ans": "Monter",
             "options": [
-              "Monter avec énergie",
-              "Chuchoter",
-              "S'arrêter net"
+              "Monter",
+              "Descendre",
+              "Chuchoter"
             ],
             "icon": "❗",
-            "speech": "Avec un point d'exclamation, comment module-t-on la voix ?"
+            "speech": "Avec un point d'exclamation, la voix monte avec force !"
           },
           {
-            "q": "Quand on rencontre une virgule (,), on fait :",
+            "q": "Devant une virgule (,) dans un texte, le lecteur fait :",
             "dots": "⏸️ Respiration",
             "ans": "Une courte pause",
             "options": [
               "Une courte pause",
               "Un arrêt complet",
-              "Un cri fort"
+              "Un grand cri"
             ],
             "icon": "⏸️",
-            "speech": "Que fait le lecteur lorsqu'il rencontre une virgule ?"
+            "speech": "À la virgule, on marque une courte pause pour respirer."
           }
         ]
       ],
@@ -1722,66 +1796,66 @@ const CURRICULUM = {
             "options": [
               "L'Éléphant",
               "Le Caillou",
-              "Le Ballon"
+              "La Bouteille"
             ],
             "icon": "🐘",
-            "speech": "Qui est un être vivant qui respire et grandit ?"
+            "speech": "Qui est vivant entre l'éléphant et le caillou ?"
           },
           {
-            "q": "Quelle plante donne des fruits au Cameroun ?",
-            "dots": "🌴 Plante fruitière",
+            "q": "Quelle plante donne des fruits dans nos plantations ?",
+            "dots": "🌴 Arbre fruitier",
             "ans": "Le Bananier",
             "options": [
               "Le Bananier",
-              "Le Plastique",
-              "Le Ciment"
+              "Le Béton",
+              "Le Plastique"
             ],
             "icon": "🍌",
-            "speech": "Quelle plante donne de délicieuses bananes ?"
+            "speech": "Quelle plante donne de bonnes bananes ?"
           }
         ],
         [
           {
             "q": "Où vit le grand chimpanzé au Cameroun ?",
-            "dots": "🌳 Canopée",
-            "ans": "La grande forêt",
+            "dots": "🌳 Forêt équatoriale",
+            "ans": "La forêt",
             "options": [
-              "La grande forêt",
+              "La forêt",
               "La banquise",
-              "Le désert"
+              "Le désert sec"
             ],
             "icon": "🐒",
-            "speech": "Dans quel milieu naturel vit le chimpanzé ?"
+            "speech": "Le chimpanzé vit dans la grande forêt verdoyante !"
           },
           {
             "q": "Où nagent les poissons d'eau douce ?",
-            "dots": "🌊 Eau douce",
+            "dots": "🌊 Eau calme",
             "ans": "Le fleuve Wouri",
             "options": [
               "Le fleuve Wouri",
-              "Le sable sec",
-              "Le mont rocheux"
+              "Le volcan",
+              "Le sable chaud"
             ],
             "icon": "🐟",
-            "speech": "Où nagent les poissons d'eau douce au Cameroun ?"
+            "speech": "Les poissons nagent dans les eaux du fleuve Wouri !"
           }
         ],
         [
           {
-            "q": "Quand l'eau chauffe très fort au soleil, elle devient :",
-            "dots": "♨️ Évaporation",
-            "ans": "Vapeur d'eau",
+            "q": "Quand l'eau chauffe au soleil, elle s'évapore en :",
+            "dots": "♨️ Vapeur d'eau",
+            "ans": "Vapeur",
             "options": [
-              "Vapeur d'eau",
-              "Glace solide",
-              "Pierre dure"
+              "Vapeur",
+              "Glace dure",
+              "Roche"
             ],
             "icon": "💨",
-            "speech": "Quand l'eau chauffe au soleil, que devient-elle ?"
+            "speech": "Sous la chaleur, l'eau devient de la vapeur invisible !"
           },
           {
-            "q": "Quand l'eau gèle en glaçon, elle est à l'état :",
-            "dots": "🧊 Glaçon",
+            "q": "Dans un glaçon gelé, l'eau est à l'état :",
+            "dots": "🧊 Solide",
             "ans": "Solide",
             "options": [
               "Solide",
@@ -1789,33 +1863,33 @@ const CURRICULUM = {
               "Gazeux"
             ],
             "icon": "🧊",
-            "speech": "Sous quel état physique est l'eau d'un glaçon ?"
+            "speech": "Un glaçon est de l'eau à l'état solide !"
           }
         ],
         [
           {
-            "q": "Quelle énergie propre est captée du soleil ?",
-            "dots": "☀️ Rayons solaires",
-            "ans": "Énergie Solaire",
+            "q": "Quelle énergie propre et renouvelable vient des rayons du soleil ?",
+            "dots": "☀️ Énergie propre",
+            "ans": "Solaire",
             "options": [
-              "Énergie Solaire",
-              "Charbon fossile",
-              "Pétrole lourd"
+              "Solaire",
+              "Charbon",
+              "Fumée"
             ],
             "icon": "☀️",
-            "speech": "Quelle énergie propre est fournie par le soleil ?"
+            "speech": "L'énergie solaire est captée par les panneaux du toit !"
           },
           {
-            "q": "Quelle force attire les objets vers le sol de la Terre ?",
+            "q": "Quelle force naturelle attire tous les objets vers la Terre ?",
             "dots": "🌍 Attraction",
-            "ans": "La Gravité",
+            "ans": "La gravité",
             "options": [
-              "La Gravité",
-              "Le Son",
-              "Le Magnétisme seul"
+              "La gravité",
+              "Le vent seul",
+              "La lumière"
             ],
             "icon": "🌍",
-            "speech": "Quelle force attire tous les objets vers le sol ?"
+            "speech": "La gravité empêche les objets de s'envoler !"
           }
         ]
       ],
@@ -1823,7 +1897,7 @@ const CURRICULUM = {
         [
           {
             "q": "Trouve l'intrus qui n'est PAS un fruit :",
-            "dots": "🚫 Intrus",
+            "dots": "🚫 Pas un fruit",
             "ans": "Voiture",
             "options": [
               "Voiture",
@@ -1831,25 +1905,25 @@ const CURRICULUM = {
               "Banane"
             ],
             "icon": "🚗",
-            "speech": "Trouve l'intrus qui n'est pas un fruit !"
+            "speech": "La voiture est un véhicule, pas un fruit !"
           },
           {
-            "q": "Quel animal est le PLUS GRAND ?",
-            "dots": "📏 Comparaison",
-            "ans": "Éléphant",
+            "q": "Quel animal est le PLUS GRAND de tous ?",
+            "dots": "📏 Taille géante",
+            "ans": "L'Éléphant",
             "options": [
-              "Éléphant",
-              "Souris",
-              "Fourmi"
+              "L'Éléphant",
+              "La Souris",
+              "La Fourmi"
             ],
             "icon": "🐘",
-            "speech": "Quel animal est le plus grand de tous ?"
+            "speech": "L'éléphant est le plus grand de ces animaux !"
           }
         ],
         [
           {
-            "q": "Complète la suite : 🔴 🔵 🔴 🔵 ?",
-            "dots": "🔄 Motif ABAB",
+            "q": "Complète la suite logique : 🔴 🔵 🔴 🔵 ?",
+            "dots": "🔄 Motif alterné",
             "ans": "🔴 Rouge",
             "options": [
               "🔴 Rouge",
@@ -1857,10 +1931,10 @@ const CURRICULUM = {
               "🟡 Jaune"
             ],
             "icon": "🔴",
-            "speech": "Rouge, bleu, rouge, bleu... Quelle est la suite ?"
+            "speech": "Rouge, bleu, rouge, bleu... Quelle est la couleur suivante ?"
           },
           {
-            "q": "Complète la suite : 🥭 🍌 🥭 🍌 ?",
+            "q": "Complète la suite de fruits : 🥭 🍌 🥭 🍌 ?",
             "dots": "🔄 Fruits alternés",
             "ans": "🥭 Mangue",
             "options": [
@@ -1869,66 +1943,66 @@ const CURRICULUM = {
               "🍍 Ananas"
             ],
             "icon": "🥭",
-            "speech": "Mangue, banane, mangue, banane... Quelle est la suite ?"
+            "speech": "Mangue, banane, mangue, banane... et ensuite ?"
           }
         ],
         [
           {
-            "q": "Face à une impasse dans un labyrinthe, que fait-on ?",
+            "q": "Face à une impasse fermée dans un labyrinthe, que fait-on ?",
             "dots": "🔄 Demi-tour",
-            "ans": "Faire demi-tour",
+            "ans": "Demi-tour",
             "options": [
-              "Faire demi-tour",
+              "Demi-tour",
               "Casser le mur",
-              "S'arrêter"
+              "Abandonner"
             ],
             "icon": "🔄",
-            "speech": "Dans un labyrinthe, face à une impasse, que doit-on faire ?"
+            "speech": "Devant une impasse, on fait demi-tour pour trouver le bon chemin !"
           },
           {
-            "q": "Quel chemin est le plus court vers la sortie ?",
+            "q": "Quel trajet est le plus rapide vers la sortie ?",
             "dots": "➡️ Trajet direct",
-            "ans": "Ligne droite",
+            "ans": "La ligne droite",
             "options": [
-              "Ligne droite",
-              "Grand détour",
+              "La ligne droite",
+              "Les grands détours",
               "Tourner en rond"
             ],
             "icon": "➡️",
-            "speech": "Quel est le trajet le plus direct pour sortir ?"
+            "speech": "La ligne droite est le chemin le plus court !"
           }
         ],
         [
           {
-            "q": "Pour faire monter le plateau droit d'une balance :",
+            "q": "Pour faire monter le plateau droit de la balance :",
             "dots": "⚖️ Équilibre",
             "ans": "Alléger à droite",
             "options": [
               "Alléger à droite",
-              "Ajouter du poids",
+              "Alourdir à droite",
               "Ne rien toucher"
             ],
             "icon": "⚖️",
-            "speech": "Pour faire monter le plateau droit, que faut-il faire ?"
+            "speech": "En retirant du poids à droite, ce plateau remonte !"
           },
           {
-            "q": "Dans un jeu de réflexion, la première étape est de :",
-            "dots": "🧠 Méthode",
-            "ans": "Observer et analyser",
+            "q": "Pour résoudre une énigme difficile, la meilleure démarche est :",
+            "dots": "🧠 Réflexion",
+            "ans": "Observer d'abord",
             "options": [
-              "Observer et analyser",
+              "Observer d'abord",
               "Cliquer au hasard",
               "Fermer les yeux"
             ],
             "icon": "🧠",
-            "speech": "Quelle est la clé pour réussir une énigme ?"
+            "speech": "Observer attentivement permet de trouver la solution !"
           }
         ]
       ],
       "creative_play": [
         [
           {
-            "q": "Quelle forme a 3 côtés comme le toit d'une case ?",
+            "q": "Quelle forme a 3 côtés pointus comme le toit d'une case ?",
             "dots": "🔺 3 côtés",
             "ans": "Triangle",
             "options": [
@@ -1937,11 +2011,11 @@ const CURRICULUM = {
               "Cercle"
             ],
             "icon": "🔺",
-            "speech": "Quelle forme a 3 côtés pointus comme un toit ?"
+            "speech": "Le triangle a trois côtés pointus !"
           },
           {
-            "q": "Quelle forme est parfaitement ronde comme le soleil ?",
-            "dots": "🟡 Rond",
+            "q": "Quelle forme est parfaitement ronde comme le soleil couchant ?",
+            "dots": "🟡 Tout rond",
             "ans": "Cercle",
             "options": [
               "Cercle",
@@ -1949,85 +2023,85 @@ const CURRICULUM = {
               "Carré"
             ],
             "icon": "🟡",
-            "speech": "Quelle forme est toute ronde comme le soleil ?"
+            "speech": "Le cercle est tout rond sans aucun coin !"
           }
         ],
         [
           {
-            "q": "Pour construire un pont solide, on pose des :",
-            "dots": "🏗️ Poutres",
+            "q": "Pour fabriquer un pont solide sur le fleuve, on pose des :",
+            "dots": "🏗️ Structure",
             "ans": "Poutres solides",
             "options": [
               "Poutres solides",
-              "Feuilles d'arbre",
-              "Ficelles fines"
+              "Feuilles sèches",
+              "Ficelles"
             ],
             "icon": "🏗️",
-            "speech": "De quoi a-t-on besoin pour construire un pont solide ?"
+            "speech": "Les poutres solides assurent la sécurité du pont !"
           },
           {
-            "q": "Pour assembler un robot, on commence par :",
-            "dots": "🤖 Châssis",
-            "ans": "Le châssis central",
+            "q": "Pour assembler un robot joueur, on commence par fixer :",
+            "dots": "🤖 Base",
+            "ans": "Le châssis",
             "options": [
-              "Le châssis central",
+              "Le châssis",
               "La peinture",
-              "Les antennes"
+              "L'antenne"
             ],
             "icon": "🤖",
-            "speech": "Par quoi commence-t-on pour monter un robot ?"
+            "speech": "Le châssis est la base solide sur laquelle tout repose !"
           }
         ],
         [
           {
-            "q": "Pour faire pousser une plante dans l'atelier, il faut :",
+            "q": "Pour faire grandir la graine dans le pot, il lui faut impérativement :",
             "dots": "☀️ + 💧 Vital",
-            "ans": "Soleil + Eau fraîche",
+            "ans": "Soleil et Eau",
             "options": [
-              "Soleil + Eau fraîche",
-              "Jus sucré",
-              "Sable sec seul"
+              "Soleil et Eau",
+              "Chocolat liquide",
+              "Sable sec"
             ],
             "icon": "🌻",
-            "speech": "De quoi la graine a-t-elle besoin pour pousser ?"
+            "speech": "L'eau et la lumière du soleil sont indispensables à la vie de la plante !"
           },
           {
-            "q": "Pour séparer les 7 couleurs de l'arc-en-ciel, on utilise :",
-            "dots": "🌈 Lumière",
-            "ans": "Un prisme de verre",
+            "q": "Pour décomposer la lumière blanche en 7 couleurs arc-en-ciel :",
+            "dots": "🌈 Prisme",
+            "ans": "Un prisme",
             "options": [
-              "Un prisme de verre",
-              "Un miroir noir",
-              "Un drap blanc"
+              "Un prisme",
+              "Un drap noir",
+              "Un caillou"
             ],
             "icon": "🌈",
-            "speech": "Quel instrument décompose la lumière en arc-en-ciel ?"
+            "speech": "Le prisme de verre réfracte les couleurs de l'arc-en-ciel !"
           }
         ],
         [
           {
-            "q": "Deux roues dentées qui se touchent tournent en :",
-            "dots": "⚙️ Engrenages",
+            "q": "Deux engrenages qui s'emboîtent tournent l'un par rapport à l'autre en :",
+            "dots": "⚙️ Rotation",
             "ans": "Sens opposé",
             "options": [
               "Sens opposé",
               "Même sens",
-              "Elles bloquent"
+              "Restent bloqués"
             ],
             "icon": "⚙️",
-            "speech": "Deux engrenages qui s'emboîtent tournent dans quel sens ?"
+            "speech": "Les deux roues dentées tournent en sens opposé !"
           },
           {
-            "q": "Pour allumer une ampoule, le circuit électrique doit être :",
-            "dots": "💡 Circuit",
+            "q": "Pour que l'ampoule électrique s'allume, le circuit doit être :",
+            "dots": "💡 Boucle",
             "ans": "Fermé et continu",
             "options": [
               "Fermé et continu",
-              "Coupé net",
+              "Coupé",
               "Débranché"
             ],
             "icon": "💡",
-            "speech": "Comment doit être le circuit pour laisser passer le courant ?"
+            "speech": "Le courant circule uniquement dans un circuit fermé !"
           }
         ]
       ]
@@ -2036,7 +2110,8 @@ const CURRICULUM = {
   "en": {
     "categories": {
       "math_arcade": {
-        "label": "Math Arcade",
+        "label": "Math Kingdom",
+        "icon": "🧮",
         "topics": [
           "Counting (1–5)",
           "Addition & Subtraction",
@@ -2045,7 +2120,8 @@ const CURRICULUM = {
         ]
       },
       "reading": {
-        "label": "Reading • Phonics",
+        "label": "Reading Forest",
+        "icon": "📖",
         "topics": [
           "Letters & Sounds",
           "Syllables & Sight Words",
@@ -2054,7 +2130,8 @@ const CURRICULUM = {
         ]
       },
       "comprehension": {
-        "label": "Comprehension",
+        "label": "Story Valley",
+        "icon": "📜",
         "topics": [
           "Audio Stories",
           "Story Sequencing",
@@ -2063,16 +2140,18 @@ const CURRICULUM = {
         ]
       },
       "pronunciation": {
-        "label": "Pronunciation",
+        "label": "Voice Studio",
+        "icon": "🗣️",
         "topics": [
           "Sounds & Phonemes",
-          "Syllable Repetition",
+          "Syllable Tempo",
           "Word Cadence",
           "Oral Articulation"
         ]
       },
       "science": {
-        "label": "Science & Nature",
+        "label": "Eco Lab",
+        "icon": "🔬",
         "topics": [
           "Living Things & Plants",
           "Natural Habitats",
@@ -2081,198 +2160,223 @@ const CURRICULUM = {
         ]
       },
       "logic_puzzles": {
-        "label": "Logic & Puzzles",
+        "label": "Puzzle Temple",
+        "icon": "🧩",
         "topics": [
           "Sorting & Shapes",
           "Pattern Sequences (ABAB)",
           "Mazes & Paths",
-          "Strategy & Scales"
+          "Strategy & Balance"
         ]
       },
       "creative_play": {
-        "label": "Creative Play",
+        "label": "Creative Workshop",
+        "icon": "🎨",
         "topics": [
           "Shapes & Tangrams",
           "Robot Assembly",
           "Color Experiments",
-          "Gears & Simple Circuits"
+          "Gears & Circuits"
         ]
       }
     },
     "games": {
       "math_arcade": [
         {
-          "id": "math_drop",
-          "name": "Math Drop",
-          "sub": "Falling Blocks",
-          "icon": "🧱",
-          "desc": "Steer the block into the correct column answer!"
-        },
-        {
-          "id": "math_racing",
-          "name": "Turbo Rally",
-          "sub": "3 Lanes",
-          "icon": "🏎️",
-          "desc": "Switch lanes to drive through the correct answer and activate turbo!"
-        },
-        {
-          "id": "fruit_harvest",
-          "name": "Fruit Harvest",
-          "sub": "Tree Orchard",
+          "id": "fruit_orchard",
+          "name": "Fruit Orchard",
+          "sub": "Pluck & Count",
           "icon": "🥭",
-          "desc": "Tap the ripe fruits one by one to count and collect!"
+          "engine": "fruit",
+          "desc": "Tap the ripe fruits hanging on the branches to pick them into the basket and count!"
         },
         {
-          "id": "math_match",
-          "name": "Memory Duo",
-          "sub": "Card Pairs",
-          "icon": "🃏",
-          "desc": "Flip and match the cards with equal quantities!"
+          "id": "tens_robot",
+          "name": "Base-10 Bot",
+          "sub": "Rods & Units",
+          "icon": "🤖",
+          "engine": "base10",
+          "desc": "Snap tens rods and unit cubes to charge the robot to the exact target!"
         },
         {
-          "id": "cfa_market",
-          "name": "CFA Market",
+          "id": "turbo_racing",
+          "name": "Turbo Rally",
+          "sub": "3-Lane Track",
+          "icon": "🏎️",
+          "engine": "racing",
+          "desc": "Steer the rally car and switch lanes to drive through the correct gate!"
+        },
+        {
+          "id": "cfa_balance",
+          "name": "Market Scale",
           "sub": "Coin Counter",
-          "icon": "🪙",
-          "desc": "Drop coins onto the tray to match the target bill!"
+          "icon": "⚖️",
+          "engine": "balance",
+          "desc": "Place coins on the scale until both sides balance perfectly!"
+        },
+        {
+          "id": "fraction_bakery",
+          "name": "Bakery Slices",
+          "sub": "Portion Cake",
+          "icon": "🥧",
+          "engine": "fraction",
+          "desc": "Slice and select cake portions to match the target fraction!"
         }
       ],
       "reading": [
         {
-          "id": "letter_safari",
-          "name": "Letter Safari",
-          "sub": "Phonics & Animals",
+          "id": "animal_safari",
+          "name": "Safari Sounds",
+          "sub": "Letters & Animals",
           "icon": "🦁",
-          "desc": "Tap the matching letter sound for the displayed picture!"
+          "engine": "safari",
+          "desc": "Listen to the animal sound and tap the matching starting letter!"
+        },
+        {
+          "id": "phonics_fishing",
+          "name": "Phonics Fishing",
+          "sub": "River Wouri Fish",
+          "icon": "🎣",
+          "engine": "fishing",
+          "desc": "Lower the fishing hook to catch the swimming tilapia with the right sound!"
         },
         {
           "id": "syllable_frog",
-          "name": "Lilypad Frog",
-          "sub": "Syllable Hop",
+          "name": "Lilypad Hop",
+          "sub": "Jumping Frog",
           "icon": "🐸",
-          "desc": "Hop the frog across lilypads to spell the target word!"
+          "engine": "frog",
+          "desc": "Hop the frog from lilypad to lilypad in order to spell the complete word!"
         },
         {
-          "id": "word_train",
+          "id": "sentence_coupler",
           "name": "Word Train",
-          "sub": "Syllable Coupler",
+          "sub": "Sentence Coupler",
           "icon": "🚂",
-          "desc": "Couple the train wagon with the matching syllable!"
-        },
-        {
-          "id": "fluency_catch",
-          "name": "Sight Catcher",
-          "sub": "Floating Words",
-          "icon": "📖",
-          "desc": "Catch the exact word that completes the sentence!"
+          "engine": "train",
+          "desc": "Couple the correct word wagon to complete the sentence!"
         }
       ],
       "comprehension": [
         {
-          "id": "story_mosaic",
-          "name": "Story Mosaic",
-          "sub": "Sequencing",
+          "id": "story_cards",
+          "name": "Audio Tales",
+          "sub": "Listen & Pick",
           "icon": "📜",
-          "desc": "Arrange the story cards in chronological order!"
+          "engine": "story",
+          "desc": "Listen to Owl's story and tap the illustration that answers the riddle!"
         },
         {
-          "id": "detective_clue",
+          "id": "chrono_mosaic",
+          "name": "Story Timeline",
+          "sub": "Step 1-2-3",
+          "icon": "🗂️",
+          "engine": "sequence",
+          "desc": "Arrange the story sequence cards in chronological order!"
+        },
+        {
+          "id": "detective_clues",
           "name": "Detective Clue",
-          "sub": "Evidence Dossier",
+          "sub": "Evidence Spotlight",
           "icon": "🔍",
-          "desc": "Inspect the evidence to solve the riddle!"
-        },
-        {
-          "id": "cause_effect",
-          "name": "Cause & Effect",
-          "sub": "Balance Scale",
-          "icon": "⚖️",
-          "desc": "Match the cause to its direct effect!"
+          "engine": "magnifier",
+          "desc": "Move the glowing magnifying lens to uncover hidden clues!"
         }
       ],
       "pronunciation": [
         {
-          "id": "sound_studio",
-          "name": "Voice Studio",
-          "sub": "Listen & Repeat",
-          "icon": "🎙️",
-          "desc": "Listen to the slow native pronunciation and repeat the sound!"
-        },
-        {
-          "id": "minimal_pairs",
-          "name": "Sound Pairs",
-          "sub": "Discrimination",
-          "icon": "🎧",
-          "desc": "Distinguish between close phonetic sounds like P and B!"
-        },
-        {
-          "id": "djembe_beat",
+          "id": "djembe_drum",
           "name": "Djembe Drum",
           "sub": "Syllable Tempo",
           "icon": "🪘",
-          "desc": "Tap the djembe drum in rhythm with the syllables!"
+          "engine": "djembe",
+          "desc": "Tap the traditional djembe drum in rhythm to count each syllable beat!"
+        },
+        {
+          "id": "voice_studio",
+          "name": "Voice Studio",
+          "sub": "Listen & Repeat",
+          "icon": "🎙️",
+          "engine": "studio",
+          "desc": "Hear native pronunciation in slow motion (0.65x) and match the phoneme!"
+        },
+        {
+          "id": "rhyme_match",
+          "name": "Rhyme Pairs",
+          "sub": "Matching Endings",
+          "icon": "🎧",
+          "engine": "rhyme",
+          "desc": "Pair words that share the exact same ending rhyme sound!"
         }
       ],
       "science": [
         {
-          "id": "plant_lab",
+          "id": "botany_growth",
           "name": "Botany Lab",
-          "sub": "Sunlight & Water",
+          "sub": "Sprout & Bloom",
           "icon": "🌱",
-          "desc": "Give the seed sunlight and water to watch it bloom!"
+          "engine": "botany",
+          "desc": "Provide water, sunlight, and soil food to watch the flower sprout and bloom!"
         },
         {
-          "id": "habitat_sort",
-          "name": "Biome Habitat",
+          "id": "habitat_biome",
+          "name": "Biome Terrarium",
           "sub": "Savanna & River",
           "icon": "🌍",
-          "desc": "Place each animal in its natural habitat!"
+          "engine": "habitat",
+          "desc": "Place wild animals in their natural African habitats!"
         },
         {
-          "id": "water_cycle",
+          "id": "water_cycle_lab",
           "name": "Water Cycle",
-          "sub": "Rain & Clouds",
+          "sub": "Steam & Rain",
           "icon": "☁️",
-          "desc": "Follow the water journey from cloud to river!"
+          "engine": "water",
+          "desc": "Heat water under the sun to form clouds and trigger rainfall!"
         }
       ],
       "logic_puzzles": [
         {
-          "id": "pattern_train",
+          "id": "shape_sorter_box",
+          "name": "Wooden Sorter",
+          "sub": "Carved Slots",
+          "icon": "🔺",
+          "engine": "shapes",
+          "desc": "Slide wooden geometric cutouts into their matching carved slots!"
+        },
+        {
+          "id": "pattern_train_game",
           "name": "Pattern Train",
           "sub": "ABAB Logic",
           "icon": "🔴",
-          "desc": "Find the shape or color that completes the pattern!"
+          "engine": "pattern",
+          "desc": "Follow the alternating rhythm to find what comes next in line!"
         },
         {
-          "id": "shape_sorter",
-          "name": "Shape Sorter",
-          "sub": "Geometry Slots",
-          "icon": "🔺",
-          "desc": "Slide each geometric shape into its matching slot!"
-        },
-        {
-          "id": "maze_runner",
+          "id": "smart_maze",
           "name": "Smart Maze",
-          "sub": "Path Finder",
+          "sub": "Path to Exit",
           "icon": "🧭",
-          "desc": "Guide the owl mascot to the trophy!"
+          "engine": "maze",
+          "desc": "Guide Owl safely through the maze paths to claim the golden trophy!"
         }
       ],
       "creative_play": [
         {
-          "id": "tangram_build",
+          "id": "tangram_studio",
           "name": "Tangram Studio",
-          "sub": "Polygon Puzzle",
+          "sub": "Polygon Shapes",
           "icon": "🧩",
-          "desc": "Fit geometric pieces into the target silhouette!"
+          "engine": "tangram",
+          "desc": "Arrange geometric shapes to complete animal and object silhouettes!"
         },
         {
-          "id": "robot_factory",
-          "name": "Robot Factory",
-          "sub": "Assembly Line",
-          "icon": "🤖",
-          "desc": "Assemble the playful robot piece by piece!"
+          "id": "gear_engineering",
+          "name": "Gear Factory",
+          "sub": "Cogwheel Drive",
+          "icon": "⚙️",
+          "engine": "gears",
+          "desc": "Connect interlocking gears to transmit rotational drive to the generator!"
         }
       ]
     },
@@ -2280,61 +2384,57 @@ const CURRICULUM = {
       "math_arcade": [
         [
           {
-            "q": "How many stars do you see?",
-            "dots": "⭐⭐⭐⭐",
+            "q": "Pick 4 ripe mangoes for the basket!",
+            "dots": "🥭🥭🥭🥭",
             "ans": "4",
             "options": [
               "3",
               "4",
-              "5",
-              "2"
+              "5"
             ],
-            "icon": "⭐",
-            "speech": "Count the shining stars!",
+            "icon": "🥭",
+            "speech": "Touch and harvest 4 ripe mangoes from the tree!",
             "mathType": "count",
             "a": 4
           },
           {
-            "q": "Count the sweet mangoes!",
-            "dots": "🥭🥭🥭",
+            "q": "Pick 3 sweet bananas!",
+            "dots": "🍌🍌🍌",
             "ans": "3",
             "options": [
               "2",
               "3",
-              "4",
-              "1"
+              "4"
             ],
-            "icon": "🥭",
-            "speech": "Count the ripe mangoes!",
+            "icon": "🍌",
+            "speech": "Harvest 3 bananas for the basket!",
             "mathType": "count",
             "a": 3
           },
           {
-            "q": "How many pineapples?",
+            "q": "Pick 5 fresh pineapples!",
             "dots": "🍍🍍🍍🍍🍍",
             "ans": "5",
             "options": [
               "4",
               "5",
-              "6",
-              "3"
+              "6"
             ],
             "icon": "🍍",
-            "speech": "Count the fresh pineapples!",
+            "speech": "Pick 5 juicy pineapples!",
             "mathType": "count",
             "a": 5
           }
         ],
         [
           {
-            "q": "4 + 3 = ?",
-            "dots": "🥭🥭🥭🥭 + 🍏🍏🍏",
+            "q": "4 mangoes + 3 bananas = ?",
+            "dots": "🥭🥭🥭🥭 + 🍌🍌🍌",
             "ans": "7",
             "options": [
               "6",
               "7",
-              "8",
-              "5"
+              "8"
             ],
             "icon": "🥭",
             "speech": "What is 4 plus 3?",
@@ -2343,32 +2443,30 @@ const CURRICULUM = {
             "b": 3
           },
           {
-            "q": "8 - 3 = ?",
+            "q": "8 fruits - 3 eaten = ?",
             "dots": "🍌🍌🍌🍌🍌 ❌❌❌",
             "ans": "5",
             "options": [
               "4",
               "5",
-              "6",
-              "3"
+              "6"
             ],
             "icon": "🍌",
-            "speech": "What is 8 take away 3?",
+            "speech": "What is 8 minus 3?",
             "mathType": "sub",
             "a": 8,
             "b": 3
           },
           {
-            "q": "5 + 4 = ?",
-            "dots": "🍍🍍🍍🍍🍍 + 🍏🍏🍏🍏",
+            "q": "5 stars + 4 stars = ?",
+            "dots": "⭐⭐⭐⭐⭐ + ⭐⭐⭐⭐",
             "ans": "9",
             "options": [
               "8",
               "9",
-              "10",
-              "7"
+              "10"
             ],
-            "icon": "🍍",
+            "icon": "⭐",
             "speech": "What is 5 plus 4?",
             "mathType": "add",
             "a": 5,
@@ -2377,46 +2475,43 @@ const CURRICULUM = {
         ],
         [
           {
-            "q": "3 × 4 = ?",
+            "q": "3 rows of 4 stars = ?",
             "dots": "⭐⭐⭐⭐ • ⭐⭐⭐⭐ • ⭐⭐⭐⭐",
             "ans": "12",
             "options": [
               "10",
               "12",
-              "14",
-              "16"
+              "15"
             ],
             "icon": "⭐",
-            "speech": "What is 3 times 4?",
+            "speech": "What is 3 times 4 stars?",
             "mathType": "mul",
             "a": 3,
             "b": 4
           },
           {
-            "q": "15 ÷ 3 = ?",
-            "dots": "🧺 (5) | 🧺 (5) | 🧺 (5)",
+            "q": "15 cookies shared among 3 kids = ?",
+            "dots": "🍪 (5) | 🍪 (5) | 🍪 (5)",
             "ans": "5",
             "options": [
               "4",
               "5",
-              "6",
-              "3"
+              "6"
             ],
-            "icon": "🐟",
+            "icon": "🍪",
             "speech": "What is 15 divided by 3?",
             "mathType": "div",
             "a": 15,
             "b": 3
           },
           {
-            "q": "4 × 5 = ?",
+            "q": "4 rows of 5 mangoes = ?",
             "dots": "🥭🥭🥭🥭🥭 × 4",
             "ans": "20",
             "options": [
-              "18",
+              "16",
               "20",
-              "22",
-              "25"
+              "24"
             ],
             "icon": "🥭",
             "speech": "What is 4 times 5?",
@@ -2427,51 +2522,47 @@ const CURRICULUM = {
         ],
         [
           {
-            "q": "1/2 of 10 mangoes = ?",
+            "q": "What is one half (1/2) of 10 mangoes?",
             "dots": "🥭🥭🥭🥭🥭 | 🥭🥭🥭🥭🥭",
             "ans": "5",
             "options": [
               "4",
               "5",
-              "6",
-              "3"
+              "6"
             ],
             "icon": "🥭",
-            "speech": "What is one half of 10 mangoes?",
+            "speech": "Find one half of 10 mangoes!",
             "mathType": "fraction",
             "a": 10,
             "b": 2
           },
           {
-            "q": "2.5 + 1.5 = ?",
-            "dots": "2.5 + 1.5 in coins",
-            "ans": "4",
+            "q": "Pay 250 CFA with coins on the scale:",
+            "dots": "100F + 100F + 50F",
+            "ans": "250",
             "options": [
-              "3.5",
-              "4",
-              "4.5",
-              "5"
+              "200",
+              "250",
+              "300"
             ],
             "icon": "🪙",
-            "speech": "What is 2.5 plus 1.5?",
-            "mathType": "decimal",
-            "a": 2.5,
-            "b": 1.5
+            "speech": "Balance the scale to 250 CFA coins!",
+            "mathType": "cfa",
+            "a": 250
           },
           {
-            "q": "3/4 of 8 cookies = ?",
-            "dots": "🍪🍪 🍪🍪 🍪🍪 | ⚪⚪",
-            "ans": "6",
+            "q": "Which fraction shows 3 shaded slices out of 4?",
+            "dots": "🥧 3 slices shaded",
+            "ans": "3/4",
             "options": [
-              "5",
-              "6",
-              "7",
-              "4"
+              "1/4",
+              "1/2",
+              "3/4"
             ],
-            "icon": "🍪",
-            "speech": "What is three fourths of 8 cookies?",
+            "icon": "🥧",
+            "speech": "Three parts out of four is written how?",
             "mathType": "fraction",
-            "a": 8,
+            "a": 3,
             "b": 4
           }
         ]
@@ -2479,199 +2570,187 @@ const CURRICULUM = {
       "reading": [
         [
           {
-            "q": "Which letter starts 🍍 Pineapple?",
-            "dots": "🍍 [P]ineapple",
+            "q": "Catch the fish with the letter for 🍍 Pineapple:",
+            "dots": "🍍 Pineapple starts with [P]",
             "ans": "P",
             "options": [
               "P",
               "B",
-              "M",
-              "T"
+              "M"
             ],
             "icon": "🍍",
-            "speech": "Find the letter that starts Pineapple!"
+            "speech": "Catch the letter P for Pineapple!"
           },
           {
-            "q": "Which letter starts 🍌 Banana?",
-            "dots": "🍌 [B]anana",
+            "q": "Catch the fish with the letter for 🍌 Banana:",
+            "dots": "🍌 Banana starts with [B]",
             "ans": "B",
             "options": [
               "B",
               "D",
-              "P",
-              "K"
+              "T"
             ],
             "icon": "🍌",
-            "speech": "Find the letter that makes the sound B!"
+            "speech": "Catch the letter B for Banana!"
           },
           {
-            "q": "Which letter starts 🥭 Mango?",
-            "dots": "🥭 [M]ango",
+            "q": "Catch the fish with the letter for 🥭 Mango:",
+            "dots": "🥭 Mango starts with [M]",
             "ans": "M",
             "options": [
               "M",
               "N",
-              "W",
               "V"
             ],
             "icon": "🥭",
-            "speech": "Find the letter M for Mango!"
+            "speech": "Catch the letter M for Mango!"
           }
         ],
         [
           {
-            "q": "Sound out: C - A - T",
-            "dots": "🐱 Friendly pet",
+            "q": "Hop the frog on C then A then T to form:",
+            "dots": "C + A + T ➡️ ?",
             "ans": "CAT",
             "options": [
               "CAT",
               "BAT",
-              "DOG",
-              "PIG"
+              "DOG"
             ],
             "icon": "🐱",
-            "speech": "C... A... T... What word is that?"
+            "speech": "C... A... T... spells CAT!"
           },
           {
-            "q": "Which word starts with the sound [S]?",
-            "dots": "Sound [Ssss]",
-            "ans": "Sun",
-            "options": [
-              "Sun",
-              "Moon",
-              "Tree",
-              "Book"
-            ],
-            "icon": "☀️",
-            "speech": "Which word starts with the sound S?"
-          },
-          {
-            "q": "B + E + D spells :",
-            "dots": "🛏️ Sleep furniture",
+            "q": "Spell out the word for sleeping: B - E - D",
+            "dots": "🛏️ Sleeping furniture",
             "ans": "BED",
             "options": [
               "BED",
               "BAD",
-              "RED",
-              "BOX"
+              "RED"
             ],
             "icon": "🛏️",
-            "speech": "B... E... D... spells what?"
+            "speech": "B... E... D... spells BED!"
+          },
+          {
+            "q": "Hop the frog on S then U then N:",
+            "dots": "S + U + N ➡️ ?",
+            "ans": "SUN",
+            "options": [
+              "SUN",
+              "SON",
+              "RUN"
+            ],
+            "icon": "☀️",
+            "speech": "S... U... N... spells SUN!"
           }
         ],
         [
           {
-            "q": "Complete: The bird flies high in the...",
+            "q": "Complete: The eagle flies high in the...",
             "dots": "🦅 High above",
             "ans": "Sky",
             "options": [
               "Sky",
               "Ground",
-              "Sea",
-              "Fire"
+              "Sea"
             ],
             "icon": "🌤️",
-            "speech": "The bird flies high in the what?"
+            "speech": "The eagle flies high in the sky!"
           },
           {
-            "q": "Musa goes to school with his...",
-            "dots": "🎒 On his back",
-            "ans": "Backpack",
+            "q": "Musa packs his school bag to go to...",
+            "dots": "🎒 Books and pencils",
+            "ans": "School",
             "options": [
-              "Backpack",
-              "Bicycle",
-              "Drum",
-              "Ball"
+              "School",
+              "Moon",
+              "Beach"
             ],
-            "icon": "🎒",
-            "speech": "Musa goes to school with his what?"
+            "icon": "🏫",
+            "speech": "Musa goes to school!"
           },
           {
-            "q": "The fish swims in the...",
-            "dots": "🐟 In deep waters",
+            "q": "The river fish swims in the clear...",
+            "dots": "🐟 In fresh water",
             "ans": "River",
             "options": [
               "River",
               "Desert",
-              "Tree",
               "Roof"
             ],
             "icon": "🌊",
-            "speech": "The fish swims in the what?"
+            "speech": "The fish swims in the river!"
           }
         ],
         [
           {
-            "q": "What is a synonym for Brave?",
+            "q": "What is a synonym for 'Brave'?",
             "dots": "🦁 Fearless hero",
             "ans": "Courageous",
             "options": [
               "Courageous",
-              "Afraid",
-              "Slow",
-              "Dark"
+              "Timid",
+              "Slow"
             ],
             "icon": "🦁",
-            "speech": "What word means the same as brave?"
+            "speech": "Find the synonym for brave!"
           },
           {
-            "q": "To do something 'Eagerly' means:",
+            "q": "To do an activity with 'Zeal' means:",
             "dots": "✨ Full of energy",
-            "ans": "With enthusiasm",
+            "ans": "With passion",
             "options": [
-              "With enthusiasm",
-              "Weakly",
-              "Sadly",
+              "With passion",
+              "With boredom",
               "Carelessly"
             ],
             "icon": "✨",
-            "speech": "What does eagerly mean?"
+            "speech": "What does with zeal mean?"
           },
           {
-            "q": "Which word expresses immense joy?",
-            "dots": "🎉 Great happiness",
-            "ans": "Delight",
+            "q": "Which word expresses immense happiness?",
+            "dots": "🎉 Great delight",
+            "ans": "Joy",
             "options": [
-              "Delight",
+              "Joy",
               "Sorrow",
-              "Anger",
-              "Boredom"
+              "Anger"
             ],
             "icon": "🌟",
-            "speech": "Which word expresses great joy?"
+            "speech": "Which word means great happiness?"
           }
         ]
       ],
       "comprehension": [
         [
           {
-            "q": "The monkey climbs to the top of the tree. Where is he?",
-            "dots": "🐒 Tree canopy",
+            "q": "The little monkey climbs to the top of the tree. Where is he?",
+            "dots": "🐒 Tree top",
             "ans": "In the tree",
             "options": [
               "In the tree",
               "Under water",
-              "In the ground"
+              "In bed"
             ],
             "icon": "🐒",
-            "speech": "Where is the climbing monkey?"
+            "speech": "Where is the monkey perched?"
           },
           {
-            "q": "Musa bites into a sweet mango. What is Musa eating?",
-            "dots": "🥭 Ripe fruit",
+            "q": "Amina bites into a sweet mango. What is Amina eating?",
+            "dots": "🥭 Sweet fruit",
             "ans": "A mango",
             "options": [
               "A mango",
-              "A stone",
+              "A rock",
               "A book"
             ],
             "icon": "🥭",
-            "speech": "What is Musa eating?"
+            "speech": "What fruit is Amina eating?"
           }
         ],
         [
           {
-            "q": "In the butterfly cycle, what comes first?",
+            "q": "In the butterfly cycle, what comes FIRST?",
             "dots": "🐛 Transformation",
             "ans": "The caterpillar",
             "options": [
@@ -2680,36 +2759,36 @@ const CURRICULUM = {
               "The butterfly"
             ],
             "icon": "🐛",
-            "speech": "What comes first in the butterfly story?"
+            "speech": "At the start, there is a caterpillar!"
           },
           {
-            "q": "What do you do first when you WAKE UP in the morning?",
-            "dots": "🌅 Day begins",
-            "ans": "Get out of bed",
+            "q": "When the sun rises in the morning, the first action is:",
+            "dots": "🌅 Morning dawn",
+            "ans": "Wake up",
             "options": [
-              "Get out of bed",
-              "Go to sleep",
-              "Eat dinner"
+              "Wake up",
+              "Sleep",
+              "Dinner"
             ],
             "icon": "🌅",
-            "speech": "What is the first step in the morning?"
+            "speech": "At sunrise, what do we do first?"
           }
         ],
         [
           {
-            "q": "It rained all night. What is the result?",
-            "dots": "🌧️ Heavy downpour",
+            "q": "It rained all night long. What is the direct consequence?",
+            "dots": "🌧️ Heavy storm",
             "ans": "The ground is wet",
             "options": [
               "The ground is wet",
-              "The sky is dark",
-              "Leaves catch fire"
+              "Sky is burning",
+              "Dry dust"
             ],
             "icon": "🌧️",
-            "speech": "It rained all night. What happened to the ground?"
+            "speech": "Rain made the ground completely wet!"
           },
           {
-            "q": "Amina waters her sunflower every day. What will happen?",
+            "q": "Amina waters her plant every morning. What will happen?",
             "dots": "💧 Daily care",
             "ans": "It grows tall",
             "options": [
@@ -2718,94 +2797,93 @@ const CURRICULUM = {
               "It flies away"
             ],
             "icon": "🌻",
-            "speech": "Amina waters her plant. What will happen?"
+            "speech": "Water helps the plant grow healthy and tall!"
           }
         ],
         [
           {
-            "q": "Students carry backpacks and walk through the school gate. Where are they?",
-            "dots": "🎒 Clues",
+            "q": "Children carry backpacks and enter the gate in the morning. Where are they?",
+            "dots": "🎒 School clue",
             "ans": "At school",
             "options": [
               "At school",
-              "At the beach",
-              "At the airport"
+              "At the airport",
+              "At the cinema"
             ],
             "icon": "🏫",
-            "speech": "Where are the students arriving?"
+            "speech": "Where are all the students heading?"
           },
           {
             "q": "The grass is muddy and umbrellas are open. We infer:",
-            "dots": "☔ Weather clue",
-            "ans": "It is raining",
+            "dots": "☔ Evidence",
+            "ans": "It rained",
             "options": [
-              "It is raining",
-              "It is midnight",
-              "It is sunny"
+              "It rained",
+              "It is dry summer",
+              "It is midnight"
             ],
             "icon": "🌧️",
-            "speech": "What can we deduce from umbrellas and mud?"
+            "speech": "Mud and umbrellas indicate that it rained!"
           }
         ]
       ],
       "pronunciation": [
         [
           {
-            "q": "Listen to the sound: [Aaa]! Tap the matching letter:",
-            "dots": "👄 Open mouth",
+            "q": "Listen to the sound: [Aaaa]! Tap the matching letter:",
+            "dots": "👄 Wide open mouth",
             "ans": "A",
             "options": [
               "A",
               "O",
-              "U",
-              "I"
+              "U"
             ],
             "icon": "🔤",
             "speech": "Listen closely: Aaaa! Which letter makes this sound?"
           },
           {
-            "q": "Which animal crows 'Cock-a-doodle-doo' at dawn?",
-            "dots": "🐓 Morning crow",
+            "q": "Which animal crows 'Cock-a-doodle-doo' at sunrise?",
+            "dots": "🐓 Morning call",
             "ans": "The Rooster",
             "options": [
               "The Rooster",
               "The Dog",
-              "The Cat"
+              "The Duck"
             ],
             "icon": "🐓",
-            "speech": "Which animal crows in the morning?"
+            "speech": "Which farm animal crows in the morning?"
           }
         ],
         [
           {
-            "q": "How many syllables in BUT-TER-FLY?",
+            "q": "Tap the djembe drum: how many syllables in BUT-TER-FLY?",
             "dots": "👏 BUT • TER • FLY",
-            "ans": "3 syllables",
+            "ans": "3",
             "options": [
-              "2 syllables",
-              "3 syllables",
-              "4 syllables"
+              "2",
+              "3",
+              "4"
             ],
-            "icon": "🦋",
-            "speech": "How many syllables in butterfly?"
+            "icon": "🪘",
+            "speech": "Tap the drum 3 times for but-ter-fly!"
           },
           {
-            "q": "How many syllables in MA-MA?",
+            "q": "Tap the djembe drum: how many syllables in MA-MA?",
             "dots": "👏 MA • MA",
-            "ans": "2 syllables",
+            "ans": "2",
             "options": [
-              "1 syllable",
-              "2 syllables",
-              "3 syllables"
+              "1",
+              "2",
+              "3"
             ],
-            "icon": "❤️",
-            "speech": "How many syllables in mama?"
+            "icon": "🪘",
+            "speech": "Tap the drum 2 times for ma-ma!"
           }
         ],
         [
           {
             "q": "Which word rhymes with BOAT?",
-            "dots": "🎵 Same ending sound",
+            "dots": "🎵 [-OAT] sound",
             "ans": "FLOAT",
             "options": [
               "FLOAT",
@@ -2813,11 +2891,11 @@ const CURRICULUM = {
               "TREE"
             ],
             "icon": "⛵",
-            "speech": "Which word rhymes with boat?"
+            "speech": "Which word ends with the same sound as boat?"
           },
           {
             "q": "Which word rhymes with MOUSE?",
-            "dots": "🎵 Same ending sound",
+            "dots": "🎵 [-OUSE] sound",
             "ans": "HOUSE",
             "options": [
               "HOUSE",
@@ -2831,19 +2909,19 @@ const CURRICULUM = {
         [
           {
             "q": "At the end of an exclamation (!), your voice should:",
-            "dots": "❗ Energetic rise",
-            "ans": "Rise with energy",
+            "dots": "❗ Energy",
+            "ans": "Rise",
             "options": [
-              "Rise with energy",
-              "Drop to a whisper",
-              "Stop dead"
+              "Rise",
+              "Fall to a whisper",
+              "Stop"
             ],
             "icon": "❗",
-            "speech": "How does your voice sound with an exclamation point?"
+            "speech": "With an exclamation point, raise your voice with energy!"
           },
           {
-            "q": "When encountering a comma (,), you make:",
-            "dots": "⏸️ Short breath",
+            "q": "When seeing a comma (,) while reading, you should make:",
+            "dots": "⏸️ Breathing",
             "ans": "A short pause",
             "options": [
               "A short pause",
@@ -2851,7 +2929,7 @@ const CURRICULUM = {
               "A loud shout"
             ],
             "icon": "⏸️",
-            "speech": "What should you do at a comma?"
+            "speech": "A comma calls for a short breathing pause."
           }
         ]
       ],
@@ -2863,67 +2941,67 @@ const CURRICULUM = {
             "ans": "The Elephant",
             "options": [
               "The Elephant",
-              "The Stone",
-              "The Balloon"
+              "The Pebble",
+              "The Bottle"
             ],
             "icon": "🐘",
-            "speech": "Which one is a living being that grows?"
+            "speech": "Which one is alive: the elephant or the pebble?"
           },
           {
-            "q": "Which plant gives tasty fruit?",
+            "q": "Which plant bears sweet fruits in our fields?",
             "dots": "🌴 Fruit plant",
             "ans": "The Banana Tree",
             "options": [
               "The Banana Tree",
-              "Plastic Toy",
-              "Cement Brick"
+              "Concrete Block",
+              "Plastic Toy"
             ],
             "icon": "🍌",
-            "speech": "Which plant gives fruit?"
+            "speech": "Which plant grows delicious bananas?"
           }
         ],
         [
           {
-            "q": "Where does the chimpanzee live in nature?",
-            "dots": "🌳 Forest canopy",
-            "ans": "Rainforest",
+            "q": "Where does the wild chimpanzee live in Cameroon?",
+            "dots": "🌳 Equatorial forest",
+            "ans": "The rainforest",
             "options": [
-              "Rainforest",
+              "The rainforest",
               "Polar ice",
               "Dry desert"
             ],
             "icon": "🐒",
-            "speech": "Where does the wild chimpanzee live?"
+            "speech": "The chimpanzee lives in the lush tropical rainforest!"
           },
           {
-            "q": "Where do freshwater river fish swim?",
-            "dots": "🌊 Fresh water",
+            "q": "Where do freshwater fish swim?",
+            "dots": "🌊 Gentle current",
             "ans": "Wouri River",
             "options": [
               "Wouri River",
-              "Dry desert",
-              "Volcano top"
+              "Volcano peak",
+              "Hot sand"
             ],
             "icon": "🐟",
-            "speech": "Where do fish swim?"
+            "speech": "Fish swim in the currents of the Wouri river!"
           }
         ],
         [
           {
-            "q": "When water heats up strongly under the sun, it turns to:",
+            "q": "When water heats up strongly under the sun, it turns into:",
             "dots": "♨️ Evaporation",
             "ans": "Water vapor",
             "options": [
               "Water vapor",
-              "Hard ice",
-              "Solid stone"
+              "Hard rock",
+              "Solid ice"
             ],
             "icon": "💨",
-            "speech": "What does hot water turn into under strong sun?"
+            "speech": "Hot water evaporates into invisible vapor!"
           },
           {
-            "q": "When water freezes into an ice cube, it is in a:",
-            "dots": "🧊 Ice cube",
+            "q": "In a solid ice cube, water is in a:",
+            "dots": "🧊 Solid state",
             "ans": "Solid state",
             "options": [
               "Solid state",
@@ -2931,13 +3009,13 @@ const CURRICULUM = {
               "Gas state"
             ],
             "icon": "🧊",
-            "speech": "What state of matter is an ice cube?"
+            "speech": "Ice is water in its solid state!"
           }
         ],
         [
           {
-            "q": "What clean renewable energy comes from the sun?",
-            "dots": "☀️ Sun rays",
+            "q": "What clean renewable energy comes straight from the sun?",
+            "dots": "☀️ Clean energy",
             "ans": "Solar Energy",
             "options": [
               "Solar Energy",
@@ -2945,27 +3023,27 @@ const CURRICULUM = {
               "Heavy oil"
             ],
             "icon": "☀️",
-            "speech": "What clean energy comes from sunlight?"
+            "speech": "Solar panels collect clean solar energy!"
           },
           {
-            "q": "Which natural force pulls objects down to Earth?",
+            "q": "Which natural force pulls objects down toward Earth?",
             "dots": "🌍 Earth pull",
             "ans": "Gravity",
             "options": [
               "Gravity",
-              "Sound",
-              "Magnetism only"
+              "Wind only",
+              "Light"
             ],
             "icon": "🌍",
-            "speech": "Which force pulls objects to the ground?"
+            "speech": "Gravity keeps our feet grounded on Earth!"
           }
         ]
       ],
       "logic_puzzles": [
         [
           {
-            "q": "Find the odd one out that is NOT a fruit:",
-            "dots": "🚫 Odd item",
+            "q": "Find the odd item out that is NOT a fruit:",
+            "dots": "🚫 Not fruit",
             "ans": "Car",
             "options": [
               "Car",
@@ -2973,24 +3051,24 @@ const CURRICULUM = {
               "Banana"
             ],
             "icon": "🚗",
-            "speech": "Find the item that is not a fruit!"
+            "speech": "A car is a vehicle, not a fruit!"
           },
           {
-            "q": "Which animal is the BIGGEST?",
-            "dots": "📏 Size compare",
-            "ans": "Elephant",
+            "q": "Which animal is the LARGEST of all?",
+            "dots": "📏 Giant size",
+            "ans": "The Elephant",
             "options": [
-              "Elephant",
-              "Mouse",
-              "Ant"
+              "The Elephant",
+              "The Mouse",
+              "The Ant"
             ],
             "icon": "🐘",
-            "speech": "Which animal is the largest?"
+            "speech": "The elephant is the largest of these animals!"
           }
         ],
         [
           {
-            "q": "Complete the sequence: 🔴 🔵 🔴 🔵 ?",
+            "q": "Complete the logical pattern: 🔴 🔵 🔴 🔵 ?",
             "dots": "🔄 ABAB pattern",
             "ans": "🔴 Red",
             "options": [
@@ -2999,11 +3077,11 @@ const CURRICULUM = {
               "🟡 Yellow"
             ],
             "icon": "🔴",
-            "speech": "Red, blue, red, blue... What comes next?"
+            "speech": "Red, blue, red, blue... What color comes next?"
           },
           {
-            "q": "Complete the pattern: 🥭 🍌 🥭 🍌 ?",
-            "dots": "🔄 Alternating fruits",
+            "q": "Complete the fruit pattern: 🥭 🍌 🥭 🍌 ?",
+            "dots": "🔄 Fruit rhythm",
             "ans": "🥭 Mango",
             "options": [
               "🥭 Mango",
@@ -3011,13 +3089,13 @@ const CURRICULUM = {
               "🍍 Pineapple"
             ],
             "icon": "🥭",
-            "speech": "Mango, banana, mango, banana... What comes next?"
+            "speech": "Mango, banana, mango, banana... and next?"
           }
         ],
         [
           {
-            "q": "When you hit a dead end in a maze, what should you do?",
-            "dots": "🔄 Turn around",
+            "q": "When facing a dead end in a maze, what should you do?",
+            "dots": "🔄 Turn back",
             "ans": "Turn back",
             "options": [
               "Turn back",
@@ -3025,52 +3103,52 @@ const CURRICULUM = {
               "Give up"
             ],
             "icon": "🔄",
-            "speech": "What do you do at a maze dead end?"
+            "speech": "At a dead end, turn around to find the right path!"
           },
           {
             "q": "Which path is the shortest straight to the exit?",
-            "dots": "➡️ Direct route",
+            "dots": "➡️ Direct path",
             "ans": "Straight line",
             "options": [
               "Straight line",
-              "Big zigzag",
+              "Big detour",
               "Circles"
             ],
             "icon": "➡️",
-            "speech": "Which path is the shortest?"
+            "speech": "A straight line is the shortest path!"
           }
         ],
         [
           {
-            "q": "To make the right pan of a scale rise upwards:",
-            "dots": "⚖️ Balance balance",
-            "ans": "Lighten the right",
+            "q": "To make the right pan of the balance scale rise upwards:",
+            "dots": "⚖️ Equilibrium",
+            "ans": "Lighten right",
             "options": [
-              "Lighten the right",
-              "Add more weight",
+              "Lighten right",
+              "Add weight",
               "Do nothing"
             ],
             "icon": "⚖️",
-            "speech": "How do you make the right scale pan rise?"
+            "speech": "Removing weight from the right makes it rise!"
           },
           {
-            "q": "When solving a puzzle, the best first step is to:",
+            "q": "When solving a puzzle, the smartest first step is:",
             "dots": "🧠 Strategy",
-            "ans": "Observe and think",
+            "ans": "Observe first",
             "options": [
-              "Observe and think",
+              "Observe first",
               "Click randomly",
               "Close eyes"
             ],
             "icon": "🧠",
-            "speech": "What is the key to solving a puzzle?"
+            "speech": "Careful observation reveals the secret solution!"
           }
         ]
       ],
       "creative_play": [
         [
           {
-            "q": "Which shape has 3 sides like a hut roof?",
+            "q": "Which shape has 3 sharp sides like a hut roof?",
             "dots": "🔺 3 sides",
             "ans": "Triangle",
             "options": [
@@ -3079,11 +3157,11 @@ const CURRICULUM = {
               "Circle"
             ],
             "icon": "🔺",
-            "speech": "Which shape has 3 sharp sides?"
+            "speech": "A triangle has three sharp corners and three sides!"
           },
           {
-            "q": "Which shape is perfectly round like the sun?",
-            "dots": "🟡 Round shape",
+            "q": "Which shape is perfectly round like the setting sun?",
+            "dots": "🟡 Smooth round",
             "ans": "Circle",
             "options": [
               "Circle",
@@ -3091,85 +3169,85 @@ const CURRICULUM = {
               "Square"
             ],
             "icon": "🟡",
-            "speech": "Which shape is perfectly round?"
+            "speech": "A circle is smooth and round with zero corners!"
           }
         ],
         [
           {
-            "q": "To build a strong river bridge, we place:",
-            "dots": "🏗️ Sturdy beams",
+            "q": "To build a strong river bridge, we lay down:",
+            "dots": "🏗️ Solid frame",
             "ans": "Solid beams",
             "options": [
               "Solid beams",
-              "Tree leaves",
-              "Thin strings"
+              "Dry leaves",
+              "Strings"
             ],
             "icon": "🏗️",
-            "speech": "What do we use to build a sturdy bridge?"
+            "speech": "Solid steel and timber beams hold up the bridge!"
           },
           {
-            "q": "When assembling a robot, we start with:",
+            "q": "When assembling a robot, we first build:",
             "dots": "🤖 Main frame",
-            "ans": "The main chassis",
+            "ans": "The chassis",
             "options": [
-              "The main chassis",
+              "The chassis",
               "The paint",
-              "The antennas"
+              "The antenna"
             ],
             "icon": "🤖",
-            "speech": "What part do we assemble first?"
+            "speech": "The chassis is the central body of the robot!"
           }
         ],
         [
           {
-            "q": "To grow a plant in our lab, the seed needs:",
-            "dots": "☀️ + 💧 Vital care",
-            "ans": "Sunlight + Water",
+            "q": "To make the seed sprout in our garden pot, it needs:",
+            "dots": "☀️ + 💧 Vital",
+            "ans": "Sun and Water",
             "options": [
-              "Sunlight + Water",
+              "Sun and Water",
               "Soda drink",
-              "Dry sand alone"
+              "Dry sand"
             ],
             "icon": "🌻",
-            "speech": "What does the seed need to grow?"
+            "speech": "Sunlight and fresh water bring the sprout to life!"
           },
           {
-            "q": "To split sunlight into the 7 rainbow colors, use:",
-            "dots": "🌈 Light split",
+            "q": "To split white light into the 7 rainbow colors, use:",
+            "dots": "🌈 Prism",
             "ans": "A glass prism",
             "options": [
               "A glass prism",
-              "A dark cloth",
+              "A black cloth",
               "A stone"
             ],
             "icon": "🌈",
-            "speech": "What tool splits light into rainbow colors?"
+            "speech": "A glass prism refracts white light into a rainbow!"
           }
         ],
         [
           {
             "q": "Two meshed gears rotate in:",
-            "dots": "⚙️ Gear drive",
-            "ans": "Opposite directions",
+            "dots": "⚙️ Rotation",
+            "ans": "Opposite direction",
             "options": [
-              "Opposite directions",
-              "The exact same direction",
-              "They cannot move"
+              "Opposite direction",
+              "Same direction",
+              "They jam"
             ],
             "icon": "⚙️",
-            "speech": "In which direction do two meshed gears turn?"
+            "speech": "Meshed gears turn in opposite directions!"
           },
           {
-            "q": "To light up the bulb, the electrical circuit must be:",
+            "q": "For the light bulb to turn on, the circuit must be:",
             "dots": "💡 Closed loop",
-            "ans": "Closed and complete",
+            "ans": "Closed & complete",
             "options": [
-              "Closed and complete",
-              "Cut open",
+              "Closed & complete",
+              "Broken",
               "Unplugged"
             ],
             "icon": "💡",
-            "speech": "How must the circuit be to light the bulb?"
+            "speech": "Electricity flows only in a closed loop circuit!"
           }
         ]
       ]
@@ -3179,18 +3257,19 @@ const CURRICULUM = {
 
 // Game State
 const state = {
+  currentView: "hub", // "hub" | "game"
   lang: "fr",
   grade: 0,
   category: "math_arcade",
-  game: "math_drop",
+  game: "fruit_orchard",
+  engineType: "fruit",
   score: 0,
   level: 1,
   round: 1,
   maxRoundsPerLevel: 5,
   coins: 15,
   lives: 3,
-  running: false,
-  isPaused: false,
+  running: true,
   question: null,
   recentQuestions: [],
   independentStreak: 0,
@@ -3198,13 +3277,17 @@ const state = {
   lastTime: 0,
   tutorOpen: false,
   tutorMode: "WATCH",
+  // Engine specific actors
   items: [],
-  cards: [],
-  playerX: 250,
-  playerY: 320,
-  targetValue: null,
-  fallingBlock: null,
+  fruits: [],
+  fishList: [],
+  lilypads: [],
+  frogIndex: 0,
   raceLane: 1,
+  balanceCoins: [],
+  magnifierX: 250,
+  magnifierY: 190,
+  plantStage: 0,
   particles: []
 };
 
@@ -3233,47 +3316,146 @@ function spawnParticles(x, y, color, count) {
   }
 }
 
-function renderGameSelector() {
-  const grid = $("game-selector-grid");
-  grid.innerHTML = "";
-  const gamesList = CURRICULUM[state.lang].games[state.category] || [];
-  
-  const validIds = gamesList.map(g => g.id);
-  if (!validIds.includes(state.game)) {
-    state.game = validIds[0] || "math_drop";
+// ============================================================================
+// VIEW NAVIGATION (HOME / HUB vs GAME ARENA)
+// ============================================================================
+function showHub() {
+  state.currentView = "hub";
+  VoiceEngine.cancel();
+  const gameoverModal = $("gameover-modal");
+  if (gameoverModal) gameoverModal.classList.remove("open");
+  const victoryModal = $("victory-modal");
+  if (victoryModal) victoryModal.classList.remove("open");
+  const tutorModal = $("tutor-modal");
+  if (tutorModal) tutorModal.classList.remove("open");
+  state.lives = 3;
+
+  $("view-hub").style.display = "flex";
+  $("view-game").style.display = "none";
+  renderWorldCards();
+  updateLabels();
+}
+
+function showGame(category, gameId) {
+  state.currentView = "game";
+  const gameoverModal = $("gameover-modal");
+  if (gameoverModal) gameoverModal.classList.remove("open");
+  const victoryModal = $("victory-modal");
+  if (victoryModal) victoryModal.classList.remove("open");
+  const tutorModal = $("tutor-modal");
+  if (tutorModal) tutorModal.classList.remove("open");
+  state.lives = 3;
+
+  if (category) state.category = category;
+  if (gameId) state.game = gameId;
+
+  const games = CURRICULUM[state.lang].games[state.category] || [];
+  const gObj = games.find(g => g.id === state.game) || games[0];
+  if (gObj) {
+    state.game = gObj.id;
+    state.engineType = gObj.engine;
   }
 
-  gamesList.forEach(g => {
-    const btn = document.createElement("button");
-    btn.className = "game-card-btn" + (g.id === state.game ? " active" : "");
-    btn.dataset.game = g.id;
-    btn.innerHTML = '<span class="game-card-icon">' + g.icon + '</span><span class="game-card-name">' + g.name + '<small>' + g.sub + '</small></span>';
-    btn.onclick = () => {
-      document.querySelectorAll(".game-card-btn").forEach(b => b.classList.remove("active"));
-      btn.classList.add("active");
-      state.game = g.id;
-      AudioEngine.playWhoosh();
-      VoiceEngine.speak(g.name);
-      initActiveGame();
+  $("view-hub").style.display = "none";
+  $("view-game").style.display = "flex";
+
+  renderGameSwitchPills();
+  updateLabels();
+  generateQuestion();
+}
+
+function renderWorldCards() {
+  const container = $("worlds-grid");
+  container.innerHTML = "";
+  const catEntries = Object.entries(CURRICULUM[state.lang].categories);
+
+  catEntries.forEach(([catKey, catConf]) => {
+    const games = CURRICULUM[state.lang].games[catKey] || [];
+    const card = document.createElement("div");
+    card.className = "world-card";
+    card.dataset.cat = catKey;
+    
+    let chipsHtml = "";
+    games.forEach(g => {
+      chipsHtml += '<span class="game-chip">' + g.icon + ' ' + g.name + '</span>';
+    });
+
+    card.innerHTML = 
+      '<div class="world-card-top">' +
+        '<div class="world-card-icon">' + catConf.icon + '</div>' +
+        '<div class="world-card-info">' +
+          '<h3>' + catConf.label + '</h3>' +
+          '<span>🎯 ' + (catConf.topics[state.grade] || catConf.topics[0]) + '</span>' +
+        '</div>' +
+      '</div>' +
+      '<div class="world-games-chips">' + chipsHtml + '</div>';
+
+    card.onclick = () => {
+      AudioEngine.playClick();
+      const defaultGameIdx = Math.min(state.grade, games.length - 1);
+      const defaultGame = games[defaultGameIdx] || games[0];
+      showGame(catKey, defaultGame ? defaultGame.id : null);
     };
-    grid.appendChild(btn);
+
+    container.appendChild(card);
   });
 }
 
-function updateBannersAndLabels() {
+function renderGameSwitchPills() {
+  const container = $("game-switch-pills");
+  container.innerHTML = "";
+  const games = CURRICULUM[state.lang].games[state.category] || [];
+
+  games.forEach(g => {
+    const btn = document.createElement("button");
+    btn.className = "game-switch-btn" + (g.id === state.game ? " active" : "");
+    btn.innerHTML = g.icon + ' ' + g.name;
+    btn.onclick = () => {
+      AudioEngine.playClick();
+      state.game = g.id;
+      state.engineType = g.engine;
+      document.querySelectorAll(".game-switch-btn").forEach(b => b.classList.remove("active"));
+      btn.classList.add("active");
+      updateLabels();
+      initActiveEngine();
+    };
+    container.appendChild(btn);
+  });
+}
+
+function updateLabels() {
+  const isFR = state.lang === "fr";
   const catConf = CURRICULUM[state.lang].categories[state.category];
-  const gradeNames = state.lang === "fr" 
+  const games = CURRICULUM[state.lang].games[state.category] || [];
+  const curGame = games.find(g => g.id === state.game) || games[0];
+
+  const gradeNames = isFR 
     ? ["🐣 Maternelle (2–4 ans)", "🦁 SIL / CP (5–6 ans)", "🚀 CE1 / CE2 (7–8 ans)", "👑 CM1 / CM2 (9–11 ans)"]
     : ["🐣 Nursery (2–4 yrs)", "🦁 Class 1–2 (5–6 yrs)", "🚀 Class 3–4 (7–8 yrs)", "👑 Class 5–6 (9–11 yrs)"];
 
-  $("matrix-category-label").textContent = catConf.label;
-  $("matrix-topic-label").textContent = catConf.topics[state.grade] || catConf.topics[0];
+  // Header & Hub labels
+  $("label-home-btn").textContent = isFR ? "Accueil" : "Home";
+  $("header-subtitle").textContent = isFR ? "Aventure Éducative • 100% Hors-Ligne" : "Educational Adventure • 100% Offline";
+  $("hub-welcome-title").textContent = isFR ? "Choisis ton Monde d'Aventure !" : "Choose your Adventure World!";
+  $("hub-welcome-sub").textContent = isFR ? "Explore, joue et apprends à ton rythme" : "Explore, play and learn at your own pace";
+  $("label-back-hub").textContent = isFR ? "Retour aux Mondes" : "Back to Worlds";
+  $("label-theme").textContent = isFR ? "Thème" : "Topic";
+  $("stat-level-label").textContent = isFR ? "Niveau" : "Level";
+
+  if (curGame) {
+    $("current-game-icon").textContent = curGame.icon;
+    $("current-game-name").textContent = curGame.name;
+  }
+  if (catConf) {
+    $("matrix-category-label").textContent = catConf.label;
+    $("matrix-topic-label").textContent = catConf.topics[state.grade] || catConf.topics[0];
+  }
   $("matrix-grade-label").textContent = gradeNames[state.grade];
-  $("label-theme").textContent = state.lang === "fr" ? "Thème" : "Topic";
-  $("stat-level-label").textContent = state.lang === "fr" ? "Niveau" : "Level";
-  $("header-subtitle").textContent = state.lang === "fr" ? "Aventure Éducative • 100% Hors-Ligne" : "Educational Adventure • 100% Offline";
 }
 
+// ============================================================================
+// QUESTION GENERATION (ZERO NaN & LRU AVOIDANCE)
+// ============================================================================
 function generateQuestion() {
   const bank = CURRICULUM[state.lang].bank[state.category] && CURRICULUM[state.lang].bank[state.category][state.grade];
   let picked = null;
@@ -3301,17 +3483,17 @@ function generateQuestion() {
       b: picked.b !== undefined ? picked.b : null
     };
   } else {
-    const a = Math.floor(Math.random() * 5) + 1;
+    // Default fallback
+    const a = Math.floor(Math.random() * 4) + 1;
     const b = Math.floor(Math.random() * 4) + 1;
     const ans = String(a + b);
-    const opts = [ans, String(a + b + 1), String(Math.max(1, a + b - 1))].sort(() => Math.random() - 0.5);
     state.question = {
       q: a + " + " + b + " = ?",
       ans: ans,
-      options: opts,
+      options: [ans, String(a + b + 1), String(Math.max(1, a + b - 1))].sort(() => Math.random() - 0.5),
       icon: "🥭",
       dots: a + " + " + b,
-      speech: state.lang === "fr" ? (a + " plus " + b + " égale combien ?") : ("What is " + a + " plus " + b + "?"),
+      speech: a + " plus " + b + " ?",
       mathType: "add",
       a, b
     };
@@ -3322,7 +3504,7 @@ function generateQuestion() {
   state.idleTime = 0;
 
   VoiceEngine.speak(state.question.speech);
-  initActiveGame();
+  initActiveEngine();
   updateStatsDOM();
 }
 
@@ -3334,112 +3516,154 @@ function updateStatsDOM() {
   $("stat-lives").textContent = state.lives;
 }
 
-function initActiveGame() {
+// ============================================================================
+// DISTINCT GAMEPLAY ENGINES INITIALIZATION (0 AUTOPLAY)
+// ============================================================================
+function initActiveEngine() {
   const q = state.question;
   if (!q) return;
   state.items = [];
-  state.cards = [];
-  state.fallingBlock = null;
+  state.fruits = [];
+  state.fishList = [];
+  state.lilypads = [];
+  state.balanceCoins = [];
+  state.plantStage = 0;
 
-  const game = state.game;
+  const eng = state.engineType;
   const options = q.options.length >= 3 ? q.options.slice(0, 3) : q.options;
   if (!options.includes(q.ans)) options[0] = q.ans;
   options.sort(() => Math.random() - 0.5);
 
-  if (game === "math_drop" || game === "word_train") {
-    state.fallingBlock = {
-      val: q.ans,
-      x: 210,
-      y: 10,
-      w: Math.max(90, String(q.ans).length * 15),
-      h: 46,
-      vy: 45 + state.level * 6
-    };
-    state.items = options.map((opt, idx) => ({
+  // 1. FRUIT ORCHARD (Nursery Tactile Picking)
+  if (eng === "fruit") {
+    const targetCount = parseInt(q.ans) || 4;
+    // Spawn 7 hanging fruits on tree
+    const icons = ["🥭", "🍌", "🍍", "🍏", "🍊"];
+    for (let i = 0; i < 7; i++) {
+      state.fruits.push({
+        id: i + 1,
+        x: 80 + (i % 4) * 95 + (Math.random() * 20 - 10),
+        y: 80 + Math.floor(i / 4) * 65 + (Math.random() * 15 - 7),
+        icon: q.icon || icons[i % icons.length],
+        picked: false,
+        radius: 26,
+        wobble: Math.random() * 6
+      });
+    }
+  }
+  // 2. PHONICS FISHING (SIL/CP River Swimming Fish)
+  else if (eng === "fishing") {
+    // 3 Swimming fish carrying options
+    state.fishList = options.map((opt, i) => ({
       val: opt,
-      x: 35 + idx * 155,
-      y: 310,
-      w: 140,
-      h: 55,
-      color: "#FFFFFF"
+      x: 60 + i * 140,
+      y: 190 + (i % 2 === 0 ? -30 : 30),
+      vx: (i % 2 === 0 ? 1 : -1) * 20,
+      w: 90,
+      h: 45,
+      hooked: false
     }));
-  } else if (game === "math_racing") {
+    state.playerX = 250; // boat canoe position
+  }
+  // 3. LILYPAD FROG (SIL/CP Sequence Platformer)
+  else if (eng === "frog") {
+    state.frogIndex = 0;
+    state.lilypads = options.map((opt, i) => ({
+      val: opt,
+      x: 75 + i * 150,
+      y: 200 + (i % 2 === 0 ? 20 : -20),
+      radius: 46
+    }));
+  }
+  // 4. TURBO RACING (CE1/CE2 3-Lane Highway)
+  else if (eng === "racing") {
     state.raceLane = 1;
     state.items = options.map((opt, i) => ({
       val: opt,
       lane: i,
       x: 55 + i * 150,
-      y: 40,
+      y: 80,
       w: 130,
-      h: 48,
-      vy: 85 + state.level * 10
+      h: 50
     }));
-  } else if (game === "fruit_harvest" || game === "plant_lab") {
-    const count = typeof q.ans === "number" ? q.ans : (parseInt(q.ans) || 4);
-    state.targetValue = count;
-    for (let i = 0; i < count; i++) {
-      state.items.push({
-        id: i + 1,
-        x: 80 + (i % 5) * 85 + (Math.random() * 10 - 5),
-        y: 85 + Math.floor(i / 5) * 65 + (Math.random() * 10 - 5),
-        radius: 26,
-        icon: q.icon,
-        harvested: false
-      });
-    }
-  } else if (game === "math_match" || game === "minimal_pairs") {
-    const pairA = { id: 1, label: String(q.ans), matchKey: "ans" };
-    const pairB = { id: 2, label: q.icon + " " + (q.dots || q.ans), matchKey: "ans" };
-    const wrong = options.find(o => o !== q.ans) || "⭐";
-    const pairC = { id: 3, label: String(wrong), matchKey: "wrong" };
-    const pairD = { id: 4, label: "❓ " + String(wrong), matchKey: "wrong" };
-    
-    const deck = [pairA, pairB, pairC, pairD].sort(() => Math.random() - 0.5);
-    state.cards = deck.map((c, i) => ({
-      ...c,
-      flipped: false,
-      solved: false,
-      x: 75 + (i % 2) * 190,
-      y: 80 + Math.floor(i / 2) * 125,
-      w: 160,
-      h: 95
-    }));
-  } else if (game === "cfa_market") {
-    const targetAmt = (parseInt(q.ans) || 5) * 50;
-    state.targetValue = targetAmt;
+  }
+  // 5. CFA COIN SCALE BALANCE (CM1/CM2)
+  else if (eng === "balance") {
+    state.balanceCoins = [];
     state.items = [25, 50, 100, 250, 500].map((c, i) => ({
       coin: c,
-      x: 55 + i * 85,
+      x: 65 + i * 80,
       y: 310,
-      radius: 32
+      radius: 30
     }));
-    state.playerX = 0;
-  } else {
-    state.items = options.map((opt, idx) => ({
+  }
+  // 6. DETECTIVE MAGNIFIER (Comprehension Evidence Lens)
+  else if (eng === "magnifier") {
+    state.magnifierX = 250;
+    state.magnifierY = 190;
+    state.items = options.map((opt, i) => ({
       val: opt,
-      x: 45 + idx * 150,
-      y: 190 + (idx % 2 === 1 ? -40 : 30),
-      w: 135,
+      x: 60 + i * 140,
+      y: 180 + (i % 2 === 0 ? 30 : -30),
+      w: 120,
+      h: 55,
+      revealed: false
+    }));
+  }
+  // 7. BOTANY GROWTH (Science Sandbox)
+  else if (eng === "botany") {
+    state.plantStage = 0;
+    // 3 Tools: Water, Sun, Soil
+    state.items = [
+      { id: "water", icon: "💧", label: state.lang === "fr" ? "Eau" : "Water", x: 90, y: 310, radius: 32 },
+      { id: "sun", icon: "☀️", label: state.lang === "fr" ? "Soleil" : "Sun", x: 250, y: 310, radius: 32 },
+      { id: "food", icon: "🌱", label: state.lang === "fr" ? "Terreau" : "Soil", x: 410, y: 310, radius: 32 }
+    ];
+  }
+  // 8. TANGRAM & SHAPES (Logic & Creative)
+  else if (eng === "shapes" || eng === "tangram") {
+    state.items = options.map((opt, i) => ({
+      val: opt,
+      x: 65 + i * 145,
+      y: 190,
+      w: 125,
       h: 60,
-      icon: q.icon
+      shape: i === 0 ? "triangle" : i === 1 ? "circle" : "square"
+    }));
+  }
+  // 9. DJEMBE RHYTHM (Pronunciation)
+  else if (eng === "djembe") {
+    state.playerX = 0; // drum taps count
+  }
+  // 10. DEFAULT / GENERAL CARDS
+  else {
+    state.items = options.map((opt, i) => ({
+      val: opt,
+      x: 50 + i * 145,
+      y: 180 + (i % 2 === 1 ? -25 : 25),
+      w: 130,
+      h: 60
     }));
   }
 }
 
+// ============================================================================
+// ANSWER VALIDATION & REWARDS (STRICTLY ON CHILD TOUCH - 0 AUTOPLAY)
+// ============================================================================
 function handleAnswer(choice) {
-  if (!state.running || state.tutorOpen || state.isPaused) return;
+  if (state.tutorOpen) return;
   const q = state.question;
-  const isMatch = String(choice).trim().toLowerCase() === String(q.ans).trim().toLowerCase() || choice === state.targetValue;
+  const isMatch = String(choice).trim().toLowerCase() === String(q.ans).trim().toLowerCase();
 
   if (isMatch) {
     AudioEngine.playSuccess();
     AudioEngine.playCoin();
-    spawnParticles(W / 2, H / 2, "#FFB800", 32);
+    spawnParticles(W / 2, H / 2, "#FFB800", 35);
     state.score += 10;
     state.coins += 5;
     state.independentStreak++;
 
-    const praise = state.lang === "fr" ? "Bravo champion ! 🌟" : "Awesome job! 🌟";
+    const praise = state.lang === "fr" ? "Bravo champion ! 🌟" : "Great job, champion! 🌟";
     $("feedback-msg").style.color = "var(--green)";
     $("feedback-msg").textContent = praise;
     VoiceEngine.speak(praise);
@@ -3453,7 +3677,7 @@ function handleAnswer(choice) {
       } else {
         generateQuestion();
       }
-    }, 1200);
+    }, 1300);
   } else {
     AudioEngine.playMistake();
     spawnParticles(W / 2, H / 2, "#E5252A", 18);
@@ -3473,7 +3697,6 @@ function handleAnswer(choice) {
 }
 
 function triggerVictory() {
-  state.running = false;
   AudioEngine.playVictory();
   const vicMsg = state.lang === "fr" ? "Victoire ! Tu as réussi toutes les étapes !" : "Victory! You completed all the stages!";
   VoiceEngine.speak(vicMsg);
@@ -3482,156 +3705,212 @@ function triggerVictory() {
 }
 
 function triggerGameOver() {
-  state.running = false;
-  VoiceEngine.speak(state.lang === "fr" ? "Ne t'inquiète pas, regarde le tuteur !" : "Don't worry, check the tutor!");
+  VoiceEngine.speak(state.lang === "fr" ? "Prends ton temps, regarde le tuteur !" : "Take your time, check the tutor!");
   $("gameover-modal").classList.add("open");
 }
 
+// ============================================================================
+// CANVAS DRAW ENGINES (GENUINELY DISTINCT GAME LOGIC & ANIMATIONS)
+// ============================================================================
 function draw(time) {
   ctx.clearRect(0, 0, W, H);
 
+  // Background
   const bg = ctx.createLinearGradient(0, 0, 0, H);
   bg.addColorStop(0, "#17233D");
   bg.addColorStop(1, "#202F52");
   ctx.fillStyle = bg;
   ctx.fillRect(0, 0, W, H);
 
-  ctx.fillStyle = "rgba(255, 255, 255, 0.25)";
-  for (let i = 0; i < 18; i++) {
-    const sx = (i * 68 + time * 0.008) % W;
-    const sy = (i * 42) % (H - 40);
-    ctx.fillRect(sx, sy, 2, 2);
-  }
+  const eng = state.engineType;
 
-  if (state.game === "math_drop" || state.game === "word_train") {
-    state.items.forEach(base => {
-      ctx.fillStyle = "#FFFFFF";
+  // 1. FRUIT ORCHARD (Nursery)
+  if (eng === "fruit") {
+    // Tree trunk & foliage
+    ctx.fillStyle = "#78350F";
+    ctx.fillRect(230, 180, 40, 170);
+    ctx.fillStyle = "#059669";
+    ctx.beginPath();
+    ctx.arc(250, 120, 140, 0, Math.PI * 2);
+    ctx.fill();
+
+    // Fruits on tree
+    state.fruits.forEach(f => {
+      if (!f.picked) {
+        ctx.font = "34px system-ui";
+        ctx.textAlign = "center";
+        const wobbleY = Math.sin(time * 0.005 + f.wobble) * 3;
+        ctx.fillText(f.icon, f.x, f.y + wobbleY);
+      }
+    });
+
+    // Basket with picked count
+    const pickedCount = state.fruits.filter(f => f.picked).length;
+    ctx.fillStyle = "#D97706";
+    ctx.beginPath();
+    ctx.roundRect(190, 305, 120, 60, [10, 10, 25, 25]);
+    ctx.fill();
+    ctx.fillStyle = "#FFFFFF";
+    ctx.font = "bold 15px system-ui";
+    ctx.textAlign = "center";
+    ctx.fillText("🧺 " + pickedCount + " / " + (state.question.ans || 4), 250, 342);
+  }
+  // 2. PHONICS FISHING (SIL/CP River)
+  else if (eng === "fishing") {
+    // River water
+    ctx.fillStyle = "#0284C7";
+    ctx.fillRect(0, 120, W, H - 120);
+    // Waves
+    ctx.fillStyle = "rgba(255, 255, 255, 0.2)";
+    for (let i = 0; i < 6; i++) {
+      const wx = (i * 100 + time * 0.04) % (W + 100) - 50;
+      ctx.fillRect(wx, 160 + (i % 3) * 45, 60, 4);
+    }
+
+    // Canoe boat
+    ctx.fillStyle = "#92400E";
+    ctx.beginPath();
+    ctx.roundRect(state.playerX - 45, 75, 90, 35, [0, 0, 16, 16]);
+    ctx.fill();
+    ctx.fillStyle = "#FFFFFF";
+    ctx.font = "20px system-ui";
+    ctx.fillText("🛶", state.playerX, 70);
+
+    // Fishing line
+    ctx.strokeStyle = "#FFFFFF";
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    ctx.moveTo(state.playerX, 105);
+    ctx.lineTo(state.playerX, 230);
+    ctx.stroke();
+    ctx.fillStyle = "#FFB800";
+    ctx.fillText("🪝", state.playerX, 245);
+
+    // Swimming fish carrying syllables
+    state.fishList.forEach(fish => {
+      ctx.fillStyle = "#38BDF8";
       ctx.beginPath();
-      ctx.roundRect(base.x, base.y, base.w, base.h, 14);
+      ctx.roundRect(fish.x, fish.y, fish.w, fish.h, 16);
       ctx.fill();
-      ctx.strokeStyle = base.val === state.question.ans ? "#0084FF" : "#CBD5E1";
-      ctx.lineWidth = 3;
+      ctx.strokeStyle = "#FFFFFF";
+      ctx.lineWidth = 2;
       ctx.stroke();
 
       ctx.fillStyle = "#17233D";
-      ctx.font = "bold " + (String(base.val).length > 8 ? "15px" : "20px") + " system-ui";
+      ctx.font = "bold 18px system-ui";
       ctx.textAlign = "center";
-      ctx.fillText(String(base.val), base.x + base.w / 2, base.y + 35);
+      ctx.fillText("🐟 " + fish.val, fish.x + fish.w / 2, fish.y + 28);
     });
+  }
+  // 3. LILYPAD FROG (SIL/CP Pond)
+  else if (eng === "frog") {
+    // Pond water
+    ctx.fillStyle = "#0F766E";
+    ctx.fillRect(0, 0, W, H);
 
-    const block = state.fallingBlock;
-    if (block) {
-      ctx.save();
-      ctx.fillStyle = "#E5252A";
-      ctx.shadowColor = "rgba(229, 37, 42, 0.5)";
-      ctx.shadowBlur = 12;
+    // Lilypads
+    state.lilypads.forEach((pad, i) => {
+      ctx.fillStyle = "#10B981";
       ctx.beginPath();
-      ctx.roundRect(block.x, block.y, block.w, block.h, 12);
+      ctx.arc(pad.x, pad.y, pad.radius, 0, Math.PI * 2);
       ctx.fill();
-      ctx.restore();
+      ctx.strokeStyle = "#34D399";
+      ctx.lineWidth = 4;
+      ctx.stroke();
 
       ctx.fillStyle = "#FFFFFF";
-      ctx.font = "bold " + (String(block.val).length > 8 ? "15px" : "20px") + " system-ui";
+      ctx.font = "bold 22px system-ui";
       ctx.textAlign = "center";
-      ctx.fillText(String(block.val), block.x + block.w / 2, block.y + 30);
-    }
-  } else if (state.game === "math_racing") {
-    ctx.strokeStyle = "rgba(255, 255, 255, 0.15)";
+      ctx.fillText(pad.val, pad.x, pad.y + 8);
+    });
+
+    // Animated frog
+    const curPad = state.lilypads[state.frogIndex] || state.lilypads[0];
+    ctx.font = "38px system-ui";
+    ctx.textAlign = "center";
+    ctx.fillText("🐸", curPad.x, curPad.y - 35);
+  }
+  // 4. TURBO RACING (CE1/CE2 Highway)
+  else if (eng === "racing") {
+    // 3 Highway lanes
+    ctx.strokeStyle = "rgba(255, 255, 255, 0.2)";
     ctx.lineWidth = 3;
-    ctx.setLineDash([15, 15]);
+    ctx.setLineDash([16, 16]);
     ctx.beginPath();
     ctx.moveTo(170, 0); ctx.lineTo(170, H);
     ctx.moveTo(330, 0); ctx.lineTo(330, H);
     ctx.stroke();
     ctx.setLineDash([]);
 
+    // Lane gates
     state.items.forEach(target => {
       ctx.fillStyle = "#FFFFFF";
       ctx.beginPath();
       ctx.roundRect(target.x, target.y, target.w, target.h, 12);
       ctx.fill();
       ctx.strokeStyle = "#0084FF";
-      ctx.lineWidth = 2.5;
+      ctx.lineWidth = 3;
       ctx.stroke();
 
       ctx.fillStyle = "#17233D";
       ctx.font = "bold 18px system-ui";
       ctx.textAlign = "center";
-      ctx.fillText(String(target.val), target.x + target.w / 2, target.y + 30);
+      ctx.fillText(String(target.val), target.x + target.w / 2, target.y + 32);
     });
 
+    // Player car (steered by child)
     const carX = 55 + state.raceLane * 150 + 40;
     ctx.fillStyle = "#FFB800";
     ctx.beginPath();
-    ctx.roundRect(carX, 300, 50, 60, 8);
+    ctx.roundRect(carX, 290, 50, 65, 8);
     ctx.fill();
     ctx.fillStyle = "#E5252A";
-    ctx.fillRect(carX + 10, 310, 30, 35);
-  } else if (state.game === "fruit_harvest" || state.game === "plant_lab") {
-    ctx.fillStyle = "#78350F";
-    ctx.fillRect(230, 200, 40, 160);
-    ctx.fillStyle = "#059669";
-    ctx.beginPath();
-    ctx.arc(250, 130, 140, 0, Math.PI * 2);
-    ctx.fill();
-
-    state.items.forEach(fruit => {
-      if (!fruit.harvested) {
-        ctx.font = "34px system-ui";
-        ctx.textAlign = "center";
-        ctx.fillText(fruit.icon, fruit.x, fruit.y + Math.sin(time * 0.005 + fruit.x) * 4);
-      }
-    });
-
-    ctx.fillStyle = "#D97706";
-    ctx.beginPath();
-    ctx.roundRect(190, 310, 120, 55, [10, 10, 25, 25]);
-    ctx.fill();
+    ctx.fillRect(carX + 10, 305, 30, 35);
     ctx.fillStyle = "#FFFFFF";
-    ctx.font = "bold 15px system-ui";
+    ctx.font = "bold 13px system-ui";
     ctx.textAlign = "center";
-    ctx.fillText("🧺 " + (state.lang === "fr" ? "Panier" : "Basket"), 250, 345);
-  } else if (state.game === "math_match" || state.game === "minimal_pairs") {
-    state.cards.forEach(card => {
-      ctx.save();
-      ctx.translate(card.x, card.y);
-      if (card.flipped || card.solved) {
-        ctx.fillStyle = card.solved ? "#D1FAE5" : "#FFFFFF";
-        ctx.beginPath();
-        ctx.roundRect(0, 0, card.w, card.h, 14);
-        ctx.fill();
-        ctx.strokeStyle = card.solved ? "#00C48C" : "#0084FF";
-        ctx.lineWidth = 3;
-        ctx.stroke();
+    ctx.fillText("🏎️", carX + 25, 328);
+  }
+  // 5. CFA COIN SCALE BALANCE (CM1/CM2)
+  else if (eng === "balance") {
+    // Brass balance beam
+    const targetAmt = parseInt(state.question.ans) || 250;
+    const currentAmt = state.balanceCoins.reduce((a, b) => a + b, 0);
 
-        ctx.fillStyle = "#17233D";
-        ctx.font = "bold 18px system-ui";
-        ctx.textAlign = "center";
-        ctx.fillText(card.label, card.w / 2, card.h / 2 + 6);
-      } else {
-        ctx.fillStyle = "#E5252A";
-        ctx.beginPath();
-        ctx.roundRect(0, 0, card.w, card.h, 14);
-        ctx.fill();
-        ctx.fillStyle = "#FFFFFF";
-        ctx.font = "32px system-ui";
-        ctx.textAlign = "center";
-        ctx.fillText("⭐", card.w / 2, card.h / 2 + 10);
-      }
-      ctx.restore();
-    });
-  } else if (state.game === "cfa_market") {
-    ctx.fillStyle = "#E2E8F0";
+    ctx.strokeStyle = "#CBD5E1";
+    ctx.lineWidth = 8;
     ctx.beginPath();
-    ctx.roundRect(100, 120, 300, 90, 16);
+    ctx.moveTo(100, 160);
+    ctx.lineTo(400, 160);
+    ctx.stroke();
+
+    // Fulcrum triangle
+    ctx.fillStyle = "#E5252A";
+    ctx.beginPath();
+    ctx.moveTo(250, 160); ctx.lineTo(230, 220); ctx.lineTo(270, 220);
+    ctx.fill();
+
+    // Left pan (Target)
+    ctx.fillStyle = "#FFFFFF";
+    ctx.beginPath();
+    ctx.roundRect(90, 180, 120, 60, 12);
     ctx.fill();
     ctx.fillStyle = "#17233D";
-    ctx.font = "bold 18px system-ui";
+    ctx.font = "bold 15px system-ui";
     ctx.textAlign = "center";
-    ctx.fillText((state.lang === "fr" ? "Prix à payer : " : "Price to pay: ") + state.targetValue + " CFA", 250, 155);
-    ctx.fillStyle = "var(--red-primary)";
-    ctx.fillText((state.lang === "fr" ? "Déposé : " : "Deposited: ") + state.playerX + " CFA", 250, 185);
+    ctx.fillText(targetAmt + " CFA", 150, 215);
 
+    // Right pan (Deposited)
+    ctx.fillStyle = currentAmt === targetAmt ? "#D1FAE5" : "#FFFFFF";
+    ctx.beginPath();
+    ctx.roundRect(290, 180, 120, 60, 12);
+    ctx.fill();
+    ctx.strokeStyle = currentAmt === targetAmt ? "#00C48C" : "#E2E8F0";
+    ctx.stroke();
+    ctx.fillStyle = "var(--red-primary)";
+    ctx.fillText(currentAmt + " CFA", 350, 215);
+
+    // Coins on table
     state.items.forEach(c => {
       ctx.fillStyle = "#FFB800";
       ctx.beginPath();
@@ -3640,14 +3919,127 @@ function draw(time) {
       ctx.strokeStyle = "#B45309";
       ctx.lineWidth = 2.5;
       ctx.stroke();
-
       ctx.fillStyle = "#78350F";
       ctx.font = "bold 13px system-ui";
       ctx.textAlign = "center";
-      ctx.textBaseline = "middle";
-      ctx.fillText(c.coin + "F", c.x, c.y);
+      ctx.fillText(c.coin + "F", c.x, c.y + 5);
     });
-  } else {
+  }
+  // 6. DETECTIVE MAGNIFIER (Comprehension)
+  else if (eng === "magnifier") {
+    // Dark room with blueprint
+    ctx.fillStyle = "#0F172A";
+    ctx.fillRect(0, 0, W, H);
+
+    // Clue evidence cards
+    state.items.forEach(item => {
+      ctx.fillStyle = "#1E293B";
+      ctx.beginPath();
+      ctx.roundRect(item.x, item.y, item.w, item.h, 14);
+      ctx.fill();
+
+      // If near magnifier, reveal clearly!
+      const dist = Math.hypot((item.x + item.w / 2) - state.magnifierX, (item.y + item.h / 2) - state.magnifierY);
+      if (dist < 80) {
+        ctx.fillStyle = "#FFFFFF";
+        ctx.beginPath();
+        ctx.roundRect(item.x, item.y, item.w, item.h, 14);
+        ctx.fill();
+        ctx.strokeStyle = "#FFB800";
+        ctx.lineWidth = 3;
+        ctx.stroke();
+        ctx.fillStyle = "#17233D";
+      } else {
+        ctx.fillStyle = "rgba(255, 255, 255, 0.3)";
+      }
+      ctx.font = "bold 16px system-ui";
+      ctx.textAlign = "center";
+      ctx.fillText(item.val, item.x + item.w / 2, item.y + item.h / 2 + 6);
+    });
+
+    // Circular magnifying glass lens
+    ctx.save();
+    ctx.strokeStyle = "#FFB800";
+    ctx.lineWidth = 6;
+    ctx.beginPath();
+    ctx.arc(state.magnifierX, state.magnifierY, 60, 0, Math.PI * 2);
+    ctx.stroke();
+    // Glass handle
+    ctx.strokeStyle = "#78350F";
+    ctx.lineWidth = 10;
+    ctx.beginPath();
+    ctx.moveTo(state.magnifierX + 42, state.magnifierY + 42);
+    ctx.lineTo(state.magnifierX + 85, state.magnifierY + 85);
+    ctx.stroke();
+    ctx.restore();
+  }
+  // 7. BOTANY GROWTH (Science Lab)
+  else if (eng === "botany") {
+    // Soil pot
+    ctx.fillStyle = "#78350F";
+    ctx.beginPath();
+    ctx.moveTo(180, 220); ctx.lineTo(320, 220); ctx.lineTo(290, 310); ctx.lineTo(210, 310);
+    ctx.fill();
+
+    // Growing plant stage
+    if (state.plantStage >= 1) {
+      // Little sprout
+      ctx.strokeStyle = "#10B981";
+      ctx.lineWidth = 6;
+      ctx.beginPath();
+      ctx.moveTo(250, 220); ctx.lineTo(250, 160);
+      ctx.stroke();
+      ctx.fillStyle = "#10B981";
+      ctx.beginPath();
+      ctx.arc(235, 175, 12, 0, Math.PI * 2);
+      ctx.arc(265, 175, 12, 0, Math.PI * 2);
+      ctx.fill();
+    }
+    if (state.plantStage >= 2) {
+      // Blooming sunflower
+      ctx.font = "46px system-ui";
+      ctx.textAlign = "center";
+      ctx.fillText("🌻", 250, 140);
+    }
+
+    // Tools at bottom
+    state.items.forEach(tool => {
+      ctx.fillStyle = "#FFFFFF";
+      ctx.beginPath();
+      ctx.arc(tool.x, tool.y, tool.radius, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.strokeStyle = "#0084FF";
+      ctx.lineWidth = 2.5;
+      ctx.stroke();
+      ctx.font = "24px system-ui";
+      ctx.textAlign = "center";
+      ctx.fillText(tool.icon, tool.x, tool.y + 8);
+    });
+  }
+  // 8. DJEMBE DRUM (Pronunciation)
+  else if (eng === "djembe") {
+    // Large traditional African Djembe drum
+    ctx.fillStyle = "#92400E";
+    ctx.beginPath();
+    ctx.moveTo(180, 100); ctx.lineTo(320, 100); ctx.lineTo(270, 230); ctx.lineTo(290, 310); ctx.lineTo(210, 310); ctx.lineTo(230, 230);
+    ctx.fill();
+    // Drum head
+    ctx.fillStyle = "#FEF3C7";
+    ctx.beginPath();
+    ctx.ellipse(250, 100, 70, 25, 0, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.strokeStyle = "#B45309";
+    ctx.lineWidth = 3;
+    ctx.stroke();
+
+    // Tap count indicator
+    ctx.fillStyle = "#FFFFFF";
+    ctx.font = "bold 24px system-ui";
+    ctx.textAlign = "center";
+    ctx.fillText("👏 Coups : " + state.playerX + " / " + state.question.ans, 250, 60);
+  }
+  // 9. GENERAL INTERACTIVE CARDS
+  else {
     state.items.forEach(item => {
       ctx.fillStyle = "#FFFFFF";
       ctx.beginPath();
@@ -3665,6 +4057,7 @@ function draw(time) {
     });
   }
 
+  // Draw Particles
   state.particles.forEach(p => {
     ctx.save();
     ctx.globalAlpha = Math.max(0, p.life / p.maxLife);
@@ -3675,70 +4068,41 @@ function draw(time) {
     ctx.restore();
   });
 
-  if (!state.running && !state.tutorOpen && !$("victory-modal").classList.contains("open") && !$("gameover-modal").classList.contains("open")) {
-    ctx.fillStyle = "rgba(23, 35, 61, 0.85)";
-    ctx.fillRect(0, 0, W, H);
-    ctx.fillStyle = "#FFB800";
-    ctx.textAlign = "center";
-    ctx.font = "bold 26px system-ui";
-    ctx.fillText(state.lang === "fr" ? "▶ TOUCHE POUR JOUER" : "▶ TAP TO PLAY", W / 2, H / 2 - 10);
-    ctx.font = "bold 15px system-ui";
-    ctx.fillStyle = "#FFFFFF";
-    ctx.fillText(state.lang === "fr" ? "Apprends en t'amusant • 100% Hors-Ligne" : "Learn with fun • 100% Offline", W / 2, H / 2 + 25);
-  }
-
   updateHandPointer();
 }
 
 function updateHandPointer() {
   const hand = $("pointer-hand");
-  if (state.running && state.idleTime > 4.5) {
+  if (state.currentView === "game" && state.idleTime > 5.0) {
     hand.classList.add("show");
-    const q = state.question;
-    const target = state.items.find(it => it.val === q.ans) || state.items[0];
-    if (target) {
-      hand.style.left = (target.x + (target.w ? target.w / 2 : 0)) + "px";
-      hand.style.top = (target.y + (target.h ? target.h / 2 : 0)) + "px";
-    }
+    hand.style.left = "250px";
+    hand.style.top = "200px";
   } else {
     hand.classList.remove("show");
   }
 }
 
+// ============================================================================
+// ANIMATION TICK (ZERO AUTOPLAY)
+// ============================================================================
 function tick(time) {
   const dt = Math.min((time - (state.lastTime || time)) / 1000, 0.1);
   state.lastTime = time;
 
-  if (state.running && !state.tutorOpen && !state.isPaused) {
+  if (state.currentView === "game" && !state.tutorOpen) {
     state.idleTime += dt;
 
-    if (state.fallingBlock) {
-      state.fallingBlock.y += state.fallingBlock.vy * dt;
-      if (state.fallingBlock.y + state.fallingBlock.h >= 310) {
-        const midX = state.fallingBlock.x + state.fallingBlock.w / 2;
-        const hitBase = state.items.find(b => midX >= b.x && midX <= b.x + b.w);
-        if (hitBase) {
-          handleAnswer(hitBase.val);
-        } else {
-          handleAnswer("miss");
-        }
-      }
-    }
-
-    if (state.game === "math_racing") {
-      state.items.forEach(target => {
-        target.y += target.vy * dt;
-        if (target.y >= 290) {
-          if (target.lane === state.raceLane) {
-            handleAnswer(target.val);
-          }
+    // Swimming fish swim smoothly left/right without answering
+    if (state.engineType === "fishing") {
+      state.fishList.forEach(fish => {
+        fish.x += fish.vx * dt;
+        if (fish.x < 30 || fish.x > W - 120) {
+          fish.vx *= -1;
         }
       });
-      if (state.items.length > 0 && state.items[0].y > H) {
-        initActiveGame();
-      }
     }
 
+    // Particles decay
     state.particles.forEach(p => {
       p.x += p.vx * dt;
       p.y += p.vy * dt;
@@ -3747,10 +4111,15 @@ function tick(time) {
     state.particles = state.particles.filter(p => p.life > 0);
   }
 
-  draw(time);
+  if (state.currentView === "game") {
+    draw(time);
+  }
   requestAnimationFrame(tick);
 }
 
+// ============================================================================
+// VOICE-FIRST VISUAL TUTOR (EXACT PROBLEM BREAKDOWN)
+// ============================================================================
 function drawTutorScene() {
   const q = state.question;
   if (!q) return;
@@ -3759,92 +4128,35 @@ function drawTutorScene() {
   tctx.fillStyle = "#FFFFFF";
   tctx.fillRect(0, 0, 480, 200);
 
-  const mode = state.tutorMode;
   const isFR = state.lang === "fr";
 
   if (state.category === "math_arcade") {
-    if (q.mathType === "add" || (!q.mathType && q.a && q.b)) {
-      const a = q.a || 3, b = q.b || 2, total = q.ans;
-      const speech = isFR 
-        ? ("Regarde bien : " + a + " mangues réunies avec " + b + " bananes font au total " + total + " !")
-        : ("Look closely: " + a + " mangoes combined with " + b + " bananas make " + total + " in total!");
-      $("tutor-speech-text").textContent = "« " + speech + " »";
-      VoiceEngine.speak(speech);
+    const a = q.a || 3, b = q.b || 2, total = q.ans;
+    const speech = isFR 
+      ? ("Regarde bien : " + a + " et " + b + " font au total " + total + " !")
+      : ("Look closely: " + a + " and " + b + " make " + total + " in total!");
+    $("tutor-speech-text").textContent = "« " + speech + " »";
+    VoiceEngine.speak(speech);
 
-      for (let i = 0; i < a; i++) {
-        tctx.font = "28px system-ui";
-        tctx.fillText(q.icon || "🥭", 35 + i * 36, 80);
-      }
-      tctx.fillStyle = "#0084FF";
-      tctx.font = "bold 30px system-ui";
-      tctx.fillText("➕", 35 + a * 36 + 10, 80);
-
-      for (let j = 0; j < b; j++) {
-        tctx.font = "28px system-ui";
-        tctx.fillText("🍏", 35 + a * 36 + 50 + j * 36, 80);
-      }
-
-      tctx.fillStyle = "#00C48C";
-      tctx.font = "bold 20px system-ui";
-      tctx.fillText((isFR ? "Total réuni = " : "Total sum = ") + total + " ! 🌟", 240, 150);
-
-    } else if (q.mathType === "sub") {
-      const a = q.a || 8, b = q.b || 3, rem = q.ans;
-      const speech = isFR
-        ? ("Au départ nous avons " + a + " fruits. On en retire " + b + ". Il en reste " + rem + " !")
-        : ("We start with " + a + " fruits. We cross out " + b + ". Exactly " + rem + " are left!");
-      $("tutor-speech-text").textContent = "« " + speech + " »";
-      VoiceEngine.speak(speech);
-
-      for (let i = 0; i < a; i++) {
-        const x = 35 + i * 36;
-        tctx.font = "28px system-ui";
-        tctx.fillText(q.icon || "🍌", x, 75);
-        if (i >= rem) {
-          tctx.fillStyle = "#E5252A";
-          tctx.font = "bold 28px system-ui";
-          tctx.fillText("❌", x + 2, 75);
-        }
-      }
-      tctx.fillStyle = "#059669";
-      tctx.font = "bold 20px system-ui";
-      tctx.textAlign = "center";
-      tctx.fillText((isFR ? "Reste = " : "Remaining = ") + rem + " ! 🌟", 240, 145);
-
-    } else if (q.mathType === "mul") {
-      const a = q.a || 3, b = q.b || 4, total = q.ans;
-      const speech = isFR
-        ? (a + " fois " + b + " : c'est " + a + " rangées de " + b + " étoiles = " + total + " !")
-        : (a + " times " + b + " means " + a + " rows of " + b + " stars = " + total + "!");
-      $("tutor-speech-text").textContent = "« " + speech + " »";
-      VoiceEngine.speak(speech);
-
-      for (let r = 0; r < a; r++) {
-        for (let c = 0; c < b; c++) {
-          tctx.font = "22px system-ui";
-          tctx.fillText(q.icon || "⭐", 60 + c * 34, 45 + r * 28);
-        }
-      }
-      tctx.fillStyle = "#0084FF";
-      tctx.font = "bold 18px system-ui";
-      tctx.textAlign = "center";
-      tctx.fillText(a + " × " + b + " = " + total + " ! 🚀", 340, 95);
-
-    } else {
-      const speech = isFR ? ("Compte avec moi : " + q.dots + " !") : ("Count with me: " + q.dots + "!");
-      $("tutor-speech-text").textContent = "« " + speech + " »";
-      VoiceEngine.speak(speech);
-
-      tctx.font = "36px system-ui";
-      tctx.textAlign = "center";
-      tctx.fillText(q.dots || q.ans, 240, 85);
-      tctx.fillStyle = "#00C48C";
-      tctx.font = "bold 22px system-ui";
-      tctx.fillText(q.q + " ➡️ " + q.ans, 240, 145);
+    for (let i = 0; i < a; i++) {
+      tctx.font = "28px system-ui";
+      tctx.fillText(q.icon || "🥭", 35 + i * 36, 80);
     }
+    tctx.fillStyle = "#0084FF";
+    tctx.font = "bold 30px system-ui";
+    tctx.fillText("➕", 35 + a * 36 + 10, 80);
+
+    for (let j = 0; j < b; j++) {
+      tctx.font = "28px system-ui";
+      tctx.fillText("🍏", 35 + a * 36 + 50 + j * 36, 80);
+    }
+
+    tctx.fillStyle = "#00C48C";
+    tctx.font = "bold 20px system-ui";
+    tctx.fillText((isFR ? "Total = " : "Total sum = ") + total + " ! 🌟", 240, 150);
   } else if (state.category === "reading") {
     const speech = isFR 
-      ? ("Observe bien la lettre et le mot : " + q.ans + " comme dans " + (q.dots || q.ans) + " !")
+      ? ("Observe bien la lettre : " + q.ans + " comme dans " + (q.dots || q.ans) + " !")
       : ("Look at the letter sound: " + q.ans + " as in " + (q.dots || q.ans) + "!");
     $("tutor-speech-text").textContent = "« " + speech + " »";
     VoiceEngine.speak(speech, true);
@@ -3860,10 +4172,6 @@ function drawTutorScene() {
     tctx.fillStyle = "#17233D";
     tctx.font = "bold 22px system-ui";
     tctx.fillText(q.dots || q.ans, 340, 95);
-
-    tctx.fillStyle = "#0084FF";
-    tctx.font = "bold 16px system-ui";
-    tctx.fillText(isFR ? "Touche la bonne lettre sur l'écran !" : "Tap the matching letter on screen!", 240, 155);
   } else {
     const speech = isFR
       ? ("La bonne réponse est : " + q.ans + ". " + q.q)
@@ -3885,46 +4193,49 @@ function drawTutorScene() {
   }
 }
 
+// ============================================================================
+// EVENT LISTENERS & TOUCH CONTROLS
+// ============================================================================
 window.addEventListener("DOMContentLoaded", () => {
-  document.querySelectorAll("#category-pills .cat-pill-btn").forEach(btn => {
-    btn.onclick = () => {
-      document.querySelectorAll("#category-pills .cat-pill-btn").forEach(b => b.classList.remove("active"));
-      btn.classList.add("active");
-      state.category = btn.dataset.cat;
-      AudioEngine.playClick();
-      renderGameSelector();
-      updateBannersAndLabels();
-      generateQuestion();
-    };
-  });
+  // Home buttons
+  $("btn-header-home").onclick = () => showHub();
+  $("btn-back-to-hub").onclick = () => showHub();
 
+  // Grade pills
   document.querySelectorAll("#grade-pills .pill-grade").forEach(btn => {
     btn.onclick = () => {
       document.querySelectorAll("#grade-pills .pill-grade").forEach(b => b.classList.remove("active"));
       btn.classList.add("active");
       state.grade = parseInt(btn.dataset.grade);
       AudioEngine.playDrop();
-      updateBannersAndLabels();
-      generateQuestion();
+      updateLabels();
+      renderWorldCards();
     };
   });
 
+  // Language toggle
   $("lang-btn").onclick = () => {
     state.lang = state.lang === "fr" ? "en" : "fr";
     VoiceEngine.lang = state.lang;
     $("lang-btn").textContent = state.lang === "fr" ? "🇨🇲 FR" : "🇬🇧 EN";
-    AudioEngine.playWhoosh();
-    renderGameSelector();
-    updateBannersAndLabels();
-    generateQuestion();
+    AudioEngine.playClick();
+    updateLabels();
+    if (state.currentView === "hub") {
+      renderWorldCards();
+    } else {
+      renderGameSwitchPills();
+      generateQuestion();
+    }
   };
 
+  // Sound toggle
   $("sound-btn").onclick = () => {
     AudioEngine.soundEnabled = !AudioEngine.soundEnabled;
     $("sound-btn").textContent = AudioEngine.soundEnabled ? "🔊 Son" : "🔇 Muet";
     if (!AudioEngine.soundEnabled) VoiceEngine.cancel();
   };
 
+  // Repeat audio button
   $("repeat-audio-btn").onclick = () => {
     if (state.question && state.question.speech) {
       VoiceEngine.speak(state.question.speech);
@@ -3933,6 +4244,7 @@ window.addEventListener("DOMContentLoaded", () => {
     }
   };
 
+  // Tutor modal open/close
   $("btn-open-tutor").onclick = () => {
     state.tutorOpen = true;
     $("tutor-modal").classList.add("open");
@@ -3949,7 +4261,6 @@ window.addEventListener("DOMContentLoaded", () => {
     state.tutorOpen = false;
     VoiceEngine.cancel();
     $("tutor-modal").classList.remove("open");
-    state.running = true;
   };
 
   $("tutor-btn-next").onclick = () => {
@@ -3982,9 +4293,10 @@ window.addEventListener("DOMContentLoaded", () => {
     };
   });
 
+  // Guide modal
   $("guide-btn").onclick = () => {
-    const gList = CURRICULUM[state.lang].games[state.category] || [];
-    const cur = gList.find(g => g.id === state.game) || gList[0];
+    const games = CURRICULUM[state.lang].games[state.category] || [];
+    const cur = games.find(g => g.id === state.game) || games[0];
     if (cur) {
       $("guide-icon").textContent = cur.icon;
       $("guide-title").textContent = cur.name;
@@ -3996,19 +4308,19 @@ window.addEventListener("DOMContentLoaded", () => {
   $("btn-close-guide").onclick = () => $("guide-modal").classList.remove("open");
   $("btn-guide-ok").onclick = () => $("guide-modal").classList.remove("open");
 
+  // Play / Restart
   $("btn-play-restart").onclick = () => {
-    state.running = true;
     state.round = 1;
     state.lives = 3;
     updateStatsDOM();
     generateQuestion();
   };
 
+  // Victory / Game over handlers
   $("btn-victory-next").onclick = () => {
     $("victory-modal").classList.remove("open");
     state.level++;
     state.round = 1;
-    state.running = true;
     updateStatsDOM();
     generateQuestion();
   };
@@ -4017,7 +4329,6 @@ window.addEventListener("DOMContentLoaded", () => {
     $("gameover-modal").classList.remove("open");
     state.lives = 3;
     state.round = 1;
-    state.running = true;
     updateStatsDOM();
     generateQuestion();
   };
@@ -4027,87 +4338,139 @@ window.addEventListener("DOMContentLoaded", () => {
     $("btn-open-tutor").click();
   };
 
+  // Tactile on-screen buttons
   $("btn-left").onclick = () => {
     state.idleTime = 0;
-    if (state.fallingBlock) {
-      state.fallingBlock.x = Math.max(30, state.fallingBlock.x - 50);
-    } else if (state.game === "math_racing") {
+    if (state.engineType === "racing") {
       state.raceLane = Math.max(0, state.raceLane - 1);
+    } else if (state.engineType === "fishing") {
+      state.playerX = Math.max(60, state.playerX - 60);
     }
   };
 
   $("btn-right").onclick = () => {
     state.idleTime = 0;
-    if (state.fallingBlock) {
-      state.fallingBlock.x = Math.min(370, state.fallingBlock.x + 50);
-    } else if (state.game === "math_racing") {
+    if (state.engineType === "racing") {
       state.raceLane = Math.min(2, state.raceLane + 1);
+    } else if (state.engineType === "fishing") {
+      state.playerX = Math.min(440, state.playerX + 60);
     }
   };
 
   $("btn-action").onclick = () => {
     state.idleTime = 0;
-    if (state.fallingBlock) {
-      state.fallingBlock.vy += 120;
+    if (state.engineType === "racing") {
+      const hit = state.items.find(it => it.lane === state.raceLane);
+      if (hit) handleAnswer(hit.val);
+    } else if (state.engineType === "fishing") {
+      // Catch fish near hook
+      const hit = state.fishList.find(f => Math.abs(f.x + f.w / 2 - state.playerX) < 55);
+      if (hit) {
+        AudioEngine.playSplash();
+        handleAnswer(hit.val);
+      }
     }
   };
 
+  // Canvas Tactile Touches
   canvas.addEventListener("pointerdown", (e) => {
     state.idleTime = 0;
     const rect = canvas.getBoundingClientRect();
     const x = (e.clientX - rect.left) * (W / rect.width);
     const y = (e.clientY - rect.top) * (H / rect.height);
+    const eng = state.engineType;
 
-    if (!state.running) {
-      state.running = true;
-      updateStatsDOM();
-      generateQuestion();
-      return;
-    }
-
-    if (state.game === "fruit_harvest" || state.game === "plant_lab") {
-      const fruit = state.items.find(f => !f.harvested && Math.hypot(f.x - x, f.y - y) < f.radius + 12);
-      if (fruit) {
-        fruit.harvested = true;
-        AudioEngine.playDrop();
-        VoiceEngine.speak(String(fruit.id));
-        const rem = state.items.filter(f => !f.harvested);
-        if (rem.length === 0) {
+    // 1. Fruit Picker
+    if (eng === "fruit") {
+      const f = state.fruits.find(fr => !fr.picked && Math.hypot(fr.x - x, fr.y - y) < fr.radius + 15);
+      if (f) {
+        f.picked = true;
+        AudioEngine.playPop();
+        const currentPicked = state.fruits.filter(fr => fr.picked).length;
+        VoiceEngine.speak(String(currentPicked));
+        const targetCount = parseInt(state.question.ans) || 4;
+        if (currentPicked === targetCount) {
           handleAnswer(state.question.ans);
         }
       }
-    } else if (state.game === "math_match" || state.game === "minimal_pairs") {
-      const card = state.cards.find(c => x >= c.x && x <= c.x + c.w && y >= c.y && y <= c.y + c.h);
-      if (card && !card.flipped && !card.solved) {
-        AudioEngine.playWhoosh();
-        card.flipped = true;
-        const flipped = state.cards.filter(c => c.flipped && !c.solved);
-        if (flipped.length === 2) {
-          if (flipped[0].matchKey === flipped[1].matchKey) {
-            flipped[0].solved = true;
-            flipped[1].solved = true;
-            if (flipped[0].matchKey === "ans") {
-              handleAnswer(state.question.ans);
-            }
-          } else {
-            setTimeout(() => {
-              flipped[0].flipped = false;
-              flipped[1].flipped = false;
-            }, 800);
-          }
-        }
+    }
+    // 2. Fishing
+    else if (eng === "fishing") {
+      state.playerX = Math.max(60, Math.min(440, x));
+      const hit = state.fishList.find(f => x >= f.x && x <= f.x + f.w && y >= f.y && y <= f.y + f.h);
+      if (hit) {
+        AudioEngine.playSplash();
+        handleAnswer(hit.val);
       }
-    } else if (state.game === "cfa_market") {
+    }
+    // 3. Lilypad Frog
+    else if (eng === "frog") {
+      const pad = state.lilypads.find(p => Math.hypot(p.x - x, p.y - y) < p.radius + 10);
+      if (pad) {
+        AudioEngine.playSplash();
+        state.frogIndex = state.lilypads.indexOf(pad);
+        handleAnswer(pad.val);
+      }
+    }
+    // 4. Racing Lanes
+    else if (eng === "racing") {
+      if (x < 170) state.raceLane = 0;
+      else if (x < 330) state.raceLane = 1;
+      else state.raceLane = 2;
+      const hit = state.items.find(it => it.lane === state.raceLane);
+      if (hit && y < 200) {
+        handleAnswer(hit.val);
+      }
+    }
+    // 5. Balance Coins
+    else if (eng === "balance") {
       const coin = state.items.find(c => Math.hypot(c.x - x, c.y - y) < c.radius + 8);
       if (coin) {
         AudioEngine.playCoin();
-        state.playerX += coin.coin;
+        state.balanceCoins.push(coin.coin);
+        const curTotal = state.balanceCoins.reduce((a, b) => a + b, 0);
         VoiceEngine.speak(coin.coin + " Francs !");
-        if (state.playerX >= state.targetValue) {
-          handleAnswer(state.playerX);
+        const targetAmt = parseInt(state.question.ans) || 250;
+        if (curTotal >= targetAmt) {
+          handleAnswer(String(curTotal));
         }
       }
-    } else {
+    }
+    // 6. Magnifier Lens
+    else if (eng === "magnifier") {
+      state.magnifierX = x;
+      state.magnifierY = y;
+      const hit = state.items.find(it => x >= it.x && x <= it.x + it.w && y >= it.y && y <= it.y + it.h);
+      if (hit) {
+        handleAnswer(hit.val);
+      }
+    }
+    // 7. Botany Lab
+    else if (eng === "botany") {
+      const tool = state.items.find(t => Math.hypot(t.x - x, t.y - y) < t.radius + 10);
+      if (tool) {
+        AudioEngine.playPop();
+        state.plantStage++;
+        VoiceEngine.speak(tool.label);
+        if (state.plantStage >= 2) {
+          handleAnswer(state.question.ans);
+        }
+      }
+    }
+    // 8. Djembe Drum
+    else if (eng === "djembe") {
+      if (Math.hypot(250 - x, 130 - y) < 85) {
+        AudioEngine.playDrum();
+        state.playerX++;
+        VoiceEngine.speak(String(state.playerX));
+        const targetCount = parseInt(state.question.ans) || 3;
+        if (state.playerX === targetCount) {
+          handleAnswer(state.question.ans);
+        }
+      }
+    }
+    // 9. General Cards
+    else {
       const hit = state.items.find(it => x >= it.x && x <= it.x + it.w && y >= it.y && y <= it.y + it.h);
       if (hit) {
         handleAnswer(hit.val);
@@ -4115,24 +4478,19 @@ window.addEventListener("DOMContentLoaded", () => {
     }
   });
 
+  // Mascot avatar greeting
   $("mascot-avatar").onclick = () => {
     AudioEngine.playSuccess();
-    VoiceEngine.speak(state.lang === "fr" ? "Bonjour ! Je suis Hibou, ton tuteur malin. Prêt pour l'aventure ?" : "Hello! I am Owl, your smart tutor. Ready for an adventure?");
+    VoiceEngine.speak(state.lang === "fr" ? "Bienvenue chez Nateiva EduKids ! Choisis ton monde d'aventure." : "Welcome to Nateiva EduKids! Choose your adventure world.");
   };
 
-  window.addEventListener("keydown", (e) => {
-    state.idleTime = 0;
-    if (e.key === "ArrowLeft") $("btn-left").click();
-    if (e.key === "ArrowRight") $("btn-right").click();
-    if (e.key === " " || e.key === "ArrowDown") $("btn-action").click();
-  });
+  // Expose global controller
+  window.NateivaApp = { state, CURRICULUM, showHub, showGame, AudioEngine, VoiceEngine };
 
-  renderGameSelector();
-  updateBannersAndLabels();
-  generateQuestion();
+  // Initialize in Hub view
+  showHub();
   requestAnimationFrame(tick);
 });
 </script>
-<div id="root" style="display:none;"></div>
 </body>
 </html>
