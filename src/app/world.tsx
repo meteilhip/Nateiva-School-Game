@@ -52,7 +52,7 @@ export default function WorldScreen() {
         {/* Global 60-Game Library Banner */}
         <TouchableOpacity 
           style={styles.libraryBanner}
-          onPress={() => router.push('/library')}
+          onPress={() => router.push('/library' as any)}
         >
           <Text style={styles.libraryIcon}>🎮</Text>
           <View style={{ flex: 1 }}>

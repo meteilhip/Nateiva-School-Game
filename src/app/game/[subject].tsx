@@ -8,7 +8,7 @@ import {
   // Early (01-15)
   ColorSplash, ShapeSafari, CountTheAnimals, BubbleNumbers, LetterTrain,
   SoundDetective, AnimalHomes, PatternCaterpillar, FruitBasket, PictureMemory,
-  DancingLetters, StoryPuppetShow, SizeSorting, ShadowMatch, RainbowBridge,
+  DancingLetters, StoryPuppetShow, SizeSorting, ShadowMatch, RainbowBridge, BlockStack,
   // Foundation (16-30)
   MathCarRacing, TreasureHunt, RobotFactory, WordCastle, SyllableJump,
   SpellingBeeAdventure, NumberLineRunner, AdditionBridge, SubtractionNinja, CFAMarket,
@@ -450,6 +450,7 @@ export default function GameActivityScreen() {
       case 'SIZE_SORTING': return <SizeSorting question={currentQ} onAnswer={handleAnswer} />;
       case 'SHADOW_MATCH': return <ShadowMatch question={currentQ} onAnswer={handleAnswer} />;
       case 'RAINBOW_BRIDGE': return <RainbowBridge question={currentQ} onAnswer={handleAnswer} />;
+      case 'BLOCK_STACK': return <BlockStack question={currentQ} onAnswer={handleAnswer} />;
 
       // Foundation (16-30)
       case 'MATH_RACING': return <MathCarRacing question={currentQ} onAnswer={handleAnswer} />;

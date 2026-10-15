@@ -21,7 +21,7 @@ export function PersistentBottomNav() {
 
       <TouchableOpacity 
         style={[styles.navItem, isGames && styles.navItemActive]} 
-        onPress={() => router.replace('/library')}
+        onPress={() => router.replace('/library' as any)}
       >
         <Text style={styles.navIcon}>🎮</Text>
         <Text style={[styles.navLabel, isGames && styles.navLabelActive]}>60 Jeux</Text>

@@ -166,7 +166,7 @@ export default function LevelSelectionScreen() {
                 {/* Direct link to choose between multiple games for this skill */}
                 <TouchableOpacity 
                   style={[styles.playBtn, { backgroundColor: getSubjectColor() }]}
-                  onPress={() => router.push(`/game-choice/${skill.skillId}?subject=${subject}`)}
+                  onPress={() => router.push(`/game-choice/${skill.skillId}?subject=${subject}` as any)}
                 >
                   <Text style={styles.playBtnText}>Choisir un Jeu 🎮</Text>
                 </TouchableOpacity>

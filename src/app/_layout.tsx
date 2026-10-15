@@ -16,7 +16,7 @@ class ErrorBoundary extends React.Component<any, { hasError: boolean, error: any
   render() {
     if (this.state.hasError) {
       return (
-        <View style={{ flex: 1, height: Platform.OS === 'web' ? '100vh' : '100%', justifyContent: 'center', alignItems: 'center', padding: 20 }}>
+        <View style={{ flex: 1, height: '100%', justifyContent: 'center', alignItems: 'center', padding: 20 }}>
           <Text style={{ fontSize: 24, fontWeight: 'bold', color: 'red', marginBottom: 10 }}>Runtime Error!</Text>
           <Text>{this.state.error?.message || 'Unknown error'}</Text>
         </View>

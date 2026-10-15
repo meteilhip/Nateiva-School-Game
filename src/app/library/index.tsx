@@ -380,7 +380,6 @@ export default function GameLibraryScreen() {
                       speakText('Recommençons ' + game.title);
                       handleLaunchGame(game);
                     }}
-                    title="Rejouer"
                   >
                     <Text style={styles.replayButtonText}>🔄</Text>
                   </TouchableOpacity>

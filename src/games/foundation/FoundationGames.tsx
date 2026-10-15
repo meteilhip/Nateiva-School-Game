@@ -668,6 +668,23 @@ export function ScienceGarden({ question, onAnswer }: { question: any, onAnswer:
             <Text style={styles.gardenToolBtnText}>🪱 Nourrir</Text>
           </TouchableOpacity>
         </View>
+
+        {/* Harvest Button when mature */}
+        {growthStage === 3 ? (
+          <TouchableOpacity 
+            style={styles.harvestActionBtn}
+            onPress={() => {
+              Speech.speak('Récolte abondante ! Le cycle végétal est accompli avec succès !', { language: 'fr-FR' });
+              setTimeout(() => onAnswer(question.ans || 'Eau et Soleil ☀️💧'), 800);
+            }}
+          >
+            <Text style={styles.harvestBtnText}>🌽 RÉCOLTER LE MAÏS MÛR ! ✨</Text>
+          </TouchableOpacity>
+        ) : (
+          <Text style={styles.gardenHintText}>
+            {waterCount === 0 ? '💧 Ajoute de l\'eau pour faire germer la graine !' : sunCount === 0 ? '☀️ Le soleil est nécessaire pour la photosynthèse !' : 'Continue à soigner la plante !'}
+          </Text>
+        )}
       </View>
 
       <Text style={styles.curriculumQuestionText}>
@@ -685,21 +702,132 @@ export function ScienceGarden({ question, onAnswer }: { question: any, onAnswer:
   );
 }
 
-// --- GAME 30: PHONICS FISHING ---
+// --- GAME 30: PHONICS FISHING (INTERACTIVE CAST & REEL ENGINE) ---
 export function PhonicsFishing({ question, onAnswer }: { question: any, onAnswer: (ans: string) => void }) {
   const targetSound = question.targetSound || 'B';
+  const options = question.options || ['B', 'D', 'P', 'T'];
+
+  // Rod aim position (0 to 3)
+  const [aimPosition, setAimPosition] = useState<number>(1);
+  const [isCasting, setIsCasting] = useState<boolean>(false);
+  const [hookDepth, setHookDepth] = useState<number>(10);
+  const [caughtFish, setCaughtFish] = useState<string | null>(null);
+  const [fishSwimOffset, setFishSwimOffset] = useState<number>(0);
+  const [catchesCount, setCatchesCount] = useState<number>(0);
+
+  // Wiggle fish animation on render
+  React.useEffect(() => {
+    const timer = setInterval(() => {
+      setFishSwimOffset(prev => (prev === 0 ? 8 : prev === 8 ? -8 : 0));
+    }, 600);
+    return () => clearInterval(timer);
+  }, []);
+
+  const handleCastLine = () => {
+    if (isCasting) return;
+    setIsCasting(true);
+    setHookDepth(85); // Drop hook deep into river
+    Speech.speak('Lancer de ligne dans le fleuve Wouri !', { language: 'fr-FR' });
+
+    setTimeout(() => {
+      const selectedLetter = options[aimPosition] || 'B';
+      if (selectedLetter === targetSound || selectedLetter === question.ans) {
+        setCaughtFish(selectedLetter);
+        setCatchesCount(c => c + 1);
+        Speech.speak(`Bravo ! Tu as pêché le poisson ${selectedLetter} !`, { language: 'fr-FR' });
+        setTimeout(() => {
+          setIsCasting(false);
+          setHookDepth(10);
+          setCaughtFish(null);
+          onAnswer(selectedLetter);
+        }, 1200);
+      } else {
+        Speech.speak(`Ce poisson porte la lettre ${selectedLetter}. Cherche le son ${targetSound} !`, { language: 'fr-FR' });
+        setTimeout(() => {
+          setIsCasting(false);
+          setHookDepth(10);
+        }, 1000);
+      }
+    }, 900);
+  };
+
   return (
     <View style={styles.container}>
       <Text style={styles.gameTitle}>🎣 La Pêche aux Sons (Fleuve Wouri)</Text>
-      <Text style={styles.promptText}>Pêche le poisson qui porte la lettre du son <Text style={{ color: '#0284C7', fontWeight: 'bold' }}>"{targetSound}"</Text> :</Text>
+      <Text style={styles.promptText}>
+        Vise et lance ta canne pour pêcher le poisson du son <Text style={{ color: '#0284C7', fontWeight: 'bold' }}>"{targetSound}"</Text> !
+      </Text>
 
-      <View style={styles.riverArea}>
-        {(question.options || ['B', 'D', 'P', 'T']).map((letter: string) => (
-          <TouchableOpacity key={letter} style={styles.fishItem} onPress={() => onAnswer(letter)}>
-            <Text style={styles.fishIcon}>🐟</Text>
-            <Text style={styles.fishLetter}>{letter}</Text>
-          </TouchableOpacity>
-        ))}
+      {/* River Simulation Box */}
+      <View style={styles.riverContainer}>
+        {/* Riverbank & Fishing Rod */}
+        <View style={styles.fishingPier}>
+          <Text style={styles.fishermanIcon}>🧒🏾🎣</Text>
+          <View style={styles.fishingLineWrapper}>
+            <View style={[styles.fishingLine, { height: hookDepth, left: `${20 + aimPosition * 22}%` }]} />
+            <Text style={[styles.fishingHook, { top: hookDepth - 4, left: `${16 + aimPosition * 22}%` }]}>
+              {caughtFish ? `🐟✨ ${caughtFish}` : '🪝'}
+            </Text>
+          </View>
+        </View>
+
+        {/* River Water Currents with Swimming Fish */}
+        <View style={styles.riverWaterBox}>
+          <View style={styles.waterWavesRow}>
+            <Text style={styles.waveText}>〰️ 〰️ 〰️ 〰️ 〰️ 〰️ 〰️</Text>
+          </View>
+
+          {/* Swimming Fish at Distinct Lanes */}
+          <View style={styles.fishSchoolRow}>
+            {options.map((letter: string, idx: number) => {
+              const isTargetLane = aimPosition === idx;
+              return (
+                <TouchableOpacity
+                  key={`fish_${letter}_${idx}`}
+                  style={[
+                    styles.swimmingFishCard,
+                    isTargetLane && styles.targetLaneHighlight,
+                    { transform: [{ translateY: (idx % 2 === 0 ? fishSwimOffset : -fishSwimOffset) }] }
+                  ]}
+                  onPress={() => setAimPosition(idx)}
+                >
+                  <Text style={styles.fishEmoji}>🐠</Text>
+                  <View style={styles.letterBubble}>
+                    <Text style={styles.letterBubbleText}>{letter}</Text>
+                  </View>
+                  <Text style={styles.laneMarkerText}>{isTargetLane ? '🎯 VISE' : '📍'}</Text>
+                </TouchableOpacity>
+              );
+            })}
+          </View>
+        </View>
+      </View>
+
+      {/* Pier Controls */}
+      <View style={styles.pierControlsRow}>
+        <TouchableOpacity 
+          style={styles.aimMoveBtn}
+          onPress={() => setAimPosition(p => Math.max(0, p - 1))}
+          disabled={isCasting}
+        >
+          <Text style={styles.aimBtnText}>⬅️ Déplacer Canne</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity 
+          style={[styles.castActionBtn, isCasting && styles.castBtnDisabled]}
+          onPress={handleCastLine}
+          disabled={isCasting}
+        >
+          <Text style={styles.castBtnText}>{isCasting ? '⏳ Pêche en cours...' : '🎣 LANCER LA LIGNE !'}</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity 
+          style={styles.aimMoveBtn}
+          onPress={() => setAimPosition(p => Math.min(options.length - 1, p + 1))}
+          disabled={isCasting}
+        >
+          <Text style={styles.aimBtnText}>Déplacer Canne ➡️</Text>
+        </TouchableOpacity>
       </View>
     </View>
   );
@@ -845,9 +973,34 @@ const styles = StyleSheet.create({
   gardenToolsRow: { flexDirection: 'row', gap: 10 },
   gardenToolBtn: { backgroundColor: '#DCFCE7', paddingVertical: 8, paddingHorizontal: 12, borderRadius: 12, borderWidth: 1, borderColor: '#4ADE80' },
   gardenToolBtnText: { fontSize: 12, fontWeight: 'bold', color: '#14532D' },
+  harvestActionBtn: { backgroundColor: '#15803D', paddingVertical: 12, paddingHorizontal: 20, borderRadius: 16, marginTop: 10, elevation: 4 },
+  harvestBtnText: { color: 'white', fontWeight: 'bold', fontSize: 14 },
+  gardenHintText: { fontSize: 12, color: '#166534', fontStyle: 'italic', marginTop: 8 },
   curriculumQuestionText: { fontSize: 14, fontWeight: 'bold', color: '#1E293B', textAlign: 'center', marginBottom: 12 },
 
-  // Phonics Fishing
+  // Phonics Fishing (Interactive)
+  riverContainer: { width: '100%', maxWidth: 420, backgroundColor: '#0284C7', borderRadius: 24, overflow: 'hidden', borderWidth: 3, borderColor: '#0369A1', marginBottom: 15 },
+  fishingPier: { backgroundColor: '#78350F', paddingVertical: 8, paddingHorizontal: 16, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' },
+  fishermanIcon: { fontSize: 28 },
+  fishingLineWrapper: { flex: 1, height: 20, position: 'relative' },
+  fishingLine: { position: 'absolute', top: 0, width: 2, backgroundColor: '#FFFFFF' },
+  fishingHook: { position: 'absolute', fontSize: 18 },
+  riverWaterBox: { backgroundColor: '#0EA5E9', padding: 12, minHeight: 140, justifyContent: 'space-between' },
+  waterWavesRow: { alignItems: 'center', opacity: 0.6 },
+  waveText: { color: '#BAE6FD', fontSize: 12, letterSpacing: 4 },
+  fishSchoolRow: { flexDirection: 'row', justifyContent: 'space-around', alignItems: 'center', marginTop: 10 },
+  swimmingFishCard: { backgroundColor: '#E0F2FE', padding: 8, borderRadius: 16, alignItems: 'center', minWidth: 60, borderWidth: 2, borderColor: '#38BDF8' },
+  targetLaneHighlight: { borderColor: '#FACC15', backgroundColor: '#FEF08A', transform: [{ scale: 1.1 }] },
+  fishEmoji: { fontSize: 26 },
+  letterBubble: { backgroundColor: '#0284C7', borderRadius: 12, paddingHorizontal: 8, paddingVertical: 2, marginTop: 4 },
+  letterBubbleText: { color: 'white', fontWeight: 'bold', fontSize: 14 },
+  laneMarkerText: { fontSize: 9, fontWeight: 'bold', color: '#0369A1', marginTop: 2 },
+  pierControlsRow: { flexDirection: 'row', gap: 8, alignItems: 'center', justifyContent: 'center', width: '100%', maxWidth: 420 },
+  aimMoveBtn: { backgroundColor: '#0369A1', paddingVertical: 10, paddingHorizontal: 12, borderRadius: 12 },
+  aimBtnText: { color: 'white', fontSize: 11, fontWeight: 'bold' },
+  castActionBtn: { backgroundColor: '#10B981', paddingVertical: 12, paddingHorizontal: 18, borderRadius: 16, elevation: 4 },
+  castBtnDisabled: { opacity: 0.6 },
+  castBtnText: { color: 'white', fontSize: 13, fontWeight: 'bold' },
   riverArea: { flexDirection: 'row', flexWrap: 'wrap', gap: 15, justifyContent: 'center', maxWidth: 360, marginVertical: 20 },
   fishItem: { width: 75, height: 75, backgroundColor: '#E0F2FE', borderRadius: 20, borderWidth: 2, borderColor: '#38BDF8', alignItems: 'center', justifyContent: 'center' },
   fishIcon: { fontSize: 28 },

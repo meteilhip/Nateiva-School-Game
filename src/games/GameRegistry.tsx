@@ -16,7 +16,8 @@ export {
   StoryPuppetShow,
   SizeSorting,
   ShadowMatch,
-  RainbowBridge
+  RainbowBridge,
+  BlockStack
 } from './early/EarlyGames';
 
 // --- FOUNDATION LEARNERS (16 - 30) ---

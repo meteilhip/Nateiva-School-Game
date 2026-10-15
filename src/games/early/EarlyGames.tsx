@@ -497,6 +497,183 @@ export function RainbowBridge({ question, onAnswer }: { question: any, onAnswer:
   );
 }
 
+// --- GAME: BLOCK STACK (FALLING-BLOCK ARITHMETIC PUZZLE) ---
+export function BlockStack({ question, onAnswer }: { question?: any, onAnswer: (ans: string) => void }) {
+  const targetSum = (question && question.ans) ? parseInt(question.ans) : 6;
+  const COLS = 5;
+  const ROWS = 6;
+
+  // Grid represented as 2D array of numbers or null
+  const [grid, setGrid] = useState<(number | null)[][]>(() => 
+    Array.from({ length: ROWS }, () => Array(COLS).fill(null))
+  );
+
+  // Active falling piece: shape offsets relative to anchor [r, c]
+  const [pieceCol, setPieceCol] = useState(2);
+  const [pieceRow, setPieceRow] = useState(0);
+  const [pieceVal, setPieceVal] = useState(2);
+  const [orientation, setOrientation] = useState(0); // 0: horizontal, 1: vertical
+  const [clearedCount, setClearedCount] = useState(0);
+  const [comboSparkle, setComboSparkle] = useState(false);
+
+  // Get current cells occupied by active piece
+  const getPieceCells = (r: number, c: number, ori: number) => {
+    if (ori === 0) {
+      return [{ r, c }, { r, c: c + 1 }];
+    } else {
+      return [{ r, c }, { r: r + 1, c }];
+    }
+  };
+
+  const isCollision = (r: number, c: number, ori: number, currentGrid: (number | null)[][]) => {
+    const cells = getPieceCells(r, c, ori);
+    for (const cell of cells) {
+      if (cell.c < 0 || cell.c >= COLS || cell.r >= ROWS) return true;
+      if (cell.r >= 0 && currentGrid[cell.r][cell.c] !== null) return true;
+    }
+    return false;
+  };
+
+  // Move Left
+  const handleMoveLeft = () => {
+    if (!isCollision(pieceRow, pieceCol - 1, orientation, grid)) {
+      setPieceCol(c => c - 1);
+    }
+  };
+
+  // Move Right
+  const handleMoveRight = () => {
+    if (!isCollision(pieceRow, pieceCol + 1, orientation, grid)) {
+      setPieceCol(c => c + 1);
+    }
+  };
+
+  // Rotate 90 degrees
+  const handleRotate = () => {
+    const nextOri = orientation === 0 ? 1 : 0;
+    if (!isCollision(pieceRow, pieceCol, nextOri, grid)) {
+      setOrientation(nextOri);
+      Speech.speak('Rotation !', { language: 'fr-FR' });
+    }
+  };
+
+  // Drop down by 1 row or lock
+  const handleDropStep = () => {
+    if (!isCollision(pieceRow + 1, pieceCol, orientation, grid)) {
+      setPieceRow(r => r + 1);
+    } else {
+      // Lock piece into grid
+      const newGrid = grid.map(row => [...row]);
+      const cells = getPieceCells(pieceRow, pieceCol, orientation);
+      cells.forEach(cell => {
+        if (cell.r >= 0 && cell.r < ROWS && cell.c >= 0 && cell.c < COLS) {
+          newGrid[cell.r][cell.c] = pieceVal;
+        }
+      });
+
+      // Check line clears or sum matches
+      let clears = 0;
+      for (let r = 0; r < ROWS; r++) {
+        const rowSum = newGrid[r].reduce((sum: number, val) => sum + (val || 0), 0);
+        const rowFull = newGrid[r].every(val => val !== null);
+        if (rowFull || rowSum === targetSum) {
+          newGrid.splice(r, 1);
+          newGrid.unshift(Array(COLS).fill(null));
+          clears++;
+        }
+      }
+
+      if (clears > 0) {
+        setComboSparkle(true);
+        const newTotal = clearedCount + clears;
+        setClearedCount(newTotal);
+        Speech.speak('Ligne complétée ! Bravo !', { language: 'fr-FR' });
+        setTimeout(() => setComboSparkle(false), 800);
+        if (newTotal >= 2) {
+          Speech.speak('Victoire Tetris Math !', { language: 'fr-FR' });
+          setTimeout(() => onAnswer(String(targetSum)), 900);
+          return;
+        }
+      }
+
+      // Spawn next piece
+      setGrid(newGrid);
+      setPieceRow(0);
+      setPieceCol(2);
+      setOrientation(0);
+      setPieceVal(Math.floor(Math.random() * 3) + 1);
+    }
+  };
+
+  const activeCells = getPieceCells(pieceRow, pieceCol, orientation);
+
+  return (
+    <View style={styles.container}>
+      <Text style={styles.gameTitle}>🧱 Block Stack (Tetris Math)</Text>
+      <Text style={styles.promptText}>
+        Fais pivoter et empile les blocs pour atteindre la somme <Text style={{ color: '#2563EB', fontWeight: 'bold' }}>{targetSum}</Text> ou compléter une ligne !
+      </Text>
+
+      {/* Tetris Board */}
+      <View style={styles.tetrisContainer}>
+        <View style={styles.tetrisHeader}>
+          <Text style={styles.tetrisStat}>Cible : 🎯 {targetSum}</Text>
+          <Text style={styles.tetrisStat}>Lignes : ⭐ {clearedCount}/2</Text>
+          {comboSparkle && <Text style={styles.sparkleBadge}>✨ COMBO ! ✨</Text>}
+        </View>
+
+        <View style={styles.tetrisGrid}>
+          {grid.map((row, r) => (
+            <View key={`row_${r}`} style={styles.tetrisRow}>
+              {row.map((cellVal, c) => {
+                const isActive = activeCells.some(cell => cell.r === r && cell.c === c);
+                const displayVal = isActive ? pieceVal : cellVal;
+                return (
+                  <View 
+                    key={`cell_${r}_${c}`} 
+                    style={[
+                      styles.tetrisCell,
+                      cellVal !== null && styles.tetrisCellOccupied,
+                      isActive && styles.tetrisCellFalling
+                    ]}
+                  >
+                    {displayVal !== null && (
+                      <Text style={styles.tetrisCellText}>{displayVal}</Text>
+                    )}
+                  </View>
+                );
+              })}
+            </View>
+          ))}
+        </View>
+
+        {/* Player Controls */}
+        <View style={styles.tetrisControlsRow}>
+          <TouchableOpacity style={styles.tetrisBtn} onPress={handleMoveLeft}>
+            <Text style={styles.tetrisBtnIcon}>⬅️</Text>
+            <Text style={styles.tetrisBtnLabel}>Gauche</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity style={[styles.tetrisBtn, styles.tetrisRotateBtn]} onPress={handleRotate}>
+            <Text style={styles.tetrisBtnIcon}>🔄</Text>
+            <Text style={styles.tetrisBtnLabel}>Tourner</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity style={styles.tetrisBtn} onPress={handleMoveRight}>
+            <Text style={styles.tetrisBtnIcon}>➡️</Text>
+            <Text style={styles.tetrisBtnLabel}>Droite</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity style={[styles.tetrisBtn, styles.tetrisDropBtn]} onPress={handleDropStep}>
+            <Text style={styles.tetrisBtnIcon}>⬇️</Text>
+            <Text style={styles.tetrisBtnLabel}>Descendre</Text>
+          </TouchableOpacity>
+        </View>
+      </View>
+    </View>
+  );
+}
+
 const styles = StyleSheet.create({
   container: { flex: 1, alignItems: 'center', justifyContent: 'center', padding: 15, width: '100%' },
   gameTitle: { fontSize: 22, fontWeight: 'bold', color: '#1E3A8A', marginBottom: 6 },
@@ -567,45 +744,50 @@ const styles = StyleSheet.create({
   buttonActionsRow: { flexDirection: 'row', gap: 15 },
   resetMiniBtn: { backgroundColor: '#E2E8F0', paddingVertical: 10, paddingHorizontal: 16, borderRadius: 12 },
   resetMiniText: { color: '#475569', fontWeight: 'bold' },
-  confirmMiniBtn: { backgroundColor: '#10B981', paddingVertical: 10, paddingHorizontal: 20, borderRadius: 12 },
-  confirmMiniText: { color: 'white', fontWeight: 'bold' },
+  // Tetris Block Stack
+  tetrisContainer: { width: '100%', maxWidth: 360, backgroundColor: '#1E293B', padding: 14, borderRadius: 24, alignItems: 'center', borderWidth: 3, borderColor: '#334155' },
+  tetrisHeader: { flexDirection: 'row', justifyContent: 'space-between', width: '100%', marginBottom: 10, paddingHorizontal: 6, alignItems: 'center' },
+  tetrisStat: { color: '#F8FAFC', fontWeight: 'bold', fontSize: 14 },
+  sparkleBadge: { color: '#FACC15', fontWeight: 'bold', fontSize: 14 },
+  tetrisGrid: { backgroundColor: '#0F172A', padding: 6, borderRadius: 16, borderWidth: 2, borderColor: '#475569' },
+  tetrisRow: { flexDirection: 'row' },
+  tetrisCell: { width: 44, height: 44, margin: 2, backgroundColor: '#1E293B', borderRadius: 8, alignItems: 'center', justifyContent: 'center', borderWidth: 1, borderColor: '#334155' },
+  tetrisCellOccupied: { backgroundColor: '#3B82F6', borderColor: '#60A5FA' },
+  tetrisCellFalling: { backgroundColor: '#F59E0B', borderColor: '#FDE047' },
+  tetrisCellText: { color: 'white', fontWeight: 'bold', fontSize: 18 },
+  tetrisControlsRow: { flexDirection: 'row', gap: 10, marginTop: 14, justifyContent: 'center' },
+  tetrisBtn: { backgroundColor: '#334155', paddingVertical: 10, paddingHorizontal: 14, borderRadius: 14, alignItems: 'center', minWidth: 64 },
+  tetrisRotateBtn: { backgroundColor: '#8B5CF6' },
+  tetrisDropBtn: { backgroundColor: '#10B981' },
+  tetrisBtnIcon: { fontSize: 20 },
+  tetrisBtnLabel: { color: 'white', fontSize: 10, fontWeight: 'bold', marginTop: 2 },
 
-  // Picture Memory
-  memoryGrid: { flexDirection: 'row', flexWrap: 'wrap', gap: 15, width: 240, justifyContent: 'center' },
-  memCardBox: { width: 100, height: 100, borderRadius: 20, alignItems: 'center', justifyContent: 'center', elevation: 3 },
-  memCardClosed: { backgroundColor: '#3B82F6' },
-  memCardOpen: { backgroundColor: '#FEF08A', borderWidth: 3, borderColor: '#EAB308' },
-  memCardEmoji: { fontSize: 44 },
-
-  // Dancing Letters
-  dancingStage: { flexDirection: 'row', gap: 15, justifyContent: 'center', marginVertical: 20 },
-  dancingLetterBtn: { width: 75, height: 85, borderRadius: 20, backgroundColor: '#F5F3FF', borderWidth: 3, borderColor: '#8B5CF6', alignItems: 'center', justifyContent: 'center', elevation: 4 },
-  dancingLetterText: { fontSize: 42, fontWeight: 'bold', color: '#6D28D9' },
-  dancingMusicNotes: { fontSize: 14, position: 'absolute', top: 4, right: 6 },
-
-  // Puppet
-  puppetNarrative: { fontSize: 16, color: '#4338CA', textAlign: 'center', fontStyle: 'italic', marginBottom: 15, paddingHorizontal: 20 },
-  puppetStageBox: { backgroundColor: '#EEF2FF', padding: 18, borderRadius: 24, borderWidth: 3, borderColor: '#C7D2FE', alignItems: 'center', width: 160, marginBottom: 20 },
-  puppetIcon: { fontSize: 50 },
-  puppetSpeech: { fontSize: 13, fontWeight: 'bold', color: '#4F46E5', marginTop: 4 },
-
-  // Size Sorting
-  sizeCompareRow: { flexDirection: 'row', alignItems: 'flex-end', gap: 20, marginVertical: 25 },
-  sizeBox: { backgroundColor: '#F8FAFC', padding: 14, borderRadius: 20, borderWidth: 2, borderColor: '#E2E8F0', alignItems: 'center' },
-  sizeLabel: { fontSize: 13, fontWeight: 'bold', color: '#64748B', marginTop: 6 },
-
-  // Shadow
-  silhouetteCard: { width: 130, height: 130, borderRadius: 24, backgroundColor: '#0F172A', alignItems: 'center', justifyContent: 'center', marginBottom: 20 },
-  silhouetteEmoji: { fontSize: 45, opacity: 0.15 },
-
-  // Rainbow
-  rainbowRow: { flexDirection: 'row', gap: 10, marginVertical: 25 },
-  rainbowStone: { width: 50, height: 50, borderRadius: 12, backgroundColor: '#F8FAFC', borderWidth: 1, borderColor: '#E2E8F0', alignItems: 'center', justifyContent: 'center' },
-
-  // Shared
-  optionsRow: { flexDirection: 'row', flexWrap: 'wrap', gap: 12, justifyContent: 'center', width: '100%', maxWidth: 450 },
-  choiceBtn: { paddingVertical: 14, paddingHorizontal: 24, backgroundColor: '#DBEAFE', borderRadius: 18, borderWidth: 3, borderColor: '#3B82F6', minWidth: 80, alignItems: 'center' },
-  choiceBtnText: { fontSize: 26, fontWeight: 'bold', color: '#1E3A8A' },
-  choiceCard: { padding: 16, backgroundColor: '#EFF6FF', borderRadius: 16, borderWidth: 2, borderColor: '#93C5FD', width: '100%', maxWidth: 360, alignItems: 'center', marginBottom: 8 },
-  choiceCardText: { fontSize: 16, fontWeight: 'bold', color: '#1E40AF' }
+  // Story Puppet, Size, Shadow & Rainbow Styles
+  puppetNarrative: { fontSize: 15, color: '#475569', textAlign: 'center', marginBottom: 15, paddingHorizontal: 12 },
+  puppetStageBox: { backgroundColor: '#FEF3C7', padding: 20, borderRadius: 20, borderWidth: 2, borderColor: '#FDE68A', alignItems: 'center', marginBottom: 20, width: '100%', maxWidth: 320 },
+  puppetIcon: { fontSize: 50, marginBottom: 8 },
+  puppetSpeech: { fontSize: 15, fontStyle: 'italic', color: '#92400E', fontWeight: 'bold' },
+  optionsRow: { flexDirection: 'column', gap: 10, width: '100%', maxWidth: 340 },
+  choiceCard: { backgroundColor: '#F8FAFC', padding: 14, borderRadius: 16, borderWidth: 2, borderColor: '#CBD5E1', alignItems: 'center' },
+  choiceCardText: { fontSize: 15, fontWeight: 'bold', color: '#1E293B' },
+  sizeCompareRow: { flexDirection: 'row', gap: 15, alignItems: 'flex-end', justifyContent: 'center', marginTop: 20 },
+  sizeBox: { backgroundColor: '#F1F5F9', padding: 12, borderRadius: 16, alignItems: 'center', borderWidth: 2, borderColor: '#CBD5E1' },
+  sizeLabel: { fontSize: 13, fontWeight: 'bold', color: '#475569', marginTop: 6 },
+  silhouetteCard: { backgroundColor: '#1E293B', padding: 25, borderRadius: 24, alignItems: 'center', justifyContent: 'center', marginBottom: 20, width: 140, height: 140 },
+  silhouetteEmoji: { fontSize: 60, opacity: 0.2 },
+  rainbowRow: { flexDirection: 'row', gap: 8, justifyContent: 'center', marginBottom: 20 },
+  rainbowStone: { width: 44, height: 44, borderRadius: 22, alignItems: 'center', justifyContent: 'center' },
+  choiceBtn: { backgroundColor: '#F8FAFC', paddingVertical: 12, paddingHorizontal: 16, borderRadius: 14, borderWidth: 2, borderColor: '#CBD5E1', alignItems: 'center' },
+  choiceBtnText: { fontSize: 16, fontWeight: 'bold', color: '#1E293B' },
+  confirmMiniBtn: { backgroundColor: '#10B981', paddingVertical: 10, paddingHorizontal: 20, borderRadius: 12, alignItems: 'center' },
+  confirmMiniText: { color: 'white', fontWeight: 'bold', fontSize: 14 },
+  memoryGrid: { flexDirection: 'row', flexWrap: 'wrap', gap: 12, justifyContent: 'center', maxWidth: 320, marginVertical: 15 },
+  memCardBox: { width: 68, height: 68, borderRadius: 16, alignItems: 'center', justifyContent: 'center', elevation: 3 },
+  memCardOpen: { backgroundColor: '#FEF08A', borderWidth: 2, borderColor: '#FACC15' },
+  memCardClosed: { backgroundColor: '#3B82F6', borderWidth: 2, borderColor: '#2563EB' },
+  memCardEmoji: { fontSize: 32 },
+  dancingStage: { width: '100%', maxWidth: 320, backgroundColor: '#FEF3C7', padding: 20, borderRadius: 24, alignItems: 'center', marginVertical: 15, borderWidth: 2, borderColor: '#FDE68A' },
+  dancingLetterBtn: { backgroundColor: '#F59E0B', width: 90, height: 90, borderRadius: 45, alignItems: 'center', justifyContent: 'center', elevation: 4 },
+  dancingLetterText: { fontSize: 44, fontWeight: '900', color: 'white' },
+  dancingMusicNotes: { fontSize: 24, marginTop: 10 }
 });
