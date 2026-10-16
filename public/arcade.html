@@ -4,23 +4,29 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
 <meta name="theme-color" content="#E5252A">
-<title>Nateiva Kids • Simulations Réalistes & Arcade Tactile</title>
+<title>Nateiva Kids • Simulations & Arcade Éducative</title>
 <style>
 /* ==========================================================================
-   APPLE-GRADE DESIGN SYSTEM & THEME
+   NATEIVA BRAND DESIGN SYSTEM (BLACK, ROUGE, GRIS, BLANC)
    ========================================================================== */
 :root {
-  --red: #E5252A;
-  --blue: #377DFF;
-  --green: #00C48C;
-  --yellow: #FFB800;
-  --purple: #8B5CF6;
-  --navy: #17233D;
-  --bg-gradient: linear-gradient(180deg, #F0F4F8 0%, #E2E8F0 100%);
-  --radius-lg: 24px;
-  --radius-md: 16px;
-  --shadow-arcade: 0 14px 34px rgba(23, 35, 61, 0.14);
-  --shadow-subtle: 0 4px 14px rgba(23, 35, 61, 0.06);
+  --nateiva-red: #E5252A;
+  --nateiva-red-dark: #B91C1C;
+  --nateiva-red-light: #FEE2E2;
+  --nateiva-black: #111827;
+  --nateiva-black-soft: #1F2937;
+  --nateiva-grey-dark: #4B5563;
+  --nateiva-grey-med: #9CA3AF;
+  --nateiva-grey-light: #E5E7EB;
+  --nateiva-grey-bg: #F9FAFB;
+  --nateiva-white: #FFFFFF;
+
+  --radius-lg: 22px;
+  --radius-md: 14px;
+  --radius-sm: 10px;
+  --border-card: 2.5px solid var(--nateiva-black);
+  --border-grey: 2px solid var(--nateiva-grey-light);
+  --shadow-nateiva: 0 10px 25px rgba(17, 24, 39, 0.08);
 }
 
 * {
@@ -31,12 +37,12 @@
   -webkit-user-select: none;
   -webkit-touch-callout: none;
   touch-action: manipulation;
-  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Rounded", "Comic Neue", "Segoe UI", Roboto, sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Rounded", "Segoe UI", Roboto, sans-serif;
 }
 
 body {
-  background: var(--bg-gradient);
-  color: var(--navy);
+  background: #F3F4F6;
+  color: var(--nateiva-black);
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -47,7 +53,7 @@ body {
 
 .shell {
   width: 100%;
-  max-width: 1060px;
+  max-width: 1040px;
   display: flex;
   flex-direction: column;
   gap: 16px;
@@ -55,14 +61,14 @@ body {
 
 /* TOP NAVBAR */
 .app-nav {
-  background: #FFFFFF;
-  border: 2.5px solid #CBD5E1;
+  background: var(--nateiva-white);
+  border: var(--border-card);
   border-radius: var(--radius-lg);
   padding: 12px 20px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  box-shadow: var(--shadow-subtle);
+  box-shadow: var(--shadow-nateiva);
   flex-wrap: wrap;
   gap: 12px;
 }
@@ -74,22 +80,23 @@ body {
 }
 
 .brand-icon {
-  width: 48px;
-  height: 48px;
-  border-radius: 14px;
-  background: linear-gradient(135deg, #E5252A, #FF6B6B);
+  width: 46px;
+  height: 46px;
+  border-radius: 12px;
+  background: var(--nateiva-red);
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 26px;
-  box-shadow: 0 4px 10px rgba(229, 37, 42, 0.35);
-  border: 2px solid #FFFFFF;
+  color: var(--nateiva-white);
+  border: 2px solid var(--nateiva-black);
+  box-shadow: 0 4px 10px rgba(229, 37, 42, 0.25);
 }
 
 .brand-titles h1 {
   font-size: 1.25rem;
   font-weight: 900;
-  color: var(--navy);
+  color: var(--nateiva-black);
   letter-spacing: -0.5px;
   line-height: 1.1;
 }
@@ -97,7 +104,7 @@ body {
 .brand-titles p {
   font-size: 0.76rem;
   font-weight: 700;
-  color: #64748B;
+  color: var(--nateiva-grey-dark);
 }
 
 .nav-actions {
@@ -108,35 +115,35 @@ body {
 }
 
 .select-pill, .btn-pill {
-  border: 2.2px solid #CBD5E1;
-  background: #F8FAFC;
-  border-radius: 14px;
+  border: 2px solid var(--nateiva-black);
+  background: var(--nateiva-white);
+  border-radius: 12px;
   padding: 8px 14px;
   font-weight: 800;
   font-size: 13.5px;
-  color: var(--navy);
+  color: var(--nateiva-black);
   cursor: pointer;
   transition: all 0.15s ease;
 }
 
 .select-pill:focus, .btn-pill:hover {
-  border-color: var(--blue);
-  background: #FFFFFF;
+  background: var(--nateiva-red-light);
+  border-color: var(--nateiva-red);
 }
 
 /* HERO BANNER */
 .hero-banner {
-  background: linear-gradient(135deg, #17233D 0%, #202F52 100%);
+  background: var(--nateiva-black);
   border-radius: var(--radius-lg);
   padding: 22px 28px;
-  color: #FFFFFF;
+  color: var(--nateiva-white);
   display: flex;
   align-items: center;
   justify-content: space-between;
-  box-shadow: var(--shadow-arcade);
+  box-shadow: var(--shadow-nateiva);
   position: relative;
   overflow: hidden;
-  border: 2.5px solid #334155;
+  border: 2.5px solid var(--nateiva-black);
 }
 
 .hero-banner::after {
@@ -146,29 +153,30 @@ body {
   top: -20px;
   width: 170px;
   height: 170px;
-  background: radial-gradient(circle, rgba(229, 37, 42, 0.3) 0%, transparent 70%);
+  background: radial-gradient(circle, rgba(229, 37, 42, 0.35) 0%, transparent 70%);
   border-radius: 50%;
   pointer-events: none;
 }
 
 .hero-content h2 {
-  font-size: clamp(1.4rem, 3.2vw, 2.1rem);
+  font-size: clamp(1.35rem, 3vw, 1.9rem);
   font-weight: 900;
-  letter-spacing: -0.6px;
+  letter-spacing: -0.5px;
   margin-bottom: 6px;
+  color: var(--nateiva-white);
 }
 
 .hero-content p {
-  font-size: 0.92rem;
-  color: #CBD5E1;
+  font-size: 0.9rem;
+  color: var(--nateiva-grey-light);
   font-weight: 600;
   max-width: 580px;
   line-height: 1.45;
 }
 
 .hero-mascot-badge {
-  font-size: 72px;
-  filter: drop-shadow(0 10px 16px rgba(0, 0, 0, 0.35));
+  font-size: 68px;
+  filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.4));
   animation: mascotBob 3.2s ease-in-out infinite;
   cursor: pointer;
 }
@@ -186,14 +194,14 @@ body {
 }
 
 .portal-card {
-  background: #FFFFFF;
-  border: 2.5px solid #CBD5E1;
-  border-radius: 22px;
+  background: var(--nateiva-white);
+  border: 2.5px solid var(--nateiva-grey-light);
+  border-radius: 20px;
   padding: 18px;
   display: flex;
   flex-direction: column;
   gap: 10px;
-  box-shadow: var(--shadow-subtle);
+  box-shadow: 0 4px 12px rgba(17, 24, 39, 0.04);
   cursor: pointer;
   position: relative;
   overflow: hidden;
@@ -202,9 +210,9 @@ body {
 }
 
 .portal-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 16px 36px rgba(23, 35, 61, 0.12);
-  border-color: var(--card-theme, var(--blue));
+  transform: translateY(-4px);
+  box-shadow: 0 14px 30px rgba(17, 24, 39, 0.1);
+  border-color: var(--nateiva-black);
 }
 
 .portal-card-header {
@@ -214,35 +222,35 @@ body {
 }
 
 .portal-badge {
-  width: 52px;
-  height: 52px;
-  border-radius: 16px;
-  background: var(--card-bg, #EFF6FF);
-  border: 2px solid rgba(0, 0, 0, 0.05);
+  width: 50px;
+  height: 50px;
+  border-radius: 14px;
+  background: #F3F4F6;
+  border: 2px solid var(--nateiva-grey-light);
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 28px;
+  font-size: 26px;
   flex-shrink: 0;
 }
 
 .portal-titles h3 {
   font-size: 1.05rem;
-  font-weight: 800;
-  color: var(--navy);
+  font-weight: 900;
+  color: var(--nateiva-black);
 }
 
 .portal-curriculum-tag {
   font-size: 0.72rem;
   font-weight: 800;
-  color: var(--card-theme, #377DFF);
+  color: var(--nateiva-red);
   text-transform: uppercase;
   letter-spacing: 0.4px;
 }
 
 .portal-desc {
   font-size: 0.8rem;
-  color: #64748B;
+  color: var(--nateiva-grey-dark);
   font-weight: 600;
   line-height: 1.4;
 }
@@ -256,44 +264,39 @@ body {
 }
 
 .count-pill {
-  background: #F8FAFC;
-  border: 1.8px solid #CBD5E1;
-  border-radius: 10px;
+  background: #F3F4F6;
+  border: 1.8px solid var(--nateiva-grey-light);
+  border-radius: 8px;
   padding: 4px 8px;
   font-size: 0.72rem;
   font-weight: 800;
-  color: var(--navy);
+  color: var(--nateiva-black);
   display: inline-flex;
   align-items: center;
   gap: 4px;
 }
 
 .count-pill.highlight {
-  background: #EFF6FF;
-  border-color: #93C5FD;
-  color: #1D4ED8;
+  background: var(--nateiva-red-light);
+  border-color: var(--nateiva-red);
+  color: var(--nateiva-red-dark);
 }
 
-.count-pill.gold {
-  background: #FFFBEB;
-  border-color: #FCD34D;
-  color: #B45309;
+.count-pill.black {
+  background: var(--nateiva-black);
+  border-color: var(--nateiva-black);
+  color: var(--nateiva-white);
 }
-
-.portal-card[data-cat="math"] { --card-theme: #377DFF; --card-bg: #EBF3FF; }
-.portal-card[data-cat="read"] { --card-theme: #00C48C; --card-bg: #ECFDF5; }
-.portal-card[data-cat="sci"]  { --card-theme: #FFB800; --card-bg: #FFFBEB; }
-.portal-card[data-cat="logic"]{ --card-theme: #8B5CF6; --card-bg: #F5F3FF; }
 
 /* ==========================================================================
-   ARCADE & SIMULATION WORKSPACE
+   ARCADE & SIMULATION WORKSPACE (CLEAN NATEIVA)
    ========================================================================== */
 .arcade-workspace {
-  background: #FFFFFF;
-  border: 2.5px solid #CBD5E1;
+  background: var(--nateiva-white);
+  border: var(--border-card);
   border-radius: var(--radius-lg);
   padding: 20px;
-  box-shadow: var(--shadow-arcade);
+  box-shadow: var(--shadow-nateiva);
   display: none;
   flex-direction: column;
   gap: 14px;
@@ -310,12 +313,35 @@ body {
   justify-content: space-between;
   gap: 12px;
   flex-wrap: wrap;
-  background: #17233D;
-  color: #FFFFFF;
+  background: var(--nateiva-black);
+  color: var(--nateiva-white);
   padding: 12px 18px;
   border-radius: var(--radius-md);
-  border: 2px solid #334155;
+  border: 2px solid var(--nateiva-black-soft);
   box-shadow: 0 4px 14px rgba(0, 0, 0, 0.15);
+}
+
+.btn-home-top {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--nateiva-white);
+  color: var(--nateiva-black);
+  border: 2px solid var(--nateiva-black);
+  border-radius: 12px;
+  padding: 6px 14px;
+  font-size: 0.88rem;
+  font-weight: 900;
+  cursor: pointer;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+  transition: all 0.15s ease;
+}
+
+.btn-home-top:hover {
+  background: var(--nateiva-red);
+  color: var(--nateiva-white);
+  border-color: var(--nateiva-white);
+  transform: translateY(-1px);
 }
 
 .hud-left {
@@ -328,28 +354,28 @@ body {
 .hud-title {
   font-size: 1.1rem;
   font-weight: 900;
-  letter-spacing: -0.3px;
   display: flex;
   align-items: center;
   gap: 8px;
 }
 
 .hud-badge {
-  background: rgba(255, 255, 255, 0.1);
-  border: 1.5px solid rgba(255, 255, 255, 0.2);
-  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.12);
+  border: 1.5px solid rgba(255, 255, 255, 0.25);
+  border-radius: 10px;
   padding: 4px 12px;
   font-weight: 800;
   font-size: 0.84rem;
   display: flex;
   align-items: center;
   gap: 6px;
+  color: var(--nateiva-white);
 }
 
-.hud-badge.highlight {
-  background: #EFF6FF;
-  border-color: #93C5FD;
-  color: #1D4ED8;
+.hud-badge.red {
+  background: var(--nateiva-red);
+  border-color: var(--nateiva-red-light);
+  color: var(--nateiva-white);
 }
 
 .hud-stats {
@@ -360,28 +386,27 @@ body {
 }
 
 .combo-multiplier {
-  background: linear-gradient(135deg, #EF4444, #F59E0B);
-  color: #FFFFFF;
+  background: var(--nateiva-red);
+  color: var(--nateiva-white);
   font-size: 0.84rem;
   font-weight: 900;
   padding: 4px 12px;
-  border-radius: 12px;
-  border: 1.5px solid #FDE68A;
-  box-shadow: 0 2px 8px rgba(239, 68, 68, 0.35);
+  border-radius: 10px;
+  border: 1.5px solid #FFFFFF;
 }
 
 /* LEVEL META BANNER */
 .level-meta-banner {
-  background: linear-gradient(135deg, #EFF6FF, #DBEAFE);
-  border: 2.2px solid #93C5FD;
-  border-radius: 16px;
+  background: #F9FAFB;
+  border: 2px solid var(--nateiva-grey-light);
+  border-radius: var(--radius-md);
   padding: 10px 16px;
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 12px;
   font-weight: 800;
-  color: #1E3A8A;
+  color: var(--nateiva-black);
   font-size: 0.88rem;
   flex-wrap: wrap;
 }
@@ -393,11 +418,11 @@ body {
 }
 
 .meta-pill {
-  background: #FFFFFF;
-  border: 1.5px solid #BFDBFE;
+  background: var(--nateiva-white);
+  border: 1.5px solid var(--nateiva-grey-light);
   padding: 4px 10px;
-  border-radius: 10px;
-  color: #1D4ED8;
+  border-radius: 8px;
+  color: var(--nateiva-black);
   font-weight: 900;
   font-size: 0.76rem;
   display: inline-flex;
@@ -411,9 +436,9 @@ body {
   align-items: center;
   justify-content: center;
   gap: 8px;
-  background: #F8FAFC;
-  border: 2px solid #E2E8F0;
-  border-radius: 16px;
+  background: #F9FAFB;
+  border: 2px solid var(--nateiva-grey-light);
+  border-radius: 14px;
   padding: 8px 14px;
   margin: 2px 0;
   flex-wrap: wrap;
@@ -423,28 +448,28 @@ body {
   display: flex;
   align-items: center;
   gap: 6px;
-  padding: 6px 12px;
-  border-radius: 12px;
-  font-size: 0.8rem;
+  padding: 6px 14px;
+  border-radius: 10px;
+  font-size: 0.82rem;
   font-weight: 800;
-  color: #64748B;
-  background: #FFFFFF;
-  border: 1.8px solid #CBD5E1;
+  color: var(--nateiva-grey-dark);
+  background: var(--nateiva-white);
+  border: 1.8px solid var(--nateiva-grey-light);
   transition: all 0.2s ease;
 }
 
 .step-node.active {
-  background: #377DFF;
-  border-color: #2563EB;
-  color: #FFFFFF;
-  box-shadow: 0 4px 12px rgba(55, 125, 255, 0.35);
-  transform: scale(1.04);
+  background: var(--nateiva-red);
+  border-color: var(--nateiva-black);
+  color: var(--nateiva-white);
+  box-shadow: 0 4px 10px rgba(229, 37, 42, 0.25);
+  transform: scale(1.03);
 }
 
 .step-node.done {
-  background: #ECFDF5;
-  border-color: #10B981;
-  color: #065F46;
+  background: #F3F4F6;
+  border-color: var(--nateiva-black);
+  color: var(--nateiva-black);
 }
 
 .step-num {
@@ -460,42 +485,42 @@ body {
 
 .step-node.active .step-num {
   background: rgba(255, 255, 255, 0.25);
-  color: #FFFFFF;
+  color: var(--nateiva-white);
 }
 
 .step-connector {
   width: 18px;
   height: 3px;
-  background: #CBD5E1;
+  background: var(--nateiva-grey-light);
   border-radius: 2px;
 }
 
 .step-connector.done {
-  background: #10B981;
+  background: var(--nateiva-black);
 }
 
 /* PROGRESS RAIL */
 .progress-rail {
   width: 100%;
   height: 10px;
-  background: #E2E8F0;
+  background: var(--nateiva-grey-light);
   border-radius: 6px;
   overflow: hidden;
-  border: 1.5px solid #CBD5E1;
+  border: 1.5px solid var(--nateiva-grey-med);
 }
 
 .progress-fill {
   height: 100%;
   width: 0%;
-  background: linear-gradient(90deg, #377DFF, #00C48C);
+  background: var(--nateiva-red);
   border-radius: 4px;
   transition: width 0.35s ease;
 }
 
-/* INSTRUCTION BOX */
+/* INSTRUCTION BOX (AUDIO & VISUAL FIRST FOR MAT/SIL) */
 .arcade-instruction-box {
-  background: #F8FAFC;
-  border: 2px solid #CBD5E1;
+  background: #F9FAFB;
+  border: 2px solid var(--nateiva-black);
   border-radius: var(--radius-md);
   padding: 12px 18px;
   display: flex;
@@ -506,40 +531,46 @@ body {
 
 .instruction-text {
   font-size: 1.05rem;
-  font-weight: 800;
-  color: var(--navy);
+  font-weight: 900;
+  color: var(--nateiva-black);
   line-height: 1.35;
 }
 
 .curriculum-cue {
-  font-size: 0.74rem;
+  font-size: 0.76rem;
   font-weight: 700;
-  color: #64748B;
+  color: var(--nateiva-grey-dark);
   margin-top: 2px;
 }
 
 .btn-speaker {
-  width: 44px;
-  height: 44px;
+  width: 48px;
+  height: 48px;
   border-radius: 50%;
-  background: #EFF6FF;
-  border: 2px solid #BFDBFE;
-  color: #377DFF;
-  font-size: 20px;
+  background: var(--nateiva-red);
+  border: 2px solid var(--nateiva-black);
+  color: var(--nateiva-white);
+  font-size: 22px;
   display: grid;
   place-items: center;
   flex-shrink: 0;
   cursor: pointer;
+  box-shadow: 0 4px 10px rgba(229, 37, 42, 0.25);
+  transition: transform 0.15s ease;
+}
+
+.btn-speaker:hover {
+  transform: scale(1.08);
 }
 
 /* CANVAS SIMULATION ARENA */
 .arena-wrapper {
   position: relative;
-  background: #0F172A;
-  border: 3.5px solid #475569;
-  border-radius: 24px;
+  background: #111827;
+  border: 3.5px solid var(--nateiva-black);
+  border-radius: 20px;
   overflow: hidden;
-  box-shadow: 0 16px 40px rgba(15, 23, 42, 0.35);
+  box-shadow: 0 14px 34px rgba(17, 24, 39, 0.25);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -552,7 +583,7 @@ canvas#sim-canvas {
   width: 100%;
   max-width: 600px;
   aspect-ratio: 600 / 380;
-  background: #0F172A;
+  background: #111827;
   touch-action: none;
   cursor: grab;
 }
@@ -566,9 +597,9 @@ canvas#sim-canvas:active {
   bottom: 8px;
   left: 50%;
   transform: translateX(-50%);
-  background: rgba(15, 23, 42, 0.85);
-  border: 1.5px solid #64748B;
-  color: #F8FAFC;
+  background: rgba(17, 24, 39, 0.88);
+  border: 1.5px solid var(--nateiva-grey-med);
+  color: var(--nateiva-white);
   padding: 4px 12px;
   border-radius: 20px;
   font-size: 0.76rem;
@@ -587,26 +618,32 @@ canvas#sim-canvas:active {
   flex-wrap: wrap;
 }
 
+/* Large child-friendly tactile buttons */
 .btn-interactive {
   flex: 1;
-  min-width: 120px;
-  max-width: 220px;
-  padding: 12px 18px;
-  border-radius: 18px;
-  background: #FFFFFF;
-  border: 2.5px solid #CBD5E1;
-  font-size: 1.1rem;
+  min-width: 130px;
+  max-width: 240px;
+  padding: 14px 20px;
+  border-radius: 16px;
+  background: var(--nateiva-white);
+  border: 2.5px solid var(--nateiva-black);
+  font-size: 1.15rem;
   font-weight: 900;
-  color: var(--navy);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+  color: var(--nateiva-black);
+  box-shadow: 0 4px 12px rgba(17, 24, 39, 0.06);
   cursor: pointer;
   transition: all 0.15s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
 }
 
 .btn-interactive:hover {
   transform: translateY(-2px);
-  border-color: var(--blue);
-  background: #EFF6FF;
+  border-color: var(--nateiva-red);
+  background: var(--nateiva-red-light);
+  color: var(--nateiva-red-dark);
 }
 
 .arcade-controls-bar {
@@ -616,35 +653,35 @@ canvas#sim-canvas:active {
   gap: 10px;
   flex-wrap: wrap;
   padding-top: 10px;
-  border-top: 2px solid #F1F5F9;
+  border-top: 2px solid var(--nateiva-grey-light);
 }
 
 .btn-action {
   padding: 9px 18px;
-  border-radius: 14px;
-  border: 2px solid #CBD5E1;
-  background: #F8FAFC;
+  border-radius: 12px;
+  border: 2px solid var(--nateiva-black);
+  background: var(--nateiva-white);
   font-weight: 800;
   font-size: 0.85rem;
-  color: var(--navy);
+  color: var(--nateiva-black);
   cursor: pointer;
   transition: all 0.15s ease;
 }
 
 .btn-action.red {
-  background: #FEF2F2;
-  border-color: #FECACA;
-  color: var(--red);
+  background: var(--nateiva-red-light);
+  border-color: var(--nateiva-red);
+  color: var(--nateiva-red-dark);
 }
 
 .btn-action:hover {
-  border-color: var(--navy);
+  background: #F3F4F6;
 }
 
 /* TUTOR PANEL */
 .tutor-panel {
-  background: #FFFBEB;
-  border: 2.5px solid #FCD34D;
+  background: #F9FAFB;
+  border: 2.5px solid var(--nateiva-black);
   border-radius: var(--radius-md);
   padding: 16px;
   display: none;
@@ -665,21 +702,22 @@ canvas#sim-canvas:active {
 .tutor-title-row h4 {
   font-size: 1.1rem;
   font-weight: 900;
-  color: #92400E;
+  color: var(--nateiva-black);
 }
 
 .tutor-trick-box {
-  background: #FEF9C3;
-  border-left: 4px solid #EAB308;
+  background: var(--nateiva-white);
+  border-left: 4px solid var(--nateiva-red);
   padding: 10px 14px;
-  border-radius: 10px;
+  border-radius: 8px;
   font-size: 0.9rem;
   font-weight: 800;
-  color: #713F12;
+  color: var(--nateiva-black);
+  border: 1px solid var(--nateiva-grey-light);
 }
 
 .footer-credits {
-  color: #64748B;
+  color: var(--nateiva-grey-dark);
   font-size: 0.78rem;
   font-weight: 700;
   text-align: center;
@@ -697,29 +735,29 @@ canvas#sim-canvas:active {
       <div class="brand-icon">🦁</div>
       <div class="brand-titles">
         <h1>Nateiva Kids</h1>
-        <p id="lbl-tagline">Simulations Réalistes & Arcade Tactile</p>
+        <p id="lbl-tagline">Simulations & Arcade Éducative</p>
       </div>
     </div>
     <div class="nav-actions">
       <select class="select-pill" id="grade-select" aria-label="Classe">
-        <option value="MAT">🐣 Maternelle (2–4 ans)</option>
-        <option value="SIL">🌱 SIL / CP (5–6 ans)</option>
+        <option value="MAT">🐣 Maternelle (2–4 ans • Tout en écoute)</option>
+        <option value="SIL">🌱 SIL / CP (5–6 ans • Sons & Éveil)</option>
         <option value="CE">🌿 CE1 / CE2 (7–8 ans)</option>
         <option value="CM">🌳 CM1 / CM2 (9–10+ ans)</option>
       </select>
       <select class="select-pill" id="lang-select" aria-label="Langue">
-        <option value="fr">🇫🇷 Français</option>
-        <option value="en">🇬🇧 English</option>
+        <option value="fr">🇫🇷 Français (Voix Studio)</option>
+        <option value="en">🇬🇧 English (Studio Voice)</option>
       </select>
       <button class="btn-pill" id="btn-sound-toggle">🔊 Son</button>
     </div>
   </header>
 
-  <!-- HERO SECTION -->
+  <!-- HERO BANNER -->
   <section class="hero-banner" id="hero-banner">
     <div class="hero-content">
-      <h2 id="hero-title">Choisis ton Aventure Tactile !</h2>
-      <p id="hero-desc">Touche, déplace les objets au doigt et observe la physique en temps réel ! Chaque niveau comporte 5 exercices avec 3 activités guidées.</p>
+      <h2 id="hero-title">Apprends en Jouant et en Touchant !</h2>
+      <p id="hero-desc">Pour les petits comme les grands : écoute la voix native, touche et manipule directement avec ton doigt ! Chaque niveau contient 5 exercices et 3 activités.</p>
     </div>
     <div class="hero-mascot-badge" id="hero-mascot" title="Léo le Lion">🦁</div>
   </section>
@@ -732,13 +770,13 @@ canvas#sim-canvas:active {
         <div class="portal-badge">🧪</div>
         <div class="portal-titles">
           <h3>Labo de Chimie</h3>
-          <div class="portal-curriculum-tag">Sciences & Réactions</div>
+          <div class="portal-curriculum-tag">Sciences • Découverte Sensorielle</div>
         </div>
       </div>
-      <p class="portal-desc">Prends les éprouvettes au doigt, verse le liquide dans le flacon et observe les couleurs changer avec de vraies bulles de gaz !</p>
+      <p class="portal-desc">Prends les éprouvettes au doigt, verse les liquides dans le flacon et observe les couleurs changer avec de vraies bulles de gaz !</p>
       <div class="portal-counts-badge-bar">
         <span class="count-pill highlight">🎯 5 Exercices / Niveau</span>
-        <span class="count-pill gold">⚡ 3 Activités / Exercice</span>
+        <span class="count-pill black">⚡ 3 Activités / Exercice</span>
         <span class="count-pill">🏆 10 Niveaux</span>
       </div>
     </button>
@@ -749,13 +787,13 @@ canvas#sim-canvas:active {
         <div class="portal-badge">🌻</div>
         <div class="portal-titles">
           <h3>Jardin & Germination</h3>
-          <div class="portal-curriculum-tag">Botanique & Cycle Vivant</div>
+          <div class="portal-curriculum-tag">Nature & Cycle Vivant</div>
         </div>
       </div>
-      <p class="portal-desc">Verse l'arrosoir au doigt, place le soleil et observe les racines grandir sous terre et la plante fleurir au fil des jours !</p>
+      <p class="portal-desc">Verse l'arrosoir au doigt, place le soleil et observe les racines grandir sous terre et la fleur éclore au fil des jours !</p>
       <div class="portal-counts-badge-bar">
         <span class="count-pill highlight">🎯 5 Exercices / Niveau</span>
-        <span class="count-pill gold">⚡ 3 Activités / Exercice</span>
+        <span class="count-pill black">⚡ 3 Activités / Exercice</span>
         <span class="count-pill">🏆 10 Niveaux</span>
       </div>
     </button>
@@ -766,13 +804,13 @@ canvas#sim-canvas:active {
         <div class="portal-badge">🌊</div>
         <div class="portal-titles">
           <h3>Flotte ou Coule (Archimède)</h3>
-          <div class="portal-curriculum-tag">Physique Réaliste</div>
+          <div class="portal-curriculum-tag">Physique Réaliste & Eau</div>
         </div>
       </div>
-      <p class="portal-desc">Glisse des objets dans l'eau au doigt, observe les éclaboussures et pousse le liège sous l'eau pour le voir remonter !</p>
+      <p class="portal-desc">Glisse les objets dans l'eau au doigt, observe les éclaboussures et pousse le liège sous l'eau pour le voir remonter !</p>
       <div class="portal-counts-badge-bar">
         <span class="count-pill highlight">🎯 5 Exercices / Niveau</span>
-        <span class="count-pill gold">⚡ 3 Activités / Exercice</span>
+        <span class="count-pill black">⚡ 3 Activités / Exercice</span>
         <span class="count-pill">🏆 10 Niveaux</span>
       </div>
     </button>
@@ -783,13 +821,13 @@ canvas#sim-canvas:active {
         <div class="portal-badge">💡</div>
         <div class="portal-titles">
           <h3>Circuit Électrique & Multimètre</h3>
-          <div class="portal-curriculum-tag">Énergie & Électrons</div>
+          <div class="portal-curriculum-tag">Énergie & Moteur</div>
         </div>
       </div>
-      <p class="portal-desc">Ferme l'interrupteur au doigt pour déclencher les étincelles, voir les ampères s'afficher et les électrons faire tourner l'hélice !</p>
+      <p class="portal-desc">Ferme l'interrupteur au doigt pour déclencher les étincelles, voir le courant circuler et faire tourner l'hélice !</p>
       <div class="portal-counts-badge-bar">
         <span class="count-pill highlight">🎯 5 Exercices / Niveau</span>
-        <span class="count-pill gold">⚡ 3 Activités / Exercice</span>
+        <span class="count-pill black">⚡ 3 Activités / Exercice</span>
         <span class="count-pill">🏆 10 Niveaux</span>
       </div>
     </button>
@@ -800,13 +838,13 @@ canvas#sim-canvas:active {
         <div class="portal-badge">🚀</div>
         <div class="portal-titles">
           <h3>Comet Defender</h3>
-          <div class="portal-curriculum-tag">Maths & Calcul Mental</div>
+          <div class="portal-curriculum-tag">Calcul Mental & Réflexes</div>
         </div>
       </div>
       <p class="portal-desc">Glisse le vaisseau pour viser les météorites en temps réel et tire au laser pour désintégrer la bonne réponse !</p>
       <div class="portal-counts-badge-bar">
         <span class="count-pill highlight">🎯 5 Exercices / Niveau</span>
-        <span class="count-pill gold">⚡ 3 Activités / Exercice</span>
+        <span class="count-pill black">⚡ 3 Activités / Exercice</span>
         <span class="count-pill">🏆 10 Niveaux</span>
       </div>
     </button>
@@ -823,7 +861,7 @@ canvas#sim-canvas:active {
       <p class="portal-desc">Déplace le panier au doigt sous les arbres pour attraper le nombre exact de fruits mûrs !</p>
       <div class="portal-counts-badge-bar">
         <span class="count-pill highlight">🎯 5 Exercices / Niveau</span>
-        <span class="count-pill gold">⚡ 3 Activités / Exercice</span>
+        <span class="count-pill black">⚡ 3 Activités / Exercice</span>
         <span class="count-pill">🏆 10 Niveaux</span>
       </div>
     </button>
@@ -834,13 +872,15 @@ canvas#sim-canvas:active {
     <!-- HUD -->
     <div class="arcade-hud">
       <div class="hud-left">
+        <button class="btn-home-top" id="btn-back-hub-top" title="Retourner à l'accueil">🏠 Accueil</button>
         <div class="hud-title" id="hud-game-name">🧪 Labo de Chimie</div>
-        <div class="hud-badge highlight" id="hud-exercise-badge">🎯 Exercice 1/5 • Niveau 1</div>
+        <div class="hud-badge red" id="hud-exercise-badge">🎯 Exercice 1/5 • Niveau 1</div>
       </div>
       <div class="hud-stats">
         <div class="hud-badge">⭐ <span id="hud-score-val">0</span> XP</div>
         <div class="combo-multiplier" id="hud-combo-badge">🔥 COMBO x1</div>
         <div class="hud-badge" id="hud-lives-badge">❤️❤️❤️</div>
+        <button class="btn-home-top" id="btn-back-hub-top-right" title="Retourner à l'accueil">🏠</button>
       </div>
     </div>
 
@@ -868,11 +908,11 @@ canvas#sim-canvas:active {
       <div class="progress-fill" id="progress-fill"></div>
     </div>
 
-    <!-- INSTRUCTION -->
+    <!-- INSTRUCTION (VISUAL & AUDIO FIRST) -->
     <div class="arcade-instruction-box">
       <div>
-        <div class="instruction-text" id="instruction-title">Prends l'éprouvette et verse-la dans le flacon !</div>
-        <div class="curriculum-cue" id="curriculum-cue">Glisse avec ton doigt directement sur l'écran pour manipuler les objets !</div>
+        <div class="instruction-text" id="instruction-title">Touche et verse l'éprouvette au doigt !</div>
+        <div class="curriculum-cue" id="curriculum-cue">Écoute bien la voix et touche l'écran directement !</div>
       </div>
       <button class="btn-speaker" id="btn-narrate" title="Écouter la consigne">🔊</button>
     </div>
@@ -880,10 +920,10 @@ canvas#sim-canvas:active {
     <!-- REALISTIC CANVAS ARENA -->
     <div class="arena-wrapper" id="arena-container">
       <canvas id="sim-canvas" width="600" height="380"></canvas>
-      <div class="arena-gesture-hint" id="gesture-hint">👆 Touche et déplace les éléments avec ton doigt !</div>
+      <div class="arena-gesture-hint" id="gesture-hint">👆 Déplace les éléments avec ton doigt !</div>
     </div>
 
-    <!-- INTERACTIVE CHOICES / TAPS -->
+    <!-- INTERACTIVE CHOICES (ICONS/EMOJIS FOR MAT/SIL) -->
     <div class="interactive-answers-bar" id="answers-container"></div>
 
     <!-- CONTROLS & TUTOR -->
@@ -899,7 +939,7 @@ canvas#sim-canvas:active {
         <span style="font-size:26px">🦁</span>
         <h4 id="tutor-step-title">Le professeur Léo t'explique</h4>
       </div>
-      <p id="tutor-step-desc" style="font-size:16px; font-weight:700; color:#1E293B;"></p>
+      <p id="tutor-step-desc" style="font-size:16px; font-weight:700; color:var(--nateiva-black);"></p>
       <div class="tutor-trick-box" id="tutor-trick-content"></div>
       <div style="display:flex; gap:10px; margin-top:12px;">
         <button class="btn-action" id="tutor-resume">Reprendre le jeu ✓</button>
@@ -923,7 +963,7 @@ canvas#sim-canvas:active {
   const CH = 380;
 
   // ============================================================================
-  // AUDIO SYNTHESIZER ENGINE
+  // AUDIO SYNTHESIZER ENGINE (EFFECTS)
   // ============================================================================
   const AudioEngine = {
     ctx: null,
@@ -1001,39 +1041,59 @@ canvas#sim-canvas:active {
   };
 
   // ============================================================================
-  // VOICE ENGINE WITH LOCAL STUDIO TTS
+  // SINGLETON STUDIO NEURAL VOICE ENGINE (FRENCH & ENGLISH ONLY)
+  // Strictly ONE voice channel at a time with clean cancellation.
   // ============================================================================
   const VoiceEngine = {
-    lang: 'fr',
-    currentAudio: null,
-    speak(text) {
-      if (!text || state.muted) return;
-      if (this.currentAudio) {
-        this.currentAudio.pause();
-        this.currentAudio = null;
-      }
-      if ('speechSynthesis' in window) window.speechSynthesis.cancel();
+    audio: new Audio(),
+    isPlaying: false,
 
-      try {
-        const audio = new Audio();
-        this.currentAudio = audio;
-        const targetLang = this.lang === 'fr' ? 'fr' : 'en';
-        audio.src = 'http://localhost:8082/tts?lang=' + targetLang + '&q=' + encodeURIComponent(text);
-        audio.play().catch(() => {
-          // Fallback to browser SpeechSynthesis
-          if ('speechSynthesis' in window) {
-            const u = new SpeechSynthesisUtterance(text);
-            u.lang = targetLang === 'fr' ? 'fr-FR' : 'en-US';
-            u.rate = 0.95;
-            window.speechSynthesis.speak(u);
-          }
-        });
-      } catch (e) {}
+    stop() {
+      if (this.audio) {
+        this.audio.pause();
+        this.audio.currentTime = 0;
+        this.audio.src = '';
+      }
+      this.isPlaying = false;
+      if ('speechSynthesis' in window) {
+        window.speechSynthesis.cancel();
+      }
+    },
+
+    speak(text, onEnded = null) {
+      if (!text || state.muted) {
+        if (onEnded) onEnded();
+        return;
+      }
+
+      // Strictly stop any previous narration so voices NEVER overlap
+      this.stop();
+
+      const targetLang = (state.lang === 'en') ? 'en' : 'fr';
+      const clean = text.trim();
+      const url = 'http://localhost:8082/tts?lang=' + targetLang + '&q=' + encodeURIComponent(clean);
+
+      this.audio.src = url;
+      this.isPlaying = true;
+
+      this.audio.onended = () => {
+        this.isPlaying = false;
+        if (onEnded) onEnded();
+      };
+
+      this.audio.onerror = () => {
+        this.isPlaying = false;
+        if (onEnded) onEnded();
+      };
+
+      this.audio.play().catch(() => {
+        this.isPlaying = false;
+      });
     }
   };
 
   // ============================================================================
-  // APPLICATION & PHYSICAL STATE
+  // APPLICATION & PHYSICAL SIMULATION STATE
   // ============================================================================
   const state = {
     game: null,
@@ -1049,7 +1109,7 @@ canvas#sim-canvas:active {
     // Progression structure
     exerciseInLevel: 1,
     totalExercisesPerLevel: 5,
-    activityPhase: 1, // 1: Touch Discovery, 2: Arcade Action, 3: Mastery Trick
+    activityPhase: 1, // 1: Touch Discovery, 2: Action Arcade, 3: Mastery Trick
     totalActivitiesPerExercise: 3,
     totalLevels: 10,
 
@@ -1065,9 +1125,9 @@ canvas#sim-canvas:active {
 
     // 1. CHEMISTRY LAB STATE
     tubes: [
-      { id: 'red', color: '#EF4444', label: 'Rouge', x: 50, y: 70, ox: 50, oy: 70, tilt: 0, fluid: 100 },
-      { id: 'blue', color: '#3B82F6', label: 'Bleu', x: 120, y: 70, ox: 120, oy: 70, tilt: 0, fluid: 100 },
-      { id: 'yellow', color: '#EAB308', label: 'Jaune', x: 190, y: 70, ox: 190, oy: 70, tilt: 0, fluid: 100 }
+      { id: 'red', color: '#EF4444', label: 'Rouge', emoji: '🔴', x: 50, y: 70, ox: 50, oy: 70, tilt: 0, fluid: 100 },
+      { id: 'blue', color: '#3B82F6', label: 'Bleu', emoji: '🔵', x: 120, y: 70, ox: 120, oy: 70, tilt: 0, fluid: 100 },
+      { id: 'yellow', color: '#EAB308', label: 'Jaune', emoji: '🟡', x: 190, y: 70, ox: 190, oy: 70, tilt: 0, fluid: 100 }
     ],
     flask: { x: 380, y: 260, r: 65, fluidHeight: 30, fluidColor: '#38BDF8', targetColor: '#10B981', bubbles: [] },
     pouredColors: [],
@@ -1105,11 +1165,7 @@ canvas#sim-canvas:active {
     // 5. COMET DEFENDER ARCADE
     ship: { x: CW / 2, y: CH - 35, targetX: CW / 2 },
     meteors: [],
-    lasers: [],
-
-    // 6. FRUIT HARVESTING
-    basket: { x: CW / 2, y: CH - 35 },
-    fallingFruits: []
+    lasers: []
   };
 
   window.state = state;
@@ -1117,7 +1173,7 @@ canvas#sim-canvas:active {
   const rand = n => Math.floor(Math.random() * n);
   const shuffle = a => [...a].sort(() => Math.random() - 0.5);
 
-  function createExplosion(x, y, color = '#F59E0B', count = 16) {
+  function createExplosion(x, y, color = '#E5252A', count = 16) {
     state.screenShake = 10;
     for (let i = 0; i < count; i++) {
       const angle = Math.random() * Math.PI * 2;
@@ -1134,7 +1190,7 @@ canvas#sim-canvas:active {
     }
   }
 
-  function addFloatingScore(text, x, y, color = '#FBBF24') {
+  function addFloatingScore(text, x, y, color = '#E5252A') {
     state.floatingScores.push({ text, x, y, alpha: 1, color, vy: 1.4 });
   }
 
@@ -1182,7 +1238,7 @@ canvas#sim-canvas:active {
     // 3. Density: pick an item
     else if (g === 'density') {
       for (const it of state.densityItems) {
-        if (Math.hypot(p.x - it.x, p.y - it.y) < it.r + 10) {
+        if (Math.hypot(p.x - it.x, p.y - it.y) < it.r + 12) {
           state.dragged = it;
           it.inWater = false;
           it.vx = 0;
@@ -1194,8 +1250,7 @@ canvas#sim-canvas:active {
     }
     // 4. Circuit: drag switch blade
     else if (g === 'circuit') {
-      // Switch contact pivot at (180, 200), tip around (250, 160)
-      if (Math.hypot(p.x - 240, p.y - 170) < 50 || Math.hypot(p.x - 180, p.y - 200) < 50) {
+      if (Math.hypot(p.x - 240, p.y - 170) < 55 || Math.hypot(p.x - 180, p.y - 200) < 55) {
         state.dragged = state.switchBlade;
         state.switchBlade.isDragging = true;
       }
@@ -1204,7 +1259,6 @@ canvas#sim-canvas:active {
     else if (g === 'comet') {
       state.ship.targetX = Math.max(40, Math.min(CW - 40, p.x));
       state.dragged = state.ship;
-      // Tap triggers instant laser bolt!
       fireCometLaser(state.ship.x);
     }
   });
@@ -1227,7 +1281,6 @@ canvas#sim-canvas:active {
         const distToFlaskMouth = Math.hypot(state.dragged.x - state.flask.x, state.dragged.y - (state.flask.y - 80));
         if (distToFlaskMouth < 90) {
           state.dragged.tilt = 65;
-          // Pour stream
           state.flask.fluidHeight = Math.min(95, state.flask.fluidHeight + 0.4);
           if (!state.pouredColors.includes(state.dragged.id)) {
             state.pouredColors.push(state.dragged.id);
@@ -1251,7 +1304,6 @@ canvas#sim-canvas:active {
         }
       }
     } else if (g === 'circuit' && state.dragged === state.switchBlade) {
-      // Calculate angle from pivot (180, 200)
       const angleRad = Math.atan2(200 - p.y, p.x - 180);
       let deg = angleRad * (180 / Math.PI);
       if (deg < 0) deg = 0;
@@ -1268,40 +1320,31 @@ canvas#sim-canvas:active {
     if (!state.dragged) return;
 
     const g = state.game;
-    // Release chemistry tube
     if (g === 'chemistry') {
       state.dragged.tilt = 0;
       state.dragged.x = state.dragged.ox;
       state.dragged.y = state.dragged.oy;
-    }
-    // Release botany tools
-    else if (g === 'botany') {
+    } else if (g === 'botany') {
       if (state.dragged === state.can) {
         state.can.tilt = 0;
         state.can.x = state.can.ox;
         state.can.y = state.can.oy;
       }
-    }
-    // Release density item into water
-    else if (g === 'density') {
+    } else if (g === 'density') {
       const it = state.dragged;
       if (it.y > state.waterLevelY - 30) {
         it.inWater = true;
-        it.vy = 2.5; // entry speed
+        it.vy = 2.5;
         AudioEngine.playSplash();
-        createExplosion(it.x, state.waterLevelY, '#38BDF8', 12);
-        // Perturb water waves
+        createExplosion(it.x, state.waterLevelY, '#E5252A', 12);
         const waveIdx = Math.floor((it.x / CW) * state.waterNodes.length);
         if (state.waterNodes[waveIdx]) state.waterNodes[waveIdx].vy = 8;
       } else {
         it.x = it.ox;
         it.y = it.oy;
       }
-    }
-    // Release circuit switch blade
-    else if (g === 'circuit') {
+    } else if (g === 'circuit') {
       state.switchBlade.isDragging = false;
-      // Snap to closed if near 0
       if (state.switchBlade.angle < 12) {
         state.switchBlade.angle = 0;
       } else {
@@ -1317,41 +1360,39 @@ canvas#sim-canvas:active {
   // CHEMISTRY DYNAMIC COLOR MIXING
   // ============================================================================
   function onChemistryColorBlend() {
-    createExplosion(state.flask.x, state.flask.y, '#38BDF8', 18);
+    createExplosion(state.flask.x, state.flask.y, '#E5252A', 16);
     AudioEngine.playSplash();
 
-    // Check blended colors
     const hasRed = state.pouredColors.includes('red');
     const hasBlue = state.pouredColors.includes('blue');
     const hasYellow = state.pouredColors.includes('yellow');
 
     let mixed = '#38BDF8';
-    let mixedName = 'Eau claire';
+    let mixedName = state.lang === 'en' ? 'Clear Water' : 'Eau claire';
 
     if (hasBlue && hasYellow) {
       mixed = '#10B981';
-      mixedName = 'Vert Émeraude';
+      mixedName = state.lang === 'en' ? 'Green' : 'Vert';
     } else if (hasRed && hasYellow) {
       mixed = '#F97316';
-      mixedName = 'Orange Vif';
+      mixedName = state.lang === 'en' ? 'Orange' : 'Orange';
     } else if (hasRed && hasBlue) {
       mixed = '#8B5CF6';
-      mixedName = 'Violet Royal';
+      mixedName = state.lang === 'en' ? 'Purple' : 'Violet';
     } else if (hasRed) {
       mixed = '#EF4444';
-      mixedName = 'Rouge';
+      mixedName = state.lang === 'en' ? 'Red' : 'Rouge';
     } else if (hasBlue) {
       mixed = '#3B82F6';
-      mixedName = 'Bleu';
+      mixedName = state.lang === 'en' ? 'Blue' : 'Bleu';
     } else if (hasYellow) {
       mixed = '#EAB308';
-      mixedName = 'Jaune';
+      mixedName = state.lang === 'en' ? 'Yellow' : 'Jaune';
     }
 
     state.flask.fluidColor = mixed;
-    addFloatingScore('Mélange : ' + mixedName + ' ! 🧪', state.flask.x, state.flask.y - 70, mixed);
+    addFloatingScore(mixedName + ' ! 🧪', state.flask.x, state.flask.y - 70, '#E5252A');
 
-    // If matches target, award activity point!
     if (mixedName.toLowerCase().includes(state.question.targetWord.toLowerCase())) {
       onActivityTaskCompleted();
     }
@@ -1367,7 +1408,6 @@ canvas#sim-canvas:active {
       state.leafSpread = Math.min(1, state.simDay / 12);
       state.flowerBloom = Math.max(0, (state.simDay - 14) / 7);
 
-      // Branch roots
       if (state.roots.length < Math.floor(state.simDay * 2)) {
         state.roots.push({
           x: CW / 2 + (Math.random() - 0.5) * (state.simDay * 4),
@@ -1379,7 +1419,7 @@ canvas#sim-canvas:active {
       if (state.simDay >= 20 && !state.botanyAwarded) {
         state.botanyAwarded = true;
         AudioEngine.playLevelUp();
-        addFloatingScore('Floraison réussie ! 🌻 Jour 21', CW / 2, 120, '#FBBF24');
+        addFloatingScore(state.lang === 'en' ? 'Sunflower Blooming! 🌻 Day 21' : 'Floraison réussie ! 🌻 Jour 21', CW / 2, 120, '#E5252A');
         onActivityTaskCompleted();
       }
     }
@@ -1394,10 +1434,10 @@ canvas#sim-canvas:active {
       state.circuitClosed = closed;
       if (closed) {
         AudioEngine.playZap();
-        createExplosion(240, 200, '#FDE047', 16);
+        createExplosion(240, 200, '#E5252A', 16);
         state.currentAmps = 0.85;
         state.lampGlow = 1;
-        addFloatingScore('Circuit FERMÉ : 0.85 A ! ⚡', CW / 2, 120, '#FDE047');
+        addFloatingScore(state.lang === 'en' ? 'Circuit CLOSED: 0.85 A! ⚡' : 'Circuit FERMÉ : 0.85 A ! ⚡', CW / 2, 120, '#E5252A');
         onActivityTaskCompleted();
       } else {
         state.currentAmps = 0.0;
@@ -1413,13 +1453,11 @@ canvas#sim-canvas:active {
     AudioEngine.playLaser();
     state.lasers.push({ x, y: CH - 45, vy: -12 });
 
-    // Check collision with meteors
     state.meteors.forEach((m, idx) => {
       if (Math.abs(m.x - x) < 36) {
-        // Hit!
-        createExplosion(m.x, m.y, '#F59E0B', 24);
+        createExplosion(m.x, m.y, '#E5252A', 22);
         AudioEngine.playExplosion();
-        addFloatingScore('+15 XP ! 💥', m.x, m.y - 20, '#F59E0B');
+        addFloatingScore('+15 XP ! 💥', m.x, m.y - 20, '#E5252A');
         state.meteors.splice(idx, 1);
         if (m.val === state.question.ans) {
           onActivityTaskCompleted();
@@ -1429,127 +1467,165 @@ canvas#sim-canvas:active {
   }
 
   // ============================================================================
-  // 3-STEP ACTIVITY PROGRESSION & LEVEL ADVANCEMENT
+  // 3-STEP ACTIVITY PROGRESSION (SINGLE VOICE STREAM, NO OVERLAP)
   // ============================================================================
   function onActivityTaskCompleted() {
     AudioEngine.playSuccess();
     state.score++;
     state.combo++;
 
-    // Advance 3-phase activity stepper
     state.activityPhase++;
     if (state.activityPhase > state.totalActivitiesPerExercise) {
       state.activityPhase = 1;
       state.exerciseInLevel++;
 
-      // Level up milestone every 5 exercises!
       if (state.exerciseInLevel > state.totalExercisesPerLevel) {
         state.level++;
         state.exerciseInLevel = 1;
         AudioEngine.playLevelUp();
-        addFloatingScore('🏆 NIVEAU ' + state.level + ' DÉBLOQUÉ !', CW / 2, CH / 2 - 50, '#F59E0B');
-        VoiceEngine.speak("Fantastique ! Tu as terminé tous les 5 exercices du niveau ! Tu passes au Niveau " + state.level + " avec de nouveaux défis plus stimulants !");
+        addFloatingScore(state.lang === 'en' ? '🏆 LEVEL ' + state.level + ' UNLOCKED!' : '🏆 NIVEAU ' + state.level + ' DÉBLOQUÉ !', CW / 2, CH / 2 - 50, '#E5252A');
+        const lvlMsg = state.lang === 'en'
+          ? "Fantastic! You completed all 5 exercises! Moving to Level " + state.level + "!"
+          : "Fantastique ! Tu as terminé les 5 exercices du niveau ! Tu passes au Niveau " + state.level + " !";
+        VoiceEngine.speak(lvlMsg, () => {
+          setTimeout(() => nextActivityChallenge(false), 500);
+        });
       } else {
         const remaining = state.totalExercisesPerLevel - state.exerciseInLevel + 1;
-        VoiceEngine.speak("Bravo ! Exercice validé ! Plus que " + remaining + " exercices pour débloquer le Niveau " + (state.level + 1) + " !");
+        const exMsg = state.lang === 'en'
+          ? "Great! Exercise completed! " + remaining + " more exercises to unlock Level " + (state.level + 1) + "!"
+          : "Bravo ! Exercice validé ! Plus que " + remaining + " exercices pour débloquer le Niveau " + (state.level + 1) + " !";
+        VoiceEngine.speak(exMsg, () => {
+          setTimeout(() => nextActivityChallenge(false), 500);
+        });
       }
     } else {
-      VoiceEngine.speak("Super ! Activité " + (state.activityPhase - 1) + " réussie ! Place à l'activité " + state.activityPhase + " sur 3 !");
+      const actMsg = state.lang === 'en'
+        ? "Awesome! Activity " + (state.activityPhase - 1) + " done!"
+        : "Super ! Activité " + (state.activityPhase - 1) + " réussie !";
+      VoiceEngine.speak(actMsg, () => {
+        setTimeout(() => nextActivityChallenge(false), 500);
+      });
     }
-
-    setTimeout(() => {
-      nextActivityChallenge();
-    }, 1200);
   }
 
   // ============================================================================
-  // CURRICULUM QUESTIONS PER CLASS & GAME
+  // CURRICULUM QUESTIONS PER CLASS & GRADE LEVEL
+  // (MAT: zero heavy reading, 100% audio + visual icons)
   // ============================================================================
   function generateActivityProblem() {
     const grade = state.grade;
     const lvl = state.level;
-    const phase = state.activityPhase;
     const g = state.game;
+    const isEn = state.lang === 'en';
 
     if (g === 'chemistry') {
       const reactions = [
-        { c1: 'Bleu', c2: 'Jaune', target: 'Vert', hint: "Le bleu de l'eau et le jaune du soleil font la chlorophylle verte !" },
-        { c1: 'Rouge', c2: 'Jaune', target: 'Orange', hint: "Le rouge et le jaune s'unissent pour former l'orange flamboyant !" },
-        { c1: 'Rouge', c2: 'Bleu', target: 'Violet', hint: "Le rouge et le bleu fusionnent pour créer le violet magique !" }
+        { c1: isEn ? 'Blue' : 'Bleu', c2: isEn ? 'Yellow' : 'Jaune', target: isEn ? 'Green' : 'Vert', emoji: '🟢', hint: isEn ? "Blue + Yellow = Green!" : "Le bleu et le jaune font le vert !" },
+        { c1: isEn ? 'Red' : 'Rouge', c2: isEn ? 'Yellow' : 'Jaune', target: isEn ? 'Orange' : 'Orange', emoji: '🟠', hint: isEn ? "Red + Yellow = Orange!" : "Le rouge et le jaune font l'orange !" },
+        { c1: isEn ? 'Red' : 'Rouge', c2: isEn ? 'Blue' : 'Bleu', target: isEn ? 'Purple' : 'Violet', emoji: '🟣', hint: isEn ? "Red + Blue = Purple!" : "Le rouge et le bleu font le violet !" }
       ];
       const r = reactions[(state.score + state.exerciseInLevel) % reactions.length];
       return {
-        prompt: "Labo Chimie : Verse les tubes au doigt pour fabriquer du " + r.target + " !",
+        prompt: (grade === 'MAT' || grade === 'SIL')
+          ? (isEn ? "Touch and pour the tube to make " + r.emoji + " " + r.target : "Touche et verse le tube pour faire du " + r.emoji + " " + r.target)
+          : (isEn ? "Chemistry Lab: Pour the tubes with your finger to synthesize " + r.target : "Labo Chimie : Verse les tubes au doigt pour fabriquer du " + r.target + " !"),
         targetWord: r.target,
         ans: r.target,
-        options: [r.target, "Noir", "Gris"],
-        speech: "Prends l'éprouvette au doigt et verse-la au-dessus du flacon pour obtenir la couleur " + r.target + " !",
+        options: [r.emoji + " " + r.target, "⚫ Noir", "⚪ Blanc"],
+        speech: isEn
+          ? "Take the test tube with your finger and pour it over the flask to make " + r.target + "!"
+          : "Prends l'éprouvette au doigt et verse-la au-dessus du flacon pour obtenir la couleur " + r.target + " !",
         tutorTrick: r.hint
       };
     }
 
     if (g === 'botany') {
       return {
-        prompt: "Botanique : Arrose la graine au doigt et donne-lui du soleil pour atteindre le Jour 21 !",
+        prompt: (grade === 'MAT' || grade === 'SIL')
+          ? (isEn ? "💧 Pour water and give ☀️ sun to the plant!" : "💧 Arrose et donne du ☀️ soleil à la graine !")
+          : (isEn ? "Botany: Water the seed with your finger and give it sun to reach Day 21!" : "Botanique : Arrose la graine au doigt et donne-lui du soleil pour atteindre le Jour 21 !"),
         targetWord: 'fleur',
-        ans: 'Arroser',
-        options: ['Arroser', 'Congeler'],
-        speech: "Verse de l'eau avec l'arrosoir pour faire grandir les racines sous la terre !",
-        tutorTrick: "Astuce de Léo : Une plante a besoin d'Eau 💧, de Terre riche 🌱 et de Soleil ☀️ pour fleurir !"
+        ans: isEn ? '💧 Water' : '💧 Arroser',
+        options: [isEn ? '💧 Water' : '💧 Arroser', isEn ? '❄️ Freeze' : '❄️ Congeler'],
+        speech: isEn
+          ? "Pour water with the watering can to make the roots grow under the soil!"
+          : "Verse de l'eau avec l'arrosoir pour faire grandir les racines sous la terre !",
+        tutorTrick: isEn
+          ? "Leo's Tip: Water 💧 + Rich soil 🌱 + Sunlight ☀️ = Beautiful blooming flower!"
+          : "Astuce de Léo : Une plante a besoin d'Eau 💧, de Terre 🌱 et de Soleil ☀️ pour fleurir !"
       };
     }
 
     if (g === 'density') {
       return {
-        prompt: "Archimède : Glisse les objets au doigt dans l'eau. Le liège flotte-t-il ou coule-t-il ?",
-        targetWord: 'flotte',
-        ans: 'Flotte',
-        options: ['Flotte', 'Coule'],
-        speech: "Dépose l'objet dans l'aquarium avec ton doigt pour tester s'il flotte ou coule !",
-        tutorTrick: "Astuce : Le liège et le bois sont moins denses que l'eau, ils flottent toujours à la surface !"
+        prompt: (grade === 'MAT' || grade === 'SIL')
+          ? (isEn ? "Drop the cork in water: 🌊 Floats or ⬇️ Sinks?" : "Glisse le liège dans l'eau : 🌊 Flotte ou ⬇️ Coule ?")
+          : (isEn ? "Archimedes: Drag objects into the water tank. Does cork float or sink?" : "Archimède : Glisse les objets au doigt dans l'eau. Le liège flotte-t-il ou coule-t-il ?"),
+        targetWord: isEn ? 'float' : 'flotte',
+        ans: isEn ? '🌊 Floats' : '🌊 Flotte',
+        options: [isEn ? '🌊 Floats' : '🌊 Flotte', isEn ? '⬇️ Sinks' : '⬇️ Coule'],
+        speech: isEn
+          ? "Drop the object into the tank with your finger to test if it floats or sinks!"
+          : "Dépose l'objet dans l'aquarium avec ton doigt pour tester s'il flotte ou coule !",
+        tutorTrick: isEn
+          ? "Cork and wood are lighter than water, so they always float!"
+          : "Astuce : Le liège et le bois sont moins denses que l'eau, ils flottent toujours !"
       };
     }
 
     if (g === 'circuit') {
       return {
-        prompt: "Électricité : Fais glisser le levier au doigt pour FERMER le circuit !",
-        targetWord: 'fermer',
-        ans: 'Fermer',
-        options: ['Fermer le circuit', 'Couper le fil'],
-        speech: "Glisse le levier de l'interrupteur avec ton doigt pour allumer la lampe !",
-        tutorTrick: "Astuce : Le courant a besoin d'une boucle fermée et continue pour alimenter le moteur et la lampe !"
+        prompt: (grade === 'MAT' || grade === 'SIL')
+          ? (isEn ? "Drag switch down to turn on 💡 light!" : "Glisse le levier pour allumer la 💡 lampe !")
+          : (isEn ? "Electricity: Drag the knife switch down with your finger to CLOSE the circuit!" : "Électricité : Fais glisser le levier au doigt pour FERMER le circuit !"),
+        targetWord: isEn ? 'close' : 'fermer',
+        ans: isEn ? '⚡ Close Circuit' : '⚡ Fermer le circuit',
+        options: [isEn ? '⚡ Close Circuit' : '⚡ Fermer le circuit', isEn ? '✂️ Cut Wire' : '✂️ Couper le fil'],
+        speech: isEn
+          ? "Drag the knife switch with your finger to turn on the lamp and spin the motor!"
+          : "Glisse le levier de l'interrupteur avec ton doigt pour allumer la lampe et faire tourner le moteur !",
+        tutorTrick: isEn
+          ? "Electricity needs a continuous closed loop to power the lamp and motor!"
+          : "Astuce : Le courant a besoin d'une boucle fermée et continue pour alimenter la lampe !"
       };
     }
 
     if (g === 'comet') {
-      let a = 2 + rand(4 + lvl);
-      let b = 1 + rand(4 + lvl);
+      let a = 1 + rand(grade === 'MAT' ? 3 : (grade === 'SIL' ? 5 : 8));
+      let b = 1 + rand(grade === 'MAT' ? 2 : (grade === 'SIL' ? 4 : 8));
       let ans = a + b;
-      if (grade === 'CE' || grade === 'CM') {
+      if (grade === 'CM') {
         ans = a * b;
       }
       return {
-        prompt: "Comètes : Glisse le vaisseau au doigt et tire sur : " + a + (grade === 'CE' || grade === 'CM' ? " × " : " + ") + b + " = ?",
+        prompt: (grade === 'MAT' || grade === 'SIL')
+          ? (isEn ? "🚀 Aim and shoot: " + a + " + " + b + " = ?" : "🚀 Vise et tire au laser : " + a + " + " + b + " = ?")
+          : (isEn ? "Comet Defender: Drag spaceship and shoot " + a + (grade === 'CM' ? " × " : " + ") + b + " = ?" : "Comètes : Glisse le vaisseau et tire sur : " + a + (grade === 'CM' ? " × " : " + ") + b + " = ?"),
         targetWord: String(ans),
         ans: ans,
-        options: shuffle([ans, ans + 2, Math.max(1, ans - 3)]),
-        speech: "Vise la météorite avec le bon résultat : " + a + " et " + b + " !",
-        tutorTrick: "Astuce de Léo : Mets le plus grand nombre dans ta tête et ajoute le reste !"
+        options: shuffle([ans, ans + 1, Math.max(1, ans - 1)]),
+        speech: isEn
+          ? "Aim at the comet with the result: " + a + " and " + b + "!"
+          : "Vise la météorite avec le bon résultat : " + a + " et " + b + " !",
+        tutorTrick: isEn
+          ? "Put the bigger number in your mind and count up with the smaller one!"
+          : "Astuce de Léo : Mets le plus grand nombre dans ta tête et ajoute le reste !"
       };
     }
 
     return {
-      prompt: "Choisis la bonne réponse pour continuer :",
+      prompt: isEn ? "Choose the correct answer:" : "Choisis la bonne réponse :",
       targetWord: '3',
       ans: '3',
       options: ['2', '3', '4'],
-      speech: "Sélectionne la bonne réponse !",
-      tutorTrick: "Prends ton temps et compte avec tes doigts !"
+      speech: isEn ? "Select the right answer!" : "Sélectionne la bonne réponse !",
+      tutorTrick: isEn ? "Take your time and count with your fingers!" : "Prends ton temps et compte avec tes doigts !"
     };
   }
 
   // ============================================================================
-  // LAUNCH & HUD UPDATES
+  // LAUNCH GAME (ONE SINGLE WELCOME NARRATION)
   // ============================================================================
   function launchGame(gameKey) {
     state.game = gameKey;
@@ -1564,39 +1640,46 @@ canvas#sim-canvas:active {
     $('hero-banner').style.display = 'none';
     $('arcade-workspace').classList.add('active');
 
+    const isEn = state.lang === 'en';
     const titleMap = {
-      chemistry: "🧪 Labo de Chimie Réaliste",
-      botany: "🌻 Jardin Botanique & Germination",
-      density: "🌊 Aquarium Flotte ou Coule (Archimède)",
-      circuit: "💡 Circuit Électrique & Multimètre",
-      comet: "🚀 Comet Defender Arcade",
-      fruit: "🧺 Verger Gourmand"
+      chemistry: isEn ? "🧪 Chemistry Lab" : "🧪 Labo de Chimie",
+      botany: isEn ? "🌻 Botanical Garden" : "🌻 Jardin Botanique",
+      density: isEn ? "🌊 Archimedes Tank" : "🌊 Aquarium Flotte ou Coule",
+      circuit: isEn ? "💡 Electric Circuit" : "💡 Circuit Électrique",
+      comet: isEn ? "🚀 Comet Defender" : "🚀 Comet Defender",
+      fruit: isEn ? "🧺 Orchard Harvest" : "🧺 Verger Gourmand"
     };
     $('hud-game-name').textContent = titleMap[gameKey] || "🎮 Simulation Tactile";
 
-    VoiceEngine.speak("Bienvenue ! Chaque niveau comporte 5 exercices avec 3 activités par exercice. Déplace les objets au doigt pour manipuler la simulation !");
-
-    nextActivityChallenge();
+    // Launch with ONE unified speech
+    nextActivityChallenge(true);
   }
 
-  function nextActivityChallenge() {
+  function nextActivityChallenge(isWelcome = false) {
     state.question = generateActivityProblem();
     const q = state.question;
+    const isEn = state.lang === 'en';
 
     $('instruction-title').textContent = q.prompt;
-    $('curriculum-cue').textContent = "Classe : " + state.grade + " • Activité " + state.activityPhase + " sur " + state.totalActivitiesPerExercise;
+    $('curriculum-cue').textContent = (state.grade === 'MAT' || state.grade === 'SIL')
+      ? (isEn ? "🎧 Listen & touch with your finger!" : "🎧 Écoute bien la voix et touche avec ton doigt !")
+      : (isEn ? "Grade: " + state.grade + " • Activity " + state.activityPhase + " of " + state.totalActivitiesPerExercise : "Classe : " + state.grade + " • Activité " + state.activityPhase + " sur " + state.totalActivitiesPerExercise);
 
     // HUD & Badges
-    $('hud-exercise-badge').innerHTML = "🎯 Exercice <b>" + state.exerciseInLevel + "/" + state.totalExercisesPerLevel + "</b> • Niveau <b>" + state.level + "/" + state.totalLevels + "</b>";
+    $('hud-exercise-badge').innerHTML = isEn
+      ? "🎯 Exercise <b>" + state.exerciseInLevel + "/" + state.totalExercisesPerLevel + "</b> • Level <b>" + state.level + "/" + state.totalLevels + "</b>"
+      : "🎯 Exercice <b>" + state.exerciseInLevel + "/" + state.totalExercisesPerLevel + "</b> • Niveau <b>" + state.level + "/" + state.totalLevels + "</b>";
     $('hud-score-val').textContent = (state.score * 15);
     $('hud-combo-badge').textContent = "🔥 COMBO x" + Math.max(1, state.combo);
-    $('hud-lives-badge').textContent = "❤️".repeat(Math.max(0, state.lives));
+    $('hud-lives-badge').textContent = "❤️❤️❤️".slice(0, Math.max(0, state.lives * 2));
 
     // Meta Banner
-    $('level-meta-text').innerHTML = "🎯 <b>Niveau " + state.level + "</b> : Exercice <b>" + state.exerciseInLevel + " sur " + state.totalExercisesPerLevel + "</b> (3 activités par exercice)";
-    $('meta-ex-pill').textContent = "🎯 Exercice " + state.exerciseInLevel + "/" + state.totalExercisesPerLevel;
-    $('meta-act-pill').textContent = "⚡ Activité " + state.activityPhase + "/" + state.totalActivitiesPerExercise;
-    $('meta-lvl-pill').textContent = "🏆 Niveau " + state.level + "/" + state.totalLevels;
+    $('level-meta-text').innerHTML = isEn
+      ? "🎯 <b>Level " + state.level + "</b>: Exercise <b>" + state.exerciseInLevel + " of " + state.totalExercisesPerLevel + "</b> (3 activities per exercise)"
+      : "🎯 <b>Niveau " + state.level + "</b> : Exercice <b>" + state.exerciseInLevel + " sur " + state.totalExercisesPerLevel + "</b> (3 activités par exercice)";
+    $('meta-ex-pill').textContent = isEn ? "🎯 Exercise " + state.exerciseInLevel + "/" + state.totalExercisesPerLevel : "🎯 Exercice " + state.exerciseInLevel + "/" + state.totalExercisesPerLevel;
+    $('meta-act-pill').textContent = isEn ? "⚡ Activity " + state.activityPhase + "/" + state.totalActivitiesPerExercise : "⚡ Activité " + state.activityPhase + "/" + state.totalActivitiesPerExercise;
+    $('meta-lvl-pill').textContent = isEn ? "🏆 Level " + state.level + "/" + state.totalLevels : "🏆 Niveau " + state.level + "/" + state.totalLevels;
 
     // Stepper update
     const curP = state.activityPhase;
@@ -1617,7 +1700,11 @@ canvas#sim-canvas:active {
     const overallPct = Math.min(100, Math.round((currentStep / totalSteps) * 100));
     $('progress-fill').style.width = overallPct + '%';
 
-    VoiceEngine.speak(q.speech);
+    // Single unified voice narration
+    const welcomePrefix = isWelcome
+      ? (isEn ? "Welcome! Each level has 5 exercises with 3 activities. " : "Bienvenue ! Chaque niveau comporte 5 exercices avec 3 activités. ")
+      : "";
+    VoiceEngine.speak(welcomePrefix + (q.speech || q.prompt));
 
     // Interactive fallback / quick tap buttons
     const answersBox = $('answers-container');
@@ -1639,22 +1726,23 @@ canvas#sim-canvas:active {
         y: 60,
         vy: speed,
         r: 28,
-        color: v === q.ans ? '#F97316' : '#EF4444'
+        color: v === q.ans ? '#E5252A' : '#111827'
       }));
     }
   }
 
   function submitPlayerChoice(choice) {
     if (state.paused) return;
-    const isCorrect = String(choice).trim().toLowerCase() === String(state.question.ans).trim().toLowerCase();
+    const isCorrect = String(choice).trim().toLowerCase().includes(String(state.question.ans).trim().toLowerCase()) ||
+                      String(state.question.ans).trim().toLowerCase().includes(String(choice).trim().toLowerCase());
     if (isCorrect) {
       onActivityTaskCompleted();
     } else {
       AudioEngine.playWrong();
       state.lives--;
       state.combo = 0;
-      addFloatingScore("Oups ! Réessaie au doigt 💪", CW / 2, CH / 2 - 20, '#EF4444');
-      $('hud-lives-badge').textContent = "❤️".repeat(Math.max(0, state.lives));
+      addFloatingScore(state.lang === 'en' ? "Try again with your finger! 💪" : "Réessaie avec ton doigt ! 💪", CW / 2, CH / 2 - 20, '#E5252A');
+      $('hud-lives-badge').textContent = "❤️❤️❤️".slice(0, Math.max(0, state.lives * 2));
       if (state.lives <= 1) {
         setTimeout(() => openTutorPanel(), 500);
       }
@@ -1663,19 +1751,18 @@ canvas#sim-canvas:active {
 
   function openTutorPanel() {
     const q = state.question;
-    $('tutor-step-title').textContent = "Léo le Lion t'explique";
-    $('tutor-step-desc').textContent = q ? q.prompt : "Prends ton temps pour observer !";
-    $('tutor-trick-content').textContent = q ? q.tutorTrick : "Déplace les objets avec ton doigt pour voir le résultat.";
+    $('tutor-step-title').textContent = state.lang === 'en' ? "Leo the Lion explains" : "Le professeur Léo t'explique";
+    $('tutor-step-desc').textContent = q ? q.prompt : "";
+    $('tutor-trick-content').textContent = q ? q.tutorTrick : (state.lang === 'en' ? "Touch and drag items with your finger to observe the result!" : "Déplace les objets avec ton doigt pour observer le résultat !");
     $('tutor-panel').classList.add('active');
   }
 
   // ============================================================================
-  // CONTINUOUS REAL PHYSICS RENDER & ANIMATION LOOP
+  // CONTINUOUS REAL PHYSICS RENDER & ANIMATION LOOP (NATEIVA PALETTE)
   // ============================================================================
   function renderLoop() {
     ctx.save();
 
-    // Screen Shake
     if (state.screenShake > 0) {
       const sx = (Math.random() - 0.5) * state.screenShake;
       const sy = (Math.random() - 0.5) * state.screenShake;
@@ -1686,10 +1773,10 @@ canvas#sim-canvas:active {
 
     ctx.clearRect(0, 0, CW, CH);
 
-    // Deep Canvas Background
+    // Deep Canvas Background (Nateiva Dark Black #111827)
     const bg = ctx.createLinearGradient(0, 0, 0, CH);
-    bg.addColorStop(0, '#0F172A');
-    bg.addColorStop(1, '#1E293B');
+    bg.addColorStop(0, '#111827');
+    bg.addColorStop(1, '#1F2937');
     ctx.fillStyle = bg;
     ctx.fillRect(0, 0, CW, CH);
 
@@ -1697,9 +1784,11 @@ canvas#sim-canvas:active {
 
     // 1. CHEMISTRY LAB SIMULATION
     if (g === 'chemistry') {
-      // Shelf table
-      ctx.fillStyle = '#334155';
+      // Lab Bench table (Graphite Slate)
+      ctx.fillStyle = '#374151';
       ctx.fillRect(0, 310, CW, 70);
+      ctx.fillStyle = '#E5252A';
+      ctx.fillRect(0, 310, CW, 4);
 
       // Erlenmeyer Flask at (380, 260)
       const fx = state.flask.x;
@@ -1717,7 +1806,7 @@ canvas#sim-canvas:active {
       ctx.closePath();
       ctx.fillStyle = 'rgba(255, 255, 255, 0.08)';
       ctx.fill();
-      ctx.strokeStyle = '#94A3B8';
+      ctx.strokeStyle = '#E5E7EB';
       ctx.lineWidth = 3.5;
       ctx.stroke();
 
@@ -1732,11 +1821,11 @@ canvas#sim-canvas:active {
       ctx.fillStyle = state.flask.fluidColor;
       ctx.fill();
 
-      // Fizzy bubbles
+      // Effervescent bubbles
       if (Math.random() < 0.3) {
         state.flask.bubbles.push({ x: fx + (Math.random() - 0.5) * 60, y: fy + 35, vy: 1 + Math.random() * 2, r: 2 + Math.random() * 3 });
       }
-      ctx.fillStyle = 'rgba(255, 255, 255, 0.6)';
+      ctx.fillStyle = 'rgba(255, 255, 255, 0.7)';
       state.flask.bubbles.forEach((b, i) => {
         b.y -= b.vy;
         ctx.beginPath();
@@ -1752,28 +1841,24 @@ canvas#sim-canvas:active {
         ctx.translate(t.x, t.y);
         ctx.rotate((t.tilt * Math.PI) / 180);
 
-        // Glass Tube Body
         ctx.beginPath();
         ctx.roundRect(-12, -35, 24, 70, 10);
         ctx.fillStyle = 'rgba(255, 255, 255, 0.15)';
         ctx.fill();
-        ctx.strokeStyle = '#CBD5E1';
+        ctx.strokeStyle = '#FFFFFF';
         ctx.lineWidth = 2.5;
         ctx.stroke();
 
-        // Liquid in tube
         ctx.beginPath();
         ctx.roundRect(-9, 0, 18, 30, 8);
         ctx.fillStyle = t.color;
         ctx.fill();
 
-        // Label
         ctx.fillStyle = '#FFFFFF';
-        ctx.font = 'bold 12px sans-serif';
+        ctx.font = 'bold 13px sans-serif';
         ctx.textAlign = 'center';
-        ctx.fillText(t.label, 0, -42);
+        ctx.fillText(t.emoji + " " + t.label, 0, -42);
 
-        // Pouring Stream if tilted
         if (t.tilt > 30) {
           ctx.beginPath();
           ctx.moveTo(10, 30);
@@ -1789,24 +1874,24 @@ canvas#sim-canvas:active {
     // 2. BOTANY GERMINATION & PLANT SIMULATION
     else if (g === 'botany') {
       // Ground / Soil layer
-      ctx.fillStyle = '#78350F';
+      ctx.fillStyle = '#27170E';
       ctx.fillRect(0, 240, CW, 140);
-      ctx.fillStyle = '#451A03';
-      ctx.fillRect(0, 240, CW, 8);
+      ctx.fillStyle = '#E5252A';
+      ctx.fillRect(0, 240, CW, 4);
 
       // Sunlight rays
       ctx.save();
       const sx = state.sun.x;
       const sy = state.sun.y;
       const sunGrad = ctx.createRadialGradient(sx, sy, 10, sx, sy, 90);
-      sunGrad.addColorStop(0, 'rgba(253, 224, 71, 0.8)');
+      sunGrad.addColorStop(0, 'rgba(253, 224, 71, 0.85)');
       sunGrad.addColorStop(1, 'transparent');
       ctx.fillStyle = sunGrad;
       ctx.beginPath();
       ctx.arc(sx, sy, 90, 0, Math.PI * 2);
       ctx.fill();
 
-      ctx.fillStyle = '#FBBF24';
+      ctx.fillStyle = '#F59E0B';
       ctx.beginPath();
       ctx.arc(sx, sy, 32, 0, Math.PI * 2);
       ctx.fill();
@@ -1825,7 +1910,6 @@ canvas#sim-canvas:active {
         ctx.lineWidth = 7;
         ctx.stroke();
 
-        // Leaves
         if (state.leafSpread > 0) {
           ctx.save();
           ctx.translate(px, py - sh * 0.6);
@@ -1839,19 +1923,18 @@ canvas#sim-canvas:active {
           ctx.restore();
         }
 
-        // Flower
         if (state.flowerBloom > 0) {
           ctx.save();
           ctx.translate(px, py - sh);
           ctx.scale(state.flowerBloom, state.flowerBloom);
           for (let p = 0; p < 8; p++) {
             ctx.rotate((Math.PI * 2) / 8);
-            ctx.fillStyle = '#F59E0B';
+            ctx.fillStyle = '#E5252A';
             ctx.beginPath();
             ctx.ellipse(0, -18, 8, 16, 0, 0, Math.PI * 2);
             ctx.fill();
           }
-          ctx.fillStyle = '#78350F';
+          ctx.fillStyle = '#111827';
           ctx.beginPath();
           ctx.arc(0, 0, 14, 0, Math.PI * 2);
           ctx.fill();
@@ -1877,7 +1960,6 @@ canvas#sim-canvas:active {
       ctx.textAlign = 'center';
       ctx.fillText('🚿', 0, 16);
       if (state.can.tilt > 20) {
-        // Droplets
         ctx.fillStyle = '#38BDF8';
         for (let d = 0; d < 5; d++) {
           ctx.beginPath();
@@ -1891,36 +1973,34 @@ canvas#sim-canvas:active {
       ctx.fillStyle = '#FFFFFF';
       ctx.font = 'bold 16px sans-serif';
       ctx.textAlign = 'left';
-      ctx.fillText('🗓️ Jour ' + Math.floor(state.simDay) + ' / 21', 20, 40);
+      ctx.fillText(state.lang === 'en' ? '🗓️ Day ' + Math.floor(state.simDay) + ' / 21' : '🗓️ Jour ' + Math.floor(state.simDay) + ' / 21', 20, 40);
       ctx.font = '13px sans-serif';
-      ctx.fillStyle = '#CBD5E1';
-      ctx.fillText('Humidité: ' + Math.floor(state.soilMoisture) + '% • Soleil: ' + Math.floor(state.sunExposure) + '%', 20, 62);
+      ctx.fillStyle = '#9CA3AF';
+      ctx.fillText(state.lang === 'en' ? 'Soil Moisture: ' + Math.floor(state.soilMoisture) + '% • Sun: ' + Math.floor(state.sunExposure) + '%' : 'Humidité: ' + Math.floor(state.soilMoisture) + '% • Soleil: ' + Math.floor(state.sunExposure) + '%', 20, 62);
     }
 
     // 3. ARCHIMEDES BUOYANCY AQUARIUM
     else if (g === 'density') {
       const wy = state.waterLevelY;
 
-      // Tank glass background
-      ctx.fillStyle = 'rgba(56, 189, 248, 0.15)';
+      ctx.fillStyle = 'rgba(56, 189, 248, 0.12)';
       ctx.fillRect(30, wy, CW - 60, CH - wy - 20);
 
-      // Realistic Damped Waves
+      // Waves
       ctx.beginPath();
       ctx.moveTo(30, wy);
       const stepW = (CW - 60) / (state.waterNodes.length - 1);
       state.waterNodes.forEach((node, i) => {
-        // Spring physics
         const force = -0.08 * (node.y - node.targetY);
         node.vy += force;
-        node.vy *= 0.94; // damping
+        node.vy *= 0.94;
         node.y += node.vy;
         ctx.lineTo(30 + i * stepW, node.y);
       });
       ctx.lineTo(CW - 30, CH - 20);
       ctx.lineTo(30, CH - 20);
       ctx.closePath();
-      ctx.fillStyle = 'rgba(14, 165, 233, 0.45)';
+      ctx.fillStyle = 'rgba(14, 165, 233, 0.4)';
       ctx.fill();
       ctx.strokeStyle = '#38BDF8';
       ctx.lineWidth = 3;
@@ -1928,15 +2008,13 @@ canvas#sim-canvas:active {
 
       // Density Items
       state.densityItems.forEach(it => {
-        // Physics in water
         if (it.inWater && state.dragged !== it) {
           const gravity = 0.25 * it.density;
           const buoyancy = it.y > wy ? -0.32 : 0;
           it.vy += gravity + buoyancy;
-          it.vy *= 0.92; // water resistance
+          it.vy *= 0.92;
           it.y += it.vy;
 
-          // Bottom collision
           if (it.y > CH - 45) {
             it.y = CH - 45;
             it.vy = 0;
@@ -1955,27 +2033,30 @@ canvas#sim-canvas:active {
       });
 
       // Digital Density Multimeter
-      ctx.fillStyle = 'rgba(15, 23, 42, 0.85)';
+      ctx.fillStyle = 'rgba(17, 24, 39, 0.9)';
       ctx.roundRect(40, 30, 260, 48, 12);
       ctx.fill();
-      ctx.strokeStyle = '#0284C7';
-      ctx.lineWidth = 1.8;
+      ctx.strokeStyle = '#E5252A';
+      ctx.lineWidth = 2;
       ctx.stroke();
       ctx.fillStyle = '#38BDF8';
       ctx.font = 'bold 13px monospace';
       ctx.textAlign = 'left';
-      ctx.fillText('Masse Volumique Eau : 1.0 g/cm³', 52, 50);
-      ctx.fillStyle = '#F8FAFC';
+      ctx.fillText('Eau : 1.0 g/cm³', 52, 50);
+      ctx.fillStyle = '#FFFFFF';
       ctx.font = 'bold 11px sans-serif';
-      ctx.fillText('Liège (0.25) < Eau ➜ FLOTTE !', 52, 68);
+      ctx.fillText(state.lang === 'en' ? 'Cork (0.25) < Water ➜ FLOATS!' : 'Liège (0.25) < Eau ➜ FLOTTE !', 52, 68);
     }
 
     // 4. ELECTRIC CIRCUIT SIMULATION
     else if (g === 'circuit') {
       // Battery at (80, 200)
-      ctx.fillStyle = '#EF4444';
+      ctx.fillStyle = '#E5252A';
       ctx.roundRect(60, 170, 45, 60, 8);
       ctx.fill();
+      ctx.strokeStyle = '#FFFFFF';
+      ctx.lineWidth = 2;
+      ctx.stroke();
       ctx.fillStyle = '#FFFFFF';
       ctx.font = 'bold 14px sans-serif';
       ctx.textAlign = 'center';
@@ -1986,7 +2067,7 @@ canvas#sim-canvas:active {
       ctx.arc(320, 90, 26, 0, Math.PI * 2);
       ctx.fillStyle = state.circuitClosed ? '#FEF08A' : 'rgba(255, 255, 255, 0.15)';
       ctx.fill();
-      ctx.strokeStyle = '#CBD5E1';
+      ctx.strokeStyle = '#E5E7EB';
       ctx.lineWidth = 2.5;
       ctx.stroke();
       ctx.font = '30px sans-serif';
@@ -2003,12 +2084,12 @@ canvas#sim-canvas:active {
       ctx.fillText('🌀', 0, 14);
       ctx.restore();
 
-      // Knife Switch Base at (180, 200) to (250, 200)
-      ctx.strokeStyle = '#64748B';
+      // Knife Switch Base
+      ctx.strokeStyle = '#4B5563';
       ctx.lineWidth = 4;
       ctx.strokeRect(175, 195, 80, 10);
 
-      // Knife Switch Blade (drags from 36 deg down to 0)
+      // Knife Switch Blade
       ctx.save();
       ctx.translate(180, 200);
       ctx.rotate((-state.switchBlade.angle * Math.PI) / 180);
@@ -2018,14 +2099,13 @@ canvas#sim-canvas:active {
       ctx.moveTo(0, 0);
       ctx.lineTo(70, 0);
       ctx.stroke();
-      // Knob handle
       ctx.fillStyle = '#E5252A';
       ctx.beginPath();
       ctx.arc(70, 0, 9, 0, Math.PI * 2);
       ctx.fill();
       ctx.restore();
 
-      // Electron particle loop
+      // Electrons
       if (state.circuitClosed) {
         ctx.fillStyle = '#67E8F9';
         state.electrons.forEach(el => {
@@ -2042,36 +2122,35 @@ canvas#sim-canvas:active {
       }
 
       // Digital Multimeter Box
-      ctx.fillStyle = 'rgba(15, 23, 42, 0.9)';
+      ctx.fillStyle = 'rgba(17, 24, 39, 0.95)';
       ctx.roundRect(140, 270, 320, 52, 14);
       ctx.fill();
-      ctx.strokeStyle = state.circuitClosed ? '#10B981' : '#64748B';
+      ctx.strokeStyle = state.circuitClosed ? '#E5252A' : '#4B5563';
       ctx.lineWidth = 2;
       ctx.stroke();
       ctx.fillStyle = state.circuitClosed ? '#34D399' : '#EF4444';
       ctx.font = 'bold 15px monospace';
       ctx.textAlign = 'center';
-      const statusTxt = state.circuitClosed ? "FERMÉ • I = 0.85 A • P = 3.8 W" : "OUVERT • I = 0.00 A (Coupe-circuit)";
+      const statusTxt = state.circuitClosed
+        ? (state.lang === 'en' ? "CLOSED • I = 0.85 A • P = 3.8 W" : "FERMÉ • I = 0.85 A • P = 3.8 W")
+        : (state.lang === 'en' ? "OPEN • I = 0.00 A (No Current)" : "OUVERT • I = 0.00 A (Coupe-circuit)");
       ctx.fillText(statusTxt, 300, 302);
     }
 
     // 5. COMET DEFENDER ARCADE
     else if (g === 'comet') {
-      // Spaceship follow targetX
       state.ship.x += (state.ship.targetX - state.ship.x) * 0.2;
       ctx.font = '46px sans-serif';
       ctx.textAlign = 'center';
       ctx.fillText('🚀', state.ship.x, state.ship.y);
 
-      // Lasers
-      ctx.fillStyle = '#38BDF8';
+      ctx.fillStyle = '#E5252A';
       state.lasers.forEach((l, i) => {
         l.y += l.vy;
         ctx.fillRect(l.x - 2.5, l.y, 5, 16);
         if (l.y < 0) state.lasers.splice(i, 1);
       });
 
-      // Meteors
       state.meteors.forEach(m => {
         m.y += m.vy;
         ctx.beginPath();
@@ -2131,34 +2210,40 @@ canvas#sim-canvas:active {
 
   $('grade-select').addEventListener('change', e => {
     state.grade = e.target.value;
-    if (state.game) nextActivityChallenge();
+    if (state.game) nextActivityChallenge(false);
   });
 
   $('lang-select').addEventListener('change', e => {
     state.lang = e.target.value;
-    VoiceEngine.lang = e.target.value;
-    if (state.game) nextActivityChallenge();
+    if (state.game) nextActivityChallenge(false);
   });
 
   $('btn-sound-toggle').addEventListener('click', () => {
     state.muted = !state.muted;
     $('btn-sound-toggle').textContent = state.muted ? "🔇 Muet" : "🔊 Son";
+    if (state.muted) VoiceEngine.stop();
   });
 
   $('btn-narrate').addEventListener('click', () => {
     if (state.question) VoiceEngine.speak(state.question.speech || state.question.prompt);
   });
 
-  $('btn-back-hub').addEventListener('click', () => {
+  const handleGoHome = () => {
+    VoiceEngine.stop();
     $('arcade-workspace').classList.remove('active');
     $('portals-grid').style.display = 'grid';
     $('hero-banner').style.display = 'flex';
     state.game = null;
-  });
+  };
+
+  if ($('btn-back-hub-top')) $('btn-back-hub-top').addEventListener('click', handleGoHome);
+  if ($('btn-back-hub-top-right')) $('btn-back-hub-top-right').addEventListener('click', handleGoHome);
+  if ($('btn-back-hub')) $('btn-back-hub').addEventListener('click', handleGoHome);
 
   $('btn-pause-toggle').addEventListener('click', () => {
     state.paused = !state.paused;
     $('btn-pause-toggle').textContent = state.paused ? "▶ Reprendre" : "⏸ Pause";
+    if (state.paused) VoiceEngine.stop();
   });
 
   $('btn-open-tutor').addEventListener('click', () => openTutorPanel());
