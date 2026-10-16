@@ -4,10 +4,10 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
 <meta name="theme-color" content="#E5252A">
-<title>Nateiva Kids • Arcade Éducative & Simulations Tactiles</title>
+<title>Nateiva Kids • Arcade Éducative & Simulations Flottantes</title>
 <style>
 /* ==========================================================================
-   NATEIVA BRAND DESIGN SYSTEM (NOIR, ROUGE NATEIVA, GRIS, BLANC PUR)
+   NATEIVA APPLE-GRADE DESIGN SYSTEM (BLACK, ROUGE NATEIVA, GRIS, BLANC PUR)
    ========================================================================== */
 :root {
   --nateiva-red: #E5252A;
@@ -21,12 +21,14 @@
   --nateiva-grey-bg: #F9FAFB;
   --nateiva-white: #FFFFFF;
 
+  --radius-xl: 26px;
   --radius-lg: 20px;
   --radius-md: 14px;
   --radius-sm: 10px;
   --border-card: 2.5px solid var(--nateiva-black);
   --border-grey: 2px solid var(--nateiva-grey-light);
-  --shadow-nateiva: 0 10px 25px rgba(17, 24, 39, 0.08);
+  --shadow-apple: 0 12px 30px rgba(17, 24, 39, 0.08);
+  --shadow-hover: 0 20px 40px rgba(17, 24, 39, 0.14);
 }
 
 * {
@@ -37,7 +39,7 @@
   -webkit-user-select: none;
   -webkit-touch-callout: none;
   touch-action: manipulation;
-  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Rounded", "Segoe UI", Roboto, sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Rounded", "SF Pro Display", "Segoe UI", Roboto, sans-serif;
 }
 
 body {
@@ -47,16 +49,16 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 12px;
+  padding: 14px;
   overflow-x: hidden;
 }
 
 .shell {
   width: 100%;
-  max-width: 1080px;
+  max-width: 1100px;
   display: flex;
   flex-direction: column;
-  gap: 14px;
+  gap: 16px;
 }
 
 /* TOP NAVBAR */
@@ -64,11 +66,11 @@ body {
   background: var(--nateiva-white);
   border: var(--border-card);
   border-radius: var(--radius-lg);
-  padding: 12px 20px;
+  padding: 12px 22px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  box-shadow: var(--shadow-nateiva);
+  box-shadow: var(--shadow-apple);
   flex-wrap: wrap;
   gap: 12px;
 }
@@ -80,28 +82,28 @@ body {
 }
 
 .brand-icon {
-  width: 44px;
-  height: 44px;
-  border-radius: 12px;
+  width: 46px;
+  height: 46px;
+  border-radius: 14px;
   background: var(--nateiva-red);
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 24px;
+  font-size: 26px;
   color: var(--nateiva-white);
   border: 2px solid var(--nateiva-black);
-  box-shadow: 0 4px 10px rgba(229, 37, 42, 0.25);
+  box-shadow: 0 4px 12px rgba(229, 37, 42, 0.28);
 }
 
 .brand-titles h1 {
-  font-size: 1.25rem;
+  font-size: 1.3rem;
   font-weight: 900;
   color: var(--nateiva-black);
   letter-spacing: -0.5px;
 }
 
 .brand-titles p {
-  font-size: 0.8rem;
+  font-size: 0.82rem;
   color: var(--nateiva-grey-dark);
   font-weight: 700;
 }
@@ -144,12 +146,114 @@ body {
   background: var(--nateiva-grey-light);
 }
 
+/* ==========================================================================
+   LEVEL-FIRST SELECTOR BAR (STEP 1: CHOOSE LEVEL)
+   ========================================================================== */
+.level-selector-section {
+  background: var(--nateiva-white);
+  border: var(--border-card);
+  border-radius: var(--radius-xl);
+  padding: 16px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  box-shadow: var(--shadow-apple);
+}
+
+.level-selector-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.level-title-wrap {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.level-badge-pill {
+  background: var(--nateiva-red);
+  color: var(--nateiva-white);
+  font-size: 0.76rem;
+  font-weight: 900;
+  padding: 4px 10px;
+  border-radius: 8px;
+  letter-spacing: 0.5px;
+}
+
+.level-title-wrap h3 {
+  font-size: 1.15rem;
+  font-weight: 900;
+  color: var(--nateiva-black);
+}
+
+.level-active-info {
+  font-size: 0.84rem;
+  font-weight: 800;
+  color: var(--nateiva-grey-dark);
+  background: var(--nateiva-grey-bg);
+  padding: 4px 12px;
+  border-radius: 10px;
+  border: 1.5px solid var(--nateiva-grey-light);
+}
+
+.level-pills-track {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  overflow-x: auto;
+  padding: 4px 2px 8px;
+  scrollbar-width: thin;
+}
+
+.level-pill-btn {
+  background: var(--nateiva-white);
+  border: 2px solid var(--nateiva-black);
+  border-radius: 16px;
+  padding: 10px 18px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  min-width: 86px;
+  cursor: pointer;
+  transition: all 0.22s cubic-bezier(0.34, 1.56, 0.64, 1);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+  flex-shrink: 0;
+}
+
+.level-pill-btn:hover {
+  transform: translateY(-4px) scale(1.05);
+  box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+}
+
+.level-pill-btn.active {
+  background: var(--nateiva-black);
+  color: var(--nateiva-white);
+  border-color: var(--nateiva-red);
+  transform: translateY(-4px) scale(1.08);
+  box-shadow: 0 12px 24px rgba(229, 37, 42, 0.25);
+}
+
+.level-pill-num {
+  font-size: 1.1rem;
+  font-weight: 900;
+}
+
+.level-pill-stars {
+  font-size: 0.72rem;
+  color: #F59E0B;
+}
+
 /* CATEGORY TABS */
 .category-tabs {
   display: flex;
   gap: 8px;
   overflow-x: auto;
-  padding: 4px 2px;
+  padding: 2px;
 }
 
 .tab-btn {
@@ -171,70 +275,77 @@ body {
   border-color: var(--nateiva-black);
 }
 
-/* HERO BANNER */
-.hero-banner {
-  background: var(--nateiva-white);
-  border: var(--border-card);
-  border-radius: var(--radius-lg);
-  padding: 18px 22px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 16px;
-  box-shadow: var(--shadow-nateiva);
+/* ==========================================================================
+   APPLE FLOATING CARDS ANIMATION
+   ========================================================================== */
+@keyframes appleFloat {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-7px); }
+  100% { transform: translateY(0px); }
 }
 
-.hero-content h2 {
-  font-size: 1.35rem;
-  font-weight: 900;
-  color: var(--nateiva-black);
-  margin-bottom: 4px;
-}
-
-.hero-content p {
-  font-size: 0.88rem;
-  color: var(--nateiva-grey-dark);
-  font-weight: 700;
-  line-height: 1.4;
-}
-
-.hero-mascot-badge {
-  font-size: 44px;
-  background: var(--nateiva-grey-bg);
-  border: 2px solid var(--nateiva-grey-light);
-  border-radius: 16px;
-  padding: 8px 14px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-/* PORTALS GRID */
 .portals-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(310px, 1fr));
-  gap: 16px;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 18px;
+  transition: all 0.3s ease;
 }
 
 .portal-card {
   background: var(--nateiva-white);
   border: var(--border-card);
-  border-radius: var(--radius-lg);
-  padding: 18px;
+  border-radius: var(--radius-xl);
+  padding: 20px;
   display: flex;
   flex-direction: column;
   gap: 12px;
   cursor: pointer;
-  transition: transform 0.18s ease, box-shadow 0.18s ease;
-  box-shadow: var(--shadow-nateiva);
   text-align: left;
   outline: none;
+  box-shadow: var(--shadow-apple);
+  animation: appleFloat 4.6s ease-in-out infinite;
+  transition: transform 0.22s ease, box-shadow 0.22s ease, border-color 0.22s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.portal-card:nth-child(2n) {
+  animation-delay: -1.4s;
+}
+
+.portal-card:nth-child(3n) {
+  animation-delay: -2.8s;
+}
+
+.portal-card:nth-child(4n) {
+  animation-delay: -3.8s;
 }
 
 .portal-card:hover, .portal-card:focus {
-  transform: translateY(-3px);
-  box-shadow: 0 14px 28px rgba(17, 24, 39, 0.14);
+  animation-play-state: paused;
+  transform: translateY(-10px) scale(1.02);
+  box-shadow: var(--shadow-hover);
   border-color: var(--nateiva-red);
+}
+
+.portal-card.card-rearranging {
+  animation: none;
+  transform: scale(0.96);
+  opacity: 0.6;
+}
+
+.card-top-glow {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: transparent;
+  transition: background 0.2s ease;
+}
+
+.portal-card:hover .card-top-glow {
+  background: var(--nateiva-red);
 }
 
 .portal-card-header {
@@ -244,25 +355,26 @@ body {
 }
 
 .portal-badge {
-  width: 48px;
-  height: 48px;
-  border-radius: 14px;
+  width: 52px;
+  height: 52px;
+  border-radius: 16px;
   background: var(--nateiva-grey-bg);
   border: 2px solid var(--nateiva-black);
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 26px;
+  font-size: 28px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.06);
 }
 
 .portal-titles h3 {
-  font-size: 1.15rem;
+  font-size: 1.2rem;
   font-weight: 900;
   color: var(--nateiva-black);
 }
 
 .portal-curriculum-tag {
-  font-size: 0.76rem;
+  font-size: 0.78rem;
   font-weight: 800;
   color: var(--nateiva-red);
   text-transform: uppercase;
@@ -270,7 +382,7 @@ body {
 }
 
 .portal-desc {
-  font-size: 0.85rem;
+  font-size: 0.88rem;
   color: var(--nateiva-grey-dark);
   font-weight: 700;
   line-height: 1.45;
@@ -282,14 +394,14 @@ body {
   align-items: center;
   gap: 6px;
   flex-wrap: wrap;
-  padding-top: 8px;
+  padding-top: 10px;
   border-top: 1.5px solid var(--nateiva-grey-light);
 }
 
 .count-pill {
-  font-size: 0.74rem;
+  font-size: 0.76rem;
   font-weight: 900;
-  padding: 4px 8px;
+  padding: 4px 10px;
   border-radius: 8px;
   border: 1.5px solid var(--nateiva-grey-light);
   background: var(--nateiva-grey-bg);
@@ -311,11 +423,13 @@ body {
   background: var(--nateiva-black);
 }
 
-/* ARCADE WORKSPACE */
+/* ==========================================================================
+   ARCADE & SIMULATION WORKSPACE
+   ========================================================================== */
 .arcade-workspace {
   display: none;
   flex-direction: column;
-  gap: 12px;
+  gap: 14px;
 }
 
 .arcade-workspace.active {
@@ -327,12 +441,12 @@ body {
   background: var(--nateiva-black);
   color: var(--nateiva-white);
   border-radius: var(--radius-lg);
-  padding: 12px 18px;
+  padding: 12px 20px;
   display: flex;
   align-items: center;
   justify-content: space-between;
   border: 2px solid var(--nateiva-black);
-  box-shadow: var(--shadow-nateiva);
+  box-shadow: var(--shadow-apple);
   flex-wrap: wrap;
   gap: 10px;
 }
@@ -342,9 +456,9 @@ body {
   color: var(--nateiva-white);
   border: 2px solid #FFFFFF;
   border-radius: 12px;
-  padding: 6px 14px;
+  padding: 7px 16px;
   font-weight: 900;
-  font-size: 0.84rem;
+  font-size: 0.86rem;
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -353,7 +467,7 @@ body {
 }
 
 .btn-home-top:hover {
-  transform: scale(1.04);
+  transform: scale(1.05);
 }
 
 .hud-left {
@@ -364,7 +478,7 @@ body {
 }
 
 .hud-title {
-  font-size: 1.05rem;
+  font-size: 1.1rem;
   font-weight: 900;
   display: flex;
   align-items: center;
@@ -375,9 +489,9 @@ body {
   background: rgba(255, 255, 255, 0.12);
   border: 1.5px solid rgba(255, 255, 255, 0.25);
   border-radius: 10px;
-  padding: 4px 10px;
+  padding: 4px 12px;
   font-weight: 800;
-  font-size: 0.82rem;
+  font-size: 0.84rem;
   display: flex;
   align-items: center;
   gap: 6px;
@@ -400,9 +514,9 @@ body {
 .combo-multiplier {
   background: var(--nateiva-red);
   color: var(--nateiva-white);
-  font-size: 0.82rem;
+  font-size: 0.84rem;
   font-weight: 900;
-  padding: 4px 10px;
+  padding: 4px 12px;
   border-radius: 10px;
   border: 1.5px solid #FFFFFF;
 }
@@ -412,14 +526,14 @@ body {
   background: #F9FAFB;
   border: 2px solid var(--nateiva-grey-light);
   border-radius: var(--radius-md);
-  padding: 10px 16px;
+  padding: 10px 18px;
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 12px;
   font-weight: 800;
   color: var(--nateiva-black);
-  font-size: 0.86rem;
+  font-size: 0.88rem;
   flex-wrap: wrap;
 }
 
@@ -451,7 +565,7 @@ body {
   background: #F9FAFB;
   border: 2px solid var(--nateiva-grey-light);
   border-radius: 14px;
-  padding: 8px 14px;
+  padding: 10px 16px;
   margin: 2px 0;
   flex-wrap: wrap;
 }
@@ -460,9 +574,9 @@ body {
   display: flex;
   align-items: center;
   gap: 6px;
-  font-size: 0.8rem;
+  font-size: 0.82rem;
   font-weight: 900;
-  padding: 6px 12px;
+  padding: 6px 14px;
   border-radius: 10px;
   border: 1.5px solid var(--nateiva-grey-light);
   background: var(--nateiva-white);
@@ -482,8 +596,8 @@ body {
 }
 
 .step-connector {
-  width: 20px;
-  height: 3px;
+  width: 24px;
+  height: 3.5px;
   background: var(--nateiva-grey-light);
   border-radius: 2px;
 }
@@ -495,9 +609,9 @@ body {
 /* PROGRESS BAR */
 .progress-container {
   width: 100%;
-  height: 8px;
+  height: 9px;
   background: var(--nateiva-grey-light);
-  border-radius: 4px;
+  border-radius: 5px;
   overflow: hidden;
 }
 
@@ -505,19 +619,19 @@ body {
   height: 100%;
   width: 10%;
   background: var(--nateiva-red);
-  transition: width 0.3s ease;
+  transition: width 0.35s ease;
 }
 
 /* PLAYGROUND CARD */
 .playground-card {
   background: var(--nateiva-white);
   border: var(--border-card);
-  border-radius: var(--radius-lg);
-  padding: 16px;
+  border-radius: var(--radius-xl);
+  padding: 18px;
   display: flex;
   flex-direction: column;
-  gap: 12px;
-  box-shadow: var(--shadow-nateiva);
+  gap: 14px;
+  box-shadow: var(--shadow-apple);
 }
 
 .instruction-header {
@@ -529,13 +643,13 @@ body {
 }
 
 .instruction-box h3 {
-  font-size: 1.15rem;
+  font-size: 1.2rem;
   font-weight: 900;
   color: var(--nateiva-black);
 }
 
 .instruction-box p {
-  font-size: 0.85rem;
+  font-size: 0.86rem;
   color: var(--nateiva-grey-dark);
   font-weight: 700;
 }
@@ -545,9 +659,9 @@ body {
   color: var(--nateiva-white);
   border: 2px solid var(--nateiva-black);
   border-radius: 12px;
-  padding: 8px 14px;
+  padding: 8px 16px;
   font-weight: 800;
-  font-size: 0.84rem;
+  font-size: 0.85rem;
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -570,6 +684,39 @@ canvas#simCanvas {
   width: 100%;
   height: 380px;
   touch-action: none;
+}
+
+/* ON-SCREEN MAZE D-PAD CONTROLLER */
+.maze-dpad-container {
+  display: none;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 6px;
+}
+
+.maze-dpad-container.active {
+  display: flex;
+}
+
+.dpad-btn {
+  width: 54px;
+  height: 54px;
+  border-radius: 16px;
+  background: var(--nateiva-white);
+  border: 2.5px solid var(--nateiva-black);
+  font-size: 24px;
+  font-weight: 900;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  transition: transform 0.1s ease, background 0.1s ease;
+}
+
+.dpad-btn:active {
+  transform: scale(0.92);
+  background: var(--nateiva-red-light);
 }
 
 /* MODULE SPECIFIC OVERLAYS */
@@ -697,7 +844,7 @@ canvas#simCanvas {
   flex-direction: column;
   align-items: center;
   gap: 6px;
-  box-shadow: var(--shadow-nateiva);
+  box-shadow: var(--shadow-apple);
 }
 
 .word-phonetic-banner h2 {
@@ -784,7 +931,7 @@ canvas#simCanvas {
   font-size: 1.15rem;
   font-weight: 700;
   color: var(--nateiva-black);
-  box-shadow: var(--shadow-nateiva);
+  box-shadow: var(--shadow-apple);
 }
 
 .story-sentence {
@@ -853,7 +1000,7 @@ canvas#simCanvas {
   border-color: var(--nateiva-red);
 }
 
-/* INTERACTIVE QUICK ANSWERS BOX (TOUCH BUTTONS) */
+/* INTERACTIVE QUICK ANSWERS BOX */
 .answers-container {
   display: flex;
   gap: 10px;
@@ -973,7 +1120,7 @@ canvas#simCanvas {
       <div class="brand-icon">🦁</div>
       <div class="brand-titles">
         <h1>Nateiva Kids</h1>
-        <p id="lbl-tagline">Arcade Éducative, Maths, Lecture & Simulations</p>
+        <p id="lbl-tagline">Arcade Éducative, Maths, Lecture, Labyrinthes & Puzzles</p>
       </div>
     </div>
     <div class="nav-actions">
@@ -991,29 +1138,73 @@ canvas#simCanvas {
     </div>
   </header>
 
+  <!-- LEVEL-FIRST SELECTOR BAR -->
+  <section class="level-selector-section" id="level-selector-section">
+    <div class="level-selector-header">
+      <div class="level-title-wrap">
+        <span class="level-badge-pill">🏆 ÉTAPE 1</span>
+        <h3 id="level-selector-title">Choisis ton Niveau :</h3>
+      </div>
+      <span class="level-active-info" id="level-active-info">Niveau 1 actif • 5 Exercices / 3 Activités</span>
+    </div>
+    <div class="level-pills-track" id="level-pills-track">
+      <!-- Generated via JS for 10 Levels -->
+    </div>
+  </section>
+
   <!-- CATEGORY FILTER TABS -->
   <nav class="category-tabs" id="category-tabs">
-    <button class="tab-btn active" data-filter="all">🌟 Tous les Univers</button>
+    <button class="tab-btn active" data-filter="all">🌟 Tous les Défis</button>
+    <button class="tab-btn" data-filter="arcade">🎮 Arcade & Labyrinthes</button>
+    <button class="tab-btn" data-filter="puzzle">🧩 Puzzles Tangram</button>
     <button class="tab-btn" data-filter="math">🧮 Mathématiques</button>
     <button class="tab-btn" data-filter="read">📖 Lecture & Syllabes</button>
     <button class="tab-btn" data-filter="voice">🗣️ Prononciation</button>
-    <button class="tab-btn" data-filter="story">📚 Histoires & Compréhension</button>
+    <button class="tab-btn" data-filter="story">📚 Histoires & Textes</button>
     <button class="tab-btn" data-filter="sci">🔬 Sciences Réalistes</button>
   </nav>
 
-  <!-- HERO BANNER -->
-  <section class="hero-banner" id="hero-banner">
-    <div class="hero-content">
-      <h2 id="hero-title">Apprends à Lire, Compter et Comprendre en Jouant !</h2>
-      <p id="hero-desc">Pour les petits (Maternelle/SIL) comme les grands : écoute la voix native studio, touche les objets avec ton doigt et progresse pas à pas ! 5 exercices par niveau, 3 activités par exercice.</p>
-    </div>
-    <div class="hero-mascot-badge" id="hero-mascot" title="Léo le Lion">🦁</div>
-  </section>
-
-  <!-- PORTALS GRID -->
+  <!-- PORTALS GRID (WITH APPLE FLOTATION) -->
   <section class="portals-grid" id="portals-grid">
-    <!-- 1. Math Lab (NEW) -->
+    <!-- 1. Maze Quest Arcade (NEW) -->
+    <button class="portal-card" data-cat="arcade" data-game="maze_quest">
+      <div class="card-top-glow"></div>
+      <div class="portal-card-header">
+        <div class="portal-badge">🦁</div>
+        <div class="portal-titles">
+          <h3>Labyrinthe Magique</h3>
+          <div class="portal-curriculum-tag">Arcade • Réflexes & Repérage</div>
+        </div>
+      </div>
+      <p class="portal-desc">Guide Léo le Lion au doigt dans le labyrinthe, attrape les étoiles et les clés d'or pour débloquer la sortie magique !</p>
+      <div class="portal-counts-badge-bar">
+        <span class="count-pill highlight">🎯 5 Exercices / Niveau</span>
+        <span class="count-pill black">⚡ 3 Activités / Exercice</span>
+        <span class="count-pill">🏆 10 Niveaux</span>
+      </div>
+    </button>
+
+    <!-- 2. Tangram Puzzle Snap (NEW) -->
+    <button class="portal-card" data-cat="puzzle" data-game="tangram_puzzle">
+      <div class="card-top-glow"></div>
+      <div class="portal-card-header">
+        <div class="portal-badge">🧩</div>
+        <div class="portal-titles">
+          <h3>Puzzle & Tangram Snap</h3>
+          <div class="portal-curriculum-tag">Géométrie • Formes & Logique</div>
+        </div>
+      </div>
+      <p class="portal-desc">Glisse les pièces géométriques magnétiques au doigt sur la silhouette pour reconstituer l'animal secret avec effet cartoon !</p>
+      <div class="portal-counts-badge-bar">
+        <span class="count-pill highlight">🎯 5 Exercices / Niveau</span>
+        <span class="count-pill black">⚡ 3 Activités / Exercice</span>
+        <span class="count-pill">🏆 10 Niveaux</span>
+      </div>
+    </button>
+
+    <!-- 3. Math Lab -->
     <button class="portal-card" data-cat="math" data-game="math_lab">
+      <div class="card-top-glow"></div>
       <div class="portal-card-header">
         <div class="portal-badge">🧮</div>
         <div class="portal-titles">
@@ -1029,8 +1220,9 @@ canvas#simCanvas {
       </div>
     </button>
 
-    <!-- 2. Reading & Syllables Lab (NEW) -->
+    <!-- 4. Reading & Syllables Lab -->
     <button class="portal-card" data-cat="read" data-game="reading_lab">
+      <div class="card-top-glow"></div>
       <div class="portal-card-header">
         <div class="portal-badge">📖</div>
         <div class="portal-titles">
@@ -1046,8 +1238,9 @@ canvas#simCanvas {
       </div>
     </button>
 
-    <!-- 3. Pronunciation Studio (NEW) -->
+    <!-- 5. Pronunciation Studio -->
     <button class="portal-card" data-cat="voice" data-game="pronunciation_lab">
+      <div class="card-top-glow"></div>
       <div class="portal-card-header">
         <div class="portal-badge">🗣️</div>
         <div class="portal-titles">
@@ -1063,8 +1256,9 @@ canvas#simCanvas {
       </div>
     </button>
 
-    <!-- 4. Stories & Comprehension Lab (NEW) -->
+    <!-- 6. Stories & Comprehension Lab -->
     <button class="portal-card" data-cat="story" data-game="story_lab">
+      <div class="card-top-glow"></div>
       <div class="portal-card-header">
         <div class="portal-badge">📚</div>
         <div class="portal-titles">
@@ -1080,8 +1274,9 @@ canvas#simCanvas {
       </div>
     </button>
 
-    <!-- 5. Comet Defender Arcade -->
-    <button class="portal-card" data-cat="math" data-game="comet">
+    <!-- 7. Comet Defender Arcade -->
+    <button class="portal-card" data-cat="arcade" data-game="comet">
+      <div class="card-top-glow"></div>
       <div class="portal-card-header">
         <div class="portal-badge">🚀</div>
         <div class="portal-titles">
@@ -1097,8 +1292,9 @@ canvas#simCanvas {
       </div>
     </button>
 
-    <!-- 6. Chemistry Real Simulation -->
+    <!-- 8. Chemistry Real Simulation -->
     <button class="portal-card" data-cat="sci" data-game="chemistry">
+      <div class="card-top-glow"></div>
       <div class="portal-card-header">
         <div class="portal-badge">🧪</div>
         <div class="portal-titles">
@@ -1114,8 +1310,9 @@ canvas#simCanvas {
       </div>
     </button>
 
-    <!-- 7. Botany Real Simulation -->
+    <!-- 9. Botany Real Simulation -->
     <button class="portal-card" data-cat="sci" data-game="botany">
+      <div class="card-top-glow"></div>
       <div class="portal-card-header">
         <div class="portal-badge">🌻</div>
         <div class="portal-titles">
@@ -1131,8 +1328,9 @@ canvas#simCanvas {
       </div>
     </button>
 
-    <!-- 8. Buoyancy Density Tank -->
+    <!-- 10. Buoyancy Density Tank -->
     <button class="portal-card" data-cat="sci" data-game="density">
+      <div class="card-top-glow"></div>
       <div class="portal-card-header">
         <div class="portal-badge">🌊</div>
         <div class="portal-titles">
@@ -1148,8 +1346,9 @@ canvas#simCanvas {
       </div>
     </button>
 
-    <!-- 9. Electric Circuit Simulation -->
+    <!-- 11. Electric Circuit Simulation -->
     <button class="portal-card" data-cat="sci" data-game="circuit">
+      <div class="card-top-glow"></div>
       <div class="portal-card-header">
         <div class="portal-badge">💡</div>
         <div class="portal-titles">
@@ -1172,7 +1371,8 @@ canvas#simCanvas {
     <div class="arcade-hud">
       <div class="hud-left">
         <button class="btn-home-top" id="btn-back-hub" title="Retourner à l'accueil">🏠 Accueil</button>
-        <div class="hud-title" id="hud-game-name">🧪 Labo de Chimie</div>
+        <button class="btn-home-top" id="btn-back-hub-top" style="display:none;">🏠</button>
+        <div class="hud-title" id="hud-game-name">🦁 Labyrinthe Magique</div>
         <div class="hud-badge red" id="hud-exercise-badge">🎯 Exercice 1/5 • Niveau 1</div>
       </div>
       <div class="hud-stats">
@@ -1217,8 +1417,8 @@ canvas#simCanvas {
     <div class="playground-card">
       <div class="instruction-header">
         <div class="instruction-box">
-          <h3 id="instruction-title">Prends l'éprouvette et verse-la dans le flacon !</h3>
-          <p id="curriculum-cue">Sciences • Manipule directement avec ton doigt</p>
+          <h3 id="instruction-title">Guide Léo le Lion vers les étoiles !</h3>
+          <p id="curriculum-cue">Arcade • Déplace avec les flèches ou au doigt</p>
         </div>
         <button class="btn-audio-speak" id="btn-replay-speech" title="Réécouter la voix de consigne">🔊 Écouter</button>
       </div>
@@ -1226,6 +1426,14 @@ canvas#simCanvas {
       <!-- CANVAS SIMULATION DISPLAY -->
       <div class="canvas-wrapper" id="canvas-wrapper">
         <canvas id="simCanvas" width="800" height="380"></canvas>
+      </div>
+
+      <!-- ON-SCREEN MAZE D-PAD CONTROLLER -->
+      <div class="maze-dpad-container" id="maze-dpad-container">
+        <button class="dpad-btn" id="dpad-up" title="Haut">▲</button>
+        <button class="dpad-btn" id="dpad-left" title="Gauche">◀</button>
+        <button class="dpad-btn" id="dpad-down" title="Bas">▼</button>
+        <button class="dpad-btn" id="dpad-right" title="Droite">▶</button>
       </div>
 
       <!-- READING LAB OVERLAY -->
@@ -1306,10 +1514,10 @@ canvas#simCanvas {
   'use strict';
 
   // ============================================================================
-  // DATABASE: CURRICULUMS, STORIES, PHONICS & MATHS (ANTI-REPETITION)
+  // DATABASE: CURRICULUMS, STORIES, PHONICS, MATHS & PUZZLES
   // ============================================================================
   const DB = {
-    // 20+ Stories (5 per grade: MAT, SIL, CE, CM)
+    // 20+ Stories (5 per grade)
     stories: {
       MAT: [
         {
@@ -1506,19 +1714,16 @@ canvas#simCanvas {
       ]
     },
 
-    // Phonics & Reading Syllables Database
+    // Phonics & Syllables
     phonics: [
       { emoji: '⛵', word: { fr: 'Bateau', en: 'Boat' }, syllables: { fr: ['ba', 'teau'], en: ['boat'] }, distractors: ['to', 'lu', 'pa'] },
       { emoji: '🍎', word: { fr: 'Pomme', en: 'Apple' }, syllables: { fr: ['pom', 'me'], en: ['ap', 'ple'] }, distractors: ['ma', 'po', 're'] },
       { emoji: '🦁', word: { fr: 'Lion', en: 'Lion' }, syllables: { fr: ['li', 'on'], en: ['li', 'on'] }, distractors: ['lo', 'an', 'mi'] },
       { emoji: '🌙', word: { fr: 'Lune', en: 'Moon' }, syllables: { fr: ['lu', 'ne'], en: ['moon'] }, distractors: ['la', 'no', 'di'] },
-      { emoji: '🐱', word: { fr: 'Chaton', en: 'Kitten' }, syllables: { fr: ['cha', 'ton'], en: ['kit', 'ten'] }, distractors: ['cho', 'tin', 'ba'] },
-      { emoji: '🐘', word: { fr: 'Éléphant', en: 'Elephant' }, syllables: { fr: ['é', 'lé', 'phant'], en: ['el', 'e', 'phant'] }, distractors: ['a', 'li', 'fon'] },
-      { emoji: '🌻', word: { fr: 'Tournesol', en: 'Sunflower' }, syllables: { fr: ['tour', 'ne', 'sol'], en: ['sun', 'flow', 'er'] }, distractors: ['tar', 'no', 'sal'] },
-      { emoji: '🚗', word: { fr: 'Voiture', en: 'Car' }, syllables: { fr: ['voi', 'tu', 're'], en: ['car'] }, distractors: ['va', 'to', 'ri'] }
+      { emoji: '🐱', word: { fr: 'Chaton', en: 'Kitten' }, syllables: { fr: ['cha', 'ton'], en: ['kit', 'ten'] }, distractors: ['cho', 'tin', 'ba'] }
     ],
 
-    // Pronunciation Lab Words & Phonetic breakdowns
+    // Pronunciation Studio
     pronunciation: [
       {
         word: { fr: 'Papillon', en: 'Butterfly' },
@@ -1537,28 +1742,10 @@ canvas#simCanvas {
         phonemeAns: "3",
         phonemeOptions: ["2", "3", "4", "5"],
         tip: { fr: "Tape dans tes mains pour chaque morceau : cro - co - dile (3 battements) !", en: "Clap your hands for each beat: croc - o - dile (3 beats)!" }
-      },
-      {
-        word: { fr: 'Chocolat', en: 'Chocolate' },
-        syllables: { fr: 'cho • co • lat', en: 'choc • o • late' },
-        count: 3,
-        phonemeQuestion: { fr: "Quel son fait le début de 'Chocolat' ?", en: "What sound starts 'Chocolate'?" },
-        phonemeAns: { fr: "CH", en: "CH" },
-        phonemeOptions: ["CH", "S", "K", "J"],
-        tip: { fr: "Arrondis la bouche comme pour faire 'chut' : /ch/ !", en: "Round your mouth and say 'ch' like in cheerful!" }
-      },
-      {
-        word: { fr: 'Soleil', en: 'Sunshine' },
-        syllables: { fr: 'so • leil', en: 'sun • shine' },
-        count: 2,
-        phonemeQuestion: { fr: "Quelle est la première syllabe de 'Soleil' ?", en: "What is the first syllable of 'Sunshine'?" },
-        phonemeAns: { fr: "so", en: "sun" },
-        phonemeOptions: ["so", "se", "sa", "su"],
-        tip: { fr: "Fais siffler ta langue comme un petit serpent : sssss-o !", en: "Make a soft hissing sound with your tongue: ssss-un!" }
       }
     ],
 
-    // Math Lab Visual Challenges
+    // Math Lab
     math: [
       {
         grade: 'MAT',
@@ -1583,28 +1770,6 @@ canvas#simCanvas {
         ans: 5,
         options: [4, 5, 6, 7],
         tip: { fr: "3 dans la tête, puis compte 2 de plus : 4, 5 !", en: "3 in your head, then count 2 more: 4, 5!" }
-      },
-      {
-        grade: 'CE',
-        type: 'addition',
-        a: 7,
-        b: 5,
-        prompt: { fr: "Calcul mental : 7 + 5 = ?", en: "Mental Math: 7 + 5 = ?" },
-        speech: { fr: "Combien font 7 plus 5 ?", en: "How much is 7 plus 5?" },
-        ans: 12,
-        options: [11, 12, 13, 14],
-        tip: { fr: "Astuce : 7 + 3 font 10, plus les 2 restants font 12 !", en: "Trick: 7 + 3 makes 10, plus the 2 left makes 12!" }
-      },
-      {
-        grade: 'CM',
-        type: 'multiplication',
-        a: 6,
-        b: 4,
-        prompt: { fr: "Multiplication : 6 rangées de 4 blocs = ?", en: "Multiplication: 6 rows of 4 blocks = ?" },
-        speech: { fr: "Combien font 6 multiplié par 4 ?", en: "What is 6 times 4?" },
-        ans: 24,
-        options: [20, 22, 24, 28],
-        tip: { fr: "Astuce : 6 × 2 = 12, et le double de 12 est 24 !", en: "Trick: 6 × 2 = 12, and double 12 is 24!" }
       }
     ]
   };
@@ -1620,27 +1785,53 @@ canvas#simCanvas {
     combo: 1,
     lives: 3,
     level: 1,
+    selectedLevel: 1,
     totalLevels: 10,
     exerciseInLevel: 1,
     totalExercisesPerLevel: 5,
     activityPhase: 1,
     totalActivitiesPerExercise: 3,
-    game: 'chemistry',
+    game: 'maze_quest',
     paused: false,
     screenShake: 0,
     floatingScores: [],
     particles: [],
 
-    // Modules specific states
-    readingSlots: [],
-    readingTarget: null,
-    readingBank: [],
-    pronunciationItem: null,
-    storyItem: null,
-    storySentenceIdx: 0,
-    mathItem: null,
+    // Maze Quest Game State
+    maze: {
+      cols: 11,
+      rows: 6,
+      cellW: 70,
+      cellH: 60,
+      player: { r: 1, c: 1, x: 105, y: 90, targetX: 105, targetY: 90 },
+      exit: { r: 4, c: 9 },
+      stars: [
+        { r: 1, c: 5, collected: false },
+        { r: 4, c: 3, collected: false },
+        { r: 2, c: 8, collected: false }
+      ],
+      walls: [
+        // Grid walls
+        "11111111111",
+        "10000010001",
+        "10111010101",
+        "10100000101",
+        "10001110001",
+        "11111111111"
+      ]
+    },
 
-    // Real Physics states (Canvas)
+    // Tangram Puzzle Game State
+    tangram: {
+      targetShape: 'boat',
+      pieces: [
+        { id: 'p1', name: 'Grande Voile', color: '#E5252A', x: 140, y: 310, targetX: 400, targetY: 150, snapped: false, w: 70, h: 70, type: 'triangle' },
+        { id: 'p2', name: 'Petite Voile', color: '#F97316', x: 230, y: 310, targetX: 470, targetY: 180, snapped: false, w: 50, h: 50, type: 'triangle' },
+        { id: 'p3', name: 'Coque Bateau', color: '#3B82F6', x: 320, y: 310, targetX: 430, targetY: 260, snapped: false, w: 120, h: 45, type: 'trapeze' }
+      ]
+    },
+
+    // Real Physics states (Chemistry, Botany, Density, Circuit, Comet)
     dragged: null,
     flask: { x: 400, y: 250, fluidHeight: 30, fluidColor: '#38BDF8', bubbles: [] },
     tubes: [
@@ -1652,7 +1843,6 @@ canvas#simCanvas {
     wateringCan: { x: 180, y: 150, origX: 180, origY: 150, tilt: 0, isWatering: false },
     sun: { x: 620, y: 80, origX: 620, origY: 80, isDragging: false },
     soilMoisture: 30,
-    sunExposure: 20,
     simDay: 1,
     stemHeight: 0,
     leafSpread: 0,
@@ -1660,27 +1850,27 @@ canvas#simCanvas {
     roots: [],
     botanyAwarded: false,
     densityItems: [
-      { id: 'cork', name: 'Liège', emoji: '🍾', rho: 0.25, x: 100, y: 70, origX: 100, origY: 70, inWater: false, vy: 0, w: 44, h: 44, color: '#D97706' },
-      { id: 'wood', name: 'Bois', emoji: '🪵', rho: 0.60, x: 160, y: 70, origX: 160, origY: 70, inWater: false, vy: 0, w: 46, h: 46, color: '#854D0E' },
-      { id: 'apple', name: 'Pomme', emoji: '🍎', rho: 0.85, x: 220, y: 70, origX: 220, origY: 70, inWater: false, vy: 0, w: 42, h: 42, color: '#DC2626' },
-      { id: 'rock', name: 'Caillou', emoji: '🪨', rho: 2.60, x: 280, y: 70, origX: 280, origY: 70, inWater: false, vy: 0, w: 42, h: 42, color: '#6B7280' },
-      { id: 'iron', name: 'Fer', emoji: '⚓', rho: 7.80, x: 340, y: 70, origX: 340, origY: 70, inWater: false, vy: 0, w: 46, h: 46, color: '#374151' }
+      { id: 'cork', name: 'Liège', emoji: '🍾', rho: 0.25, x: 100, y: 70, origX: 100, origY: 70, inWater: false, vy: 0, color: '#D97706' },
+      { id: 'wood', name: 'Bois', emoji: '🪵', rho: 0.60, x: 160, y: 70, origX: 160, origY: 70, inWater: false, vy: 0, color: '#854D0E' },
+      { id: 'apple', name: 'Pomme', emoji: '🍎', rho: 0.85, x: 220, y: 70, origX: 220, origY: 70, inWater: false, vy: 0, color: '#DC2626' },
+      { id: 'rock', name: 'Caillou', emoji: '🪨', rho: 2.60, x: 280, y: 70, origX: 280, origY: 70, inWater: false, vy: 0, color: '#6B7280' },
+      { id: 'iron', name: 'Fer', emoji: '⚓', rho: 7.80, x: 340, y: 70, origX: 340, origY: 70, inWater: false, vy: 0, color: '#374151' }
     ],
     waterSurfaceY: 180,
     waterBottomY: 340,
-    waterWaveOffset: 0,
     circuitClosed: false,
     switchBlade: { x: 260, y: 220, angle: 36, isDragging: false },
     currentAmps: 0.0,
     lampGlow: 0,
     electrons: [],
-    fanAngle: 0,
     ship: { x: 400, y: 340, vx: 0, isDragging: false },
     lasers: [],
     meteors: [],
-
-    // Math Lab interactive items
-    mathItemsOnStage: []
+    mathItemsOnStage: [],
+    readingSlots: [],
+    readingTarget: null,
+    pronunciationItem: null,
+    storyItem: null
   };
 
   const $ = id => document.getElementById(id);
@@ -1688,7 +1878,7 @@ canvas#simCanvas {
   const shuffle = arr => [...arr].sort(() => Math.random() - 0.5);
 
   // ============================================================================
-  // SINGLE-STREAM STUDIO NEURAL VOICE ENGINE (NO MULTIPLE VOICES)
+  // SINGLE-STREAM STUDIO NEURAL VOICE ENGINE
   // ============================================================================
   const VoiceEngine = {
     audio: null,
@@ -1719,9 +1909,9 @@ canvas#simCanvas {
           this.audio = null;
           if (onEnded) onEnded();
         };
-        const playPromise = audio.play();
-        if (playPromise !== undefined) {
-          playPromise.catch(() => {
+        const p = audio.play();
+        if (p !== undefined) {
+          p.catch(() => {
             this.audio = null;
             if (onEnded) onEnded();
           });
@@ -1733,9 +1923,7 @@ canvas#simCanvas {
 
     speakSlow(text, onEnded) {
       this.speak(text, onEnded);
-      if (this.audio) {
-        this.audio.playbackRate = 0.78;
-      }
+      if (this.audio) this.audio.playbackRate = 0.78;
     },
 
     stop() {
@@ -1750,7 +1938,7 @@ canvas#simCanvas {
     }
   };
 
-  // Audio SFX Synthesis (Web Audio API)
+  // Audio SFX Synthesis
   const AudioEngine = {
     ctx: null,
     init() {
@@ -1767,7 +1955,7 @@ canvas#simCanvas {
       const gain = this.ctx.createGain();
       osc.type = type;
       osc.frequency.setValueAtTime(freq, this.ctx.currentTime);
-      gain.gain.setValueAtTime(0.12, this.ctx.currentTime);
+      gain.gain.setValueAtTime(0.14, this.ctx.currentTime);
       gain.gain.exponentialRampToValueAtTime(0.001, this.ctx.currentTime + dur);
       osc.connect(gain);
       gain.connect(this.ctx.destination);
@@ -1776,6 +1964,8 @@ canvas#simCanvas {
     },
     playSuccess() { this.playTone(523, 0.12); setTimeout(() => this.playTone(659, 0.15), 100); },
     playLevelUp() { this.playTone(440, 0.1); setTimeout(() => this.playTone(554, 0.1), 100); setTimeout(() => this.playTone(659, 0.25), 200); },
+    playSnap() { this.playTone(880, 0.08, 'triangle'); },
+    playStep() { this.playTone(340, 0.05, 'sine'); },
     playSplash() { this.playTone(180, 0.25, 'triangle'); },
     playZap() { this.playTone(880, 0.08, 'sawtooth'); },
     playWrong() { this.playTone(160, 0.25, 'sawtooth'); }
@@ -1786,7 +1976,7 @@ canvas#simCanvas {
     state.floatingScores.push({ text, x, y, alpha: 1.0, vy: -1.5, color });
   }
 
-  function createExplosion(x, y, color = '#E5252A', count = 12) {
+  function createExplosion(x, y, color = '#E5252A', count = 14) {
     for (let i = 0; i < count; i++) {
       const angle = (Math.PI * 2 * i) / count;
       const speed = 1.5 + Math.random() * 3.5;
@@ -1802,16 +1992,65 @@ canvas#simCanvas {
   }
 
   // ============================================================================
-  // CANVAS INITIALIZATION & RESIZE
+  // LEVEL-FIRST SELECTOR BAR GENERATION & CARD REARRANGEMENT
+  // ============================================================================
+  function buildLevelPillsTrack() {
+    const track = $('level-pills-track');
+    track.innerHTML = '';
+    for (let lvl = 1; lvl <= state.totalLevels; lvl++) {
+      const btn = document.createElement('button');
+      btn.className = 'level-pill-btn ' + (lvl === state.level ? 'active' : '');
+      btn.setAttribute('data-level', lvl);
+      btn.id = 'level-pill-' + lvl;
+
+      const stars = '⭐'.repeat(Math.min(3, Math.max(1, Math.floor(lvl / 3))));
+      btn.innerHTML = '<span class="level-pill-num">Niv. ' + lvl + '</span><span class="level-pill-stars">' + stars + '</span>';
+      btn.onclick = () => onSelectLevel(lvl);
+      track.appendChild(btn);
+    }
+  }
+
+  function onSelectLevel(chosenLvl) {
+    state.level = chosenLvl;
+    state.selectedLevel = chosenLvl;
+    AudioEngine.playSnap();
+
+    // Update level pills active styling
+    document.querySelectorAll('.level-pill-btn').forEach(btn => {
+      const bLvl = parseInt(btn.getAttribute('data-level'), 10);
+      btn.classList.toggle('active', bLvl === chosenLvl);
+    });
+
+    const isEn = state.lang === 'en';
+    $('level-active-info').textContent = isEn
+      ? "Level " + chosenLvl + " active • 5 Exercises / 3 Activities"
+      : "Niveau " + chosenLvl + " actif • 5 Exercices / 3 Activités";
+
+    // Rearrange Portal Cards with Apple Animation
+    const grid = $('portals-grid');
+    const cards = Array.from(grid.querySelectorAll('.portal-card'));
+
+    cards.forEach(c => c.classList.add('card-rearranging'));
+    setTimeout(() => {
+      // Re-sort cards: arcade & puzzle float up for active kid interest
+      cards.sort(() => (Math.random() - 0.5));
+      cards.forEach(c => grid.appendChild(c));
+      cards.forEach(c => c.classList.remove('card-rearranging'));
+    }, 180);
+
+    const announceMsg = isEn
+      ? "Level " + chosenLvl + " selected! Choose an arcade quest to start playing."
+      : "Niveau " + chosenLvl + " sélectionné ! Choisis une quête pour commencer à jouer.";
+    VoiceEngine.speak(announceMsg);
+  }
+
+  // ============================================================================
+  // CANVAS INITIALIZATION & DRAG-AND-DROP HANDLERS
   // ============================================================================
   const canvas = $('simCanvas');
   const ctx = canvas.getContext('2d');
   const CW = 800;
   const CH = 380;
-
-  for (let i = 0; i < 24; i++) {
-    state.electrons.push({ frac: i / 24, speed: 0.006 });
-  }
 
   function getCanvasCoords(evt) {
     const rect = canvas.getBoundingClientRect();
@@ -1825,14 +2064,22 @@ canvas#simCanvas {
     };
   }
 
-  // ============================================================================
-  // DRAG AND DROP REAL TOUCH HANDLERS
-  // ============================================================================
   function onPointerDown(e) {
     const p = getCanvasCoords(e);
     const g = state.game;
 
-    if (g === 'chemistry') {
+    if (g === 'tangram_puzzle') {
+      state.tangram.pieces.forEach(piece => {
+        if (!piece.snapped && Math.hypot(p.x - piece.x, p.y - piece.y) < 45) {
+          state.dragged = piece;
+        }
+      });
+    } else if (g === 'maze_quest') {
+      // Direct touch on maze: move toward touched cell
+      const targetCol = Math.floor(p.x / state.maze.cellW);
+      const targetRow = Math.floor(p.y / state.maze.cellH);
+      moveMazePlayerTo(targetRow, targetCol);
+    } else if (g === 'chemistry') {
       state.tubes.forEach(t => {
         if (Math.hypot(p.x - t.x, p.y - t.y) < 38) {
           state.dragged = t;
@@ -1843,8 +2090,6 @@ canvas#simCanvas {
       if (Math.hypot(p.x - state.wateringCan.x, p.y - state.wateringCan.y) < 45) {
         state.dragged = state.wateringCan;
         state.wateringCan.tilt = 28;
-      } else if (Math.hypot(p.x - state.sun.x, p.y - state.sun.y) < 45) {
-        state.dragged = state.sun;
       }
     } else if (g === 'density') {
       state.densityItems.forEach(item => {
@@ -1863,12 +2108,6 @@ canvas#simCanvas {
       state.ship.x = Math.max(60, Math.min(CW - 60, p.x));
       state.lasers.push({ x: state.ship.x, y: state.ship.y - 20, vy: -10, color: '#E5252A' });
       AudioEngine.playTone(720, 0.05, 'square');
-    } else if (g === 'math_lab') {
-      state.mathItemsOnStage.forEach(item => {
-        if (Math.hypot(p.x - item.x, p.y - item.y) < 26) {
-          state.dragged = item;
-        }
-      });
     }
   }
 
@@ -1881,7 +2120,28 @@ canvas#simCanvas {
       state.dragged.x = p.x;
       state.dragged.y = p.y;
 
-      if (g === 'chemistry' && state.dragged.id) {
+      if (g === 'tangram_puzzle') {
+        const piece = state.dragged;
+        // Check magnetic snap distance
+        if (Math.hypot(p.x - piece.targetX, p.y - piece.targetY) < 35) {
+          piece.x = piece.targetX;
+          piece.y = piece.targetY;
+          piece.snapped = true;
+          state.dragged = null;
+          AudioEngine.playSnap();
+          createExplosion(piece.targetX, piece.targetY, '#E5252A', 12);
+          addFloatingScore(state.lang === 'en' ? "SNAP! Perfect! ⭐" : "AIMANTÉ ! Parfait ! ⭐", piece.targetX, piece.targetY - 30, '#E5252A');
+
+          // Check if all pieces snapped
+          const allSnapped = state.tangram.pieces.every(pc => pc.snapped);
+          if (allSnapped) {
+            AudioEngine.playLevelUp();
+            VoiceEngine.speak(state.lang === 'en' ? "Tangram completed! Amazing geometry!" : "Tangram réussi ! Magnifique puzzle !", () => {
+              onActivityTaskCompleted();
+            });
+          }
+        }
+      } else if (g === 'chemistry') {
         const overFlask = Math.hypot(p.x - state.flask.x, p.y - (state.flask.y - 50)) < 60;
         state.dragged.isPouring = overFlask;
         if (overFlask) {
@@ -1898,10 +2158,6 @@ canvas#simCanvas {
           state.soilMoisture = Math.min(100, state.soilMoisture + 0.4);
           advanceBotanyGrowth();
         }
-      } else if (g === 'circuit' && state.switchBlade.isDragging) {
-        const dy = p.y - state.switchBlade.y;
-        state.switchBlade.angle = Math.max(0, Math.min(45, (dy / 50) * 45));
-        checkCircuitClosed();
       }
     }
 
@@ -1912,7 +2168,10 @@ canvas#simCanvas {
 
   function onPointerUp() {
     const g = state.game;
-    if (g === 'chemistry' && state.dragged) {
+    if (g === 'tangram_puzzle' && state.dragged) {
+      // If not snapped, return to shelf
+      state.dragged = null;
+    } else if (g === 'chemistry' && state.dragged) {
       state.dragged.x = state.dragged.origX;
       state.dragged.y = state.dragged.origY;
       state.dragged.tilt = 0;
@@ -1929,7 +2188,6 @@ canvas#simCanvas {
       if (it.y > state.waterSurfaceY - 20) {
         it.inWater = true;
         AudioEngine.playSplash();
-        createExplosion(it.x, state.waterSurfaceY, '#38BDF8', 10);
       } else {
         it.x = it.origX;
         it.y = it.origY;
@@ -1942,7 +2200,6 @@ canvas#simCanvas {
     } else if (g === 'comet') {
       state.ship.isDragging = false;
     }
-
     state.dragged = null;
   }
 
@@ -1953,77 +2210,235 @@ canvas#simCanvas {
   canvas.addEventListener('touchmove', e => { e.preventDefault(); onPointerMove(e); }, { passive: false });
   window.addEventListener('touchend', onPointerUp);
 
-  // Chemistry Color Synthesis
-  function onChemistryColorBlend() {
-    createExplosion(state.flask.x, state.flask.y, '#E5252A', 16);
-    AudioEngine.playSplash();
-    const hasRed = state.pouredColors.includes('red');
-    const hasBlue = state.pouredColors.includes('blue');
-    const hasYellow = state.pouredColors.includes('yellow');
+  // Keyboard controls for Maze
+  window.addEventListener('keydown', e => {
+    if (state.game !== 'maze_quest') return;
+    if (e.key === 'ArrowUp' || e.key === 'z') moveMazePlayer(-1, 0);
+    else if (e.key === 'ArrowDown' || e.key === 's') moveMazePlayer(1, 0);
+    else if (e.key === 'ArrowLeft' || e.key === 'q') moveMazePlayer(0, -1);
+    else if (e.key === 'ArrowRight' || e.key === 'd') moveMazePlayer(0, 1);
+  });
 
-    let mixed = '#38BDF8';
-    let mixedName = state.lang === 'en' ? 'Clear Water' : 'Eau claire';
-    if (hasBlue && hasYellow) { mixed = '#10B981'; mixedName = state.lang === 'en' ? 'Green' : 'Vert'; }
-    else if (hasRed && hasYellow) { mixed = '#F97316'; mixedName = state.lang === 'en' ? 'Orange' : 'Orange'; }
-    else if (hasRed && hasBlue) { mixed = '#8B5CF6'; mixedName = state.lang === 'en' ? 'Purple' : 'Violet'; }
-    else if (hasRed) { mixed = '#EF4444'; mixedName = state.lang === 'en' ? 'Red' : 'Rouge'; }
-    else if (hasBlue) { mixed = '#3B82F6'; mixedName = state.lang === 'en' ? 'Blue' : 'Bleu'; }
-    else if (hasYellow) { mixed = '#EAB308'; mixedName = state.lang === 'en' ? 'Yellow' : 'Jaune'; }
+  // On-screen Maze D-Pad
+  $('dpad-up').onclick = () => moveMazePlayer(-1, 0);
+  $('dpad-down').onclick = () => moveMazePlayer(1, 0);
+  $('dpad-left').onclick = () => moveMazePlayer(0, -1);
+  $('dpad-right').onclick = () => moveMazePlayer(0, 1);
 
-    state.flask.fluidColor = mixed;
-    addFloatingScore(mixedName + ' ! 🧪', state.flask.x, state.flask.y - 70, '#E5252A');
-    onActivityTaskCompleted();
-  }
+  // ============================================================================
+  // MAZE QUEST GAME LOGIC
+  // ============================================================================
+  function moveMazePlayer(dr, dc) {
+    const pl = state.maze.player;
+    const nr = pl.r + dr;
+    const nc = pl.c + dc;
+    if (nr >= 0 && nr < state.maze.rows && nc >= 0 && nc < state.maze.cols) {
+      if (state.maze.walls[nr][nc] !== '1') {
+        pl.r = nr;
+        pl.c = nc;
+        pl.targetX = nc * state.maze.cellW + state.maze.cellW / 2;
+        pl.targetY = nr * state.maze.cellH + state.maze.cellH / 2;
+        AudioEngine.playStep();
 
-  // Botany Growth
-  function advanceBotanyGrowth() {
-    if (state.soilMoisture > 40) {
-      state.simDay = Math.min(21, state.simDay + 0.15);
-      state.stemHeight = Math.min(130, (state.simDay / 21) * 130);
-      state.leafSpread = Math.min(1, state.simDay / 12);
-      state.flowerBloom = Math.max(0, (state.simDay - 14) / 7);
-
-      if (state.roots.length < Math.floor(state.simDay * 2)) {
-        state.roots.push({
-          x: CW / 2 + (Math.random() - 0.5) * (state.simDay * 4),
-          y: 260 + state.roots.length * 6,
-          len: 10 + Math.random() * 20
+        // Check star collection
+        state.maze.stars.forEach(st => {
+          if (!st.collected && st.r === pl.r && st.c === pl.c) {
+            st.collected = true;
+            AudioEngine.playSuccess();
+            createExplosion(pl.targetX, pl.targetY, '#F59E0B', 10);
+            addFloatingScore("+50 ⭐", pl.targetX, pl.targetY - 20, '#F59E0B');
+          }
         });
-      }
 
-      if (state.simDay >= 20 && !state.botanyAwarded) {
-        state.botanyAwarded = true;
-        AudioEngine.playLevelUp();
-        addFloatingScore(state.lang === 'en' ? 'Sunflower Blooming! 🌻 Day 21' : 'Floraison réussie ! 🌻 Jour 21', CW / 2, 120, '#E5252A');
-        onActivityTaskCompleted();
+        // Check exit reached
+        if (pl.r === state.maze.exit.r && pl.c === state.maze.exit.c) {
+          AudioEngine.playLevelUp();
+          createExplosion(pl.targetX, pl.targetY, '#E5252A', 24);
+          VoiceEngine.speak(state.lang === 'en' ? "Portal reached! Maze conquered!" : "Sortie trouvée ! Labyrinthe réussi !", () => {
+            onActivityTaskCompleted();
+          });
+        }
+      } else {
+        AudioEngine.playWrong();
       }
     }
   }
 
-  // Circuit Check
-  function checkCircuitClosed() {
-    const closed = state.switchBlade.angle <= 3;
-    if (closed !== state.circuitClosed) {
-      state.circuitClosed = closed;
-      if (closed) {
-        AudioEngine.playZap();
-        createExplosion(260, 220, '#E5252A', 16);
-        state.currentAmps = 0.85;
-        state.lampGlow = 1;
-        addFloatingScore(state.lang === 'en' ? 'Circuit CLOSED: 0.85 A! ⚡' : 'Circuit FERMÉ : 0.85 A ! ⚡', CW / 2, 120, '#E5252A');
-        onActivityTaskCompleted();
+  function moveMazePlayerTo(tr, tc) {
+    const pl = state.maze.player;
+    const dr = Math.sign(tr - pl.r);
+    const dc = Math.sign(tc - pl.c);
+    if (dr !== 0) moveMazePlayer(dr, 0);
+    else if (dc !== 0) moveMazePlayer(0, dc);
+  }
+
+  // ============================================================================
+  // ACTIVITY COMPLETION & GUARANTEED PROGRESSION:
+  // Activity (1/3 ➜ 2/3 ➜ 3/3) ➜ Exercise (1/5 ➜ 5/5) ➜ Next Level Unlocked
+  // ============================================================================
+  function onActivityTaskCompleted() {
+    state.score++;
+    state.combo++;
+    AudioEngine.playSuccess();
+    createExplosion(CW / 2, CH / 2, '#E5252A', 22);
+
+    // Advance Activity Phase
+    state.activityPhase++;
+
+    if (state.activityPhase > state.totalActivitiesPerExercise) {
+      // Completed all 3 activities of this exercise!
+      state.activityPhase = 1;
+      state.exerciseInLevel++;
+
+      if (state.exerciseInLevel > state.totalExercisesPerLevel) {
+        // Completed all 5 exercises of this level! UNLOCK NEXT LEVEL!
+        state.exerciseInLevel = 1;
+        state.level = Math.min(state.totalLevels, state.level + 1);
+        state.selectedLevel = state.level;
+        buildLevelPillsTrack();
+        AudioEngine.playLevelUp();
+
+        const levelCompleteMsg = state.lang === 'en'
+          ? "Champion! Level " + (state.level - 1) + " completed! Unlocking Level " + state.level + "!"
+          : "Félicitations champion ! Niveau " + (state.level - 1) + " terminé avec succès ! Déblocage du Niveau " + state.level + " !";
+
+        VoiceEngine.speak(levelCompleteMsg, () => {
+          setTimeout(() => nextActivityChallenge(false), 800);
+        });
       } else {
-        state.currentAmps = 0.0;
-        state.lampGlow = 0;
+        // Moving to next exercise in the same level
+        const remainingEx = state.totalExercisesPerLevel - state.exerciseInLevel + 1;
+        const exCompleteMsg = state.lang === 'en'
+          ? "Exercise cleared! Moving to Exercise " + state.exerciseInLevel + " of " + state.totalExercisesPerLevel + "!"
+          : "Bravo ! Exercice validé ! Passage à l'Exercice " + state.exerciseInLevel + " sur " + state.totalExercisesPerLevel + " !";
+
+        VoiceEngine.speak(exCompleteMsg, () => {
+          setTimeout(() => nextActivityChallenge(false), 600);
+        });
+      }
+    } else {
+      // Moving to next activity in the same exercise
+      const nextActMsg = state.lang === 'en'
+        ? "Awesome! Activity " + (state.activityPhase - 1) + " done! Ready for Activity " + state.activityPhase + " of 3!"
+        : "Super ! Activité " + (state.activityPhase - 1) + " réussie ! Prêt pour l'Activité " + state.activityPhase + " sur 3 !";
+
+      VoiceEngine.speak(nextActMsg, () => {
+        setTimeout(() => nextActivityChallenge(false), 500);
+      });
+    }
+  }
+
+  // ============================================================================
+  // NEXT ACTIVITY CHALLENGE ROUTER
+  // ============================================================================
+  function nextActivityChallenge(isWelcome = false) {
+    const isEn = state.lang === 'en';
+    const g = state.game;
+
+    // Reset game-specific progress objects for the new activity
+    if (g === 'tangram_puzzle') {
+      state.tangram.pieces.forEach(p => { p.snapped = false; p.x = p.targetX - 240 + Math.random() * 80; p.y = 310; });
+    } else if (g === 'maze_quest') {
+      state.maze.player.r = 1;
+      state.maze.player.c = 1;
+      state.maze.player.x = 105;
+      state.maze.player.y = 90;
+      state.maze.player.targetX = 105;
+      state.maze.player.targetY = 90;
+      state.maze.stars.forEach(s => s.collected = false);
+    }
+
+    // HUD & Badges
+    $('hud-exercise-badge').innerHTML = isEn
+      ? "🎯 Exercise <b>" + state.exerciseInLevel + "/" + state.totalExercisesPerLevel + "</b> • Level <b>" + state.level + "/" + state.totalLevels + "</b>"
+      : "🎯 Exercice <b>" + state.exerciseInLevel + "/" + state.totalExercisesPerLevel + "</b> • Niveau <b>" + state.level + "/" + state.totalLevels + "</b>";
+    $('hud-score-val').textContent = (state.score * 20);
+    $('hud-combo-badge').textContent = "🔥 COMBO x" + Math.max(1, state.combo);
+    $('hud-lives-badge').textContent = "❤️❤️❤️".slice(0, Math.max(0, state.lives * 2));
+
+    // Meta Banner
+    $('level-meta-text').innerHTML = isEn
+      ? "🎯 <b>Level " + state.level + "</b>: Exercise <b>" + state.exerciseInLevel + " of " + state.totalExercisesPerLevel + "</b> (3 activities per exercise)"
+      : "🎯 <b>Niveau " + state.level + "</b> : Exercice <b>" + state.exerciseInLevel + " sur " + state.totalExercisesPerLevel + "</b> (3 activités par exercice)";
+    $('meta-ex-pill').textContent = isEn ? "🎯 Exercise " + state.exerciseInLevel + "/" + state.totalExercisesPerLevel : "🎯 Exercice " + state.exerciseInLevel + "/" + state.totalExercisesPerLevel;
+    $('meta-act-pill').textContent = isEn ? "⚡ Activity " + state.activityPhase + "/" + state.totalActivitiesPerExercise : "⚡ Activité " + state.activityPhase + "/" + state.totalActivitiesPerExercise;
+    $('meta-lvl-pill').textContent = isEn ? "🏆 Level " + state.level + "/" + state.totalLevels : "🏆 Niveau " + state.level + "/" + state.totalLevels;
+
+    // 3-Step Stepper
+    const curP = state.activityPhase;
+    $('step-node-1').className = 'step-node ' + (curP === 1 ? 'active' : 'done');
+    $('step-node-2').className = 'step-node ' + (curP === 2 ? 'active' : (curP > 2 ? 'done' : ''));
+    $('step-node-3').className = 'step-node ' + (curP === 3 ? 'active' : '');
+    $('step-conn-1').className = 'step-connector ' + (curP >= 2 ? 'done' : '');
+    $('step-conn-2').className = 'step-connector ' + (curP >= 3 ? 'done' : '');
+
+    // Overall Progress Fill
+    const totalSteps = state.totalExercisesPerLevel * state.totalActivitiesPerExercise;
+    const currentStep = (state.exerciseInLevel - 1) * state.totalActivitiesPerExercise + (state.activityPhase - 1);
+    const overallPct = Math.min(100, Math.round((currentStep / totalSteps) * 100));
+    $('progress-fill').style.width = overallPct + '%';
+
+    // Show D-pad if maze
+    $('maze-dpad-container').classList.toggle('active', g === 'maze_quest');
+
+    // Route to module
+    if (g === 'reading_lab') {
+      setupReadingLabActivity();
+    } else if (g === 'pronunciation_lab') {
+      setupPronunciationActivity();
+    } else if (g === 'story_lab') {
+      setupStoryComprehensionActivity();
+    } else if (g === 'math_lab') {
+      setupMathLabActivity();
+    } else {
+      $('canvas-wrapper').style.display = 'block';
+      $('reading-overlay').classList.remove('active');
+      $('pronunciation-overlay').classList.remove('active');
+      $('story-overlay').classList.remove('active');
+
+      if (g === 'maze_quest') {
+        const mazeSpeech = isEn ? "Guide Leo through the maze with your finger or arrows to collect stars!" : "Guide Léo au doigt ou avec les flèches pour ramasser les étoiles et trouver la sortie !";
+        $('instruction-title').textContent = mazeSpeech;
+        VoiceEngine.speak(mazeSpeech);
+      } else if (g === 'tangram_puzzle') {
+        const tangramSpeech = isEn ? "Drag the puzzle pieces with your finger and snap them into place!" : "Glisse les pièces du puzzle avec ton doigt pour les emboîter sur la silhouette !";
+        $('instruction-title').textContent = tangramSpeech;
+        VoiceEngine.speak(tangramSpeech);
+      } else if (g === 'chemistry') {
+        const welcomeSpeech = isEn ? "Take the test tube and pour it into the flask!" : "Prends l'éprouvette au doigt et verse le liquide dans le flacon !";
+        $('instruction-title').textContent = welcomeSpeech;
+        VoiceEngine.speak(welcomeSpeech);
+      } else if (g === 'botany') {
+        const botSpeech = isEn ? "Water the plant with the watering can to see roots grow!" : "Verse de l'eau avec l'arrosoir pour faire grandir les racines sous terre !";
+        $('instruction-title').textContent = botSpeech;
+        VoiceEngine.speak(botSpeech);
+      } else if (g === 'density') {
+        const denSpeech = isEn ? "Drag objects into the tank to test if they float or sink!" : "Glisse les objets dans l'eau pour tester s'ils flottent ou s'ils coulent !";
+        $('instruction-title').textContent = denSpeech;
+        VoiceEngine.speak(denSpeech);
+      } else if (g === 'circuit') {
+        const circSpeech = isEn ? "Drag the knife switch down to close the circuit and turn on the light!" : "Glisse le levier pour fermer le circuit et allumer la lampe !";
+        $('instruction-title').textContent = circSpeech;
+        VoiceEngine.speak(circSpeech);
+      } else if (g === 'comet') {
+        const cometSpeech = isEn ? "Aim the spaceship and shoot comets with lasers!" : "Glisse le vaisseau pour viser les comètes et tire au laser !";
+        $('instruction-title').textContent = cometSpeech;
+        VoiceEngine.speak(cometSpeech);
+        state.meteors = [
+          { val: '3', x: 180, y: 60, vy: 0.35, r: 28, color: '#E5252A' },
+          { val: '4', x: 400, y: 60, vy: 0.35, r: 28, color: '#111827' },
+          { val: '5', x: 620, y: 60, vy: 0.35, r: 28, color: '#111827' }
+        ];
       }
     }
   }
 
   // ============================================================================
-  // READING & SYLLABLES LAB IMPLEMENTATION
+  // READING & SYLLABLES LAB
   // ============================================================================
   function setupReadingLabActivity() {
     $('canvas-wrapper').style.display = 'none';
+    $('maze-dpad-container').classList.remove('active');
     $('reading-overlay').classList.add('active');
     $('pronunciation-overlay').classList.remove('active');
     $('story-overlay').classList.remove('active');
@@ -2100,16 +2515,16 @@ canvas#simCanvas {
         }
       } else {
         AudioEngine.playWrong();
-        addFloatingScore(state.lang === 'en' ? "Listen carefully!" : "Écoute bien !", CW / 2, 100, '#E5252A');
       }
     }
   }
 
   // ============================================================================
-  // PRONUNCIATION STUDIO IMPLEMENTATION
+  // PRONUNCIATION STUDIO
   // ============================================================================
   function setupPronunciationActivity() {
     $('canvas-wrapper').style.display = 'none';
+    $('maze-dpad-container').classList.remove('active');
     $('reading-overlay').classList.remove('active');
     $('pronunciation-overlay').classList.add('active');
     $('story-overlay').classList.remove('active');
@@ -2129,7 +2544,6 @@ canvas#simCanvas {
       ? "Pronunciation Studio: " + wordText
       : "Studio de Prononciation : " + wordText;
 
-    // Rhythm beads
     const dotsRow = $('pronunciation-dots-row');
     dotsRow.innerHTML = '';
     for (let i = 0; i < item.count; i++) {
@@ -2144,20 +2558,10 @@ canvas#simCanvas {
       : "Écoute bien le mot : " + wordText + ". " + item.phonemeQuestion.fr;
     VoiceEngine.speak(speakPrompt);
 
-    // Audio Buttons
-    $('btn-listen-normal').onclick = () => {
-      animateRhythmBeads(item.count);
-      VoiceEngine.speak(wordText);
-    };
-    $('btn-listen-slow').onclick = () => {
-      animateRhythmBeads(item.count);
-      VoiceEngine.speakSlow(wordText);
-    };
-    $('btn-repeat-leo').onclick = () => {
-      VoiceEngine.speak(isEn ? "Now repeat with me: " + wordText : "À ton tour, répète avec moi : " + wordText);
-    };
+    $('btn-listen-normal').onclick = () => { animateRhythmBeads(item.count); VoiceEngine.speak(wordText); };
+    $('btn-listen-slow').onclick = () => { animateRhythmBeads(item.count); VoiceEngine.speakSlow(wordText); };
+    $('btn-repeat-leo').onclick = () => { VoiceEngine.speak(isEn ? "Now repeat with me: " + wordText : "À ton tour, répète avec moi : " + wordText); };
 
-    // Phonetic challenge buttons
     const answersBox = $('answers-container');
     answersBox.innerHTML = '';
     const correctAns = typeof item.phonemeAns === 'object' ? item.phonemeAns[langKey] : item.phonemeAns;
@@ -2193,10 +2597,11 @@ canvas#simCanvas {
   }
 
   // ============================================================================
-  // STORY & COMPREHENSION LAB IMPLEMENTATION
+  // STORY & COMPREHENSION LAB
   // ============================================================================
   function setupStoryComprehensionActivity() {
     $('canvas-wrapper').style.display = 'none';
+    $('maze-dpad-container').classList.remove('active');
     $('reading-overlay').classList.remove('active');
     $('pronunciation-overlay').classList.remove('active');
     $('story-overlay').classList.add('active');
@@ -2215,7 +2620,6 @@ canvas#simCanvas {
       ? "Listen to the story and answer questions!"
       : "Écoute l'histoire attentivement puis réponds aux questions !";
 
-    // Split text into readable sentences with karaoke highlights
     const sentences = storyFullText.split(/(?<=[.!?])s+/);
     const container = $('story-text-container');
     container.innerHTML = '';
@@ -2227,7 +2631,6 @@ canvas#simCanvas {
       container.appendChild(sSpan);
     });
 
-    // Speak entire story and highlight sentences sequentially
     const narrateStory = () => {
       let cur = 0;
       function stepSentence() {
@@ -2276,11 +2679,7 @@ canvas#simCanvas {
           AudioEngine.playLevelUp();
           const explainText = qData.explain[langKey];
           VoiceEngine.speak((isEn ? "Correct! " : "Exactement ! ") + explainText, () => {
-            if (qIdx + 1 < story.questions.length && state.activityPhase < 3) {
-              onActivityTaskCompleted();
-            } else {
-              onActivityTaskCompleted();
-            }
+            onActivityTaskCompleted();
           });
         } else {
           AudioEngine.playWrong();
@@ -2292,10 +2691,11 @@ canvas#simCanvas {
   }
 
   // ============================================================================
-  // MATH LAB IMPLEMENTATION
+  // MATH LAB
   // ============================================================================
   function setupMathLabActivity() {
     $('canvas-wrapper').style.display = 'block';
+    $('maze-dpad-container').classList.remove('active');
     $('reading-overlay').classList.remove('active');
     $('pronunciation-overlay').classList.remove('active');
     $('story-overlay').classList.remove('active');
@@ -2304,12 +2704,10 @@ canvas#simCanvas {
     const langKey = isEn ? 'en' : 'fr';
     const list = DB.math.filter(m => m.grade === state.grade);
     const item = (list.length > 0 ? list : DB.math)[(state.score + state.exerciseInLevel) % (list.length || DB.math.length)];
-    state.mathItem = item;
 
     $('instruction-title').textContent = item.prompt[langKey];
     VoiceEngine.speak(item.speech[langKey]);
 
-    // Populate interactive math items on canvas
     state.mathItemsOnStage = [];
     const count = item.targetCount || item.a || 4;
     for (let i = 0; i < count; i++) {
@@ -2343,149 +2741,23 @@ canvas#simCanvas {
   }
 
   // ============================================================================
-  // ACTIVITY COMPLETION & LEVEL PROGRESSION (5 EXERCISES, 3 ACTIVITIES, 10 LEVELS)
-  // ============================================================================
-  function onActivityTaskCompleted() {
-    state.score++;
-    state.combo++;
-    AudioEngine.playSuccess();
-    createExplosion(CW / 2, CH / 2, '#E5252A', 20);
-
-    state.activityPhase++;
-    if (state.activityPhase > state.totalActivitiesPerExercise) {
-      state.activityPhase = 1;
-      state.exerciseInLevel++;
-
-      if (state.exerciseInLevel > state.totalExercisesPerLevel) {
-        state.exerciseInLevel = 1;
-        state.level = Math.min(state.totalLevels, state.level + 1);
-        AudioEngine.playLevelUp();
-        const winMsg = state.lang === 'en'
-          ? "Incredible! Level " + (state.level - 1) + " completed! Unlocking Level " + state.level + "!"
-          : "Incroyable ! Niveau " + (state.level - 1) + " réussi ! Déblocage du Niveau " + state.level + " !";
-        VoiceEngine.speak(winMsg, () => {
-          setTimeout(() => nextActivityChallenge(false), 600);
-        });
-      } else {
-        const remaining = state.totalExercisesPerLevel - state.exerciseInLevel + 1;
-        const exMsg = state.lang === 'en'
-          ? "Great job! Exercise cleared! " + remaining + " more to unlock Level " + (state.level + 1) + "!"
-          : "Bravo ! Exercice validé ! Plus que " + remaining + " exercices pour débloquer le Niveau " + (state.level + 1) + " !";
-        VoiceEngine.speak(exMsg, () => {
-          setTimeout(() => nextActivityChallenge(false), 500);
-        });
-      }
-    } else {
-      const actMsg = state.lang === 'en'
-        ? "Awesome! Activity " + (state.activityPhase - 1) + " done!"
-        : "Super ! Activité " + (state.activityPhase - 1) + " réussie !";
-      VoiceEngine.speak(actMsg, () => {
-        setTimeout(() => nextActivityChallenge(false), 500);
-      });
-    }
-  }
-
-  // ============================================================================
-  // NEXT ACTIVITY CHALLENGE ROUTER
-  // ============================================================================
-  function nextActivityChallenge(isWelcome = false) {
-    const isEn = state.lang === 'en';
-    const g = state.game;
-
-    // HUD & Badges
-    $('hud-exercise-badge').innerHTML = isEn
-      ? "🎯 Exercise <b>" + state.exerciseInLevel + "/" + state.totalExercisesPerLevel + "</b> • Level <b>" + state.level + "/" + state.totalLevels + "</b>"
-      : "🎯 Exercice <b>" + state.exerciseInLevel + "/" + state.totalExercisesPerLevel + "</b> • Niveau <b>" + state.level + "/" + state.totalLevels + "</b>";
-    $('hud-score-val').textContent = (state.score * 15);
-    $('hud-combo-badge').textContent = "🔥 COMBO x" + Math.max(1, state.combo);
-    $('hud-lives-badge').textContent = "❤️❤️❤️".slice(0, Math.max(0, state.lives * 2));
-
-    // Meta Banner
-    $('level-meta-text').innerHTML = isEn
-      ? "🎯 <b>Level " + state.level + "</b>: Exercise <b>" + state.exerciseInLevel + " of " + state.totalExercisesPerLevel + "</b> (3 activities per exercise)"
-      : "🎯 <b>Niveau " + state.level + "</b> : Exercice <b>" + state.exerciseInLevel + " sur " + state.totalExercisesPerLevel + "</b> (3 activités par exercice)";
-    $('meta-ex-pill').textContent = isEn ? "🎯 Exercise " + state.exerciseInLevel + "/" + state.totalExercisesPerLevel : "🎯 Exercice " + state.exerciseInLevel + "/" + state.totalExercisesPerLevel;
-    $('meta-act-pill').textContent = isEn ? "⚡ Activity " + state.activityPhase + "/" + state.totalActivitiesPerExercise : "⚡ Activité " + state.activityPhase + "/" + state.totalActivitiesPerExercise;
-    $('meta-lvl-pill').textContent = isEn ? "🏆 Level " + state.level + "/" + state.totalLevels : "🏆 Niveau " + state.level + "/" + state.totalLevels;
-
-    // Stepper
-    const curP = state.activityPhase;
-    $('step-node-1').className = 'step-node ' + (curP === 1 ? 'active' : 'done');
-    $('step-node-2').className = 'step-node ' + (curP === 2 ? 'active' : (curP > 2 ? 'done' : ''));
-    $('step-node-3').className = 'step-node ' + (curP === 3 ? 'active' : '');
-    $('step-conn-1').className = 'step-connector ' + (curP >= 2 ? 'done' : '');
-    $('step-conn-2').className = 'step-connector ' + (curP >= 3 ? 'done' : '');
-
-    // Overall Progress
-    const totalSteps = state.totalExercisesPerLevel * state.totalActivitiesPerExercise;
-    const currentStep = (state.exerciseInLevel - 1) * state.totalActivitiesPerExercise + (state.activityPhase - 1);
-    const overallPct = Math.min(100, Math.round((currentStep / totalSteps) * 100));
-    $('progress-fill').style.width = overallPct + '%';
-
-    // Route to module
-    if (g === 'reading_lab') {
-      setupReadingLabActivity();
-    } else if (g === 'pronunciation_lab') {
-      setupPronunciationActivity();
-    } else if (g === 'story_lab') {
-      setupStoryComprehensionActivity();
-    } else if (g === 'math_lab') {
-      setupMathLabActivity();
-    } else {
-      // Real Physics Simulators
-      $('canvas-wrapper').style.display = 'block';
-      $('reading-overlay').classList.remove('active');
-      $('pronunciation-overlay').classList.remove('active');
-      $('story-overlay').classList.remove('active');
-
-      if (g === 'chemistry') {
-        const welcomeSpeech = isEn ? "Take the test tube and pour it into the flask!" : "Prends l'éprouvette au doigt et verse le liquide dans le flacon !";
-        $('instruction-title').textContent = welcomeSpeech;
-        VoiceEngine.speak(welcomeSpeech);
-      } else if (g === 'botany') {
-        const botSpeech = isEn ? "Water the plant with the watering can to see roots grow!" : "Verse de l'eau avec l'arrosoir pour faire grandir les racines sous terre !";
-        $('instruction-title').textContent = botSpeech;
-        VoiceEngine.speak(botSpeech);
-      } else if (g === 'density') {
-        const denSpeech = isEn ? "Drag objects into the tank to test if they float or sink!" : "Glisse les objets dans l'eau pour tester s'ils flottent ou s'ils coulent !";
-        $('instruction-title').textContent = denSpeech;
-        VoiceEngine.speak(denSpeech);
-      } else if (g === 'circuit') {
-        const circSpeech = isEn ? "Drag the knife switch down to close the circuit and turn on the light!" : "Glisse le levier pour fermer le circuit et allumer la lampe !";
-        $('instruction-title').textContent = circSpeech;
-        VoiceEngine.speak(circSpeech);
-      } else if (g === 'comet') {
-        const cometSpeech = isEn ? "Aim the spaceship and shoot comets with lasers!" : "Glisse le vaisseau pour viser les comètes et tire au laser !";
-        $('instruction-title').textContent = cometSpeech;
-        VoiceEngine.speak(cometSpeech);
-        state.meteors = [
-          { val: '3', x: 180, y: 60, vy: 0.35, r: 28, color: '#E5252A' },
-          { val: '4', x: 400, y: 60, vy: 0.35, r: 28, color: '#111827' },
-          { val: '5', x: 620, y: 60, vy: 0.35, r: 28, color: '#111827' }
-        ];
-      }
-    }
-  }
-
-  // ============================================================================
   // LAUNCH GAME & RETURN TO HUB
   // ============================================================================
   function launchGame(gameKey) {
     state.game = gameKey;
-    state.level = 1;
     state.exerciseInLevel = 1;
     state.activityPhase = 1;
     state.lives = 3;
-    state.pouredColors = [];
-    state.botanyAwarded = false;
 
     $('portals-grid').style.display = 'none';
-    $('hero-banner').style.display = 'none';
+    $('level-selector-section').style.display = 'none';
     $('category-tabs').style.display = 'none';
     $('arcade-workspace').classList.add('active');
 
     const isEn = state.lang === 'en';
     const titleMap = {
+      maze_quest: isEn ? "🦁 Maze Quest" : "🦁 Labyrinthe Magique",
+      tangram_puzzle: isEn ? "🧩 Tangram Snap" : "🧩 Puzzle & Tangram Snap",
       math_lab: isEn ? "🧮 Math Lab" : "🧮 Maths & Dénombrement",
       reading_lab: isEn ? "📖 Reading Quest" : "📖 Atelier de Lecture",
       pronunciation_lab: isEn ? "🗣️ Pronunciation Studio" : "🗣️ Studio de Prononciation",
@@ -2496,7 +2768,7 @@ canvas#simCanvas {
       circuit: isEn ? "💡 Electric Circuit" : "💡 Circuit Électrique",
       comet: isEn ? "🚀 Comet Defender" : "🚀 Comet Defender"
     };
-    $('hud-game-name').textContent = titleMap[gameKey] || "🎮 Activité Éducative";
+    $('hud-game-name').textContent = titleMap[gameKey] || "🎮 Quête Éducative";
     nextActivityChallenge(true);
   }
 
@@ -2504,13 +2776,13 @@ canvas#simCanvas {
     VoiceEngine.stop();
     $('arcade-workspace').classList.remove('active');
     $('portals-grid').style.display = 'grid';
-    $('hero-banner').style.display = 'flex';
+    $('level-selector-section').style.display = 'flex';
     $('category-tabs').style.display = 'flex';
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
   // ============================================================================
-  // CONTINUOUS REAL PHYSICS RENDER & ANIMATION LOOP
+  // CONTINUOUS 60FPS REAL PHYSICS & ARCADE RENDER LOOP
   // ============================================================================
   function renderLoop() {
     ctx.save();
@@ -2524,7 +2796,7 @@ canvas#simCanvas {
 
     ctx.clearRect(0, 0, CW, CH);
 
-    // Deep Canvas Background (Nateiva Dark Black #111827)
+    // Deep Canvas Background
     const bg = ctx.createLinearGradient(0, 0, 0, CH);
     bg.addColorStop(0, '#111827');
     bg.addColorStop(1, '#1F2937');
@@ -2533,17 +2805,138 @@ canvas#simCanvas {
 
     const g = state.game;
 
-    // 1. CHEMISTRY LAB SIMULATION
-    if (g === 'chemistry') {
+    // 1. MAZE QUEST ARCADE
+    if (g === 'maze_quest') {
+      const mz = state.maze;
+      // Draw Maze Grid Walls
+      for (let r = 0; r < mz.rows; r++) {
+        for (let c = 0; c < mz.cols; c++) {
+          const x = c * mz.cellW;
+          const y = r * mz.cellH;
+          if (mz.walls[r][c] === '1') {
+            ctx.fillStyle = '#374151';
+            ctx.beginPath();
+            ctx.roundRect(x + 2, y + 2, mz.cellW - 4, mz.cellH - 4, 8);
+            ctx.fill();
+            ctx.strokeStyle = '#111827';
+            ctx.lineWidth = 2;
+            ctx.stroke();
+          } else {
+            // Path
+            ctx.fillStyle = 'rgba(255, 255, 255, 0.04)';
+            ctx.fillRect(x, y, mz.cellW, mz.cellH);
+          }
+        }
+      }
+
+      // Exit Portal
+      const exX = mz.exit.c * mz.cellW + mz.cellW / 2;
+      const exY = mz.exit.r * mz.cellH + mz.cellH / 2;
+      ctx.fillStyle = '#10B981';
+      ctx.beginPath();
+      ctx.arc(exX, exY, 24 + Math.sin(Date.now() / 250) * 3, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.fillStyle = '#FFFFFF';
+      ctx.font = '24px sans-serif';
+      ctx.fillText('🌀', exX - 14, exY + 8);
+
+      // Stars
+      mz.stars.forEach(st => {
+        if (!st.collected) {
+          const sx = st.c * mz.cellW + mz.cellW / 2;
+          const sy = st.r * mz.cellH + mz.cellH / 2;
+          ctx.font = '26px sans-serif';
+          ctx.fillText('⭐', sx - 13, sy + 9);
+        }
+      });
+
+      // Player Smooth Lerp
+      mz.player.x += (mz.player.targetX - mz.player.x) * 0.25;
+      mz.player.y += (mz.player.targetY - mz.player.y) * 0.25;
+
+      // Draw Leo the Lion Mascot
+      ctx.save();
+      ctx.translate(mz.player.x, mz.player.y);
+      ctx.font = '34px sans-serif';
+      ctx.fillText('🦁', -17, 12);
+      ctx.restore();
+    }
+
+    // 2. TANGRAM PUZZLE SNAP
+    else if (g === 'tangram_puzzle') {
+      // Background Target Silhouette (Dashed Boat Outline)
+      ctx.strokeStyle = 'rgba(255, 255, 255, 0.35)';
+      ctx.lineWidth = 3;
+      ctx.setLineDash([6, 6]);
+
+      // Sail 1
+      ctx.beginPath();
+      ctx.moveTo(400, 115);
+      ctx.lineTo(400, 185);
+      ctx.lineTo(340, 185);
+      ctx.closePath();
+      ctx.stroke();
+
+      // Sail 2
+      ctx.beginPath();
+      ctx.moveTo(470, 155);
+      ctx.lineTo(470, 205);
+      ctx.lineTo(510, 205);
+      ctx.closePath();
+      ctx.stroke();
+
+      // Hull
+      ctx.beginPath();
+      ctx.moveTo(370, 240);
+      ctx.lineTo(490, 240);
+      ctx.lineTo(470, 280);
+      ctx.lineTo(390, 280);
+      ctx.closePath();
+      ctx.stroke();
+      ctx.setLineDash([]);
+
+      // Shelf Bar
+      ctx.fillStyle = '#374151';
+      ctx.fillRect(0, 290, CW, 90);
+      ctx.fillStyle = '#E5252A';
+      ctx.fillRect(0, 290, CW, 3);
+
+      // Draw Tangram Pieces
+      state.tangram.pieces.forEach(p => {
+        ctx.save();
+        ctx.translate(p.x, p.y);
+        ctx.fillStyle = p.color;
+        ctx.strokeStyle = '#FFFFFF';
+        ctx.lineWidth = 2.5;
+
+        ctx.beginPath();
+        if (p.type === 'triangle') {
+          ctx.moveTo(0, -p.h / 2);
+          ctx.lineTo(p.w / 2, p.h / 2);
+          ctx.lineTo(-p.w / 2, p.h / 2);
+        } else {
+          ctx.roundRect(-p.w / 2, -p.h / 2, p.w, p.h, 6);
+        }
+        ctx.closePath();
+        ctx.fill();
+        ctx.stroke();
+
+        ctx.fillStyle = '#FFFFFF';
+        ctx.font = 'bold 12px sans-serif';
+        ctx.fillText(p.name, -28, p.h / 2 + 16);
+        ctx.restore();
+      });
+    }
+
+    // 3. CHEMISTRY LAB
+    else if (g === 'chemistry') {
       ctx.fillStyle = '#374151';
       ctx.fillRect(0, 310, CW, 70);
       ctx.fillStyle = '#E5252A';
       ctx.fillRect(0, 310, CW, 4);
 
-      // Erlenmeyer Flask
       const fx = state.flask.x;
       const fy = state.flask.y;
-      ctx.save();
       ctx.beginPath();
       ctx.moveTo(fx - 24, fy - 80);
       ctx.lineTo(fx + 24, fy - 80);
@@ -2571,21 +2964,7 @@ canvas#simCanvas {
       ctx.fillStyle = state.flask.fluidColor;
       ctx.fill();
 
-      // Bubbles
-      if (Math.random() < 0.3) {
-        state.flask.bubbles.push({ x: fx + (Math.random() - 0.5) * 60, y: fy + 35, vy: 1 + Math.random() * 2, r: 2 + Math.random() * 3 });
-      }
-      ctx.fillStyle = 'rgba(255, 255, 255, 0.7)';
-      state.flask.bubbles.forEach((b, i) => {
-        b.y -= b.vy;
-        ctx.beginPath();
-        ctx.arc(b.x, b.y, b.r, 0, Math.PI * 2);
-        ctx.fill();
-        if (b.y < fy + 45 - fh) state.flask.bubbles.splice(i, 1);
-      });
-      ctx.restore();
-
-      // Test Tubes
+      // Tubes
       state.tubes.forEach(t => {
         ctx.save();
         ctx.translate(t.x, t.y);
@@ -2602,20 +2981,11 @@ canvas#simCanvas {
         ctx.roundRect(-10, -10, 20, 42, 8);
         ctx.fillStyle = t.color;
         ctx.fill();
-
-        if (t.isPouring) {
-          ctx.beginPath();
-          ctx.moveTo(0, 35);
-          ctx.lineTo(state.flask.x - t.x, state.flask.y - 70 - t.y);
-          ctx.strokeStyle = t.color;
-          ctx.lineWidth = 4;
-          ctx.stroke();
-        }
         ctx.restore();
       });
     }
 
-    // 2. BOTANY GARDEN
+    // 4. BOTANY GARDEN
     else if (g === 'botany') {
       ctx.fillStyle = '#10B981';
       ctx.fillRect(0, 0, CW, 240);
@@ -2623,71 +2993,27 @@ canvas#simCanvas {
       ctx.fillRect(0, 240, CW, 140);
 
       // Sun
-      ctx.save();
       ctx.fillStyle = '#FBBF24';
       ctx.beginPath();
       ctx.arc(state.sun.x, state.sun.y, 34, 0, Math.PI * 2);
       ctx.fill();
-      ctx.restore();
 
-      // Plant Stem
-      const px = CW / 2;
-      const py = 240;
+      // Stem & Bloom
       if (state.stemHeight > 0) {
         ctx.strokeStyle = '#15803D';
         ctx.lineWidth = 7;
         ctx.beginPath();
-        ctx.moveTo(px, py);
-        ctx.quadraticCurveTo(px + Math.sin(Date.now() / 600) * 8, py - state.stemHeight / 2, px, py - state.stemHeight);
+        ctx.moveTo(CW / 2, 240);
+        ctx.lineTo(CW / 2, 240 - state.stemHeight);
         ctx.stroke();
       }
 
-      // Flower Bloom
-      if (state.flowerBloom > 0) {
-        const fy = py - state.stemHeight;
-        ctx.fillStyle = '#F59E0B';
-        for (let i = 0; i < 8; i++) {
-          const ang = (Math.PI * 2 * i) / 8;
-          ctx.beginPath();
-          ctx.arc(px + Math.cos(ang) * 18 * state.flowerBloom, fy + Math.sin(ang) * 18 * state.flowerBloom, 10 * state.flowerBloom, 0, Math.PI * 2);
-          ctx.fill();
-        }
-        ctx.fillStyle = '#78350F';
-        ctx.beginPath();
-        ctx.arc(px, fy, 12 * state.flowerBloom, 0, Math.PI * 2);
-        ctx.fill();
-      }
-
-      // Roots
-      ctx.strokeStyle = '#FEF08A';
-      ctx.lineWidth = 2.5;
-      state.roots.forEach(r => {
-        ctx.beginPath();
-        ctx.moveTo(r.x, 240);
-        ctx.lineTo(r.x + (Math.sin(r.y) * 12), r.y);
-        ctx.stroke();
-      });
-
-      // Watering can
-      ctx.save();
-      ctx.translate(state.wateringCan.x, state.wateringCan.y);
-      ctx.rotate((state.wateringCan.tilt * Math.PI) / 180);
-      ctx.fillStyle = '#E5252A';
-      ctx.beginPath();
-      ctx.roundRect(-25, -20, 50, 40, 8);
-      ctx.fill();
-      ctx.fillStyle = '#FFFFFF';
-      ctx.font = '22px sans-serif';
-      ctx.fillText('💧', -12, 10);
-      ctx.restore();
-
-      // Real-time Day counter
       ctx.fillStyle = '#FFFFFF';
       ctx.font = 'bold 16px sans-serif';
       ctx.fillText((state.lang === 'en' ? 'DAY ' : 'JOUR ') + Math.floor(state.simDay) + ' / 21', 20, 40);
     }
 
-    // 3. DENSITY TANK
+    // 5. DENSITY TANK
     else if (g === 'density') {
       ctx.fillStyle = 'rgba(56, 189, 248, 0.45)';
       ctx.fillRect(40, state.waterSurfaceY, CW - 80, state.waterBottomY - state.waterSurfaceY);
@@ -2697,11 +3023,7 @@ canvas#simCanvas {
 
       state.densityItems.forEach(it => {
         if (it.inWater) {
-          if (it.rho < 1.0) {
-            it.y = state.waterSurfaceY + 12 + Math.sin(Date.now() / 400 + it.x) * 4;
-          } else {
-            it.y = Math.min(state.waterBottomY - 26, it.y + 2.5);
-          }
+          it.y = it.rho < 1.0 ? state.waterSurfaceY + 12 + Math.sin(Date.now() / 400 + it.x) * 4 : Math.min(state.waterBottomY - 26, it.y + 2.5);
         }
         ctx.save();
         ctx.fillStyle = it.color;
@@ -2713,25 +3035,14 @@ canvas#simCanvas {
         ctx.fillText(it.emoji, it.x - 12, it.y + 7);
         ctx.restore();
       });
-
-      ctx.fillStyle = '#FFFFFF';
-      ctx.font = 'bold 14px sans-serif';
-      ctx.fillText(state.lang === 'en' ? 'DENSITY MULTIMETER: Water = 1.0 g/cm³' : 'MULTIMÈTRE DE DENSITÉ : Eau = 1.0 g/cm³', 50, 40);
     }
 
-    // 4. ELECTRIC CIRCUIT
+    // 6. ELECTRIC CIRCUIT
     else if (g === 'circuit') {
       ctx.strokeStyle = '#F97316';
       ctx.lineWidth = 6;
       ctx.strokeRect(120, 100, CW - 240, 180);
 
-      // Battery
-      ctx.fillStyle = '#111827';
-      ctx.fillRect(100, 160, 40, 60);
-      ctx.fillStyle = '#E5252A';
-      ctx.fillRect(105, 150, 30, 10);
-
-      // Lamp
       ctx.fillStyle = state.lampGlow > 0 ? '#FBBF24' : '#4B5563';
       ctx.beginPath();
       ctx.arc(CW / 2, 100, 26, 0, Math.PI * 2);
@@ -2740,32 +3051,15 @@ canvas#simCanvas {
       ctx.font = '24px sans-serif';
       ctx.fillText('💡', CW / 2 - 14, 108);
 
-      // Knife switch
       ctx.save();
       ctx.translate(state.switchBlade.x, state.switchBlade.y);
       ctx.rotate((-state.switchBlade.angle * Math.PI) / 180);
       ctx.fillStyle = '#D97706';
       ctx.fillRect(0, -6, 60, 12);
       ctx.restore();
-
-      // Electron stream
-      if (state.circuitClosed) {
-        ctx.fillStyle = '#60A5FA';
-        state.electrons.forEach(e => {
-          e.frac = (e.frac + e.speed) % 1;
-          const ex = 120 + e.frac * (CW - 240);
-          ctx.beginPath();
-          ctx.arc(ex, 100, 4, 0, Math.PI * 2);
-          ctx.fill();
-        });
-      }
-
-      ctx.fillStyle = '#FFFFFF';
-      ctx.font = 'bold 14px monospace';
-      ctx.fillText(state.circuitClosed ? 'I = 0.85 A • P = 3.8 W • 4.5V [FERMÉ]' : 'I = 0.00 A [OUVERT]', 140, 50);
     }
 
-    // 5. COMET DEFENDER
+    // 7. COMET DEFENDER
     else if (g === 'comet') {
       ctx.fillStyle = '#E5252A';
       ctx.beginPath();
@@ -2775,7 +3069,6 @@ canvas#simCanvas {
       ctx.closePath();
       ctx.fill();
 
-      // Lasers
       state.lasers.forEach((l, idx) => {
         l.y += l.vy;
         ctx.fillStyle = l.color;
@@ -2783,7 +3076,6 @@ canvas#simCanvas {
         if (l.y < 0) state.lasers.splice(idx, 1);
       });
 
-      // Meteors
       state.meteors.forEach((m, idx) => {
         m.y += m.vy;
         ctx.fillStyle = m.color;
@@ -2794,20 +3086,18 @@ canvas#simCanvas {
         ctx.font = 'bold 18px sans-serif';
         ctx.fillText(String(m.val), m.x - 7, m.y + 6);
 
-        // Check collision
         state.lasers.forEach((l, lIdx) => {
           if (Math.hypot(l.x - m.x, l.y - m.y) < m.r) {
             createExplosion(m.x, m.y, '#E5252A', 18);
             state.lasers.splice(lIdx, 1);
             state.meteors.splice(idx, 1);
-            AudioEngine.playSuccess();
             onActivityTaskCompleted();
           }
         });
       });
     }
 
-    // 6. MATH LAB CANVAS MANIPULATIVES
+    // 8. MATH LAB
     else if (g === 'math_lab') {
       ctx.fillStyle = 'rgba(255, 255, 255, 0.05)';
       ctx.roundRect(80, 80, CW - 160, 220, 16);
@@ -2910,20 +3200,24 @@ canvas#simCanvas {
   });
 
   $('btn-tutor-hint').addEventListener('click', () => {
-    const p = $('tutor-panel');
-    p.classList.toggle('active');
+    $('tutor-panel').classList.toggle('active');
   });
+
+  // Initialize Level Pills Track
+  buildLevelPillsTrack();
 
   // Auto-start Render Loop
   requestAnimationFrame(renderLoop);
 
-  // Expose state for automated Playwright verification suites
+  // Expose state & APIs for test automation
   window.state = state;
   window.__NATEIVA_STATE__ = state;
   window.__NATEIVA_VOICE__ = VoiceEngine;
   window.__NATEIVA_LAUNCH__ = launchGame;
+  window.__NATEIVA_SELECT_LEVEL__ = onSelectLevel;
+  window.__NATEIVA_COMPLETE_ACTIVITY__ = onActivityTaskCompleted;
 
-  console.log("[Nateiva] Educational Arcade, Literacy & Math Suite initialized.");
+  console.log("[Nateiva] Level-First Educational Arcade & Flotation Suite Initialized.");
 })();
 </script>
 </body>
