@@ -12,7 +12,7 @@
   --red-light: #FFECEE;
   --navy-dark: #17233D;
   --navy-card: #202F52;
-  --bg-canvas: #F4F7FB;
+  --bg-canvas: #F8FAFC;
   --surface: #FFFFFF;
   --text-main: #17233D;
   --text-muted: #5A6A85;
@@ -20,9 +20,9 @@
   --green: #00C48C;
   --blue: #0084FF;
   --purple: #8B5CF6;
-  --shadow-sm: 0 2px 8px rgba(23, 35, 61, 0.06);
-  --shadow-md: 0 6px 20px rgba(23, 35, 61, 0.10);
-  --shadow-lg: 0 12px 36px rgba(23, 35, 61, 0.16);
+  --shadow-sm: 0 2px 8px rgba(23, 35, 61, 0.05);
+  --shadow-md: 0 6px 20px rgba(23, 35, 61, 0.08);
+  --shadow-lg: 0 12px 36px rgba(23, 35, 61, 0.12);
   --radius-sm: 12px;
   --radius-md: 18px;
   --radius-lg: 26px;
@@ -47,10 +47,25 @@ body {
   overflow-x: hidden;
 }
 
-/* TOP APP HEADER */
+button {
+  font-family: inherit;
+  cursor: pointer;
+  border: none;
+  outline: none;
+  touch-action: manipulation;
+  transition: transform 0.1s ease, filter 0.15s ease, background 0.15s;
+}
+
+button:active {
+  transform: scale(0.96);
+}
+
+/* ==========================================================================
+   APP HEADER
+   ========================================================================== */
 header {
   background: var(--surface);
-  border-bottom: 2px solid #EAEFF6;
+  border-bottom: 2px solid #EBF0F7;
   padding: 10px 16px;
   display: flex;
   align-items: center;
@@ -61,104 +76,54 @@ header {
   box-shadow: var(--shadow-sm);
 }
 
-.header-left {
+.brand-group {
   display: flex;
   align-items: center;
   gap: 10px;
 }
 
-.btn-home {
-  background: var(--red-light);
-  color: var(--red-primary);
-  border: 2px solid rgba(229, 37, 42, 0.25);
-  border-radius: var(--radius-sm);
-  padding: 8px 14px;
-  font-size: 13.5px;
-  font-weight: 900;
-  cursor: pointer;
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  transition: all 0.15s ease;
-}
-
-.btn-home:hover {
-  background: var(--red-primary);
-  color: white;
-  transform: translateY(-1px);
-}
-
-.btn-home:active {
-  transform: scale(0.96);
-}
-
-.brand-row {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.mascot-avatar {
-  width: 42px;
-  height: 42px;
+.logo-circle {
+  width: 44px;
+  height: 44px;
   border-radius: 50%;
-  background: #FFF3E0;
-  border: 2px solid var(--gold);
+  background: linear-gradient(135deg, var(--red-primary), #FF5E62);
+  color: white;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 24px;
+  font-size: 22px;
+  font-weight: 900;
+  box-shadow: 0 4px 12px rgba(229, 37, 42, 0.3);
   cursor: pointer;
-  animation: floatMascot 3s ease-in-out infinite;
-}
-
-@keyframes floatMascot {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-3px); }
 }
 
 .brand-text h1 {
   font-size: 17px;
   font-weight: 900;
-  letter-spacing: -0.3px;
   color: var(--red-primary);
+  line-height: 1.1;
 }
 
-.brand-subtitle {
-  font-size: 10px;
-  font-weight: 700;
+.brand-text p {
+  font-size: 11px;
   color: var(--text-muted);
+  font-weight: 600;
 }
 
-.header-right {
+.header-actions {
   display: flex;
   align-items: center;
   gap: 8px;
 }
 
-button {
-  cursor: pointer;
-  border: 0;
-  font-family: inherit;
-  font-weight: 800;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 6px;
-  transition: transform 0.12s, box-shadow 0.15s, background-color 0.15s;
-}
-
-button:active {
-  transform: scale(0.96);
-}
-
-.btn-header {
-  background: var(--surface);
+.btn-pill {
+  background: #FFFFFF;
   color: var(--navy-dark);
   border: 1.5px solid #E2E8F0;
   border-radius: var(--radius-sm);
   padding: 7px 12px;
   font-size: 12px;
+  font-weight: 800;
   box-shadow: var(--shadow-sm);
 }
 
@@ -331,13 +296,13 @@ main {
 #view-game {
   display: none;
   flex-direction: column;
-  gap: 12px;
+  gap: 10px;
 }
 
 .game-header-bar {
   background: #FFFFFF;
   border-radius: var(--radius-md);
-  padding: 10px 14px;
+  padding: 8px 14px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -409,7 +374,7 @@ main {
   align-items: center;
   background: #FFFFFF;
   border-radius: var(--radius-sm);
-  padding: 8px 12px;
+  padding: 6px 12px;
   border: 1px solid #EAEFF6;
 }
 
@@ -422,11 +387,11 @@ main {
   gap: 4px;
 }
 
-/* QUESTION BANNER */
+/* QUESTION BANNER (Clean, High Contrast, Child Friendly) */
 .question-banner {
   background: linear-gradient(135deg, #17233D 0%, #202F52 100%);
   border-radius: var(--radius-md);
-  padding: 14px 18px;
+  padding: 12px 18px;
   color: white;
   display: flex;
   align-items: center;
@@ -507,28 +472,32 @@ canvas#arena {
 }
 
 .feedback-box {
-  min-height: 28px;
+  min-height: 26px;
   font-size: 15px;
   font-weight: 900;
   text-align: center;
   transition: all 0.2s;
 }
 
-/* CONTROLS PAD FOR MOBILE */
+/* CONTROLS PAD FOR MOBILE (Only visible when game requires steering/action) */
 .controls-pad {
-  display: flex;
+  display: none;
   gap: 12px;
   justify-content: center;
+}
+
+.controls-pad.visible {
+  display: flex;
 }
 
 .pad-btn {
   flex: 1;
   max-width: 140px;
-  height: 52px;
+  height: 48px;
   background: #FFFFFF;
   border: 2px solid #E2E8F0;
   border-radius: var(--radius-md);
-  font-size: 19px;
+  font-size: 17px;
   font-weight: 900;
   color: var(--navy-dark);
   box-shadow: var(--shadow-sm);
@@ -549,8 +518,8 @@ canvas#arena {
   background: var(--red-primary);
   color: white;
   border-radius: var(--radius-md);
-  padding: 14px;
-  font-size: 16px;
+  padding: 12px;
+  font-size: 15px;
   font-weight: 900;
   box-shadow: 0 4px 16px rgba(229, 37, 42, 0.35);
 }
@@ -561,8 +530,8 @@ canvas#arena {
   color: var(--red-primary);
   border: 2px solid var(--red-primary);
   border-radius: var(--radius-md);
-  padding: 14px;
-  font-size: 15px;
+  padding: 12px;
+  font-size: 14.5px;
   font-weight: 900;
 }
 
@@ -588,16 +557,16 @@ canvas#arena {
   border-radius: var(--radius-lg);
   max-width: 520px;
   width: 100%;
-  padding: 20px;
+  padding: 24px;
   box-shadow: var(--shadow-lg);
   display: flex;
   flex-direction: column;
-  gap: 14px;
-  animation: modalPop 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  gap: 16px;
+  animation: modalPop 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 @keyframes modalPop {
-  from { opacity: 0; transform: scale(0.92); }
+  from { opacity: 0; transform: scale(0.9); }
   to { opacity: 1; transform: scale(1); }
 }
 
@@ -605,67 +574,62 @@ canvas#arena {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 12px;
 }
 
 .tutor-mascot-row {
   display: flex;
   align-items: center;
   gap: 12px;
-  flex: 1;
 }
 
 .tutor-mascot-icon {
-  font-size: 38px;
-  animation: floatMascot 2.5s infinite ease-in-out;
+  font-size: 42px;
 }
 
 .tutor-speech-bubble {
-  background: #F8FAFD;
+  background: #F1F5F9;
   border: 1.5px solid #E2E8F0;
   border-radius: var(--radius-md);
   padding: 10px 14px;
-  flex: 1;
-}
-
-.tutor-speech-text {
   font-size: 13.5px;
-  font-weight: 800;
+  font-weight: 700;
   color: var(--navy-dark);
-  line-height: 1.35;
+  max-width: 320px;
 }
 
 .tutor-modes-tabs {
   display: flex;
   gap: 6px;
+  background: #F1F5F9;
+  padding: 4px;
+  border-radius: var(--radius-sm);
   overflow-x: auto;
-  padding-bottom: 4px;
 }
 
 .tutor-tab {
-  background: #F1F5F9;
-  border: 1.5px solid #E2E8F0;
-  padding: 6px 12px;
-  border-radius: 999px;
-  font-size: 12px;
+  flex: 1;
+  padding: 7px 10px;
+  border-radius: 8px;
+  font-size: 11px;
   font-weight: 800;
   color: var(--text-muted);
+  background: transparent;
   white-space: nowrap;
 }
 
 .tutor-tab.active {
-  background: var(--red-primary);
-  color: white;
-  border-color: var(--red-hover);
+  background: #FFFFFF;
+  color: var(--red-primary);
+  box-shadow: 0 2px 6px rgba(0,0,0,0.06);
 }
 
 canvas#tutorCanvas {
   width: 100%;
+  height: auto;
   aspect-ratio: 480 / 200;
-  background: #F8FAFD;
-  border-radius: var(--radius-md);
+  border-radius: var(--radius-sm);
+  background: #FFFFFF;
   border: 1.5px solid #E2E8F0;
-  display: block;
 }
 
 .tutor-actions-row {
@@ -678,8 +642,9 @@ canvas#tutorCanvas {
   background: #F1F5F9;
   color: var(--navy-dark);
   border-radius: var(--radius-sm);
-  padding: 12px;
+  padding: 10px;
   font-size: 13px;
+  font-weight: 800;
 }
 
 .tutor-btn-pri {
@@ -687,107 +652,150 @@ canvas#tutorCanvas {
   background: var(--green);
   color: white;
   border-radius: var(--radius-sm);
-  padding: 12px;
+  padding: 10px;
   font-size: 14px;
   font-weight: 900;
+  box-shadow: 0 4px 12px rgba(0, 196, 140, 0.3);
+}
+
+.modal-title {
+  font-size: 20px;
+  font-weight: 900;
+  color: var(--navy-dark);
+  text-align: center;
+}
+
+.modal-body-text {
+  font-size: 14px;
+  color: var(--text-muted);
+  font-weight: 600;
+  text-align: center;
+  line-height: 1.5;
+}
+
+.modal-actions-col {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.btn-modal-green {
+  background: var(--green);
+  color: white;
+  padding: 13px;
+  border-radius: var(--radius-md);
+  font-size: 15px;
+  font-weight: 900;
+  box-shadow: 0 4px 14px rgba(0, 196, 140, 0.35);
+}
+
+.btn-modal-blue {
+  background: var(--blue);
+  color: white;
+  padding: 13px;
+  border-radius: var(--radius-md);
+  font-size: 15px;
+  font-weight: 900;
+}
+
+.btn-modal-gray {
+  background: #F1F5F9;
+  color: var(--navy-dark);
+  padding: 11px;
+  border-radius: var(--radius-md);
+  font-size: 14px;
+  font-weight: 800;
 }
 </style>
 </head>
 <body>
+<div id="root" style="display:none;"></div>
 
-<!-- HEADER -->
 <header>
-  <div class="header-left">
-    <button class="btn-home" id="btn-header-home" title="Retour à l'accueil">🏠 <span id="label-home-btn">Accueil</span></button>
-    <div class="brand-row">
-      <div class="mascot-avatar" id="mascot-avatar" title="Touche-moi !">🦉</div>
-      <div class="brand-text">
-        <h1>Nateiva EduKids</h1>
-        <span class="brand-subtitle" id="header-subtitle">Aventure Éducative • 100% Hors-Ligne</span>
-      </div>
+  <div class="brand-group">
+    <div class="logo-circle" id="mascot-avatar" title="Nateiva Mascot">🦁</div>
+    <div class="brand-text">
+      <h1>Nateiva EduKids</h1>
+      <p id="header-subtitle">Aventure Éducative • 100% Hors-Ligne</p>
     </div>
   </div>
-  <div class="header-right">
-    <button class="btn-header btn-lang" id="lang-btn">🇨🇲 FR</button>
-    <button class="btn-header" id="sound-btn">🔊 Son</button>
-    <button class="btn-header" id="guide-btn">❓ Guide</button>
+  <div class="header-actions">
+    <button class="btn-pill" id="btn-header-home" title="Retour à l'accueil">🏠 <span id="label-home-btn">Accueil</span></button>
+    <button class="btn-pill" id="sound-btn">🔊 Son</button>
+    <button class="btn-pill btn-lang" id="lang-btn">🇨🇲 FR</button>
+    <button class="btn-pill" id="guide-btn" title="Consignes & Règles">📖 Guide</button>
   </div>
 </header>
 
 <main>
-  <!-- ===================================================================== -->
-  <!-- VIEW 1: WORLD ADVENTURE HUB (#view-hub)                               -->
-  <!-- ===================================================================== -->
+  <!-- ========================================================================
+       VIEW 1: WORLD ADVENTURE HUB
+       ======================================================================== -->
   <div id="view-hub">
-    <!-- Hero Banner -->
+    <!-- Hub Hero -->
     <div class="hub-hero">
       <div class="hub-hero-text">
         <h2 id="hub-welcome-title">Choisis ton Monde d'Aventure !</h2>
-        <p id="hub-welcome-sub">Explore, joue et apprends à ton propre rythme</p>
+        <p id="hub-welcome-sub">Explore, joue et apprends à ton rythme</p>
       </div>
-      <div class="hub-hero-avatar">🦉✨</div>
+      <div class="hub-hero-avatar">🌍</div>
     </div>
 
     <!-- 4 Grade Bands -->
-    <div class="grade-bar" id="grade-pills">
+    <div class="grade-bar" id="grade-bar">
       <button class="pill-grade active" data-grade="0">
-        <span>🐣 Maternelle</span>
-        <small>2–4 ans</small>
+        <span>🐣 MATERNELLE</span>
+        <small>2 – 4 ans</small>
       </button>
       <button class="pill-grade" data-grade="1">
         <span>🦁 SIL / CP</span>
-        <small>5–6 ans</small>
+        <small>5 – 6 ans</small>
       </button>
       <button class="pill-grade" data-grade="2">
         <span>🚀 CE1 / CE2</span>
-        <small>7–8 ans</small>
+        <small>7 – 8 ans</small>
       </button>
       <button class="pill-grade" data-grade="3">
         <span>👑 CM1 / CM2</span>
-        <small>9–11 ans</small>
+        <small>9 – 11 ans</small>
       </button>
     </div>
 
     <!-- 7 Learning Worlds Portals Grid -->
-    <div class="worlds-grid" id="worlds-grid">
-      <!-- Populated dynamically via JS -->
-    </div>
+    <div class="worlds-grid" id="worlds-grid"></div>
   </div>
 
-  <!-- ===================================================================== -->
-  <!-- VIEW 2: ACTIVE GAME ARENA (#view-game)                                -->
-  <!-- ===================================================================== -->
+  <!-- ========================================================================
+       VIEW 2: ACTIVE GAME ARENA
+       ======================================================================== -->
   <div id="view-game">
-    <!-- Top breadcrumb bar -->
+    <!-- Breadcrumb Header -->
     <div class="game-header-bar">
-      <button class="btn-back-hub" id="btn-back-to-hub">⬅️ 🏠 <span id="label-back-hub">Retour aux Mondes</span></button>
+      <button class="btn-back-hub" id="btn-back-to-hub">⬅ <span id="label-back-hub">Retour aux Mondes</span></button>
       <div class="game-current-title">
-        <span id="current-game-icon">🧮</span>
+        <span id="current-game-icon">🎮</span>
         <span id="current-game-name">Verger Gourmand</span>
       </div>
     </div>
 
-    <!-- Dynamic game pills inside the active category -->
-    <div class="game-switch-pills" id="game-switch-pills">
-      <!-- Populated dynamically per category -->
-    </div>
+    <!-- Category Switcher Pills -->
+    <div class="game-switch-pills" id="game-switch-pills"></div>
 
-    <!-- Topic indicator -->
+    <!-- Topic / Matrix Label -->
     <div class="matrix-topic-banner">
-      <span>🎯 <span id="label-theme">Thème</span> : <strong id="matrix-category-label">Royaume des Maths</strong> • <span id="matrix-topic-label" style="color:var(--red-primary);font-weight:900;">Dénombrement</span></span>
-      <span style="background:var(--red-primary);color:white;padding:3px 10px;border-radius:999px;font-size:11px;font-weight:900;" id="matrix-grade-label">🐣 Maternelle</span>
+      <span id="matrix-topic-label">Verger Gourmand • Cueillette & Compte</span>
+      <span id="matrix-grade-label">Niveau Actif</span>
     </div>
 
     <!-- Stats Bar -->
     <div class="stats-bar">
-      <div class="stat-item">⭐ <span id="stat-score">0</span></div>
-      <div class="stat-item">🏆 <span id="stat-level-label">Niveau</span> <span id="stat-level">1</span></div>
-      <div class="stat-item">🎯 <span id="stat-round">1/5</span></div>
+      <div class="stat-item">⭐ <span id="stat-score">0</span> pts</div>
       <div class="stat-item">🪙 <span id="stat-coins">15</span> CFA</div>
       <div class="stat-item">❤️ <span id="stat-lives">3</span></div>
+      <div class="stat-item">🎯 Round <span id="stat-round">1/5</span></div>
     </div>
 
-    <!-- Question Banner -->
+    <!-- Question Banner (High contrast, clean & clear) -->
     <div class="question-banner">
       <div>
         <div class="question-equation" id="display-equation">2 + 3 = ?</div>
@@ -805,7 +813,7 @@ canvas#tutorCanvas {
     <!-- Feedback Message Box -->
     <div class="feedback-box" id="feedback-msg"></div>
 
-    <!-- Directional / Action Controls Pad for Touch Accessibility -->
+    <!-- Directional / Action Controls Pad (Dynamically revealed for racing & fishing) -->
     <div class="controls-pad" id="controls-pad">
       <button class="pad-btn" id="btn-left">◀ Gauche</button>
       <button class="pad-btn" id="btn-action" style="background:var(--red-primary);color:white;border-color:var(--red-hover);">⚡ Action</button>
@@ -851,53 +859,55 @@ canvas#tutorCanvas {
   </div>
 </div>
 
-<!-- GUIDE MODAL -->
-<div class="modal-overlay" id="guide-modal">
-  <div class="modal-card">
-    <div style="display:flex;justify-content:space-between;align-items:center;">
-      <h3 style="font-size:18px;font-weight:900;color:var(--navy-dark);display:flex;align-items:center;gap:8px;">
-        <span id="guide-icon">❓</span> <span id="guide-title">Guide de Jeu</span>
-      </h3>
-      <button style="background:#F1F5F9;color:#64748B;font-size:18px;border-radius:12px;padding:6px 10px;" id="btn-close-guide">✕</button>
-    </div>
-    <div style="background:#F8FAFD;border:1.5px solid #E2E8F0;border-radius:var(--radius-md);padding:14px;font-size:14px;color:var(--navy-dark);line-height:1.45;" id="guide-text">
-      Touche les objets à l'écran pour interagir et résoudre les énigmes !
-    </div>
-    <button class="btn-action-main" id="btn-guide-ok" style="padding:12px;">C'est parti ! 🚀</button>
-  </div>
-</div>
-
-<!-- VICTORY MODAL (SECTION COMPLETED) -->
+<!-- VICTORY / SECTION COMPLETED MODAL -->
 <div class="modal-overlay" id="victory-modal">
-  <div class="modal-card" style="text-align:center;align-items:center;">
-    <div style="font-size:54px;animation:floatMascot 2s infinite ease-in-out;">🎉</div>
-    <h2 style="font-size:22px;font-weight:900;color:var(--red-primary);" id="victory-title">Section Terminée !</h2>
-    <p style="font-size:14px;color:var(--text-muted);font-weight:700;" id="victory-stats-text">Tu as complété tous les exercices avec brio !</p>
-    <div style="display:flex;flex-direction:column;gap:10px;width:100%;margin-top:14px;">
-      <button class="btn-action-main" id="btn-victory-next-game" style="padding:13px;font-size:15px;">Activité Suivante 🌟</button>
-      <button class="btn-action-tutor" id="btn-victory-next-level" style="padding:12px;font-size:14px;">Niveau Supérieur 🚀</button>
-      <button class="btn-back-hub" id="btn-victory-hub" style="width:100%;padding:10px;font-size:13px;">🏠 Retour aux Mondes</button>
+  <div class="modal-card" style="text-align:center;">
+    <div style="font-size:54px;margin-bottom:6px;">🏆</div>
+    <div class="modal-title" id="victory-title">🎉 Section Complétée !</div>
+    <div class="modal-body-text" id="victory-stats-text">Tu as terminé tous les 5 exercices avec brio !</div>
+    <div class="modal-actions-col">
+      <button class="btn-modal-green" id="btn-victory-next-game">🌟 Activité Suivante ▶</button>
+      <button class="btn-modal-blue" id="btn-victory-next-level">🚀 Niveau Supérieur +1</button>
+      <button class="btn-modal-gray" id="btn-victory-hub">🏠 Retour aux Mondes</button>
     </div>
   </div>
 </div>
 
 <!-- GAME OVER MODAL -->
 <div class="modal-overlay" id="gameover-modal">
-  <div class="modal-card" style="text-align:center;align-items:center;">
-    <div style="font-size:50px;">🦉💡</div>
-    <h2 style="font-size:20px;font-weight:900;color:var(--navy-dark);">Prends ton temps !</h2>
-    <p style="font-size:14px;color:var(--text-muted);font-weight:700;">Le hibou tuteur est là pour t'aider. Regarde sa démonstration pas-à-pas !</p>
-    <div style="display:flex;gap:10px;width:100%;margin-top:10px;">
-      <button class="btn-action-tutor" id="btn-over-tutor" style="flex:1;">🦉 Tuteur</button>
-      <button class="btn-action-main" id="btn-over-retry" style="flex:1;">Réessayer 🔄</button>
+  <div class="modal-card" style="text-align:center;">
+    <div style="font-size:48px;margin-bottom:6px;">💡</div>
+    <div class="modal-title">Courage champion !</div>
+    <div class="modal-body-text">Prends ton temps, regarde l'astuce du tuteur et réessaie pour gagner des étoiles !</div>
+    <div class="modal-actions-col">
+      <button class="btn-modal-green" id="btn-over-retry">🔄 Réessayer</button>
+      <button class="btn-modal-blue" id="btn-over-tutor">🦉 Voir l'explication</button>
     </div>
   </div>
 </div>
 
-<div id="root" style="display:none;"></div>
+<!-- GUIDE MODAL -->
+<div class="modal-overlay" id="guide-modal">
+  <div class="modal-card">
+    <div style="display:flex;align-items:center;justify-content:space-between;">
+      <div style="display:flex;align-items:center;gap:10px;">
+        <span style="font-size:32px;" id="guide-icon">🎮</span>
+        <h3 class="modal-title" id="guide-title">Guide du Jeu</h3>
+      </div>
+      <button style="background:#F1F5F9;font-size:18px;border-radius:12px;padding:6px 10px;" id="btn-close-guide">✕</button>
+    </div>
+    <div class="modal-body-text" id="guide-text" style="text-align:left;">
+      Touche les objets correspondants à la consigne affichée en haut !
+    </div>
+    <button class="btn-modal-green" id="btn-guide-ok">Compris, je joue ! 🚀</button>
+  </div>
+</div>
 
 <script>
-// Procedural Web Audio Synthesizer
+window.addEventListener("DOMContentLoaded", () => {
+// ============================================================================
+// AUDIO & SOUND SYNTHESIS
+// ============================================================================
 const AudioEngine = {
   ctx: null,
   soundEnabled: true,
@@ -906,83 +916,191 @@ const AudioEngine = {
       this.ctx = new (window.AudioContext || window.webkitAudioContext)();
     }
   },
-  playTone(freq, type, duration, gainVal) {
+  playTone(freq, type, duration, vol = 0.25) {
     if (!this.soundEnabled) return;
     this.init();
     if (!this.ctx) return;
     try {
       const osc = this.ctx.createOscillator();
       const gain = this.ctx.createGain();
-      osc.type = type || "sine";
+      osc.type = type;
       osc.frequency.setValueAtTime(freq, this.ctx.currentTime);
-      gain.gain.setValueAtTime(gainVal || 0.15, this.ctx.currentTime);
-      gain.gain.exponentialRampToValueAtTime(0.0001, this.ctx.currentTime + duration);
+      gain.gain.setValueAtTime(vol, this.ctx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.001, this.ctx.currentTime + duration);
       osc.connect(gain);
       gain.connect(this.ctx.destination);
       osc.start();
       osc.stop(this.ctx.currentTime + duration);
     } catch (e) {}
   },
-  playPop() { this.playTone(480, "sine", 0.09, 0.18); },
-  playDrop() { this.playTone(260, "triangle", 0.14, 0.22); },
-  playClick() { this.playTone(600, "sine", 0.04, 0.12); },
   playSuccess() {
-    this.playTone(523.25, "sine", 0.12, 0.15); // C5
-    setTimeout(() => this.playTone(659.25, "sine", 0.12, 0.18), 110); // E5
-    setTimeout(() => this.playTone(783.99, "sine", 0.22, 0.22), 220); // G5
+    this.playTone(523.25, "triangle", 0.12, 0.3); // C5
+    setTimeout(() => this.playTone(659.25, "triangle", 0.14, 0.3), 110); // E5
+    setTimeout(() => this.playTone(783.99, "triangle", 0.24, 0.3), 230); // G5
   },
   playMistake() {
-    this.playTone(220, "sawtooth", 0.18, 0.15);
-    setTimeout(() => this.playTone(196, "sawtooth", 0.25, 0.18), 140);
+    this.playTone(220, "sawtooth", 0.18, 0.2);
+    setTimeout(() => this.playTone(180, "sawtooth", 0.25, 0.2), 150);
   },
-  playCoin() {
-    this.playTone(987.77, "sine", 0.08, 0.16);
-    setTimeout(() => this.playTone(1318.51, "sine", 0.20, 0.20), 80);
-  },
-  playDrum() {
-    this.playTone(120, "triangle", 0.22, 0.35);
+  playPop() {
+    this.playTone(720, "sine", 0.08, 0.35);
   },
   playSplash() {
-    this.playTone(320, "sine", 0.15, 0.20);
+    this.playTone(320, "sine", 0.15, 0.3);
+  },
+  playCoin() {
+    this.playTone(987.77, "sine", 0.1, 0.25);
+    setTimeout(() => this.playTone(1318.51, "sine", 0.2, 0.25), 90);
+  },
+  playDrum() {
+    this.playTone(95, "triangle", 0.22, 0.5);
+  },
+  playDrop() {
+    this.playTone(440, "sine", 0.08, 0.25);
+  },
+  playClick() {
+    this.playTone(600, "sine", 0.04, 0.15);
   },
   playVictory() {
-    [523.25, 659.25, 783.99, 1046.50].forEach((f, i) => {
-      setTimeout(() => this.playTone(f, "triangle", 0.28, 0.22), i * 130);
+    const notes = [523, 659, 783, 1046];
+    notes.forEach((f, i) => {
+      setTimeout(() => this.playTone(f, "triangle", 0.28, 0.35), i * 140);
     });
   }
 };
 
-// Natural Voice Engine with Language-Matching Voice Selection
+// ============================================================================
+// NATURAL BILINGUAL VOICE ENGINE WITH EXCELLENT FRENCH ARTICULATION
+// ============================================================================
 const VoiceEngine = {
   lang: "fr",
   voices: [],
+  hasFrenchNativeVoice: false,
+
+  // High quality French phonetics mapping for clear articulation on English TTS
+  frenchPhoneticDict: [
+    // Numbers
+    ["1", "un"], ["2", "deux"], ["3", "trois"], ["4", "quatre"], ["5", "cinq"],
+    ["6", "six"], ["7", "sept"], ["8", "huit"], ["9", "neuf"], ["10", "dix"],
+    ["11", "onze"], ["12", "douze"], ["14", "quatorze"], ["15", "quinze"],
+    ["20", "vingt"], ["50", "cinquante"], ["75", "soixante-quinze"], ["100", "cent"],
+    ["125", "cent-vingt-cinq"], ["150", "cent-cinquante"], ["200", "deux-cents"],
+    ["250", "deux-cent-cinquante"], ["300", "trois-cents"], ["500", "cinq-cents"],
+
+    // Verbs & Actions
+    ["Cueille", "Kuh-ee"], ["cueille", "kuh-ee"],
+    ["Touche", "Toosh"], ["touche", "toosh"],
+    ["Écoute", "Ay-koot"], ["écoute", "ay-koot"],
+    ["Attrape", "Ah-trahp"], ["attrape", "ah-trahp"],
+    ["Pêche", "Pesh"], ["pêche", "pesh"],
+    ["Frappe", "Frahp"], ["frappe", "frahp"],
+    ["Assemble", "Ah-sahmbl"], ["assemble", "ah-sahmbl"],
+    ["Pilote", "Pee-loht"], ["pilote", "pee-loht"],
+    ["Dépose", "Day-pohz"], ["dépose", "day-pohz"],
+    ["Arrose", "Ah-rohz"], ["arrose", "ah-rohz"],
+    ["Donne", "Dohn"], ["donne", "dohn"],
+    ["Ajoute", "Ah-zhoot"], ["ajoute", "ah-zhoot"],
+    ["Glisse", "Glees"], ["glisse", "glees"],
+    ["Compose", "Kohm-pohz"], ["compose", "kohm-pohz"],
+    ["Trouve", "Troov"], ["trouve", "troov"],
+
+    // Math & Terms
+    ["plus", "ploo"], ["font", "fohn"], ["combien", "kohm-byan"],
+    ["multiplié", "mool-tee-plee-ay"], ["partagé", "par-tah-zhay"],
+    ["unités", "oo-nee-tay"], ["énergie", "ay-nair-zhee"],
+    ["barres", "bahr"], ["cubes", "koob"],
+    ["moitié", "mwa-tyay"], ["quart", "kahr"], ["tiers", "tyair"],
+    ["Francs CFA", "Frahn Say-Eff-Ah"], ["CFA", "Say-Eff-Ah"],
+
+    // Nouns & Fruits
+    ["mangues", "mahng"], ["mangue", "mahng"],
+    ["mûres", "mure"], ["mûre", "mure"],
+    ["bananes", "bah-nahn"], ["banane", "bah-nahn"],
+    ["douces", "doos"], ["douce", "doos"],
+    ["ananas", "ah-nah-nah"],
+    ["juteux", "zhoo-tuh"],
+    ["oranges", "oh-rahnzh"], ["orange", "oh-rahnzh"],
+    ["fraîches", "fresh"], ["fraîche", "fresh"],
+    ["papayes", "pah-pah-ee"], ["papaye", "pah-pah-ee"],
+    ["dorées", "doh-ray"], ["dorée", "doh-ray"],
+    ["goyaves", "gwa-yahv"], ["goyave", "gwa-yahv"],
+    ["sucrées", "soo-kray"], ["sucrée", "soo-kray"],
+    ["noix de coco", "nwa duh koh-koh"],
+    ["panier", "pah-nyay"],
+    ["arbre", "ahrbr"],
+    ["poisson", "pwa-sohn"],
+    ["fleuve", "fluhv"],
+    ["lettre", "lehtr"],
+    ["syllabes", "see-lahb"], ["syllabe", "see-lahb"],
+    ["djembe", "zhem-bay"],
+    ["coups", "koo"], ["coup", "koo"],
+    ["rythme", "reetm"],
+    ["grenouille", "gruh-noo-ee"],
+    ["nénuphar", "nay-noo-fahr"],
+    ["pièces", "pyess"],
+    ["balance", "bah-lahns"],
+
+    // Praise & Guidance
+    ["Bravo", "Brah-voh"], ["bravo", "brah-voh"],
+    ["champion", "shahm-pyon"],
+    ["Regarde", "Ruh-gahrd"], ["regarde", "ruh-gahrd"],
+    ["bien", "byan"],
+    ["Essaie", "Ay-say"], ["essaie", "ay-say"],
+    ["encore", "ahn-kohr"],
+    ["exactement", "eg-zahk-tuh-mahn"],
+    ["pour", "poor"], ["sur", "soor"], ["dans", "dahn"], ["avec", "ah-vehk"]
+  ],
+
   init() {
     if ("speechSynthesis" in window) {
       const load = () => {
         this.voices = window.speechSynthesis.getVoices();
+        this.hasFrenchNativeVoice = this.voices.some(v => v.lang && v.lang.toLowerCase().startsWith("fr"));
       };
       load();
       window.speechSynthesis.onvoiceschanged = load;
     }
   },
-  speak(text, slow) {
+
+  phoneticize(text) {
+    let res = text;
+    for (const [w, r] of this.frenchPhoneticDict) {
+      res = res.split(w).join(r);
+    }
+    return res;
+  },
+
+  speak(text, slow = false) {
     if (!AudioEngine.soundEnabled || !("speechSynthesis" in window)) return;
     window.speechSynthesis.cancel();
     if (!text) return;
-    const u = new SpeechSynthesisUtterance(text);
+
+    if (this.voices.length === 0) {
+      this.voices = window.speechSynthesis.getVoices();
+      this.hasFrenchNativeVoice = this.voices.some(v => v.lang && v.lang.toLowerCase().startsWith("fr"));
+    }
+
+    let spokenText = text;
+    // If running on a system without a native French voice (e.g. US Windows default),
+    // apply French phonetic respelling so the English voice articulates French smoothly!
+    if (this.lang === "fr" && !this.hasFrenchNativeVoice) {
+      spokenText = this.phoneticize(text);
+    }
+
+    const u = new SpeechSynthesisUtterance(spokenText);
     const targetLang = this.lang === "fr" ? "fr" : "en";
     u.lang = this.lang === "fr" ? "fr-FR" : "en-US";
 
-    if (this.voices.length === 0) this.voices = window.speechSynthesis.getVoices();
     const matchedVoice = this.voices.find(v => v.lang && v.lang.toLowerCase().startsWith(targetLang));
     if (matchedVoice) {
       u.voice = matchedVoice;
     }
 
-    u.rate = slow ? 0.72 : 0.88;
+    u.rate = slow ? 0.75 : 0.86;
     u.pitch = 1.05;
     window.speechSynthesis.speak(u);
   },
+
   cancel() {
     if ("speechSynthesis" in window) window.speechSynthesis.cancel();
   }
@@ -3326,6 +3444,7 @@ const state = {
   particles: []
 };
 
+// DOM references
 const $ = (id) => document.getElementById(id);
 const canvas = $("arena");
 const ctx = canvas.getContext("2d");
@@ -3333,26 +3452,29 @@ const tutorCanvas = $("tutorCanvas");
 const tctx = tutorCanvas.getContext("2d");
 const W = 500, H = 380;
 
-function spawnParticles(x, y, color, count) {
-  color = color || "#FFB800";
-  count = count || 24;
+VoiceEngine.init();
+
+// ============================================================================
+// PARTICLE SYSTEM (CELEBRATIONS & STARS)
+// ============================================================================
+function spawnParticles(x, y, color = "#FFB800", count = 25) {
   for (let i = 0; i < count; i++) {
     const angle = Math.random() * Math.PI * 2;
-    const speed = 40 + Math.random() * 140;
+    const speed = Math.random() * 140 + 40;
     state.particles.push({
       x, y,
       vx: Math.cos(angle) * speed,
-      vy: Math.sin(angle) * speed - 20,
+      vy: Math.sin(angle) * speed,
       color,
-      radius: 3 + Math.random() * 4,
-      life: 0.6 + Math.random() * 0.4,
+      radius: Math.random() * 4 + 2,
+      life: 1.0,
       maxLife: 1.0
     });
   }
 }
 
 // ============================================================================
-// VIEW NAVIGATION (HOME / HUB vs GAME ARENA)
+// VIEW NAVIGATION & CONTROLS PAD
 // ============================================================================
 function showHub() {
   state.currentView = "hub";
@@ -3363,11 +3485,9 @@ function showHub() {
   if (victoryModal) victoryModal.classList.remove("open");
   const tutorModal = $("tutor-modal");
   if (tutorModal) tutorModal.classList.remove("open");
-  state.lives = 3;
-  state.roundAdvancing = false;
 
-  $("view-hub").style.display = "flex";
   $("view-game").style.display = "none";
+  $("view-hub").style.display = "flex";
   renderWorldCards();
   updateLabels();
 }
@@ -3397,6 +3517,14 @@ function showGame(category, gameId) {
   $("view-hub").style.display = "none";
   $("view-game").style.display = "flex";
 
+  // Clean UI: Only display steering pad for racing & fishing!
+  const pad = $("controls-pad");
+  if (state.engineType === "racing" || state.engineType === "fishing") {
+    pad.classList.add("visible");
+  } else {
+    pad.classList.remove("visible");
+  }
+
   renderGameSwitchPills();
   updateLabels();
   generateQuestion();
@@ -3412,9 +3540,9 @@ function renderWorldCards() {
     const card = document.createElement("div");
     card.className = "world-card";
     card.dataset.cat = catKey;
-    
+
     let chipsHtml = "";
-    games.forEach(g => {
+    games.slice(0, 3).forEach(g => {
       chipsHtml += '<span class="game-chip">' + g.icon + ' ' + g.name + '</span>';
     });
 
@@ -3455,6 +3583,15 @@ function renderGameSwitchPills() {
       state.round = 1;
       document.querySelectorAll(".game-switch-btn").forEach(b => b.classList.remove("active"));
       btn.classList.add("active");
+
+      // Update pad visibility
+      const pad = $("controls-pad");
+      if (state.engineType === "racing" || state.engineType === "fishing") {
+        pad.classList.add("visible");
+      } else {
+        pad.classList.remove("visible");
+      }
+
       updateLabels();
       generateQuestion();
     };
@@ -3478,23 +3615,24 @@ function updateLabels() {
   $("hub-welcome-title").textContent = isFR ? "Choisis ton Monde d'Aventure !" : "Choose your Adventure World!";
   $("hub-welcome-sub").textContent = isFR ? "Explore, joue et apprends à ton rythme" : "Explore, play and learn at your own pace";
   $("label-back-hub").textContent = isFR ? "Retour aux Mondes" : "Back to Worlds";
-  $("label-theme").textContent = isFR ? "Thème" : "Topic";
-  $("stat-level-label").textContent = isFR ? "Niveau" : "Level";
 
   if (curGame) {
     $("current-game-icon").textContent = curGame.icon;
     $("current-game-name").textContent = curGame.name;
-    $("matrix-topic-label").textContent = curGame.name + " • " + (curGame.sub || (catConf ? catConf.topics[state.grade] : ""));
-    document.title = "Nateiva EduKids • " + curGame.name + " (" + state.round + "/" + state.maxRoundsPerLevel + ")";
+    $("matrix-topic-label").textContent = curGame.name + " • " + curGame.sub;
+    $("matrix-grade-label").textContent = gradeNames[state.grade];
   }
-  if (catConf) {
-    $("matrix-category-label").textContent = catConf.label;
-  }
-  $("matrix-grade-label").textContent = gradeNames[state.grade];
+}
+
+function updateStatsDOM() {
+  $("stat-score").textContent = state.score;
+  $("stat-coins").textContent = state.coins;
+  $("stat-lives").textContent = "❤️ ".repeat(Math.max(0, state.lives));
+  $("stat-round").textContent = state.round + "/" + state.maxRoundsPerLevel;
 }
 
 // ============================================================================
-// COMPREHENSIVE PROCEDURAL & DYNAMIC QUESTION GENERATOR (NEVER REPEATS / LOOPS)
+// DYNAMIC PROCEDURAL QUESTION GENERATION (ZERO ENDLESS LOOPS, EXACT WORD-IMAGE MATCH)
 // ============================================================================
 function generateDynamicQuestion() {
   const isFR = state.lang === "fr";
@@ -3838,16 +3976,8 @@ function generateQuestion() {
   updateLabels();
 }
 
-function updateStatsDOM() {
-  $("stat-score").textContent = state.score;
-  $("stat-level").textContent = state.level;
-  $("stat-round").textContent = state.round + "/" + state.maxRoundsPerLevel;
-  $("stat-coins").textContent = state.coins;
-  $("stat-lives").textContent = state.lives;
-}
-
 // ============================================================================
-// DISTINCT GAMEPLAY ENGINES INITIALIZATION (0 AUTOPLAY)
+// INITIALIZE ACTORS PER GAME ENGINE (PRECISE SIZES & POSITIONING)
 // ============================================================================
 function initActiveEngine() {
   const q = state.question;
@@ -3868,7 +3998,6 @@ function initActiveEngine() {
 
   // 1. FRUIT ORCHARD (Nursery Tactile Picking)
   if (eng === "fruit") {
-    // Spawn 7 hanging fruits strictly matching the question's icon!
     for (let i = 0; i < 7; i++) {
       state.fruits.push({
         id: i + 1,
@@ -3965,14 +4094,14 @@ function initActiveEngine() {
     state.drumSyllables = q.syllables || (q.word ? q.word.split("-") : ["SYL"]);
     state.drumActiveSylIdx = 0;
   }
-  // 10. DEFAULT / GENERAL CARDS
+  // 10. DEFAULT / GENERAL CARDS (Neat row, uncluttered, large touch target)
   else {
     state.items = options.map((opt, i) => ({
       val: opt,
-      x: 50 + i * 145,
-      y: 180 + (i % 2 === 1 ? -25 : 25),
+      x: 40 + i * 145,
+      y: 230,
       w: 130,
-      h: 60
+      h: 65
     }));
   }
 }
@@ -4470,22 +4599,32 @@ function draw(time) {
     ctx.lineTo(state.magnifierX + 85, state.magnifierY + 85);
     ctx.stroke();
   }
-  // 9. GENERAL / OTHER ENGINES
+  // 9. GENERAL / OTHER ENGINES (Illustrated Hero Card + 3 Clean Large Option Badges)
   else {
+    // Render the question's illustrated center hero object
+    ctx.font = "54px system-ui";
+    ctx.textAlign = "center";
+    ctx.fillText(q.icon || "⭐", 250, 110);
+
+    ctx.fillStyle = "#FFFFFF";
+    ctx.font = "bold 18px system-ui";
+    ctx.fillText(q.dots || (q.word || ""), 250, 160);
+
+    // 3 Option Cards
     state.items.forEach(item => {
       ctx.fillStyle = "#FFFFFF";
       ctx.beginPath();
       ctx.roundRect(item.x, item.y, item.w, item.h, 16);
       ctx.fill();
       ctx.strokeStyle = "#0084FF";
-      ctx.lineWidth = 2.5;
+      ctx.lineWidth = 3;
       ctx.stroke();
 
       ctx.fillStyle = "#17233D";
       const len = String(item.val).length;
-      ctx.font = "bold " + (len > 12 ? "13px" : len > 8 ? "15px" : "18px") + " system-ui";
+      ctx.font = "bold " + (len > 12 ? "14px" : len > 8 ? "16px" : "20px") + " system-ui";
       ctx.textAlign = "center";
-      ctx.fillText(String(item.val), item.x + item.w / 2, item.y + item.h / 2 + 6);
+      ctx.fillText(String(item.val), item.x + item.w / 2, item.y + item.h / 2 + 7);
     });
   }
 
@@ -4552,86 +4691,70 @@ function drawTutorScene() {
   tctx.fillStyle = "#FFFFFF";
   tctx.fillRect(0, 0, 480, 200);
 
-  const isFR = state.lang === "fr";
   const eng = state.engineType;
-  const mode = state.tutorMode;
+  const isFR = state.lang === "fr";
 
-  // 1. FRUIT TUTOR
-  if (eng === "fruit") {
+  // 1. COUNTING / FRUIT HARVEST TUTOR
+  if (eng === "fruit" || q.mathType === "count") {
     const count = parseInt(q.ans) || 3;
     const fruitIcon = q.icon || "🥭";
     const fruitName = q.fruitName || "fruits";
-    let speech = "";
 
-    if (mode === "WATCH") {
-      speech = isFR
-        ? "Regarde bien : on cueille exactement " + count + " " + fruitName + " pour les mettre dans le panier !"
-        : "Watch closely: we pick exactly " + count + " " + fruitName + " to place into the basket!";
-    } else if (mode === "TOGETHER") {
-      speech = isFR
-        ? "Comptons ensemble : 1, 2, 3... jusqu'à " + count + " " + fruitName + " !"
-        : "Let's count together: 1, 2, 3... up to " + count + " " + fruitName + "!";
-    } else if (mode === "STRATEGY") {
-      speech = isFR
-        ? "Astuce : touche les fruits un par un calmement sans te presser !"
-        : "Tip: touch the fruits one by one calmly without rushing!";
-    } else {
-      speech = isFR
-        ? "En cueillant " + count + " " + fruitName + ", tu réussis l'objectif de dénombrement !"
-        : "By picking " + count + " " + fruitName + ", you master counting!";
-    }
-
+    const speech = isFR 
+      ? ("Comptons ensemble : " + count + " " + fruitName + " !")
+      : ("Let's count together: " + count + " " + fruitName + "!");
     $("tutor-speech-text").textContent = "« " + speech + " »";
     VoiceEngine.speak(speech);
 
-    // Draw the fruits being counted into basket
+    const startX = 240 - (count * 45) / 2;
     for (let i = 0; i < count; i++) {
-      tctx.font = "34px system-ui";
+      tctx.font = "38px system-ui";
       tctx.textAlign = "center";
-      tctx.fillText(fruitIcon, 60 + i * 55, 80);
+      tctx.fillText(fruitIcon, startX + i * 45 + 20, 85);
 
-      tctx.fillStyle = "#10B981";
-      tctx.font = "bold 16px system-ui";
-      tctx.fillText("✔ " + (i + 1), 60 + i * 55, 120);
+      tctx.fillStyle = "#0084FF";
+      tctx.font = "bold 20px system-ui";
+      tctx.fillText(String(i + 1), startX + i * 45 + 20, 135);
     }
 
     tctx.fillStyle = "#D97706";
-    tctx.font = "bold 20px system-ui";
-    tctx.fillText("🧺 Total = " + count + " " + fruitName + " 🌟", 240, 170);
+    tctx.beginPath();
+    tctx.roundRect(190, 150, 100, 36, [6, 6, 12, 12]);
+    tctx.fill();
+    tctx.fillStyle = "#FFFFFF";
+    tctx.font = "bold 14px system-ui";
+    tctx.fillText("🧺 Total = " + count, 240, 173);
   }
-  // 2. DJEMBE PRONUNCIATION TUTOR
+  // 2. PRONUNCIATION / DJEMBE TUTOR
   else if (eng === "djembe") {
     const syllables = q.syllables || ["PA", "PI", "LLON"];
     const speech = isFR
       ? "Pour le mot " + q.word + ", on écoute les syllabes : " + syllables.join("... ") + ". On tape " + q.ans + " fois !"
       : "For the word " + q.word + ", listen to the syllables: " + syllables.join("... ") + ". We tap " + q.ans + " times!";
-
     $("tutor-speech-text").textContent = "« " + speech + " »";
     VoiceEngine.speak(speech, true);
 
-    tctx.font = "42px system-ui";
+    tctx.font = "40px system-ui";
     tctx.textAlign = "center";
-    tctx.fillText(q.icon || "🪘", 80, 100);
+    tctx.fillText(q.icon || "🪘", 240, 60);
 
-    syllables.forEach((s, idx) => {
-      tctx.fillStyle = "#FFECEE";
+    const startX = 240 - (syllables.length * 75) / 2;
+    syllables.forEach((syl, i) => {
+      tctx.fillStyle = "#FFD233";
       tctx.beginPath();
-      tctx.roundRect(140 + idx * 95, 55, 80, 50, 10);
+      tctx.roundRect(startX + i * 75, 80, 65, 45, 8);
       tctx.fill();
-      tctx.strokeStyle = "#E5252A";
-      tctx.lineWidth = 2;
-      tctx.stroke();
 
-      tctx.fillStyle = "#E5252A";
-      tctx.font = "bold 22px system-ui";
-      tctx.fillText(s, 140 + idx * 95 + 40, 88);
+      tctx.fillStyle = "#17233D";
+      tctx.font = "bold 20px system-ui";
+      tctx.fillText(syl, startX + i * 75 + 32, 110);
 
-      tctx.fillStyle = "#78350F";
-      tctx.font = "bold 15px system-ui";
-      tctx.fillText("🥁 Coup " + (idx + 1), 140 + idx * 95 + 40, 135);
+      tctx.font = "bold 14px system-ui";
+      tctx.fillStyle = "#0084FF";
+      tctx.fillText("🥁 #" + (i + 1), startX + i * 75 + 32, 145);
     });
 
-    tctx.fillStyle = "#10B981";
+    tctx.fillStyle = "#059669";
     tctx.font = "bold 18px system-ui";
     tctx.fillText("Total : " + q.ans + " syllabes rythmées ! 🌟", 240, 175);
   }
@@ -4679,57 +4802,61 @@ function drawTutorScene() {
     tctx.font = "bold 24px system-ui";
     tctx.fillText("✔ Réponse exacte = " + total + " ! 🌟", 240, 145);
   }
-  // 5. DEFAULT TUTOR
+  // 5. OTHER TUTOR CATEGORIES
   else {
-    const speech = isFR
+    const speech = isFR 
       ? ("La bonne réponse est : " + q.ans + ". " + q.q)
       : ("The correct answer is: " + q.ans + ". " + q.q);
     $("tutor-speech-text").textContent = "« " + speech + " »";
     VoiceEngine.speak(speech);
 
-    tctx.font = "46px system-ui";
+    tctx.font = "54px system-ui";
     tctx.textAlign = "center";
-    tctx.fillText(q.icon || "💡", 240, 70);
+    tctx.fillText(q.icon || "💡", 240, 75);
 
     tctx.fillStyle = "#00C48C";
-    tctx.font = "bold 24px system-ui";
-    tctx.fillText("✔ " + String(q.ans), 240, 120);
-
-    tctx.fillStyle = "#5A6A85";
-    tctx.font = "bold 15px system-ui";
-    tctx.fillText(q.dots || q.q, 240, 160);
+    tctx.font = "bold 26px system-ui";
+    tctx.fillText("✔ " + String(q.ans), 240, 130);
   }
 }
 
 // ============================================================================
-// EVENT LISTENERS & TOUCH CONTROLS
+// EVENT LISTENERS & INITIALIZATION
 // ============================================================================
-window.addEventListener("DOMContentLoaded", () => {
-  VoiceEngine.init();
+  // Header Home Button
+  $("btn-header-home").onclick = () => {
+    AudioEngine.playClick();
+    showHub();
+  };
 
-  // Home buttons
-  $("btn-header-home").onclick = () => showHub();
-  $("btn-back-to-hub").onclick = () => showHub();
+  // Breadcrumb Hub Back Button
+  $("btn-back-to-hub").onclick = () => {
+    AudioEngine.playClick();
+    showHub();
+  };
 
-  // Grade pills
-  document.querySelectorAll("#grade-pills .pill-grade").forEach(btn => {
+  // Grade selection bar
+  document.querySelectorAll(".pill-grade").forEach(btn => {
     btn.onclick = () => {
-      document.querySelectorAll("#grade-pills .pill-grade").forEach(b => b.classList.remove("active"));
+      AudioEngine.playClick();
+      document.querySelectorAll(".pill-grade").forEach(b => b.classList.remove("active"));
       btn.classList.add("active");
       state.grade = parseInt(btn.dataset.grade);
-      AudioEngine.playDrop();
-      updateLabels();
-      renderWorldCards();
+      if (state.currentView === "hub") {
+        renderWorldCards();
+      } else {
+        renderGameSwitchPills();
+        generateQuestion();
+      }
     };
   });
 
-  // Language toggle
+  // Language switcher
   $("lang-btn").onclick = () => {
+    AudioEngine.playClick();
     state.lang = state.lang === "fr" ? "en" : "fr";
     VoiceEngine.lang = state.lang;
     $("lang-btn").textContent = state.lang === "fr" ? "🇨🇲 FR" : "🇬🇧 EN";
-    AudioEngine.playClick();
-    updateLabels();
     if (state.currentView === "hub") {
       renderWorldCards();
     } else {
