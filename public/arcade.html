@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
 <meta name="theme-color" content="#E5252A">
-<title>Nateiva EduKids • Le Monde des Jeux Éducatifs</title>
+<title>Nateiva EduKids • Apprendre à Lire & Bien Prononcer</title>
 <style>
 :root {
   --red-primary: #E5252A;
@@ -453,7 +453,7 @@ main {
   color: var(--navy-dark);
   white-space: nowrap;
   box-shadow: 0 2px 4px rgba(15, 23, 42, 0.04);
-  transition: all 0.15s ease;
+  transition: all 0.2s ease;
 }
 
 .game-switch-btn:hover {
@@ -1054,7 +1054,7 @@ canvas#tutorCanvas {
 window.addEventListener("DOMContentLoaded", () => {
 
 // ============================================================================
-// AUDIO & SOUND SYNTHESIS
+// AUDIO & SOUND SYNTHESIS (Warm, Musical & Cheerful)
 // ============================================================================
 const AudioEngine = {
   ctx: null,
@@ -1110,6 +1110,20 @@ const AudioEngine = {
   playClick() {
     this.playTone(600, "sine", 0.04, 0.15);
   },
+  playTrainWhistle() {
+    this.playTone(440, "sawtooth", 0.3, 0.25); // A4
+    this.playTone(554.37, "sine", 0.3, 0.25); // C#5
+    setTimeout(() => {
+      this.playTone(440, "sawtooth", 0.45, 0.3);
+      this.playTone(554.37, "sine", 0.45, 0.3);
+    }, 320);
+  },
+  playMagicChime() {
+    const notes = [523, 659, 783, 987, 1046, 1318];
+    notes.forEach((f, i) => {
+      setTimeout(() => this.playTone(f, "sine", 0.2, 0.25), i * 70);
+    });
+  },
   playVictory() {
     const notes = [523, 659, 783, 1046, 1318];
     notes.forEach((f, i) => {
@@ -1126,13 +1140,33 @@ const VoiceEngine = {
   voices: [],
   hasFrenchNativeVoice: false,
 
-  // High quality French phonetics mapping for clear articulation on English TTS
+  // Comprehensive French phonetic dictionary mapping numbers, phonemes, syllables, and curriculum vocabulary
   frenchPhoneticDict: [
+    // Numbers
     ["1", "un"], ["2", "deux"], ["3", "trois"], ["4", "quatre"], ["5", "cinq"],
     ["6", "six"], ["7", "sept"], ["8", "huit"], ["9", "neuf"], ["10", "dix"],
     ["11", "onze"], ["12", "douze"], ["14", "quatorze"], ["15", "quinze"],
     ["20", "vingt"], ["50", "cinquante"], ["75", "soixante-quinze"], ["100", "cent"],
     ["250", "deux cent cinquante"], ["500", "cinq cents"],
+
+    // French Letter Sounds (Phonemes)
+    ["[A]", "Ah"], ["[B]", "Bay"], ["[C]", "Say"], ["[D]", "Day"], ["[E]", "Uh"],
+    ["[F]", "Eff"], ["[G]", "Zhay"], ["[H]", "Ahsh"], ["[I]", "Ee"], ["[J]", "Zhee"],
+    ["[K]", "Kah"], ["[L]", "Ell"], ["[M]", "Emm"], ["[N]", "Enn"], ["[O]", "Oh"],
+    ["[P]", "Pay"], ["[Q]", "Koo"], ["[R]", "Air"], ["[S]", "Ess"], ["[T]", "Tay"],
+    ["[U]", "Oo"], ["[V]", "Vay"], ["[W]", "Doobluh-vay"], ["[X]", "Eeks"], ["[Y]", "Eegrek"], ["[Z]", "Zed"],
+    ["[CH]", "Shh"], ["[OU]", "Ooh"], ["[ON]", "Ohn"], ["[AN]", "Ahn"], ["[IN]", "Ahn"],
+
+    // Syllables
+    ["[BA]", "Bah"], ["[BO]", "Boh"], ["[BU]", "Boo"], ["[BI]", "Bee"], ["[BE]", "Buh"],
+    ["[MA]", "Mah"], ["[MO]", "Moh"], ["[MI]", "Mee"], ["[MU]", "Moo"], ["[ME]", "Muh"],
+    ["[PA]", "Pah"], ["[PO]", "Poh"], ["[PI]", "Pee"], ["[PU]", "Poo"], ["[PE]", "Puh"],
+    ["[TO]", "Toh"], ["[TA]", "Tah"], ["[TE]", "Tuh"], ["[TI]", "Tee"],
+    ["[SA]", "Sah"], ["[SO]", "Soh"], ["[SU]", "Soo"], ["[SI]", "See"],
+    ["[LA]", "Lah"], ["[LE]", "Luh"], ["[LI]", "Lee"], ["[LU]", "Loo"],
+    ["[NA]", "Nah"], ["[NE]", "Nuh"], ["[NI]", "Nee"],
+
+    // Key curriculum words & verbs
     ["Touche", "Toosh"], ["cueille", "kuh-ee"], ["exactement", "eg-zahk-tuh-mahn"],
     ["mangues", "mahng"], ["mangue", "mahng"], ["mûres", "mure"], ["mûre", "mure"],
     ["bananes", "bah-nahn"], ["banane", "bah-nahn"], ["douces", "doos"], ["douce", "doos"],
@@ -1143,13 +1177,19 @@ const VoiceEngine = {
     ["panier", "pah-nyay"], ["arbre", "ahr-bruh"], ["trouve", "troov"],
     ["lettre", "let-truh"], ["chouette", "shoo-et"], ["balance", "bah-lahns"],
     ["djembe", "jem-bay"], ["rythme", "reet-muh"], ["frappe", "frahp"],
-    ["bravo", "brah-voh"], ["champion", "shahm-pyon"], ["réponse", "ray-pons"]
+    ["bravo", "brah-voh"], ["champion", "shahm-pyon"], ["réponse", "ray-pons"],
+    ["souris", "soo-ree"], ["tapis", "tah-pee"], ["bateau", "bah-toh"], ["château", "shah-toh"],
+    ["lion", "lee-ohn"], ["zèbre", "zeh-bruh"], ["éléphant", "ay-lay-fahn"], ["girafe", "zhee-rahf"],
+    ["hippopotame", "ee-poh-poh-tahm"], ["papillon", "pah-pee-yohn"], ["maman", "mah-mahn"],
+    ["poisson", "pwah-sohn"], ["oiseau", "wah-zoh"], ["ciel", "syell"], ["soleil", "soh-lay-ee"],
+    ["chat", "shah"], ["train", "trahn"], ["phrase", "frahz"], ["bouche", "boosh"]
   ],
 
   phoneticize(text) {
     let out = text;
     this.frenchPhoneticDict.forEach(([w, rep]) => {
-      const reg = new RegExp("\\b" + w + "\\b", "gi");
+      const escaped = w.replace(/[-[\]{}()*+?.,\\^$|#\s]/g, '\\$&');
+      const reg = new RegExp(escaped, "gi");
       out = out.replace(reg, rep);
     });
     return out;
@@ -1196,8 +1236,9 @@ const VoiceEngine = {
     if (this.selectedVoice && (this.lang !== "fr" || this.hasFrenchNativeVoice)) {
       u.voice = this.selectedVoice;
     }
-    u.rate = this.lang === "fr" ? 0.88 : 0.92;
-    u.pitch = 1.05;
+    // Tuning speech rate for crystal clear kid learning & pronunciation
+    u.rate = this.lang === "fr" ? 0.84 : 0.90;
+    u.pitch = 1.08;
     window.speechSynthesis.speak(u);
   }
 };
@@ -3522,7 +3563,7 @@ const state = {
   lastTime: 0,
   tutorOpen: false,
   tutorMode: "WATCH",
-  // Engine specific actors
+  // Engine specific actors & animation controllers
   items: [],
   fruits: [],
   fallingFruit: null,
@@ -3543,7 +3584,14 @@ const state = {
   floatingTexts: [],
   waterRipples: [],
   sonicWaves: [],
-  roadOffset: 0
+  roadOffset: 0,
+  // French Reading & Phonics Engine States
+  trainX: 20,
+  trainPuffs: [],
+  trainKaraokeIdx: -1,
+  studioMouthShape: "A",
+  rhymeHeroCard: null,
+  safariMascotWiggle: 0
 };
 
 // DOM references
@@ -3750,7 +3798,7 @@ function updateStatsDOM() {
 }
 
 // ============================================================================
-// DYNAMIC PROCEDURAL QUESTION GENERATION (ZERO ENDLESS LOOPS, EXACT WORD-IMAGE MATCH)
+// DYNAMIC PROCEDURAL QUESTION GENERATION (RICH FRENCH READING & PRONUNCIATION)
 // ============================================================================
 function generateDynamicQuestion() {
   const isFR = state.lang === "fr";
@@ -3759,7 +3807,7 @@ function generateDynamicQuestion() {
   const round = state.round;
   const level = state.level;
 
-  // 1. FRUIT ORCHARD (Nursery & Counting - distinct fruit & count every single round!)
+  // 1. FRUIT ORCHARD (Nursery & Counting)
   if (eng === "fruit") {
     const fruitsCatalog = [
       { nameFr: "mangues mûres", nameEn: "ripe mangoes", icon: "🥭" },
@@ -3799,54 +3847,79 @@ function generateDynamicQuestion() {
     };
   }
 
-  // 2. PHONICS FISHING & SAFARI (Reading sounds & letters)
-  if (eng === "fishing" || eng === "safari") {
-    const phonicsBank = [
-      { letter: "A", wordFr: "Ananas", wordEn: "Apple", icon: "🍍" },
-      { letter: "B", wordFr: "Banane", wordEn: "Banana", icon: "🍌" },
-      { letter: "C", wordFr: "Chameau", wordEn: "Camel", icon: "🐪" },
-      { letter: "D", wordFr: "Dauphin", wordEn: "Dolphin", icon: "🐬" },
-      { letter: "E", wordFr: "Éléphant", wordEn: "Elephant", icon: "🐘" },
-      { letter: "G", wordFr: "Girafe", wordEn: "Giraffe", icon: "🦒" },
-      { letter: "L", wordFr: "Lion", wordEn: "Lion", icon: "🦁" },
-      { letter: "M", wordFr: "Mangue", wordEn: "Mango", icon: "🥭" },
-      { letter: "P", wordFr: "Perroquet", wordEn: "Parrot", icon: "🦜" },
-      { letter: "Z", wordFr: "Zèbre", wordEn: "Zebra", icon: "🦓" }
+  // 2. SAFARI SONS (French Phonics, Letter Sounds & Savanna Animals)
+  if (eng === "safari") {
+    const safariCatalog = [
+      { letter: "A", sound: "Ah", word: "Ananas", icon: "🍍", animal: "🦁" },
+      { letter: "B", sound: "Bé", word: "Banane", icon: "🍌", animal: "🐒" },
+      { letter: "C", sound: "Ké", word: "Chameau", icon: "🐪", animal: "🐪" },
+      { letter: "D", sound: "Dé", word: "Dauphin", icon: "🐬", animal: "🐘" },
+      { letter: "E", sound: "Euh", word: "Éléphant", icon: "🐘", animal: "🐘" },
+      { letter: "G", sound: "Gué", word: "Girafe", icon: "🦒", animal: "🦒" },
+      { letter: "L", sound: "Lll", word: "Lion", icon: "🦁", animal: "🦁" },
+      { letter: "M", sound: "Mmm", word: "Mangue", icon: "🥭", animal: "🦓" },
+      { letter: "P", sound: "Pé", word: "Perroquet", icon: "🦜", animal: "🦜" },
+      { letter: "Z", sound: "Zzz", word: "Zèbre", icon: "🦓", animal: "🦓" }
     ];
-    const item = phonicsBank[(round - 1 + (level - 1) * 2) % phonicsBank.length];
-    const word = isFR ? item.wordFr : item.wordEn;
-
-    const qText = isFR
-      ? "Trouve le poisson avec la lettre de " + item.icon + " " + word + " :"
-      : "Catch the fish with the initial of " + item.icon + " " + word + ":";
-    const speech = isFR
-      ? "Attrape la lettre " + item.letter + " comme " + word + " !"
-      : "Catch the letter " + item.letter + " as in " + word + "!";
-
+    const item = safariCatalog[(round - 1 + (level - 1) * 2) % safariCatalog.length];
     const dist = ["A", "B", "M", "L", "P", "E", "Z"].filter(l => l !== item.letter);
     dist.sort(() => Math.random() - 0.5);
+
+    const qText = isFR
+      ? "Trouve la lettre qui chante [" + item.sound + "] comme dans " + item.icon + " " + item.word + " :"
+      : "Find the letter that makes the [" + item.sound + "] sound as in " + item.icon + " " + item.word + ":";
+    const speech = isFR
+      ? "Écoute bien : quelle lettre chante le son " + item.sound + " comme dans " + item.word + " ?"
+      : "Listen: which letter makes the " + item.sound + " sound as in " + item.word + "?";
 
     return {
       q: qText,
       ans: item.letter,
       options: [item.letter, dist[0], dist[1]].sort(() => Math.random() - 0.5),
       icon: item.icon,
-      word: word,
-      dots: item.letter + " comme " + word,
+      word: item.word,
+      animal: item.animal,
+      dots: item.letter + " chante [" + item.sound + "] comme " + item.word,
       speech: speech
     };
   }
 
-  // 3. FROG HOP (Syllables & Sequences)
+  // 3. PHONICS FISHING (River Phonics Letter & Sound Fishing)
+  if (eng === "fishing") {
+    const fishingCatalog = [
+      { letter: "A", word: "Ananas", icon: "🍍" },
+      { letter: "B", word: "Banane", icon: "🍌" },
+      { letter: "M", word: "Mangue", icon: "🥭" },
+      { letter: "L", word: "Lion", icon: "🦁" },
+      { letter: "P", word: "Poisson", icon: "🐟" },
+      { letter: "O", word: "Orange", icon: "🍊" }
+    ];
+    const item = fishingCatalog[(round - 1) % fishingCatalog.length];
+    const dist = ["A", "B", "M", "L", "P", "O"].filter(l => l !== item.letter);
+    dist.sort(() => Math.random() - 0.5);
+
+    return {
+      q: "Attrape le poisson qui porte la lettre de " + item.icon + " " + item.word + " :",
+      ans: item.letter,
+      options: [item.letter, dist[0], dist[1]].sort(() => Math.random() - 0.5),
+      icon: item.icon,
+      word: item.word,
+      dots: item.letter + " comme " + item.word,
+      speech: "Pêche le poisson avec la lettre " + item.letter + " comme " + item.word + " !"
+    };
+  }
+
+  // 4. FROG HOP (Syllables & Combinatoire Syllabique)
   if (eng === "frog") {
     const syllableBank = [
       { word: "BANANE", missing: "BA", syllables: ["BA", "NA", "NE"], icon: "🍌" },
       { word: "TOMATE", missing: "TO", syllables: ["TO", "MA", "TE"], icon: "🍅" },
       { word: "PAPAYE", missing: "PA", syllables: ["PA", "PA", "YE"], icon: "🍈" },
-      { word: "SALADE", missing: "SA", syllables: ["SA", "LA", "DE"], icon: "🥗" }
+      { word: "SALADE", missing: "SA", syllables: ["SA", "LA", "DE"], icon: "🥗" },
+      { word: "CHOUETTE", missing: "CHOU", syllables: ["CHOU", "ETTE"], icon: "🦉" }
     ];
     const item = syllableBank[(round - 1) % syllableBank.length];
-    const dist = ["LI", "PO", "MA", "KO"].filter(s => s !== item.missing);
+    const dist = ["LI", "PO", "MA", "KO", "RO"].filter(s => s !== item.missing);
 
     return {
       q: "Fais sauter la grenouille sur [" + item.missing + "] pour former " + item.word + " :",
@@ -3859,7 +3932,105 @@ function generateDynamicQuestion() {
     };
   }
 
-  // 4. TURBO RACING (Math speed calculations)
+  // 5. TRAIN DES PHRASES & FLUENCE (Decodable Sentences with Karaoke Flow)
+  if (eng === "train") {
+    const sentences = [
+      { prefix: "Le petit", missing: "chat", suffix: "dort au soleil.", full: "Le petit chat dort au soleil.", icon: "🐱", dist: ["lion", "camion"] },
+      { prefix: "Mina mange une", missing: "mangue", suffix: "bien sucrée.", full: "Mina mange une mangue bien sucrée.", icon: "🥭", dist: ["pomme", "pierre"] },
+      { prefix: "Le grand", missing: "lion", suffix: "rugit dans la savane.", full: "Le grand lion rugit dans la savane.", icon: "🦁", dist: ["lapin", "livre"] },
+      { prefix: "Le joli", missing: "poisson", suffix: "nage dans le fleuve.", full: "Le joli poisson nage dans le fleuve.", icon: "🐟", dist: ["papillon", "pont"] },
+      { prefix: "L'oiseau vole vers le", missing: "ciel", suffix: "bleu.", full: "L'oiseau vole vers le ciel bleu.", icon: "🌤️", dist: ["mer", "lit"] }
+    ];
+    const item = sentences[(round - 1) % sentences.length];
+
+    return {
+      q: item.prefix + " [ ... ] " + item.suffix,
+      ans: item.missing,
+      options: [item.missing, item.dist[0], item.dist[1]].sort(() => Math.random() - 0.5),
+      icon: item.icon,
+      prefix: item.prefix,
+      suffix: item.suffix,
+      fullSentence: item.full,
+      dots: "Lecture de phrase • Fluence",
+      speech: "Quel mot complète la phrase : " + item.prefix + "... quoi... " + item.suffix
+    };
+  }
+
+  // 6. STUDIO VOCAL & BOUCHE MAGIQUE (Mouth Articulation & Pure Phonemes)
+  if (eng === "studio") {
+    const mouthBank = [
+      { sound: "A", mouth: "A", desc: "Bouche grande ouverte 🗣️", word: "Ananas", icon: "🍍", speech: "Regarde bien la bouche : grande ouverte pour chanter [Aaaa] !" },
+      { sound: "O", mouth: "O", desc: "Lèvres arrondies en cercle 👄", word: "Orange", icon: "🍊", speech: "Regarde la bouche : les lèvres s'arrondissent pour le son [Oooo] !" },
+      { sound: "I", mouth: "I", desc: "Grand sourire en montrant les dents 😁", word: "Igloo", icon: "🧊", speech: "Grand sourire étiré : [Iiii] comme dans Igloo !" },
+      { sound: "OU", mouth: "OU", desc: "Lèvres projetées vers l'avant 🐺", word: "Chouette", icon: "🦉", speech: "Lèvres projetées en avant pour faire [Ouuu] comme le loup !" },
+      { sound: "U", mouth: "U", desc: "Lèvres pincées pointues 🐢", word: "Tortue", icon: "🐢", speech: "Lèvres serrées vers le haut : [Uuu] comme dans Tortue !" }
+    ];
+    const item = mouthBank[(round - 1) % mouthBank.length];
+    const dist = ["A", "O", "I", "OU", "U"].filter(s => s !== item.sound);
+
+    return {
+      q: "Observe la bouche et choisis le son : " + item.desc,
+      ans: item.sound,
+      options: [item.sound, dist[0], dist[1]].sort(() => Math.random() - 0.5),
+      icon: item.icon,
+      mouthShape: item.mouth,
+      dots: item.desc,
+      speech: item.speech
+    };
+  }
+
+  // 7. PAIRES DE RIMES MAGIQUES (Rhyming Pairs & Endings)
+  if (eng === "rhyme") {
+    const rhymeBank = [
+      { promptWord: "BATEAU", rhymingWord: "CHÂTEAU", ending: "-EAU", icon: "⛵", matchIcon: "🏰", dist: [{ word: "MAISON", icon: "🏠" }, { word: "ARBRE", icon: "🌳" }] },
+      { promptWord: "SOURIS", rhymingWord: "TAPIS", ending: "-IS", icon: "🐁", matchIcon: "🧶", dist: [{ word: "BALLON", icon: "🎈" }, { word: "CHAT", icon: "🐱" }] },
+      { promptWord: "BALLON", rhymingWord: "LION", ending: "-ON", icon: "🎈", matchIcon: "🦁", dist: [{ word: "FLEUR", icon: "🌸" }, { word: "TABLE", icon: "🪵" }] },
+      { promptWord: "CHOUETTE", rhymingWord: "LUNETTES", ending: "-ETTE", icon: "🦉", matchIcon: "👓", dist: [{ word: "SOLEIL", icon: "☀️" }, { word: "POISSON", icon: "🐟" }] },
+      { promptWord: "POMME", rhymingWord: "GOMME", ending: "-OMME", icon: "🍎", matchIcon: "✏️", dist: [{ word: "BICYCLETTE", icon: "🚲" }, { word: "NUAGE", icon: "☁️" }] }
+    ];
+    const item = rhymeBank[(round - 1) % rhymeBank.length];
+    const opts = [
+      { val: item.rhymingWord, icon: item.matchIcon },
+      { val: item.dist[0].word, icon: item.dist[0].icon },
+      { val: item.dist[1].word, icon: item.dist[1].icon }
+    ].sort(() => Math.random() - 0.5);
+
+    return {
+      q: "Quel mot rime avec " + item.icon + " " + item.promptWord + " (son " + item.ending + ") ?",
+      ans: item.rhymingWord,
+      options: opts.map(o => o.val),
+      rhymeOptions: opts,
+      promptWord: item.promptWord,
+      ending: item.ending,
+      icon: item.icon,
+      dots: "Terminaison en [" + item.ending + "]",
+      speech: "Quel mot se termine par le même son que " + item.promptWord + " ?"
+    };
+  }
+
+  // 8. DJEMBE DRUM (Rhythm & Syllables)
+  if (eng === "djembe") {
+    const drumBank = [
+      { word: "LION", count: 1, syllables: ["LION"], icon: "🦁" },
+      { word: "ZE-BRE", count: 2, syllables: ["ZE", "BRE"], icon: "🦓" },
+      { word: "E-LE-PHANT", count: 3, syllables: ["E", "LE", "PHANT"], icon: "🐘" },
+      { word: "GI-RA-FE", count: 3, syllables: ["GI", "RA", "FE"], icon: "🦒" },
+      { word: "HIP-PO-PO-TAME", count: 4, syllables: ["HIP", "PO", "PO", "TAME"], icon: "🦛" }
+    ];
+    const item = drumBank[(round - 1) % drumBank.length];
+    return {
+      q: "Frappe " + item.count + " coup" + (item.count > 1 ? "s" : "") + " sur le djembe pour : " + item.word + " " + item.icon + " !",
+      ans: String(item.count),
+      options: ["1", "2", "3", "4"],
+      icon: item.icon,
+      word: item.word,
+      syllables: item.syllables,
+      dots: item.syllables.join(" • "),
+      speech: "Frappe exactement " + item.count + " coups de djembe en rythme pour " + item.word + " !"
+    };
+  }
+
+  // 9. TURBO RACING (Math speed calculations)
   if (eng === "racing") {
     let a = (round * 2) + level;
     let b = round + 1;
@@ -3888,29 +4059,7 @@ function generateDynamicQuestion() {
     };
   }
 
-  // 5. DJEMBE DRUM (Rhythm & Syllables)
-  if (eng === "djembe") {
-    const drumBank = [
-      { word: "LION", count: 1, syllables: ["LION"], icon: "🦁" },
-      { word: "ZE-BRE", count: 2, syllables: ["ZE", "BRE"], icon: "🦓" },
-      { word: "E-LE-PHANT", count: 3, syllables: ["E", "LE", "PHANT"], icon: "🐘" },
-      { word: "GI-RA-FE", count: 3, syllables: ["GI", "RA", "FE"], icon: "🦒" },
-      { word: "HIP-PO-PO-TAME", count: 4, syllables: ["HIP", "PO", "PO", "TAME"], icon: "🦛" }
-    ];
-    const item = drumBank[(round - 1) % drumBank.length];
-    return {
-      q: "Frappe " + item.count + " coup" + (item.count > 1 ? "s" : "") + " sur le djembe pour : " + item.word + " " + item.icon + " !",
-      ans: String(item.count),
-      options: ["1", "2", "3", "4"],
-      icon: item.icon,
-      word: item.word,
-      syllables: item.syllables,
-      dots: item.syllables.join(" • "),
-      speech: "Frappe exactement " + item.count + " coups de djembe en rythme pour " + item.word + " !"
-    };
-  }
-
-  // 6. CFA BALANCE (Market money)
+  // 10. CFA BALANCE (Market money)
   if (eng === "balance") {
     const targets = [150, 200, 250, 350, 500];
     const amt = targets[(round - 1) % targets.length];
@@ -3924,7 +4073,7 @@ function generateDynamicQuestion() {
     };
   }
 
-  // 7. DEFAULT / FALLBACK (Grade tailored)
+  // 11. DEFAULT / GENERAL
   const a = round + 1;
   const b = grade + 1;
   const sum = a + b;
@@ -3967,6 +4116,7 @@ function initActiveEngine() {
   state.balanceCoins = [];
   state.plantStage = 0;
   state.drumHitTime = 0;
+  state.trainKaraokeIdx = -1;
 
   const eng = state.engineType;
   const options = q.options.length >= 3 ? q.options.slice(0, 3) : q.options;
@@ -3987,7 +4137,19 @@ function initActiveEngine() {
       });
     }
   }
-  // 2. PHONICS FISHING (SIL/CP River Swimming Fish)
+  // 2. SAFARI SONS (Savanna Letter Blocks with Cute Blinking Cartoon Eyes)
+  else if (eng === "safari") {
+    state.items = options.map((opt, i) => ({
+      val: opt,
+      x: 65 + i * 135,
+      y: 220,
+      w: 105,
+      h: 95,
+      squash: 1.0,
+      blink: Math.random() * 4
+    }));
+  }
+  // 3. PHONICS FISHING (SIL/CP River Swimming Fish)
   else if (eng === "fishing") {
     state.fishList = options.map((opt, i) => ({
       val: opt,
@@ -4000,7 +4162,7 @@ function initActiveEngine() {
     }));
     state.playerX = 250;
   }
-  // 3. LILYPAD FROG (SIL/CP Sequence Platformer)
+  // 4. LILYPAD FROG (SIL/CP Sequence Platformer)
   else if (eng === "frog") {
     state.frogIndex = 0;
     state.frogAnim = { active: false, startX: 75, startY: 200, targetX: 75, targetY: 200, progress: 1 };
@@ -4011,7 +4173,41 @@ function initActiveEngine() {
       radius: 46
     }));
   }
-  // 4. TURBO RACING (CE1/CE2 3-Lane Highway)
+  // 5. TRAIN DES PHRASES & FLUENCE (Sentence Cars & Missing Luggage Tiles)
+  else if (eng === "train") {
+    state.trainX = 25;
+    state.items = options.map((opt, i) => ({
+      val: opt,
+      x: 50 + i * 145,
+      y: 285,
+      w: 125,
+      h: 58
+    }));
+  }
+  // 6. STUDIO VOCAL & BOUCHE MAGIQUE (Interactive Drawn Mouth & Sound Badges)
+  else if (eng === "studio") {
+    state.studioMouthShape = q.mouthShape || "A";
+    state.items = options.map((opt, i) => ({
+      val: opt,
+      x: 55 + i * 140,
+      y: 275,
+      w: 120,
+      h: 62
+    }));
+  }
+  // 7. PAIRES DE RIMES MAGIQUES (Enchanted Parchment Rhyme Cards)
+  else if (eng === "rhyme") {
+    const rOpts = q.rhymeOptions || options.map(o => ({ val: o, icon: "✨" }));
+    state.items = rOpts.map((opt, i) => ({
+      val: opt.val,
+      icon: opt.icon || "✨",
+      x: 45 + i * 145,
+      y: 250,
+      w: 125,
+      h: 75
+    }));
+  }
+  // 8. TURBO RACING (CE1/CE2 3-Lane Highway)
   else if (eng === "racing") {
     state.raceLane = 1;
     state.items = options.map((opt, i) => ({
@@ -4023,7 +4219,7 @@ function initActiveEngine() {
       h: 52
     }));
   }
-  // 5. CFA COIN SCALE BALANCE (CM1/CM2)
+  // 9. CFA COIN SCALE BALANCE (CM1/CM2)
   else if (eng === "balance") {
     state.balanceCoins = [];
     state.items = [25, 50, 100, 250, 500].map((c, i) => ({
@@ -4033,7 +4229,7 @@ function initActiveEngine() {
       radius: 30
     }));
   }
-  // 6. DETECTIVE MAGNIFIER (Comprehension Evidence Lens)
+  // 10. DETECTIVE MAGNIFIER (Comprehension Evidence Lens)
   else if (eng === "magnifier") {
     state.magnifierX = 250;
     state.magnifierY = 190;
@@ -4046,7 +4242,7 @@ function initActiveEngine() {
       revealed: false
     }));
   }
-  // 7. BOTANY LAB (Science)
+  // 11. BOTANY LAB (Science)
   else if (eng === "botany") {
     state.items = [
       { id: "water", icon: "💧", label: state.lang === "fr" ? "Eau" : "Water", x: 90, y: 310, radius: 32 },
@@ -4054,7 +4250,7 @@ function initActiveEngine() {
       { id: "food", icon: "🌱", label: state.lang === "fr" ? "Terreau" : "Soil", x: 410, y: 310, radius: 32 }
     ];
   }
-  // 8. WOOD SHAPES SORTER (Logic)
+  // 12. WOOD SHAPES SORTER (Logic)
   else if (eng === "shapes") {
     state.items = options.map((opt, i) => ({
       val: opt,
@@ -4065,13 +4261,13 @@ function initActiveEngine() {
       shape: i === 0 ? "triangle" : i === 1 ? "circle" : "square"
     }));
   }
-  // 9. DJEMBE RHYTHM (Pronunciation)
+  // 13. DJEMBE RHYTHM (Pronunciation)
   else if (eng === "djembe") {
-    state.playerX = 0; // drum taps count
+    state.playerX = 0;
     state.drumSyllables = q.syllables || (q.word ? q.word.split("-") : ["SYL"]);
     state.drumActiveSylIdx = 0;
   }
-  // 10. DEFAULT / GENERAL CARDS (Neat row, uncluttered, large touch target)
+  // 14. DEFAULT / GENERAL CARDS
   else {
     state.items = options.map((opt, i) => ({
       val: opt,
@@ -4101,6 +4297,16 @@ function handleAnswer(choice) {
     state.coins += 5;
     state.independentStreak++;
 
+    // Extra game-specific animations
+    if (state.engineType === "train") {
+      AudioEngine.playTrainWhistle();
+      state.trainKaraokeIdx = 0;
+      const readSentence = q.fullSentence || q.q;
+      VoiceEngine.speak(readSentence);
+    } else if (state.engineType === "rhyme") {
+      AudioEngine.playMagicChime();
+    }
+
     // Floating Arcade Combo Text
     const comboText = state.combo > 1 
       ? ("COMBO x" + state.combo + " ! 🔥")
@@ -4125,7 +4331,7 @@ function handleAnswer(choice) {
       } else {
         generateQuestion();
       }
-    }, 1200);
+    }, 1300);
   } else {
     state.combo = 0;
     AudioEngine.playMistake();
@@ -4169,7 +4375,7 @@ function triggerGameOver() {
 }
 
 // ============================================================================
-// CANVAS DRAW ENGINES (IMAGE ANIMATIONS PERFECTLY MATCH SPOKEN WORDS & PRONUNCIATION)
+// CANVAS DRAW ENGINES (TOP-TIER ANIMATED CARTOON GRAPHICS & LEARNING DYNAMICS)
 // ============================================================================
 function draw(time) {
   ctx.clearRect(0, 0, W, H);
@@ -4270,7 +4476,110 @@ function draw(time) {
 
     ctx.restore();
   }
-  // 2. PHONICS FISHING (River with target word banner, swimming fish, and wagging tails)
+  // 2. SAFARI SONS (Savanna Landscape with Peeking Cartoon Animals & Bouncy 3D Letter Blocks)
+  else if (eng === "safari") {
+    // Warm Savanna Sunset gradient
+    const savGrad = ctx.createLinearGradient(0, 0, 0, H);
+    savGrad.addColorStop(0, "#C2410C");
+    savGrad.addColorStop(0.4, "#EA580C");
+    savGrad.addColorStop(0.75, "#F59E0B");
+    savGrad.addColorStop(1, "#78350F");
+    ctx.fillStyle = savGrad;
+    ctx.fillRect(0, 0, W, H);
+
+    // Silhouetted Acacia Tree on the right
+    ctx.fillStyle = "rgba(41, 16, 4, 0.45)";
+    ctx.beginPath();
+    ctx.moveTo(420, 250); ctx.lineTo(435, 140); ctx.lineTo(460, 110);
+    ctx.ellipse(450, 100, 50, 18, 0, 0, Math.PI * 2);
+    ctx.ellipse(400, 115, 35, 14, 0, 0, Math.PI * 2);
+    ctx.fill();
+
+    // Golden Savanna Grass Dunes
+    ctx.fillStyle = "#92400E";
+    ctx.beginPath();
+    ctx.moveTo(0, 250); ctx.bezierCurveTo(150, 230, 350, 270, 500, 240);
+    ctx.lineTo(500, H); ctx.lineTo(0, H);
+    ctx.fill();
+
+    // Peeking Savanna Cartoon Mascot at top center
+    const earWiggle = Math.sin(time * 0.008) * 4;
+    ctx.font = "58px system-ui";
+    ctx.textAlign = "center";
+    ctx.fillText(q.animal || "🦁", 250 + earWiggle, 95);
+
+    // Speech Cloud with illustrated target word
+    ctx.fillStyle = "#FFFFFF";
+    ctx.beginPath();
+    ctx.roundRect(140, 115, 220, 50, 16);
+    ctx.fill();
+    ctx.strokeStyle = "#F59E0B";
+    ctx.lineWidth = 3;
+    ctx.stroke();
+
+    ctx.fillStyle = "#1E293B";
+    ctx.font = "bold 16.5px system-ui";
+    ctx.textAlign = "center";
+    ctx.fillText((q.icon || "🍍") + " " + (q.word || "Mot"), 250, 146);
+
+    // 3 Chunky 3D Wooden Letter Blocks with cute animated faces
+    state.items.forEach((block, idx) => {
+      const floatY = Math.sin(time * 0.004 + idx * 1.5) * 5;
+      const bx = block.x;
+      const by = block.y + floatY;
+
+      // 3D Block Shadow
+      ctx.fillStyle = "#451A03";
+      ctx.beginPath();
+      ctx.roundRect(bx, by + 6, block.w, block.h, 20);
+      ctx.fill();
+
+      // Wooden Block Face
+      const woodGrad = ctx.createLinearGradient(bx, by, bx, by + block.h);
+      woodGrad.addColorStop(0, "#FEF3C7");
+      woodGrad.addColorStop(1, "#FDE68A");
+      ctx.fillStyle = woodGrad;
+      ctx.beginPath();
+      ctx.roundRect(bx, by, block.w, block.h, 18);
+      ctx.fill();
+      ctx.strokeStyle = "#D97706";
+      ctx.lineWidth = 3.5;
+      ctx.stroke();
+
+      // Cute Blinking Cartoon Eyes on block
+      const isBlinking = (Math.sin(time * 0.003 + block.blink) > 0.94);
+      ctx.fillStyle = "#1E293B";
+      if (isBlinking) {
+        ctx.fillRect(bx + 32, by + 18, 10, 2);
+        ctx.fillRect(bx + 62, by + 18, 10, 2);
+      } else {
+        ctx.beginPath();
+        ctx.arc(bx + 37, by + 18, 5, 0, Math.PI * 2);
+        ctx.arc(bx + 67, by + 18, 5, 0, Math.PI * 2);
+        ctx.fill();
+        // Eye shines
+        ctx.fillStyle = "#FFFFFF";
+        ctx.beginPath();
+        ctx.arc(bx + 35, by + 16, 2, 0, Math.PI * 2);
+        ctx.arc(bx + 65, by + 16, 2, 0, Math.PI * 2);
+        ctx.fill();
+      }
+
+      // Rosy blush cheeks
+      ctx.fillStyle = "rgba(239, 68, 68, 0.4)";
+      ctx.beginPath();
+      ctx.arc(bx + 26, by + 25, 4, 0, Math.PI * 2);
+      ctx.arc(bx + 78, by + 25, 4, 0, Math.PI * 2);
+      ctx.fill();
+
+      // Chunky Letter Display
+      ctx.fillStyle = "#991B1B";
+      ctx.font = "900 48px system-ui";
+      ctx.textAlign = "center";
+      ctx.fillText(block.val, bx + block.w / 2, by + 76);
+    });
+  }
+  // 3. PHONICS FISHING (River with swimming fish, wagging tails & bobbing canoe)
   else if (eng === "fishing") {
     // Target banner on shore
     ctx.fillStyle = "rgba(255, 255, 255, 0.12)";
@@ -4356,7 +4665,7 @@ function draw(time) {
     ctx.arc(state.playerX, 195, 6, 0, Math.PI);
     ctx.stroke();
   }
-  // 3. LILYPAD FROG (Animated parabolic frog leaping & water ripples)
+  // 4. LILYPAD FROG (Syllabic Decoding with Frog Leap Arc & Water Ripples)
   else if (eng === "frog") {
     // Word banner on shore
     ctx.fillStyle = "rgba(255, 255, 255, 0.12)";
@@ -4420,9 +4729,307 @@ function draw(time) {
     ctx.textAlign = "center";
     ctx.fillText("🐸", frogX, frogY);
   }
-  // 4. TURBO RACING (Animated scrolling road marks, speed lines & nitro exhaust flames)
+  // 5. TRAIN DES PHRASES & FLUENCE (Animated Steam Locomotive & Sentence Wagons)
+  else if (eng === "train") {
+    // Landscape Background
+    const landGrad = ctx.createLinearGradient(0, 0, 0, H);
+    landGrad.addColorStop(0, "#0284C7");
+    landGrad.addColorStop(0.5, "#38BDF8");
+    landGrad.addColorStop(0.55, "#15803D");
+    landGrad.addColorStop(1, "#166534");
+    ctx.fillStyle = landGrad;
+    ctx.fillRect(0, 0, W, H);
+
+    // Railroad Tracks across the middle
+    ctx.fillStyle = "#78350F";
+    for (let r = 0; r < W; r += 24) {
+      ctx.fillRect(r, 195, 14, 16);
+    }
+    ctx.fillStyle = "#64748B";
+    ctx.fillRect(0, 192, W, 4);
+    ctx.fillRect(0, 208, W, 4);
+
+    // Billowing Steam Puffs from Train Chimney
+    ctx.fillStyle = "rgba(255, 255, 255, 0.75)";
+    const puffY = 70 + Math.sin(time * 0.006) * 6;
+    ctx.beginPath();
+    ctx.arc(85, puffY, 14, 0, Math.PI * 2);
+    ctx.arc(105, puffY - 12, 18, 0, Math.PI * 2);
+    ctx.arc(130, puffY - 22, 24, 0, Math.PI * 2);
+    ctx.fill();
+
+    // Red Steam Locomotive Cabin
+    ctx.fillStyle = "#DC2626";
+    ctx.beginPath();
+    ctx.roundRect(20, 120, 75, 75, [14, 14, 4, 4]);
+    ctx.fill();
+    ctx.fillStyle = "#F59E0B";
+    ctx.fillRect(70, 95, 16, 28); // Chimney
+    // Cabin window
+    ctx.fillStyle = "#E0F2FE";
+    ctx.fillRect(32, 132, 28, 28);
+    ctx.font = "24px system-ui";
+    ctx.fillText("🦁", 46, 154);
+
+    // Locomotive Wheels
+    ctx.fillStyle = "#1E293B";
+    ctx.beginPath();
+    ctx.arc(38, 198, 14, 0, Math.PI * 2);
+    ctx.arc(75, 198, 14, 0, Math.PI * 2);
+    ctx.fill();
+
+    // Sentence Wagons carrying word cards
+    const sentenceParts = [
+      { text: q.prefix || "Le petit", isMissing: false, x: 105, w: 110 },
+      { text: state.roundAdvancing ? q.ans : "[ ? ]", isMissing: true, x: 225, w: 105 },
+      { text: q.suffix || "dort.", isMissing: false, x: 340, w: 145 }
+    ];
+
+    sentenceParts.forEach((part, i) => {
+      // Wagon base
+      ctx.fillStyle = "#0284C7";
+      ctx.beginPath();
+      ctx.roundRect(part.x, 140, part.w, 55, 10);
+      ctx.fill();
+      ctx.strokeStyle = part.isMissing ? "#FFD233" : "#38BDF8";
+      ctx.lineWidth = part.isMissing ? 3.5 : 2;
+      ctx.stroke();
+
+      // Wheels
+      ctx.fillStyle = "#1E293B";
+      ctx.beginPath();
+      ctx.arc(part.x + 22, 198, 10, 0, Math.PI * 2);
+      ctx.arc(part.x + part.w - 22, 198, 10, 0, Math.PI * 2);
+      ctx.fill();
+
+      // Word Tile on Wagon
+      ctx.fillStyle = part.isMissing ? (state.roundAdvancing ? "#10B981" : "#FEF3C7") : "#FFFFFF";
+      ctx.beginPath();
+      ctx.roundRect(part.x + 6, 145, part.w - 12, 38, 8);
+      ctx.fill();
+
+      ctx.fillStyle = "#17233D";
+      ctx.font = "bold 15px system-ui";
+      ctx.textAlign = "center";
+      ctx.fillText(part.text, part.x + part.w / 2, 169);
+    });
+
+    // 3 Luggage Word Tiles below tracks
+    ctx.fillStyle = "#FFFFFF";
+    ctx.font = "bold 14px system-ui";
+    ctx.textAlign = "center";
+    ctx.fillText("Choisis le mot pour accrocher au wagon :", 250, 260);
+
+    state.items.forEach(item => {
+      ctx.fillStyle = "#FFFFFF";
+      ctx.beginPath();
+      ctx.roundRect(item.x, item.y, item.w, item.h, 16);
+      ctx.fill();
+      ctx.strokeStyle = "#2563EB";
+      ctx.lineWidth = 3;
+      ctx.stroke();
+
+      ctx.fillStyle = "#1E293B";
+      ctx.font = "bold 18px system-ui";
+      ctx.textAlign = "center";
+      ctx.fillText(item.val, item.x + item.w / 2, item.y + item.h / 2 + 6);
+    });
+  }
+  // 6. STUDIO VOCAL & BOUCHE MAGIQUE (Interactive Drawn Cartoon Mouth & Soundwaves)
+  else if (eng === "studio") {
+    // Broadcast Studio Stage Background
+    ctx.fillStyle = "#0F172A";
+    ctx.fillRect(0, 0, W, H);
+
+    // Twin Spotlight Beams
+    ctx.fillStyle = "rgba(56, 189, 248, 0.12)";
+    ctx.beginPath();
+    ctx.moveTo(60, 0); ctx.lineTo(160, H); ctx.lineTo(280, H); ctx.lineTo(90, 0);
+    ctx.fill();
+    ctx.beginPath();
+    ctx.moveTo(440, 0); ctx.lineTo(340, H); ctx.lineTo(220, H); ctx.lineTo(410, 0);
+    ctx.fill();
+
+    // Soundwave Equalizer Bars on Left & Right
+    for (let b = 0; b < 7; b++) {
+      const bh = 15 + Math.abs(Math.sin(time * 0.007 + b)) * 45;
+      ctx.fillStyle = "#38BDF8";
+      ctx.fillRect(40 + b * 10, 140 - bh / 2, 6, bh);
+      ctx.fillRect(400 + b * 10, 140 - bh / 2, 6, bh);
+    }
+
+    // Center Mascot Character Head
+    ctx.fillStyle = "#F59E0B";
+    ctx.beginPath();
+    ctx.arc(250, 115, 62, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.strokeStyle = "#B45309";
+    ctx.lineWidth = 3.5;
+    ctx.stroke();
+
+    // Friendly Eyes
+    ctx.fillStyle = "#1E293B";
+    ctx.beginPath();
+    ctx.arc(230, 98, 6, 0, Math.PI * 2);
+    ctx.arc(270, 98, 6, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.fillStyle = "#FFFFFF";
+    ctx.beginPath();
+    ctx.arc(228, 96, 2, 0, Math.PI * 2);
+    ctx.arc(268, 96, 2, 0, Math.PI * 2);
+    ctx.fill();
+
+    // Rosy Cheeks
+    ctx.fillStyle = "rgba(239, 68, 68, 0.4)";
+    ctx.beginPath();
+    ctx.arc(215, 115, 7, 0, Math.PI * 2);
+    ctx.arc(285, 115, 7, 0, Math.PI * 2);
+    ctx.fill();
+
+    // Dynamic Drawn Mouth showing exact French Articulation!
+    const mShape = q.mouthShape || state.studioMouthShape || "A";
+    ctx.save();
+    ctx.translate(250, 136);
+
+    if (mShape === "A") {
+      // Wide open mouth
+      ctx.fillStyle = "#7F1D1D";
+      ctx.beginPath();
+      ctx.ellipse(0, 0, 22, 18, 0, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.fillStyle = "#F43F5E"; // Tongue
+      ctx.beginPath();
+      ctx.ellipse(0, 8, 14, 8, 0, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.fillStyle = "#FFFFFF"; // Upper teeth
+      ctx.fillRect(-12, -16, 24, 6);
+    } else if (mShape === "O") {
+      // Rounded lips
+      ctx.fillStyle = "#7F1D1D";
+      ctx.beginPath();
+      ctx.ellipse(0, 0, 16, 20, 0, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.strokeStyle = "#F43F5E";
+      ctx.lineWidth = 3;
+      ctx.stroke();
+    } else if (mShape === "I") {
+      // Grinning wide teeth
+      ctx.fillStyle = "#FFFFFF";
+      ctx.beginPath();
+      ctx.roundRect(-24, -8, 48, 16, 6);
+      ctx.fill();
+      ctx.strokeStyle = "#F43F5E";
+      ctx.lineWidth = 2.5;
+      ctx.stroke();
+      ctx.strokeStyle = "#CBD5E1";
+      ctx.lineWidth = 1.5;
+      ctx.beginPath();
+      ctx.moveTo(-20, 0); ctx.lineTo(20, 0);
+      ctx.stroke();
+    } else if (mShape === "OU") {
+      // Forward pucker lips
+      ctx.fillStyle = "#7F1D1D";
+      ctx.beginPath();
+      ctx.ellipse(0, 0, 12, 14, 0, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.strokeStyle = "#F43F5E";
+      ctx.lineWidth = 4;
+      ctx.stroke();
+    } else {
+      // Default tight lips [U]
+      ctx.fillStyle = "#7F1D1D";
+      ctx.beginPath();
+      ctx.ellipse(0, 0, 9, 10, 0, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.strokeStyle = "#F43F5E";
+      ctx.lineWidth = 3;
+      ctx.stroke();
+    }
+    ctx.restore();
+
+    // Studio Sound Options below
+    ctx.fillStyle = "#FFFFFF";
+    ctx.font = "bold 14px system-ui";
+    ctx.textAlign = "center";
+    ctx.fillText("🎙️ Touche le bon son correspondant à l'articulation :", 250, 248);
+
+    state.items.forEach(item => {
+      ctx.fillStyle = "#FFFFFF";
+      ctx.beginPath();
+      ctx.roundRect(item.x, item.y, item.w, item.h, 16);
+      ctx.fill();
+      ctx.strokeStyle = "#8B5CF6";
+      ctx.lineWidth = 3.5;
+      ctx.stroke();
+
+      ctx.fillStyle = "#5B21B6";
+      ctx.font = "900 24px system-ui";
+      ctx.textAlign = "center";
+      ctx.fillText("[" + item.val + "]", item.x + item.w / 2, item.y + item.h / 2 + 8);
+    });
+  }
+  // 7. PAIRES DE RIMES MAGIQUES (Enchanted Starry Library with Prompt Pedestal & Rhyme Cards)
+  else if (eng === "rhyme") {
+    // Starry Mystical Background
+    const skyGrad = ctx.createLinearGradient(0, 0, 0, H);
+    skyGrad.addColorStop(0, "#1E1B4B");
+    skyGrad.addColorStop(1, "#312E81");
+    ctx.fillStyle = skyGrad;
+    ctx.fillRect(0, 0, W, H);
+
+    // Floating Starlight Sparkles
+    for (let s = 0; s < 12; s++) {
+      const sx = (s * 45 + time * 0.02) % W;
+      const sy = 40 + (s % 4) * 45;
+      ctx.fillStyle = "rgba(253, 224, 71, 0.6)";
+      ctx.beginPath();
+      ctx.arc(sx, sy, 2.5, 0, Math.PI * 2);
+      ctx.fill();
+    }
+
+    // Hero Pedestal holding prompt word & icon
+    ctx.fillStyle = "#F59E0B";
+    ctx.beginPath();
+    ctx.roundRect(160, 65, 180, 85, 20);
+    ctx.fill();
+    ctx.strokeStyle = "#FEF3C7";
+    ctx.lineWidth = 4;
+    ctx.stroke();
+
+    ctx.font = "40px system-ui";
+    ctx.textAlign = "center";
+    ctx.fillText(q.icon || "⛵", 250, 108);
+
+    ctx.fillStyle = "#1E1B4B";
+    ctx.font = "900 17px system-ui";
+    ctx.fillText(q.promptWord || "BATEAU", 250, 136);
+
+    ctx.fillStyle = "#FFFFFF";
+    ctx.font = "bold 14.5px system-ui";
+    ctx.textAlign = "center";
+    ctx.fillText("Trouve le mot qui rime avec " + (q.promptWord || "") + " :", 250, 215);
+
+    // 3 Parchment Rhyme Cards Below
+    state.items.forEach(item => {
+      ctx.fillStyle = "#FFFBEB";
+      ctx.beginPath();
+      ctx.roundRect(item.x, item.y, item.w, item.h, 16);
+      ctx.fill();
+      ctx.strokeStyle = "#F59E0B";
+      ctx.lineWidth = 3;
+      ctx.stroke();
+
+      ctx.font = "28px system-ui";
+      ctx.textAlign = "center";
+      ctx.fillText(item.icon || "✨", item.x + item.w / 2, item.y + 36);
+
+      ctx.fillStyle = "#78350F";
+      ctx.font = "900 15px system-ui";
+      ctx.fillText(item.val, item.x + item.w / 2, item.y + 64);
+    });
+  }
+  // 8. TURBO RACING (Animated scrolling road marks, speed lines & nitro exhaust flames)
   else if (eng === "racing") {
-    // Scrolling dashed road markings
     state.roadOffset = (state.roadOffset + 6) % 40;
     ctx.strokeStyle = "rgba(255, 255, 255, 0.3)";
     ctx.lineWidth = 3.5;
@@ -4476,12 +5083,10 @@ function draw(time) {
     ctx.textAlign = "center";
     ctx.fillText("🏎️", carX + 25, 328);
   }
-  // 5. CFA COIN SCALE BALANCE (CM1/CM2)
+  // 9. CFA COIN SCALE BALANCE (CM1/CM2)
   else if (eng === "balance") {
     const targetAmt = parseInt(q.ans) || 250;
     const currentAmt = state.balanceCoins.reduce((a, b) => a + b, 0);
-
-    // Balance beam tilt angle
     const tilt = Math.max(-0.25, Math.min(0.25, (currentAmt - targetAmt) * 0.0015));
 
     ctx.save();
@@ -4491,8 +5096,7 @@ function draw(time) {
     ctx.strokeStyle = "#CBD5E1";
     ctx.lineWidth = 8;
     ctx.beginPath();
-    ctx.moveTo(-150, 0);
-    ctx.lineTo(150, 0);
+    ctx.moveTo(-150, 0); ctx.lineTo(150, 0);
     ctx.stroke();
 
     // Left pan (Target)
@@ -4538,7 +5142,7 @@ function draw(time) {
       ctx.fillText(c.coin + "F", c.x, c.y + 5);
     });
   }
-  // 6. DJEMBE RHYTHM (Pronunciation - concentric expanding sound rings)
+  // 10. DJEMBE RHYTHM (Pronunciation - concentric expanding sound rings)
   else if (eng === "djembe") {
     // Top Banner displaying the illustrated word and syllables
     ctx.fillStyle = "rgba(255, 255, 255, 0.12)";
@@ -4550,7 +5154,6 @@ function draw(time) {
     ctx.textAlign = "center";
     ctx.fillText(q.icon || "🪘", 80, 60);
 
-    // Syllables with dynamic highlight based on current tap!
     const syllables = state.drumSyllables || ["MOT"];
     const startSylX = 140;
     syllables.forEach((syl, i) => {
@@ -4585,13 +5188,11 @@ function draw(time) {
     ctx.translate(250, 220);
     ctx.scale(drumScale, drumScale);
 
-    // Drum wood base
     ctx.fillStyle = "#92400E";
     ctx.beginPath();
     ctx.moveTo(-60, -90); ctx.lineTo(60, -90); ctx.lineTo(25, 20); ctx.lineTo(40, 90); ctx.lineTo(-40, 90); ctx.lineTo(-25, 20);
     ctx.fill();
 
-    // Drum skin head
     ctx.fillStyle = "#FEF3C7";
     ctx.beginPath();
     ctx.ellipse(0, -90, 65, 22, 0, 0, Math.PI * 2);
@@ -4602,21 +5203,18 @@ function draw(time) {
 
     ctx.restore();
 
-    // Tap instruction
     ctx.fillStyle = "#FFFFFF";
     ctx.font = "bold 16px system-ui";
     ctx.textAlign = "center";
     ctx.fillText("Touche le tam-tam pour rythmer (" + state.playerX + " / " + q.ans + ")", 250, 350);
   }
-  // 7. BOTANY LAB (Science)
+  // 11. BOTANY LAB (Science)
   else if (eng === "botany") {
-    // Soil pot
     ctx.fillStyle = "#78350F";
     ctx.beginPath();
     ctx.moveTo(180, 210); ctx.lineTo(320, 210); ctx.lineTo(290, 290); ctx.lineTo(210, 290);
     ctx.fill();
 
-    // Plant stages
     if (state.plantStage === 0) {
       ctx.fillStyle = "#92400E";
       ctx.beginPath();
@@ -4640,7 +5238,6 @@ function draw(time) {
       ctx.fillText("🌻", 250, 130);
     }
 
-    // Tools
     state.items.forEach(tool => {
       ctx.fillStyle = "#FFFFFF";
       ctx.beginPath();
@@ -4654,7 +5251,7 @@ function draw(time) {
       ctx.fillText(tool.icon, tool.x, tool.y + 8);
     });
   }
-  // 8. DETECTIVE MAGNIFIER
+  // 12. DETECTIVE MAGNIFIER
   else if (eng === "magnifier") {
     state.items.forEach(item => {
       const dist = Math.hypot((item.x + item.w / 2) - state.magnifierX, (item.y + item.h / 2) - state.magnifierY);
@@ -4676,7 +5273,6 @@ function draw(time) {
       ctx.fillText(item.val, item.x + item.w / 2, item.y + item.h / 2 + 6);
     });
 
-    // Magnifying glass lens
     ctx.strokeStyle = "#FFB800";
     ctx.lineWidth = 6;
     ctx.beginPath();
@@ -4689,9 +5285,8 @@ function draw(time) {
     ctx.lineTo(state.magnifierX + 85, state.magnifierY + 85);
     ctx.stroke();
   }
-  // 9. GENERAL / OTHER ENGINES (Illustrated Hero Card + 3 Clean Large Option Badges)
+  // 13. GENERAL / OTHER ENGINES
   else {
-    // Render the question's illustrated center hero object
     ctx.font = "56px system-ui";
     ctx.textAlign = "center";
     ctx.fillText(q.icon || "⭐", 250, 110);
@@ -4700,7 +5295,6 @@ function draw(time) {
     ctx.font = "bold 18px system-ui";
     ctx.fillText(q.dots || (q.word || ""), 250, 160);
 
-    // 3 Option Cards
     state.items.forEach(item => {
       ctx.fillStyle = "#FFFFFF";
       ctx.beginPath();
@@ -4873,31 +5467,53 @@ function drawTutorScene() {
     tctx.font = "bold 18px system-ui";
     tctx.fillText("Total : " + q.ans + " syllabes rythmées ! 🌟", 240, 175);
   }
-  // 3. READING PHONICS TUTOR
-  else if (eng === "fishing" || state.category === "reading") {
+  // 3. READING & PHONICS TUTOR
+  else if (eng === "safari" || eng === "fishing" || state.category === "reading") {
+    const letter = q.ans || "A";
+    const word = q.word || "Ananas";
     const speech = isFR
-      ? "Écoute bien le phonème : [" + q.ans + "] comme dans " + (q.word || q.ans) + " !"
-      : "Listen carefully to the sound: [" + q.ans + "] as in " + (q.word || q.ans) + "!";
+      ? "Écoute bien : la lettre [" + letter + "] chante le son du mot " + word + " !"
+      : "Listen: the letter [" + letter + "] makes the sound for " + word + "!";
     $("tutor-speech-text").textContent = "« " + speech + " »";
     VoiceEngine.speak(speech, true);
 
     tctx.fillStyle = "#E5252A";
-    tctx.font = "bold 56px system-ui";
+    tctx.font = "900 64px system-ui";
     tctx.textAlign = "center";
-    tctx.fillText(String(q.ans), 140, 95);
+    tctx.fillText("[" + letter + "]", 120, 105);
 
-    tctx.font = "50px system-ui";
-    tctx.fillText(q.icon || "📖", 250, 95);
+    tctx.font = "52px system-ui";
+    tctx.fillText(q.icon || "📖", 240, 95);
 
     tctx.fillStyle = "#17233D";
-    tctx.font = "bold 24px system-ui";
-    tctx.fillText(q.word || q.dots || q.ans, 360, 95);
+    tctx.font = "bold 26px system-ui";
+    tctx.fillText(word, 370, 95);
+
+    tctx.fillStyle = "#059669";
+    tctx.font = "bold 16px system-ui";
+    tctx.fillText("✔ " + letter + " comme " + word + " 🌟", 240, 160);
+  }
+  // 4. STUDIO VOCAL TUTOR
+  else if (eng === "studio") {
+    const speech = isFR 
+      ? ("Pour bien prononcer le son [" + q.ans + "], observe la forme des lèvres !")
+      : ("To pronounce [" + q.ans + "], observe the lip shape!");
+    $("tutor-speech-text").textContent = "« " + speech + " »";
+    VoiceEngine.speak(speech);
+
+    tctx.font = "52px system-ui";
+    tctx.textAlign = "center";
+    tctx.fillText(q.icon || "👄", 240, 70);
+
+    tctx.fillStyle = "#7C3AED";
+    tctx.font = "900 32px system-ui";
+    tctx.fillText("Son : [" + q.ans + "]", 240, 125);
 
     tctx.fillStyle = "#5A6A85";
-    tctx.font = "bold 16px system-ui";
-    tctx.fillText("La lettre [" + q.ans + "] chante le son du mot !", 240, 155);
+    tctx.font = "bold 15px system-ui";
+    tctx.fillText(q.dots || "Articulation française", 240, 165);
   }
-  // 4. GENERAL MATH / SPEED RACING TUTOR
+  // 5. GENERAL MATH / SPEED RACING TUTOR
   else if (state.category === "math_arcade" || eng === "racing") {
     const a = q.a !== null ? q.a : 3;
     const b = q.b !== null ? q.b : 2;
@@ -4917,7 +5533,7 @@ function drawTutorScene() {
     tctx.font = "bold 24px system-ui";
     tctx.fillText("✔ Réponse exacte = " + total + " ! 🌟", 240, 145);
   }
-  // 5. OTHER TUTOR CATEGORIES
+  // 6. OTHER TUTOR CATEGORIES
   else {
     const speech = isFR 
       ? ("La bonne réponse est : " + q.ans + ". " + q.q)
@@ -5127,7 +5743,6 @@ function drawTutorScene() {
       if (f) {
         f.picked = true;
         AudioEngine.playPop();
-        // Parabolic arc into the basket
         state.fallingFruit = {
           icon: f.icon,
           startX: f.x,
@@ -5136,7 +5751,6 @@ function drawTutorScene() {
           targetY: 325,
           t: 0
         };
-        // Leaves flutter & floating text
         spawnParticles(f.x, f.y, "#10B981", 6);
         spawnFloatingText(f.x, f.y - 12, "+1 " + f.icon, "#FFD233", 22);
 
@@ -5151,7 +5765,17 @@ function drawTutorScene() {
         }
       }
     }
-    // 2. Fishing
+    // 2. Safari Sons (Bouncy 3D Wooden Letter Blocks)
+    else if (eng === "safari") {
+      const hitBlock = state.items.find(b => x >= b.x && x <= b.x + b.w && y >= b.y - 10 && y <= b.y + b.h + 10);
+      if (hitBlock) {
+        AudioEngine.playClick();
+        spawnParticles(hitBlock.x + hitBlock.w / 2, hitBlock.y + 40, "#F59E0B", 14);
+        spawnFloatingText(hitBlock.x + hitBlock.w / 2, hitBlock.y - 15, "[" + hitBlock.val + "] ! 🌟", "#FFD233", 24);
+        handleAnswer(hitBlock.val);
+      }
+    }
+    // 3. Phonics Fishing
     else if (eng === "fishing") {
       state.playerX = Math.max(60, Math.min(440, x));
       const hit = state.fishList.find(f => x >= f.x && x <= f.x + f.w && y >= f.y - 20 && y <= f.y + f.h);
@@ -5162,7 +5786,7 @@ function drawTutorScene() {
         handleAnswer(hit.val);
       }
     }
-    // 3. Lilypad Frog
+    // 4. Lilypad Frog
     else if (eng === "frog") {
       const pad = state.lilypads.find(p => Math.hypot(p.x - x, p.y - y) < p.radius + 15);
       if (pad) {
@@ -5183,7 +5807,38 @@ function drawTutorScene() {
         handleAnswer(pad.val);
       }
     }
-    // 4. Turbo Racing
+    // 5. Train des Phrases
+    else if (eng === "train") {
+      const hitLuggage = state.items.find(it => x >= it.x && x <= it.x + it.w && y >= it.y && y <= it.y + it.h);
+      if (hitLuggage) {
+        AudioEngine.playClick();
+        spawnParticles(hitLuggage.x + hitLuggage.w / 2, hitLuggage.y, "#38BDF8", 14);
+        spawnFloatingText(hitLuggage.x + hitLuggage.w / 2, hitLuggage.y - 20, hitLuggage.val + " 🚂", "#FFD233", 22);
+        handleAnswer(hitLuggage.val);
+      }
+    }
+    // 6. Studio Vocal
+    else if (eng === "studio") {
+      const hitSound = state.items.find(it => x >= it.x && x <= it.x + it.w && y >= it.y && y <= it.y + it.h);
+      if (hitSound) {
+        AudioEngine.playClick();
+        state.studioMouthShape = hitSound.val;
+        spawnParticles(hitSound.x + hitSound.w / 2, hitSound.y, "#8B5CF6", 14);
+        spawnFloatingText(hitSound.x + hitSound.w / 2, hitSound.y - 20, "[" + hitSound.val + "] 🎙️", "#FFD233", 24);
+        handleAnswer(hitSound.val);
+      }
+    }
+    // 7. Paires de Rimes
+    else if (eng === "rhyme") {
+      const hitRhyme = state.items.find(it => x >= it.x && x <= it.x + it.w && y >= it.y && y <= it.y + it.h);
+      if (hitRhyme) {
+        AudioEngine.playClick();
+        spawnParticles(hitRhyme.x + hitRhyme.w / 2, hitRhyme.y, "#F59E0B", 16);
+        spawnFloatingText(hitRhyme.x + hitRhyme.w / 2, hitRhyme.y - 20, "RIME ! 🎶", "#FFD233", 24);
+        handleAnswer(hitRhyme.val);
+      }
+    }
+    // 8. Turbo Racing
     else if (eng === "racing") {
       if (x < 170) state.raceLane = 0;
       else if (x < 330) state.raceLane = 1;
@@ -5194,7 +5849,7 @@ function drawTutorScene() {
         handleAnswer(hit.val);
       }
     }
-    // 5. CFA Coin Balance
+    // 9. CFA Coin Balance
     else if (eng === "balance") {
       const hitCoin = state.items.find(c => Math.hypot(c.x - x, c.y - y) < c.radius + 8);
       if (hitCoin) {
@@ -5211,7 +5866,7 @@ function drawTutorScene() {
         }
       }
     }
-    // 6. Detective Magnifier
+    // 10. Detective Magnifier
     else if (eng === "magnifier") {
       state.magnifierX = Math.max(70, Math.min(430, x));
       state.magnifierY = Math.max(100, Math.min(270, y));
@@ -5221,7 +5876,7 @@ function drawTutorScene() {
         handleAnswer(hit.val);
       }
     }
-    // 7. Botany Lab
+    // 11. Botany Lab
     else if (eng === "botany") {
       const hitTool = state.items.find(t => Math.hypot(t.x - x, t.y - y) < t.radius + 10);
       if (hitTool) {
@@ -5234,13 +5889,12 @@ function drawTutorScene() {
         }
       }
     }
-    // 8. Djembe Drum
+    // 12. Djembe Drum
     else if (eng === "djembe") {
       if (Math.hypot(x - 250, y - 220) < 95) {
         state.drumHitTime = Date.now();
         state.playerX++;
         AudioEngine.playDrum();
-        // Concentric sonic ring
         state.sonicWaves.push({ x: 250, y: 130, r: 25, maxR: 160, alpha: 1.0 });
         const drumNotes = ["🎵", "🎶", "🥁", "✨"];
         spawnFloatingText(250 + (Math.random() * 60 - 30), 120, drumNotes[Math.floor(Math.random() * drumNotes.length)], "#F59E0B", 28);
@@ -5253,7 +5907,7 @@ function drawTutorScene() {
         }
       }
     }
-    // 9. General Options (3 large buttons)
+    // 13. General Options
     else {
       const hit = state.items.find(it => x >= it.x && x <= it.x + it.w && y >= it.y && y <= it.y + it.h);
       if (hit) {
@@ -5270,7 +5924,7 @@ function drawTutorScene() {
   };
 
   // Expose global controller
-  window.NateivaApp = { state, CURRICULUM, showHub, showGame, AudioEngine, VoiceEngine };
+  window.NateivaApp = { state, CURRICULUM, showHub, showGame, generateQuestion, handleAnswer, AudioEngine, VoiceEngine };
 
   // Initialize in Hub view
   showHub();
