@@ -7,11 +7,11 @@
 <title>Nateiva Kids • Arcade Éducative & Simulations Flottantes</title>
 <style>
 /* ==========================================================================
-   NATEIVA LUXURY APPLE x COCA-COLA DESIGN SYSTEM
-   - Pristine borderless / ultra-fine frosted glass
-   - Coca-Cola signature lustrous high-gloss red gradients (#FF2A32 -> #E5252A)
-   - Apple multi-layer diffused drop shadows & squircle radii (22px-28px)
-   - Floating cards with continuous fluid levitation
+   NATEIVA LUXURY SLEEK BORDER & FLOATING ARCADE DESIGN SYSTEM
+   - Sleek, refined, ultra-clean borders (1.5px solid rgba(17, 24, 39, 0.14))
+   - Coca-Cola signature rich red gradient accents (#FF2A32 -> #E5252A)
+   - Apple squircle curvature (24px) & fluid floating animations
+   - Deep tactile interactive feedback
    ========================================================================== */
 :root {
   --coca-red: #E5252A;
@@ -20,13 +20,9 @@
   --coca-red-soft: #FFF0F1;
   --coca-red-glow: rgba(229, 37, 42, 0.35);
   
-  --apple-bg: radial-gradient(circle at 50% 0%, #FFF5F5 0%, #F8FAFC 50%, #F1F5F9 100%);
-  --apple-glass: rgba(255, 255, 255, 0.92);
-  --apple-glass-dark: rgba(17, 24, 39, 0.94);
-  
   --nateiva-red: #E5252A;
   --nateiva-red-dark: #B91C1C;
-  --nateiva-red-light: #FFF0F1;
+  --nateiva-red-light: #FEE2E2;
   --nateiva-black: #111827;
   --nateiva-black-soft: #1F2937;
   --nateiva-grey-dark: #4B5563;
@@ -35,22 +31,22 @@
   --nateiva-grey-bg: #F8FAFC;
   --nateiva-white: #FFFFFF;
 
-  --radius-xl: 26px;
-  --radius-lg: 20px;
+  --radius-xl: 24px;
+  --radius-lg: 18px;
   --radius-md: 14px;
   --radius-sm: 10px;
   
-  /* Ultra-sleek Apple borders: NO HEAVY BLACK BORDERS */
-  --border-card: 1px solid rgba(0, 0, 0, 0.06);
-  --border-subtle: 1px solid rgba(0, 0, 0, 0.08);
-  --border-glass: 1px solid rgba(255, 255, 255, 0.85);
-  --border-glow: 1.5px solid rgba(229, 37, 42, 0.45);
+  /* Sleek Defined Borders Across All Components */
+  --border-card: 1.5px solid rgba(17, 24, 39, 0.14);
+  --border-subtle: 1.5px solid rgba(17, 24, 39, 0.13);
+  --border-grey: 1.5px solid rgba(17, 24, 39, 0.10);
+  --border-glow: 1.5px solid var(--nateiva-red);
   
-  /* Apple Multi-Layer Diffused Soft Shadows */
-  --shadow-apple: 0 10px 30px -5px rgba(0, 0, 0, 0.05), 0 20px 40px -10px rgba(0, 0, 0, 0.04), inset 0 1px 0 rgba(255, 255, 255, 0.95);
-  --shadow-hover: 0 22px 48px -10px rgba(229, 37, 42, 0.22), 0 12px 24px -8px rgba(0, 0, 0, 0.06);
-  --shadow-pill: 0 4px 14px rgba(0, 0, 0, 0.04);
-  --shadow-coca-button: 0 8px 24px -4px rgba(229, 37, 42, 0.38), inset 0 1px 0 rgba(255, 255, 255, 0.35);
+  /* Tactile Multi-Layer Diffused Shadows */
+  --shadow-apple: 0 10px 30px -4px rgba(17, 24, 39, 0.06), 0 4px 12px rgba(17, 24, 39, 0.03);
+  --shadow-hover: 0 20px 40px -8px rgba(229, 37, 42, 0.22), 0 8px 16px rgba(17, 24, 39, 0.04);
+  --shadow-pill: 0 3px 10px rgba(17, 24, 39, 0.04);
+  --shadow-coca-button: 0 6px 20px -3px rgba(229, 37, 42, 0.38), inset 0 1px 0 rgba(255, 255, 255, 0.35);
 }
 
 * {
@@ -65,7 +61,7 @@
 }
 
 body {
-  background: var(--apple-bg);
+  background: radial-gradient(circle at 50% 0%, #FFF5F5 0%, #F8FAFC 50%, #F1F5F9 100%);
   color: var(--nateiva-black);
   min-height: 100vh;
   display: flex;
@@ -83,11 +79,9 @@ body {
   gap: 18px;
 }
 
-/* TOP NAVBAR (Apple Glassmorphism) */
+/* TOP NAVBAR */
 .app-nav {
-  background: var(--apple-glass);
-  backdrop-filter: blur(24px) saturate(180%);
-  -webkit-backdrop-filter: blur(24px) saturate(180%);
+  background: var(--nateiva-white);
   border: var(--border-card);
   border-radius: var(--radius-xl);
   padding: 14px 24px;
@@ -115,7 +109,7 @@ body {
   justify-content: center;
   font-size: 26px;
   color: var(--nateiva-white);
-  border: 1px solid rgba(255, 255, 255, 0.35);
+  border: 1.5px solid rgba(255, 255, 255, 0.45);
   box-shadow: var(--shadow-coca-button);
 }
 
@@ -142,7 +136,7 @@ body {
 .select-pill {
   padding: 9px 16px;
   border-radius: 14px;
-  border: var(--border-subtle);
+  border: 1.5px solid rgba(17, 24, 39, 0.16);
   background: var(--nateiva-white);
   font-weight: 800;
   font-size: 0.85rem;
@@ -154,14 +148,14 @@ body {
 }
 
 .select-pill:hover, .select-pill:focus {
-  border-color: rgba(229, 37, 42, 0.4);
-  box-shadow: 0 4px 16px rgba(229, 37, 42, 0.12);
+  border-color: var(--nateiva-red);
+  box-shadow: 0 4px 14px rgba(229, 37, 42, 0.18);
 }
 
 .btn-pill {
   padding: 9px 18px;
   border-radius: 14px;
-  border: var(--border-subtle);
+  border: 1.5px solid rgba(17, 24, 39, 0.16);
   background: var(--nateiva-white);
   font-weight: 800;
   font-size: 0.85rem;
@@ -176,6 +170,7 @@ body {
 
 .btn-pill:hover {
   background: var(--nateiva-grey-bg);
+  border-color: rgba(17, 24, 39, 0.25);
   transform: translateY(-1px);
 }
 
@@ -183,9 +178,7 @@ body {
    LEVEL-FIRST SELECTOR BAR (STEP 1: CHOOSE LEVEL)
    ========================================================================== */
 .level-selector-section {
-  background: var(--apple-glass);
-  backdrop-filter: blur(24px) saturate(180%);
-  -webkit-backdrop-filter: blur(24px) saturate(180%);
+  background: var(--nateiva-white);
   border: var(--border-card);
   border-radius: var(--radius-xl);
   padding: 18px 24px;
@@ -217,7 +210,8 @@ body {
   padding: 5px 12px;
   border-radius: 10px;
   letter-spacing: 0.5px;
-  box-shadow: 0 4px 12px rgba(229, 37, 42, 0.25);
+  border: 1.5px solid rgba(255, 255, 255, 0.35);
+  box-shadow: var(--shadow-coca-button);
 }
 
 .level-title-wrap h3 {
@@ -233,7 +227,7 @@ body {
   background: var(--nateiva-grey-bg);
   padding: 6px 14px;
   border-radius: 12px;
-  border: var(--border-subtle);
+  border: 1.5px solid rgba(17, 24, 39, 0.12);
 }
 
 .level-pills-track {
@@ -247,7 +241,7 @@ body {
 
 .level-pill-btn {
   background: var(--nateiva-white);
-  border: var(--border-subtle);
+  border: 1.5px solid rgba(17, 24, 39, 0.16);
   border-radius: 18px;
   padding: 12px 20px;
   display: flex;
@@ -256,20 +250,21 @@ body {
   gap: 4px;
   min-width: 90px;
   cursor: pointer;
-  transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+  transition: all 0.22s cubic-bezier(0.34, 1.56, 0.64, 1);
   box-shadow: var(--shadow-pill);
   flex-shrink: 0;
 }
 
 .level-pill-btn:hover {
   transform: translateY(-4px) scale(1.05);
-  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 10px 22px rgba(0, 0, 0, 0.08);
+  border-color: var(--nateiva-red);
 }
 
 .level-pill-btn.active {
   background: linear-gradient(135deg, var(--coca-red-bright) 0%, var(--coca-red) 100%);
   color: var(--nateiva-white);
-  border: 1px solid rgba(255, 255, 255, 0.35);
+  border: 1.5px solid rgba(255, 255, 255, 0.4);
   transform: translateY(-5px) scale(1.08);
   box-shadow: var(--shadow-coca-button);
 }
@@ -298,7 +293,7 @@ body {
 
 .tab-btn {
   background: var(--nateiva-white);
-  border: var(--border-subtle);
+  border: 1.5px solid rgba(17, 24, 39, 0.15);
   border-radius: 14px;
   padding: 10px 18px;
   font-weight: 800;
@@ -312,18 +307,19 @@ body {
 
 .tab-btn:hover {
   transform: translateY(-2px);
-  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.06);
+  background: var(--nateiva-grey-bg);
+  border-color: rgba(17, 24, 39, 0.25);
 }
 
 .tab-btn.active {
   background: var(--nateiva-black);
   color: var(--nateiva-white);
-  border: 1px solid var(--nateiva-black);
-  box-shadow: 0 8px 20px rgba(17, 24, 39, 0.15);
+  border: 1.5px solid var(--nateiva-black);
+  box-shadow: 0 6px 16px rgba(17, 24, 39, 0.16);
 }
 
 /* ==========================================================================
-   APPLE FLOATING CARDS ANIMATION & COCA-COLA LUSTROUS HOVER
+   APPLE FLOATING CARDS ANIMATION & SLEEK BORDERS
    ========================================================================== */
 @keyframes appleFloat {
   0% { transform: translateY(0px); }
@@ -339,9 +335,7 @@ body {
 }
 
 .portal-card {
-  background: var(--apple-glass);
-  backdrop-filter: blur(20px) saturate(180%);
-  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  background: var(--nateiva-white);
   border: var(--border-card);
   border-radius: var(--radius-xl);
   padding: 22px;
@@ -353,7 +347,7 @@ body {
   outline: none;
   box-shadow: var(--shadow-apple);
   animation: appleFloat 4.6s ease-in-out infinite;
-  transition: transform 0.28s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.28s ease, border-color 0.28s ease;
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
   position: relative;
   overflow: hidden;
 }
@@ -374,7 +368,7 @@ body {
   animation-play-state: paused;
   transform: translateY(-8px) scale(1.02);
   box-shadow: var(--shadow-hover);
-  border-color: rgba(229, 37, 42, 0.35);
+  border-color: var(--nateiva-red);
 }
 
 .portal-card.card-rearranging {
@@ -408,12 +402,12 @@ body {
   height: 56px;
   border-radius: 18px;
   background: var(--nateiva-grey-bg);
-  border: var(--border-subtle);
+  border: 1.5px solid rgba(17, 24, 39, 0.12);
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 30px;
-  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
   transition: transform 0.2s ease;
 }
 
@@ -449,7 +443,7 @@ body {
   gap: 8px;
   flex-wrap: wrap;
   padding-top: 12px;
-  border-top: 1px solid rgba(0, 0, 0, 0.06);
+  border-top: 1.5px solid var(--nateiva-grey-light);
 }
 
 .count-pill {
@@ -457,7 +451,7 @@ body {
   font-weight: 900;
   padding: 5px 12px;
   border-radius: 10px;
-  border: var(--border-subtle);
+  border: 1.5px solid rgba(17, 24, 39, 0.12);
   background: var(--nateiva-grey-bg);
   color: var(--nateiva-black);
   display: inline-flex;
@@ -466,13 +460,13 @@ body {
 }
 
 .count-pill.highlight {
-  border: 1px solid rgba(229, 37, 42, 0.2);
+  border-color: rgba(229, 37, 42, 0.35);
   color: var(--coca-red-dark);
   background: var(--coca-red-soft);
 }
 
 .count-pill.black {
-  border: 1px solid var(--nateiva-black);
+  border-color: var(--nateiva-black);
   color: var(--nateiva-white);
   background: var(--nateiva-black);
 }
@@ -490,19 +484,17 @@ body {
   display: flex;
 }
 
-/* TOP ARCADE HUD (Obsidian Apple Frosted Glass with Coca-Cola Red Accent) */
+/* TOP ARCADE HUD WITH SLEEK DEFINITION */
 .arcade-hud {
-  background: var(--apple-glass-dark);
-  backdrop-filter: blur(24px) saturate(180%);
-  -webkit-backdrop-filter: blur(24px) saturate(180%);
+  background: var(--nateiva-black);
   color: var(--nateiva-white);
   border-radius: var(--radius-xl);
   padding: 14px 22px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.22);
+  border: 1.5px solid rgba(255, 255, 255, 0.15);
+  box-shadow: 0 14px 32px rgba(17, 24, 39, 0.2);
   flex-wrap: wrap;
   gap: 12px;
 }
@@ -510,7 +502,7 @@ body {
 .btn-home-top {
   background: linear-gradient(135deg, var(--coca-red-bright) 0%, var(--coca-red) 100%);
   color: var(--nateiva-white);
-  border: 1px solid rgba(255, 255, 255, 0.35);
+  border: 1.5px solid rgba(255, 255, 255, 0.45);
   border-radius: 14px;
   padding: 8px 18px;
   font-weight: 900;
@@ -520,12 +512,11 @@ body {
   align-items: center;
   gap: 6px;
   box-shadow: var(--shadow-coca-button);
-  transition: transform 0.15s ease, box-shadow 0.15s ease;
+  transition: transform 0.15s ease;
 }
 
 .btn-home-top:hover {
   transform: translateY(-2px) scale(1.04);
-  box-shadow: 0 12px 28px -4px rgba(229, 37, 42, 0.5);
 }
 
 .hud-left {
@@ -544,8 +535,8 @@ body {
 }
 
 .hud-badge {
-  background: rgba(255, 255, 255, 0.1);
-  border: 1px solid rgba(255, 255, 255, 0.18);
+  background: rgba(255, 255, 255, 0.12);
+  border: 1.5px solid rgba(255, 255, 255, 0.25);
   border-radius: 12px;
   padding: 5px 14px;
   font-weight: 800;
@@ -558,7 +549,7 @@ body {
 
 .hud-badge.red {
   background: linear-gradient(135deg, var(--coca-red-bright) 0%, var(--coca-red) 100%);
-  border: 1px solid rgba(255, 255, 255, 0.3);
+  border: 1.5px solid rgba(255, 255, 255, 0.45);
   color: var(--nateiva-white);
   box-shadow: 0 4px 14px rgba(229, 37, 42, 0.35);
 }
@@ -577,16 +568,14 @@ body {
   font-weight: 900;
   padding: 5px 14px;
   border-radius: 12px;
-  border: 1px solid rgba(255, 255, 255, 0.35);
+  border: 1.5px solid rgba(255, 255, 255, 0.4);
   box-shadow: var(--shadow-coca-button);
 }
 
 /* LEVEL META BANNER */
 .level-meta-banner {
-  background: var(--apple-glass);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border: var(--border-card);
+  background: var(--nateiva-white);
+  border: 1.5px solid rgba(17, 24, 39, 0.14);
   border-radius: var(--radius-lg);
   padding: 12px 20px;
   display: flex;
@@ -608,7 +597,7 @@ body {
 
 .meta-pill {
   background: var(--nateiva-white);
-  border: var(--border-subtle);
+  border: 1.5px solid rgba(17, 24, 39, 0.14);
   padding: 5px 12px;
   border-radius: 10px;
   color: var(--nateiva-black);
@@ -626,10 +615,8 @@ body {
   align-items: center;
   justify-content: center;
   gap: 10px;
-  background: var(--apple-glass);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border: var(--border-card);
+  background: var(--nateiva-white);
+  border: 1.5px solid rgba(17, 24, 39, 0.14);
   border-radius: var(--radius-lg);
   padding: 12px 18px;
   margin: 2px 0;
@@ -645,7 +632,7 @@ body {
   font-weight: 900;
   padding: 7px 16px;
   border-radius: 12px;
-  border: var(--border-subtle);
+  border: 1.5px solid rgba(17, 24, 39, 0.14);
   background: var(--nateiva-white);
   color: var(--nateiva-grey-dark);
   box-shadow: var(--shadow-pill);
@@ -655,14 +642,14 @@ body {
 .step-node.active {
   background: var(--nateiva-black);
   color: var(--nateiva-white);
-  border: 1px solid var(--nateiva-black);
-  box-shadow: 0 6px 16px rgba(17, 24, 39, 0.16);
+  border: 1.5px solid var(--nateiva-black);
+  box-shadow: 0 4px 12px rgba(17, 24, 39, 0.2);
 }
 
 .step-node.done {
   background: var(--coca-red-soft);
   color: var(--coca-red-dark);
-  border: 1px solid rgba(229, 37, 42, 0.3);
+  border: 1.5px solid var(--nateiva-red);
 }
 
 .step-connector {
@@ -679,8 +666,9 @@ body {
 /* PROGRESS BAR */
 .progress-container {
   width: 100%;
-  height: 8px;
-  background: rgba(0, 0, 0, 0.06);
+  height: 9px;
+  background: var(--nateiva-grey-light);
+  border: 1.5px solid rgba(17, 24, 39, 0.14);
   border-radius: 6px;
   overflow: hidden;
 }
@@ -694,9 +682,7 @@ body {
 
 /* PLAYGROUND CARD */
 .playground-card {
-  background: var(--apple-glass);
-  backdrop-filter: blur(24px) saturate(180%);
-  -webkit-backdrop-filter: blur(24px) saturate(180%);
+  background: var(--nateiva-white);
   border: var(--border-card);
   border-radius: var(--radius-xl);
   padding: 22px;
@@ -729,7 +715,7 @@ body {
 .btn-audio-speak {
   background: linear-gradient(135deg, var(--coca-red-bright) 0%, var(--coca-red) 100%);
   color: var(--nateiva-white);
-  border: 1px solid rgba(255, 255, 255, 0.35);
+  border: 1.5px solid rgba(255, 255, 255, 0.45);
   border-radius: 14px;
   padding: 9px 18px;
   font-weight: 900;
@@ -739,23 +725,22 @@ body {
   align-items: center;
   gap: 6px;
   box-shadow: var(--shadow-coca-button);
-  transition: transform 0.15s ease, box-shadow 0.15s ease;
+  transition: transform 0.15s ease;
 }
 
 .btn-audio-speak:hover {
   transform: translateY(-2px);
-  box-shadow: 0 12px 24px -4px rgba(229, 37, 42, 0.45);
 }
 
-/* SIMULATION CANVAS WRAPPER (Sleek Apple bezel) */
+/* SIMULATION CANVAS WRAPPER */
 .canvas-wrapper {
   width: 100%;
   position: relative;
   background: #0B0F19;
-  border: 1px solid rgba(255, 255, 255, 0.12);
+  border: 1.5px solid rgba(255, 255, 255, 0.16);
   border-radius: var(--radius-lg);
   overflow: hidden;
-  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.18), inset 0 2px 8px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15), inset 0 2px 8px rgba(0, 0, 0, 0.5);
 }
 
 canvas#simCanvas {
@@ -782,7 +767,7 @@ canvas#simCanvas {
   height: 58px;
   border-radius: 18px;
   background: var(--nateiva-white);
-  border: var(--border-subtle);
+  border: 1.5px solid rgba(17, 24, 39, 0.16);
   font-size: 24px;
   font-weight: 900;
   display: flex;
@@ -790,22 +775,20 @@ canvas#simCanvas {
   justify-content: center;
   cursor: pointer;
   box-shadow: var(--shadow-pill);
-  transition: transform 0.12s ease, background 0.12s ease, box-shadow 0.12s ease;
+  transition: transform 0.12s ease, background 0.12s ease;
 }
 
 .dpad-btn:active {
   transform: scale(0.92);
   background: var(--coca-red-soft);
-  box-shadow: 0 2px 8px rgba(229, 37, 42, 0.2);
+  border-color: var(--nateiva-red);
 }
 
 /* MODULE SPECIFIC OVERLAYS */
 .module-overlay {
   display: none;
-  background: var(--apple-glass);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border: var(--border-card);
+  background: var(--nateiva-white);
+  border: 1.5px solid rgba(17, 24, 39, 0.14);
   border-radius: var(--radius-lg);
   padding: 18px;
   flex-direction: column;
@@ -828,7 +811,7 @@ canvas#simCanvas {
 .target-word-illustration {
   font-size: 64px;
   background: var(--nateiva-white);
-  border: var(--border-subtle);
+  border: 1.5px solid rgba(17, 24, 39, 0.14);
   border-radius: 22px;
   width: 110px;
   height: 110px;
@@ -844,7 +827,7 @@ canvas#simCanvas {
   gap: 12px;
   min-height: 64px;
   background: var(--nateiva-grey-bg);
-  border: 2px dashed rgba(229, 37, 42, 0.3);
+  border: 1.5px dashed rgba(229, 37, 42, 0.4);
   border-radius: 16px;
   padding: 10px 18px;
   width: 100%;
@@ -855,7 +838,7 @@ canvas#simCanvas {
 
 .syllable-tile {
   background: var(--nateiva-white);
-  border: var(--border-subtle);
+  border: 1.5px solid rgba(17, 24, 39, 0.16);
   border-radius: 16px;
   padding: 12px 20px;
   font-size: 1.3rem;
@@ -863,7 +846,7 @@ canvas#simCanvas {
   color: var(--nateiva-black);
   cursor: pointer;
   box-shadow: var(--shadow-pill);
-  transition: transform 0.15s ease, background 0.15s ease, box-shadow 0.15s ease;
+  transition: transform 0.15s ease, background 0.15s ease;
   display: inline-flex;
   align-items: center;
   gap: 6px;
@@ -872,13 +855,13 @@ canvas#simCanvas {
 .syllable-tile:hover {
   transform: translateY(-3px) scale(1.05);
   background: var(--coca-red-soft);
-  box-shadow: 0 8px 20px rgba(229, 37, 42, 0.15);
+  border-color: var(--nateiva-red);
 }
 
 .syllable-tile.placed {
   background: linear-gradient(135deg, var(--coca-red-bright) 0%, var(--coca-red) 100%);
   color: var(--nateiva-white);
-  border: 1px solid rgba(255, 255, 255, 0.35);
+  border: 1.5px solid rgba(255, 255, 255, 0.4);
   box-shadow: var(--shadow-coca-button);
 }
 
@@ -910,8 +893,7 @@ canvas#simCanvas {
   height: 24px;
   border-radius: 50%;
   background: var(--nateiva-grey-light);
-  border: 1px solid rgba(0, 0, 0, 0.08);
-  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+  border: 1.5px solid rgba(17, 24, 39, 0.18);
   transition: all 0.25s ease;
 }
 
@@ -919,11 +901,12 @@ canvas#simCanvas {
   background: linear-gradient(135deg, var(--coca-red-bright) 0%, var(--coca-red) 100%);
   transform: scale(1.4);
   box-shadow: 0 0 16px rgba(229, 37, 42, 0.7);
+  border-color: #FFFFFF;
 }
 
 .word-phonetic-banner {
   background: var(--nateiva-white);
-  border: var(--border-card);
+  border: 1.5px solid rgba(17, 24, 39, 0.14);
   border-radius: 22px;
   padding: 18px 32px;
   display: flex;
@@ -956,7 +939,7 @@ canvas#simCanvas {
 
 .btn-pronounce {
   background: var(--nateiva-white);
-  border: var(--border-subtle);
+  border: 1.5px solid rgba(17, 24, 39, 0.16);
   border-radius: 16px;
   padding: 12px 22px;
   font-weight: 900;
@@ -973,17 +956,13 @@ canvas#simCanvas {
 .btn-pronounce.primary {
   background: linear-gradient(135deg, var(--coca-red-bright) 0%, var(--coca-red) 100%);
   color: var(--nateiva-white);
-  border: 1px solid rgba(255, 255, 255, 0.35);
+  border: 1.5px solid rgba(255, 255, 255, 0.4);
   box-shadow: var(--shadow-coca-button);
 }
 
 .btn-pronounce:hover {
   transform: translateY(-2px);
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
-}
-
-.btn-pronounce.primary:hover {
-  box-shadow: 0 12px 28px -4px rgba(229, 37, 42, 0.45);
+  border-color: var(--nateiva-red);
 }
 
 /* STORY & COMPREHENSION LAB */
@@ -999,7 +978,7 @@ canvas#simCanvas {
   justify-content: space-between;
   gap: 12px;
   background: var(--nateiva-grey-bg);
-  border: var(--border-subtle);
+  border: 1.5px solid rgba(17, 24, 39, 0.12);
   border-radius: 14px;
   padding: 12px 18px;
   flex-wrap: wrap;
@@ -1016,7 +995,7 @@ canvas#simCanvas {
 
 .story-text-container {
   background: var(--nateiva-white);
-  border: var(--border-card);
+  border: 1.5px solid rgba(17, 24, 39, 0.13);
   border-radius: var(--radius-lg);
   padding: 22px;
   line-height: 1.75;
@@ -1045,7 +1024,7 @@ canvas#simCanvas {
   flex-direction: column;
   gap: 14px;
   background: var(--nateiva-grey-bg);
-  border: var(--border-subtle);
+  border: 1.5px solid rgba(17, 24, 39, 0.12);
   border-radius: var(--radius-lg);
   padding: 18px;
 }
@@ -1072,7 +1051,7 @@ canvas#simCanvas {
 
 .btn-comp-option {
   background: var(--nateiva-white);
-  border: var(--border-subtle);
+  border: 1.5px solid rgba(17, 24, 39, 0.14);
   border-radius: 14px;
   padding: 14px 18px;
   font-weight: 800;
@@ -1090,9 +1069,8 @@ canvas#simCanvas {
 
 .btn-comp-option:hover {
   background: var(--coca-red-soft);
-  border-color: rgba(229, 37, 42, 0.3);
+  border-color: var(--nateiva-red);
   transform: translateY(-2px);
-  box-shadow: 0 8px 18px rgba(229, 37, 42, 0.12);
 }
 
 /* INTERACTIVE QUICK ANSWERS BOX */
@@ -1106,7 +1084,7 @@ canvas#simCanvas {
 
 .btn-interactive {
   background: var(--nateiva-white);
-  border: var(--border-subtle);
+  border: 1.5px solid rgba(17, 24, 39, 0.16);
   border-radius: 16px;
   padding: 14px 26px;
   font-size: 1.08rem;
@@ -1122,7 +1100,7 @@ canvas#simCanvas {
 .btn-interactive:hover {
   background: linear-gradient(135deg, var(--coca-red-bright) 0%, var(--coca-red) 100%);
   color: var(--nateiva-white);
-  border: 1px solid rgba(255, 255, 255, 0.35);
+  border: 1.5px solid rgba(255, 255, 255, 0.4);
   box-shadow: var(--shadow-coca-button);
   transform: translateY(-3px) scale(1.03);
 }
@@ -1135,13 +1113,13 @@ canvas#simCanvas {
   gap: 12px;
   flex-wrap: wrap;
   padding-top: 14px;
-  border-top: 1px solid rgba(0, 0, 0, 0.06);
+  border-top: 1.5px solid var(--nateiva-grey-light);
 }
 
 .btn-action {
   padding: 10px 20px;
   border-radius: 14px;
-  border: var(--border-subtle);
+  border: 1.5px solid rgba(17, 24, 39, 0.16);
   background: var(--nateiva-white);
   font-weight: 800;
   font-size: 0.88rem;
@@ -1153,21 +1131,20 @@ canvas#simCanvas {
 
 .btn-action.red {
   background: var(--coca-red-soft);
-  border: 1px solid rgba(229, 37, 42, 0.25);
+  border: 1.5px solid var(--nateiva-red);
   color: var(--coca-red-dark);
 }
 
 .btn-action:hover {
   background: var(--nateiva-grey-bg);
+  border-color: rgba(17, 24, 39, 0.25);
   transform: translateY(-1px);
 }
 
 /* TUTOR PANEL */
 .tutor-panel {
-  background: var(--apple-glass);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border: var(--border-card);
+  background: var(--nateiva-white);
+  border: 1.5px solid rgba(17, 24, 39, 0.14);
   border-radius: var(--radius-lg);
   padding: 18px;
   display: none;
@@ -1194,15 +1171,15 @@ canvas#simCanvas {
 
 .tutor-trick-box {
   background: var(--nateiva-white);
-  border-left: 4px solid var(--coca-red);
+  border-left: 5px solid var(--coca-red);
   padding: 12px 16px;
   border-radius: 10px;
   font-size: 0.92rem;
   font-weight: 800;
   color: var(--nateiva-black);
-  border-top: var(--border-subtle);
-  border-right: var(--border-subtle);
-  border-bottom: var(--border-subtle);
+  border-top: 1.5px solid rgba(17, 24, 39, 0.12);
+  border-right: 1.5px solid rgba(17, 24, 39, 0.12);
+  border-bottom: 1.5px solid rgba(17, 24, 39, 0.12);
   box-shadow: var(--shadow-pill);
 }
 
@@ -1819,16 +1796,216 @@ canvas#simCanvas {
       ]
     },
 
-    // Phonics & Syllables
-    phonics: [
-      { emoji: '⛵', word: { fr: 'Bateau', en: 'Boat' }, syllables: { fr: ['ba', 'teau'], en: ['boat'] }, distractors: ['to', 'lu', 'pa'] },
-      { emoji: '🍎', word: { fr: 'Pomme', en: 'Apple' }, syllables: { fr: ['pom', 'me'], en: ['ap', 'ple'] }, distractors: ['ma', 'po', 're'] },
-      { emoji: '🦁', word: { fr: 'Lion', en: 'Lion' }, syllables: { fr: ['li', 'on'], en: ['li', 'on'] }, distractors: ['lo', 'an', 'mi'] },
-      { emoji: '🌙', word: { fr: 'Lune', en: 'Moon' }, syllables: { fr: ['lu', 'ne'], en: ['moon'] }, distractors: ['la', 'no', 'di'] },
-      { emoji: '🐱', word: { fr: 'Chaton', en: 'Kitten' }, syllables: { fr: ['cha', 'ton'], en: ['kit', 'ten'] }, distractors: ['cho', 'tin', 'ba'] }
+    // 10 Distinct Mazes (Different layout, start, exit, and stars per activity!)
+    mazes: [
+      {
+        id: 'maze_1',
+        name: { fr: "🌲 Labyrinthe de la Forêt Enchantée", en: "🌲 Enchanted Forest Maze" },
+        cols: 11, rows: 6,
+        player: { r: 1, c: 1 }, exit: { r: 4, c: 9 },
+        stars: [{ r: 1, c: 5 }, { r: 4, c: 3 }, { r: 2, c: 8 }],
+        walls: ["11111111111", "10000010001", "10111010101", "10100000101", "10001110001", "11111111111"]
+      },
+      {
+        id: 'maze_2',
+        name: { fr: "💎 Grotte de Cristal Scintillante", en: "💎 Sparkling Crystal Cavern" },
+        cols: 11, rows: 6,
+        player: { r: 4, c: 1 }, exit: { r: 1, c: 9 },
+        stars: [{ r: 2, c: 2 }, { r: 3, c: 6 }, { r: 1, c: 7 }],
+        walls: ["11111111111", "10100000001", "10101111101", "10001000101", "10100010001", "11111111111"]
+      },
+      {
+        id: 'maze_3',
+        name: { fr: "🚀 Station Spatiale Galactique", en: "🚀 Galactic Space Station" },
+        cols: 11, rows: 6,
+        player: { r: 1, c: 9 }, exit: { r: 4, c: 1 },
+        stars: [{ r: 1, c: 3 }, { r: 3, c: 5 }, { r: 4, c: 7 }],
+        walls: ["11111111111", "10001000001", "11101011101", "10000010001", "10111000101", "11111111111"]
+      },
+      {
+        id: 'maze_4',
+        name: { fr: "🏜️ Pyramide du Soleil Doré", en: "🏜️ Golden Sun Pyramid" },
+        cols: 11, rows: 6,
+        player: { r: 2, c: 1 }, exit: { r: 2, c: 9 },
+        stars: [{ r: 1, c: 4 }, { r: 4, c: 4 }, { r: 2, c: 6 }],
+        walls: ["11111111111", "10000000001", "10111111101", "10100000101", "10001110001", "11111111111"]
+      },
+      {
+        id: 'maze_5',
+        name: { fr: "🧊 Banquise Polaire Arctique", en: "🧊 Arctic Polar Glacier" },
+        cols: 11, rows: 6,
+        player: { r: 4, c: 9 }, exit: { r: 1, c: 1 },
+        stars: [{ r: 3, c: 2 }, { r: 2, c: 5 }, { r: 4, c: 5 }],
+        walls: ["11111111111", "10001000101", "10101010101", "10100010001", "10001000101", "11111111111"]
+      },
+      {
+        id: 'maze_6',
+        name: { fr: "🏰 Donjon Médiéval des Rois", en: "🏰 Medieval Kings Dungeon" },
+        cols: 11, rows: 6,
+        player: { r: 1, c: 5 }, exit: { r: 4, c: 5 },
+        stars: [{ r: 2, c: 1 }, { r: 2, c: 9 }, { r: 4, c: 2 }],
+        walls: ["11111111111", "10000000001", "10111011101", "10100000101", "10001010001", "11111111111"]
+      },
+      {
+        id: 'maze_7',
+        name: { fr: "🌋 Sentier du Volcan de Feu", en: "🌋 Fire Volcano Trail" },
+        cols: 11, rows: 6,
+        player: { r: 3, c: 1 }, exit: { r: 3, c: 9 },
+        stars: [{ r: 1, c: 2 }, { r: 4, c: 6 }, { r: 1, c: 8 }],
+        walls: ["11111111111", "10101010101", "10101010101", "10000000001", "10111111101", "11111111111"]
+      },
+      {
+        id: 'maze_8',
+        name: { fr: "🌊 Cité Magique Sous-Marine", en: "🌊 Underwater Magic City" },
+        cols: 11, rows: 6,
+        player: { r: 1, c: 2 }, exit: { r: 4, c: 8 },
+        stars: [{ r: 2, c: 4 }, { r: 3, c: 7 }, { r: 4, c: 2 }],
+        walls: ["11111111111", "10000010001", "11101010111", "10001000001", "10100011101", "11111111111"]
+      },
+      {
+        id: 'maze_9',
+        name: { fr: "🌈 Palais Flottant des Nuages", en: "🌈 Floating Cloud Palace" },
+        cols: 11, rows: 6,
+        player: { r: 4, c: 2 }, exit: { r: 1, c: 8 },
+        stars: [{ r: 1, c: 3 }, { r: 3, c: 5 }, { r: 2, c: 8 }],
+        walls: ["11111111111", "10001000001", "10101111101", "10100000101", "10001110001", "11111111111"]
+      },
+      {
+        id: 'maze_10',
+        name: { fr: "🏆 Arène Ultime des Champions", en: "🏆 Ultimate Champions Arena" },
+        cols: 11, rows: 6,
+        player: { r: 1, c: 1 }, exit: { r: 4, c: 9 },
+        stars: [{ r: 2, c: 3 }, { r: 3, c: 7 }, { r: 1, c: 7 }],
+        walls: ["11111111111", "10000000001", "10111011101", "10001000101", "10100010001", "11111111111"]
+      }
     ],
 
-    // Pronunciation Studio
+    // 10 Distinct Tangram Puzzles (Different silhouette & pieces per activity!)
+    tangrams: [
+      {
+        id: 'tangram_boat',
+        name: { fr: "⛵ Le Voilier des Mers", en: "⛵ The Ocean Sailboat" },
+        pieces: [
+          { id: 'tp1', name: 'Grande Voile', color: '#E5252A', x: 140, y: 310, targetX: 400, targetY: 150, snapped: false, w: 70, h: 70, type: 'triangle' },
+          { id: 'tp2', name: 'Petite Voile', color: '#F97316', x: 230, y: 310, targetX: 470, targetY: 180, snapped: false, w: 50, h: 50, type: 'triangle' },
+          { id: 'tp3', name: 'Coque Bleue', color: '#3B82F6', x: 320, y: 310, targetX: 430, targetY: 250, snapped: false, w: 120, h: 45, type: 'trapeze' }
+        ]
+      },
+      {
+        id: 'tangram_house',
+        name: { fr: "🏠 La Maisonnette Joyeuse", en: "🏠 The Happy Little House" },
+        pieces: [
+          { id: 'tp1', name: 'Toit Rouge', color: '#E5252A', x: 140, y: 310, targetX: 430, targetY: 140, snapped: false, w: 90, h: 65, type: 'triangle' },
+          { id: 'tp2', name: 'Murs Dorés', color: '#F59E0B', x: 240, y: 310, targetX: 430, targetY: 220, snapped: false, w: 80, h: 80, type: 'square' },
+          { id: 'tp3', name: 'Porte Bleue', color: '#3B82F6', x: 340, y: 310, targetX: 430, targetY: 260, snapped: false, w: 40, h: 60, type: 'rectangle' }
+        ]
+      },
+      {
+        id: 'tangram_rocket',
+        name: { fr: "🚀 La Fusée Cosmique", en: "🚀 The Cosmic Rocket" },
+        pieces: [
+          { id: 'tp1', name: 'Pointe Ogive', color: '#E5252A', x: 140, y: 310, targetX: 430, targetY: 120, snapped: false, w: 60, h: 60, type: 'triangle' },
+          { id: 'tp2', name: 'Corps Fusée', color: '#FFFFFF', x: 230, y: 310, targetX: 430, targetY: 200, snapped: false, w: 65, h: 80, type: 'rectangle' },
+          { id: 'tp3', name: 'Aileron Gauche', color: '#F97316', x: 320, y: 310, targetX: 375, targetY: 230, snapped: false, w: 40, h: 50, type: 'triangle' },
+          { id: 'tp4', name: 'Aileron Droit', color: '#F97316', x: 410, y: 310, targetX: 485, targetY: 230, snapped: false, w: 40, h: 50, type: 'triangle' }
+        ]
+      },
+      {
+        id: 'tangram_cat',
+        name: { fr: "🐱 Le Chaton Curieux", en: "🐱 The Curious Kitten" },
+        pieces: [
+          { id: 'tp1', name: 'Tête Chaton', color: '#F59E0B', x: 140, y: 310, targetX: 430, targetY: 150, snapped: false, w: 65, h: 65, type: 'square' },
+          { id: 'tp2', name: 'Oreille Gauche', color: '#E5252A', x: 230, y: 310, targetX: 395, targetY: 105, snapped: false, w: 35, h: 35, type: 'triangle' },
+          { id: 'tp3', name: 'Oreille Droite', color: '#E5252A', x: 320, y: 310, targetX: 465, targetY: 105, snapped: false, w: 35, h: 35, type: 'triangle' },
+          { id: 'tp4', name: 'Corps Assis', color: '#10B981', x: 410, y: 310, targetX: 430, targetY: 235, snapped: false, w: 85, h: 70, type: 'triangle' }
+        ]
+      },
+      {
+        id: 'tangram_tree',
+        name: { fr: "🌲 Le Grand Sapin Vert", en: "🌲 The Tall Green Pine" },
+        pieces: [
+          { id: 'tp1', name: 'Cime Sapin', color: '#10B981', x: 140, y: 310, targetX: 430, targetY: 130, snapped: false, w: 60, h: 55, type: 'triangle' },
+          { id: 'tp2', name: 'Branche Milieu', color: '#059669', x: 230, y: 310, targetX: 430, targetY: 185, snapped: false, w: 85, h: 60, type: 'triangle' },
+          { id: 'tp3', name: 'Tronc Bois', color: '#78350F', x: 320, y: 310, targetX: 430, targetY: 245, snapped: false, w: 35, h: 50, type: 'rectangle' }
+        ]
+      },
+      {
+        id: 'tangram_crown',
+        name: { fr: "👑 La Couronne Royale", en: "👑 The Royal Crown" },
+        pieces: [
+          { id: 'tp1', name: 'Pointe Gauche', color: '#F59E0B', x: 140, y: 310, targetX: 380, targetY: 155, snapped: false, w: 45, h: 55, type: 'triangle' },
+          { id: 'tp2', name: 'Pointe Centre', color: '#E5252A', x: 230, y: 310, targetX: 430, targetY: 140, snapped: false, w: 55, h: 70, type: 'triangle' },
+          { id: 'tp3', name: 'Pointe Droite', color: '#F59E0B', x: 320, y: 310, targetX: 480, targetY: 155, snapped: false, w: 45, h: 55, type: 'triangle' },
+          { id: 'tp4', name: 'Bandeau Or', color: '#D97706', x: 410, y: 310, targetX: 430, targetY: 220, snapped: false, w: 130, h: 35, type: 'rectangle' }
+        ]
+      },
+      {
+        id: 'tangram_car',
+        name: { fr: "🚗 Le Bolide de Course", en: "🚗 The Racing Car" },
+        pieces: [
+          { id: 'tp1', name: 'Toit Profilé', color: '#E5252A', x: 140, y: 310, targetX: 430, targetY: 170, snapped: false, w: 75, h: 45, type: 'triangle' },
+          { id: 'tp2', name: 'Châssis Rapide', color: '#3B82F6', x: 240, y: 310, targetX: 430, targetY: 220, snapped: false, w: 135, h: 45, type: 'rectangle' },
+          { id: 'tp3', name: 'Roue Gauche', color: '#111827', x: 340, y: 310, targetX: 385, targetY: 255, snapped: false, w: 32, h: 32, type: 'square' },
+          { id: 'tp4', name: 'Roue Droite', color: '#111827', x: 420, y: 310, targetX: 475, targetY: 255, snapped: false, w: 32, h: 32, type: 'square' }
+        ]
+      },
+      {
+        id: 'tangram_diamond',
+        name: { fr: "💎 Le Diamant Flottant", en: "💎 The Floating Diamond" },
+        pieces: [
+          { id: 'tp1', name: 'Facette Haut', color: '#38BDF8', x: 140, y: 310, targetX: 430, targetY: 145, snapped: false, w: 85, h: 55, type: 'triangle' },
+          { id: 'tp2', name: 'Facette Bas', color: '#0284C7', x: 240, y: 310, targetX: 430, targetY: 220, snapped: false, w: 85, h: 75, type: 'triangle' }
+        ]
+      },
+      {
+        id: 'tangram_duck',
+        name: { fr: "🦆 Le Caneton Doré", en: "🦆 The Golden Duckling" },
+        pieces: [
+          { id: 'tp1', name: 'Tête Canard', color: '#F59E0B', x: 140, y: 310, targetX: 410, targetY: 145, snapped: false, w: 45, h: 45, type: 'square' },
+          { id: 'tp2', name: 'Bec Orange', color: '#EA580C', x: 230, y: 310, targetX: 370, targetY: 145, snapped: false, w: 30, h: 25, type: 'triangle' },
+          { id: 'tp3', name: 'Corps Flottant', color: '#FBBF24', x: 320, y: 310, targetX: 445, targetY: 205, snapped: false, w: 90, h: 60, type: 'triangle' }
+        ]
+      },
+      {
+        id: 'tangram_airplane',
+        name: { fr: "✈️ L'Avion à Réaction", en: "✈️ The Jet Airplane" },
+        pieces: [
+          { id: 'tp1', name: 'Fuselage Blanc', color: '#FFFFFF', x: 140, y: 310, targetX: 430, targetY: 185, snapped: false, w: 120, h: 40, type: 'rectangle' },
+          { id: 'tp2', name: 'Aile Supérieure', color: '#E5252A', x: 250, y: 310, targetX: 430, targetY: 135, snapped: false, w: 60, h: 50, type: 'triangle' },
+          { id: 'tp3', name: 'Aile Inférieure', color: '#E5252A', x: 350, y: 310, targetX: 430, targetY: 235, snapped: false, w: 60, h: 50, type: 'triangle' }
+        ]
+      }
+    ],
+
+    // 25+ Phonics & Syllables (Never repeats!)
+    phonics: [
+      { emoji: '🍎', word: { fr: 'Pomme', en: 'Apple' }, syllables: { fr: ['pom', 'me'], en: ['ap', 'ple'] }, distractors: ['ma', 'po', 're'] },
+      { emoji: '🍌', word: { fr: 'Banane', en: 'Banana' }, syllables: { fr: ['ba', 'na', 'ne'], en: ['ba', 'na', 'na'] }, distractors: ['to', 'li', 'ka'] },
+      { emoji: '🦁', word: { fr: 'Lion', en: 'Lion' }, syllables: { fr: ['li', 'on'], en: ['li', 'on'] }, distractors: ['lo', 'an', 'mi'] },
+      { emoji: '⛵', word: { fr: 'Bateau', en: 'Boat' }, syllables: { fr: ['ba', 'teau'], en: ['sail', 'boat'] }, distractors: ['to', 'lu', 'pa'] },
+      { emoji: '🌙', word: { fr: 'Lune', en: 'Moon' }, syllables: { fr: ['lu', 'ne'], en: ['moon'] }, distractors: ['la', 'no', 'di'] },
+      { emoji: '🐱', word: { fr: 'Chaton', en: 'Kitten' }, syllables: { fr: ['cha', 'ton'], en: ['kit', 'ten'] }, distractors: ['cho', 'tin', 'ba'] },
+      { emoji: '⭐', word: { fr: 'Étoile', en: 'Star' }, syllables: { fr: ['é', 'toi', 'le'], en: ['shin', 'ing', 'star'] }, distractors: ['ta', 'ro', 'vi'] },
+      { emoji: '☀️', word: { fr: 'Soleil', en: 'Sunshine' }, syllables: { fr: ['so', 'leil'], en: ['sun', 'shine'] }, distractors: ['sa', 'lou', 'me'] },
+      { emoji: '🐟', word: { fr: 'Poisson', en: 'Goldfish' }, syllables: { fr: ['pois', 'son'], en: ['gold', 'fish'] }, distractors: ['pa', 'san', 'te'] },
+      { emoji: '🏠', word: { fr: 'Maison', en: 'Cottage' }, syllables: { fr: ['mai', 'son'], en: ['cot', 'tage'] }, distractors: ['mo', 'sen', 'ru'] },
+      { emoji: '🎈', word: { fr: 'Ballon', en: 'Balloon' }, syllables: { fr: ['bal', 'lon'], en: ['bal', 'loon'] }, distractors: ['bo', 'lin', 'ka'] },
+      { emoji: '🦋', word: { fr: 'Papillon', en: 'Butterfly' }, syllables: { fr: ['pa', 'pil', 'lon'], en: ['but', 'ter', 'fly'] }, distractors: ['po', 'ton', 'li'] },
+      { emoji: '🐘', word: { fr: 'Éléphant', en: 'Elephant' }, syllables: { fr: ['é', 'lé', 'phant'], en: ['el', 'e', 'phant'] }, distractors: ['al', 'fan', 'to'] },
+      { emoji: '🐢', word: { fr: 'Tortue', en: 'Turtle' }, syllables: { fr: ['tor', 'tue'], en: ['tur', 'tle'] }, distractors: ['tar', 'tou', 'ma'] },
+      { emoji: '🦒', word: { fr: 'Girafe', en: 'Giraffe' }, syllables: { fr: ['gi', 'ra', 'fe'], en: ['gi', 'raffe'] }, distractors: ['ga', 'ru', 'fe'] },
+      { emoji: '🌳', word: { fr: 'Arbre', en: 'Banyan' }, syllables: { fr: ['ar', 'bre'], en: ['ban', 'yan'] }, distractors: ['or', 'bra', 'li'] },
+      { emoji: '🌸', word: { fr: 'Tulipe', en: 'Tulip' }, syllables: { fr: ['tu', 'li', 'pe'], en: ['tu', 'lip'] }, distractors: ['to', 'la', 'pi'] },
+      { emoji: '🚀', word: { fr: 'Fusée', en: 'Rocket' }, syllables: { fr: ['fu', 'sée'], en: ['rock', 'et'] }, distractors: ['fa', 'zo', 'mi'] },
+      { emoji: '🤖', word: { fr: 'Robot', en: 'Android' }, syllables: { fr: ['ro', 'bot'], en: ['an', 'droid'] }, distractors: ['ra', 'bat', 'ku'] },
+      { emoji: '🚗', word: { fr: 'Voiture', en: 'Racecar' }, syllables: { fr: ['voi', 'tu', 're'], en: ['race', 'car'] }, distractors: ['va', 'to', 'ran'] },
+      { emoji: '🐸', word: { fr: 'Grenouille', en: 'Treefrog' }, syllables: { fr: ['gre', 'nouil', 'le'], en: ['tree', 'frog'] }, distractors: ['gra', 'nil', 'ba'] },
+      { emoji: '🍍', word: { fr: 'Ananas', en: 'Pineapple' }, syllables: { fr: ['a', 'na', 'nas'], en: ['pine', 'ap', 'ple'] }, distractors: ['o', 'no', 'ra'] },
+      { emoji: '🦖', word: { fr: 'Dino', en: 'Dino' }, syllables: { fr: ['di', 'no'], en: ['di', 'no'] }, distractors: ['da', 'nu', 'ma'] },
+      { emoji: '🐼', word: { fr: 'Panda', en: 'Panda' }, syllables: { fr: ['pan', 'da'], en: ['pan', 'da'] }, distractors: ['pon', 'do', 'ka'] }
+    ],
+
+    // 20+ Pronunciation Challenges (Different word & beats per activity!)
     pronunciation: [
       {
         word: { fr: 'Papillon', en: 'Butterfly' },
@@ -1847,48 +2024,177 @@ canvas#simCanvas {
         phonemeAns: "3",
         phonemeOptions: ["2", "3", "4", "5"],
         tip: { fr: "Tape dans tes mains pour chaque morceau : cro - co - dile (3 battements) !", en: "Clap your hands for each beat: croc - o - dile (3 beats)!" }
+      },
+      {
+        word: { fr: 'Chocolat', en: 'Chocolate' },
+        syllables: { fr: 'cho • co • lat', en: 'choc • o • late' },
+        count: 3,
+        phonemeQuestion: { fr: "Quel son doux entends-tu au début de 'Chocolat' ?", en: "What sound do you hear at the start of 'Chocolate'?" },
+        phonemeAns: { fr: "CH", en: "CH" },
+        phonemeOptions: ["CH", "S", "Z", "F"],
+        tip: { fr: "Arrondis la bouche et souffle doucement : /ch/ comme pour faire silence !", en: "Round your lips and push air forward: /ch/!" }
+      },
+      {
+        word: { fr: 'Dinosaure', en: 'Dinosaur' },
+        syllables: { fr: 'di • no • sau • re', en: 'di • no • saur' },
+        count: 4,
+        phonemeQuestion: { fr: "Combien de syllabes entends-tu dans 'Dinosaure' ?", en: "How many syllables do you hear in 'Dinosaur'?" },
+        phonemeAns: "4",
+        phonemeOptions: ["2", "3", "4", "5"],
+        tip: { fr: "Rythme avec les pieds : di - no - sau - re (4 pas) !", en: "Step with each beat: di - no - saur!" }
+      },
+      {
+        word: { fr: 'Hippopotame', en: 'Hippopotamus' },
+        syllables: { fr: 'hip • po • po • ta • me', en: 'hip • po • pot • a • mus' },
+        count: 5,
+        phonemeQuestion: { fr: "Combien de syllabes compte ce mot géant ?", en: "How many syllables in this giant word?" },
+        phonemeAns: "5",
+        phonemeOptions: ["3", "4", "5", "6"],
+        tip: { fr: "C'est un mot à 5 syllabes : hip - po - po - ta - me !", en: "It has 5 full beats: hip - po - pot - a - mus!" }
+      },
+      {
+        word: { fr: 'Soleil', en: 'Sunshine' },
+        syllables: { fr: 'so • leil', en: 'sun • shine' },
+        count: 2,
+        phonemeQuestion: { fr: "Quel son entends-tu au début de 'Soleil' ?", en: "What sound do you hear at the start of 'Sunshine'?" },
+        phonemeAns: { fr: "S", en: "S" },
+        phonemeOptions: ["S", "Z", "C", "T"],
+        tip: { fr: "Fais siffler la langue derrière les dents : /s/ comme un serpent !", en: "Hiss like a friendly snake: /s/!" }
+      },
+      {
+        word: { fr: 'Chat', en: 'Cat' },
+        syllables: { fr: 'chat', en: 'cat' },
+        count: 1,
+        phonemeQuestion: { fr: "Combien de syllabes entends-tu dans 'Chat' ?", en: "How many syllables in 'Cat'?" },
+        phonemeAns: "1",
+        phonemeOptions: ["1", "2", "3", "4"],
+        tip: { fr: "Un seul battement rapide : chat !", en: "Just one quick beat: cat!" }
+      },
+      {
+        word: { fr: 'Ordinateur', en: 'Computer' },
+        syllables: { fr: 'or • di • na • teur', en: 'com • pu • ter' },
+        count: 4,
+        phonemeQuestion: { fr: "Combien de syllabes entends-tu dans 'Ordinateur' ?", en: "How many syllables in 'Computer'?" },
+        phonemeAns: "4",
+        phonemeOptions: ["2", "3", "4", "5"],
+        tip: { fr: "Articule chaque son : or - di - na - teur !", en: "Articulate every beat: com - pu - ter!" }
+      },
+      {
+        word: { fr: 'Magicien', en: 'Magician' },
+        syllables: { fr: 'ma • gi • ci • en', en: 'ma • gi • cian' },
+        count: 3,
+        phonemeQuestion: { fr: "Quel son magique entends-tu au milieu ?", en: "What sound do you hear in the middle?" },
+        phonemeAns: { fr: "J", en: "J" },
+        phonemeOptions: ["J", "G", "S", "M"],
+        tip: { fr: "Fais vibrer les joues doucement : /j/ !", en: "Soft vibration on the palate: /j/!" }
+      },
+      {
+        word: { fr: 'Coccinelle', en: 'Ladybug' },
+        syllables: { fr: 'coc • ci • nel • le', en: 'la • dy • bug' },
+        count: 4,
+        phonemeQuestion: { fr: "Combien de battements pour la petite coccinelle ?", en: "How many beats for ladybug?" },
+        phonemeAns: "4",
+        phonemeOptions: ["2", "3", "4", "5"],
+        tip: { fr: "Frappe 4 fois dans tes mains : coc - ci - nel - le !", en: "Clap 4 times: coc - ci - nel - le!" }
       }
     ],
 
-    // Math Lab
+    // 25+ Math Challenges across Grades & Operations (Never repeats!)
     math: [
       {
-        grade: 'MAT',
-        type: 'count',
-        targetCount: 4,
-        itemEmoji: '🍎',
-        itemName: { fr: 'pommes', en: 'apples' },
+        grade: 'MAT', type: 'count', targetCount: 3, itemEmoji: '🍎',
         prompt: { fr: "Compte les 🍎 pommes avec ton doigt !", en: "Count the 🍎 apples with your finger!" },
-        speech: { fr: "Touche les pommes une par une pour compter combien il y en a !", en: "Touch the apples one by one to count how many there are!" },
-        ans: 4,
-        options: [3, 4, 5, 6],
-        tip: { fr: "Pose ton doigt sur chaque pomme : 1, 2, 3 et 4 !", en: "Point your finger at each apple: 1, 2, 3 and 4!" }
+        speech: { fr: "Touche les pommes pour compter combien il y en a !", en: "Touch the apples to count how many there are!" },
+        ans: 3, options: [2, 3, 4, 5],
+        tip: { fr: "Un, deux et trois ! Il y a 3 pommes !", en: "One, two, three! There are 3 apples!" }
       },
       {
-        grade: 'SIL',
-        type: 'tenframe',
-        a: 3,
-        b: 2,
-        itemEmoji: '⭐',
-        prompt: { fr: "3 étoiles ⭐ + 2 étoiles ⭐ = combien ?", en: "3 stars ⭐ + 2 stars ⭐ = how many?" },
-        speech: { fr: "Additionne 3 étoiles et 2 étoiles dans la boîte de 10 !", en: "Add 3 stars and 2 stars into the ten-frame!" },
-        ans: 5,
-        options: [4, 5, 6, 7],
-        tip: { fr: "3 dans la tête, puis compte 2 de plus : 4, 5 !", en: "3 in your head, then count 2 more: 4, 5!" }
+        grade: 'MAT', type: 'count', targetCount: 4, itemEmoji: '⭐',
+        prompt: { fr: "Combien d'étoiles ⭐ scintillent dans le ciel ?", en: "How many stars ⭐ sparkle in the sky?" },
+        speech: { fr: "Compte toutes les étoiles une par une !", en: "Count all the sparkling stars one by one!" },
+        ans: 4, options: [3, 4, 5, 6],
+        tip: { fr: "1, 2, 3 et 4 étoiles dorées !", en: "1, 2, 3 and 4 golden stars!" }
+      },
+      {
+        grade: 'MAT', type: 'count', targetCount: 5, itemEmoji: '🍓',
+        prompt: { fr: "Combien de fraises 🍓 mûres vois-tu ?", en: "How many ripe strawberries 🍓 do you see?" },
+        speech: { fr: "Touche les fraises du bout du doigt !", en: "Touch the delicious strawberries!" },
+        ans: 5, options: [4, 5, 6, 7],
+        tip: { fr: "Les 5 doigts de la main : 5 fraises !", en: "Like 5 fingers on your hand: 5 strawberries!" }
+      },
+      {
+        grade: 'MAT', type: 'count', targetCount: 6, itemEmoji: '🚗',
+        prompt: { fr: "Compte les petites voitures 🚗 de course !", en: "Count the racing cars 🚗 on the track!" },
+        speech: { fr: "Combien de bolides sont prêts à partir ?", en: "How many cars are ready to race?" },
+        ans: 6, options: [5, 6, 7, 8],
+        tip: { fr: "3 bolides en haut et 3 en bas font 6 voitures !", en: "3 on top and 3 below make 6 cars!" }
+      },
+      {
+        grade: 'SIL', type: 'addition', a: 2, b: 2, itemEmoji: '🎈',
+        prompt: { fr: "2 ballons 🎈 + 2 ballons 🎈 = combien ?", en: "2 balloons 🎈 + 2 balloons 🎈 = how many?" },
+        speech: { fr: "Additionne deux ballons plus deux ballons !", en: "Add two balloons and two balloons together!" },
+        ans: 4, options: [3, 4, 5, 6],
+        tip: { fr: "2 dans la tête, puis 3 et 4 !", en: "2 in your head, then 3 and 4!" }
+      },
+      {
+        grade: 'SIL', type: 'addition', a: 3, b: 3, itemEmoji: '🌸',
+        prompt: { fr: "3 fleurs 🌸 + 3 fleurs 🌸 = combien ?", en: "3 flowers 🌸 + 3 flowers 🌸 = how many?" },
+        speech: { fr: "Le double de 3 : trois plus trois !", en: "Double of 3: three plus three!" },
+        ans: 6, options: [5, 6, 7, 8],
+        tip: { fr: "Le double de 3 est 6 !", en: "The double of 3 is 6!" }
+      },
+      {
+        grade: 'SIL', type: 'addition', a: 4, b: 3, itemEmoji: '🐟',
+        prompt: { fr: "4 poissons 🐟 + 3 poissons 🐟 = combien ?", en: "4 fish 🐟 + 3 fish 🐟 = how many?" },
+        speech: { fr: "Combien nagent de poissons au total ?", en: "How many fish swimming in total?" },
+        ans: 7, options: [6, 7, 8, 9],
+        tip: { fr: "Pars de 4 et avance de 3 pas : 5, 6, 7 !", en: "Start from 4 and count 3 more: 5, 6, 7!" }
+      },
+      {
+        grade: 'CE', type: 'addition', a: 5, b: 5, itemEmoji: '💎',
+        prompt: { fr: "5 diamants 💎 + 5 diamants 💎 = combien ?", en: "5 diamonds 💎 + 5 diamonds 💎 = how many?" },
+        speech: { fr: "Cinq plus cinq forment la dizaine complète !", en: "Five plus five makes a full ten!" },
+        ans: 10, options: [8, 9, 10, 11],
+        tip: { fr: "5 + 5 = 10, le compte parfait !", en: "5 + 5 = 10, a perfect ten!" }
+      },
+      {
+        grade: 'CE', type: 'multiply', a: 3, b: 4, itemEmoji: '🧁',
+        prompt: { fr: "3 plateaux de 4 gâteaux 🧁 = combien ?", en: "3 trays of 4 cupcakes 🧁 = how many?" },
+        speech: { fr: "Trois fois quatre font combien de gâteaux ?", en: "Three times four makes how many cakes?" },
+        ans: 12, options: [10, 11, 12, 14],
+        tip: { fr: "3 x 4 = 12 ! 4, 8, 12 !", en: "3 x 4 = 12! Count by fours: 4, 8, 12!" }
+      },
+      {
+        grade: 'CM', type: 'multiply', a: 6, b: 4, itemEmoji: '⚡',
+        prompt: { fr: "6 piles de 4 volts ⚡ = combien de volts ?", en: "6 batteries of 4 volts ⚡ = how many volts?" },
+        speech: { fr: "Calcule le produit de six multiplié par quatre !", en: "Calculate six multiplied by four!" },
+        ans: 24, options: [20, 22, 24, 26],
+        tip: { fr: "6 x 4 = 24 volts !", en: "6 x 4 = 24 volts!" }
       }
+    ],
+
+    // Physical Simulation Challenge Targets per Activity
+    chemistryTargets: [
+      { name: 'green', color: '#10B981', recipe: 'blue+yellow', title: { fr: "Vert Émeraude (Bleu + Jaune)", en: "Emerald Green (Blue + Yellow)" } },
+      { name: 'orange', color: '#F97316', recipe: 'red+yellow', title: { fr: "Orange Vif (Rouge + Jaune)", en: "Vibrant Orange (Red + Yellow)" } },
+      { name: 'purple', color: '#8B5CF6', recipe: 'red+blue', title: { fr: "Violet Royal (Rouge + Bleu)", en: "Royal Purple (Red + Blue)" } },
+      { name: 'amber', color: '#D97706', recipe: 'red+yellow', title: { fr: "Ambre Solaire (Rouge + Jaune)", en: "Solar Amber (Red + Yellow)" } },
+      { name: 'cyan', color: '#06B6D4', recipe: 'blue+yellow', title: { fr: "Turquoise Océan (Bleu + Jaune)", en: "Ocean Turquoise (Blue + Yellow)" } }
+    ],
+
+    botanyPlants: [
+      { name: 'sunflower', emoji: '🌻', title: { fr: "Tournesol Doré", en: "Golden Sunflower" }, maxDay: 21 },
+      { name: 'tree', emoji: '🌳', title: { fr: "Pommier Rustique", en: "Apple Orchard Tree" }, maxDay: 21 },
+      { name: 'strawberry', emoji: '🍓', title: { fr: "Fraisier Sauvage", en: "Wild Strawberry" }, maxDay: 21 },
+      { name: 'rose', emoji: '🌹', title: { fr: "Rose Écarlate", en: "Scarlet Rose" }, maxDay: 21 }
     ]
   };
 
-  // ============================================================================
-  // APP STATE
-  // ============================================================================
   const state = {
-    lang: 'fr',
+    game: 'maze_quest',
     grade: 'MAT',
-    soundEnabled: true,
+    lang: 'fr',
     score: 0,
-    combo: 1,
-    lives: 3,
     level: 1,
     selectedLevel: 1,
     totalLevels: 10,
@@ -1896,27 +2202,23 @@ canvas#simCanvas {
     totalExercisesPerLevel: 5,
     activityPhase: 1,
     totalActivitiesPerExercise: 3,
-    game: 'maze_quest',
-    paused: false,
+    combo: 1,
+    lives: 3,
+    soundEnabled: true,
     screenShake: 0,
-    floatingScores: [],
     particles: [],
+    floatingScores: [],
 
-    // Maze Quest Game State
+    // Maze State
     maze: {
       cols: 11,
       rows: 6,
-      cellW: 70,
+      cellW: 72,
       cellH: 60,
       player: { r: 1, c: 1, x: 105, y: 90, targetX: 105, targetY: 90 },
       exit: { r: 4, c: 9 },
-      stars: [
-        { r: 1, c: 5, collected: false },
-        { r: 4, c: 3, collected: false },
-        { r: 2, c: 8, collected: false }
-      ],
+      stars: [{ r: 1, c: 5, collected: false }, { r: 4, c: 3, collected: false }, { r: 2, c: 8, collected: false }],
       walls: [
-        // Grid walls
         "11111111111",
         "10000010001",
         "10111010101",
@@ -1926,13 +2228,14 @@ canvas#simCanvas {
       ]
     },
 
-    // Tangram Puzzle Game State
+    // Tangram State
     tangram: {
-      targetShape: 'boat',
+      puzzleId: 'tangram_sailboat',
+      name: { fr: "Voilier", en: "Sailboat" },
       pieces: [
-        { id: 'p1', name: 'Grande Voile', color: '#E5252A', x: 140, y: 310, targetX: 400, targetY: 150, snapped: false, w: 70, h: 70, type: 'triangle' },
-        { id: 'p2', name: 'Petite Voile', color: '#F97316', x: 230, y: 310, targetX: 470, targetY: 180, snapped: false, w: 50, h: 50, type: 'triangle' },
-        { id: 'p3', name: 'Coque Bateau', color: '#3B82F6', x: 320, y: 310, targetX: 430, targetY: 260, snapped: false, w: 120, h: 45, type: 'trapeze' }
+        { id: 'p1', name: 'Grand Triangle', color: '#EF4444', x: 150, y: 310, targetX: 370, targetY: 150, snapped: false, w: 90, h: 70, type: 'triangle' },
+        { id: 'p2', name: 'Petit Triangle', color: '#3B82F6', x: 260, y: 310, targetX: 490, targetY: 180, snapped: false, w: 60, h: 50, type: 'triangle' },
+        { id: 'p3', name: 'Trapèze Coque', color: '#EAB308', x: 380, y: 310, targetX: 430, targetY: 260, snapped: false, w: 120, h: 40, type: 'rectangle' }
       ]
     },
 
@@ -1977,6 +2280,8 @@ canvas#simCanvas {
     pronunciationItem: null,
     storyItem: null
   };
+
+  window.state = state;
 
   const $ = id => document.getElementById(id);
   const rand = n => Math.floor(Math.random() * n);
@@ -2407,19 +2712,16 @@ canvas#simCanvas {
           ? "Champion! Level " + (state.level - 1) + " completed! Unlocking Level " + state.level + "!"
           : "Félicitations champion ! Niveau " + (state.level - 1) + " terminé avec succès ! Déblocage du Niveau " + state.level + " !";
 
-        VoiceEngine.speak(levelCompleteMsg, () => {
-          setTimeout(() => nextActivityChallenge(false), 800);
-        });
+        nextActivityChallenge(false);
+        VoiceEngine.speak(levelCompleteMsg);
       } else {
         // Moving to next exercise in the same level
-        const remainingEx = state.totalExercisesPerLevel - state.exerciseInLevel + 1;
         const exCompleteMsg = state.lang === 'en'
           ? "Exercise cleared! Moving to Exercise " + state.exerciseInLevel + " of " + state.totalExercisesPerLevel + "!"
           : "Bravo ! Exercice validé ! Passage à l'Exercice " + state.exerciseInLevel + " sur " + state.totalExercisesPerLevel + " !";
 
-        VoiceEngine.speak(exCompleteMsg, () => {
-          setTimeout(() => nextActivityChallenge(false), 600);
-        });
+        nextActivityChallenge(false);
+        VoiceEngine.speak(exCompleteMsg);
       }
     } else {
       // Moving to next activity in the same exercise
@@ -2427,11 +2729,13 @@ canvas#simCanvas {
         ? "Awesome! Activity " + (state.activityPhase - 1) + " done! Ready for Activity " + state.activityPhase + " of 3!"
         : "Super ! Activité " + (state.activityPhase - 1) + " réussie ! Prêt pour l'Activité " + state.activityPhase + " sur 3 !";
 
-      VoiceEngine.speak(nextActMsg, () => {
-        setTimeout(() => nextActivityChallenge(false), 500);
-      });
+      nextActivityChallenge(false);
+      VoiceEngine.speak(nextActMsg);
     }
   }
+
+  window.__NATEIVA_COMPLETE_ACTIVITY__ = onActivityTaskCompleted;
+  window.nextActivityChallenge = nextActivityChallenge;
 
   // ============================================================================
   // NEXT ACTIVITY CHALLENGE ROUTER
@@ -2439,18 +2743,41 @@ canvas#simCanvas {
   function nextActivityChallenge(isWelcome = false) {
     const isEn = state.lang === 'en';
     const g = state.game;
+    const challengeIndex = ((state.level - 1) * 5 + (state.exerciseInLevel - 1) * 3 + (state.activityPhase - 1));
 
     // Reset game-specific progress objects for the new activity
     if (g === 'tangram_puzzle') {
-      state.tangram.pieces.forEach(p => { p.snapped = false; p.x = p.targetX - 240 + Math.random() * 80; p.y = 310; });
+      const tgDef = DB.tangrams[challengeIndex % DB.tangrams.length];
+      state.tangram = {
+        puzzleId: tgDef.id,
+        name: tgDef.name,
+        pieces: tgDef.pieces.map((p, idx) => ({
+          ...p,
+          snapped: false,
+          x: 140 + idx * 95,
+          y: 310
+        }))
+      };
     } else if (g === 'maze_quest') {
-      state.maze.player.r = 1;
-      state.maze.player.c = 1;
-      state.maze.player.x = 105;
-      state.maze.player.y = 90;
-      state.maze.player.targetX = 105;
-      state.maze.player.targetY = 90;
-      state.maze.stars.forEach(s => s.collected = false);
+      const mzDef = DB.mazes[challengeIndex % DB.mazes.length];
+      state.maze = {
+        cols: mzDef.cols,
+        rows: mzDef.rows,
+        cellW: 72,
+        cellH: 60,
+        player: {
+          r: mzDef.player.r,
+          c: mzDef.player.c,
+          x: mzDef.player.c * 72 + 36,
+          y: mzDef.player.r * 60 + 30,
+          targetX: mzDef.player.c * 72 + 36,
+          targetY: mzDef.player.r * 60 + 30
+        },
+        exit: { r: mzDef.exit.r, c: mzDef.exit.c },
+        stars: mzDef.stars.map(s => ({ r: s.r, c: s.c, collected: false })),
+        walls: [...mzDef.walls],
+        name: mzDef.name
+      };
     }
 
     // HUD & Badges
@@ -2502,26 +2829,47 @@ canvas#simCanvas {
       $('story-overlay').classList.remove('active');
 
       if (g === 'maze_quest') {
-        const mazeSpeech = isEn ? "Guide Leo through the maze with your finger or arrows to collect stars!" : "Guide Léo au doigt ou avec les flèches pour ramasser les étoiles et trouver la sortie !";
+        const mzName = state.maze.name ? (isEn ? state.maze.name.en : state.maze.name.fr) : "";
+        const mazeSpeech = isEn ? "Guide Leo through " + mzName + "! Collect stars to reach the portal." : "Guide Léo dans " + mzName + " ! Ramasse les étoiles pour ouvrir le portail.";
         $('instruction-title').textContent = mazeSpeech;
         VoiceEngine.speak(mazeSpeech);
       } else if (g === 'tangram_puzzle') {
-        const tangramSpeech = isEn ? "Drag the puzzle pieces with your finger and snap them into place!" : "Glisse les pièces du puzzle avec ton doigt pour les emboîter sur la silhouette !";
+        const tgName = state.tangram.name ? (isEn ? state.tangram.name.en : state.tangram.name.fr) : "";
+        const tangramSpeech = isEn ? "Assemble " + tgName + "! Drag pieces onto the silhouette." : "Assemble " + tgName + " ! Glisse les pièces pour compléter la silhouette.";
         $('instruction-title').textContent = tangramSpeech;
         VoiceEngine.speak(tangramSpeech);
       } else if (g === 'chemistry') {
-        const welcomeSpeech = isEn ? "Take the test tube and pour it into the flask!" : "Prends l'éprouvette au doigt et verse le liquide dans le flacon !";
-        $('instruction-title').textContent = welcomeSpeech;
-        VoiceEngine.speak(welcomeSpeech);
+        const chemTarget = DB.chemistryTargets[challengeIndex % DB.chemistryTargets.length];
+        state.flask.fluidHeight = 30;
+        state.flask.fluidColor = '#38BDF8';
+        state.flask.bubbles = [];
+        state.pouredColors = [];
+        state.tubes.forEach(t => { t.x = t.origX; t.y = t.origY; t.tilt = 0; t.isPouring = false; });
+        const chemSpeech = isEn ? "Chemistry challenge: Blend colors to create " + chemTarget.title.en + "!" : "Défi chimie : Mélange les fioles pour créer " + chemTarget.title.fr + " !";
+        $('instruction-title').textContent = chemSpeech;
+        VoiceEngine.speak(chemSpeech);
       } else if (g === 'botany') {
-        const botSpeech = isEn ? "Water the plant with the watering can to see roots grow!" : "Verse de l'eau avec l'arrosoir pour faire grandir les racines sous terre !";
+        const botTarget = DB.botanyPlants[challengeIndex % DB.botanyPlants.length];
+        state.simDay = 1;
+        state.stemHeight = 0;
+        state.leafSpread = 0;
+        state.flowerBloom = 0;
+        state.soilMoisture = 30;
+        state.botanyAwarded = false;
+        state.roots = [];
+        const botSpeech = isEn ? "Botany: Water the soil to grow the " + botTarget.title.en + " " + botTarget.emoji + "!" : "Botanique : Arrose la terre pour faire grandir le " + botTarget.title.fr + " " + botTarget.emoji + " !";
         $('instruction-title').textContent = botSpeech;
         VoiceEngine.speak(botSpeech);
       } else if (g === 'density') {
+        state.densityItems.forEach(item => { item.x = item.origX; item.y = item.origY; item.inWater = false; item.vy = 0; });
         const denSpeech = isEn ? "Drag objects into the tank to test if they float or sink!" : "Glisse les objets dans l'eau pour tester s'ils flottent ou s'ils coulent !";
         $('instruction-title').textContent = denSpeech;
         VoiceEngine.speak(denSpeech);
       } else if (g === 'circuit') {
+        state.circuitClosed = false;
+        state.switchBlade.angle = 36;
+        state.currentAmps = 0.0;
+        state.lampGlow = 0;
         const circSpeech = isEn ? "Drag the knife switch down to close the circuit and turn on the light!" : "Glisse le levier pour fermer le circuit et allumer la lampe !";
         $('instruction-title').textContent = circSpeech;
         VoiceEngine.speak(circSpeech);
@@ -2530,9 +2878,9 @@ canvas#simCanvas {
         $('instruction-title').textContent = cometSpeech;
         VoiceEngine.speak(cometSpeech);
         state.meteors = [
-          { val: '3', x: 180, y: 60, vy: 0.35, r: 28, color: '#E5252A' },
-          { val: '4', x: 400, y: 60, vy: 0.35, r: 28, color: '#111827' },
-          { val: '5', x: 620, y: 60, vy: 0.35, r: 28, color: '#111827' }
+          { val: String(1 + (challengeIndex % 5)), x: 180, y: 60, vy: 0.35, r: 28, color: '#E5252A' },
+          { val: String(2 + ((challengeIndex + 1) % 5)), x: 400, y: 60, vy: 0.35, r: 28, color: '#111827' },
+          { val: String(3 + ((challengeIndex + 2) % 5)), x: 620, y: 60, vy: 0.35, r: 28, color: '#111827' }
         ];
       }
     }
@@ -2549,7 +2897,8 @@ canvas#simCanvas {
     $('story-overlay').classList.remove('active');
 
     const list = DB.phonics;
-    const item = list[(state.score + state.exerciseInLevel) % list.length];
+    const challengeIndex = ((state.level - 1) * 5 + (state.exerciseInLevel - 1) * 3 + (state.activityPhase - 1));
+    const item = list[challengeIndex % list.length];
     state.readingTarget = item;
     state.readingSlots = [];
 
@@ -2635,7 +2984,8 @@ canvas#simCanvas {
     $('story-overlay').classList.remove('active');
 
     const list = DB.pronunciation;
-    const item = list[(state.score + state.exerciseInLevel) % list.length];
+    const challengeIndex = ((state.level - 1) * 5 + (state.exerciseInLevel - 1) * 3 + (state.activityPhase - 1));
+    const item = list[challengeIndex % list.length];
     state.pronunciationItem = item;
 
     const isEn = state.lang === 'en';
@@ -2712,7 +3062,8 @@ canvas#simCanvas {
     $('story-overlay').classList.add('active');
 
     const gradeStories = DB.stories[state.grade] || DB.stories.MAT;
-    const story = gradeStories[(state.score + state.level - 1) % gradeStories.length];
+    const challengeIndex = ((state.level - 1) * 5 + (state.exerciseInLevel - 1) * 3 + (state.activityPhase - 1));
+    const story = gradeStories[challengeIndex % gradeStories.length];
     state.storyItem = story;
 
     const isEn = state.lang === 'en';
@@ -2749,7 +3100,7 @@ canvas#simCanvas {
           });
         } else {
           document.querySelectorAll('.story-sentence').forEach(el => el.classList.remove('active'));
-          showComprehensionQuestion(0);
+          showComprehensionQuestion((state.activityPhase - 1) % story.questions.length);
         }
       }
       stepSentence();
@@ -2807,8 +3158,10 @@ canvas#simCanvas {
 
     const isEn = state.lang === 'en';
     const langKey = isEn ? 'en' : 'fr';
+    const challengeIndex = ((state.level - 1) * 5 + (state.exerciseInLevel - 1) * 3 + (state.activityPhase - 1));
     const list = DB.math.filter(m => m.grade === state.grade);
-    const item = (list.length > 0 ? list : DB.math)[(state.score + state.exerciseInLevel) % (list.length || DB.math.length)];
+    const pool = list.length > 0 ? list : DB.math;
+    const item = pool[challengeIndex % pool.length];
 
     $('instruction-title').textContent = item.prompt[langKey];
     VoiceEngine.speak(item.speech[langKey]);
@@ -2969,36 +3322,38 @@ canvas#simCanvas {
 
     // 2. TANGRAM PUZZLE SNAP
     else if (g === 'tangram_puzzle') {
-      // Background Target Silhouette (Dashed Boat Outline)
-      ctx.strokeStyle = 'rgba(255, 255, 255, 0.35)';
-      ctx.lineWidth = 3;
+      // Dynamic Target Silhouette for current puzzle
+      ctx.save();
+      ctx.strokeStyle = 'rgba(255, 255, 255, 0.45)';
+      ctx.fillStyle = 'rgba(255, 255, 255, 0.08)';
+      ctx.lineWidth = 2.5;
       ctx.setLineDash([6, 6]);
 
-      // Sail 1
-      ctx.beginPath();
-      ctx.moveTo(400, 115);
-      ctx.lineTo(400, 185);
-      ctx.lineTo(340, 185);
-      ctx.closePath();
-      ctx.stroke();
+      state.tangram.pieces.forEach(p => {
+        ctx.save();
+        ctx.translate(p.targetX, p.targetY);
+        ctx.beginPath();
+        if (p.type === 'triangle') {
+          ctx.moveTo(0, -p.h / 2);
+          ctx.lineTo(p.w / 2, p.h / 2);
+          ctx.lineTo(-p.w / 2, p.h / 2);
+        } else if (p.type === 'circle') {
+          ctx.arc(0, 0, p.w / 2, 0, Math.PI * 2);
+        } else {
+          ctx.roundRect(-p.w / 2, -p.h / 2, p.w, p.h, 6);
+        }
+        ctx.closePath();
+        ctx.fill();
+        ctx.stroke();
+        ctx.restore();
+      });
+      ctx.restore();
 
-      // Sail 2
-      ctx.beginPath();
-      ctx.moveTo(470, 155);
-      ctx.lineTo(470, 205);
-      ctx.lineTo(510, 205);
-      ctx.closePath();
-      ctx.stroke();
-
-      // Hull
-      ctx.beginPath();
-      ctx.moveTo(370, 240);
-      ctx.lineTo(490, 240);
-      ctx.lineTo(470, 280);
-      ctx.lineTo(390, 280);
-      ctx.closePath();
-      ctx.stroke();
-      ctx.setLineDash([]);
+      // Puzzle Title Banner
+      ctx.fillStyle = '#FFFFFF';
+      ctx.font = 'bold 16px sans-serif';
+      const tgTitle = state.tangram.name ? (state.lang === 'en' ? state.tangram.name.en : state.tangram.name.fr) : "Tangram";
+      ctx.fillText(tgTitle, 20, 35);
 
       // Shelf Bar
       ctx.fillStyle = '#374151';
