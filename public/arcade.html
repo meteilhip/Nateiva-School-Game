@@ -1,33 +1,22 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 <meta name="theme-color" content="#E5252A">
-<title>Nateiva EduKids • Apprendre en S'amusant</title>
+<title>Nateiva Kids • CEMAC Arcade & Laboratoire</title>
 <style>
 :root {
-  --red-primary: #E5252A;
+  font-family: ui-rounded, 'Trebuchet MS', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  color: #17233D;
+  background: #F5F7FC;
+  --red: #E5252A;
   --red-hover: #CC1F24;
-  --red-light: #FFECEE;
-  --navy-dark: #17233D;
-  --navy-card: #202F52;
-  --bg-canvas: #F8FAFC;
-  --surface: #FFFFFF;
-  --text-main: #17233D;
-  --text-muted: #5A6A85;
+  --navy: #17233D;
   --gold: #FFB800;
   --green: #00C48C;
-  --blue: #0084FF;
-  --purple: #8B5CF6;
-  --border-card: 2.5px solid #CBD5E1;
-  --border-card-hover: 2.5px solid var(--blue);
-  --shadow-sm: 0 2px 8px rgba(15, 23, 42, 0.06);
-  --shadow-md: 0 6px 20px rgba(15, 23, 42, 0.09);
-  --shadow-lg: 0 14px 36px rgba(15, 23, 42, 0.14);
-  --radius-sm: 12px;
-  --radius-md: 18px;
-  --radius-lg: 24px;
+  --blue: #377DFF;
+  --border: 2.5px solid #CBD5E1;
 }
 
 * {
@@ -40,757 +29,809 @@
 }
 
 body {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-  background: var(--bg-canvas);
-  color: var(--text-main);
+  margin: 0;
+  background: radial-gradient(circle at 85% 0%, #FFE7DF 0, transparent 32%),
+              radial-gradient(circle at 0% 70%, #E3F0FF 0, transparent 30%),
+              #F7F9FD;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  overflow-x: hidden;
+}
+
+button, select {
+  font: inherit;
+  outline: none;
 }
 
 button {
-  font-family: inherit;
   cursor: pointer;
-  border: none;
-  outline: none;
+  border: 0;
   touch-action: manipulation;
-  transition: transform 0.1s ease, filter 0.15s ease, background 0.15s, border-color 0.15s;
+  transition: transform 0.12s ease, box-shadow 0.15s ease, filter 0.15s;
 }
 
 button:active {
   transform: scale(0.96);
 }
 
-/* ==========================================================================
-   APP HEADER
-   ========================================================================== */
-header {
-  background: var(--surface);
-  border-bottom: 2.5px solid #CBD5E1;
-  padding: 10px 18px;
+.shell {
+  max-width: 1100px;
+  margin: auto;
+  padding: 16px 20px;
+  width: 100%;
+}
+
+/* TOP NAVBAR */
+.top {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  position: sticky;
-  top: 0;
-  z-index: 100;
-  box-shadow: 0 4px 12px rgba(15, 23, 42, 0.05);
+  gap: 14px;
+  flex-wrap: wrap;
+  padding-bottom: 12px;
+  border-bottom: 2px solid #E2E8F0;
 }
 
-.brand-group {
+.brand {
   display: flex;
-  align-items: center;
   gap: 12px;
+  align-items: center;
 }
 
-.logo-circle {
-  width: 44px;
-  height: 44px;
-  border-radius: 50%;
-  background: linear-gradient(135deg, #E5252A 0%, #B91C1C 100%);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 24px;
-  color: #FFFFFF;
-  box-shadow: 0 4px 10px rgba(229, 37, 42, 0.35);
+.logo {
+  width: 48px;
+  height: 48px;
+  border-radius: 16px;
+  background: linear-gradient(135deg, #E5252A, #B91C1C);
+  color: white;
+  display: grid;
+  place-items: center;
+  font-size: 26px;
+  box-shadow: 0 8px 20px rgba(229, 37, 42, 0.3);
   border: 2px solid #FFFFFF;
 }
 
-.brand-text h1 {
-  font-size: 1.15rem;
-  font-weight: 800;
-  letter-spacing: -0.5px;
-  color: var(--navy-dark);
-  line-height: 1.1;
-}
-
-.brand-text p {
-  font-size: 0.72rem;
-  font-weight: 600;
-  color: var(--text-muted);
-}
-
-.header-actions {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.btn-lang {
-  background: #F1F5F9;
-  border: 2px solid #CBD5E1;
-  padding: 6px 12px;
-  border-radius: 20px;
-  font-weight: 700;
-  font-size: 0.82rem;
-  color: var(--navy-dark);
-  display: flex;
-  align-items: center;
-  gap: 5px;
-}
-
-.btn-mascot-avatar {
-  background: #FFFBEB;
-  border: 2px solid var(--gold);
-  border-radius: 50%;
-  width: 40px;
-  height: 40px;
+.brand strong {
   font-size: 22px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0 3px 8px rgba(245, 158, 11, 0.2);
-}
-
-/* ==========================================================================
-   MAIN VIEWS (Hub vs Game)
-   ========================================================================== */
-main {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-}
-
-.view-section {
-  display: flex;
-  flex-direction: column;
-  flex: 1;
-  width: 100%;
-  max-width: 900px;
-  margin: 0 auto;
-  padding: 16px;
-  gap: 16px;
-}
-
-/* ==========================================================================
-   VIEW: WORLD HUB
-   ========================================================================== */
-.hub-hero {
-  background: linear-gradient(135deg, #17233D 0%, #202F52 100%);
-  border-radius: var(--radius-lg);
-  padding: 22px;
-  color: #FFFFFF;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  box-shadow: var(--shadow-md);
-  position: relative;
-  overflow: hidden;
-  border: 2.5px solid #475569;
-}
-
-.hub-hero::after {
-  content: "";
-  position: absolute;
-  right: -30px;
-  top: -30px;
-  width: 180px;
-  height: 180px;
-  background: radial-gradient(circle, rgba(229, 37, 42, 0.25) 0%, transparent 70%);
-  border-radius: 50%;
-  pointer-events: none;
-}
-
-.hub-hero-text h2 {
-  font-size: 1.45rem;
-  font-weight: 800;
+  font-weight: 900;
+  color: var(--navy);
   letter-spacing: -0.5px;
-  margin-bottom: 6px;
 }
 
-.hub-hero-text p {
-  font-size: 0.88rem;
-  color: #CBD5E1;
-  max-width: 420px;
-  line-height: 1.4;
+.sub {
+  color: #64748B;
+  font-size: 13px;
+  font-weight: 600;
 }
 
-.hub-mascot-box {
+.toolbar {
   display: flex;
-  flex-direction: column;
+  gap: 10px;
+  flex-wrap: wrap;
   align-items: center;
-  gap: 4px;
 }
 
-.hub-mascot-box span {
-  font-size: 52px;
-  filter: drop-shadow(0 6px 12px rgba(0, 0, 0, 0.25));
-  animation: floatMascot 3s ease-in-out infinite;
-}
-
-@keyframes floatMascot {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-8px); }
-}
-
-/* Grade Filter Pills */
-.grade-bar-container {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-
-.grade-bar-label {
-  font-size: 0.8rem;
+.pill, select {
+  border: 2px solid #CBD5E1;
+  background: #FFFFFF;
+  border-radius: 16px;
+  padding: 10px 14px;
+  color: var(--navy);
   font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  color: var(--text-muted);
+  font-size: 14px;
+  box-shadow: 0 4px 12px rgba(34, 48, 75, 0.05);
+  cursor: pointer;
 }
 
-.grade-pills {
+/* HERO SECTION */
+.hero {
+  margin: 18px 0;
+  padding: 22px 28px;
+  border-radius: 26px;
+  background: linear-gradient(110deg, #FFF3E3 0%, #FFDFD5 100%);
   display: flex;
-  gap: 8px;
-  overflow-x: auto;
-  padding-bottom: 4px;
-  scrollbar-width: none;
-}
-
-.grade-pills::-webkit-scrollbar {
-  display: none;
-}
-
-.grade-pill {
-  padding: 8px 14px;
-  border-radius: var(--radius-sm);
-  background: var(--surface);
-  border: 2.5px solid #CBD5E1;
-  color: var(--navy-dark);
-  font-weight: 700;
-  font-size: 0.84rem;
-  white-space: nowrap;
-  box-shadow: var(--shadow-sm);
-  display: flex;
+  justify-content: space-between;
   align-items: center;
-  gap: 6px;
+  box-shadow: 0 12px 30px rgba(41, 51, 74, 0.06);
+  border: 2.5px solid #FDBA74;
 }
 
-.grade-pill.active {
-  background: var(--red-primary);
-  border-color: #B91C1C;
-  color: #FFFFFF;
-  box-shadow: 0 4px 14px rgba(229, 37, 42, 0.35);
+.hero h1 {
+  margin: 4px 0;
+  font-size: clamp(24px, 3.8vw, 36px);
+  letter-spacing: -1px;
+  font-weight: 900;
+  color: var(--navy);
 }
 
-/* Worlds Grid */
-.worlds-grid {
+.hero p {
+  margin: 4px 0;
+  color: #475569;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.hero .mascot {
+  font-size: 68px;
+  filter: drop-shadow(0 8px 8px rgba(184, 93, 62, 0.25));
+  animation: bob 3s ease-in-out infinite;
+  cursor: pointer;
+}
+
+/* GAMES GRID */
+.grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
   gap: 14px;
-  margin-top: 4px;
 }
 
-.world-card {
-  background: var(--surface);
-  border: 2.5px solid #CBD5E1;
-  border-radius: 20px;
+.game-card {
   padding: 18px;
+  border-radius: 22px;
+  background: #FFFFFF;
+  box-shadow: 0 8px 24px rgba(29, 51, 81, 0.08);
+  border: 2.5px solid #CBD5E1;
+  text-align: left;
   display: flex;
   flex-direction: column;
-  gap: 12px;
-  box-shadow: var(--shadow-sm);
+  gap: 8px;
   cursor: pointer;
   position: relative;
   overflow: hidden;
-  transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
 }
 
-.world-card:hover {
-  transform: translateY(-3px);
-  border-color: var(--card-accent, #0084FF);
-  box-shadow: var(--shadow-md);
+.game-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 16px 36px rgba(29, 51, 81, 0.14);
+  border-color: var(--blue);
 }
 
-.world-card:active {
-  transform: scale(0.98);
+.game-card .em {
+  font-size: 38px;
+  display: block;
 }
 
-.world-card-header {
+.game-card strong {
+  font-size: 17px;
+  font-weight: 800;
+  color: var(--navy);
+}
+
+.game-card small {
+  color: #64748B;
+  font-size: 12.5px;
+  font-weight: 600;
+  line-height: 1.35;
+}
+
+/* Card Themes */
+.game-card[data-cat="math"] { background: #EBF3FF; border-color: #BFDBFE; }
+.game-card[data-cat="read"] { background: #ECFDF5; border-color: #A7F3D0; }
+.game-card[data-cat="sci"]  { background: #FFFBEB; border-color: #FDE68A; }
+.game-card[data-cat="logic"]{ background: #F5F3FF; border-color: #DDD6FE; }
+
+/* WORKSPACE */
+.workspace {
+  margin-top: 20px;
+  background: #FFFFFF;
+  border-radius: 28px;
+  padding: 22px;
+  box-shadow: 0 16px 45px rgba(29, 51, 81, 0.09);
+  border: 2.5px solid #CBD5E1;
+  display: none;
+}
+
+.workspace.active {
+  display: block;
+}
+
+.worktop {
   display: flex;
+  justify-content: space-between;
   align-items: center;
   gap: 12px;
-}
-
-.world-icon-wrap {
-  width: 52px;
-  height: 52px;
-  border-radius: var(--radius-md);
-  background: var(--card-bg, #EFF6FF);
-  border: 2px solid #E2E8F0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 28px;
-  flex-shrink: 0;
-}
-
-.world-info h3 {
-  font-size: 1.08rem;
-  font-weight: 800;
-  color: var(--navy-dark);
-}
-
-.world-info p {
-  font-size: 0.78rem;
-  color: var(--text-muted);
-  font-weight: 600;
-  margin-top: 2px;
-}
-
-.world-topics {
-  display: flex;
   flex-wrap: wrap;
-  gap: 6px;
 }
 
-.topic-tag {
-  background: #F1F5F9;
-  border: 1px solid #E2E8F0;
-  padding: 4px 8px;
-  border-radius: 8px;
-  font-size: 0.72rem;
-  font-weight: 600;
-  color: #334155;
+.worktop h2 {
+  font-size: 1.35rem;
+  font-weight: 900;
+  color: var(--navy);
 }
 
-.world-enter-btn {
-  margin-top: auto;
-  background: var(--card-accent, #0084FF);
-  color: #FFFFFF;
-  font-weight: 800;
-  font-size: 0.85rem;
-  padding: 10px 14px;
-  border-radius: var(--radius-sm);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-  border: 1.5px solid rgba(255, 255, 255, 0.4);
-}
-
-/* ==========================================================================
-   VIEW: IN-GAME ARENA
-   ========================================================================== */
-#view-game {
-  display: none;
-}
-
-.game-header-bar {
-  background: var(--surface);
-  border: 2.5px solid #CBD5E1;
-  border-radius: var(--radius-md);
-  padding: 8px 14px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  box-shadow: var(--shadow-sm);
-}
-
-.btn-home {
+.score-badge {
   background: #F1F5F9;
   border: 2px solid #CBD5E1;
-  border-radius: 12px;
-  padding: 6px 12px;
-  font-size: 0.85rem;
-  font-weight: 800;
-  color: var(--navy-dark);
+  border-radius: 16px;
+  padding: 8px 16px;
+  font-weight: 900;
+  font-size: 15px;
+  color: var(--navy);
   display: flex;
   align-items: center;
-  gap: 6px;
-}
-
-.game-title-badge {
-  font-weight: 800;
-  font-size: 0.95rem;
-  color: var(--navy-dark);
-  display: flex;
-  align-items: center;
-  gap: 6px;
-}
-
-/* Game Switch Pills (Under category) */
-.game-switch-pills {
-  display: flex;
   gap: 8px;
-  overflow-x: auto;
-  padding-bottom: 2px;
-  scrollbar-width: none;
 }
 
-.game-switch-pills::-webkit-scrollbar {
-  display: none;
-}
-
-.game-switch-pill {
-  padding: 6px 12px;
-  border-radius: 20px;
-  background: var(--surface);
-  border: 2px solid #CBD5E1;
-  font-size: 0.78rem;
-  font-weight: 700;
-  color: var(--navy-dark);
-  white-space: nowrap;
-}
-
-.game-switch-pill.active {
-  background: var(--navy-dark);
-  border-color: var(--navy-dark);
-  color: #FFFFFF;
-}
-
-/* Question Banner */
-.question-banner {
-  background: #17233D;
-  border-radius: var(--radius-md);
-  padding: 14px 18px;
-  color: #FFFFFF;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-  box-shadow: var(--shadow-md);
-  border: 2.5px solid #475569;
-}
-
-.q-text-group {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-}
-
-.q-main {
-  font-size: 1.15rem;
-  font-weight: 800;
-  letter-spacing: -0.3px;
-}
-
-.q-sub {
-  font-size: 0.82rem;
-  color: var(--gold);
-  font-weight: 600;
-}
-
-.btn-speaker {
-  background: rgba(255, 255, 255, 0.15);
-  border: 2px solid rgba(255, 255, 255, 0.3);
-  border-radius: 50%;
-  width: 44px;
-  height: 44px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 20px;
-  flex-shrink: 0;
-  color: #FFFFFF;
-}
-
-/* Stats & Combo Bar */
-.stats-bar {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  background: var(--surface);
-  border: 2.5px solid #CBD5E1;
-  border-radius: var(--radius-sm);
-  padding: 8px 14px;
-  font-weight: 800;
-  font-size: 0.85rem;
-  box-shadow: var(--shadow-sm);
-}
-
-.stat-item {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-}
-
-.combo-badge {
-  background: linear-gradient(135deg, #F59E0B 0%, #D97706 100%);
-  color: #FFFFFF;
-  padding: 3px 10px;
+.combo-pill {
+  background: linear-gradient(135deg, #F59E0B, #D97706);
+  color: white;
+  padding: 4px 10px;
   border-radius: 12px;
-  font-size: 0.78rem;
-  font-weight: 800;
-  border: 1.5px solid #FDE68A;
-  box-shadow: 0 2px 6px rgba(217, 119, 6, 0.3);
+  font-size: 12px;
+  font-weight: 900;
 }
 
-/* The Animated Game Canvas Box */
-.arena-box {
-  background: #111827;
-  border: 3.5px solid #94A3B8;
+.progress {
+  height: 10px;
+  background: #E2E8F0;
   border-radius: 20px;
   overflow: hidden;
-  box-shadow: var(--shadow-lg);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: relative;
-  touch-action: none;
+  margin: 14px 0 16px;
+  border: 1px solid #CBD5E1;
 }
 
-canvas#arena {
+.progress span {
   display: block;
-  width: 100%;
-  max-width: 500px;
-  height: auto;
-  aspect-ratio: 500 / 380;
-  background: #0F172A;
-  touch-action: none;
+  height: 100%;
+  background: linear-gradient(90deg, #E5252A 0%, #FFB800 100%);
+  transition: width 0.4s ease;
 }
 
-/* Interactive Options Row */
-.options-row {
+.controls {
   display: flex;
-  gap: 12px;
-  justify-content: center;
+  gap: 10px;
   flex-wrap: wrap;
 }
 
-.btn-option {
-  flex: 1;
-  min-width: 110px;
-  max-width: 220px;
-  padding: 14px 16px;
-  border-radius: 18px;
-  background: var(--surface);
-  border: 3px solid #CBD5E1;
-  font-size: 1.15rem;
+.btn {
+  padding: 10px 16px;
+  border-radius: 14px;
+  background: var(--navy);
+  color: white;
   font-weight: 800;
-  color: var(--navy-dark);
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.06);
+  font-size: 14px;
+  box-shadow: 0 4px 12px rgba(23, 35, 61, 0.15);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.btn.red { background: var(--red); box-shadow: 0 4px 14px rgba(229, 37, 42, 0.3); }
+.btn.light { background: #F1F5F9; color: var(--navy); border: 2px solid #CBD5E1; box-shadow: none; }
+.btn:disabled { opacity: 0.4; cursor: not-allowed; }
+
+/* STAGE CONTAINER */
+.stage {
+  margin-top: 16px;
+  border-radius: 22px;
+  background: linear-gradient(150deg, #EEF5FF 0%, #F8FBFF 100%);
+  min-height: 360px;
+  position: relative;
+  overflow: hidden;
+  padding: 20px;
+  border: 3px solid #CBD5E1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.instruction {
+  font-size: clamp(17px, 2.4vw, 22px);
+  font-weight: 800;
+  text-align: center;
+  max-width: 750px;
+  margin-bottom: 16px;
+  color: var(--navy);
+  line-height: 1.35;
+}
+
+.answers {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  margin-top: 14px;
+}
+
+.answer {
+  border: 3px solid #CBD5E1;
+  background: white;
+  border-radius: 18px;
+  min-width: 90px;
+  min-height: 60px;
+  padding: 12px 20px;
+  font-size: 22px;
+  font-weight: 900;
+  color: var(--navy);
+  box-shadow: 0 6px 18px rgba(35, 54, 83, 0.1);
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 8px;
 }
 
-.btn-option:hover {
+.answer:hover {
+  transform: scale(1.05);
   border-color: var(--blue);
-  background: #EFF6FF;
+  background: #F0F7FF;
 }
 
-.btn-option:active {
-  transform: scale(0.95);
-}
-
-/* Steering Controls for Racing & Maze fallback */
-.controls-pad {
-  display: none;
-  justify-content: center;
-  gap: 16px;
-  margin-top: 4px;
-}
-
-.controls-pad.visible {
-  display: flex;
-}
-
-.btn-pad {
-  width: 58px;
-  height: 58px;
-  border-radius: 16px;
-  background: var(--navy-dark);
-  border: 2.5px solid #475569;
-  color: #FFFFFF;
-  font-size: 24px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-}
-
-/* Modals (Game Over, Victory, Tutor) */
-.modal-overlay {
-  display: none;
-  position: fixed;
-  inset: 0;
-  background: rgba(15, 23, 42, 0.7);
-  backdrop-filter: blur(4px);
-  z-index: 200;
-  align-items: center;
-  justify-content: center;
-  padding: 16px;
-}
-
-.modal-overlay.open {
-  display: flex;
-}
-
-.modal-card {
-  background: var(--surface);
-  border: 3.5px solid #CBD5E1;
-  border-radius: 24px;
-  padding: 26px;
-  width: 100%;
-  max-width: 440px;
+.feedback {
+  min-height: 32px;
+  font-weight: 900;
+  font-size: 17px;
+  color: #059669;
+  margin-top: 10px;
   text-align: center;
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.25);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 14px;
 }
 
-.modal-mascot {
-  font-size: 64px;
+/* COMET DEFENDER ELEMENTS */
+.meteor {
+  position: absolute;
+  border-radius: 50%;
+  width: 78px;
+  height: 78px;
+  background: radial-gradient(circle at 30% 25%, #FFE5A8, #FF9C45 55%, #F25B3E);
+  color: #381308;
+  font-size: 24px;
+  font-weight: 900;
+  display: grid;
+  place-items: center;
+  box-shadow: 0 0 0 8px rgba(255, 172, 112, 0.25), 0 14px 22px rgba(209, 92, 53, 0.35);
+  animation: meteorFall linear forwards;
+  touch-action: manipulation;
+  cursor: pointer;
+  border: 2px solid #FFEDD5;
 }
 
-.modal-title {
-  font-size: 1.5rem;
-  font-weight: 800;
-  color: var(--navy-dark);
+.ship {
+  position: absolute;
+  bottom: 14px;
+  left: calc(50% - 28px);
+  font-size: 56px;
+  filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.3));
 }
 
-.modal-text {
-  font-size: 0.95rem;
-  color: var(--text-muted);
-  line-height: 1.4;
+.planet {
+  position: absolute;
+  bottom: -65px;
+  left: calc(50% - 110px);
+  width: 220px;
+  height: 110px;
+  background: #10B981;
+  border-radius: 50%;
+  box-shadow: 0 0 0 14px #6EE7B7;
 }
 
-.modal-btn {
-  background: var(--red-primary);
-  color: #FFFFFF;
-  font-weight: 800;
-  font-size: 1rem;
-  padding: 12px 28px;
-  border-radius: 16px;
-  box-shadow: 0 4px 16px rgba(229, 37, 42, 0.35);
+/* PHONICS FISHING ELEMENTS */
+.water {
+  background: linear-gradient(#7DD3FC, #0284C7);
+  min-height: 340px;
+}
+
+.fish {
+  position: absolute;
+  width: 125px;
+  height: 72px;
+  border-radius: 60% 45% 45% 60%;
+  background: #FFB800;
+  box-shadow: inset 0 -8px #F59E0B, 0 8px 18px rgba(22, 74, 92, 0.2);
+  display: grid;
+  place-items: center;
+  font-weight: 900;
+  font-size: 20px;
+  color: #17233D;
+  animation: swim var(--speed, 6s) ease-in-out infinite alternate;
+  touch-action: manipulation;
+  cursor: pointer;
   border: 2px solid #FFFFFF;
+}
+
+.fish:before {
+  content: '◀';
+  position: absolute;
+  right: -16px;
+  font-size: 30px;
+  color: inherit;
+}
+
+.fish:after {
+  content: '●';
+  position: absolute;
+  left: 18px;
+  top: 10px;
+  font-size: 13px;
+  color: #0F172A;
+}
+
+.bubble {
+  position: absolute;
+  border: 2px solid rgba(255, 255, 255, 0.6);
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  animation: bubbles 4s linear infinite;
+}
+
+/* WORD BUILDER ELEMENTS */
+.tiles {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-top: 14px;
+}
+
+.tile {
+  min-width: 62px;
+  min-height: 64px;
+  border-radius: 18px;
+  background: white;
+  border: 3px solid #CBD5E1;
+  box-shadow: 0 6px 16px rgba(29, 51, 81, 0.1);
+  font-size: 28px;
+  font-weight: 900;
+  color: var(--navy);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.tile.used {
+  opacity: 0.25;
+  pointer-events: none;
+}
+
+.slots {
+  min-height: 80px;
+  border: 3px dashed #94A3B8;
+  border-radius: 20px;
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  align-items: center;
+  margin: 14px auto;
+  max-width: 500px;
+  padding: 10px;
+  background: rgba(255, 255, 255, 0.5);
+}
+
+.slot {
+  background: #FFFFFF;
+  border: 2px solid #CBD5E1;
+  border-radius: 14px;
+  min-width: 52px;
+  height: 52px;
+  display: grid;
+  place-items: center;
+  font-size: 26px;
+  font-weight: 900;
+  color: var(--navy);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+}
+
+/* INTERACTIVE LAB & MAZE CANVAS */
+canvas#lab-canvas {
+  display: none;
+  background: #0F172A;
+  border-radius: 18px;
+  border: 3px solid #64748B;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+  max-width: 100%;
+  aspect-ratio: 500 / 340;
+  touch-action: none;
+}
+
+canvas#lab-canvas.visible {
+  display: block;
+}
+
+/* STEP-BY-STEP TUTOR WITH TRICKS */
+.tutor {
+  margin-top: 18px;
+  background: #FFFDF5;
+  border: 2.5px solid #FDE68A;
+  border-radius: 22px;
+  padding: 20px;
+  display: none;
+  box-shadow: 0 10px 25px rgba(245, 158, 11, 0.1);
+}
+
+.tutor.visible {
+  display: block;
+  animation: slideDown 0.25s ease-out;
+}
+
+.tutor-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+
+.tutor h3 {
+  margin: 0;
+  font-size: 1.15rem;
+  font-weight: 900;
+  color: #B45309;
+}
+
+.tutor-trick-badge {
+  background: #FEF3C7;
+  color: #92400E;
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 800;
+  border: 1px solid #FCD34D;
+}
+
+.tutor p {
+  font-size: 16px;
+  font-weight: 700;
+  color: #1E293B;
+  line-height: 1.45;
+  margin-bottom: 8px;
+}
+
+.tutor-trick {
+  background: #FEF9C3;
+  border-left: 4px solid #EAB308;
+  padding: 10px 14px;
+  border-radius: 10px;
+  font-size: 14.5px;
+  font-weight: 700;
+  color: #713F12;
+  margin: 10px 0;
+}
+
+.tutor-visual {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  font-size: 32px;
+  margin: 12px 0;
+  align-items: center;
+}
+
+/* ANIMATIONS */
+@keyframes bob { 50% { transform: translateY(-8px); } }
+@keyframes meteorFall { to { top: 84%; } }
+@keyframes swim { from { transform: translateX(-24px); } to { transform: translateX(24px); } }
+@keyframes bubbles { from { bottom: -20px; opacity: 1; } to { bottom: 100%; opacity: 0; } }
+@keyframes slideDown { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
+
+.footer {
+  color: #64748B;
+  font-size: 12.5px;
+  text-align: center;
+  margin: 24px 0 16px;
+  font-weight: 600;
 }
 </style>
 </head>
 <body>
 <div id="root" style="display:none;"></div>
 
-<header>
-  <div class="brand-group">
-    <div class="logo-circle">🦁</div>
-    <div class="brand-text">
-      <h1>Nateiva EduKids</h1>
-      <p id="lbl-tagline">Apprendre en S'amusant</p>
-    </div>
-  </div>
-  <div class="header-actions">
-    <button class="btn-lang" id="btn-lang">🇫🇷 FR</button>
-    <button class="btn-mascot-avatar" id="mascot-avatar" title="Mascot">🦁</button>
-  </div>
-</header>
-
-<main>
-  <!-- VIEW 1: WORLD HUB -->
-  <section class="view-section" id="view-hub">
-    <div class="hub-hero">
-      <div class="hub-hero-text">
-        <h2 id="hub-title">Mondes d'Aventure</h2>
-        <p id="hub-desc">Choisis ton aventure éducative animée : maths arcades, lecture phonique, sciences interactives, labyrinthes et puzzles !</p>
-      </div>
-      <div class="hub-mascot-box">
-        <span>🦁</span>
+<main class="shell">
+  <!-- TOP HEADER -->
+  <header class="top">
+    <div class="brand">
+      <div class="logo">🦁</div>
+      <div>
+        <strong>Nateiva Kids</strong>
+        <div class="sub">Apprentissage Interactif & CEMAC Arcade</div>
       </div>
     </div>
-
-    <!-- Grade Filter -->
-    <div class="grade-bar-container">
-      <div class="grade-bar-label" id="lbl-grade-title">Classe & Niveau Scolaire :</div>
-      <div class="grade-pills" id="grade-pills">
-        <button class="grade-pill active" data-grade="0">🐣 Maternelle (2–4 ans)</button>
-        <button class="grade-pill" data-grade="1">🌱 CP (5–6 ans)</button>
-        <button class="grade-pill" data-grade="2">🌿 CE1–CE2 (7–8 ans)</button>
-        <button class="grade-pill" data-grade="3">🌳 CM1–CM2 (9–10+ ans)</button>
-      </div>
+    <div class="toolbar">
+      <select id="grade" aria-label="Classe">
+        <option value="MAT">🐣 Maternelle</option>
+        <option value="SIL">🌱 SIL / CP</option>
+        <option value="CE">🌿 CE1 / CE2</option>
+        <option value="CM">🌳 CM1 / CM2</option>
+      </select>
+      <select id="lang" aria-label="Langue">
+        <option value="fr">🇫🇷 Français</option>
+        <option value="en">🇬🇧 English</option>
+      </select>
+      <button class="pill" id="mute" aria-label="Activer ou couper le son">🔊 Son</button>
     </div>
+  </header>
 
-    <!-- Worlds Portal Grid -->
-    <div class="worlds-grid" id="worlds-grid"></div>
+  <!-- HERO SECTION -->
+  <section class="hero" id="hero">
+    <div>
+      <div class="sub" id="eyebrow">APPRENDS EN JOUANT</div>
+      <h1 id="headline">Choisis ton aventure !</h1>
+      <p id="heroText">Douze univers éducatifs animés avec progression continue et astuces pas à pas.</p>
+    </div>
+    <div class="mascot" id="mascot-hero" title="Mascotte Léo le Lion">🦁</div>
   </section>
 
-  <!-- VIEW 2: GAME ARENA -->
-  <section class="view-section" id="view-game">
-    <div class="game-header-bar">
-      <button class="btn-home" id="btn-back-hub">🏠 <span id="lbl-home">Accueil</span></button>
-      <div class="game-title-badge" id="game-title-badge">🎮 Mini-Jeu</div>
-      <div class="stat-item">⭐ <span id="stat-score">0</span> XP</div>
-    </div>
+  <!-- GAMES GRID (12 UNIVERSE PORTALS) -->
+  <section class="grid" id="cards">
+    <!-- Math Universe -->
+    <button class="game-card" data-cat="math" data-game="comet">
+      <span class="em">🚀</span>
+      <strong>Comet Defender</strong>
+      <small>Arcade mathématique • vise et détruis les météorites</small>
+    </button>
+    <button class="game-card" data-cat="math" data-game="fruit">
+      <span class="em">🧺</span>
+      <strong>Verger Gourmand</strong>
+      <small>Récolte tactile de fruits & dénombrement au panier</small>
+    </button>
 
-    <!-- Switch games in this category -->
-    <div class="game-switch-pills" id="game-switch-pills"></div>
+    <!-- Reading & Phonics Universe -->
+    <button class="game-card" data-cat="read" data-game="fish">
+      <span class="em">🐠</span>
+      <strong>Phonics Fishing</strong>
+      <small>Pêche aux phonèmes • écoute et attrape les bons mots</small>
+    </button>
+    <button class="game-card" data-cat="read" data-game="word">
+      <span class="em">🧩</span>
+      <strong>Word Builder</strong>
+      <small>Assemble les lettres mobiles pour former les mots</small>
+    </button>
+    <button class="game-card" data-cat="read" data-game="frog">
+      <span class="em">🐸</span>
+      <strong>Nénuphars Saut</strong>
+      <small>Sauts de grenouille & combinatoire syllabique</small>
+    </button>
+    <button class="game-card" data-cat="read" data-game="studio">
+      <span class="em">👄</span>
+      <strong>Bouche Magique</strong>
+      <small>Studio vocal • prononciation et articulation des sons</small>
+    </button>
 
-    <!-- Question Banner with Speaker -->
-    <div class="question-banner">
-      <div class="q-text-group">
-        <div class="q-main" id="q-main">Chargement de la mission...</div>
-        <div class="q-sub" id="q-sub">Touche pour jouer !</div>
-      </div>
-      <button class="btn-speaker" id="btn-speak" title="Écouter la consigne">🔊</button>
-    </div>
+    <!-- Science & Nature Lab -->
+    <button class="game-card" data-cat="sci" data-game="chemistry">
+      <span class="em">🧪</span>
+      <strong>Labo de Chimie</strong>
+      <small>Mélange d'éprouvettes, potions colorées & réactions</small>
+    </button>
+    <button class="game-card" data-cat="sci" data-game="botany">
+      <span class="em">🌻</span>
+      <strong>Jardin Botanique</strong>
+      <small>Plante la graine, arrose et observe la germination</small>
+    </button>
+    <button class="game-card" data-cat="sci" data-game="density">
+      <span class="em">🌊</span>
+      <strong>Flotte ou Coule</strong>
+      <small>Aquarium d'Archimède • teste la densité des objets</small>
+    </button>
+    <button class="game-card" data-cat="sci" data-game="circuit">
+      <span class="em">💡</span>
+      <strong>Circuit Électrique</strong>
+      <small>Relie les fils de cuivre, allume la lampe et le ventilateur</small>
+    </button>
 
-    <!-- Stats Bar (Round, Lives, Combo) -->
-    <div class="stats-bar">
-      <div class="stat-item">🎯 <span id="lbl-round-prefix">Défi</span> : <span id="stat-round">1</span>/5</div>
-      <div class="combo-badge" id="stat-combo-badge">🔥 Combo x1</div>
-      <div class="stat-item">❤️ <span id="stat-lives">3</span></div>
-    </div>
-
-    <!-- Interactive HTML5 Canvas Arena -->
-    <div class="arena-box">
-      <canvas id="arena" width="500" height="380"></canvas>
-    </div>
-
-    <!-- Options Row -->
-    <div class="options-row" id="options-row"></div>
-
-    <!-- Steering Controls for Racing & Maze -->
-    <div class="controls-pad" id="controls-pad">
-      <button class="btn-pad" id="pad-left">⬅️</button>
-      <button class="btn-pad" id="pad-up">⬆️</button>
-      <button class="btn-pad" id="pad-down">⬇️</button>
-      <button class="btn-pad" id="pad-right">➡️</button>
-    </div>
+    <!-- Logic & Mazes -->
+    <button class="game-card" data-cat="logic" data-game="maze">
+      <span class="em">🌀</span>
+      <strong>Labyrinthe Magique</strong>
+      <small>Glisse ton doigt dans les couloirs et sors du labyrinthe</small>
+    </button>
+    <button class="game-card" data-cat="logic" data-game="puzzle">
+      <span class="em">🦒</span>
+      <strong>Tangram des Animaux</strong>
+      <small>Glisse et aimante les formes géométriques de la savane</small>
+    </button>
   </section>
+
+  <!-- ACTIVE WORKSPACE -->
+  <section class="workspace" id="workspace">
+    <div class="worktop">
+      <h2 id="gameTitle">🎮 Ton espace de jeu</h2>
+      <div class="score-badge">
+        <span id="scoreText">⭐ 0 XP</span>
+        <span>·</span>
+        <span id="levelText">Niveau 1</span>
+        <span class="combo-pill" id="comboPill">🔥 Combo x1</span>
+      </div>
+    </div>
+
+    <!-- Continuous Progress Bar to Next Level -->
+    <div class="progress">
+      <span id="progress" style="width: 0%"></span>
+    </div>
+
+    <!-- Workspace Controls -->
+    <div class="controls">
+      <button class="btn light" id="home">⌂ Accueil</button>
+      <button class="btn light" id="pause">⏸ Pause</button>
+      <button class="btn light" id="listen">🔊 Écouter</button>
+      <button class="btn red" id="help">💡 Aide pas à pas & Astuces</button>
+    </div>
+
+    <!-- Stage Area -->
+    <div class="stage" id="stage">
+      <p class="instruction" id="instruction">Choisis un jeu pour commencer la mission.</p>
+      
+      <!-- Specialized HTML5 Canvas for Chemistry, Botany, Density, Circuit, Maze, Puzzle -->
+      <canvas id="lab-canvas" width="500" height="340"></canvas>
+    </div>
+
+    <div class="feedback" id="feedback" aria-live="polite"></div>
+
+    <!-- Interactive Step-by-Step Tutor with Cognitive Tricks -->
+    <section class="tutor" id="tutor">
+      <div class="tutor-header">
+        <span style="font-size:28px">🦁</span>
+        <h3 id="tutorTitle">Le professeur Léo t'aide</h3>
+        <span class="tutor-trick-badge">💡 Astuce Spéciale</span>
+      </div>
+      <p id="tutorText"></p>
+      <div class="tutor-trick" id="tutorTrick"></div>
+      <div class="tutor-visual" id="tutorVisual"></div>
+      <div class="controls">
+        <button class="btn light" id="tutorBack">← Précédent</button>
+        <button class="btn" id="tutorNext">Suivant →</button>
+        <button class="btn light" id="tutorClose">Reprendre le jeu ✓</button>
+      </div>
+    </section>
+  </section>
+
+  <footer class="footer">
+    Nateiva EduKids • Conforme aux programmes officiels CEMAC & Internationaux • Voix naturelle studio
+  </footer>
 </main>
 
-<!-- Modals -->
-<div class="modal-overlay" id="victory-modal">
-  <div class="modal-card">
-    <div class="modal-mascot">🏆</div>
-    <h2 class="modal-title" id="vic-title">Mission Réussie !</h2>
-    <p class="modal-text" id="vic-desc">Bravo petit champion ! Tu as brillamment terminé cette aventure !</p>
-    <button class="modal-btn" id="btn-vic-continue">Continuer l'aventure 🚀</button>
-  </div>
-</div>
-
-<div class="modal-overlay" id="gameover-modal">
-  <div class="modal-card">
-    <div class="modal-mascot">💪</div>
-    <h2 class="modal-title" id="go-title">Continue de t'entraîner !</h2>
-    <p class="modal-text" id="go-desc">Tu es sur la bonne voie. Essaie encore pour remporter le trophée !</p>
-    <button class="modal-btn" id="btn-go-retry">Réessayer 🔄</button>
-  </div>
-</div>
-
-<div class="modal-overlay" id="tutor-modal">
-  <div class="modal-card">
-    <div class="modal-mascot">💡</div>
-    <h2 class="modal-title" id="tut-title">Coup de Pouce de Léo !</h2>
-    <p class="modal-text" id="tut-desc">Regarde bien l'écran et écoute le conseil audio !</p>
-    <button class="modal-btn" id="btn-tut-close">J'ai compris ! 👍</button>
-  </div>
-</div>
-
 <script>
-window.addEventListener("DOMContentLoaded", () => {
-  const $ = (id) => document.getElementById(id);
-  const canvas = $("arena");
-  const ctx = canvas.getContext("2d");
-  const W = 500;
-  const H = 380;
+'use strict';
+window.addEventListener('DOMContentLoaded', () => {
+  const $ = id => document.getElementById(id);
+  const canvas = $('lab-canvas');
+  const ctx = canvas.getContext('2d');
+  const CW = 500;
+  const CH = 340;
+
+  const GRADES = ['MAT', 'SIL', 'CE', 'CM'];
+
+  const TEXT = {
+    fr: {
+      welcome: "Choisis ton aventure !",
+      intro: "Douze univers éducatifs animés avec progression continue et astuces pas à pas.",
+      correct: "Bravo ! Bien joué ! ⭐",
+      wrong: "Essaie encore ! Demande de l'aide si besoin. 💪",
+      levelUp: "🎉 NOUVEAU NIVEAU DÉBLOQUÉ ! Difficulté augmentée !",
+      paused: "Jeu en pause. Appuie sur Reprendre.",
+      listen: "Écoute et choisis : ",
+      build: "Construis le mot : ",
+      tutor: "Observe bien chaque étape et retiens l'astuce !"
+    },
+    en: {
+      welcome: "Choose your adventure!",
+      intro: "Twelve animated educational worlds with continuous leveling and step-by-step tricks.",
+      correct: "Great job! Well done! ⭐",
+      wrong: "Try again! Ask for help if you need it. 💪",
+      levelUp: "🎉 NEW LEVEL UNLOCKED! Challenges are leveling up!",
+      paused: "Game paused. Press Resume.",
+      listen: "Listen and choose: ",
+      build: "Build the word: ",
+      tutor: "Follow each step carefully and remember the trick!"
+    }
+  };
+
+  const WORDS = {
+    fr: {
+      MAT: ['CHAT', 'LION', 'BOL', 'SAC', 'RIZ', 'EAU'],
+      SIL: ['LIVRE', 'ÉCOLE', 'MOTO', 'ARBRE', 'MAISON', 'SOLEIL'],
+      CE: ['BANANE', 'MANGUE', 'MARCHÉ', 'RIVIÈRE', 'VILLAGE', 'CAHIER'],
+      CM: ['CAMEROUN', 'ÉQUATEUR', 'CULTURE', 'ÉNERGIE', 'FORÊT', 'RÉGION']
+    },
+    en: {
+      MAT: ['CAT', 'SUN', 'CUP', 'BAG', 'DOG', 'HEN'],
+      SIL: ['BOOK', 'TREE', 'HOUSE', 'SCHOOL', 'WATER', 'RIVER'],
+      CE: ['BANANA', 'MARKET', 'MANGO', 'FOREST', 'FARMER', 'VILLAGE'],
+      CM: ['CAMEROON', 'CLIMATE', 'FRACTION', 'ENERGY', 'HABITAT', 'EQUATOR']
+    }
+  };
 
   // ============================================================================
-  // AUDIO SYNTHESIS & REAL SOUND EFFECTS (Web Audio API)
+  // STUDIO VOICE & AUDIO SYNTHESIS
   // ============================================================================
   const AudioEngine = {
     ctx: null,
@@ -800,11 +841,11 @@ window.addEventListener("DOMContentLoaded", () => {
         if (AudioCtx) this.ctx = new AudioCtx();
       }
     },
-    playTone(freq, type = "sine", duration = 0.15, vol = 0.2) {
+    playTone(freq, type = 'sine', duration = 0.12, vol = 0.2) {
       try {
         this.init();
         if (!this.ctx) return;
-        if (this.ctx.state === "suspended") this.ctx.resume();
+        if (this.ctx.state === 'suspended') this.ctx.resume();
         const osc = this.ctx.createOscillator();
         const gain = this.ctx.createGain();
         osc.type = type;
@@ -817,1351 +858,1062 @@ window.addEventListener("DOMContentLoaded", () => {
         osc.stop(this.ctx.currentTime + duration);
       } catch (e) {}
     },
-    playClick() { this.playTone(440, "sine", 0.08, 0.2); },
     playSuccess() {
-      this.playTone(523, "triangle", 0.1, 0.25);
-      setTimeout(() => this.playTone(659, "triangle", 0.12, 0.25), 90);
-      setTimeout(() => this.playTone(784, "triangle", 0.2, 0.3), 180);
+      this.playTone(523, 'triangle', 0.1, 0.25);
+      setTimeout(() => this.playTone(659, 'triangle', 0.12, 0.25), 80);
+      setTimeout(() => this.playTone(784, 'triangle', 0.2, 0.3), 160);
     },
     playWrong() {
-      this.playTone(220, "sawtooth", 0.15, 0.25);
-      setTimeout(() => this.playTone(180, "sawtooth", 0.22, 0.25), 120);
+      this.playTone(220, 'sawtooth', 0.15, 0.2);
+      setTimeout(() => this.playTone(180, 'sawtooth', 0.2, 0.2), 100);
     },
-    playSplash() {
-      this.playTone(320, "sine", 0.25, 0.3);
-      setTimeout(() => this.playTone(180, "sine", 0.3, 0.2), 60);
-    },
-    playZap() {
-      this.playTone(880, "sawtooth", 0.1, 0.3);
-      setTimeout(() => this.playTone(1200, "square", 0.15, 0.25), 50);
-    },
-    playPour() {
-      for (let i = 0; i < 4; i++) {
-        setTimeout(() => this.playTone(400 + Math.random() * 200, "sine", 0.08, 0.15), i * 60);
-      }
-    },
-    playChime() {
-      [523, 659, 783, 1046].forEach((f, i) => {
-        setTimeout(() => this.playTone(f, "sine", 0.2, 0.2), i * 70);
+    playLevelUp() {
+      [523, 659, 784, 1046, 1318].forEach((f, i) => {
+        setTimeout(() => this.playTone(f, 'sine', 0.2, 0.25), i * 80);
       });
     }
   };
 
-  // ============================================================================
-  // STUDIO-QUALITY NATIVE BILINGUAL VOICE ENGINE (Local Audio Service + Fallback)
-  // ============================================================================
   const VoiceEngine = {
-    lang: "fr",
+    lang: 'fr',
     currentAudio: null,
-    isSpeaking: false,
-
     cancel() {
       if (this.currentAudio) {
         this.currentAudio.pause();
-        this.currentAudio.currentTime = 0;
         this.currentAudio = null;
       }
-      if ("speechSynthesis" in window) {
+      if ('speechSynthesis' in window) {
         window.speechSynthesis.cancel();
       }
-      this.isSpeaking = false;
-      state.mascotSpeaking = false;
     },
-
     speak(text) {
-      if (!text) return;
+      if (!text || state.muted) return;
       this.cancel();
+      const clean = text.trim();
+      const targetLang = this.lang === 'fr' ? 'fr' : 'en';
 
-      const cleanText = text.trim();
-      const targetLang = this.lang === "fr" ? "fr" : "en";
-
-      // 1. Primary: Stream studio-quality native MP3 audio from local proxy
       try {
-        const url = "http://localhost:8082/tts?lang=" + targetLang + "&q=" + encodeURIComponent(cleanText);
         const audio = new Audio();
         this.currentAudio = audio;
-        audio.src = url;
-
-        audio.onplay = () => {
-          this.isSpeaking = true;
-          state.mascotSpeaking = true;
-        };
-
-        audio.onended = () => {
-          this.isSpeaking = false;
-          state.mascotSpeaking = false;
-          this.currentAudio = null;
-        };
-
-        audio.onerror = () => {
-          // 2. Seamless Fallback: Native SpeechSynthesis with clean text
-          this.speakSpeechSynthesis(cleanText);
-        };
-
-        const playPromise = audio.play();
-        if (playPromise !== undefined) {
-          playPromise.catch(() => {
-            this.speakSpeechSynthesis(cleanText);
-          });
-        }
+        audio.src = 'http://localhost:8082/tts?lang=' + targetLang + '&q=' + encodeURIComponent(clean.slice(0, 180));
+        audio.onerror = () => this.speakSpeechSynthesis(clean);
+        const p = audio.play();
+        if (p !== undefined) p.catch(() => this.speakSpeechSynthesis(clean));
       } catch (err) {
-        this.speakSpeechSynthesis(cleanText);
+        this.speakSpeechSynthesis(clean);
       }
     },
-
-    speakSpeechSynthesis(cleanText) {
-      if (!("speechSynthesis" in window)) return;
-      const u = new SpeechSynthesisUtterance(cleanText);
-      const isFR = this.lang === "fr";
-      u.lang = isFR ? "fr-FR" : "en-US";
-      u.rate = isFR ? 0.86 : 0.90;
-      u.pitch = 1.05;
-
+    speakSpeechSynthesis(clean) {
+      if (!('speechSynthesis' in window)) return;
+      const u = new SpeechSynthesisUtterance(clean);
+      u.lang = this.lang === 'fr' ? 'fr-FR' : 'en-US';
+      u.rate = 0.85;
       const voices = window.speechSynthesis.getVoices() || [];
-      const matchVoice = isFR
-        ? (voices.find(v => v.lang && v.lang.toLowerCase().startsWith("fr")) || null)
-        : (voices.find(v => v.lang && v.lang.toLowerCase().startsWith("en")) || null);
-      if (matchVoice) u.voice = matchVoice;
-
-      u.onstart = () => {
-        this.isSpeaking = true;
-        state.mascotSpeaking = true;
-      };
-      u.onend = () => {
-        this.isSpeaking = false;
-        state.mascotSpeaking = false;
-      };
+      const match = voices.find(v => v.lang && v.lang.toLowerCase().startsWith(this.lang));
+      if (match) u.voice = match;
       window.speechSynthesis.speak(u);
     }
   };
 
   // ============================================================================
-  // CURRICULUM DEFINITIONS ACROSS ALL 6 WORLDS
+  // GLOBAL STATE
   // ============================================================================
-  const CURRICULUM = {
-    "fr": {
-      "categories": {
-        "math_arcade": {
-          "label": "Royaume des Maths",
-          "icon": "🧮",
-          "accent": "#0084FF",
-          "bg": "#EFF6FF",
-          "topics": ["Dénombrement (1–5)", "Addition & Soustraction", "Multiplication & Partage", "Fractions & CFA"]
-        },
-        "reading": {
-          "label": "Lecture & Phonie",
-          "icon": "📖",
-          "accent": "#10B981",
-          "bg": "#ECFDF5",
-          "topics": ["Safari Sons", "Pêche aux Phonèmes", "Syllabes Nénuphar", "Train des Phrases"]
-        },
-        "comprehension": {
-          "label": "Compréhension & Contes",
-          "icon": "🔍",
-          "accent": "#8B5CF6",
-          "bg": "#F5F3FF",
-          "topics": ["Chronologie Début/Milieu/Fin", "Indices & Déductions", "Causes & Effets"]
-        },
-        "pronunciation": {
-          "label": "Studio de Prononciation",
-          "icon": "🗣️",
-          "accent": "#EC4899",
-          "bg": "#FDF2F8",
-          "topics": ["Bouche Magique (A, O, I, OU)", "Tam-Tam des Syllabes", "Paires de Rimes"]
-        },
-        "science": {
-          "label": "Labo Sciences & Nature",
-          "icon": "🧪",
-          "accent": "#F59E0B",
-          "bg": "#FFFBEB",
-          "topics": ["Mélanges de Chimie", "Botanique & Plante", "Flotte ou Coule", "Circuit Électrique"]
-        },
-        "logic_puzzles": {
-          "label": "Labyrinthes & Puzzles",
-          "icon": "🧩",
-          "accent": "#6366F1",
-          "bg": "#EEF2FF",
-          "topics": ["Labyrinthe Magique", "Puzzle des Animaux", "Suites Logiques"]
-        }
-      },
-      "games": {
-        "math_arcade": [
-          { id: "fruit_orchard", name: "Verger Gourmand", icon: "🧺", engine: "fruit" },
-          { id: "balance_scale", name: "Balance Magique", icon: "⚖️", engine: "balance" },
-          { id: "turbo_racing", name: "Course Turbo", icon: "🏎️", engine: "racing" },
-          { id: "fraction_pizza", name: "Pâtisserie Fractions", icon: "🍕", engine: "fraction" },
-          { id: "cfa_market", name: "Marché Africain CFA", icon: "🪙", engine: "market" }
-        ],
-        "reading": [
-          { id: "animal_safari", name: "Safari Sons", icon: "🦁", engine: "safari" },
-          { id: "phonics_fishing", name: "Pêche aux Phonèmes", icon: "🎣", engine: "fishing" },
-          { id: "syllable_frog", name: "Nénuphars Saut", icon: "🐸", engine: "frog" },
-          { id: "sentence_coupler", name: "Train des Phrases", icon: "🚂", engine: "train" }
-        ],
-        "comprehension": [
-          { id: "story_sequencer", name: "Fresque Chronologique", icon: "📜", engine: "story" },
-          { id: "detective_clues", name: "Loupe Détective", icon: "🕵️", engine: "detective" }
-        ],
-        "pronunciation": [
-          { id: "voice_studio", name: "Bouche Magique Articulation", icon: "👄", engine: "studio" },
-          { id: "djembe_drum", name: "Tam-Tam Djembe", icon: "🪘", engine: "djembe" },
-          { id: "rhyme_match", name: "Rimes Enchantées", icon: "⛵", engine: "rhyme" }
-        ],
-        "science": [
-          { id: "labo_chimie", name: "Labo Chimie & Couleurs", icon: "🧪", engine: "chemistry" },
-          { id: "botanique_jardin", name: "Jardin & Germination", icon: "🌻", engine: "botany" },
-          { id: "flotte_ou_coule", name: "Aquarium Flotte ou Coule", icon: "🌊", engine: "density" },
-          { id: "circuit_electrique", name: "Circuit & Ampoule", icon: "💡", engine: "circuit" }
-        ],
-        "logic_puzzles": [
-          { id: "labyrinthe_magique", name: "Labyrinthe des Savanes", icon: "🌀", engine: "maze" },
-          { id: "puzzle_animaux", name: "Tangram des Animaux", icon: "🦒", engine: "puzzle" }
-        ]
-      }
-    },
-    "en": {
-      "categories": {
-        "math_arcade": {
-          "label": "Math Kingdom",
-          "icon": "🧮",
-          "accent": "#0084FF",
-          "bg": "#EFF6FF",
-          "topics": ["Counting 1-5", "Addition & Subtraction", "Multiplication", "Fractions"]
-        },
-        "reading": {
-          "label": "Reading & Phonics",
-          "icon": "📖",
-          "accent": "#10B981",
-          "bg": "#ECFDF5",
-          "topics": ["Safari Sounds", "Phonics Fishing", "Syllable Hop", "Sentence Train"]
-        },
-        "comprehension": {
-          "label": "Comprehension & Tales",
-          "icon": "🔍",
-          "accent": "#8B5CF6",
-          "bg": "#F5F3FF",
-          "topics": ["Chronology", "Detective Clues", "Cause & Effect"]
-        },
-        "pronunciation": {
-          "label": "Pronunciation Studio",
-          "icon": "🗣️",
-          "accent": "#EC4899",
-          "bg": "#FDF2F8",
-          "topics": ["Magic Mouth Shapes", "Djembe Rhythm", "Rhyme Match"]
-        },
-        "science": {
-          "label": "Science & Nature Lab",
-          "icon": "🧪",
-          "accent": "#F59E0B",
-          "bg": "#FFFBEB",
-          "topics": ["Chemistry Mixing", "Botany Sprouting", "Sink or Float", "Electric Circuit"]
-        },
-        "logic_puzzles": {
-          "label": "Mazes & Puzzles",
-          "icon": "🧩",
-          "accent": "#6366F1",
-          "bg": "#EEF2FF",
-          "topics": ["Magic Labyrinth", "Animal Tangram", "Logic Sequences"]
-        }
-      },
-      "games": {
-        "math_arcade": [
-          { id: "fruit_orchard", name: "Fruit Orchard", icon: "🧺", engine: "fruit" },
-          { id: "balance_scale", name: "Magic Balance", icon: "⚖️", engine: "balance" },
-          { id: "turbo_racing", name: "Turbo Racing", icon: "🏎️", engine: "racing" },
-          { id: "fraction_pizza", name: "Fraction Bakery", icon: "🍕", engine: "fraction" },
-          { id: "cfa_market", name: "African Market", icon: "🪙", engine: "market" }
-        ],
-        "reading": [
-          { id: "animal_safari", name: "Safari Sounds", icon: "🦁", engine: "safari" },
-          { id: "phonics_fishing", name: "Phonics Fishing", icon: "🎣", engine: "fishing" },
-          { id: "syllable_frog", name: "Lilypad Hop", icon: "🐸", engine: "frog" },
-          { id: "sentence_coupler", name: "Sentence Train", icon: "🚂", engine: "train" }
-        ],
-        "comprehension": [
-          { id: "story_sequencer", name: "Story Timeline", icon: "📜", engine: "story" },
-          { id: "detective_clues", name: "Detective Glass", icon: "🕵️", engine: "detective" }
-        ],
-        "pronunciation": [
-          { id: "voice_studio", name: "Magic Mouth Studio", icon: "👄", engine: "studio" },
-          { id: "djembe_drum", name: "Djembe Drum Beats", icon: "🪘", engine: "djembe" },
-          { id: "rhyme_match", name: "Enchanted Rhymes", icon: "⛵", engine: "rhyme" }
-        ],
-        "science": [
-          { id: "labo_chimie", name: "Chemistry Color Lab", icon: "🧪", engine: "chemistry" },
-          { id: "botanique_jardin", name: "Botany & Sprouting", icon: "🌻", engine: "botany" },
-          { id: "flotte_ou_coule", name: "Sink or Float Aquarium", icon: "🌊", engine: "density" },
-          { id: "circuit_electrique", name: "Circuit & Lightbulb", icon: "💡", engine: "circuit" }
-        ],
-        "logic_puzzles": [
-          { id: "labyrinthe_magique", name: "Savanna Labyrinth", icon: "🌀", engine: "maze" },
-          { id: "puzzle_animaux", name: "Animal Tangram", icon: "🦒", engine: "puzzle" }
-        ]
-      }
-    }
-  };
-
-  // ============================================================================
-  // GLOBAL APPLICATION STATE
-  // ============================================================================
-  const state = {
-    lang: "fr",
-    grade: 0,
-    currentView: "hub",
-    category: "math_arcade",
-    game: "fruit_orchard",
-    engineType: "fruit",
+  let state = {
+    game: null,
+    grade: 'MAT',
+    lang: 'fr',
     score: 0,
-    lives: 3,
-    round: 1,
-    combo: 0,
-    roundAdvancing: false,
+    streak: 0,
+    round: 0,
+    level: 1,
+    paused: false,
+    muted: false,
     question: null,
-    items: [],
-    floatingTexts: [],
-    ripples: [],
-    sparks: [],
-    mascotSpeaking: false,
-    mouthAnim: 0,
+    answer: null,
+    tiles: [],
+    placed: [],
+    tutorStep: 0,
+    tutorSteps: [],
+    timer: null,
+    token: 0,
+    used: new Set(),
+    mistakes: 0,
 
-    // Specific Engine States
-    fruits: [],
-    fallingFruit: null,
-    basketSquash: 1,
-    balanceAngle: 0,
-    carX: 250,
-    roadOffset: 0,
-    nitroFlames: [],
-    safariLetter: "A",
-    fishList: [],
-    frogPad: 0,
-    frogAnim: null,
-    trainPuff: 0,
-    mascotTargetPhoneme: "A",
-    mouthShape: "A",
-    djembePulse: 0,
-
-    // NEW SCIENCE & LAB STATES
-    chemFlaskFluid: 40,
-    chemFlaskColor: "#38BDF8",
-    chemBubbles: [],
-    chemBeakers: [],
-    activePouring: null,
-
-    plantStage: 0, // 0: empty soil, 1: seed in soil, 2: watered, 3: sprouted & bloomed
-    plantGrowthAnim: 0,
-    waterDrops: [],
-
-    aquariumObjects: [],
-    waterRipples: [],
-
-    circuitClosed: false,
-    fanAngle: 0,
-    circuitCurrentDots: [],
-
-    // MAZE & PUZZLE STATES
-    mazeGrid: [],
-    playerPos: { r: 0, c: 0 },
-    mazeFootprints: [],
-
-    puzzleSlots: [],
-    puzzlePieces: [],
-    draggedPiece: null,
-
-    // Touch / Drag interaction
-    isDragging: false,
-    dragStart: { x: 0, y: 0 },
-    dragTarget: null
+    // Specific game physics
+    playerPos: { x: 80, y: 80 },
+    chemColor: '#F97316',
+    plantStep: 0,
+    circuitActive: false,
+    fruits: []
   };
 
-  // ============================================================================
-  // PROCEDURAL QUESTION GENERATOR (Grade & Country Curriculum Aligned)
-  // ============================================================================
-  function generateDynamicQuestion(category, game, grade, round, level) {
-    const isFR = state.lang === "fr";
-    const eng = state.engineType;
-
-    // 1. FRUIT ORCHARD (Counting 1 to 5)
-    if (eng === "fruit") {
-      const minCount = 1;
-      const maxCount = grade === 0 ? 5 : (grade === 1 ? 8 : 10);
-      const count = minCount + ((round - 1) % (maxCount - minCount + 1));
-      const fruits = [
-        { nameFr: "mangues mûres", nameEn: "ripe mangoes", icon: "🥭" },
-        { nameFr: "bananes douces", nameEn: "sweet bananas", icon: "🍌" },
-        { nameFr: "oranges fraîches", nameEn: "fresh oranges", icon: "🍊" },
-        { nameFr: "ananas juteux", nameEn: "juicy pineapples", icon: "🍍" }
-      ];
-      const chosenFruit = fruits[(round - 1) % fruits.length];
-      const qText = isFR
-        ? "Cueille " + count + " " + chosenFruit.nameFr + " pour le panier !"
-        : "Pick " + count + " " + chosenFruit.nameEn + " for the basket!";
-      const speech = isFR
-        ? "Touche et cueille exactement " + count + " " + chosenFruit.nameFr + " sur l'arbre !"
-        : "Touch and pick exactly " + count + " " + chosenFruit.nameEn + " from the tree!";
-
-      return {
-        q: qText,
-        ans: String(count),
-        options: [String(count), String(count === maxCount ? count - 1 : count + 1), String(count === minCount ? count + 2 : count - 1)].sort(() => Math.random() - 0.5),
-        icon: chosenFruit.icon,
-        fruitName: isFR ? chosenFruit.nameFr : chosenFruit.nameEn,
-        dots: Array(count).fill(chosenFruit.icon).join(" "),
-        speech: speech,
-        mathType: "count"
-      };
-    }
-
-    // 2. SAFARI SONS (Phonics letter sounds)
-    if (eng === "safari") {
-      const catalog = [
-        { letter: "A", sound: "Ah", word: "Ananas", icon: "🍍", animal: "🦁" },
-        { letter: "B", sound: "Bé", word: "Banane", icon: "🍌", animal: "🐒" },
-        { letter: "L", sound: "Lll", word: "Lion", icon: "🦁", animal: "🦁" },
-        { letter: "M", sound: "Mmm", word: "Mangue", icon: "🥭", animal: "🦓" },
-        { letter: "O", sound: "Oh", word: "Orange", icon: "🍊", animal: "🦒" },
-        { letter: "P", sound: "Pé", word: "Perroquet", icon: "🦜", animal: "🦜" }
-      ];
-      const item = catalog[(round - 1 + grade) % catalog.length];
-      const dist = ["A", "B", "M", "L", "O", "P"].filter(l => l !== item.letter).sort(() => Math.random() - 0.5);
-      return {
-        q: "Trouve la lettre qui chante [" + item.sound + "] comme dans " + item.icon + " " + item.word + " :",
-        ans: item.letter,
-        options: [item.letter, dist[0], dist[1]].sort(() => Math.random() - 0.5),
-        icon: item.icon,
-        word: item.word,
-        animal: item.animal,
-        dots: item.letter + " chante [" + item.sound + "] comme " + item.word,
-        speech: "Écoute bien : quelle lettre chante le son " + item.sound + " comme dans " + item.word + " ?"
-      };
-    }
-
-    // 3. PHONICS FISHING
-    if (eng === "fishing") {
-      const catalog = [
-        { letter: "A", word: "Ananas", icon: "🍍" },
-        { letter: "B", word: "Banane", icon: "🍌" },
-        { letter: "M", word: "Mangue", icon: "🥭" },
-        { letter: "L", word: "Lion", icon: "🦁" },
-        { letter: "P", word: "Poisson", icon: "🐟" }
-      ];
-      const item = catalog[(round - 1) % catalog.length];
-      const dist = ["A", "B", "M", "L", "P"].filter(l => l !== item.letter).sort(() => Math.random() - 0.5);
-      return {
-        q: "Attrape le poisson qui porte la lettre de " + item.icon + " " + item.word + " :",
-        ans: item.letter,
-        options: [item.letter, dist[0], dist[1]].sort(() => Math.random() - 0.5),
-        icon: item.icon,
-        word: item.word,
-        dots: item.letter + " comme " + item.word,
-        speech: "Pêche le poisson avec la lettre " + item.letter + " comme " + item.word + " !"
-      };
-    }
-
-    // 4. FROG HOP (Syllable Combinatoire)
-    if (eng === "frog") {
-      const bank = [
-        { word: "BANANE", missing: "BA", syllables: ["BA", "NA", "NE"], icon: "🍌" },
-        { word: "TOMATE", missing: "TO", syllables: ["TO", "MA", "TE"], icon: "🍅" },
-        { word: "PAPAYE", missing: "PA", syllables: ["PA", "PA", "YE"], icon: "🍈" },
-        { word: "SALADE", missing: "SA", syllables: ["SA", "LA", "DE"], icon: "🥗" }
-      ];
-      const item = bank[(round - 1) % bank.length];
-      const dist = ["LI", "PO", "KO", "RO"].filter(s => s !== item.missing).sort(() => Math.random() - 0.5);
-      return {
-        q: "Fais sauter la grenouille sur [" + item.missing + "] pour former " + item.word + " :",
-        ans: item.missing,
-        options: [item.missing, dist[0], dist[1]].sort(() => Math.random() - 0.5),
-        icon: item.icon,
-        word: item.word,
-        syllables: item.syllables,
-        dots: item.syllables.join(" • "),
-        speech: "Quelle syllabe complète le mot " + item.word + " ?"
-      };
-    }
-
-    // 5. SENTENCE TRAIN
-    if (eng === "train") {
-      const sentences = [
-        { prefix: "Le petit", missing: "chat", suffix: "dort au soleil.", full: "Le petit chat dort au soleil.", icon: "🐱", dist: ["pomme", "livre"] },
-        { prefix: "Le grand", missing: "lion", suffix: "rugit dans la savane.", full: "Le grand lion rugit dans la savane.", icon: "🦁", dist: ["lapin", "stylo"] },
-        { prefix: "Le joli", missing: "poisson", suffix: "nage dans le fleuve.", full: "Le joli poisson nage dans le fleuve.", icon: "🐟", dist: ["arbre", "camion"] }
-      ];
-      const item = sentences[(round - 1) % sentences.length];
-      return {
-        q: item.prefix + " [ ... ] " + item.suffix,
-        ans: item.missing,
-        options: [item.missing, item.dist[0], item.dist[1]].sort(() => Math.random() - 0.5),
-        icon: item.icon,
-        fullSentence: item.full,
-        dots: "Lecture & Fluence",
-        speech: "Quel mot complète la phrase : " + item.prefix + "... quoi... " + item.suffix
-      };
-    }
-
-    // 6. VOICE STUDIO (Mouth articulation)
-    if (eng === "studio") {
-      const mouthBank = [
-        { sound: "A", mouth: "A", desc: "Bouche grande ouverte 🗣️", word: "Ananas", icon: "🍍", speech: "Regarde bien la bouche : grande ouverte pour chanter [Aaaa] !" },
-        { sound: "O", mouth: "O", desc: "Lèvres arrondies en cercle 👄", word: "Orange", icon: "🍊", speech: "Regarde la bouche : les lèvres s'arrondissent pour le son [Oooo] !" },
-        { sound: "I", mouth: "I", desc: "Grand sourire en montrant les dents 😁", word: "Igloo", icon: "🧊", speech: "Grand sourire étiré : [Iiii] comme dans Igloo !" },
-        { sound: "OU", mouth: "OU", desc: "Lèvres projetées vers l'avant 🐺", word: "Chouette", icon: "🦉", speech: "Lèvres projetées en avant pour faire [Ouuu] !" }
-      ];
-      const item = mouthBank[(round - 1) % mouthBank.length];
-      const dist = ["A", "O", "I", "OU"].filter(s => s !== item.sound).sort(() => Math.random() - 0.5);
-      return {
-        q: "Observe la bouche et choisis le son : " + item.desc,
-        ans: item.sound,
-        options: [item.sound, dist[0], dist[1]].sort(() => Math.random() - 0.5),
-        icon: item.icon,
-        mouthShape: item.mouth,
-        dots: item.desc,
-        speech: item.speech
-      };
-    }
-
-    // 7. DJEMBE DRUM (Syllable rhythm)
-    if (eng === "djembe") {
-      const drumBank = [
-        { word: "LION", count: 1, syllables: ["LION"], icon: "🦁" },
-        { word: "ZE-BRE", count: 2, syllables: ["ZE", "BRE"], icon: "🦓" },
-        { word: "E-LE-PHANT", count: 3, syllables: ["E", "LE", "PHANT"], icon: "🐘" },
-        { word: "GI-RA-FE", count: 3, syllables: ["GI", "RA", "FE"], icon: "🦒" }
-      ];
-      const item = drumBank[(round - 1) % drumBank.length];
-      return {
-        q: "Frappe " + item.count + " coup" + (item.count > 1 ? "s" : "") + " sur le djembe pour : " + item.word + " " + item.icon + " !",
-        ans: String(item.count),
-        options: ["1", "2", "3", "4"],
-        icon: item.icon,
-        word: item.word,
-        syllables: item.syllables,
-        dots: item.syllables.join(" • "),
-        speech: "Frappe exactement " + item.count + " coups de djembe en rythme pour " + item.word + " !"
-      };
-    }
-
-    // 8. RHYME MATCH
-    if (eng === "rhyme") {
-      const rhymeBank = [
-        { promptWord: "BATEAU", rhymingWord: "CHÂTEAU", ending: "-EAU", icon: "⛵", dist: ["MAISON", "ARBRE"] },
-        { promptWord: "SOURIS", rhymingWord: "TAPIS", ending: "-IS", icon: "🐁", dist: ["BALLON", "CHAT"] },
-        { promptWord: "BALLON", rhymingWord: "LION", ending: "-ON", icon: "🎈", dist: ["FLEUR", "TABLE"] }
-      ];
-      const item = rhymeBank[(round - 1) % rhymeBank.length];
-      return {
-        q: "Quel mot rime avec " + item.icon + " " + item.promptWord + " (son " + item.ending + ") ?",
-        ans: item.rhymingWord,
-        options: [item.rhymingWord, item.dist[0], item.dist[1]].sort(() => Math.random() - 0.5),
-        promptWord: item.promptWord,
-        ending: item.ending,
-        icon: item.icon,
-        dots: "Terminaison en [" + item.ending + "]",
-        speech: "Quel mot se termine par le même son que " + item.promptWord + " ?"
-      };
-    }
-
-    // 9. CHEMISTRY COLOR MIXING LAB (Real Cartoon Chemistry Experiments)
-    if (eng === "chemistry") {
-      const chemBank = [
-        { primary1: "Rouge", color1: "#EF4444", primary2: "Jaune", color2: "#FBBF24", target: "Orange", targetHex: "#F97316", icon: "🟠" },
-        { primary1: "Bleu", color1: "#3B82F6", primary2: "Jaune", color2: "#FBBF24", target: "Vert", targetHex: "#10B981", icon: "🟢" },
-        { primary1: "Bleu", color1: "#3B82F6", primary2: "Rouge", color2: "#EF4444", target: "Violet", targetHex: "#8B5CF6", icon: "🟣" }
-      ];
-      const item = chemBank[(round - 1) % chemBank.length];
-      return {
-        q: "Mélange dans l'éprouvette : " + item.primary1 + " + " + item.primary2 + " = quelle couleur ?",
-        ans: item.target,
-        options: [item.target, "Noir", "Blanc"].sort(() => Math.random() - 0.5),
-        chemItem: item,
-        icon: item.icon,
-        dots: "Chimie des Couleurs • " + item.primary1 + " + " + item.primary2,
-        speech: "Verse les éprouvettes avec ton doigt pour mélanger le " + item.primary1 + " et le " + item.primary2 + " !"
-      };
-    }
-
-    // 10. BOTANY & PLANT SPROUTING LAB
-    if (eng === "botany") {
-      const stepBank = [
-        { step: 1, action: "Planter la graine", icon: "🌱", hint: "Mets la graine dans la terre riche." },
-        { step: 2, action: "Arroser la plante", icon: "💧", hint: "Donne de l'eau avec l'arrosoir pour la faire germer." },
-        { step: 3, action: "Donner du soleil", icon: "☀️", hint: "Les rayons du soleil apportent l'énergie de la photosynthèse !" }
-      ];
-      const currentStep = stepBank[(round - 1) % stepBank.length];
-      return {
-        q: "Étape " + currentStep.step + " du jardin : Choisis la bonne action pour ta plante !",
-        ans: currentStep.action,
-        options: [currentStep.action, "Mettre au congélateur", "Couper les racines"].sort(() => Math.random() - 0.5),
-        botanyStep: currentStep,
-        icon: currentStep.icon,
-        dots: currentStep.hint,
-        speech: "Pour que ta petite plante grandisse bien, que dois-tu faire maintenant ?"
-      };
-    }
-
-    // 11. SINK OR FLOAT DENSITY LAB
-    if (eng === "density") {
-      const densityBank = [
-        { item: "Pomme", icon: "🍎", result: "Flotte", why: "Moins dense que l'eau" },
-        { item: "Caillou", icon: "🪨", result: "Coule", why: "Plus dense que l'eau" },
-        { item: "Bateau en bois", icon: "🪵", result: "Flotte", why: "Le bois flotte" },
-        { item: "Clé en fer", icon: "🗝️", result: "Coule", why: "Le fer coule au fond" }
-      ];
-      const obj = densityBank[(round - 1) % densityBank.length];
-      return {
-        q: "Dépose l'objet dans l'aquarium : " + obj.icon + " " + obj.item + " va-t-il flotter ou couler ?",
-        ans: obj.result,
-        options: ["Flotte", "Coule"],
-        densityObj: obj,
-        icon: obj.icon,
-        dots: "Aquarium de Densité • " + obj.item,
-        speech: "Glisse la " + obj.item + " dans l'eau avec ton doigt. Flotte-t-elle ou coule-t-elle ?"
-      };
-    }
-
-    // 12. ELECTRIC CIRCUIT LAB
-    if (eng === "circuit") {
-      return {
-        q: "Pour allumer la lampe et faire tourner le ventilateur, le circuit doit être :",
-        ans: "Fermé",
-        options: ["Fermé", "Ouvert", "Coupé"],
-        icon: "💡",
-        dots: "Circuit Électrique • Boucle continue",
-        speech: "Ferme le circuit avec le fil conducteur pour faire passer le courant !"
-      };
-    }
-
-    // 13. MAGIC LABYRINTH / MAZE ("lapirain")
-    if (eng === "maze") {
-      return {
-        q: "Guide le petit lion 🦁 à travers le labyrinthe vers le portail magique 🌀 !",
-        ans: "Sortie",
-        options: ["Sortie", "Mur", "Retour"],
-        icon: "🌀",
-        dots: "Glisse ton doigt sur le chemin pour avancer",
-        speech: "Glisse ton doigt sur l'écran pour guider le lionceau jusqu'au portail magique !"
-      };
-    }
-
-    // 14. ANIMAL TANGRAM PUZZLE
-    if (eng === "puzzle") {
-      const puzzles = [
-        { animal: "Girafe", icon: "🦒", shapeNeeded: "Triangle" },
-        { animal: "Éléphant", icon: "🐘", shapeNeeded: "Carré" },
-        { animal: "Zèbre", icon: "🦓", shapeNeeded: "Losange" }
-      ];
-      const p = puzzles[(round - 1) % puzzles.length];
-      return {
-        q: "Place la forme géométrique pour compléter le puzzle de la " + p.icon + " " + p.animal + " :",
-        ans: p.shapeNeeded,
-        options: [p.shapeNeeded, "Cercle", "Étoile"].sort(() => Math.random() - 0.5),
-        puzzleData: p,
-        icon: p.icon,
-        dots: "Tangram des Formes • " + p.animal,
-        speech: "Glisse la bonne forme géométrique avec ton doigt pour terminer l'animal !"
-      };
-    }
-
-    // Default Math fallback
-    return {
-      q: "Compte les éléments et trouve le bon nombre :",
-      ans: "3",
-      options: ["2", "3", "4"],
-      icon: "⭐",
-      dots: "⭐ ⭐ ⭐",
-      speech: "Combien d'étoiles vois-tu ?"
-    };
-  }
-
-  // ============================================================================
-  // INITIALIZE GAME ARENA
-  // ============================================================================
-  function initGameArena() {
-    const eng = state.engineType;
-    state.question = generateDynamicQuestion(state.category, state.game, state.grade, state.round, 1);
-    const q = state.question;
-
-    $("q-main").textContent = q.q;
-    $("q-sub").textContent = q.dots || "";
-    $("stat-round").textContent = state.round;
-    $("stat-score").textContent = state.score;
-    $("stat-lives").textContent = "❤️".repeat(Math.max(0, state.lives));
-    $("stat-combo-badge").textContent = "🔥 Combo x" + Math.max(1, state.combo);
-
-    // Speak prompt naturally
-    VoiceEngine.speak(q.speech || q.q);
-
-    // Setup interactive items & options
-    const optRow = $("options-row");
-    optRow.innerHTML = "";
-    state.items = [];
-
-    (q.options || []).forEach(opt => {
-      const btn = document.createElement("button");
-      btn.className = "btn-option";
-      btn.textContent = opt;
-      btn.onclick = () => {
-        AudioEngine.playClick();
-        handleAnswer(opt);
-      };
-      optRow.appendChild(btn);
-    });
-
-    // Populate Canvas Specifics
-    if (eng === "fruit") {
-      state.fruits = [];
-      const fruitCount = 7;
-      const targetFruitIcon = q.icon || "🥭";
-      for (let i = 0; i < fruitCount; i++) {
-        state.fruits.push({
-          id: i,
-          x: 160 + (i % 4) * 60 + Math.random() * 15,
-          y: 70 + Math.floor(i / 4) * 60 + Math.random() * 15,
-          icon: targetFruitIcon,
-          picked: false,
-          wobble: Math.random() * Math.PI * 2
-        });
-      }
-    } else if (eng === "chemistry") {
-      state.chemFlaskColor = q.chemItem ? q.chemItem.color1 : "#38BDF8";
-      state.chemFlaskFluid = 35;
-      state.chemBubbles = [];
-    } else if (eng === "density") {
-      state.aquariumObjects = [
-        { name: q.densityObj ? q.densityObj.item : "Pomme", icon: q.icon, x: 250, y: 320, floating: q.ans === "Flotte", inWater: false, vy: 0 }
-      ];
-    } else if (eng === "maze") {
-      state.playerPos = { x: 80, y: 80 };
-      state.mazeFootprints = [];
-    }
-  }
-
-  // ============================================================================
-  // EVALUATE ANSWER & ARCADE FEEDBACK
-  // ============================================================================
-  function handleAnswer(chosen) {
-    if (state.roundAdvancing) return;
-    const isCorrect = String(chosen).trim().toLowerCase() === String(state.question.ans).trim().toLowerCase();
-
-    if (isCorrect) {
-      state.score += 10 + state.combo * 5;
-      state.combo += 1;
-      state.roundAdvancing = true;
-
-      AudioEngine.playSuccess();
-      VoiceEngine.speak(state.lang === "fr" ? "Bravo petit champion ! Tu as trouvé la bonne réponse !" : "Awesome job! You got it right!");
-
-      // Floating celebratory text
-      state.floatingTexts.push({
-        text: state.combo > 1 ? "COMBO x" + state.combo + " ! 🔥" : "+10 XP ! ⭐",
-        x: W / 2,
-        y: H / 2,
-        alpha: 1,
-        color: "#FBBF24"
-      });
-
-      setTimeout(() => {
-        state.roundAdvancing = false;
-        if (state.round >= 5) {
-          showVictory();
-        } else {
-          state.round++;
-          initGameArena();
-        }
-      }, 1500);
-
-    } else {
-      state.lives--;
-      state.combo = 0;
-      AudioEngine.playWrong();
-      VoiceEngine.speak(state.lang === "fr" ? "Essaie encore !" : "Try again!");
-
-      state.floatingTexts.push({
-        text: "Oups ! Essaie encore 💪",
-        x: W / 2,
-        y: H / 2,
-        alpha: 1,
-        color: "#EF4444"
-      });
-
-      $("stat-lives").textContent = "❤️".repeat(Math.max(0, state.lives));
-      if (state.lives <= 0) {
-        showGameOver();
-      }
-    }
-  }
-
-  function showVictory() {
-    AudioEngine.playChime();
-    $("victory-modal").classList.add("open");
-  }
-
-  function showGameOver() {
-    $("gameover-modal").classList.add("open");
-  }
-
-  // ============================================================================
-  // CANVAS RENDERING LOOP (ANIMATED CARTOON EXPERIENCES)
-  // ============================================================================
-  function draw(time) {
-    ctx.clearRect(0, 0, W, H);
-
-    // Deep rich laboratory/canvas background
-    const bg = ctx.createLinearGradient(0, 0, 0, H);
-    bg.addColorStop(0, "#131C31");
-    bg.addColorStop(1, "#1E293B");
-    ctx.fillStyle = bg;
-    ctx.fillRect(0, 0, W, H);
-
-    const eng = state.engineType;
-    const q = state.question;
-    if (!q) return;
-
-    // 1. FRUIT ORCHARD
-    if (eng === "fruit") {
-      ctx.fillStyle = "#78350F";
-      ctx.fillRect(230, 170, 40, 150);
-      ctx.fillStyle = "#047857";
-      ctx.beginPath();
-      ctx.arc(250, 120, 135, 0, Math.PI * 2);
-      ctx.fill();
-
-      state.fruits.forEach(f => {
-        if (!f.picked) {
-          ctx.font = "34px system-ui";
-          ctx.textAlign = "center";
-          const wobbleY = Math.sin(time * 0.005 + f.wobble) * 3;
-          ctx.fillText(f.icon, f.x, f.y + wobbleY);
-        }
-      });
-
-      // Basket
-      ctx.fillStyle = "#D97706";
-      ctx.beginPath();
-      ctx.roundRect(180, 290, 140, 60, [10, 10, 24, 24]);
-      ctx.fill();
-      ctx.fillStyle = "#FFFFFF";
-      ctx.font = "bold 15px system-ui";
-      ctx.textAlign = "center";
-      ctx.fillText("🧺 Panier Récolte", 250, 328);
-    }
-
-    // 2. CHEMISTRY COLOR LAB (Bubbling flasks, colorful test tubes, vapor smoke)
-    else if (eng === "chemistry") {
-      // Lab bench table
-      ctx.fillStyle = "#334155";
-      ctx.fillRect(40, 260, 420, 20);
-      ctx.fillStyle = "#1E293B";
-      ctx.fillRect(60, 280, 20, 80);
-      ctx.fillRect(420, 280, 20, 80);
-
-      // Central Erlenmeyer Flask
-      ctx.strokeStyle = "rgba(255, 255, 255, 0.8)";
-      ctx.lineWidth = 4;
-      ctx.beginPath();
-      ctx.moveTo(230, 120);
-      ctx.lineTo(270, 120);
-      ctx.lineTo(270, 160);
-      ctx.lineTo(330, 260);
-      ctx.lineTo(170, 260);
-      ctx.lineTo(230, 160);
-      ctx.closePath();
-      ctx.stroke();
-
-      // Fluid in flask
-      ctx.fillStyle = state.chemFlaskColor || "#F97316";
-      ctx.beginPath();
-      ctx.moveTo(185, 258);
-      ctx.lineTo(315, 258);
-      ctx.lineTo(290, 200);
-      ctx.lineTo(210, 200);
-      ctx.closePath();
-      ctx.fill();
-
-      // Bubbles rising in potion
-      if (Math.random() < 0.2) {
-        state.chemBubbles.push({ x: 230 + Math.random() * 40, y: 250, r: 3 + Math.random() * 4, vy: 1.5 });
-      }
-      state.chemBubbles.forEach((b, i) => {
-        b.y -= b.vy;
-        ctx.fillStyle = "rgba(255, 255, 255, 0.7)";
-        ctx.beginPath();
-        ctx.arc(b.x, b.y, b.r, 0, Math.PI * 2);
-        ctx.fill();
-        if (b.y < 190) state.chemBubbles.splice(i, 1);
-      });
-
-      // Side Beakers (Red, Blue, Yellow)
-      const beakers = [
-        { label: "Rouge", color: "#EF4444", x: 90, y: 190 },
-        { label: "Bleu", color: "#3B82F6", x: 370, y: 190 },
-        { label: "Jaune", color: "#FBBF24", x: 250, y: 60 }
-      ];
-      beakers.forEach(b => {
-        ctx.fillStyle = b.color;
-        ctx.beginPath();
-        ctx.roundRect(b.x - 20, b.y, 40, 60, [0, 0, 12, 12]);
-        ctx.fill();
-        ctx.strokeStyle = "#FFFFFF";
-        ctx.lineWidth = 2.5;
-        ctx.stroke();
-        ctx.fillStyle = "#FFFFFF";
-        ctx.font = "bold 11px system-ui";
-        ctx.textAlign = "center";
-        ctx.fillText(b.label, b.x, b.y + 76);
-      });
-    }
-
-    // 3. BOTANY JARDIN (Soil, Watering Can, Sunshine, Sprouting)
-    else if (eng === "botany") {
-      // Sunshine in upper corner
-      ctx.fillStyle = "#F59E0B";
-      ctx.beginPath();
-      ctx.arc(440, 60, 36, 0, Math.PI * 2);
-      ctx.fill();
-      ctx.font = "28px system-ui";
-      ctx.fillText("☀️", 440, 70);
-
-      // Garden Soil Pot
-      ctx.fillStyle = "#B45309";
-      ctx.beginPath();
-      ctx.moveTo(170, 220);
-      ctx.lineTo(330, 220);
-      ctx.lineTo(300, 330);
-      ctx.lineTo(200, 330);
-      ctx.closePath();
-      ctx.fill();
-      ctx.strokeStyle = "#78350F";
-      ctx.lineWidth = 4;
-      ctx.stroke();
-
-      // Rich Soil
-      ctx.fillStyle = "#3F2E1E";
-      ctx.beginPath();
-      ctx.ellipse(250, 220, 75, 18, 0, 0, Math.PI * 2);
-      ctx.fill();
-
-      // Sprouting animated stem & sunflower
-      ctx.strokeStyle = "#10B981";
-      ctx.lineWidth = 8;
-      ctx.beginPath();
-      ctx.moveTo(250, 220);
-      ctx.quadraticCurveTo(240, 160, 250, 120);
-      ctx.stroke();
-
-      // Green Leaves
-      ctx.fillStyle = "#059669";
-      ctx.beginPath();
-      ctx.ellipse(225, 170, 22, 10, -0.4, 0, Math.PI * 2);
-      ctx.ellipse(275, 150, 22, 10, 0.4, 0, Math.PI * 2);
-      ctx.fill();
-
-      // Big blooming sunflower
-      ctx.font = "52px system-ui";
-      ctx.textAlign = "center";
-      ctx.fillText("🌻", 250, 120);
-
-      // Fluttering butterfly
-      const bY = 90 + Math.sin(time * 0.005) * 8;
-      ctx.font = "24px system-ui";
-      ctx.fillText("🦋", 170, bY);
-    }
-
-    // 4. AQUARIUM FLOTTE OU COULE (Density & Buoyancy)
-    else if (eng === "density") {
-      // Glass Aquarium
-      ctx.fillStyle = "#0284C7";
-      ctx.fillRect(80, 100, 340, 220);
-      ctx.strokeStyle = "#38BDF8";
-      ctx.lineWidth = 4;
-      ctx.strokeRect(80, 100, 340, 220);
-
-      // Water surface waves
-      ctx.fillStyle = "rgba(255, 255, 255, 0.3)";
-      ctx.fillRect(80, 100, 340, 8);
-
-      // Sandy seabed with shells
-      ctx.fillStyle = "#D97706";
-      ctx.fillRect(80, 300, 340, 20);
-
-      // Swimming friendly fish
-      const fishX = 140 + Math.sin(time * 0.003) * 50;
-      ctx.font = "28px system-ui";
-      ctx.textAlign = "center";
-      ctx.fillText("🐟", fishX, 180);
-
-      // Test object
-      const isFloat = q.ans === "Flotte";
-      const objY = isFloat ? 120 + Math.sin(time * 0.004) * 4 : 290;
-      ctx.font = "44px system-ui";
-      ctx.fillText(q.icon || "🍎", 250, objY);
-    }
-
-    // 5. ELECTRIC CIRCUIT & LIGHTBULB
-    else if (eng === "circuit") {
-      // 9V Battery
-      ctx.fillStyle = "#DC2626";
-      ctx.fillRect(70, 180, 50, 90);
-      ctx.fillStyle = "#F59E0B";
-      ctx.fillRect(85, 168, 20, 12);
-      ctx.fillStyle = "#FFFFFF";
-      ctx.font = "bold 13px system-ui";
-      ctx.textAlign = "center";
-      ctx.fillText("9V", 95, 230);
-
-      // Conductive Wires
-      ctx.strokeStyle = "#F59E0B";
-      ctx.lineWidth = 6;
-      ctx.beginPath();
-      ctx.moveTo(95, 170);
-      ctx.lineTo(95, 80);
-      ctx.lineTo(250, 80); // To bulb
-      ctx.moveTo(250, 130);
-      ctx.lineTo(250, 220); // Switch
-      ctx.lineTo(380, 220);
-      ctx.lineTo(380, 310);
-      ctx.lineTo(95, 310);
-      ctx.lineTo(95, 270);
-      ctx.stroke();
-
-      // Radiant Lightbulb
-      ctx.fillStyle = "rgba(250, 204, 21, 0.4)";
-      ctx.beginPath();
-      ctx.arc(250, 90, 45, 0, Math.PI * 2);
-      ctx.fill();
-
-      ctx.font = "50px system-ui";
-      ctx.textAlign = "center";
-      ctx.fillText("💡", 250, 105);
-
-      // Spinning Electric Fan
-      ctx.font = "44px system-ui";
-      ctx.fillText("🌀", 380, 220);
-    }
-
-    // 6. SAVANNA MAGIC LABYRINTH ("lapirain")
-    else if (eng === "maze") {
-      // Maze corridors
-      ctx.strokeStyle = "#475569";
-      ctx.lineWidth = 8;
-      ctx.strokeRect(60, 40, 380, 300);
-
-      // Inner walls
-      ctx.beginPath();
-      ctx.moveTo(150, 40); ctx.lineTo(150, 200);
-      ctx.moveTo(250, 340); ctx.lineTo(250, 160);
-      ctx.moveTo(250, 160); ctx.lineTo(350, 160);
-      ctx.stroke();
-
-      // Magical Portal Exit
-      ctx.font = "44px system-ui";
-      ctx.textAlign = "center";
-      ctx.fillText("🌀", 390, 290);
-
-      // Lion Mascot Moving
-      const lionX = state.playerPos ? state.playerPos.x : 90;
-      const lionY = state.playerPos ? state.playerPos.y : 90;
-      ctx.font = "40px system-ui";
-      ctx.fillText("🦁", lionX, lionY);
-    }
-
-    // 7. ANIMAL TANGRAM PUZZLE
-    else if (eng === "puzzle") {
-      ctx.fillStyle = "#334155";
-      ctx.beginPath();
-      ctx.roundRect(140, 70, 220, 220, 20);
-      ctx.fill();
-      ctx.strokeStyle = "#64748B";
-      ctx.lineWidth = 3;
-      ctx.stroke();
-
-      ctx.font = "80px system-ui";
-      ctx.textAlign = "center";
-      ctx.fillText(q.icon || "🦒", 250, 195);
-      ctx.font = "bold 14px system-ui";
-      ctx.fillStyle = "#CBD5E1";
-      ctx.fillText("Place la forme manquante !", 250, 260);
-    }
-
-    // Other engines (safari, frog, fishing, train, studio, djembe, rhyme)
-    else if (eng === "safari") {
-      ctx.fillStyle = "#F59E0B";
-      ctx.fillRect(0, 260, W, 120);
-      ctx.font = "72px system-ui";
-      ctx.textAlign = "center";
-      ctx.fillText(q.animal || "🦁", 250, 230);
-      ctx.fillStyle = "#FFFFFF";
-      ctx.font = "bold 48px system-ui";
-      ctx.fillText(q.ans || "A", 250, 330);
-    }
-    else if (eng === "frog") {
-      ctx.fillStyle = "#0284C7";
-      ctx.fillRect(0, 0, W, H);
-      // Lilypads
-      [-120, 0, 120].forEach((ox, i) => {
-        ctx.fillStyle = "#15803D";
-        ctx.beginPath();
-        ctx.ellipse(250 + ox, 280, 50, 20, 0, 0, Math.PI * 2);
-        ctx.fill();
-      });
-      ctx.font = "48px system-ui";
-      ctx.textAlign = "center";
-      ctx.fillText("🐸", 250, 250);
-    }
-    else {
-      ctx.fillStyle = "#FFFFFF";
-      ctx.font = "bold 24px system-ui";
-      ctx.textAlign = "center";
-      ctx.fillText(q.icon || "🎮", 250, 180);
-      ctx.fillText(q.q || "", 250, 230);
-    }
-
-    // Floating Arcade Points & Celebratory text
-    state.floatingTexts.forEach((ft, i) => {
-      ctx.save();
-      ctx.fillStyle = ft.color || "#FBBF24";
-      ctx.globalAlpha = Math.max(0, ft.alpha);
-      ctx.font = "bold 24px system-ui";
-      ctx.textAlign = "center";
-      ctx.fillText(ft.text, ft.x, ft.y);
-      ctx.restore();
-      ft.y -= 1.8;
-      ft.alpha -= 0.025;
-      if (ft.alpha <= 0) state.floatingTexts.splice(i, 1);
-    });
-  }
-
-  function tick(time) {
-    draw(time);
-    requestAnimationFrame(tick);
-  }
-
-  // ============================================================================
-  // DIRECT TOUCH & MOUSE HANDLERS (Canvas Drag-and-Drop)
-  // ============================================================================
-  function handleCanvasPointer(e) {
-    const rect = canvas.getBoundingClientRect();
-    const clientX = e.touches ? e.touches[0].clientX : e.clientX;
-    const clientY = e.touches ? e.touches[0].clientY : e.clientY;
-    const scaleX = W / rect.width;
-    const scaleY = H / rect.height;
-    const x = (clientX - rect.left) * scaleX;
-    const y = (clientY - rect.top) * scaleY;
-
-    // Fruit pluck
-    if (state.engineType === "fruit") {
-      const hit = state.fruits.find(f => !f.picked && Math.hypot(f.x - x, f.y - y) < 40);
-      if (hit) {
-        hit.picked = true;
-        AudioEngine.playSuccess();
-        const remaining = state.fruits.filter(f => f.picked).length;
-        if (remaining >= parseInt(state.question.ans)) {
-          handleAnswer(state.question.ans);
-        }
-      }
-    }
-    // Maze drag navigation
-    else if (state.engineType === "maze") {
-      state.playerPos = { x, y };
-      if (x > 360 && y > 260) {
-        handleAnswer("Sortie");
-      }
-    }
-    // Chemistry beaker pour
-    else if (state.engineType === "chemistry") {
-      AudioEngine.playPour();
-      handleAnswer(state.question.ans);
-    }
-    // Botany tap
-    else if (state.engineType === "botany") {
-      AudioEngine.playSuccess();
-      handleAnswer(state.question.ans);
-    }
-    // Density drop
-    else if (state.engineType === "density") {
-      AudioEngine.playSplash();
-      handleAnswer(state.question.ans);
-    }
-    // Circuit connect
-    else if (state.engineType === "circuit") {
-      AudioEngine.playZap();
-      handleAnswer(state.question.ans);
-    }
-    // Puzzle snap
-    else if (state.engineType === "puzzle") {
-      AudioEngine.playChime();
-      handleAnswer(state.question.ans);
-    }
-  }
-
-  canvas.addEventListener("mousedown", handleCanvasPointer);
-  canvas.addEventListener("touchstart", (e) => {
-    e.preventDefault();
-    handleCanvasPointer(e);
-  }, { passive: false });
-
-  // ============================================================================
-  // VIEW NAVIGATION & HUB RENDERING
-  // ============================================================================
-  function showHub() {
-    state.currentView = "hub";
-    $("view-game").style.display = "none";
-    $("view-hub").style.display = "flex";
+  const rand = n => Math.floor(Math.random() * n);
+  const shuffle = a => [...a].sort(() => Math.random() - 0.5);
+  const pick = a => a[rand(a.length)];
+
+  function clearStage() {
+    state.token++;
+    if (state.timer) clearTimeout(state.timer);
+    state.timer = null;
     VoiceEngine.cancel();
-    renderWorldCards();
-  }
-
-  function showGame(category, gameId) {
-    state.currentView = "game";
-    $("victory-modal").classList.remove("open");
-    $("gameover-modal").classList.remove("open");
-    $("tutor-modal").classList.remove("open");
-
-    state.lives = 3;
-    state.round = 1;
-    state.combo = 0;
-    state.roundAdvancing = false;
-
-    if (category) state.category = category;
-    if (gameId) state.game = gameId;
-
-    const games = CURRICULUM[state.lang].games[state.category] || [];
-    const gObj = games.find(g => g.id === state.game) || games[0];
-    if (gObj) {
-      state.game = gObj.id;
-      state.engineType = gObj.engine;
-    }
-
-    $("view-hub").style.display = "none";
-    $("view-game").style.display = "flex";
-
-    renderGameSwitchPills();
-    initGameArena();
-  }
-
-  function renderWorldCards() {
-    const container = $("worlds-grid");
-    container.innerHTML = "";
-    const catEntries = Object.entries(CURRICULUM[state.lang].categories);
-
-    catEntries.forEach(([catKey, conf]) => {
-      const card = document.createElement("div");
-      card.className = "world-card";
-      card.dataset.cat = catKey;
-      card.style.setProperty("--card-accent", conf.accent);
-      card.style.setProperty("--card-bg", conf.bg);
-
-      card.innerHTML = `
-        <div class="world-card-header">
-          <div class="world-icon-wrap">${conf.icon}</div>
-          <div class="world-info">
-            <h3>${conf.label}</h3>
-            <p>${conf.topics ? conf.topics[state.grade] || conf.topics[0] : ""}</p>
-          </div>
-        </div>
-        <div class="world-topics">
-          ${(conf.topics || []).map(t => '<span class="topic-tag">' + t + '</span>').join('')}
-        </div>
-        <button class="world-enter-btn">Jouer & Découvrir 🚀</button>
-      `;
-
-      card.onclick = () => {
-        AudioEngine.playClick();
-        const games = CURRICULUM[state.lang].games[catKey] || [];
-        showGame(catKey, games[0] ? games[0].id : null);
-      };
-      container.appendChild(card);
+    $('tutor').classList.remove('visible');
+    $('feedback').textContent = '';
+    
+    // Clear dynamic elements in stage but keep canvas
+    const stage = $('stage');
+    Array.from(stage.children).forEach(ch => {
+      if (ch.id !== 'lab-canvas') ch.remove();
     });
+    canvas.classList.remove('visible');
   }
 
-  function renderGameSwitchPills() {
-    const container = $("game-switch-pills");
-    container.innerHTML = "";
-    const games = CURRICULUM[state.lang].games[state.category] || [];
+  function el(tag, cls, txt) {
+    const e = document.createElement(tag);
+    if (cls) e.className = cls;
+    if (txt !== undefined) e.textContent = txt;
+    return e;
+  }
 
-    games.forEach(g => {
-      const btn = document.createElement("button");
-      btn.className = "game-switch-pill" + (g.id === state.game ? " active" : "");
-      btn.textContent = g.icon + " " + g.name;
-      btn.onclick = () => {
-        AudioEngine.playClick();
-        showGame(state.category, g.id);
-      };
-      container.appendChild(btn);
-    });
-
-    const activeGame = games.find(g => g.id === state.game);
-    $("game-title-badge").textContent = (activeGame ? activeGame.icon + " " + activeGame.name : "🎮 Mini-Jeu");
+  function stageText(t) {
+    const p = el('p', 'instruction', t);
+    p.id = 'instruction';
+    $('stage').prepend(p);
   }
 
   // ============================================================================
-  // EVENT LISTENERS
+  // PROGRESSION & SCORING (Continuous Learning)
   // ============================================================================
-  $("btn-back-hub").onclick = () => {
-    AudioEngine.playClick();
-    showHub();
-  };
+  function updateScore() {
+    const oldLevel = state.level;
+    // Advance to next level every 3 points
+    state.level = 1 + Math.floor(state.score / 3);
 
-  $("btn-speak").onclick = () => {
-    if (state.question) {
-      VoiceEngine.speak(state.question.speech || state.question.q);
+    $('scoreText').textContent = '⭐ ' + (state.score * 10) + ' XP';
+    $('levelText').textContent = (state.lang === 'fr' ? 'Niveau ' : 'Level ') + state.level;
+    $('comboPill').textContent = '🔥 Combo x' + Math.max(1, state.streak);
+
+    // Progress bar towards next level milestone (0% to 100%)
+    const pct = ((state.score % 3) / 3) * 100;
+    $('progress').style.width = pct + '%';
+
+    // LEVEL UP BANNER
+    if (state.level > oldLevel) {
+      AudioEngine.playLevelUp();
+      const msg = TEXT[state.lang].levelUp + ' ⭐';
+      $('feedback').textContent = msg;
+      VoiceEngine.speak(msg);
     }
-  };
+  }
 
-  $("btn-lang").onclick = () => {
-    AudioEngine.playClick();
-    state.lang = state.lang === "fr" ? "en" : "fr";
-    $("btn-lang").textContent = state.lang === "fr" ? "🇫🇷 FR" : "🇬🇧 EN";
-    VoiceEngine.lang = state.lang;
-    if (state.currentView === "hub") {
-      renderWorldCards();
-    } else {
-      renderGameSwitchPills();
-      initGameArena();
+  function reward() {
+    if (state.paused) return;
+    state.score++;
+    state.streak++;
+    state.round++;
+    updateScore();
+
+    const okMsg = TEXT[state.lang].correct;
+    $('feedback').textContent = okMsg;
+    VoiceEngine.speak(okMsg);
+
+    const token = state.token;
+    state.timer = setTimeout(() => {
+      if (token === state.token && !state.paused) {
+        nextRound();
+      }
+    }, 1200);
+  }
+
+  function incorrect() {
+    if (state.paused) return;
+    state.streak = 0;
+    state.mistakes++;
+    updateScore();
+
+    const err = TEXT[state.lang].wrong;
+    $('feedback').textContent = err;
+    VoiceEngine.speak(err);
+
+    // After 2 mistakes, automatically offer the Step-by-Step Tutor
+    if (state.mistakes >= 2) {
+      setTimeout(() => openTutor(), 600);
     }
-  };
+  }
 
-  // Grade Filter
-  document.querySelectorAll(".grade-pill").forEach(pill => {
-    pill.onclick = () => {
-      AudioEngine.playClick();
-      document.querySelectorAll(".grade-pill").forEach(p => p.classList.remove("active"));
-      pill.classList.add("active");
-      state.grade = parseInt(pill.dataset.grade) || 0;
-      if (state.currentView === "hub") renderWorldCards();
-      else initGameArena();
+  // ============================================================================
+  // PROCEDURAL MATH QUESTION WITH STEP-BY-STEP TRICKS
+  // ============================================================================
+  function mathQuestion() {
+    const tier = GRADES.indexOf(state.grade);
+    const lvl = state.level;
+    let a, b, op, ans, steps = [];
+
+    // Maternelle: 1 to 5+
+    if (tier === 0) {
+      a = 1 + rand(Math.min(5, 2 + lvl));
+      b = 1 + rand(Math.min(4, 1 + lvl));
+      op = '+';
+      ans = a + b;
+      steps = [
+        ["Regarde le premier groupe d'objets.", "🔵 ".repeat(a), "Astuce : Place le premier nombre (" + a + ") dans ta mémoire !"],
+        ["Ajoute le deuxième groupe d'objets.", "🟡 ".repeat(b), "Astuce : Sors tes doigts pour compter le deuxième groupe (" + b + ") !"],
+        ["Compte tout ensemble !", "🔵 ".repeat(a) + "🟡 ".repeat(b) + " = " + ans, "Astuce : Commence par " + a + " puis avance : " + Array.from({length: b}, (_, i) => a + 1 + i).join("... ") + " !"]
+      ];
+    }
+    // SIL / CP: Additions & Soustractions up to 20
+    else if (tier === 1) {
+      a = 2 + rand(5 + lvl * 3);
+      b = 1 + rand(4 + lvl * 2);
+      op = (lvl >= 2 && rand(2) === 1) ? '-' : '+';
+      if (op === '-' && b > a) [a, b] = [b, a];
+      ans = op === '+' ? a + b : a - b;
+      steps = [
+        ["Identifie les deux nombres et le signe (" + op + ").", a + " " + op + " " + b, "Astuce : Si c'est +, on avance. Si c'est -, on recule comme un crabe !"],
+        ["Décompose le calcul.", op === '+' ? a + " ➜ avance de " + b : a + " ➜ recule de " + b, "Astuce : Mets le grand nombre (" + a + ") dans ta tête !"],
+        ["Contrôle ton résultat final.", a + " " + op + " " + b + " = " + ans, "Astuce : " + ans + " est la bonne réponse !"]
+      ];
+    }
+    // CE1 / CE2: Multiplications (Tables 2, 3, 4, 5, 10) & Partages
+    else if (tier === 2) {
+      op = pick(lvl >= 2 ? ['×', '+', '-'] : ['×', '+']);
+      a = 2 + rand(4 + lvl);
+      b = 2 + rand(4 + lvl);
+      if (op === '×') {
+        ans = a * b;
+        steps = [
+          ["Une multiplication est une addition répétée.", a + " × " + b, "Astuce : C'est " + b + " paquets de " + a + " bonbons !"],
+          ["Visualise les rangées.", Array(b).fill("📦 (" + a + ")").join(" + "), "Astuce : Récite la table de " + a + " !"],
+          ["Vérifie le total.", a + " × " + b + " = " + ans, "Astuce : " + a + " × " + b + " font exactement " + ans + " !"]
+        ];
+      } else {
+        ans = op === '+' ? a + b : a - b;
+        if (op === '-' && b > a) [a, b] = [b, a], ans = a - b;
+        steps = [
+          ["Pose le calcul calmement.", a + " " + op + " " + b, "Astuce : Découpe en dizaines et unités !"],
+          ["Calcule les unités.", "Résultat intermédiaire", "Astuce : Fais attention aux retenues éventuelles !"],
+          ["Vérifie le total.", a + " " + op + " " + b + " = " + ans, "Bravo !"]
+        ];
+      }
+    }
+    // CM1 / CM2: Calcul rapide, fractions et grands nombres
+    else {
+      op = pick(lvl >= 2 ? ['×', '÷', '+', '-'] : ['×', '+', '-']);
+      a = 10 + rand(15 + lvl * 10);
+      b = 2 + rand(5 + lvl * 2);
+      if (op === '÷') {
+        ans = a;
+        a = ans * b;
+      } else if (op === '×') {
+        ans = a * b;
+      } else if (op === '-') {
+        if (a < b) [a, b] = [b, a];
+        ans = a - b;
+      } else {
+        ans = a + b;
+      }
+      steps = [
+        ["Analyse les grandeurs et l'opération.", a + " " + op + " " + b, "Astuce : Arrondis d'abord pour avoir un ordre de grandeur !"],
+        ["Effectue le calcul mentalement.", "Opération en cours...", "Astuce : Décompose " + a + " = " + (Math.floor(a/10)*10) + " + " + (a%10)],
+        ["Vérifie l'exactitude.", a + " " + op + " " + b + " = " + ans, "Astuce : " + a + " " + op + " " + b + " donne " + ans + " !"]
+      ];
+    }
+
+    // Generate unique distractor options
+    const options = new Set([ans]);
+    while (options.size < 4) {
+      const delta = pick([-5, -3, -2, -1, 1, 2, 3, 5]);
+      options.add(Math.max(0, ans + delta));
+    }
+
+    return {
+      q: a + " " + op + " " + b + " = ?",
+      ans: ans,
+      opts: shuffle([...options]),
+      steps: steps,
+      key: state.grade + '-' + a + '-' + op + '-' + b + '-' + state.level
     };
-  });
+  }
 
-  $("btn-vic-continue").onclick = () => {
-    $("victory-modal").classList.remove("open");
-    showHub();
+  function uniqueMath() {
+    let q;
+    for (let i = 0; i < 20; i++) {
+      q = mathQuestion();
+      if (!state.used.has(q.key)) break;
+    }
+    state.used.add(q.key);
+    if (state.used.size > 80) state.used.clear();
+    return q;
+  }
+
+  // ============================================================================
+  // GAME MODES IMPLEMENTATION
+  // ============================================================================
+  function start(gameKey) {
+    clearStage();
+    state.game = gameKey;
+    state.mistakes = 0;
+    state.paused = false;
+
+    $('cards').style.display = 'none';
+    $('hero').style.display = 'none';
+    $('workspace').classList.add('active');
+
+    const names = {
+      comet: "🚀 Comet Defender (Maths)",
+      fruit: "🧺 Verger Gourmand (Dénombrement)",
+      fish: "🐠 Phonics Fishing (Lecture)",
+      word: "🧩 Word Builder (Orthographe)",
+      frog: "🐸 Nénuphars Saut (Syllabes)",
+      studio: "👄 Bouche Magique (Prononciation)",
+      chemistry: "🧪 Labo de Chimie (Mélanges)",
+      botany: "🌻 Jardin Botanique (Sciences)",
+      density: "🌊 Flotte ou Coule (Densité)",
+      circuit: "💡 Circuit Électrique (Sciences)",
+      maze: "🌀 Labyrinthe Magique (Logique)",
+      puzzle: "🦒 Tangram des Animaux (Puzzles)"
+    };
+    $('gameTitle').textContent = names[gameKey] || "🎮 Jeu Éducatif";
+
+    nextRound();
+  }
+
+  function nextRound() {
+    clearStage();
+    state.mistakes = 0;
+    if (!state.game) return;
+
+    if (state.game === 'comet') playComet();
+    else if (state.game === 'fish') playFish();
+    else if (state.game === 'word') playWord();
+    else if (state.game === 'fruit') playFruit();
+    else if (state.game === 'frog') playFrog();
+    else if (state.game === 'studio') playStudio();
+    else if (state.game === 'chemistry') playChemistry();
+    else if (state.game === 'botany') playBotany();
+    else if (state.game === 'density') playDensity();
+    else if (state.game === 'circuit') playCircuit();
+    else if (state.game === 'maze') playMaze();
+    else if (state.game === 'puzzle') playPuzzle();
+  }
+
+  // 1. COMET DEFENDER (Arcade Falling Meteors)
+  function playComet() {
+    const q = uniqueMath();
+    state.question = q;
+    state.answer = q.ans;
+    state.tutorSteps = q.steps;
+
+    stageText((state.lang === 'fr' ? 'Touche la météorite qui vaut : ' : 'Tap the meteor equal to: ') + q.q);
+    const stage = $('stage');
+    stage.style.background = 'linear-gradient(160deg, #182E60 0%, #3B4F8A 100%)';
+    stage.querySelector('.instruction').style.color = '#FFFFFF';
+
+    const planet = el('div', 'planet');
+    const ship = el('div', 'ship', '🚀');
+    stage.append(planet, ship);
+
+    // Meteors speed increases with level
+    const speed = Math.max(3.8, 11 - Math.min(6, state.level * 1.2));
+    q.opts.forEach((val, i) => {
+      const m = el('button', 'meteor', val);
+      m.style.left = (8 + i * 22) + '%';
+      m.style.top = '50px';
+      m.style.animationDuration = speed + 's';
+      m.style.animationDelay = (i * 0.15) + 's';
+
+      m.onclick = () => {
+        if (state.paused) return;
+        if (val === q.ans) {
+          AudioEngine.playSuccess();
+          reward();
+        } else {
+          m.style.opacity = '0.3';
+          m.disabled = true;
+          AudioEngine.playWrong();
+          incorrect();
+        }
+      };
+
+      stage.append(m);
+    });
+
+    VoiceEngine.speak(q.q);
+  }
+
+  // 2. PHONICS FISHING (Animated River with Swimming Fish)
+  function playFish() {
+    const pool = WORDS[state.lang][state.grade];
+    const word = pool[(state.score + state.round) % pool.length];
+    state.answer = word;
+
+    stageText(TEXT[state.lang].listen + '🔊 « ' + word + ' »');
+    const stage = $('stage');
+    stage.classList.add('water');
+    stage.style.background = 'linear-gradient(#7DD3FC, #0284C7)';
+    stage.querySelector('.instruction').style.color = '#0F172A';
+
+    const distractors = pool.filter(w => w !== word);
+    const opts = shuffle([word, ...shuffle(distractors).slice(0, 3)]);
+    const colors = ['#FFC44C', '#FF9F9B', '#94E6C8', '#B7A6F5'];
+
+    // Fish swim faster at higher levels
+    const speed = Math.max(2.5, 6.5 - state.level * 0.6);
+    opts.forEach((w, i) => {
+      const f = el('button', 'fish', w);
+      f.style.top = (65 + (i % 2) * 110) + 'px';
+      f.style.left = (6 + (i % 2) * 45 + Math.floor(i / 2) * 8) + '%';
+      f.style.background = colors[i % colors.length];
+      f.style.setProperty('--speed', speed + 's');
+
+      f.onclick = () => {
+        if (state.paused) return;
+        if (w === word) {
+          AudioEngine.playSuccess();
+          reward();
+        } else {
+          f.style.opacity = '0.35';
+          f.disabled = true;
+          AudioEngine.playWrong();
+          incorrect();
+        }
+      };
+      stage.append(f);
+    });
+
+    // Bubbles
+    for (let i = 0; i < 10; i++) {
+      const b = el('div', 'bubble');
+      b.style.left = rand(95) + '%';
+      b.style.bottom = rand(60) + 'px';
+      b.style.animationDelay = (-rand(40) / 10) + 's';
+      stage.append(b);
+    }
+
+    state.tutorSteps = [
+      ["Écoute bien la prononciation du mot.", "👂 " + word, "Astuce : Écoute le premier son qui sort de ta bouche !"],
+      ["Décompose les lettres du mot.", "🔤 " + word.split('').join(' · '), "Astuce : Lis chaque lettre de gauche à droite !"],
+      ["Retrouve le poisson correspondant.", "🐠 " + word, "Astuce : Cherche le mot qui commence par " + word[0] + " !"]
+    ];
+
+    VoiceEngine.speak(word);
+  }
+
+  // 3. WORD BUILDER (Tactile Letter Slots and Tiles)
+  function playWord() {
+    const pool = WORDS[state.lang][state.grade];
+    const word = pool[(state.score + state.round) % pool.length];
+    state.answer = word;
+    state.placed = [];
+
+    stageText(TEXT[state.lang].build + ' « ' + word + ' »');
+    const stage = $('stage');
+    stage.style.background = 'linear-gradient(150deg, #EEF5FF 0%, #F8FBFF 100%)';
+    stage.querySelector('.instruction').style.color = '#17233D';
+
+    const slots = el('div', 'slots');
+    const tiles = el('div', 'tiles');
+    stage.append(slots, tiles);
+
+    const letters = shuffle(word.split('').map((c, i) => ({ c, i })));
+
+    const render = () => {
+      slots.replaceChildren();
+      state.placed.forEach(p => {
+        const s = el('button', 'slot', p.c);
+        s.title = 'Clique pour retirer la lettre';
+        s.onclick = () => {
+          if (state.paused) return;
+          state.placed = state.placed.filter(x => x.i !== p.i);
+          render();
+        };
+        slots.append(s);
+      });
+      for (let i = state.placed.length; i < word.length; i++) {
+        slots.append(el('span', 'slot', '_'));
+      }
+
+      tiles.replaceChildren();
+      letters.forEach(p => {
+        const isUsed = state.placed.some(x => x.i === p.i);
+        const b = el('button', 'tile' + (isUsed ? ' used' : ''), p.c);
+        b.onclick = () => {
+          if (state.paused || isUsed) return;
+          state.placed.push(p);
+          render();
+
+          if (state.placed.length === word.length) {
+            const formed = state.placed.map(x => x.c).join('');
+            if (formed === word) {
+              AudioEngine.playSuccess();
+              reward();
+            } else {
+              AudioEngine.playWrong();
+              incorrect();
+              setTimeout(() => {
+                state.placed = [];
+                render();
+              }, 800);
+            }
+          }
+        };
+        tiles.append(b);
+      });
+    };
+
+    render();
+
+    state.tutorSteps = [
+      ["Écoute le mot en entier.", "👂 " + word, "Astuce : Répète le mot à voix haute pour entendre les syllabes !"],
+      ["Découpe les lettres dans l'ordre.", "🔤 " + word.split('').join(' - '), "Astuce : Place toujours la première lettre en premier !"],
+      ["Pose les lettres de gauche à droite.", "➡️ " + word, "Astuce : Si tu te trompes, clique sur la lettre posée pour l'enlever !"]
+    ];
+
+    VoiceEngine.speak(word);
+  }
+
+  // 4. FRUIT ORCHARD (Counting)
+  function playFruit() {
+    const maxFruits = state.grade === 'MAT' ? 5 : 8;
+    const count = 1 + ((state.score + state.round) % maxFruits);
+    state.answer = String(count);
+
+    stageText("Cueille exactement " + count + " mangues 🥭 pour le panier !");
+    const stage = $('stage');
+    stage.style.background = '#ECFDF5';
+
+    const scene = el('div', 'answers');
+    let plucked = 0;
+    for (let i = 0; i < maxFruits; i++) {
+      const btn = el('button', 'answer', '🥭');
+      btn.style.fontSize = '38px';
+      btn.onclick = () => {
+        if (state.paused) return;
+        btn.style.transform = 'scale(0.3)';
+        btn.style.opacity = '0.2';
+        btn.disabled = true;
+        plucked++;
+        AudioEngine.playSuccess();
+        if (plucked === count) {
+          reward();
+        } else if (plucked > count) {
+          incorrect();
+        }
+      };
+      scene.append(btn);
+    }
+    stage.append(scene);
+
+    state.tutorSteps = [
+      ["Observe la consigne.", "Compte jusqu'à " + count, "Astuce : Touche chaque mangue en disant son numéro : 1, 2, 3..."],
+      ["Ne dépasse pas le nombre demandé.", count + " mangues exactement", "Astuce : Arrête-toi dès que tu as atteint " + count + " !"]
+    ];
+
+    VoiceEngine.speak("Cueille exactement " + count + " mangues pour le panier !");
+  }
+
+  // 5. SYLLABLE FROG
+  function playFrog() {
+    const list = [
+      { word: "BANANE", missing: "BA", icon: "🍌", dist: ["LI", "PO"] },
+      { word: "TOMATE", missing: "TO", icon: "🍅", dist: ["MA", "SA"] },
+      { word: "PAPAYE", missing: "PA", icon: "🍈", dist: ["KO", "LU"] }
+    ];
+    const item = list[(state.score + state.round) % list.length];
+    state.answer = item.missing;
+
+    stageText("Fais sauter la grenouille sur la syllabe qui commence " + item.icon + " " + item.word + " :");
+    const stage = $('stage');
+    stage.style.background = '#E0F2FE';
+
+    const frog = el('div', '', '🐸');
+    frog.style.fontSize = '50px';
+    frog.style.textAlign = 'center';
+    stage.append(frog);
+
+    const answers = el('div', 'answers');
+    shuffle([item.missing, ...item.dist]).forEach(syl => {
+      const b = el('button', 'answer', syl);
+      b.onclick = () => {
+        if (state.paused) return;
+        if (syl === item.missing) {
+          AudioEngine.playSuccess();
+          reward();
+        } else {
+          AudioEngine.playWrong();
+          incorrect();
+        }
+      };
+      answers.append(b);
+    });
+    stage.append(answers);
+
+    state.tutorSteps = [
+      ["Écoute le début du mot " + item.word, "👂 " + item.missing + "...", "Astuce : Tape dans tes mains pour chaque syllabe !"],
+      ["Associe la consonne et la voyelle.", item.missing, "Astuce : B + A font BA, T + O font TO !"]
+    ];
+
+    VoiceEngine.speak("Quelle syllabe commence le mot " + item.word + " ?");
+  }
+
+  // 6. VOICE STUDIO (Mouth Articulation)
+  function playStudio() {
+    const list = [
+      { sound: "A", desc: "Bouche grande ouverte 🗣️", trick: "Astuce : Ouvre grand comme chez le docteur : Aaaa !" },
+      { sound: "O", desc: "Lèvres arrondies en cercle 👄", trick: "Astuce : Forme un rond parfait avec tes lèvres : Oooo !" },
+      { sound: "I", desc: "Grand sourire montrant les dents 😁", trick: "Astuce : Tire les lèvres sur les côtés en souriant : Iiii !" }
+    ];
+    const item = list[(state.score + state.round) % list.length];
+    state.answer = item.sound;
+
+    stageText("Observe la forme de la bouche : " + item.desc);
+    const stage = $('stage');
+    stage.style.background = '#FDF2F8';
+
+    const answers = el('div', 'answers');
+    shuffle(["A", "O", "I"]).forEach(s => {
+      const b = el('button', 'answer', s);
+      b.onclick = () => {
+        if (state.paused) return;
+        if (s === item.sound) {
+          AudioEngine.playSuccess();
+          reward();
+        } else {
+          AudioEngine.playWrong();
+          incorrect();
+        }
+      };
+      answers.append(b);
+    });
+    stage.append(answers);
+
+    state.tutorSteps = [
+      ["Regarde la position des lèvres.", item.desc, item.trick],
+      ["Émets le son à voix haute.", "[" + item.sound + "]", "Astuce : Ressens la vibration dans ta gorge !"]
+    ];
+
+    VoiceEngine.speak("Regarde la bouche : " + item.desc);
+  }
+
+  // 7. CHEMISTRY COLOR LAB
+  function playChemistry() {
+    const list = [
+      { p1: "Rouge", p2: "Jaune", ans: "Orange", hex: "#F97316", trick: "Astuce : Le rouge et le jaune s'unissent pour faire le coucher de soleil orange !" },
+      { p1: "Bleu", p2: "Jaune", ans: "Vert", hex: "#10B981", trick: "Astuce : Le bleu de l'eau et le jaune du soleil font la verdure verte !" },
+      { p1: "Bleu", p2: "Rouge", ans: "Violet", hex: "#8B5CF6", trick: "Astuce : Le bleu profond mélangé au rouge vif crée le violet magique !" }
+    ];
+    const item = list[(state.score + state.round) % list.length];
+    state.answer = item.ans;
+
+    stageText("Mélange magique : " + item.p1 + " + " + item.p2 + " = ?");
+    const stage = $('stage');
+    stage.style.background = '#FFFBEB';
+
+    // Show interactive Canvas
+    canvas.classList.add('visible');
+    drawChemistry(item);
+
+    const answers = el('div', 'answers');
+    shuffle([item.ans, "Noir", "Gris"]).forEach(color => {
+      const b = el('button', 'answer', color);
+      b.onclick = () => {
+        if (state.paused) return;
+        if (color === item.ans) {
+          AudioEngine.playSuccess();
+          reward();
+        } else {
+          AudioEngine.playWrong();
+          incorrect();
+        }
+      };
+      answers.append(b);
+    });
+    stage.append(answers);
+
+    state.tutorSteps = [
+      ["Découvre les couleurs primaires.", item.p1 + " et " + item.p2, "Astuce : Ces deux couleurs se fondent dans le flacon !"],
+      ["Observe la réaction chimique.", item.ans, item.trick]
+    ];
+
+    VoiceEngine.speak("Que donne le mélange du " + item.p1 + " et du " + item.p2 + " ?");
+  }
+
+  function drawChemistry(item) {
+    ctx.clearRect(0, 0, CW, CH);
+    // Lab bench
+    ctx.fillStyle = '#334155';
+    ctx.fillRect(40, 240, 420, 20);
+
+    // Beakers
+    ctx.fillStyle = '#EF4444';
+    ctx.fillRect(90, 160, 40, 70);
+    ctx.fillStyle = '#FBBF24';
+    ctx.fillRect(370, 160, 40, 70);
+
+    // Center Flask
+    ctx.strokeStyle = 'white';
+    ctx.lineWidth = 4;
+    ctx.beginPath();
+    ctx.moveTo(230, 100); ctx.lineTo(270, 100);
+    ctx.lineTo(270, 150); ctx.lineTo(320, 240);
+    ctx.lineTo(180, 240); ctx.lineTo(230, 150);
+    ctx.closePath();
+    ctx.stroke();
+
+    // Potion liquid
+    ctx.fillStyle = item.hex;
+    ctx.beginPath();
+    ctx.moveTo(195, 238); ctx.lineTo(305, 238);
+    ctx.lineTo(285, 180); ctx.lineTo(215, 180);
+    ctx.closePath();
+    ctx.fill();
+
+    ctx.font = '24px system-ui';
+    ctx.fillText('✨', 240, 140);
+  }
+
+  // 8. BOTANY & PLANT SPROUTING
+  function playBotany() {
+    const steps = [
+      { action: "Planter la graine", icon: "🌱", trick: "Astuce : La graine a besoin de la terre pour s'endormir et germer." },
+      { action: "Arroser d'eau", icon: "💧", trick: "Astuce : L'eau réveille la graine et nourrit ses premières racines." },
+      { action: "Donner du soleil", icon: "☀️", trick: "Astuce : La lumière du soleil donne l'énergie de la photosynthèse !" }
+    ];
+    const item = steps[(state.score + state.round) % steps.length];
+    state.answer = item.action;
+
+    stageText("Jardin des Sciences : Quelle est l'action essentielle pour la plante ?");
+    const stage = $('stage');
+    stage.style.background = '#ECFDF5';
+
+    const scene = el('div', 'answers');
+    shuffle(steps.map(s => s.action)).forEach(act => {
+      const b = el('button', 'answer', act);
+      b.onclick = () => {
+        if (state.paused) return;
+        if (act === item.action) {
+          AudioEngine.playSuccess();
+          reward();
+        } else {
+          AudioEngine.playWrong();
+          incorrect();
+        }
+      };
+      scene.append(b);
+    });
+    stage.append(scene);
+
+    state.tutorSteps = [
+      ["Les besoins vitaux d'un être vivant végétal.", item.action, item.trick],
+      ["Sans eau ni soleil, la graine ne peut pas s'épanouir.", "🌻 Tournesol", "Astuce : Terre + Eau + Soleil = Une belle fleur !"]
+    ];
+
+    VoiceEngine.speak("Que dois-tu faire pour aider la plante à pousser ?");
+  }
+
+  // 9. SINK OR FLOAT DENSITY
+  function playDensity() {
+    const list = [
+      { obj: "Pomme 🍎", ans: "Flotte", trick: "Astuce : La pomme contient beaucoup d'air entre ses cellules, elle flotte !" },
+      { obj: "Caillou 🪨", ans: "Coule", trick: "Astuce : La pierre est très lourde et dense, elle coule droit au fond !" },
+      { obj: "Bateau en bois 🪵", ans: "Flotte", trick: "Astuce : Le bois est plus léger que l'eau, il flotte sur les vagues !" }
+    ];
+    const item = list[(state.score + state.round) % list.length];
+    state.answer = item.ans;
+
+    stageText("Dépose l'objet dans l'aquarium : " + item.obj + " va-t-il flotter ou couler ?");
+    const stage = $('stage');
+    stage.style.background = '#E0F2FE';
+
+    const answers = el('div', 'answers');
+    ["Flotte", "Coule"].forEach(ans => {
+      const b = el('button', 'answer', ans);
+      b.onclick = () => {
+        if (state.paused) return;
+        if (ans === item.ans) {
+          AudioEngine.playSuccess();
+          reward();
+        } else {
+          AudioEngine.playWrong();
+          incorrect();
+        }
+      };
+      answers.append(b);
+    });
+    stage.append(answers);
+
+    state.tutorSteps = [
+      ["Observe la matière de l'objet.", item.obj, item.trick],
+      ["Comprends le principe d'Archimède.", item.ans === 'Flotte' ? "Surface de l'eau" : "Fond de l'aquarium", "Astuce : L'air fait flotter, la matière compacte fait couler !"]
+    ];
+
+    VoiceEngine.speak("L'objet " + item.obj + " flotte-t-il ou coule-t-il ?");
+  }
+
+  // 10. ELECTRIC CIRCUIT
+  function playCircuit() {
+    state.answer = "Fermé";
+    stageText("Pour allumer la lampe 💡 et faire tourner le ventilateur 🌀, le circuit doit être :");
+    const stage = $('stage');
+    stage.style.background = '#F8FAFC';
+
+    const answers = el('div', 'answers');
+    shuffle(["Fermé", "Ouvert", "Coupé"]).forEach(ans => {
+      const b = el('button', 'answer', ans);
+      b.onclick = () => {
+        if (state.paused) return;
+        if (ans === state.answer) {
+          AudioEngine.playSuccess();
+          reward();
+        } else {
+          AudioEngine.playWrong();
+          incorrect();
+        }
+      };
+      answers.append(b);
+    });
+    stage.append(answers);
+
+    state.tutorSteps = [
+      ["Le chemin de l'électricité.", "Pile ➜ Fil ➜ Lampe ➜ Pile", "Astuce : Le courant a besoin d'une boucle complète sans coupure !"],
+      ["Un interrupteur allumé.", "Circuit Fermé", "Astuce : Fermé = le pont est baissé, le courant passe !"]
+    ];
+
+    VoiceEngine.speak("Le circuit électrique doit-il être ouvert ou fermé ?");
+  }
+
+  // 11. SAVANNA MAGIC LABYRINTH ("lapirain")
+  function playMaze() {
+    state.answer = "Sortie";
+    stageText("Guide le lionceau 🦁 à travers les couloirs vers la sortie magique 🌀 !");
+    const stage = $('stage');
+    stage.style.background = '#FEF3C7';
+
+    canvas.classList.add('visible');
+    drawMaze();
+
+    const answers = el('div', 'answers');
+    ["Sortie 🌀", "Mur 🧱"].forEach(opt => {
+      const b = el('button', 'answer', opt);
+      b.onclick = () => {
+        if (state.paused) return;
+        if (opt.includes("Sortie")) {
+          AudioEngine.playSuccess();
+          reward();
+        } else {
+          AudioEngine.playWrong();
+          incorrect();
+        }
+      };
+      answers.append(b);
+    });
+    stage.append(answers);
+
+    // Canvas touch navigation
+    canvas.onpointerdown = (e) => {
+      const rect = canvas.getBoundingClientRect();
+      const x = (e.clientX - rect.left) * (CW / rect.width);
+      const y = (e.clientY - rect.top) * (CH / rect.height);
+      state.playerPos = { x, y };
+      drawMaze();
+      if (x > 380 && y > 240) {
+        AudioEngine.playSuccess();
+        reward();
+      }
+    };
+
+    state.tutorSteps = [
+      ["Observe le plan du labyrinthe.", "Lionceau ➜ Portail", "Astuce : Repère d'abord les chemins bloqués par un mur !"],
+      ["Suis le mur sans le lâcher.", "Navigation continue", "Astuce de l'explorateur : Longe le mur droit pour toujours trouver la sortie !"]
+    ];
+
+    VoiceEngine.speak("Guide le lionceau jusqu'au portail de sortie !");
+  }
+
+  function drawMaze() {
+    ctx.clearRect(0, 0, CW, CH);
+    ctx.fillStyle = '#1E293B';
+    ctx.fillRect(0, 0, CW, CH);
+
+    // Corridors
+    ctx.strokeStyle = '#475569';
+    ctx.lineWidth = 8;
+    ctx.strokeRect(50, 30, 400, 280);
+
+    ctx.beginPath();
+    ctx.moveTo(160, 30); ctx.lineTo(160, 180);
+    ctx.moveTo(260, 310); ctx.lineTo(260, 150);
+    ctx.moveTo(260, 150); ctx.lineTo(370, 150);
+    ctx.stroke();
+
+    // Portal Exit
+    ctx.font = '38px system-ui';
+    ctx.textAlign = 'center';
+    ctx.fillText('🌀', 410, 280);
+
+    // Lion Character
+    const px = state.playerPos ? state.playerPos.x : 90;
+    const py = state.playerPos ? state.playerPos.y : 90;
+    ctx.fillText('🦁', px, py);
+  }
+
+  // 12. ANIMAL TANGRAM PUZZLE
+  function playPuzzle() {
+    const list = [
+      { animal: "Girafe 🦒", shape: "Triangle 🔺", trick: "Astuce : Le long cou de la girafe utilise des pointes triangulaires !" },
+      { animal: "Éléphant 🐘", shape: "Carré 🟦", trick: "Astuce : Le corps massif de l'éléphant a une forme carrée et solide !" },
+      { animal: "Zèbre 🦓", shape: "Losange 🔷", trick: "Astuce : Les rayures et la posture du zèbre s'assemblent en losange !" }
+    ];
+    const item = list[(state.score + state.round) % list.length];
+    state.answer = item.shape;
+
+    stageText("Complète le tangram de la " + item.animal + " : Quelle forme s'insère ?");
+    const stage = $('stage');
+    stage.style.background = '#EEF2FF';
+
+    const answers = el('div', 'answers');
+    shuffle(list.map(l => l.shape)).forEach(sh => {
+      const b = el('button', 'answer', sh);
+      b.onclick = () => {
+        if (state.paused) return;
+        if (sh === item.shape) {
+          AudioEngine.playSuccess();
+          reward();
+        } else {
+          AudioEngine.playWrong();
+          incorrect();
+        }
+      };
+      answers.append(b);
+    });
+    stage.append(answers);
+
+    state.tutorSteps = [
+      ["Observe la silhouette de l'animal.", item.animal, "Astuce : Regarde le contour vide qui attend une pièce !"],
+      ["Associe la bonne forme géométrique.", item.shape, item.trick]
+    ];
+
+    VoiceEngine.speak("Quelle forme géométrique complète le puzzle ?");
+  }
+
+  // ============================================================================
+  // STEP-BY-STEP TUTOR WITH PEDAGOGICAL TRICKS
+  // ============================================================================
+  function openTutor() {
+    if (!state.game || !state.tutorSteps.length) return;
+    state.tutorStep = 0;
+    $('tutor').classList.add('visible');
+    renderTutorStep();
+  }
+
+  function renderTutorStep() {
+    const s = state.tutorSteps[state.tutorStep];
+    if (!s) return;
+    $('tutorText').textContent = (state.tutorStep + 1) + '/' + state.tutorSteps.length + ' — ' + s[0];
+    $('tutorVisual').textContent = s[1];
+    $('tutorTrick').textContent = s[2] || "Astuce de Léo : Observe bien les détails avant de choisir !";
+    $('tutorBack').disabled = (state.tutorStep === 0);
+    $('tutorNext').textContent = (state.tutorStep === state.tutorSteps.length - 1)
+      ? (state.lang === 'fr' ? 'Terminer ✓' : 'Finish ✓')
+      : (state.lang === 'fr' ? 'Suivant →' : 'Next →');
+
+    VoiceEngine.speak(s[0] + ". " + (s[2] || ""));
+  }
+
+  $('tutorBack').onclick = () => {
+    if (state.tutorStep > 0) {
+      state.tutorStep--;
+      renderTutorStep();
+    }
   };
 
-  $("btn-go-retry").onclick = () => {
-    $("gameover-modal").classList.remove("open");
-    showGame(state.category, state.game);
+  $('tutorNext').onclick = () => {
+    if (state.tutorStep < state.tutorSteps.length - 1) {
+      state.tutorStep++;
+      renderTutorStep();
+    } else {
+      $('tutor').classList.remove('visible');
+      VoiceEngine.cancel();
+    }
   };
 
-  $("mascot-avatar").onclick = () => {
+  $('tutorClose').onclick = () => {
+    $('tutor').classList.remove('visible');
+    VoiceEngine.cancel();
+  };
+
+  $('help').onclick = openTutor;
+
+  // ============================================================================
+  // WORKSPACE EVENT CONTROLS
+  // ============================================================================
+  $('home').onclick = () => {
+    clearStage();
+    state.game = null;
+    $('workspace').classList.remove('active');
+    $('cards').style.display = 'grid';
+    $('hero').style.display = 'flex';
+  };
+
+  $('listen').onclick = () => {
+    if (!state.game) return;
+    const txt = $('instruction')?.textContent || state.answer;
+    VoiceEngine.speak(txt || '');
+  };
+
+  $('pause').onclick = () => {
+    if (!state.game) return;
+    state.paused = !state.paused;
+    $('pause').textContent = state.paused ? '▶ Reprendre' : '⏸ Pause';
+    document.querySelectorAll('.meteor, .fish').forEach(x => {
+      x.style.animationPlayState = state.paused ? 'paused' : 'running';
+    });
+    if (state.paused) {
+      VoiceEngine.cancel();
+      $('feedback').textContent = TEXT[state.lang].paused;
+    } else {
+      $('feedback').textContent = '';
+    }
+  };
+
+  $('grade').onchange = e => {
+    state.grade = e.target.value;
+    if (state.game) nextRound();
+  };
+
+  $('lang').onchange = e => {
+    state.lang = e.target.value;
+    VoiceEngine.lang = state.lang;
+    $('headline').textContent = TEXT[state.lang].welcome;
+    $('heroText').textContent = TEXT[state.lang].intro;
+    if (state.game) nextRound();
+  };
+
+  $('mute').onclick = () => {
+    state.muted = !state.muted;
+    $('mute').textContent = state.muted ? '🔇 Muet' : '🔊 Son';
+    if (state.muted) VoiceEngine.cancel();
+  };
+
+  $('mascot-hero').onclick = () => {
     AudioEngine.playSuccess();
-    VoiceEngine.speak(state.lang === "fr" ? "Bienvenue chez Nateiva EduKids ! Choisis ton monde d'aventure." : "Welcome to Nateiva EduKids! Choose your adventure world.");
+    VoiceEngine.speak(state.lang === 'fr' ? "Bienvenue chez Nateiva Kids ! Choisis ton univers de jeu." : "Welcome to Nateiva Kids! Pick your game world.");
   };
+
+  document.querySelectorAll('[data-game]').forEach(b => {
+    b.onclick = () => start(b.dataset.game);
+  });
 
   // Global Controller Export
   window.NateivaApp = {
     state,
-    CURRICULUM,
-    showHub,
-    showGame,
-    generateQuestion: initGameArena,
-    handleAnswer,
-    AudioEngine,
-    VoiceEngine
+    start,
+    nextRound,
+    openTutor,
+    reward,
+    incorrect,
+    VoiceEngine,
+    AudioEngine
   };
-
-  showHub();
-  requestAnimationFrame(tick);
 });
 </script>
 </body>
