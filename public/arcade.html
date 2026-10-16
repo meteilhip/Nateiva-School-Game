@@ -20,12 +20,14 @@
   --green: #00C48C;
   --blue: #0084FF;
   --purple: #8B5CF6;
-  --shadow-sm: 0 2px 8px rgba(23, 35, 61, 0.05);
-  --shadow-md: 0 6px 20px rgba(23, 35, 61, 0.08);
-  --shadow-lg: 0 12px 36px rgba(23, 35, 61, 0.12);
+  --border-card: 2.5px solid #CBD5E1;
+  --border-card-hover: 2.5px solid var(--blue);
+  --shadow-sm: 0 2px 8px rgba(15, 23, 42, 0.06);
+  --shadow-md: 0 6px 20px rgba(15, 23, 42, 0.09);
+  --shadow-lg: 0 14px 36px rgba(15, 23, 42, 0.14);
   --radius-sm: 12px;
   --radius-md: 18px;
-  --radius-lg: 26px;
+  --radius-lg: 24px;
 }
 
 * {
@@ -53,7 +55,7 @@ button {
   border: none;
   outline: none;
   touch-action: manipulation;
-  transition: transform 0.1s ease, filter 0.15s ease, background 0.15s;
+  transition: transform 0.1s ease, filter 0.15s ease, background 0.15s, border-color 0.15s;
 }
 
 button:active {
@@ -61,53 +63,60 @@ button:active {
 }
 
 /* ==========================================================================
-   APP HEADER
+   APP HEADER (Sleek, Clean, High Contrast)
    ========================================================================== */
 header {
   background: var(--surface);
-  border-bottom: 2px solid #EBF0F7;
-  padding: 10px 16px;
+  border-bottom: 2.5px solid #CBD5E1;
+  padding: 10px 18px;
   display: flex;
   align-items: center;
   justify-content: space-between;
   position: sticky;
   top: 0;
   z-index: 100;
-  box-shadow: var(--shadow-sm);
+  box-shadow: 0 4px 12px rgba(15, 23, 42, 0.05);
 }
 
 .brand-group {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 12px;
 }
 
 .logo-circle {
-  width: 44px;
-  height: 44px;
+  width: 46px;
+  height: 46px;
   border-radius: 50%;
   background: linear-gradient(135deg, var(--red-primary), #FF5E62);
   color: white;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 22px;
+  font-size: 24px;
   font-weight: 900;
-  box-shadow: 0 4px 12px rgba(229, 37, 42, 0.3);
+  box-shadow: 0 4px 14px rgba(229, 37, 42, 0.35);
   cursor: pointer;
+  border: 2px solid #FFFFFF;
+  transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.logo-circle:hover {
+  transform: rotate(12deg) scale(1.08);
 }
 
 .brand-text h1 {
-  font-size: 17px;
+  font-size: 18px;
   font-weight: 900;
   color: var(--red-primary);
   line-height: 1.1;
+  letter-spacing: -0.3px;
 }
 
 .brand-text p {
   font-size: 11px;
   color: var(--text-muted);
-  font-weight: 600;
+  font-weight: 700;
 }
 
 .header-actions {
@@ -119,26 +128,40 @@ header {
 .btn-pill {
   background: #FFFFFF;
   color: var(--navy-dark);
-  border: 1.5px solid #E2E8F0;
+  border: 2px solid #CBD5E1;
   border-radius: var(--radius-sm);
-  padding: 7px 12px;
-  font-size: 12px;
+  padding: 7px 14px;
+  font-size: 12.5px;
   font-weight: 800;
-  box-shadow: var(--shadow-sm);
+  box-shadow: 0 2px 4px rgba(15, 23, 42, 0.05);
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  transition: all 0.15s ease;
+}
+
+.btn-pill:hover {
+  border-color: #94A3B8;
+  transform: translateY(-1px);
 }
 
 .btn-lang {
   background: var(--red-light);
   color: var(--red-primary);
-  border: 1.5px solid rgba(229, 37, 42, 0.3);
+  border: 2px solid rgba(229, 37, 42, 0.35);
   font-weight: 900;
 }
 
+.btn-lang:hover {
+  background: #FFE0E3;
+  border-color: var(--red-primary);
+}
+
 main {
-  max-width: 960px;
+  max-width: 980px;
   width: 100%;
   margin: 0 auto;
-  padding: 12px 16px 24px;
+  padding: 14px 16px 28px;
   flex: 1;
 }
 
@@ -152,142 +175,215 @@ main {
 }
 
 .hub-hero {
-  background: linear-gradient(135deg, #17233D 0%, #202F52 100%);
+  background: linear-gradient(135deg, #1E293B 0%, #0F172A 100%);
   border-radius: var(--radius-lg);
+  border: 2.5px solid #475569;
   padding: 20px 24px;
   color: white;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  box-shadow: var(--shadow-md);
+  box-shadow: 0 10px 25px rgba(15, 23, 42, 0.18);
   position: relative;
   overflow: hidden;
 }
 
+.hub-hero::after {
+  content: '';
+  position: absolute;
+  top: -50%;
+  right: -20%;
+  width: 250px;
+  height: 250px;
+  background: radial-gradient(circle, rgba(0, 132, 255, 0.25) 0%, transparent 70%);
+  pointer-events: none;
+}
+
 .hub-hero-text h2 {
-  font-size: 21px;
+  font-size: 22px;
   font-weight: 900;
   margin-bottom: 4px;
+  letter-spacing: -0.3px;
 }
 
 .hub-hero-text p {
-  font-size: 13px;
-  opacity: 0.85;
+  font-size: 13.5px;
+  opacity: 0.9;
+  font-weight: 600;
 }
 
 .hub-hero-avatar {
-  font-size: 46px;
+  font-size: 48px;
+  filter: drop-shadow(0 4px 10px rgba(0,0,0,0.3));
 }
 
 /* 4 GRADE BANDS */
 .grade-bar {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 8px;
+  gap: 10px;
 }
 
 .pill-grade {
   background: #FFFFFF;
-  border: 2px solid #E2E8F0;
-  border-radius: var(--radius-md);
-  padding: 10px 6px;
-  font-size: 12.5px;
-  font-weight: 800;
+  border: 2.5px solid #CBD5E1;
+  border-radius: 16px;
+  padding: 10px 8px;
+  font-size: 13px;
+  font-weight: 900;
   color: var(--navy-dark);
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 4px;
-  box-shadow: var(--shadow-sm);
+  box-shadow: 0 2px 6px rgba(15, 23, 42, 0.05);
+  transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 .pill-grade small {
-  font-size: 10px;
+  font-size: 10.5px;
   font-weight: 700;
-  opacity: 0.75;
+  opacity: 0.8;
+}
+
+.pill-grade:hover {
+  border-color: #94A3B8;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(15, 23, 42, 0.08);
 }
 
 .pill-grade.active {
-  background: var(--red-primary);
+  background: linear-gradient(135deg, #EF4444 0%, #DC2626 100%);
   color: white;
-  border-color: var(--red-hover);
-  box-shadow: 0 6px 18px rgba(229, 37, 42, 0.35);
-  transform: translateY(-2px);
+  border-color: #B91C1C;
+  box-shadow: 0 8px 20px rgba(220, 38, 38, 0.35);
+  transform: translateY(-3px);
 }
 
-/* 7 WORLDS GRID */
+/* 7 WORLDS GRID (Visible, Sleek, Premium Card Borders) */
 .worlds-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 14px;
+  grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+  gap: 16px;
 }
 
 .world-card {
   background: #FFFFFF;
-  border-radius: var(--radius-md);
-  border: 2px solid #EBF0F7;
-  padding: 16px;
-  box-shadow: var(--shadow-sm);
+  border-radius: 20px;
+  border: 2.5px solid #CBD5E1;
+  padding: 18px;
+  box-shadow: 0 4px 14px rgba(15, 23, 42, 0.07), 0 1px 3px rgba(15, 23, 42, 0.04);
   display: flex;
   flex-direction: column;
-  gap: 12px;
-  transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+  gap: 14px;
+  transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
   cursor: pointer;
   position: relative;
   overflow: hidden;
 }
 
+.world-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 6px;
+  background: var(--card-accent, #3B82F6);
+  border-top-left-radius: 17px;
+  border-top-right-radius: 17px;
+}
+
+.world-card[data-cat="math_arcade"] { --card-accent: #2563EB; }
+.world-card[data-cat="reading"] { --card-accent: #059669; }
+.world-card[data-cat="comprehension"] { --card-accent: #7C3AED; }
+.world-card[data-cat="pronunciation"] { --card-accent: #D97706; }
+.world-card[data-cat="science"] { --card-accent: #0891B2; }
+.world-card[data-cat="logic_puzzles"] { --card-accent: #DB2777; }
+.world-card[data-cat="creative_play"] { --card-accent: #EA580C; }
+
 .world-card:hover {
-  transform: translateY(-3px);
-  box-shadow: var(--shadow-md);
-  border-color: var(--red-primary);
+  transform: translateY(-5px) scale(1.01);
+  box-shadow: 0 14px 30px rgba(15, 23, 42, 0.14);
+  border-color: var(--card-accent, #3B82F6);
 }
 
 .world-card-top {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 14px;
 }
 
 .world-card-icon {
-  width: 52px;
-  height: 52px;
-  border-radius: var(--radius-md);
-  background: var(--bg-canvas);
+  width: 56px;
+  height: 56px;
+  border-radius: 16px;
+  background: linear-gradient(135deg, #F8FAFC 0%, #E2E8F0 100%);
+  border: 2px solid #CBD5E1;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 30px;
+  font-size: 32px;
+  box-shadow: 0 2px 6px rgba(15, 23, 42, 0.06);
+  flex-shrink: 0;
+}
+
+.world-card-info {
+  flex: 1;
 }
 
 .world-card-info h3 {
-  font-size: 16px;
+  font-size: 17px;
   font-weight: 900;
   color: var(--navy-dark);
+  letter-spacing: -0.2px;
 }
 
 .world-card-info span {
-  font-size: 11px;
-  font-weight: 700;
-  color: var(--red-primary);
+  font-size: 11.5px;
+  font-weight: 800;
+  color: var(--card-accent, #3B82F6);
+  display: inline-block;
+  margin-top: 2px;
 }
 
 .world-games-chips {
   display: flex;
   flex-wrap: wrap;
-  gap: 6px;
+  gap: 7px;
 }
 
 .game-chip {
-  background: #F1F5F9;
+  background: #F8FAFC;
   color: var(--navy-dark);
+  border: 1.5px solid #CBD5E1;
   border-radius: 999px;
   padding: 5px 12px;
   font-size: 11.5px;
   font-weight: 800;
   display: flex;
   align-items: center;
+  gap: 6px;
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.04);
+}
+
+.world-card-footer {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 2px;
+}
+
+.world-play-badge {
+  background: var(--card-accent, #3B82F6);
+  color: white;
+  border-radius: 12px;
+  padding: 6px 14px;
+  font-size: 12px;
+  font-weight: 900;
+  display: flex;
+  align-items: center;
   gap: 5px;
+  box-shadow: 0 3px 8px rgba(15, 23, 42, 0.12);
 }
 
 /* ==========================================================================
@@ -296,75 +392,94 @@ main {
 #view-game {
   display: none;
   flex-direction: column;
-  gap: 10px;
+  gap: 12px;
 }
 
 .game-header-bar {
   background: #FFFFFF;
-  border-radius: var(--radius-md);
-  padding: 8px 14px;
+  border-radius: 16px;
+  padding: 10px 16px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  border: 1.5px solid #EBF0F7;
-  box-shadow: var(--shadow-sm);
+  border: 2.5px solid #CBD5E1;
+  box-shadow: 0 4px 12px rgba(15, 23, 42, 0.05);
 }
 
 .btn-back-hub {
-  background: var(--bg-canvas);
+  background: #F1F5F9;
   color: var(--navy-dark);
-  border: 1.5px solid #CBD5E1;
-  border-radius: var(--radius-sm);
-  padding: 7px 12px;
-  font-size: 12.5px;
+  border: 2px solid #CBD5E1;
+  border-radius: 12px;
+  padding: 8px 14px;
+  font-size: 13px;
   font-weight: 800;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.15s ease;
+}
+
+.btn-back-hub:hover {
+  background: #E2E8F0;
+  border-color: #94A3B8;
+  transform: translateY(-1px);
 }
 
 .game-current-title {
-  font-size: 15px;
+  font-size: 16px;
   font-weight: 900;
   color: var(--red-primary);
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 8px;
 }
 
 /* CATEGORY & GAME SWITCHER BAR INSIDE ARENA */
 .game-switch-pills {
   display: flex;
-  gap: 6px;
+  gap: 8px;
   overflow-x: auto;
-  padding-bottom: 4px;
+  padding: 2px 2px 6px;
 }
 
 .game-switch-btn {
   background: #FFFFFF;
-  border: 1.5px solid #E2E8F0;
+  border: 2px solid #CBD5E1;
   border-radius: 999px;
-  padding: 6px 14px;
-  font-size: 12px;
+  padding: 7px 16px;
+  font-size: 12.5px;
   font-weight: 800;
   color: var(--navy-dark);
   white-space: nowrap;
+  box-shadow: 0 2px 4px rgba(15, 23, 42, 0.04);
+  transition: all 0.15s ease;
+}
+
+.game-switch-btn:hover {
+  border-color: #94A3B8;
+  transform: translateY(-1px);
 }
 
 .game-switch-btn.active {
-  background: var(--red-primary);
+  background: linear-gradient(135deg, #2563EB 0%, #1D4ED8 100%);
   color: white;
-  border-color: var(--red-hover);
+  border-color: #1E40AF;
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
 }
 
 .matrix-topic-banner {
-  background: linear-gradient(90deg, #FDF2F2 0%, #FFF8E6 100%);
-  border: 1.5px solid #FCD4D7;
-  border-radius: var(--radius-sm);
-  padding: 8px 14px;
+  background: linear-gradient(90deg, #FEF2F2 0%, #FFFBEB 100%);
+  border: 2.5px solid #FECACA;
+  border-radius: 14px;
+  padding: 10px 16px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  font-size: 12.5px;
+  font-size: 13px;
   color: var(--navy-dark);
   font-weight: 800;
+  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.04);
 }
 
 /* STATS BAR */
@@ -373,9 +488,11 @@ main {
   justify-content: space-around;
   align-items: center;
   background: #FFFFFF;
-  border-radius: var(--radius-sm);
-  padding: 6px 12px;
-  border: 1px solid #EAEFF6;
+  border-radius: 16px;
+  padding: 8px 12px;
+  border: 2.5px solid #CBD5E1;
+  box-shadow: 0 2px 8px rgba(15, 23, 42, 0.04);
+  gap: 6px;
 }
 
 .stat-item {
@@ -384,31 +501,42 @@ main {
   color: var(--navy-dark);
   display: flex;
   align-items: center;
-  gap: 4px;
+  gap: 5px;
+  background: #F8FAFC;
+  border: 1.5px solid #CBD5E1;
+  padding: 5px 10px;
+  border-radius: 10px;
+}
+
+.stat-item.stat-combo {
+  background: linear-gradient(135deg, #FEF3C7 0%, #FDE68A 100%);
+  border-color: #F59E0B;
+  color: #B45309;
 }
 
 /* QUESTION BANNER (Clean, High Contrast, Child Friendly) */
 .question-banner {
-  background: linear-gradient(135deg, #17233D 0%, #202F52 100%);
-  border-radius: var(--radius-md);
-  padding: 12px 18px;
+  background: linear-gradient(135deg, #1E293B 0%, #0F172A 100%);
+  border-radius: 18px;
+  border: 2.5px solid #475569;
+  padding: 14px 20px;
   color: white;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  box-shadow: var(--shadow-md);
+  box-shadow: 0 6px 18px rgba(15, 23, 42, 0.12);
 }
 
 .question-equation {
-  font-size: 18px;
+  font-size: 19px;
   font-weight: 900;
   margin-bottom: 4px;
   letter-spacing: 0.2px;
 }
 
 .concrete-dots {
-  font-size: 14px;
-  font-weight: 700;
+  font-size: 15px;
+  font-weight: 800;
   color: #FFD233;
 }
 
@@ -416,11 +544,16 @@ main {
   background: rgba(255, 255, 255, 0.15);
   color: white;
   border-radius: 50%;
-  width: 44px;
-  height: 44px;
-  font-size: 20px;
-  border: 1.5px solid rgba(255, 255, 255, 0.3);
-  margin-left: 12px;
+  width: 48px;
+  height: 48px;
+  font-size: 22px;
+  border: 2px solid rgba(255, 255, 255, 0.35);
+  margin-left: 14px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.25);
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .audio-repeat-btn.pulse {
@@ -432,14 +565,15 @@ main {
   to { transform: scale(1.15); }
 }
 
-/* ARENA BOX */
+/* ARENA BOX (Crisp 3.5px visible border, deep game background) */
 .arena-box {
   position: relative;
   width: 100%;
-  background: #0F172A;
-  border-radius: var(--radius-md);
+  background: #0A0F1D;
+  border-radius: 20px;
+  border: 3.5px solid #94A3B8;
   overflow: hidden;
-  box-shadow: inset 0 2px 8px rgba(0,0,0,0.4);
+  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.15), inset 0 2px 8px rgba(0,0,0,0.5);
 }
 
 canvas#arena {
@@ -452,13 +586,13 @@ canvas#arena {
 
 .pointer-hand {
   position: absolute;
-  font-size: 34px;
+  font-size: 36px;
   pointer-events: none;
   opacity: 0;
   transform: translate(-50%, -50%);
   transition: opacity 0.3s ease;
   z-index: 10;
-  filter: drop-shadow(0 4px 8px rgba(0,0,0,0.6));
+  filter: drop-shadow(0 4px 10px rgba(0,0,0,0.7));
 }
 
 .pointer-hand.show {
@@ -472,8 +606,8 @@ canvas#arena {
 }
 
 .feedback-box {
-  min-height: 26px;
-  font-size: 15px;
+  min-height: 28px;
+  font-size: 16px;
   font-weight: 900;
   text-align: center;
   transition: all 0.2s;
@@ -484,6 +618,7 @@ canvas#arena {
   display: none;
   gap: 12px;
   justify-content: center;
+  margin-top: 4px;
 }
 
 .controls-pad.visible {
@@ -493,58 +628,63 @@ canvas#arena {
 .pad-btn {
   flex: 1;
   max-width: 140px;
-  height: 48px;
+  height: 52px;
   background: #FFFFFF;
-  border: 2px solid #E2E8F0;
-  border-radius: var(--radius-md);
-  font-size: 17px;
+  border: 2.5px solid #94A3B8;
+  border-radius: 16px;
+  font-size: 16.5px;
   font-weight: 900;
   color: var(--navy-dark);
-  box-shadow: var(--shadow-sm);
+  box-shadow: 0 4px 0 #94A3B8, 0 6px 12px rgba(15, 23, 42, 0.08);
+  transition: all 0.1s ease;
 }
 
 .pad-btn:active {
-  background: #F1F5F9;
-  border-color: var(--red-primary);
+  transform: translateY(4px);
+  box-shadow: 0 0 0 #94A3B8;
 }
 
 .bottom-actions-row {
   display: flex;
-  gap: 10px;
+  gap: 12px;
 }
 
 .btn-action-main {
   flex: 2;
-  background: var(--red-primary);
+  background: linear-gradient(135deg, #EF4444 0%, #DC2626 100%);
   color: white;
-  border-radius: var(--radius-md);
-  padding: 12px;
-  font-size: 15px;
+  border: 2px solid #B91C1C;
+  border-radius: 16px;
+  padding: 14px;
+  font-size: 15.5px;
   font-weight: 900;
-  box-shadow: 0 4px 16px rgba(229, 37, 42, 0.35);
+  box-shadow: 0 4px 16px rgba(220, 38, 38, 0.35);
 }
 
 .btn-action-tutor {
   flex: 1.2;
   background: #FFFFFF;
   color: var(--red-primary);
-  border: 2px solid var(--red-primary);
-  border-radius: var(--radius-md);
-  padding: 12px;
-  font-size: 14.5px;
+  border: 2.5px solid var(--red-primary);
+  border-radius: 16px;
+  padding: 14px;
+  font-size: 15px;
   font-weight: 900;
+  box-shadow: 0 2px 8px rgba(229, 37, 42, 0.15);
 }
 
-/* MODALS */
+/* ==========================================================================
+   MODAL OVERLAYS (Sleek, High Contrast Borders)
+   ========================================================================== */
 .modal-overlay {
+  display: none;
   position: fixed;
   inset: 0;
   background: rgba(15, 23, 42, 0.75);
-  backdrop-filter: blur(6px);
-  display: none;
+  backdrop-filter: blur(4px);
+  z-index: 500;
   align-items: center;
   justify-content: center;
-  z-index: 1000;
   padding: 16px;
 }
 
@@ -554,20 +694,15 @@ canvas#arena {
 
 .modal-card {
   background: #FFFFFF;
-  border-radius: var(--radius-lg);
-  max-width: 520px;
-  width: 100%;
+  border-radius: 24px;
+  border: 3.5px solid #CBD5E1;
   padding: 24px;
-  box-shadow: var(--shadow-lg);
+  width: 92%;
+  max-width: 520px;
+  box-shadow: 0 20px 60px rgba(15, 23, 42, 0.3);
   display: flex;
   flex-direction: column;
   gap: 16px;
-  animation: modalPop 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
-}
-
-@keyframes modalPop {
-  from { opacity: 0; transform: scale(0.9); }
-  to { opacity: 1; transform: scale(1); }
 }
 
 .tutor-header {
@@ -584,33 +719,37 @@ canvas#arena {
 
 .tutor-mascot-icon {
   font-size: 42px;
+  filter: drop-shadow(0 4px 6px rgba(0,0,0,0.1));
 }
 
 .tutor-speech-bubble {
   background: #F1F5F9;
-  border: 1.5px solid #E2E8F0;
-  border-radius: var(--radius-md);
-  padding: 10px 14px;
+  border: 2px solid #CBD5E1;
+  border-radius: 14px;
+  padding: 8px 14px;
+}
+
+.tutor-speech-text {
   font-size: 13.5px;
-  font-weight: 700;
+  font-weight: 800;
   color: var(--navy-dark);
-  max-width: 320px;
 }
 
 .tutor-modes-tabs {
   display: flex;
   gap: 6px;
   background: #F1F5F9;
+  border: 2px solid #CBD5E1;
+  border-radius: 12px;
   padding: 4px;
-  border-radius: var(--radius-sm);
   overflow-x: auto;
 }
 
 .tutor-tab {
   flex: 1;
-  padding: 7px 10px;
+  padding: 8px 10px;
   border-radius: 8px;
-  font-size: 11px;
+  font-size: 11.5px;
   font-weight: 800;
   color: var(--text-muted);
   background: transparent;
@@ -620,6 +759,7 @@ canvas#arena {
 .tutor-tab.active {
   background: #FFFFFF;
   color: var(--red-primary);
+  border: 1.5px solid #CBD5E1;
   box-shadow: 0 2px 6px rgba(0,0,0,0.06);
 }
 
@@ -627,50 +767,52 @@ canvas#tutorCanvas {
   width: 100%;
   height: auto;
   aspect-ratio: 480 / 200;
-  border-radius: var(--radius-sm);
+  border-radius: 16px;
   background: #FFFFFF;
-  border: 1.5px solid #E2E8F0;
+  border: 2.5px solid #CBD5E1;
 }
 
 .tutor-actions-row {
   display: flex;
-  gap: 8px;
+  gap: 10px;
 }
 
 .tutor-btn-sec {
   flex: 1;
   background: #F1F5F9;
   color: var(--navy-dark);
-  border-radius: var(--radius-sm);
-  padding: 10px;
-  font-size: 13px;
+  border: 2px solid #CBD5E1;
+  border-radius: 12px;
+  padding: 12px;
+  font-size: 13.5px;
   font-weight: 800;
 }
 
 .tutor-btn-pri {
   flex: 2;
-  background: var(--green);
+  background: linear-gradient(135deg, #10B981 0%, #059669 100%);
   color: white;
-  border-radius: var(--radius-sm);
-  padding: 10px;
-  font-size: 14px;
+  border: 2px solid #047857;
+  border-radius: 12px;
+  padding: 12px;
+  font-size: 14.5px;
   font-weight: 900;
-  box-shadow: 0 4px 12px rgba(0, 196, 140, 0.3);
+  box-shadow: 0 4px 14px rgba(16, 185, 129, 0.35);
 }
 
 .modal-title {
-  font-size: 20px;
+  font-size: 21px;
   font-weight: 900;
   color: var(--navy-dark);
   text-align: center;
 }
 
 .modal-body-text {
-  font-size: 14px;
+  font-size: 14.5px;
+  font-weight: 700;
   color: var(--text-muted);
-  font-weight: 600;
+  line-height: 1.4;
   text-align: center;
-  line-height: 1.5;
 }
 
 .modal-actions-col {
@@ -680,29 +822,33 @@ canvas#tutorCanvas {
 }
 
 .btn-modal-green {
-  background: var(--green);
+  background: linear-gradient(135deg, #10B981 0%, #059669 100%);
   color: white;
+  border: 2px solid #047857;
+  border-radius: 14px;
   padding: 13px;
-  border-radius: var(--radius-md);
   font-size: 15px;
   font-weight: 900;
-  box-shadow: 0 4px 14px rgba(0, 196, 140, 0.35);
+  box-shadow: 0 4px 14px rgba(16, 185, 129, 0.35);
 }
 
 .btn-modal-blue {
-  background: var(--blue);
+  background: linear-gradient(135deg, #3B82F6 0%, #2563EB 100%);
   color: white;
+  border: 2px solid #1D4ED8;
+  border-radius: 14px;
   padding: 13px;
-  border-radius: var(--radius-md);
   font-size: 15px;
   font-weight: 900;
+  box-shadow: 0 4px 14px rgba(59, 130, 246, 0.35);
 }
 
 .btn-modal-gray {
   background: #F1F5F9;
   color: var(--navy-dark);
-  padding: 11px;
-  border-radius: var(--radius-md);
+  border: 2px solid #CBD5E1;
+  border-radius: 14px;
+  padding: 12px;
   font-size: 14px;
   font-weight: 800;
 }
@@ -745,23 +891,23 @@ canvas#tutorCanvas {
     <div class="grade-bar" id="grade-bar">
       <button class="pill-grade active" data-grade="0">
         <span>🐣 MATERNELLE</span>
-        <small>2 – 4 ans</small>
+        <small>2–4 ans</small>
       </button>
       <button class="pill-grade" data-grade="1">
         <span>🦁 SIL / CP</span>
-        <small>5 – 6 ans</small>
+        <small>5–6 ans</small>
       </button>
       <button class="pill-grade" data-grade="2">
         <span>🚀 CE1 / CE2</span>
-        <small>7 – 8 ans</small>
+        <small>7–8 ans</small>
       </button>
       <button class="pill-grade" data-grade="3">
         <span>👑 CM1 / CM2</span>
-        <small>9 – 11 ans</small>
+        <small>9–11 ans</small>
       </button>
     </div>
 
-    <!-- 7 Learning Worlds Portals Grid -->
+    <!-- 7 Learning Worlds Grid -->
     <div class="worlds-grid" id="worlds-grid"></div>
   </div>
 
@@ -787,10 +933,11 @@ canvas#tutorCanvas {
       <span id="matrix-grade-label">Niveau Actif</span>
     </div>
 
-    <!-- Stats Bar -->
+    <!-- Stats Bar (With Combo streak badge!) -->
     <div class="stats-bar">
       <div class="stat-item">⭐ <span id="stat-score">0</span> pts</div>
       <div class="stat-item">🪙 <span id="stat-coins">15</span> CFA</div>
+      <div class="stat-item stat-combo" id="stat-combo-box">🔥 <span id="stat-combo">1</span>x</div>
       <div class="stat-item">❤️ <span id="stat-lives">3</span></div>
       <div class="stat-item">🎯 Round <span id="stat-round">1/5</span></div>
     </div>
@@ -816,14 +963,14 @@ canvas#tutorCanvas {
     <!-- Directional / Action Controls Pad (Dynamically revealed for racing & fishing) -->
     <div class="controls-pad" id="controls-pad">
       <button class="pad-btn" id="btn-left">◀ Gauche</button>
-      <button class="pad-btn" id="btn-action" style="background:var(--red-primary);color:white;border-color:var(--red-hover);">⚡ Action</button>
+      <button class="pad-btn" id="btn-action" style="background:#EF4444;color:white;border-color:#DC2626;">⚡ Action</button>
       <button class="pad-btn" id="btn-right">Droite ▶</button>
     </div>
 
-    <!-- Bottom Actions -->
+    <!-- Bottom Actions Row -->
     <div class="bottom-actions-row">
-      <button class="btn-action-main" id="btn-play-restart">🔄 Rejouer</button>
-      <button class="btn-action-tutor" id="btn-open-tutor">🦉 Tuteur Animé</button>
+      <button class="btn-action-tutor" id="btn-open-tutor">🦉 Tuteur Pas-à-Pas</button>
+      <button class="btn-action-main" id="btn-next-question">Exercice Suivant ▶</button>
     </div>
   </div>
 </main>
@@ -838,7 +985,7 @@ canvas#tutorCanvas {
           <div class="tutor-speech-text" id="tutor-speech-text">« Regarde bien la démonstration ! »</div>
         </div>
       </div>
-      <button style="background:#F1F5F9;color:#64748B;font-size:18px;border-radius:12px;padding:6px 10px;" id="tutor-close-x">✕</button>
+      <button style="background:#F1F5F9;border:2px solid #CBD5E1;color:#64748B;font-size:18px;border-radius:12px;padding:6px 10px;" id="tutor-close-x">✕</button>
     </div>
 
     <div class="tutor-modes-tabs" id="tutor-modes-tabs">
@@ -894,7 +1041,7 @@ canvas#tutorCanvas {
         <span style="font-size:32px;" id="guide-icon">🎮</span>
         <h3 class="modal-title" id="guide-title">Guide du Jeu</h3>
       </div>
-      <button style="background:#F1F5F9;font-size:18px;border-radius:12px;padding:6px 10px;" id="btn-close-guide">✕</button>
+      <button style="background:#F1F5F9;border:2px solid #CBD5E1;font-size:18px;border-radius:12px;padding:6px 10px;" id="btn-close-guide">✕</button>
     </div>
     <div class="modal-body-text" id="guide-text" style="text-align:left;">
       Touche les objets correspondants à la consigne affichée en haut !
@@ -905,6 +1052,7 @@ canvas#tutorCanvas {
 
 <script>
 window.addEventListener("DOMContentLoaded", () => {
+
 // ============================================================================
 // AUDIO & SOUND SYNTHESIS
 // ============================================================================
@@ -935,36 +1083,37 @@ const AudioEngine = {
   },
   playSuccess() {
     this.playTone(523.25, "triangle", 0.12, 0.3); // C5
-    setTimeout(() => this.playTone(659.25, "triangle", 0.14, 0.3), 110); // E5
-    setTimeout(() => this.playTone(783.99, "triangle", 0.24, 0.3), 230); // G5
+    setTimeout(() => this.playTone(659.25, "triangle", 0.14, 0.3), 100); // E5
+    setTimeout(() => this.playTone(783.99, "triangle", 0.18, 0.32), 200); // G5
+    setTimeout(() => this.playTone(1046.50, "triangle", 0.25, 0.35), 310); // C6
   },
   playMistake() {
     this.playTone(220, "sawtooth", 0.18, 0.2);
     setTimeout(() => this.playTone(180, "sawtooth", 0.25, 0.2), 150);
   },
   playPop() {
-    this.playTone(720, "sine", 0.08, 0.35);
+    this.playTone(720 + Math.random() * 80, "sine", 0.09, 0.35);
   },
   playSplash() {
-    this.playTone(320, "sine", 0.15, 0.3);
+    this.playTone(340, "sine", 0.16, 0.3);
   },
   playCoin() {
     this.playTone(987.77, "sine", 0.1, 0.25);
-    setTimeout(() => this.playTone(1318.51, "sine", 0.2, 0.25), 90);
+    setTimeout(() => this.playTone(1318.51, "sine", 0.2, 0.25), 80);
   },
   playDrum() {
-    this.playTone(95, "triangle", 0.22, 0.5);
+    this.playTone(95, "triangle", 0.24, 0.55);
   },
   playDrop() {
-    this.playTone(440, "sine", 0.08, 0.25);
+    this.playTone(460, "sine", 0.09, 0.28);
   },
   playClick() {
     this.playTone(600, "sine", 0.04, 0.15);
   },
   playVictory() {
-    const notes = [523, 659, 783, 1046];
+    const notes = [523, 659, 783, 1046, 1318];
     notes.forEach((f, i) => {
-      setTimeout(() => this.playTone(f, "triangle", 0.28, 0.35), i * 140);
+      setTimeout(() => this.playTone(f, "triangle", 0.28, 0.35), i * 130);
     });
   }
 };
@@ -979,130 +1128,77 @@ const VoiceEngine = {
 
   // High quality French phonetics mapping for clear articulation on English TTS
   frenchPhoneticDict: [
-    // Numbers
     ["1", "un"], ["2", "deux"], ["3", "trois"], ["4", "quatre"], ["5", "cinq"],
     ["6", "six"], ["7", "sept"], ["8", "huit"], ["9", "neuf"], ["10", "dix"],
     ["11", "onze"], ["12", "douze"], ["14", "quatorze"], ["15", "quinze"],
     ["20", "vingt"], ["50", "cinquante"], ["75", "soixante-quinze"], ["100", "cent"],
-    ["125", "cent-vingt-cinq"], ["150", "cent-cinquante"], ["200", "deux-cents"],
-    ["250", "deux-cent-cinquante"], ["300", "trois-cents"], ["500", "cinq-cents"],
-
-    // Verbs & Actions
-    ["Cueille", "Kuh-ee"], ["cueille", "kuh-ee"],
-    ["Touche", "Toosh"], ["touche", "toosh"],
-    ["Écoute", "Ay-koot"], ["écoute", "ay-koot"],
-    ["Attrape", "Ah-trahp"], ["attrape", "ah-trahp"],
-    ["Pêche", "Pesh"], ["pêche", "pesh"],
-    ["Frappe", "Frahp"], ["frappe", "frahp"],
-    ["Assemble", "Ah-sahmbl"], ["assemble", "ah-sahmbl"],
-    ["Pilote", "Pee-loht"], ["pilote", "pee-loht"],
-    ["Dépose", "Day-pohz"], ["dépose", "day-pohz"],
-    ["Arrose", "Ah-rohz"], ["arrose", "ah-rohz"],
-    ["Donne", "Dohn"], ["donne", "dohn"],
-    ["Ajoute", "Ah-zhoot"], ["ajoute", "ah-zhoot"],
-    ["Glisse", "Glees"], ["glisse", "glees"],
-    ["Compose", "Kohm-pohz"], ["compose", "kohm-pohz"],
-    ["Trouve", "Troov"], ["trouve", "troov"],
-
-    // Math & Terms
-    ["plus", "ploo"], ["font", "fohn"], ["combien", "kohm-byan"],
-    ["multiplié", "mool-tee-plee-ay"], ["partagé", "par-tah-zhay"],
-    ["unités", "oo-nee-tay"], ["énergie", "ay-nair-zhee"],
-    ["barres", "bahr"], ["cubes", "koob"],
-    ["moitié", "mwa-tyay"], ["quart", "kahr"], ["tiers", "tyair"],
-    ["Francs CFA", "Frahn Say-Eff-Ah"], ["CFA", "Say-Eff-Ah"],
-
-    // Nouns & Fruits
-    ["mangues", "mahng"], ["mangue", "mahng"],
-    ["mûres", "mure"], ["mûre", "mure"],
-    ["bananes", "bah-nahn"], ["banane", "bah-nahn"],
-    ["douces", "doos"], ["douce", "doos"],
-    ["ananas", "ah-nah-nah"],
-    ["juteux", "zhoo-tuh"],
-    ["oranges", "oh-rahnzh"], ["orange", "oh-rahnzh"],
-    ["fraîches", "fresh"], ["fraîche", "fresh"],
-    ["papayes", "pah-pah-ee"], ["papaye", "pah-pah-ee"],
-    ["dorées", "doh-ray"], ["dorée", "doh-ray"],
-    ["goyaves", "gwa-yahv"], ["goyave", "gwa-yahv"],
-    ["sucrées", "soo-kray"], ["sucrée", "soo-kray"],
-    ["noix de coco", "nwa duh koh-koh"],
-    ["panier", "pah-nyay"],
-    ["arbre", "ahrbr"],
-    ["poisson", "pwa-sohn"],
-    ["fleuve", "fluhv"],
-    ["lettre", "lehtr"],
-    ["syllabes", "see-lahb"], ["syllabe", "see-lahb"],
-    ["djembe", "zhem-bay"],
-    ["coups", "koo"], ["coup", "koo"],
-    ["rythme", "reetm"],
-    ["grenouille", "gruh-noo-ee"],
-    ["nénuphar", "nay-noo-fahr"],
-    ["pièces", "pyess"],
-    ["balance", "bah-lahns"],
-
-    // Praise & Guidance
-    ["Bravo", "Brah-voh"], ["bravo", "brah-voh"],
-    ["champion", "shahm-pyon"],
-    ["Regarde", "Ruh-gahrd"], ["regarde", "ruh-gahrd"],
-    ["bien", "byan"],
-    ["Essaie", "Ay-say"], ["essaie", "ay-say"],
-    ["encore", "ahn-kohr"],
-    ["exactement", "eg-zahk-tuh-mahn"],
-    ["pour", "poor"], ["sur", "soor"], ["dans", "dahn"], ["avec", "ah-vehk"]
+    ["250", "deux cent cinquante"], ["500", "cinq cents"],
+    ["Touche", "Toosh"], ["cueille", "kuh-ee"], ["exactement", "eg-zahk-tuh-mahn"],
+    ["mangues", "mahng"], ["mangue", "mahng"], ["mûres", "mure"], ["mûre", "mure"],
+    ["bananes", "bah-nahn"], ["banane", "bah-nahn"], ["douces", "doos"], ["douce", "doos"],
+    ["ananas", "ah-nah-nah"], ["juteux", "zhoo-tuh"], ["juteuse", "zhoo-tuhz"],
+    ["oranges", "oh-rahnzh"], ["orange", "oh-rahnzh"], ["fraîches", "fresh"],
+    ["papayes", "pah-py"], ["papaye", "pah-py"], ["dorées", "doh-ray"],
+    ["goyaves", "goy-ahv"], ["goyave", "goy-ahv"], ["sucrées", "soo-kray"],
+    ["panier", "pah-nyay"], ["arbre", "ahr-bruh"], ["trouve", "troov"],
+    ["lettre", "let-truh"], ["chouette", "shoo-et"], ["balance", "bah-lahns"],
+    ["djembe", "jem-bay"], ["rythme", "reet-muh"], ["frappe", "frahp"],
+    ["bravo", "brah-voh"], ["champion", "shahm-pyon"], ["réponse", "ray-pons"]
   ],
 
+  phoneticize(text) {
+    let out = text;
+    this.frenchPhoneticDict.forEach(([w, rep]) => {
+      const reg = new RegExp("\\b" + w + "\\b", "gi");
+      out = out.replace(reg, rep);
+    });
+    return out;
+  },
+
   init() {
-    if ("speechSynthesis" in window) {
-      const load = () => {
-        this.voices = window.speechSynthesis.getVoices();
-        this.hasFrenchNativeVoice = this.voices.some(v => v.lang && v.lang.toLowerCase().startsWith("fr"));
-      };
-      load();
+    if (!("speechSynthesis" in window)) return;
+    const load = () => {
+      this.voices = window.speechSynthesis.getVoices() || [];
+      this.hasFrenchNativeVoice = this.voices.some(v => v.lang && v.lang.toLowerCase().startsWith("fr"));
+      if (this.lang === "fr") {
+        this.selectedVoice = this.voices.find(v => v.lang && (v.lang === "fr-FR" || v.lang === "fr-CA"))
+          || this.voices.find(v => v.lang && v.lang.startsWith("fr"))
+          || null;
+      } else {
+        this.selectedVoice = this.voices.find(v => v.lang && v.lang.startsWith("en")) || null;
+      }
+    };
+    load();
+    if (window.speechSynthesis.onvoiceschanged !== undefined) {
       window.speechSynthesis.onvoiceschanged = load;
     }
   },
 
-  phoneticize(text) {
-    let res = text;
-    for (const [w, r] of this.frenchPhoneticDict) {
-      res = res.split(w).join(r);
+  cancel() {
+    if ("speechSynthesis" in window) {
+      window.speechSynthesis.cancel();
     }
-    return res;
   },
 
-  speak(text, slow = false) {
-    if (!AudioEngine.soundEnabled || !("speechSynthesis" in window)) return;
-    window.speechSynthesis.cancel();
-    if (!text) return;
-
-    if (this.voices.length === 0) {
-      this.voices = window.speechSynthesis.getVoices();
-      this.hasFrenchNativeVoice = this.voices.some(v => v.lang && v.lang.toLowerCase().startsWith("fr"));
-    }
+  speak(text, forceRaw = false) {
+    if (!("speechSynthesis" in window) || !text) return;
+    this.cancel();
 
     let spokenText = text;
-    // If running on a system without a native French voice (e.g. US Windows default),
-    // apply French phonetic respelling so the English voice articulates French smoothly!
-    if (this.lang === "fr" && !this.hasFrenchNativeVoice) {
+    if (this.lang === "fr" && !this.hasFrenchNativeVoice && !forceRaw) {
       spokenText = this.phoneticize(text);
     }
 
     const u = new SpeechSynthesisUtterance(spokenText);
-    const targetLang = this.lang === "fr" ? "fr" : "en";
-    u.lang = this.lang === "fr" ? "fr-FR" : "en-US";
+    const targetLang = this.lang === "fr" ? (this.hasFrenchNativeVoice ? "fr-FR" : "en-US") : "en-US";
+    u.lang = targetLang;
 
-    const matchedVoice = this.voices.find(v => v.lang && v.lang.toLowerCase().startsWith(targetLang));
-    if (matchedVoice) {
-      u.voice = matchedVoice;
+    if (this.selectedVoice && (this.lang !== "fr" || this.hasFrenchNativeVoice)) {
+      u.voice = this.selectedVoice;
     }
-
-    u.rate = slow ? 0.75 : 0.86;
+    u.rate = this.lang === "fr" ? 0.88 : 0.92;
     u.pitch = 1.05;
     window.speechSynthesis.speak(u);
-  },
-
-  cancel() {
-    if ("speechSynthesis" in window) window.speechSynthesis.cancel();
   }
 };
 
@@ -3416,6 +3512,7 @@ const state = {
   maxRoundsPerLevel: 5,
   coins: 15,
   lives: 3,
+  combo: 0,
   roundAdvancing: false,
   running: true,
   question: null,
@@ -3429,6 +3526,7 @@ const state = {
   items: [],
   fruits: [],
   fallingFruit: null,
+  basketSquash: 1.0,
   fishList: [],
   lilypads: [],
   frogIndex: 0,
@@ -3441,7 +3539,11 @@ const state = {
   drumHitTime: 0,
   drumSyllables: [],
   drumActiveSylIdx: 0,
-  particles: []
+  particles: [],
+  floatingTexts: [],
+  waterRipples: [],
+  sonicWaves: [],
+  roadOffset: 0
 };
 
 // DOM references
@@ -3455,22 +3557,32 @@ const W = 500, H = 380;
 VoiceEngine.init();
 
 // ============================================================================
-// PARTICLE SYSTEM (CELEBRATIONS & STARS)
+// PARTICLE & FLOATING TEXT ARCADE SYSTEMS
 // ============================================================================
 function spawnParticles(x, y, color = "#FFB800", count = 25) {
   for (let i = 0; i < count; i++) {
     const angle = Math.random() * Math.PI * 2;
-    const speed = Math.random() * 140 + 40;
+    const speed = Math.random() * 160 + 50;
     state.particles.push({
       x, y,
       vx: Math.cos(angle) * speed,
       vy: Math.sin(angle) * speed,
       color,
-      radius: Math.random() * 4 + 2,
+      radius: Math.random() * 4.5 + 2,
       life: 1.0,
       maxLife: 1.0
     });
   }
+}
+
+function spawnFloatingText(x, y, text, color = "#FFD233", size = 24) {
+  state.floatingTexts.push({
+    x, y, text, color, size,
+    vy: -65,
+    alpha: 1.0,
+    life: 1.2,
+    maxLife: 1.2
+  });
 }
 
 // ============================================================================
@@ -3502,6 +3614,7 @@ function showGame(category, gameId) {
   if (tutorModal) tutorModal.classList.remove("open");
   state.lives = 3;
   state.round = 1;
+  state.combo = 0;
   state.roundAdvancing = false;
 
   if (category) state.category = category;
@@ -3546,6 +3659,7 @@ function renderWorldCards() {
       chipsHtml += '<span class="game-chip">' + g.icon + ' ' + g.name + '</span>';
     });
 
+    const isFR = state.lang === "fr";
     card.innerHTML = 
       '<div class="world-card-top">' +
         '<div class="world-card-icon">' + catConf.icon + '</div>' +
@@ -3554,7 +3668,10 @@ function renderWorldCards() {
           '<span>🎯 ' + (catConf.topics[state.grade] || catConf.topics[0]) + '</span>' +
         '</div>' +
       '</div>' +
-      '<div class="world-games-chips">' + chipsHtml + '</div>';
+      '<div class="world-games-chips">' + chipsHtml + '</div>' +
+      '<div class="world-card-footer">' +
+        '<div class="world-play-badge">' + (isFR ? "Explorer ▶" : "Explore ▶") + '</div>' +
+      '</div>';
 
     card.onclick = () => {
       AudioEngine.playClick();
@@ -3627,6 +3744,7 @@ function updateLabels() {
 function updateStatsDOM() {
   $("stat-score").textContent = state.score;
   $("stat-coins").textContent = state.coins;
+  $("stat-combo").textContent = Math.max(1, state.combo);
   $("stat-lives").textContent = "❤️ ".repeat(Math.max(0, state.lives));
   $("stat-round").textContent = state.round + "/" + state.maxRoundsPerLevel;
 }
@@ -3681,286 +3799,144 @@ function generateDynamicQuestion() {
     };
   }
 
-  // 2. BASE-10 ROBOT
-  if (eng === "base10") {
-    const tens = grade === 0 ? 1 : Math.floor(Math.random() * 3) + 1;
-    const units = Math.floor(Math.random() * 5) + 1;
-    const num = tens * 10 + units;
-    const qText = isFR
-      ? "Assemble " + num + " unités d'énergie pour le robot !"
-      : "Assemble " + num + " energy units for the robot!";
-    const speech = isFR
-      ? "Compose le nombre " + num + " avec les barres de dix et les cubes !"
-      : "Make the number " + num + " with tens and unit cubes!";
-    const dots = "🟦 ".repeat(tens) + "▫️ ".repeat(units);
-    return {
-      q: qText,
-      ans: String(num),
-      options: [String(num), String(num + 10), String(Math.max(1, num - 5))].sort(() => Math.random() - 0.5),
-      icon: "🤖",
-      dots: dots,
-      speech: speech,
-      mathType: "base10",
-      a: num
-    };
-  }
-
-  // 3. TURBO RACING (3-Lane Speed calculation)
-  if (eng === "racing") {
-    let a, b, op, ans, qText, speech;
-    if (grade <= 1) {
-      a = Math.floor(Math.random() * 4) + 1;
-      b = Math.floor(Math.random() * 4) + 1;
-      op = "+";
-      ans = String(a + b);
-      qText = a + " + " + b + " = ?";
-      speech = isFR ? "Pilote vers la bonne porte : " + a + " plus " + b + " font combien ?" : "Steer to the gate: what is " + a + " plus " + b + "?";
-    } else if (grade === 2) {
-      a = Math.floor(Math.random() * 4) + 2;
-      b = Math.floor(Math.random() * 4) + 2;
-      op = "×";
-      ans = String(a * b);
-      qText = a + " × " + b + " = ?";
-      speech = isFR ? "Course Turbo : " + a + " multiplié par " + b + " font combien ?" : "Turbo Rally: what is " + a + " times " + b + "?";
-    } else {
-      a = (Math.floor(Math.random() * 5) + 2) * 5;
-      b = 5;
-      op = "÷";
-      ans = String(a / b);
-      qText = a + " ÷ " + b + " = ?";
-      speech = isFR ? a + " partagé en " + b + " font combien ?" : "What is " + a + " divided by " + b + "?";
-    }
-    const wrong1 = String(parseInt(ans) + (Math.random() > 0.5 ? 2 : -2));
-    const wrong2 = String(parseInt(ans) + (Math.random() > 0.5 ? 4 : -3));
-    return {
-      q: qText,
-      ans: ans,
-      options: [ans, wrong1, wrong2].sort(() => Math.random() - 0.5),
-      icon: "🏎️",
-      dots: "🏁 Défi Circuit : " + qText,
-      speech: speech,
-      mathType: op === "+" ? "add" : op === "×" ? "mul" : "div",
-      a, b
-    };
-  }
-
-  // 4. CFA BALANCE
-  if (eng === "balance") {
-    const amounts = [50, 75, 100, 125, 150, 200, 250, 300, 350, 500];
-    const target = amounts[(round - 1 + (level - 1) * 2) % amounts.length];
-    const qText = isFR
-      ? "Équilibre la balance à " + target + " Francs CFA !"
-      : "Balance the scale to " + target + " CFA Francs!";
-    const speech = isFR
-      ? "Dépose les pièces pour atteindre exactement " + target + " Francs CFA !"
-      : "Place coins to reach exactly " + target + " CFA Francs!";
-    return {
-      q: qText,
-      ans: String(target),
-      options: [String(target), String(target + 50), String(Math.max(25, target - 50))].sort(() => Math.random() - 0.5),
-      icon: "🪙",
-      dots: "⚖️ Cible Marché : " + target + " CFA",
-      speech: speech,
-      mathType: "cfa",
-      a: target
-    };
-  }
-
-  // 5. FRACTION BAKERY
-  if (eng === "fraction") {
-    const fractions = [
-      { text: "1/2", nameFr: "la moitié (1/2)", nameEn: "one half (1/2)", a: 1, b: 2 },
-      { text: "1/4", nameFr: "le quart (1/4)", nameEn: "one quarter (1/4)", a: 1, b: 4 },
-      { text: "3/4", nameFr: "trois quarts (3/4)", nameEn: "three quarters (3/4)", a: 3, b: 4 },
-      { text: "1/3", nameFr: "le tiers (1/3)", nameEn: "one third (1/3)", a: 1, b: 3 },
-      { text: "2/3", nameFr: "deux tiers (2/3)", nameEn: "two thirds (2/3)", a: 2, b: 3 }
+  // 2. PHONICS FISHING & SAFARI (Reading sounds & letters)
+  if (eng === "fishing" || eng === "safari") {
+    const phonicsBank = [
+      { letter: "A", wordFr: "Ananas", wordEn: "Apple", icon: "🍍" },
+      { letter: "B", wordFr: "Banane", wordEn: "Banana", icon: "🍌" },
+      { letter: "C", wordFr: "Chameau", wordEn: "Camel", icon: "🐪" },
+      { letter: "D", wordFr: "Dauphin", wordEn: "Dolphin", icon: "🐬" },
+      { letter: "E", wordFr: "Éléphant", wordEn: "Elephant", icon: "🐘" },
+      { letter: "G", wordFr: "Girafe", wordEn: "Giraffe", icon: "🦒" },
+      { letter: "L", wordFr: "Lion", wordEn: "Lion", icon: "🦁" },
+      { letter: "M", wordFr: "Mangue", wordEn: "Mango", icon: "🥭" },
+      { letter: "P", wordFr: "Perroquet", wordEn: "Parrot", icon: "🦜" },
+      { letter: "Z", wordFr: "Zèbre", wordEn: "Zebra", icon: "🦓" }
     ];
-    const f = fractions[(round - 1 + (level - 1)) % fractions.length];
-    const wrongs = fractions.filter(x => x.text !== f.text).map(x => x.text).slice(0, 2);
-    return {
-      q: isFR ? "Sélectionne la part représentant " + f.nameFr + " du gâteau :" : "Select the slice representing " + f.nameEn + " of the cake:",
-      ans: f.text,
-      options: [f.text, wrongs[0], wrongs[1]].sort(() => Math.random() - 0.5),
-      icon: "🥧",
-      dots: "🥧 Fraction cible : " + f.text,
-      speech: isFR ? "Trouve " + f.nameFr + " du gâteau !" : "Find " + f.nameEn + " of the cake!",
-      mathType: "fraction",
-      a: f.a,
-      b: f.b
-    };
-  }
+    const item = phonicsBank[(round - 1 + (level - 1) * 2) % phonicsBank.length];
+    const word = isFR ? item.wordFr : item.wordEn;
 
-  // 6. PHONICS FISHING
-  if (eng === "fishing") {
-    const letterPairs = [
-      { letter: "A", word: "Ananas", icon: "🍍" },
-      { letter: "B", word: "Banane", icon: "🍌" },
-      { letter: "M", word: "Mangue", icon: "🥭" },
-      { letter: "P", word: "Papaye", icon: "🍈" },
-      { letter: "T", word: "Tortue", icon: "🐢" },
-      { letter: "L", word: "Lion", icon: "🦁" },
-      { letter: "S", word: "Singe", icon: "🐒" },
-      { letter: "O", word: "Oiseau", icon: "🦅" }
-    ];
-    const item = letterPairs[(round - 1 + (level - 1) * 2) % letterPairs.length];
-    const alphabet = ["A", "B", "C", "D", "E", "F", "L", "M", "P", "S", "T", "O"];
-    const wrongs = alphabet.filter(l => l !== item.letter).sort(() => Math.random() - 0.5).slice(0, 2);
     const qText = isFR
-      ? "Pêche le poisson avec la lettre de " + item.icon + " " + item.word + " :"
-      : "Catch the fish with the initial of " + item.icon + " " + item.word + ":";
+      ? "Trouve le poisson avec la lettre de " + item.icon + " " + word + " :"
+      : "Catch the fish with the initial of " + item.icon + " " + word + ":";
     const speech = isFR
-      ? "Attrape la lettre [" + item.letter + "] comme " + item.word + " dans le fleuve Wouri !"
-      : "Catch the letter [" + item.letter + "] for " + item.word + " in the river!";
+      ? "Attrape la lettre " + item.letter + " comme " + word + " !"
+      : "Catch the letter " + item.letter + " as in " + word + "!";
+
+    const dist = ["A", "B", "M", "L", "P", "E", "Z"].filter(l => l !== item.letter);
+    dist.sort(() => Math.random() - 0.5);
+
     return {
       q: qText,
       ans: item.letter,
-      options: [item.letter, wrongs[0], wrongs[1]].sort(() => Math.random() - 0.5),
+      options: [item.letter, dist[0], dist[1]].sort(() => Math.random() - 0.5),
       icon: item.icon,
-      word: item.word,
-      dots: item.icon + " " + item.word + " commence par [" + item.letter + "]",
+      word: word,
+      dots: item.letter + " comme " + word,
       speech: speech
     };
   }
 
-  // 7. LILYPAD FROG
+  // 3. FROG HOP (Syllables & Sequences)
   if (eng === "frog") {
-    const syllableWords = [
-      { word: "BANANE", syllables: ["BA", "NA", "NE"], icon: "🍌" },
-      { word: "PAPAYE", syllables: ["PA", "PA", "YE"], icon: "🍈" },
-      { word: "TOMATE", syllables: ["TO", "MA", "TE"], icon: "🍅" },
-      { word: "LAVABO", syllables: ["LA", "VA", "BO"], icon: "🧼" },
-      { word: "CHAMEAU", syllables: ["CHA", "MEAU"], icon: "🐪" },
-      { word: "KANGOUROU", syllables: ["KAN", "GOU", "ROU"], icon: "🦘" }
+    const syllableBank = [
+      { word: "BANANE", missing: "BA", syllables: ["BA", "NA", "NE"], icon: "🍌" },
+      { word: "TOMATE", missing: "TO", syllables: ["TO", "MA", "TE"], icon: "🍅" },
+      { word: "PAPAYE", missing: "PA", syllables: ["PA", "PA", "YE"], icon: "🍈" },
+      { word: "SALADE", missing: "SA", syllables: ["SA", "LA", "DE"], icon: "🥗" }
     ];
-    const item = syllableWords[(round - 1 + (level - 1)) % syllableWords.length];
-    const targetSyl = item.syllables[0];
-    const wrongs = ["PO", "LI", "RU", "MI", "SO"].filter(s => s !== targetSyl).slice(0, 2);
-    const qText = isFR
-      ? "Fais sauter la grenouille sur [" + targetSyl + "] pour former " + item.word + " :"
-      : "Hop the frog onto [" + targetSyl + "] to start " + item.word + ":";
-    const speech = isFR
-      ? "Touche le nénuphar [" + targetSyl + "] pour le mot " + item.word + " !"
-      : "Jump onto lilypad [" + targetSyl + "] for " + item.word + "!";
+    const item = syllableBank[(round - 1) % syllableBank.length];
+    const dist = ["LI", "PO", "MA", "KO"].filter(s => s !== item.missing);
+
     return {
-      q: qText,
-      ans: targetSyl,
-      options: [targetSyl, wrongs[0], wrongs[1]].sort(() => Math.random() - 0.5),
+      q: "Fais sauter la grenouille sur [" + item.missing + "] pour former " + item.word + " :",
+      ans: item.missing,
+      options: [item.missing, dist[0], dist[1]].sort(() => Math.random() - 0.5),
       icon: item.icon,
       word: item.word,
-      syllables: item.syllables,
-      dots: "🐸 Mot : " + item.word + " (" + item.syllables.join(" • ") + ")",
-      speech: speech
+      dots: item.syllables.join(" • "),
+      speech: "Fais sauter la grenouille sur " + item.missing + " pour compléter " + item.word + " !"
     };
   }
 
-  // 8. DJEMBE RHYTHM (Pronunciation)
+  // 4. TURBO RACING (Math speed calculations)
+  if (eng === "racing") {
+    let a = (round * 2) + level;
+    let b = round + 1;
+    let ans = a + b;
+    let op = "+";
+    if (grade >= 2 && round >= 3) {
+      a = Math.min(10, round + 1);
+      b = 2 + (round % 3);
+      ans = a * b;
+      op = "×";
+    }
+    const qText = a + " " + op + " " + b + " = ?";
+    const dist1 = ans + 2;
+    const dist2 = Math.max(1, ans - 3);
+
+    return {
+      q: qText,
+      ans: String(ans),
+      options: [String(ans), String(dist1), String(dist2)].sort(() => Math.random() - 0.5),
+      icon: "🏎️",
+      dots: "Niveau " + (grade + 1) + " • Course Turbo",
+      speech: isFR ? ("Calcule vite : " + a + " " + (op === "+" ? "plus" : "fois") + " " + b) : ("Quick: " + a + " " + (op === "+" ? "plus" : "times") + " " + b),
+      mathType: op === "+" ? "add" : "mult",
+      a: a,
+      b: b
+    };
+  }
+
+  // 5. DJEMBE DRUM (Rhythm & Syllables)
   if (eng === "djembe") {
-    const djembeList = [
-      { word: "LION", syllables: ["LION"], count: 1, icon: "🦁" },
-      { word: "CHAT", syllables: ["CHAT"], count: 1, icon: "🐱" },
-      { word: "MA-MAN", syllables: ["MA", "MAN"], count: 2, icon: "👩" },
-      { word: "VÉ-LO", syllables: ["VÉ", "LO"], count: 2, icon: "🚲" },
-      { word: "BA-NANE", syllables: ["BA", "NANE"], count: 2, icon: "🍌" },
-      { word: "PA-PI-LLON", syllables: ["PA", "PI", "LLON"], count: 3, icon: "🦋" },
-      { word: "TO-MA-TE", syllables: ["TO", "MA", "TE"], count: 3, icon: "🍅" },
-      { word: "A-NA-NAS", syllables: ["A", "NA", "NAS"], count: 3, icon: "🍍" },
-      { word: "E-LE-PHANT", syllables: ["É", "LÉ", "PHANT"], count: 3, icon: "🐘" },
-      { word: "OR-DI-NA-TEUR", syllables: ["OR", "DI", "NA", "TEUR"], count: 4, icon: "💻" }
+    const drumBank = [
+      { word: "LION", count: 1, syllables: ["LION"], icon: "🦁" },
+      { word: "ZE-BRE", count: 2, syllables: ["ZE", "BRE"], icon: "🦓" },
+      { word: "E-LE-PHANT", count: 3, syllables: ["E", "LE", "PHANT"], icon: "🐘" },
+      { word: "GI-RA-FE", count: 3, syllables: ["GI", "RA", "FE"], icon: "🦒" },
+      { word: "HIP-PO-PO-TAME", count: 4, syllables: ["HIP", "PO", "PO", "TAME"], icon: "🦛" }
     ];
-    const item = djembeList[(round - 1 + (level - 1) * 2) % djembeList.length];
-    const qText = isFR
-      ? "Frappe " + item.count + " coup" + (item.count > 1 ? "s" : "") + " sur le djembe pour : " + item.word + " " + item.icon + " !"
-      : "Tap " + item.count + " beat" + (item.count > 1 ? "s" : "") + " on the djembe for: " + item.word + " " + item.icon + "!";
-    const speech = isFR
-      ? "Frappe exactement " + item.count + " coups de djembe en rythme pour " + item.word + " !"
-      : "Tap exactly " + item.count + " beats on the drum for " + item.word + "!";
+    const item = drumBank[(round - 1) % drumBank.length];
     return {
-      q: qText,
+      q: "Frappe " + item.count + " coup" + (item.count > 1 ? "s" : "") + " sur le djembe pour : " + item.word + " " + item.icon + " !",
       ans: String(item.count),
-      options: ["1", "2", "3", "4"].filter(o => o !== String(item.count)).slice(0, 2).concat([String(item.count)]).sort(() => Math.random() - 0.5),
+      options: ["1", "2", "3", "4"],
       icon: item.icon,
       word: item.word,
       syllables: item.syllables,
-      dots: "👏 " + item.word + " ➡️ " + "🥁 ".repeat(item.count),
-      speech: speech
+      dots: item.syllables.join(" • "),
+      speech: "Frappe exactement " + item.count + " coups de djembe en rythme pour " + item.word + " !"
     };
   }
 
-  // 9. BOTANY LAB
-  if (eng === "botany") {
-    const plantSteps = [
-      { tool: "Eau 💧", need: "water", textFr: "Arrose la graine avec l'eau fraîche 💧 !", textEn: "Water the seed with fresh water 💧!" },
-      { tool: "Soleil ☀️", need: "sun", textFr: "Donne de la lumière du soleil ☀️ pour la photosynthèse !", textEn: "Give sunlight ☀️ for photosynthesis!" },
-      { tool: "Terreau 🌱", need: "food", textFr: "Ajoute du terreau nourrissant 🌱 pour faire fleurir !", textEn: "Add rich soil 🌱 to make it bloom!" }
-    ];
-    const step = plantSteps[(round - 1) % plantSteps.length];
+  // 6. CFA BALANCE (Market money)
+  if (eng === "balance") {
+    const targets = [150, 200, 250, 350, 500];
+    const amt = targets[(round - 1) % targets.length];
     return {
-      q: isFR ? step.textFr : step.textEn,
-      ans: step.tool,
-      options: ["Eau 💧", "Soleil ☀️", "Terreau 🌱"],
-      icon: "🌱",
-      dots: "Étape " + (((round - 1) % 3) + 1) + " / 3 de croissance",
-      speech: isFR ? step.textFr : step.textEn
+      q: "Place des pièces pour atteindre " + amt + " Francs CFA sur la balance :",
+      ans: String(amt),
+      options: [String(amt), String(amt + 50), String(amt - 50)],
+      icon: "⚖️",
+      dots: "Monnaie CFA • Marché",
+      speech: "Équilibre la balance en déposant exactement " + amt + " Francs CFA !"
     };
   }
 
-  // 10. WOOD SHAPES
-  if (eng === "shapes") {
-    const shapesList = [
-      { nameFr: "Triangle", nameEn: "Triangle", icon: "🔺" },
-      { nameFr: "Cercle", nameEn: "Circle", icon: "🟡" },
-      { nameFr: "Carré", nameEn: "Square", icon: "🟦" },
-      { nameFr: "Étoile", nameEn: "Star", icon: "⭐" },
-      { nameFr: "Losange", nameEn: "Diamond", icon: "🔷" }
-    ];
-    const sh = shapesList[(round - 1 + (level - 1)) % shapesList.length];
-    const wrongs = shapesList.filter(s => s.nameFr !== sh.nameFr).map(s => isFR ? s.nameFr : s.nameEn).slice(0, 2);
-    const qText = isFR
-      ? "Glisse la forme [" + sh.nameFr + " " + sh.icon + "] dans son encoche !"
-      : "Slide the [" + sh.nameEn + " " + sh.icon + "] into its slot!";
-    const speech = isFR
-      ? "Touche le " + sh.nameFr + " " + sh.icon + " pour l'encastrer dans le trieur !"
-      : "Touch the " + sh.nameEn + " " + sh.icon + " to fit into the slot!";
-    return {
-      q: qText,
-      ans: isFR ? sh.nameFr : sh.nameEn,
-      options: [isFR ? sh.nameFr : sh.nameEn, wrongs[0], wrongs[1]].sort(() => Math.random() - 0.5),
-      icon: sh.icon,
-      dots: sh.icon + " Forme à insérer : " + sh.nameFr,
-      speech: speech
-    };
-  }
-
-  // Default: pull from curriculum bank with round indexing
-  const bank = CURRICULUM[state.lang].bank[state.category] && CURRICULUM[state.lang].bank[state.category][state.grade];
-  if (bank && bank.length > 0) {
-    const picked = bank[(round - 1 + (level - 1) * 2) % bank.length];
-    return {
-      q: picked.q,
-      ans: picked.ans,
-      options: [...picked.options].sort(() => Math.random() - 0.5),
-      icon: picked.icon || "⭐",
-      dots: picked.dots || "",
-      speech: picked.speech || picked.q,
-      mathType: picked.mathType || null,
-      a: picked.a !== undefined ? picked.a : null,
-      b: picked.b !== undefined ? picked.b : null
-    };
-  }
-
-  // Fallback math
-  const a = Math.floor(Math.random() * 4) + 1;
-  const b = Math.floor(Math.random() * 4) + 1;
-  const ans = String(a + b);
+  // 7. DEFAULT / FALLBACK (Grade tailored)
+  const a = round + 1;
+  const b = grade + 1;
+  const sum = a + b;
   return {
     q: a + " + " + b + " = ?",
-    ans: ans,
-    options: [ans, String(a + b + 1), String(Math.max(1, a + b - 1))].sort(() => Math.random() - 0.5),
-    icon: "🥭",
-    dots: a + " + " + b,
-    speech: a + " plus " + b + " font combien ?",
-    mathType: "add",
-    a, b
+    ans: String(sum),
+    options: [String(sum), String(sum + 1), String(sum - 1)].sort(() => Math.random() - 0.5),
+    icon: "🌟",
+    dots: "⭐⭐⭐⭐⭐".slice(0, Math.min(5, sum)),
+    speech: isFR ? ("Combien font " + a + " plus " + b + " ?") : ("How much is " + a + " plus " + b + "?"),
+    a: a,
+    b: b
   };
 }
 
@@ -3985,6 +3961,7 @@ function initActiveEngine() {
   state.items = [];
   state.fruits = [];
   state.fallingFruit = null;
+  state.basketSquash = 1.0;
   state.fishList = [];
   state.lilypads = [];
   state.balanceCoins = [];
@@ -4116,14 +4093,24 @@ function handleAnswer(choice) {
 
   if (isMatch) {
     state.roundAdvancing = true;
+    state.combo++;
     AudioEngine.playSuccess();
     AudioEngine.playCoin();
     spawnParticles(W / 2, H / 2, "#FFB800", 35);
-    state.score += 10;
+    state.score += 10 + (state.combo > 1 ? (state.combo - 1) * 5 : 0);
     state.coins += 5;
     state.independentStreak++;
 
-    const praise = state.lang === "fr" ? "Bravo champion ! 🌟" : "Great job, champion! 🌟";
+    // Floating Arcade Combo Text
+    const comboText = state.combo > 1 
+      ? ("COMBO x" + state.combo + " ! 🔥")
+      : "+10 XP ! ⭐";
+    spawnFloatingText(W / 2, 140, comboText, "#FFD233", 28);
+
+    const praise = state.lang === "fr" 
+      ? (state.combo > 2 ? "INCROYABLE ! 🔥 Enchaînement parfait !" : "Bravo champion ! 🌟")
+      : (state.combo > 2 ? "AWESOME! 🔥 Perfect streak!" : "Great job, champion! 🌟");
+
     $("feedback-msg").style.color = "var(--green)";
     $("feedback-msg").textContent = praise;
     VoiceEngine.speak(praise);
@@ -4140,12 +4127,14 @@ function handleAnswer(choice) {
       }
     }, 1200);
   } else {
+    state.combo = 0;
     AudioEngine.playMistake();
     spawnParticles(W / 2, H / 2, "#E5252A", 18);
+    spawnFloatingText(W / 2, 140, state.lang === "fr" ? "Essaie encore ! 💪" : "Try again! 💪", "#FF6B6B", 22);
     state.lives = Math.max(0, state.lives - 1);
     state.independentStreak = 0;
 
-    const retryMsg = state.lang === "fr" ? "Regarde bien ! Essaie encore 💡" : "Look closely! Try again 💡";
+    const retryMsg = state.lang === "fr" ? "Regarde bien ! Tu peux le faire 💡" : "Look closely! You can do it 💡";
     $("feedback-msg").style.color = "var(--red-primary)";
     $("feedback-msg").textContent = retryMsg;
     VoiceEngine.speak(retryMsg);
@@ -4185,10 +4174,10 @@ function triggerGameOver() {
 function draw(time) {
   ctx.clearRect(0, 0, W, H);
 
-  // Background gradient
+  // Background gradient with subtle vignette
   const bg = ctx.createLinearGradient(0, 0, 0, H);
-  bg.addColorStop(0, "#17233D");
-  bg.addColorStop(1, "#202F52");
+  bg.addColorStop(0, "#131C31");
+  bg.addColorStop(1, "#1E293B");
   ctx.fillStyle = bg;
   ctx.fillRect(0, 0, W, H);
 
@@ -4196,54 +4185,92 @@ function draw(time) {
   const q = state.question;
   if (!q) return;
 
-  // 1. FRUIT ORCHARD (Nursery tactile fruit harvest)
+  // 1. FRUIT ORCHARD (Nursery tactile fruit harvest with parabolic arc & basket wobble)
   if (eng === "fruit") {
-    // Tree trunk & leafy green foliage
+    // Tree trunk & leafy green layered foliage
     ctx.fillStyle = "#78350F";
     ctx.fillRect(230, 170, 40, 150);
+
+    // Tree canopy layers for lush depth
+    ctx.fillStyle = "#047857";
+    ctx.beginPath();
+    ctx.arc(250, 120, 140, 0, Math.PI * 2);
+    ctx.fill();
+
     ctx.fillStyle = "#059669";
     ctx.beginPath();
-    ctx.arc(250, 115, 135, 0, Math.PI * 2);
+    ctx.arc(250, 110, 130, 0, Math.PI * 2);
+    ctx.fill();
+
+    ctx.fillStyle = "#10B981";
+    ctx.beginPath();
+    ctx.arc(245, 100, 115, 0, Math.PI * 2);
     ctx.fill();
 
     // Ripe fruits on branches matching question icon exactly!
     state.fruits.forEach(f => {
       if (!f.picked) {
-        ctx.font = "32px system-ui";
+        ctx.font = "34px system-ui";
         ctx.textAlign = "center";
         const wobbleY = Math.sin(time * 0.005 + f.wobble) * 3;
         ctx.fillText(f.icon, f.x, f.y + wobbleY);
+
+        // Soft twinkle sparkle on fruit
+        if (Math.sin(time * 0.003 + f.id) > 0.85) {
+          ctx.font = "14px system-ui";
+          ctx.fillText("✨", f.x + 14, f.y - 12);
+        }
       }
     });
 
-    // Plucked animated falling fruit moving to basket
+    // Plucked animated falling fruit moving along parabolic arc into the basket!
     if (state.fallingFruit) {
-      ctx.font = "34px system-ui";
+      state.fallingFruit.t += 0.07;
+      const t = Math.min(1, state.fallingFruit.t);
+      const curX = state.fallingFruit.startX + (state.fallingFruit.targetX - state.fallingFruit.startX) * t;
+      const curY = state.fallingFruit.startY + (state.fallingFruit.targetY - state.fallingFruit.startY) * t - Math.sin(t * Math.PI) * 45;
+
+      ctx.font = "36px system-ui";
       ctx.textAlign = "center";
-      ctx.fillText(state.fallingFruit.icon, state.fallingFruit.x, state.fallingFruit.y);
-      state.fallingFruit.y += 12;
-      if (state.fallingFruit.y >= 315) {
+      ctx.fillText(state.fallingFruit.icon, curX, curY);
+
+      if (t >= 1) {
+        state.basketSquash = 1.3;
         state.fallingFruit = null;
       }
     }
 
-    // Woven harvest basket with current count
+    // Woven harvest basket with dynamic squash & stretch wobble!
     const pickedCount = state.fruits.filter(f => f.picked).length;
     const targetCount = parseInt(q.ans) || 4;
+
+    ctx.save();
+    ctx.translate(250, 325);
+    ctx.scale(1 / state.basketSquash, state.basketSquash);
+
     ctx.fillStyle = "#D97706";
     ctx.beginPath();
-    ctx.roundRect(185, 295, 130, 65, [10, 10, 25, 25]);
+    ctx.roundRect(-70, -32, 140, 64, [10, 10, 26, 26]);
     ctx.fill();
     ctx.strokeStyle = "#B45309";
-    ctx.lineWidth = 3;
+    ctx.lineWidth = 3.5;
+    ctx.stroke();
+
+    // Basket rim highlight
+    ctx.strokeStyle = "#FDE68A";
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    ctx.roundRect(-66, -28, 132, 12, 6);
     ctx.stroke();
 
     ctx.fillStyle = "#FFFFFF";
     ctx.font = "bold 15px system-ui";
     ctx.textAlign = "center";
-    ctx.fillText("🧺 " + pickedCount + " / " + targetCount + " " + (q.fruitName || ""), 250, 335);
+    ctx.fillText("🧺 " + pickedCount + " / " + targetCount + " " + (q.fruitName || ""), 0, 12);
+
+    ctx.restore();
   }
-  // 2. PHONICS FISHING (River with target word banner & Swimming Tilapias)
+  // 2. PHONICS FISHING (River with target word banner, swimming fish, and wagging tails)
   else if (eng === "fishing") {
     // Target banner on shore
     ctx.fillStyle = "rgba(255, 255, 255, 0.12)";
@@ -4255,8 +4282,11 @@ function draw(time) {
     ctx.textAlign = "center";
     ctx.fillText((q.icon || "🐟") + " " + (q.word || "Mot") + " : Cherche [" + q.ans + "]", 250, 46);
 
-    // River water
-    ctx.fillStyle = "#0284C7";
+    // River water depth gradient
+    const waterGrad = ctx.createLinearGradient(0, 85, 0, H);
+    waterGrad.addColorStop(0, "#0284C7");
+    waterGrad.addColorStop(1, "#034975");
+    ctx.fillStyle = waterGrad;
     ctx.fillRect(0, 85, W, H - 85);
 
     // Animated water wave lines
@@ -4278,18 +4308,29 @@ function draw(time) {
       ctx.fill();
 
       // Fish tail wagging
-      const tailWag = Math.sin(time * 0.01 + idx) * 6;
+      const tailWag = Math.sin(time * 0.01 + idx) * 8;
       ctx.beginPath();
       ctx.moveTo(fish.vx > 0 ? fish.x : fish.x + fish.w, fish.y);
-      ctx.lineTo(fish.vx > 0 ? fish.x - 18 : fish.x + fish.w + 18, fish.y - 14 + tailWag);
-      ctx.lineTo(fish.vx > 0 ? fish.x - 18 : fish.x + fish.w + 18, fish.y + 14 + tailWag);
+      ctx.lineTo(fish.vx > 0 ? fish.x - 20 : fish.x + fish.w + 20, fish.y - 14 + tailWag);
+      ctx.lineTo(fish.vx > 0 ? fish.x - 20 : fish.x + fish.w + 20, fish.y + 14 + tailWag);
       ctx.fill();
+
+      // Little bubbles
+      if (Math.sin(time * 0.005 + idx) > 0.7) {
+        ctx.fillStyle = "rgba(255, 255, 255, 0.4)";
+        ctx.beginPath();
+        ctx.arc(fish.vx > 0 ? fish.x + fish.w + 8 : fish.x - 8, fish.y - 8, 4, 0, Math.PI * 2);
+        ctx.fill();
+      }
 
       // Glowing Letter badge
       ctx.fillStyle = "#FFFFFF";
       ctx.beginPath();
       ctx.arc(fish.x + fish.w / 2, fish.y, 16, 0, Math.PI * 2);
       ctx.fill();
+      ctx.strokeStyle = "#1E293B";
+      ctx.lineWidth = 2;
+      ctx.stroke();
 
       ctx.fillStyle = "#17233D";
       ctx.font = "bold 18px system-ui";
@@ -4315,7 +4356,7 @@ function draw(time) {
     ctx.arc(state.playerX, 195, 6, 0, Math.PI);
     ctx.stroke();
   }
-  // 3. LILYPAD FROG (Syllables hopping platformer)
+  // 3. LILYPAD FROG (Animated parabolic frog leaping & water ripples)
   else if (eng === "frog") {
     // Word banner on shore
     ctx.fillStyle = "rgba(255, 255, 255, 0.12)";
@@ -4330,6 +4371,19 @@ function draw(time) {
     // Pond water
     ctx.fillStyle = "#0369A1";
     ctx.fillRect(0, 95, W, H - 95);
+
+    // Water ripples
+    for (let i = state.waterRipples.length - 1; i >= 0; i--) {
+      const rip = state.waterRipples[i];
+      rip.r += 0.8;
+      rip.alpha -= 0.02;
+      ctx.strokeStyle = "rgba(186, 230, 253, " + Math.max(0, rip.alpha) + ")";
+      ctx.lineWidth = 2.5;
+      ctx.beginPath();
+      ctx.ellipse(rip.x, rip.y, rip.r * 1.5, rip.r * 0.8, 0, 0, Math.PI * 2);
+      ctx.stroke();
+      if (rip.alpha <= 0) state.waterRipples.splice(i, 1);
+    }
 
     // Green lilypads
     state.lilypads.forEach(pad => {
@@ -4347,23 +4401,33 @@ function draw(time) {
       ctx.fillText(pad.val, pad.x, pad.y + 8);
     });
 
-    // Frog position
+    // Frog position with smooth leap arc
     let frogX = 75, frogY = 160;
-    const curPad = state.lilypads[state.frogIndex] || state.lilypads[0];
-    if (curPad) {
-      frogX = curPad.x;
-      frogY = curPad.y - 36;
+    if (state.frogAnim.active) {
+      state.frogAnim.progress += 0.07;
+      const t = Math.min(1, state.frogAnim.progress);
+      frogX = state.frogAnim.startX + (state.frogAnim.targetX - state.frogAnim.startX) * t;
+      frogY = state.frogAnim.startY + (state.frogAnim.targetY - state.frogAnim.startY) * t - Math.sin(t * Math.PI) * 45;
+      if (t >= 1) state.frogAnim.active = false;
+    } else {
+      const curPad = state.lilypads[state.frogIndex] || state.lilypads[0];
+      if (curPad) {
+        frogX = curPad.x;
+        frogY = curPad.y - 36;
+      }
     }
-    ctx.font = "42px system-ui";
+    ctx.font = "44px system-ui";
     ctx.textAlign = "center";
     ctx.fillText("🐸", frogX, frogY);
   }
-  // 4. TURBO RACING (3-Lane Highway speed calculation)
+  // 4. TURBO RACING (Animated scrolling road marks, speed lines & nitro exhaust flames)
   else if (eng === "racing") {
-    // 3 Highway lanes
-    ctx.strokeStyle = "rgba(255, 255, 255, 0.25)";
-    ctx.lineWidth = 3;
-    ctx.setLineDash([16, 16]);
+    // Scrolling dashed road markings
+    state.roadOffset = (state.roadOffset + 6) % 40;
+    ctx.strokeStyle = "rgba(255, 255, 255, 0.3)";
+    ctx.lineWidth = 3.5;
+    ctx.setLineDash([18, 18]);
+    ctx.lineDashOffset = -state.roadOffset;
     ctx.beginPath();
     ctx.moveTo(170, 0); ctx.lineTo(170, H);
     ctx.moveTo(330, 0); ctx.lineTo(330, H);
@@ -4374,23 +4438,36 @@ function draw(time) {
     state.items.forEach(target => {
       ctx.fillStyle = "#FFFFFF";
       ctx.beginPath();
-      ctx.roundRect(target.x, target.y, target.w, target.h, 12);
+      ctx.roundRect(target.x, target.y, target.w, target.h, 14);
       ctx.fill();
       ctx.strokeStyle = "#0084FF";
-      ctx.lineWidth = 3;
+      ctx.lineWidth = 3.5;
       ctx.stroke();
 
       ctx.fillStyle = "#17233D";
-      ctx.font = "bold 20px system-ui";
+      ctx.font = "bold 21px system-ui";
       ctx.textAlign = "center";
-      ctx.fillText(String(target.val), target.x + target.w / 2, target.y + 33);
+      ctx.fillText(String(target.val), target.x + target.w / 2, target.y + 34);
     });
 
     // Player racing car steered by child
     const carX = 55 + state.raceLane * 150 + 40;
+    // Nitro flames puffing from exhaust
+    ctx.fillStyle = "#FF5722";
+    ctx.beginPath();
+    ctx.ellipse(carX + 14, 358 + Math.random() * 6, 4, 8 + Math.random() * 6, 0, 0, Math.PI * 2);
+    ctx.ellipse(carX + 36, 358 + Math.random() * 6, 4, 8 + Math.random() * 6, 0, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.fillStyle = "#00FFFF";
+    ctx.beginPath();
+    ctx.ellipse(carX + 14, 354, 2, 5, 0, 0, Math.PI * 2);
+    ctx.ellipse(carX + 36, 354, 2, 5, 0, 0, Math.PI * 2);
+    ctx.fill();
+
+    // Car body
     ctx.fillStyle = "#FFB800";
     ctx.beginPath();
-    ctx.roundRect(carX, 290, 50, 65, 8);
+    ctx.roundRect(carX, 290, 50, 65, 10);
     ctx.fill();
     ctx.fillStyle = "#E5252A";
     ctx.fillRect(carX + 10, 305, 30, 35);
@@ -4461,7 +4538,7 @@ function draw(time) {
       ctx.fillText(c.coin + "F", c.x, c.y + 5);
     });
   }
-  // 6. DJEMBE RHYTHM (Pronunciation - Perfect Syllable Highlight & Sync)
+  // 6. DJEMBE RHYTHM (Pronunciation - concentric expanding sound rings)
   else if (eng === "djembe") {
     // Top Banner displaying the illustrated word and syllables
     ctx.fillStyle = "rgba(255, 255, 255, 0.12)";
@@ -4473,7 +4550,7 @@ function draw(time) {
     ctx.textAlign = "center";
     ctx.fillText(q.icon || "🪘", 80, 60);
 
-    // Render Syllables with dynamic highlight based on current tap!
+    // Syllables with dynamic highlight based on current tap!
     const syllables = state.drumSyllables || ["MOT"];
     const startSylX = 140;
     syllables.forEach((syl, i) => {
@@ -4489,8 +4566,21 @@ function draw(time) {
       ctx.fillText(syl, startSylX + i * 80 + 35, 56);
     });
 
+    // Sonic shockwave rings
+    for (let i = state.sonicWaves.length - 1; i >= 0; i--) {
+      const sw = state.sonicWaves[i];
+      sw.r += 2.5;
+      sw.alpha -= 0.025;
+      ctx.strokeStyle = "rgba(255, 210, 51, " + Math.max(0, sw.alpha) + ")";
+      ctx.lineWidth = 3;
+      ctx.beginPath();
+      ctx.ellipse(sw.x, sw.y, sw.r * 1.4, sw.r * 0.7, 0, 0, Math.PI * 2);
+      ctx.stroke();
+      if (sw.alpha <= 0) state.sonicWaves.splice(i, 1);
+    }
+
     // Traditional Djembe Drum
-    const drumScale = (Date.now() - state.drumHitTime < 180) ? 1.05 : 1.0;
+    const drumScale = (Date.now() - state.drumHitTime < 180) ? 1.06 : 1.0;
     ctx.save();
     ctx.translate(250, 220);
     ctx.scale(drumScale, drumScale);
@@ -4602,7 +4692,7 @@ function draw(time) {
   // 9. GENERAL / OTHER ENGINES (Illustrated Hero Card + 3 Clean Large Option Badges)
   else {
     // Render the question's illustrated center hero object
-    ctx.font = "54px system-ui";
+    ctx.font = "56px system-ui";
     ctx.textAlign = "center";
     ctx.fillText(q.icon || "⭐", 250, 110);
 
@@ -4639,6 +4729,19 @@ function draw(time) {
     ctx.restore();
   });
 
+  // Draw Floating Arcade Text (+10 XP, COMBO x2, etc.)
+  state.floatingTexts.forEach(ft => {
+    ctx.save();
+    ctx.globalAlpha = ft.alpha;
+    ctx.font = "900 " + ft.size + "px 'Segoe UI', system-ui, sans-serif";
+    ctx.textAlign = "center";
+    ctx.fillStyle = "#000000";
+    ctx.fillText(ft.text, ft.x + 2, ft.y + 2);
+    ctx.fillStyle = ft.color;
+    ctx.fillText(ft.text, ft.x, ft.y);
+    ctx.restore();
+  });
+
   updateHandPointer();
 }
 
@@ -4672,6 +4775,18 @@ function tick(time) {
       p.life -= dt;
       if (p.life <= 0) state.particles.splice(i, 1);
     }
+
+    // Update Floating Text
+    for (let i = state.floatingTexts.length - 1; i >= 0; i--) {
+      const ft = state.floatingTexts[i];
+      ft.y += ft.vy * dt;
+      ft.life -= dt;
+      ft.alpha = Math.max(0, ft.life / ft.maxLife);
+      if (ft.life <= 0) state.floatingTexts.splice(i, 1);
+    }
+
+    // Ease Basket squash
+    state.basketSquash += (1.0 - state.basketSquash) * Math.min(1, dt * 10);
 
     if (state.currentView === "game" && state.question) {
       draw(time);
@@ -4881,168 +4996,122 @@ function drawTutorScene() {
     }
   };
 
-  // Tutor modal open/close
+  // Guide modal
+  $("guide-btn").onclick = () => {
+    AudioEngine.playClick();
+    const isFR = state.lang === "fr";
+    $("guide-title").textContent = isFR ? "Guide de Jeu" : "How to Play";
+    $("guide-text").innerHTML = isFR
+      ? "<b>Bienvenue chez Nateiva EduKids !</b><br><br>1. Choisis un Monde d'Aventure sur l'écran d'accueil.<br>2. Écoute la consigne lue par notre tuteur.<br>3. Touche directement les réponses sur l'écran tactile.<br>4. Appuie sur <b>Tuteur Pas-à-Pas</b> pour une explication interactive !"
+      : "<b>Welcome to Nateiva EduKids!</b><br><br>1. Select an Adventure World from the Hub.<br>2. Listen to the instruction read by our friendly tutor.<br>3. Tap answers directly on the touch arena.<br>4. Tap <b>Step-by-Step Tutor</b> anytime for interactive help!";
+    $("guide-modal").classList.add("open");
+  };
+  $("btn-close-guide").onclick = () => $("guide-modal").classList.remove("open");
+  $("btn-guide-ok").onclick = () => $("guide-modal").classList.remove("open");
+
+  // Next Question Button
+  $("btn-next-question").onclick = () => {
+    AudioEngine.playClick();
+    state.round++;
+    if (state.round > state.maxRoundsPerLevel) {
+      triggerVictory();
+    } else {
+      generateQuestion();
+    }
+  };
+
+  // Tutor Modal Controls
   $("btn-open-tutor").onclick = () => {
+    AudioEngine.playClick();
     state.tutorOpen = true;
     $("tutor-modal").classList.add("open");
     drawTutorScene();
   };
-
   $("tutor-close-x").onclick = () => {
     state.tutorOpen = false;
     VoiceEngine.cancel();
     $("tutor-modal").classList.remove("open");
   };
-
   $("tutor-btn-action").onclick = () => {
+    AudioEngine.playSuccess();
     state.tutorOpen = false;
     VoiceEngine.cancel();
     $("tutor-modal").classList.remove("open");
   };
-
-  $("tutor-btn-next").onclick = () => {
-    const modes = ["WATCH", "TOGETHER", "TRANSFER", "STRATEGY", "WHY"];
-    const curIdx = modes.indexOf(state.tutorMode);
-    state.tutorMode = modes[(curIdx + 1) % modes.length];
-    document.querySelectorAll(".tutor-tab").forEach(t => {
-      t.classList.toggle("active", t.dataset.tutorMode === state.tutorMode);
-    });
-    drawTutorScene();
-  };
-
-  $("tutor-btn-prev").onclick = () => {
-    const modes = ["WATCH", "TOGETHER", "TRANSFER", "STRATEGY", "WHY"];
-    const curIdx = modes.indexOf(state.tutorMode);
-    state.tutorMode = modes[(curIdx - 1 + modes.length) % modes.length];
-    document.querySelectorAll(".tutor-tab").forEach(t => {
-      t.classList.toggle("active", t.dataset.tutorMode === state.tutorMode);
-    });
-    drawTutorScene();
-  };
+  $("tutor-btn-prev").onclick = () => drawTutorScene();
+  $("tutor-btn-next").onclick = () => drawTutorScene();
 
   document.querySelectorAll(".tutor-tab").forEach(tab => {
     tab.onclick = () => {
+      AudioEngine.playClick();
       document.querySelectorAll(".tutor-tab").forEach(t => t.classList.remove("active"));
       tab.classList.add("active");
       state.tutorMode = tab.dataset.tutorMode;
-      AudioEngine.playDrop();
       drawTutorScene();
     };
   });
 
-  // Guide modal
-  $("guide-btn").onclick = () => {
-    const games = CURRICULUM[state.lang].games[state.category] || [];
-    const cur = games.find(g => g.id === state.game) || games[0];
-    if (cur) {
-      $("guide-icon").textContent = cur.icon;
-      $("guide-title").textContent = cur.name;
-      $("guide-text").textContent = cur.desc;
-    }
-    $("guide-modal").classList.add("open");
-  };
-
-  $("btn-close-guide").onclick = () => $("guide-modal").classList.remove("open");
-  $("btn-guide-ok").onclick = () => $("guide-modal").classList.remove("open");
-
-  // Play / Restart
-  $("btn-play-restart").onclick = () => {
-    state.round = 1;
-    state.lives = 3;
-    state.roundAdvancing = false;
-    updateStatsDOM();
-    generateQuestion();
-  };
-
-  // Victory (Section Completed) handlers
+  // Modal actions
   $("btn-victory-next-game").onclick = () => {
-    $("victory-modal").classList.remove("open");
     const games = CURRICULUM[state.lang].games[state.category] || [];
-    const curIdx = games.findIndex(g => g.id === state.game);
-    const nextGame = games[curIdx + 1];
-    if (nextGame) {
-      showGame(state.category, nextGame.id);
-    } else {
-      showHub();
-      VoiceEngine.speak(state.lang === "fr" ? "Félicitations ! Tu as complété ce monde avec succès ! Choisis un autre monde." : "Congratulations! You completed this world! Choose another world.");
-    }
+    const idx = games.findIndex(g => g.id === state.game);
+    const nextGame = games[(idx + 1) % games.length];
+    showGame(state.category, nextGame.id);
   };
-
   $("btn-victory-next-level").onclick = () => {
-    $("victory-modal").classList.remove("open");
     state.level++;
     state.round = 1;
-    state.roundAdvancing = false;
-    updateStatsDOM();
-    generateQuestion();
-  };
-
-  $("btn-victory-hub").onclick = () => {
     $("victory-modal").classList.remove("open");
-    showHub();
-  };
-
-  $("btn-over-retry").onclick = () => {
-    $("gameover-modal").classList.remove("open");
-    state.lives = 3;
-    state.round = 1;
-    state.roundAdvancing = false;
-    updateStatsDOM();
     generateQuestion();
   };
-
+  $("btn-victory-hub").onclick = () => showHub();
+  $("btn-over-retry").onclick = () => {
+    state.lives = 3;
+    state.combo = 0;
+    $("gameover-modal").classList.remove("open");
+    generateQuestion();
+  };
   $("btn-over-tutor").onclick = () => {
     $("gameover-modal").classList.remove("open");
-    $("btn-open-tutor").click();
+    state.tutorOpen = true;
+    $("tutor-modal").classList.add("open");
+    drawTutorScene();
   };
 
-  // Tactile on-screen buttons
+  // Pad Controls
   $("btn-left").onclick = () => {
-    state.idleTime = 0;
+    AudioEngine.playClick();
     if (state.engineType === "racing") {
       state.raceLane = Math.max(0, state.raceLane - 1);
     } else if (state.engineType === "fishing") {
       state.playerX = Math.max(60, state.playerX - 60);
     }
   };
-
   $("btn-right").onclick = () => {
-    state.idleTime = 0;
+    AudioEngine.playClick();
     if (state.engineType === "racing") {
       state.raceLane = Math.min(2, state.raceLane + 1);
     } else if (state.engineType === "fishing") {
       state.playerX = Math.min(440, state.playerX + 60);
     }
   };
-
   $("btn-action").onclick = () => {
-    state.idleTime = 0;
+    AudioEngine.playClick();
     if (state.engineType === "racing") {
       const hit = state.items.find(it => it.lane === state.raceLane);
       if (hit) handleAnswer(hit.val);
     } else if (state.engineType === "fishing") {
-      const hit = state.fishList.find(f => Math.abs(f.x + f.w / 2 - state.playerX) < 55);
-      if (hit) {
-        AudioEngine.playSplash();
-        handleAnswer(hit.val);
-      }
-    } else if (state.engineType === "djembe") {
-      handleDjembeTap();
+      const hit = state.fishList.find(f => Math.abs(f.x + f.w / 2 - state.playerX) < 45);
+      if (hit) handleAnswer(hit.val);
     }
   };
 
-  function handleDjembeTap() {
-    AudioEngine.playDrum();
-    state.drumHitTime = Date.now();
-    state.playerX++;
-    const syllables = state.drumSyllables || [];
-    const currentSyl = syllables[state.playerX - 1] || String(state.playerX);
-    VoiceEngine.speak(currentSyl);
-    const targetCount = parseInt(state.question.ans) || 3;
-    if (state.playerX === targetCount) {
-      setTimeout(() => handleAnswer(state.question.ans), 350);
-    }
-  }
+  // Keyboard navigation
+  window.addEventListener("keydown", (e) => {
+    if (e.key === "ArrowLeft") $("btn-left").click();
+    if (e.key === "ArrowRight") $("btn-right").click();
+    if (e.key === " " || e.key === "Enter") $("btn-action").click();
+  });
 
   // Canvas Tactile Touches
   canvas.addEventListener("pointerdown", (e) => {
@@ -5058,8 +5127,19 @@ function drawTutorScene() {
       if (f) {
         f.picked = true;
         AudioEngine.playPop();
-        // Trigger falling fruit animation
-        state.fallingFruit = { icon: f.icon, x: f.x, y: f.y };
+        // Parabolic arc into the basket
+        state.fallingFruit = {
+          icon: f.icon,
+          startX: f.x,
+          startY: f.y,
+          targetX: 250 + (Math.random() * 40 - 20),
+          targetY: 325,
+          t: 0
+        };
+        // Leaves flutter & floating text
+        spawnParticles(f.x, f.y, "#10B981", 6);
+        spawnFloatingText(f.x, f.y - 12, "+1 " + f.icon, "#FFD233", 22);
+
         const currentPicked = state.fruits.filter(fr => fr.picked).length;
         const fruitName = state.question.fruitName || "fruit";
         VoiceEngine.speak(currentPicked + " " + fruitName);
@@ -5077,15 +5157,29 @@ function drawTutorScene() {
       const hit = state.fishList.find(f => x >= f.x && x <= f.x + f.w && y >= f.y - 20 && y <= f.y + f.h);
       if (hit) {
         AudioEngine.playSplash();
+        spawnParticles(hit.x + hit.w / 2, hit.y, "#38BDF8", 12);
+        spawnFloatingText(hit.x + hit.w / 2, hit.y - 25, "ATTRAPÉ ! 🐟", "#FFD233", 22);
         handleAnswer(hit.val);
       }
     }
     // 3. Lilypad Frog
     else if (eng === "frog") {
-      const pad = state.lilypads.find(p => Math.hypot(p.x - x, p.y - y) < p.radius + 10);
+      const pad = state.lilypads.find(p => Math.hypot(p.x - x, p.y - y) < p.radius + 15);
       if (pad) {
         AudioEngine.playDrop();
+        const fromPad = state.lilypads[state.frogIndex] || state.lilypads[0];
         state.frogIndex = state.lilypads.indexOf(pad);
+        state.frogAnim = {
+          active: true,
+          startX: fromPad ? fromPad.x : 75,
+          startY: fromPad ? fromPad.y - 36 : 160,
+          targetX: pad.x,
+          targetY: pad.y - 36,
+          progress: 0
+        };
+        state.waterRipples.push({ x: pad.x, y: pad.y, r: 15, maxR: 55, alpha: 0.9 });
+        spawnParticles(pad.x, pad.y, "#38BDF8", 10);
+        spawnFloatingText(pad.x, pad.y - 45, "HOP ! 🐸", "#34D399", 22);
         handleAnswer(pad.val);
       }
     }
@@ -5106,6 +5200,7 @@ function drawTutorScene() {
       if (hitCoin) {
         AudioEngine.playCoin();
         state.balanceCoins.push(hitCoin.coin);
+        spawnFloatingText(hitCoin.x, hitCoin.y - 20, "+" + hitCoin.coin + " CFA", "#FFD233", 20);
         const currentAmt = state.balanceCoins.reduce((a, b) => a + b, 0);
         VoiceEngine.speak(currentAmt + " Francs CFA");
         const targetAmt = parseInt(state.question.ans) || 250;
@@ -5119,19 +5214,21 @@ function drawTutorScene() {
     // 6. Detective Magnifier
     else if (eng === "magnifier") {
       state.magnifierX = Math.max(70, Math.min(430, x));
-      state.magnifierY = Math.max(70, Math.min(310, y));
-      const hit = state.items.find(it => x >= it.x && x <= it.x + it.w && y >= it.y && y <= it.y + it.h);
+      state.magnifierY = Math.max(100, Math.min(270, y));
+      const hit = state.items.find(it => Math.hypot((it.x + it.w / 2) - x, (it.y + it.h / 2) - y) < 45);
       if (hit) {
+        AudioEngine.playClick();
         handleAnswer(hit.val);
       }
     }
     // 7. Botany Lab
     else if (eng === "botany") {
-      const tool = state.items.find(t => Math.hypot(t.x - x, t.y - y) < t.radius + 10);
-      if (tool) {
-        AudioEngine.playPop();
+      const hitTool = state.items.find(t => Math.hypot(t.x - x, t.y - y) < t.radius + 10);
+      if (hitTool) {
+        AudioEngine.playClick();
         state.plantStage++;
-        VoiceEngine.speak(tool.label);
+        spawnParticles(hitTool.x, hitTool.y, "#10B981", 12);
+        spawnFloatingText(250, 120, "POUSSE ! 🌱", "#10B981", 24);
         if (state.plantStage >= 2) {
           handleAnswer(state.question.ans);
         }
@@ -5139,14 +5236,28 @@ function drawTutorScene() {
     }
     // 8. Djembe Drum
     else if (eng === "djembe") {
-      if (Math.hypot(250 - x, 220 - y) < 95) {
-        handleDjembeTap();
+      if (Math.hypot(x - 250, y - 220) < 95) {
+        state.drumHitTime = Date.now();
+        state.playerX++;
+        AudioEngine.playDrum();
+        // Concentric sonic ring
+        state.sonicWaves.push({ x: 250, y: 130, r: 25, maxR: 160, alpha: 1.0 });
+        const drumNotes = ["🎵", "🎶", "🥁", "✨"];
+        spawnFloatingText(250 + (Math.random() * 60 - 30), 120, drumNotes[Math.floor(Math.random() * drumNotes.length)], "#F59E0B", 28);
+
+        const targetCount = parseInt(state.question.ans) || 2;
+        if (state.playerX === targetCount) {
+          setTimeout(() => handleAnswer(state.question.ans), 350);
+        } else if (state.playerX > targetCount) {
+          handleAnswer(-1);
+        }
       }
     }
-    // 9. General Cards
+    // 9. General Options (3 large buttons)
     else {
       const hit = state.items.find(it => x >= it.x && x <= it.x + it.w && y >= it.y && y <= it.y + it.h);
       if (hit) {
+        AudioEngine.playClick();
         handleAnswer(hit.val);
       }
     }
