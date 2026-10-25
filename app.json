@@ -1,11 +1,11 @@
 {
   "expo": {
-    "name": "Nateiva EDU",
-    "slug": "nateiva-edu",
+    "name": "Nateiva School Game",
+    "slug": "nateiva-school-game",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
-    "scheme": "nateivaedu",
+    "scheme": "nateivaschoolgame",
     "userInterfaceStyle": "automatic",
     "ios": {
       "icon": "./assets/expo.icon"

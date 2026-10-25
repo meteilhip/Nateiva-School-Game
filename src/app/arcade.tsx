@@ -10,7 +10,7 @@ export default function ArcadeScreen() {
         <TouchableOpacity style={styles.backBtn} onPress={() => router.back()}>
           <Text style={styles.backBtnText}>⬅️ Retour Bibliothèque</Text>
         </TouchableOpacity>
-        <Text style={styles.title}>🕹️ Nateiva Arcade Animée</Text>
+        <Text style={styles.title}>🕹️ Nateiva School Game</Text>
         <View style={{ width: 40 }} />
       </View>
 
@@ -25,7 +25,7 @@ export default function ArcadeScreen() {
               border: 'none',
               borderRadius: 20
             }}
-            title="Nateiva EduKids Arcade"
+            title="Nateiva School Game"
           />
         </View>
       ) : (

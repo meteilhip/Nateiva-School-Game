@@ -1,1 +1,2 @@
+@SchoolGameSoul.md
 @AGENTS.md

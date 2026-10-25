@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
 <meta name="theme-color" content="#E5252A">
-<title>Nateiva Kids • Arcade Éducative & Simulations Flottantes</title>
+<title>Nateiva School Game • Arcade Éducative & Simulations Flottantes</title>
 <style>
 /* ==========================================================================
    NATEIVA LUXURY SLEEK BORDER & FLOATING ARCADE DESIGN SYSTEM
@@ -1201,7 +1201,7 @@ canvas#simCanvas {
     <div class="brand-box">
       <div class="brand-icon">🦁</div>
       <div class="brand-titles">
-        <h1>Nateiva Kids</h1>
+        <h1>Nateiva School Game</h1>
         <p id="lbl-tagline">Arcade Éducative, Maths, Lecture, Labyrinthes & Puzzles</p>
       </div>
     </div>
@@ -1587,7 +1587,7 @@ canvas#simCanvas {
 
   <!-- FOOTER -->
   <footer class="footer-credits">
-    Nateiva Kids • Conforme aux programmes éducatifs • Audio Studio Haute Définition
+    Nateiva School Game • Conforme aux programmes éducatifs • Audio Studio Haute Définition
   </footer>
 </main>
 
@@ -2294,7 +2294,33 @@ canvas#simCanvas {
     audio: null,
     currentUtteranceId: 0,
 
-    speak(text, onEnded) {
+    fallbackWebSpeech(text, lang, myId, onEnded, rate = 0.96) {
+      if (!('speechSynthesis' in window)) {
+        if (onEnded) onEnded();
+        return;
+      }
+      try {
+        window.speechSynthesis.cancel();
+        const utter = new SpeechSynthesisUtterance(text.trim());
+        utter.lang = lang === 'en' ? 'en-US' : 'fr-FR';
+        utter.rate = rate;
+        const voices = window.speechSynthesis.getVoices() || [];
+        const preferred = voices.find(v => v.lang.toLowerCase().startsWith(lang) && /natural|neural|denise|jenny|premium|google|amelie|thomas|samantha/i.test(v.name))
+          || voices.find(v => v.lang.toLowerCase().startsWith(lang));
+        if (preferred) utter.voice = preferred;
+        utter.onend = () => {
+          if (this.currentUtteranceId === myId && onEnded) onEnded();
+        };
+        utter.onerror = () => {
+          if (this.currentUtteranceId === myId && onEnded) onEnded();
+        };
+        window.speechSynthesis.speak(utter);
+      } catch (e) {
+        if (onEnded) onEnded();
+      }
+    },
+
+    speak(text, onEnded, rate = 1.0) {
       if (!state.soundEnabled || !text) {
         if (onEnded) onEnded();
         return;
@@ -2309,6 +2335,7 @@ canvas#simCanvas {
         const audio = new Audio();
         this.audio = audio;
         audio.src = url;
+        audio.playbackRate = rate;
         audio.onended = () => {
           if (this.currentUtteranceId === myId) {
             this.audio = null;
@@ -2317,27 +2344,33 @@ canvas#simCanvas {
         };
         audio.onerror = () => {
           this.audio = null;
-          if (onEnded) onEnded();
+          if (this.currentUtteranceId === myId) {
+            this.fallbackWebSpeech(text, lang, myId, onEnded, rate * 0.96);
+          }
         };
         const p = audio.play();
         if (p !== undefined) {
           p.catch(() => {
             this.audio = null;
-            if (onEnded) onEnded();
+            if (this.currentUtteranceId === myId) {
+              this.fallbackWebSpeech(text, lang, myId, onEnded, rate * 0.96);
+            }
           });
         }
       } catch (e) {
-        if (onEnded) onEnded();
+        this.fallbackWebSpeech(text, lang, myId, onEnded, rate * 0.96);
       }
     },
 
     speakSlow(text, onEnded) {
-      this.speak(text, onEnded);
-      if (this.audio) this.audio.playbackRate = 0.78;
+      this.speak(text, onEnded, 0.78);
     },
 
     stop() {
       this.currentUtteranceId++;
+      if ('speechSynthesis' in window) {
+        try { window.speechSynthesis.cancel(); } catch (e) {}
+      }
       if (this.audio) {
         try {
           this.audio.pause();
