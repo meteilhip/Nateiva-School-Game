@@ -1749,6 +1749,114 @@ body {
     background: var(--coca-red-soft);
   }
 
+
+  /* ==========================================================================
+     V7.0 REA-ULTRA-3D: 3 DISTINCT ACTIVITY MODES, BOSS ARENA & CONFETTI HUD
+     ========================================================================== */
+  .activity-mode-banner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 12px 18px;
+    border-radius: 18px;
+    margin-bottom: 12px;
+    color: #FFFFFF;
+    font-weight: 900;
+    border: 2px solid rgba(255, 255, 255, 0.45);
+    box-shadow: 0 10px 26px rgba(15, 23, 42, 0.25);
+    transition: all 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+    animation: modeBannerPop 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+  @keyframes modeBannerPop {
+    0% { transform: translateY(-10px) scale(0.96); opacity: 0; }
+    100% { transform: translateY(0) scale(1); opacity: 1; }
+  }
+  .activity-mode-banner.mode-phase-1 {
+    background: linear-gradient(135deg, #0284C7 0%, #1D4ED8 55%, #312E81 100%);
+    border-color: #38BDF8;
+  }
+  .activity-mode-banner.mode-phase-2 {
+    background: linear-gradient(135deg, #D97706 0%, #EA580C 55%, #9A3412 100%);
+    border-color: #FDE047;
+  }
+  .activity-mode-banner.mode-phase-3 {
+    background: linear-gradient(135deg, #E5252A 0%, #991B1B 50%, #4C1D95 100%);
+    border-color: #FBBF24;
+    box-shadow: 0 12px 32px rgba(229, 37, 42, 0.42);
+  }
+  .mode-banner-left {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .mode-mascot-icon {
+    font-size: 2.2rem;
+    line-height: 1;
+    filter: drop-shadow(0 4px 8px rgba(0,0,0,0.35));
+    animation: appleFloat 2.4s ease-in-out infinite;
+  }
+  .mode-title-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+  .mode-phase-kicker {
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: #FDE68A;
+  }
+  .mode-phase-headline {
+    font-size: 1.05rem;
+    color: #FFFFFF;
+  }
+  .mode-xp-pill {
+    padding: 6px 14px;
+    border-radius: 999px;
+    background: rgba(15, 23, 42, 0.55);
+    border: 1.5px solid #FBBF24;
+    color: #FDE047;
+    font-size: 0.8rem;
+    font-weight: 900;
+    white-space: nowrap;
+  }
+
+  /* Activity Phase 2 & Phase 3 Visual Variations for DOM Overlays */
+  .lang-quest-stage[data-phase="2"] .lang-hero-banner {
+    background: linear-gradient(135deg, #7C2D12 0%, #9A3412 50%, #1E1B4B 100%);
+    border-color: #38BDF8;
+  }
+  .lang-quest-stage[data-phase="3"] .lang-hero-banner {
+    background: linear-gradient(135deg, #4C1D95 0%, #831843 55%, #0F172A 100%);
+    border-color: #FBBF24;
+  }
+  .lang-quest-stage[data-phase="2"] .btn-lang-choice {
+    background: linear-gradient(180deg, #F0F9FF 0%, #E0F2FE 100%);
+    border-color: #0284C7;
+    border-radius: 999px;
+  }
+  .lang-quest-stage[data-phase="3"] .btn-lang-choice {
+    background: linear-gradient(180deg, #FEFCE8 0%, #FEF08A 100%);
+    border-color: #D97706;
+    box-shadow: 0 8px 20px rgba(217, 119, 6, 0.25);
+  }
+  .arcade-timer-bar-wrap {
+    width: 100%;
+    height: 10px;
+    background: rgba(255,255,255,0.16);
+    border-radius: 999px;
+    overflow: hidden;
+    margin-top: 4px;
+    border: 1px solid rgba(255,255,255,0.3);
+  }
+  .arcade-timer-bar-fill {
+    height: 100%;
+    width: 100%;
+    background: linear-gradient(90deg, #10B981, #FBBF24, #EF4444);
+    transition: width 0.3s linear;
+  }
+
 </style>
 </head>
 <body>
@@ -1779,7 +1887,7 @@ body {
         <option value="en">🇬🇧 English (Studio Voice)</option>
       </select>
       <button class="btn-pill" id="btn-sound-toggle">🔊 Son</button>
-      <button class="version-cache-pill" id="btn-version-cache" title="Version active • Cliquer pour vider le cache et recharger">🚀 v6.0 REA-3D • 🔄 Vider Cache</button>
+      <button class="version-cache-pill" id="btn-version-cache" title="Version active • Cliquer pour vider le cache et recharger">🚀 v7.0 REA-ULTRA-3D • 🔄 Vider Cache</button>
     </div>
   </header>
 
@@ -1883,7 +1991,7 @@ body {
           <h3>Grammaire & Syntaxe (FR / EN)</h3>
           <div class="portal-curriculum-tag">Noms • Verbes • Adjectifs • Accords</div>
         </div>
-        <span class="card-rea-badge">✨ REA 3D v6.0</span>
+        <span class="card-rea-badge">✨ REA 3D v7.0 • 3 Modes</span>
       </div>
       <p class="portal-desc">Maîtrise la grammaire en français et en anglais (articles, pluriels, nature des mots, accords sujet-verbe) avec une seule voix native pure !</p>
       <div class="portal-counts-badge-bar">
@@ -1902,7 +2010,7 @@ body {
           <h3>Vocabulaire & Mots du Monde (FR / EN)</h3>
           <div class="portal-curriculum-tag">Synonymes • Contraires • Thèmes d'Afrique</div>
         </div>
-        <span class="card-rea-badge">✨ REA 3D v6.0</span>
+        <span class="card-rea-badge">✨ REA 3D v7.0 • 3 Modes</span>
       </div>
       <p class="portal-desc">Enrichis ton vocabulaire en français et en anglais : synonymes, contraires, objets de l'école, animaux et métiers avec prononciation native !</p>
       <div class="portal-counts-badge-bar">
@@ -1921,7 +2029,7 @@ body {
           <h3>Conjugaison & Temps (FR / EN)</h3>
           <div class="portal-curriculum-tag">Présent • Passé • Futur • Être/Avoir & To Be</div>
         </div>
-        <span class="card-rea-badge">✨ REA 3D v6.0</span>
+        <span class="card-rea-badge">✨ REA 3D v7.0 • 3 Modes</span>
       </div>
       <p class="portal-desc">Voyage dans le temps (Passé, Présent, Futur) pour conjuguer les verbes en français et en anglais selon le pronom sujet !</p>
       <div class="portal-counts-badge-bar">
@@ -1940,7 +2048,7 @@ body {
           <h3>Studio Prononciation (FR ⇄ EN)</h3>
           <div class="portal-curriculum-tag">Anglais & Français • Micro Live • Spectre</div>
         </div>
-        <span class="card-rea-badge">✨ REA 3D v6.0</span>
+        <span class="card-rea-badge">✨ REA 3D v7.0 • 3 Modes</span>
       </div>
       <p class="portal-desc">Écoute la vraie voix studio française et anglaise, parle dans ton micro pour obtenir ton score de prononciation et suis les billes de rythme !</p>
       <div class="portal-counts-badge-bar">
@@ -1959,7 +2067,7 @@ body {
           <h3>Géographie des Pays d'Afrique</h3>
           <div class="portal-curriculum-tag">Carte SVG Interactive • Drapeaux • Capitales</div>
         </div>
-        <span class="card-rea-badge">✨ REA 3D v6.0</span>
+        <span class="card-rea-badge">✨ REA 3D v7.0 • 3 Modes</span>
       </div>
       <p class="portal-desc">Explore la vraie carte vectorielle interactive des pays d'Afrique ! Touche les pays au doigt, découvre leurs drapeaux, leurs capitales et leurs fleuves !</p>
       <div class="portal-counts-badge-bar">
@@ -1978,7 +2086,7 @@ body {
           <h3>Fun Facts & Culture Générale (QCM)</h3>
           <div class="portal-curriculum-tag">Quiz Choix Multiples • Indice 50/50 • Afrique</div>
         </div>
-        <span class="card-rea-badge">✨ REA 3D v6.0</span>
+        <span class="card-rea-badge">✨ REA 3D v7.0 • 3 Modes</span>
       </div>
       <p class="portal-desc">Réponds aux questions à choix multiples (A, B, C, D) avec l'indice 50/50 sur les merveilles d'Afrique, les animaux, l'espace et les sciences !</p>
       <div class="portal-counts-badge-bar">
@@ -1997,7 +2105,7 @@ body {
           <h3>Compréhension de Texte & Contes</h3>
           <div class="portal-curriculum-tag">Lecture Karaoké FR/EN • Quiz Compréhension</div>
         </div>
-        <span class="card-rea-badge">✨ REA 3D v6.0</span>
+        <span class="card-rea-badge">✨ REA 3D v7.0 • 3 Modes</span>
       </div>
       <p class="portal-desc">Écoute et lis des contes africains et scientifiques bilingues avec surlignage phrase par phrase, puis réponds aux questions de compréhension !</p>
       <div class="portal-counts-badge-bar">
@@ -2016,7 +2124,7 @@ body {
           <h3>Monstre des Syllabes & Lecture</h3>
           <div class="portal-curriculum-tag">Feed The Monster • Voyelles & Consonnes</div>
         </div>
-        <span class="card-rea-badge">✨ REA 3D v6.0</span>
+        <span class="card-rea-badge">✨ REA 3D v7.0 • 3 Modes</span>
       </div>
       <p class="portal-desc">Nourris le Monstre magique avec les bonnes syllabes colorées (voyelles en rouge, consonnes en bleu) pour former des mots en français et en anglais !</p>
       <div class="portal-counts-badge-bar">
@@ -2035,7 +2143,7 @@ body {
           <h3>Maths 3D, Fractions & Balance Algébrique</h3>
           <div class="portal-curriculum-tag">Boîtes de 10 • Disque Fractions • Balance 2x+4</div>
         </div>
-        <span class="card-rea-badge">✨ REA 3D v6.0</span>
+        <span class="card-rea-badge">✨ REA 3D v7.0 • 3 Modes</span>
       </div>
       <p class="portal-desc">Manipule les boîtes de 10, le disque interactif des fractions et la balance algébrique selon ta classe (de la Maternelle au CM2 / Primary 6) !</p>
       <div class="portal-counts-badge-bar">
@@ -2054,7 +2162,7 @@ body {
           <h3>Labo Chimie & Échelle pH</h3>
           <div class="portal-curriculum-tag">Sciences • Réactions • Indicateur pH 0–14</div>
         </div>
-        <span class="card-rea-badge">✨ REA 3D v6.0</span>
+        <span class="card-rea-badge">✨ REA 3D v7.0 • 3 Modes</span>
       </div>
       <p class="portal-desc">Verse les éprouvettes dans l'erlenmeyer, observe l'indicateur de pH en direct, les mélanges de couleurs et l'effervescence des bulles de gaz !</p>
       <div class="portal-counts-badge-bar">
@@ -2073,7 +2181,7 @@ body {
           <h3>Bassin d'Archimède (Flotte/Coule)</h3>
           <div class="portal-curriculum-tag">Physique • Vecteurs Poussée ↑Fa & Poids ↓P</div>
         </div>
-        <span class="card-rea-badge">✨ REA 3D v6.0</span>
+        <span class="card-rea-badge">✨ REA 3D v7.0 • 3 Modes</span>
       </div>
       <p class="portal-desc">Plonge le bois, la mangue, l'or ou la brique dans l'eau et visualise en direct les vecteurs de la poussée d'Archimède (↑Fa) et du poids (↓P) !</p>
       <div class="portal-counts-badge-bar">
@@ -2092,7 +2200,7 @@ body {
           <h3>Circuit Électrique 3D & Oscilloscope</h3>
           <div class="portal-curriculum-tag">Loi d'Ohm (U=R×I) • Électrons & Hélice</div>
         </div>
-        <span class="card-rea-badge">✨ REA 3D v6.0</span>
+        <span class="card-rea-badge">✨ REA 3D v7.0 • 3 Modes</span>
       </div>
       <p class="portal-desc">Ferme l'interrupteur pour observer la circulation des électrons bleus, allumer l'ampoule de 4,5 V et faire tourner l'hélice du moteur électrique !</p>
       <div class="portal-counts-badge-bar">
@@ -2111,7 +2219,7 @@ body {
           <h3>Jardin Botanique & Photosynthèse</h3>
           <div class="portal-curriculum-tag">Biologie • Racines, Tige & Floraison 21 Jours</div>
         </div>
-        <span class="card-rea-badge">✨ REA 3D v6.0</span>
+        <span class="card-rea-badge">✨ REA 3D v7.0 • 3 Modes</span>
       </div>
       <p class="portal-desc">Dose la pluie et le soleil pour faire germer le Baobab, le Tournesol, le Cacaoyer et l'Hibiscus en observant les racines pousser sous terre !</p>
       <div class="portal-counts-badge-bar">
@@ -2130,7 +2238,7 @@ body {
           <h3>Comet Defender : Calcul Spatial</h3>
           <div class="portal-curriculum-tag">TuxMath Arcade • Lasers & Calcul Mental</div>
         </div>
-        <span class="card-rea-badge">✨ REA 3D v6.0</span>
+        <span class="card-rea-badge">✨ REA 3D v7.0 • 3 Modes</span>
       </div>
       <p class="portal-desc">Pilote le vaisseau spatial et tire au laser sur la comète qui porte la bonne réponse à l'équation affichée sur le tableau de bord !</p>
       <div class="portal-counts-badge-bar">
@@ -2149,7 +2257,7 @@ body {
           <h3>Tangram Géométrique Magnétique</h3>
           <div class="portal-curriculum-tag">Mathigon Euclid • Polygones & Silhouettes</div>
         </div>
-        <span class="card-rea-badge">✨ REA 3D v6.0</span>
+        <span class="card-rea-badge">✨ REA 3D v7.0 • 3 Modes</span>
       </div>
       <p class="portal-desc">Assemble la Fusée, le Bateau, le Chat, le Lion et le Papillon en glissant les polygones géométriques avec aimantation de précision !</p>
       <div class="portal-counts-badge-bar">
@@ -2168,7 +2276,7 @@ body {
           <h3>Donjon Labyrinthe 3D (Vue 3D & Raycast)</h3>
           <div class="portal-curriculum-tag">Blockly Maze • Algorithme & Syllabes</div>
         </div>
-        <span class="card-rea-badge">✨ REA 3D v6.0</span>
+        <span class="card-rea-badge">✨ REA 3D v7.0 • 3 Modes</span>
       </div>
       <p class="portal-desc">Guide Léo dans les 5 cartes de la Savane (Oasis, Pyramide, Volcan, Jungle) en collectant les syllabes et nombres d'or ou utilise le bouton Auto-Pas !</p>
       <div class="portal-counts-badge-bar">
@@ -2229,6 +2337,19 @@ body {
 
     <!-- PLAYGROUND CARD -->
     <div class="playground-card">
+
+      <!-- V7.0 DYNAMIC 3-MODE CINEMATIC BANNER (CHANGES EVERY ACTIVITY 1/3 -> 2/3 -> 3/3) -->
+      <div class="activity-mode-banner mode-phase-1" id="activity-mode-banner">
+        <div class="mode-banner-left">
+          <span class="mode-mascot-icon" id="mode-mascot-icon">🦁</span>
+          <div class="mode-title-stack">
+            <span class="mode-phase-kicker" id="mode-phase-kicker">ACTIVITÉ 1 SUR 3 • MODE EXPLORATION 3D</span>
+            <span class="mode-phase-headline" id="mode-phase-headline">Découverte Interactive & Manipulation Directe</span>
+          </div>
+        </div>
+        <span class="mode-xp-pill" id="mode-xp-pill">⭐ +50 XP • Mode 1/3</span>
+      </div>
+
       <div class="instruction-header">
         <div class="instruction-box">
           <h3 id="instruction-title">Guide Léo le Lion vers les étoiles !</h3>
@@ -3674,6 +3795,272 @@ body {
           rule: "💡 First conditional: 'If + present simple, ... will + base verb'.",
           speech: "Complete the conditional sentence: If we plant more baobab trees, we will protect the soil."
         }
+      },
+      {
+        grade: 'MAT',
+        fr: {
+          cat: "✍️ GRAMMAIRE MATERNELLE • MODE 2 : SINGULIER / PLURIEL",
+          sentence: "Dans le nid, je vois trois petits ___.",
+          blank: "oiseaux 🐦",
+          options: ["oiseaux 🐦", "oiseau", "la", "un"],
+          rule: "💡 Quand il y en a plusieurs (trois), « oiseau » prend un -x au pluriel : oiseaux !",
+          speech: "Mode Duel : Dans le nid, je vois trois petits oiseaux."
+        },
+        en: {
+          cat: "✍️ NURSERY GRAMMAR • MODE 2: THIS vs THESE",
+          sentence: "___ are my two happy hands! 👏",
+          blank: "These",
+          options: ["These", "This", "A", "An"],
+          rule: "💡 For more than one thing close to us (two hands), we say 'These are'!",
+          speech: "Speed Mode: These are my two happy hands!"
+        }
+      },
+      {
+        grade: 'MAT',
+        fr: {
+          cat: "✍️ GRAMMAIRE MATERNELLE • MODE 3 : BOSS DES PRONOMS",
+          sentence: "Regarde maman ! ___ chante une douce berceuse.",
+          blank: "Elle 👩🏾",
+          options: ["Elle 👩🏾", "Il", "Nous", "Ils"],
+          rule: "💡 Pour remplacer « maman » (féminin singulier), on utilise le pronom « Elle » !",
+          speech: "Défi Boss : Regarde maman ! Elle chante une douce berceuse."
+        },
+        en: {
+          cat: "✍️ NURSERY GRAMMAR • MODE 3: HE vs SHE BOSS",
+          sentence: "Look at Papa! ___ is driving the red bus. 🚌",
+          blank: "He",
+          options: ["He", "She", "It", "They"],
+          rule: "💡 For a man or boy ('Papa'), we use the pronoun 'He'!",
+          speech: "Boss Round: Look at Papa! He is driving the red bus."
+        }
+      },
+      {
+        grade: 'SIL',
+        fr: {
+          cat: "✍️ GRAMMAIRE SIL / CP1 • MODE 2 : LE / LA / L'",
+          sentence: "___ éléphant d'Afrique boit de l'eau fraîche.",
+          blank: "L'",
+          options: ["L'", "La", "Une", "Des"],
+          rule: "💡 Devant une voyelle (é), « le » devient « L' » avec une apostrophe !",
+          speech: "Mode Arcade : L'éléphant d'Afrique boit de l'eau fraîche."
+        },
+        en: {
+          cat: "✍️ PRIMARY 1 GRAMMAR • MODE 2: PLURAL -ES",
+          sentence: "Awa packed two lunch ___ for the school trip.",
+          blank: "boxes 📦",
+          options: ["boxes 📦", "box", "boxs", "boxing"],
+          rule: "💡 Words ending in -x, -s, -ch, or -sh add -es in the plural: boxes!",
+          speech: "Arcade Mode: Awa packed two lunch boxes for the school trip."
+        }
+      },
+      {
+        grade: 'SIL',
+        fr: {
+          cat: "✍️ GRAMMAIRE SIL / CP1 • MODE 3 : BOSS DU VERBE",
+          sentence: "Les élèves ___ attentivement le maître.",
+          blank: "écoutent 👂",
+          options: ["écoutent 👂", "écoute", "écoutes", "écouter"],
+          rule: "💡 Avec « Les élèves » (pluriel), le verbe prend -ent à la fin !",
+          speech: "Défi Boss : Les élèves écoutent attentivement le maître."
+        },
+        en: {
+          cat: "✍️ PRIMARY 1 GRAMMAR • MODE 3: POSSESSIVE ADJECTIVES",
+          sentence: "The little lion cub loves ___ mother.",
+          blank: "its",
+          options: ["its", "they", "we", "you"],
+          rule: "💡 For an animal or thing, the possessive word is 'its' (without an apostrophe)!",
+          speech: "Boss Challenge: The little lion cub loves its mother."
+        }
+      },
+      {
+        grade: 'CP',
+        fr: {
+          cat: "✍️ GRAMMAIRE CP • MODE 2 : PHRASE INTERROGATIVE",
+          sentence: "___ vas-tu à l'école ce matin ?",
+          blank: "Comment 🚲",
+          options: ["Comment 🚲", "Car", "Mais", "Donc"],
+          rule: "💡 « Comment » est un mot interrogatif qui sert à poser une question !",
+          speech: "Mode Duel : Comment vas-tu à l'école ce matin ?"
+        },
+        en: {
+          cat: "✍️ PRIMARY 2 GRAMMAR • MODE 2: QUESTION WORDS",
+          sentence: "___ is the capital city of Senegal? (It is Dakar!)",
+          blank: "What 🌍",
+          options: ["What 🌍", "Who", "When", "Why"],
+          rule: "💡 We use 'What' to ask about a thing or a name of a capital!",
+          speech: "Speed Duel: What is the capital city of Senegal?"
+        }
+      },
+      {
+        grade: 'CP',
+        fr: {
+          cat: "✍️ GRAMMAIRE CP • MODE 3 : FORME NÉGATIVE",
+          sentence: "La tortue ___ court pas vite, elle marche doucement.",
+          blank: "ne",
+          options: ["ne", "ni", "ou", "et"],
+          rule: "💡 La négation encadre le verbe avec les deux mots « ne ... pas » !",
+          speech: "Défi Boss : La tortue ne court pas vite."
+        },
+        en: {
+          cat: "✍️ PRIMARY 2 GRAMMAR • MODE 3: IRREGULAR PLURALS",
+          sentence: "Three happy ___ are playing in the schoolyard.",
+          blank: "children 👧🏾👦🏾",
+          options: ["children 👧🏾👦🏾", "childs", "child", "childrens"],
+          rule: "💡 'Child' has an irregular plural: one child, three children!",
+          speech: "Boss Challenge: Three happy children are playing in the schoolyard."
+        }
+      },
+      {
+        grade: 'CE',
+        fr: {
+          cat: "✍️ GRAMMAIRE CE1 • MODE 2 : DÉTERMINANTS POSSESSIFS",
+          sentence: "Nous rangeons ___ cahiers dans nos cartables.",
+          blank: "nos 📚",
+          options: ["nos 📚", "notre", "mon", "ton"],
+          rule: "💡 Devant un nom pluriel (« cahiers »), on utilise le déterminant possessif pluriel « nos » !",
+          speech: "Mode Arcade : Nous rangeons nos cahiers dans nos cartables."
+        },
+        en: {
+          cat: "✍️ PRIMARY 3 GRAMMAR • MODE 2: PREPOSITIONS OF PLACE",
+          sentence: "The ripe mangoes are ___ the woven basket.",
+          blank: "inside 🧺",
+          options: ["inside 🧺", "between", "through", "during"],
+          rule: "💡 'Inside' shows that the mangoes are in the basket!",
+          speech: "Arcade Mode: The ripe mangoes are inside the woven basket."
+        }
+      },
+      {
+        grade: 'CE',
+        fr: {
+          cat: "✍️ GRAMMAIRE CE1 • MODE 3 : SUJET & GROUPE NOMINAL",
+          sentence: "Les belles girafes ___ mangent des feuilles d'acacia.",
+          blank: "tachetées 🦒",
+          options: ["tachetées 🦒", "tacheté", "tachetés", "tachetée"],
+          rule: "💡 « Les belles girafes » est féminin pluriel : l'adjectif prend -ées !",
+          speech: "Défi Boss : Les belles girafes tachetées mangent des feuilles d'acacia."
+        },
+        en: {
+          cat: "✍️ PRIMARY 3 GRAMMAR • MODE 3: ADVERBS OF MANNER",
+          sentence: "The cheetah runs very ___ across the savannah.",
+          blank: "quickly 🐆",
+          options: ["quickly 🐆", "quick", "quickness", "quicker"],
+          rule: "💡 Adverbs describe how an action is done and often end in -ly: runs quickly!",
+          speech: "Boss Round: The cheetah runs very quickly across the savannah."
+        }
+      },
+      {
+        grade: 'CE2',
+        fr: {
+          cat: "✍️ GRAMMAIRE CE2 • MODE 2 : HOMOPHONES SON / SONT",
+          sentence: "Les lions ___ couchés à l'ombre du baobab.",
+          blank: "sont 🦁",
+          options: ["sont 🦁", "son", "sommes", "es"],
+          rule: "💡 On peut dire « étaient couchés » : c'est le verbe être « sont » (s-o-n-t) !",
+          speech: "Mode Duel : Les lions sont couchés à l'ombre du baobab."
+        },
+        en: {
+          cat: "✍️ PRIMARY 4 GRAMMAR • MODE 2: SUPERLATIVES (-EST / MOST)",
+          sentence: "Mount Kilimanjaro is the ___ mountain in Africa!",
+          blank: "highest 🏔️",
+          options: ["highest 🏔️", "higher", "high", "more high"],
+          rule: "💡 With 'the' to compare among all mountains, we use the superlative -est: the highest!",
+          speech: "Speed Mode: Mount Kilimanjaro is the highest mountain in Africa!"
+        }
+      },
+      {
+        grade: 'CE2',
+        fr: {
+          cat: "✍️ GRAMMAIRE CE2 • MODE 3 : COMPLÉMENTS CIRCONSTANCIELS",
+          sentence: "Chaque matin, le soleil se lève ___ l'horizon.",
+          blank: "à 🌅",
+          options: ["à 🌅", "a", "as", "et"],
+          rule: "💡 Devant un complément de lieu (« l'horizon »), on écrit la préposition « à » avec un accent grave !",
+          speech: "Défi Boss : Chaque matin, le soleil se lève à l'horizon."
+        },
+        en: {
+          cat: "✍️ PRIMARY 4 GRAMMAR • MODE 3: THERE IS vs THERE ARE",
+          sentence: "___ fifty-four countries on the African continent.",
+          blank: "There are 🌍",
+          options: ["There are 🌍", "There is", "Their are", "They is"],
+          rule: "💡 Before a plural noun ('fifty-four countries'), we use 'There are'!",
+          speech: "Boss Round: There are fifty-four countries on the African continent."
+        }
+      },
+      {
+        grade: 'CM1',
+        fr: {
+          cat: "✍️ GRAMMAIRE CM1 • MODE 2 : HOMOPHONES CE / SE",
+          sentence: "___ grand barrage hydroélectrique produit de l'énergie propre.",
+          blank: "Ce ⚡",
+          options: ["Ce ⚡", "Se", "Ces", "Ses"],
+          rule: "💡 Devant un groupe nominal masculin singulier (« grand barrage »), on écrit le déterminant démonstratif « Ce » !",
+          speech: "Mode Arcade : Ce grand barrage hydroélectrique produit de l'énergie propre."
+        },
+        en: {
+          cat: "✍️ PRIMARY 5 GRAMMAR • MODE 2: CONJUNCTIONS (ALTHOUGH / BECAUSE)",
+          sentence: "Solar panels work great in Africa ___ there is abundant sunshine.",
+          blank: "because ☀️",
+          options: ["because ☀️", "although", "unless", "until"],
+          rule: "💡 'Because' introduces the reason or cause!",
+          speech: "Arcade Mode: Solar panels work great in Africa because there is abundant sunshine."
+        }
+      },
+      {
+        grade: 'CM1',
+        fr: {
+          cat: "✍️ GRAMMAIRE CM1 • MODE 3 : ATTRIBUT DU SUJET",
+          sentence: "Les eaux du lac Victoria semblent très ___ aujourd'hui.",
+          blank: "calmes 🌊",
+          options: ["calmes 🌊", "calme", "calmer", "calmement"],
+          rule: "💡 Après un verbe d'état (« semblent »), l'attribut du sujet s'accorde avec « Les eaux » (pluriel) !",
+          speech: "Défi Boss : Les eaux du lac Victoria semblent très calmes aujourd'hui."
+        },
+        en: {
+          cat: "✍️ PRIMARY 5 GRAMMAR • MODE 3: PASSIVE VOICE",
+          sentence: "The Great Mosque of Djenné ___ built with sun-baked earth.",
+          blank: "was 🕌",
+          options: ["was 🕌", "were", "did", "has"],
+          rule: "💡 Singular passive voice in the past: 'was + past participle' (was built)!",
+          speech: "Boss Challenge: The Great Mosque of Djenné was built with sun-baked earth."
+        }
+      },
+      {
+        grade: 'CM',
+        fr: {
+          cat: "✍️ GRAMMAIRE CM2 • MODE 2 : PRONOM RELATIF « DONT »",
+          sentence: "Voici le livre scientifique ___ je t'ai parlé hier.",
+          blank: "dont 📖",
+          options: ["dont 📖", "qui", "que", "où"],
+          rule: "💡 On dit « parler DE quelque chose » : le pronom relatif qui remplace un complément introduit par « de » est « dont » !",
+          speech: "Mode Duel : Voici le livre scientifique dont je t'ai parlé hier."
+        },
+        en: {
+          cat: "✍️ PRIMARY 6 GRAMMAR • MODE 2: SECOND CONDITIONAL",
+          sentence: "If I ___ an astronaut, I would photograph Africa from space!",
+          blank: "were 🚀",
+          options: ["were 🚀", "am", "will be", "have been"],
+          rule: "💡 In the second conditional ('If I were...'), we use 'were' + 'would + verb'!",
+          speech: "Speed Duel: If I were an astronaut, I would photograph Africa from space!"
+        }
+      },
+      {
+        grade: 'CM',
+        fr: {
+          cat: "✍️ GRAMMAIRE CM2 • MODE 3 : ACCORD DE « TOUT »",
+          sentence: "___ les classes de l'école participent à l'olympiade de mathématiques.",
+          blank: "Toutes 🏆",
+          options: ["Toutes 🏆", "Tous", "Tout", "Toute"],
+          rule: "💡 Devant un nom féminin pluriel (« les classes »), le déterminant « tout » s'accorde en « Toutes » !",
+          speech: "Défi Boss : Toutes les classes de l'école participent à l'olympiade."
+        },
+        en: {
+          cat: "✍️ PRIMARY 6 GRAMMAR • MODE 3: REPORTED SPEECH",
+          sentence: "The teacher said that the Earth ___ around the Sun.",
+          blank: "revolves 🌍",
+          options: ["revolves 🌍", "revolve", "revolving", "to revolve"],
+          rule: "💡 For a permanent scientific truth in reported speech, the present simple 'revolves' stays valid!",
+          speech: "Boss Round: The teacher said that the Earth revolves around the Sun."
+        }
       }
     ],
 
@@ -3813,6 +4200,272 @@ body {
           rule: "💡 Solar and wind power are renewable energy sources!",
           speech: "Choose the advanced vocabulary word: Solar and wind energy are renewable."
         }
+      },
+      {
+        grade: 'MAT',
+        fr: {
+          cat: "🗂️ VOCABULAIRE MATERNELLE • MODE 2 : LES FRUITS D'AFRIQUE",
+          sentence: "Quel fruit jaune et allongé le petit singe adore-t-il manger ?",
+          blank: "la banane 🍌",
+          options: ["la banane 🍌", "le caillou 🪨", "le tambour 🥁", "le nuage ☁️"],
+          rule: "💡 La banane est un fruit doux et riche en énergie !",
+          speech: "Mode Duel : Quel fruit jaune le petit singe adore-t-il manger ? La banane."
+        },
+        en: {
+          cat: "🗂️ NURSERY VOCABULARY • MODE 2: PARTS OF THE BODY",
+          sentence: "We use our two ___ to see the colorful rainbow! 👀",
+          blank: "eyes 👀",
+          options: ["eyes 👀", "knees 🦵", "toes 🦶", "elbows 💪"],
+          rule: "💡 We see with our two eyes!",
+          speech: "Speed Mode: We use our two eyes to see the colorful rainbow!"
+        }
+      },
+      {
+        grade: 'MAT',
+        fr: {
+          cat: "🗂️ VOCABULAIRE MATERNELLE • MODE 3 : LES CRIS D'ANIMAUX",
+          sentence: "Quand le grand lion de la savane parle très fort, on dit qu'il ___.",
+          blank: "rugit 🦁",
+          options: ["rugit 🦁", "miaule 🐱", "aboie 🐶", "roucoule 🕊️"],
+          rule: "💡 Le lion rugit, tandis que le chat miaule et le chien aboie !",
+          speech: "Défi Boss : Quand le grand lion parle très fort, on dit qu'il rugit."
+        },
+        en: {
+          cat: "🗂️ NURSERY VOCABULARY • MODE 3: WEATHER WORDS",
+          sentence: "When water drops fall from the clouds to water the plants, it is ___.",
+          blank: "raining 🌧️",
+          options: ["raining 🌧️", "snowing ❄️", "sleeping 😴", "baking 🍞"],
+          rule: "💡 Rain falls from clouds to help plants grow!",
+          speech: "Boss Round: When water drops fall from the clouds, it is raining."
+        }
+      },
+      {
+        grade: 'SIL',
+        fr: {
+          cat: "🗂️ VOCABULAIRE SIL / CP1 • MODE 2 : LES JOURS & LE TEMPS",
+          sentence: "Le matin on prend le petit-déjeuner, et le ___ on regarde les étoiles.",
+          blank: "soir 🌙",
+          options: ["soir 🌙", "midi ☀️", "cartable 🎒", "crayon ✏️"],
+          rule: "💡 Le contraire du matin est le soir !",
+          speech: "Mode Arcade : Le matin on prend le petit-déjeuner, et le soir on regarde les étoiles."
+        },
+        en: {
+          cat: "🗂️ PRIMARY 1 VOCABULARY • MODE 2: CLASSROOM OBJECTS",
+          sentence: "The teacher writes the math lesson on the ___.",
+          blank: "board 📋",
+          options: ["board 📋", "shoe 👟", "tree 🌳", "river 🌊"],
+          rule: "💡 In class, lessons are written on the board!",
+          speech: "Arcade Mode: The teacher writes the math lesson on the board."
+        }
+      },
+      {
+        grade: 'SIL',
+        fr: {
+          cat: "🗂️ VOCABULAIRE SIL / CP1 • MODE 3 : NOMS DE MÉTIERS",
+          sentence: "La personne qui soigne les malades à l'hôpital est le ___.",
+          blank: "médecin 🩺",
+          options: ["médecin 🩺", "boulanger 🥖", "pilote ✈️", "menuisier 🪚"],
+          rule: "💡 Le médecin examine et soigne les patients !",
+          speech: "Défi Boss : La personne qui soigne les malades est le médecin."
+        },
+        en: {
+          cat: "🗂️ PRIMARY 1 VOCABULARY • MODE 3: COMMUNITY HELPERS",
+          sentence: "The person who grows mangoes, maize, and cassava on a farm is a ___.",
+          blank: "farmer 🌾",
+          options: ["farmer 🌾", "sailor ⛵", "dentist 🦷", "painter 🎨"],
+          rule: "💡 A farmer cultivates crops and feeds the community!",
+          speech: "Boss Challenge: The person who grows crops on a farm is a farmer."
+        }
+      },
+      {
+        grade: 'CP',
+        fr: {
+          cat: "🗂️ VOCABULAIRE CP • MODE 2 : LES CONTRAIRES",
+          sentence: "Quel est le contraire du verbe « ALLUMER » la lumière ?",
+          blank: "éteindre 💡",
+          options: ["éteindre 💡", "éclairer ☀️", "briller ✨", "chauffer 🔥"],
+          rule: "💡 « Éteindre » est l'antonyme (le contraire) d'« allumer » !",
+          speech: "Mode Duel : Quel est le contraire d'allumer la lumière ? Éteindre."
+        },
+        en: {
+          cat: "🗂️ PRIMARY 2 VOCABULARY • MODE 2: ANTONYMS",
+          sentence: "The opposite of 'EMPTY' is ___.",
+          blank: "full 🧺",
+          options: ["full 🧺", "small 🐜", "slow 🐢", "dry 🏜️"],
+          rule: "💡 When a basket has no space left, it is 'full' — the opposite of 'empty'!",
+          speech: "Speed Duel: The opposite of empty is full."
+        }
+      },
+      {
+        grade: 'CP',
+        fr: {
+          cat: "🗂️ VOCABULAIRE CP • MODE 3 : MOTS-ÉTIQUETTES (CATÉGORIES)",
+          sentence: "« Mangue, papaye, ananas, banane » : quel est le mot-étiquette de cette liste ?",
+          blank: "Les fruits 🍍",
+          options: ["Les fruits 🍍", "Les véhicules 🚗", "Les vêtements 👕", "Les outils 🔧"],
+          rule: "💡 Le mot générique (mot-étiquette) qui regroupe mangue, papaye et ananas est « Les fruits » !",
+          speech: "Défi Boss : Quel est le mot-étiquette pour mangue, papaye, ananas ? Les fruits."
+        },
+        en: {
+          cat: "🗂️ PRIMARY 2 VOCABULARY • MODE 3: WORD CATEGORIES",
+          sentence: "'Lion, elephant, giraffe, zebra' all belong to the category of ___.",
+          blank: "animals 🦓",
+          options: ["animals 🦓", "planets 🪐", "instruments 🥁", "furniture 🪑"],
+          rule: "💡 Lions, elephants, giraffes, and zebras are all wild animals!",
+          speech: "Boss Round: Lion, elephant, giraffe, and zebra all belong to the category of animals."
+        }
+      },
+      {
+        grade: 'CE',
+        fr: {
+          cat: "🗂️ VOCABULAIRE CE1 • MODE 2 : ORDRE ALPHABÉTIQUE & RADICAL",
+          sentence: "Quel mot est de la même famille que « LAIT » ?",
+          blank: "laitier 🥛",
+          options: ["laitier 🥛", "laine 🧶", "laisser ✋", "légume 🥕"],
+          rule: "💡 « Lait », « laitier », « laiterie » et « allaiter » forment une famille de mots !",
+          speech: "Mode Arcade : Quel mot est de la même famille que lait ? Laitier."
+        },
+        en: {
+          cat: "🗂️ PRIMARY 3 VOCABULARY • MODE 2: COMPOUND WORDS",
+          sentence: "Which compound word means light that comes from the sun?",
+          blank: "sunlight ☀️",
+          options: ["sunlight ☀️", "raincoat 🧥", "notebook 📓", "bedroom 🛏️"],
+          rule: "💡 Sun + light = sunlight!",
+          speech: "Arcade Mode: Which compound word means light from the sun? Sunlight."
+        }
+      },
+      {
+        grade: 'CE',
+        fr: {
+          cat: "🗂️ VOCABULAIRE CE1 • MODE 3 : POLYSÉMIE (PLUSIEURS SENS)",
+          sentence: "On utilise une « règle » pour tracer un trait, mais aussi pour ___.",
+          blank: "respecter la loi du jeu ⚖️",
+          options: ["respecter la loi du jeu ⚖️", "boire de l'eau 💧", "voler dans le ciel 🦅", "faire cuire du riz 🍚"],
+          rule: "💡 Un mot polysémique a plusieurs sens selon le contexte : la règle d'écolier ou la règle du jeu !",
+          speech: "Défi Boss : Le mot règle désigne l'objet de géométrie ou la règle du jeu."
+        },
+        en: {
+          cat: "🗂️ PRIMARY 3 VOCABULARY • MODE 3: HOMOPHONES (SEA / SEE)",
+          sentence: "Dolphins swim in the deep blue ___.",
+          blank: "sea 🌊",
+          options: ["sea 🌊", "see 👀", "she 👧", "tea ☕"],
+          rule: "💡 'Sea' (s-e-a) is the ocean, while 'see' (s-e-e) is with your eyes!",
+          speech: "Boss Round: Dolphins swim in the deep blue sea."
+        }
+      },
+      {
+        grade: 'CE2',
+        fr: {
+          cat: "🗂️ VOCABULAIRE CE2 • MODE 2 : LES SUFFIXES (-ABLE / -TION)",
+          sentence: "Une eau que l'on peut boire sans danger est une eau ___.",
+          blank: "potable 🚰",
+          options: ["potable 🚰", "invisible", "cassable", "pliable"],
+          rule: "💡 Du latin potare (boire) avec le suffixe -able : une eau potable est propre à la consommation !",
+          speech: "Mode Duel : Une eau que l'on peut boire sans danger est une eau potable."
+        },
+        en: {
+          cat: "🗂️ PRIMARY 4 VOCABULARY • MODE 2: SUFFIXES (-FUL / -LESS)",
+          sentence: "A person who always takes great care is ___.",
+          blank: "careful 🛡️",
+          options: ["careful 🛡️", "careless", "caravan", "carpet"],
+          rule: "💡 The suffix '-ful' means 'full of': careful = full of care!",
+          speech: "Speed Duel: A person who takes great care is careful."
+        }
+      },
+      {
+        grade: 'CE2',
+        fr: {
+          cat: "🗂️ VOCABULAIRE CE2 • MODE 3 : SYNONYMES DE « CONSTRUIRE »",
+          sentence: "Les ingénieurs vont « construire » un pont : quel verbe est synonyme ?",
+          blank: "bâtir 🌉",
+          options: ["bâtir 🌉", "démolir 💥", "oublier 💭", "ralentir 🐢"],
+          rule: "💡 « Bâtir » et « édifier » sont des synonymes précis du verbe « construire » !",
+          speech: "Défi Boss : Quel verbe est synonyme de construire ? Bâtir."
+        },
+        en: {
+          cat: "🗂️ PRIMARY 4 VOCABULARY • MODE 3: GEOGRAPHY TERMS",
+          sentence: "A fertile green area with water in the middle of the Sahara desert is an ___.",
+          blank: "oasis 🌴",
+          options: ["oasis 🌴", "iceberg 🧊", "volcano 🌋", "glacier 🏔️"],
+          rule: "💡 An oasis provides fresh water and palm trees in a desert!",
+          speech: "Boss Challenge: A fertile green area with water in the desert is an oasis."
+        }
+      },
+      {
+        grade: 'CM1',
+        fr: {
+          cat: "🗂️ VOCABULAIRE CM1 • MODE 2 : RACINES GRECQUES & LATINES",
+          sentence: "Que mesure un « thermomètre » dans le laboratoire de sciences ?",
+          blank: "la température 🌡️",
+          options: ["la température 🌡️", "la vitesse du vent 💨", "l'heure de la journée ⏰", "la masse d'un roc 🪨"],
+          rule: "💡 Du grec « thermos » (chaud) et « metron » (mesure) : il mesure la température !",
+          speech: "Mode Arcade : Que mesure un thermomètre ? La température."
+        },
+        en: {
+          cat: "🗂️ PRIMARY 5 VOCABULARY • MODE 2: GREEK ROOTS (BIO / GEO)",
+          sentence: "The science that studies living plants and animals is ___.",
+          blank: "biology 🧬",
+          options: ["biology 🧬", "geology 🪨", "astronomy 🔭", "phonics 🔤"],
+          rule: "💡 'Bio-' means life and '-logy' means study: biology is the study of living things!",
+          speech: "Arcade Mode: The science that studies living things is biology."
+        }
+      },
+      {
+        grade: 'CM1',
+        fr: {
+          cat: "🗂️ VOCABULAIRE CM1 • MODE 3 : ANTONYMES SAVANTS",
+          sentence: "Quel est l'antonyme (le contraire) d'un matériau « opaque » ?",
+          blank: "transparent 🔍",
+          options: ["transparent 🔍", "sombre 🌑", "rugueux 🪨", "pesant 🏋️"],
+          rule: "💡 Un corps transparent laisse passer la lumière, contrairement à un corps opaque !",
+          speech: "Défi Boss : Quel est le contraire d'un matériau opaque ? Transparent."
+        },
+        en: {
+          cat: "🗂️ PRIMARY 5 VOCABULARY • MODE 3: CONTEXT CLUES",
+          sentence: "Because it had not rained for months, the soil was completely ___.",
+          blank: "arid 🏜️",
+          options: ["arid 🏜️", "soaked 🌊", "frozen ❄️", "fragile 🥚"],
+          rule: "💡 'Arid' means extremely dry from lack of rain!",
+          speech: "Boss Round: Because it had not rained for months, the soil was arid."
+        }
+      },
+      {
+        grade: 'CM',
+        fr: {
+          cat: "🗂️ VOCABULAIRE CM2 • MODE 2 : TERMES SCIENTIFIQUES",
+          sentence: "L'ensemble des êtres vivants et de leur milieu naturel en Afrique forme un ___.",
+          blank: "écosystème 🌍",
+          options: ["écosystème 🌍", "anagramme 🔤", "parallélogramme 📐", "chronomètre ⏱️"],
+          rule: "💡 Un écosystème réunit la faune, la flore et leur environnement (biotope) !",
+          speech: "Mode Duel : L'ensemble des êtres vivants et de leur milieu forme un écosystème."
+        },
+        en: {
+          cat: "🗂️ PRIMARY 6 VOCABULARY • MODE 2: ACADEMIC SYNONYMS",
+          sentence: "Which word is a strong academic synonym for 'very important'?",
+          blank: "essential 🌟",
+          options: ["essential 🌟", "optional 🤷", "trivial 🪶", "accidental 💥"],
+          rule: "💡 'Essential', 'vital', and 'crucial' mean extremely important!",
+          speech: "Speed Duel: Which word is an academic synonym for very important? Essential."
+        }
+      },
+      {
+        grade: 'CM',
+        fr: {
+          cat: "🗂️ VOCABULAIRE CM2 • MODE 3 : NUANCES & PARONYMES",
+          sentence: "Le médecin a ___ un traitement efficace à son patient.",
+          blank: "prescrit 📋",
+          options: ["prescrit 📋", "proscrit 🚫", "inscrit ✍️", "décrit 🖼️"],
+          rule: "💡 Attention aux paronymes : « prescrire » veut dire ordonner un soin, alors que « proscrire » veut dire interdire !",
+          speech: "Défi Boss : Le médecin a prescrit un traitement efficace."
+        },
+        en: {
+          cat: "🗂️ PRIMARY 6 VOCABULARY • MODE 3: SCIENTIFIC ECOLOGY",
+          sentence: "Protecting Africa's variety of plants and wildlife is called preserving ___.",
+          blank: "biodiversity 🦁🌿",
+          options: ["biodiversity 🦁🌿", "velocity 🚀", "electricity ⚡", "choreography 💃"],
+          rule: "💡 Biodiversity = biological diversity of all species in an environment!",
+          speech: "Boss Challenge: Protecting the variety of plants and wildlife is preserving biodiversity."
+        }
       }
     ],
 
@@ -3951,6 +4604,272 @@ body {
           options: ["were reading", "was reading", "are reading", "will read"],
           rule: "💡 Past continuous for an action in progress in the past (plural 'children'): were + verb-ing!",
           speech: "Choose the past continuous form: When the rain started, the children were reading."
+        }
+      },
+      {
+        grade: 'MAT',
+        fr: {
+          cat: "⏳ CONJUGAISON MATERNELLE • MODE 2 : ACTION AU PRÉSENT",
+          sentence: "Maintenant, je ___ une belle pomme rouge.",
+          blank: "mange 🍎",
+          options: ["mange 🍎", "manger", "mangeons", "manges"],
+          rule: "💡 Avec « je », on dit : je mange !",
+          speech: "Mode Duel : Maintenant, je mange une belle pomme rouge."
+        },
+        en: {
+          cat: "⏳ NURSERY VERBS • MODE 2: HE / SHE IS",
+          sentence: "Amina ___ dancing to the djembe drum! 🥁",
+          blank: "is",
+          options: ["is", "am", "are", "be"],
+          rule: "💡 With one person ('Amina' / she), we say 'is'!",
+          speech: "Speed Mode: Amina is dancing to the djembe drum!"
+        }
+      },
+      {
+        grade: 'MAT',
+        fr: {
+          cat: "⏳ CONJUGAISON MATERNELLE • MODE 3 : ILS / ELLES AU PRÉSENT",
+          sentence: "Les petits oiseaux ___ haut dans le ciel bleu.",
+          blank: "volent 🐦",
+          options: ["volent 🐦", "vole", "volons", "voler"],
+          rule: "💡 Quand plusieurs oiseaux font l'action, on dit : ils volent !",
+          speech: "Défi Boss : Les petits oiseaux volent haut dans le ciel bleu."
+        },
+        en: {
+          cat: "⏳ NURSERY VERBS • MODE 3: THEY ARE",
+          sentence: "The elephants ___ drinking cool water together. 🐘",
+          blank: "are",
+          options: ["are", "is", "am", "be"],
+          rule: "💡 For more than one ('elephants' / they), we use 'are'!",
+          speech: "Boss Round: The elephants are drinking cool water together."
+        }
+      },
+      {
+        grade: 'SIL',
+        fr: {
+          cat: "⏳ CONJUGAISON SIL / CP1 • MODE 2 : VERBE ALLER AU PRÉSENT",
+          sentence: "Ce matin, je ___ à l'école avec mon ami Kofi.",
+          blank: "vais 🎒",
+          options: ["vais 🎒", "va", "allons", "vont"],
+          rule: "💡 Verbe ALLER au présent : Je vais, tu vas, il va !",
+          speech: "Mode Arcade : Ce matin, je vais à l'école avec mon ami Kofi."
+        },
+        en: {
+          cat: "⏳ PRIMARY 1 VERBS • MODE 2: CAN / ACTION VERBS",
+          sentence: "A bird can ___, and a fish can swim!",
+          blank: "fly 🦅",
+          options: ["fly 🦅", "flies", "flew", "flying"],
+          rule: "💡 After the modal verb 'can', we always use the base verb: can fly!",
+          speech: "Arcade Mode: A bird can fly, and a fish can swim!"
+        }
+      },
+      {
+        grade: 'SIL',
+        fr: {
+          cat: "⏳ CONJUGAISON SIL / CP1 • MODE 3 : NOUS AU PRÉSENT",
+          sentence: "À la récréation, nous ___ à la corde à sauter.",
+          blank: "jouons 🤸🏾",
+          options: ["jouons 🤸🏾", "joue", "joues", "jouent"],
+          rule: "💡 Avec le pronom « nous », le verbe se termine toujours par -ONS : nous jouons !",
+          speech: "Défi Boss : À la récréation, nous jouons à la corde à sauter."
+        },
+        en: {
+          cat: "⏳ PRIMARY 1 VERBS • MODE 3: PRESENT CONTINUOUS (-ING)",
+          sentence: "Right now, the children are ___ a song.",
+          blank: "singing 🎵",
+          options: ["singing 🎵", "sing", "sings", "sang"],
+          rule: "💡 After 'are' for an action happening right now, we add -ing: are singing!",
+          speech: "Boss Challenge: Right now, the children are singing a song."
+        }
+      },
+      {
+        grade: 'CP',
+        fr: {
+          cat: "⏳ CONJUGAISON CP • MODE 2 : VOUS AU PRÉSENT",
+          sentence: "Vous ___ de très belles histoires en classe.",
+          blank: "lisez 📖",
+          options: ["lisez 📖", "lis", "lit", "lisent"],
+          rule: "💡 Avec « Vous », le verbe prend la terminaison -EZ : vous lisez !",
+          speech: "Mode Duel : Vous lisez de très belles histoires en classe."
+        },
+        en: {
+          cat: "⏳ PRIMARY 2 VERBS • MODE 2: DO vs DOES",
+          sentence: "___ Leo like sweet mangoes? Yes, he does!",
+          blank: "Does 🥭",
+          options: ["Does 🥭", "Do", "Is", "Are"],
+          rule: "💡 For questions with he/she/it ('Leo'), we start with 'Does'!",
+          speech: "Speed Duel: Does Leo like sweet mangoes? Yes, he does!"
+        }
+      },
+      {
+        grade: 'CP',
+        fr: {
+          cat: "⏳ CONJUGAISON CP • MODE 3 : VERBE FAIRE AU PRÉSENT",
+          sentence: "Elles ___ des expériences de chimie passionnantes.",
+          blank: "font 🧪",
+          options: ["font 🧪", "fais", "fait", "faisons"],
+          rule: "💡 Verbe FAIRE au présent : ils/elles FONT (f-o-n-t) !",
+          speech: "Défi Boss : Elles font des expériences de chimie passionnantes."
+        },
+        en: {
+          cat: "⏳ PRIMARY 2 VERBS • MODE 3: WAS vs WERE",
+          sentence: "Yesterday, the weather ___ sunny and warm in Abidjan.",
+          blank: "was ☀️",
+          options: ["was ☀️", "were", "is", "are"],
+          rule: "💡 Past tense of 'to be' for singular ('the weather'): was!",
+          speech: "Boss Round: Yesterday, the weather was sunny and warm."
+        }
+      },
+      {
+        grade: 'CE',
+        fr: {
+          cat: "⏳ CONJUGAISON CE1 • MODE 2 : VERBES DU 2e GROUPE (-IR)",
+          sentence: "Au printemps, les arbres ___ dans tout le verger.",
+          blank: "fleurissent 🌸",
+          options: ["fleurissent 🌸", "fleurit", "fleuris", "fleurissons"],
+          rule: "💡 Les verbes du 2e groupe comme « fleurir » prennent -ISSENT avec « ils/elles » au présent !",
+          speech: "Mode Arcade : Au printemps, les arbres fleurissent dans tout le verger."
+        },
+        en: {
+          cat: "⏳ PRIMARY 3 VERBS • MODE 2: FUTURE WITH WILL",
+          sentence: "Tomorrow, our class ___ plant ten young baobab trees.",
+          blank: "will 🌱",
+          options: ["will 🌱", "did", "was", "has"],
+          rule: "💡 For actions 'Tomorrow' (in the future), we use 'will + base verb'!",
+          speech: "Arcade Mode: Tomorrow, our class will plant ten young baobab trees."
+        }
+      },
+      {
+        grade: 'CE',
+        fr: {
+          cat: "⏳ CONJUGAISON CE1 • MODE 3 : LE PASSÉ COMPOSÉ",
+          sentence: "Hier, j'___ terminé mon puzzle géométrique avec succès.",
+          blank: "ai 🧩",
+          options: ["ai 🧩", "as", "a", "ont"],
+          rule: "💡 Au passé composé avec « j' », l'auxiliaire avoir est « ai » : j'ai terminé !",
+          speech: "Défi Boss : Hier, j'ai terminé mon puzzle géométrique."
+        },
+        en: {
+          cat: "⏳ PRIMARY 3 VERBS • MODE 3: IRREGULAR PAST (SEE -> SAW)",
+          sentence: "Last week on safari, we ___ a family of giraffes!",
+          blank: "saw 🦒",
+          options: ["saw 🦒", "see", "seen", "sees"],
+          rule: "💡 The past simple of the irregular verb 'see' is 'saw'!",
+          speech: "Boss Challenge: Last week on safari, we saw a family of giraffes!"
+        }
+      },
+      {
+        grade: 'CE2',
+        fr: {
+          cat: "⏳ CONJUGAISON CE2 • MODE 2 : L'IMPARFAIT DE L'INDICATIF",
+          sentence: "Quand tu étais petit, tu ___ toutes les histoires de Mama Koko.",
+          blank: "écoutais 👵🏾",
+          options: ["écoutais 👵🏾", "écoutait", "écoutaient", "écoutes"],
+          rule: "💡 À l'imparfait, avec le pronom « tu », la terminaison est toujours -AIS !",
+          speech: "Mode Duel : Quand tu étais petit, tu écoutais toutes les histoires."
+        },
+        en: {
+          cat: "⏳ PRIMARY 4 VERBS • MODE 2: GOING TO FUTURE",
+          sentence: "Look at those clouds! It ___ going to rain soon.",
+          blank: "is 🌧️",
+          options: ["is 🌧️", "are", "am", "were"],
+          rule: "💡 With singular 'It', we say 'It is going to rain'!",
+          speech: "Speed Duel: Look at those clouds! It is going to rain soon."
+        }
+      },
+      {
+        grade: 'CE2',
+        fr: {
+          cat: "⏳ CONJUGAISON CE2 • MODE 3 : VERBE PRENDRE AU PRÉSENT",
+          sentence: "Les voyageurs ___ le train rapide à la gare de Rabat.",
+          blank: "prennent 🚅",
+          options: ["prennent 🚅", "prend", "prends", "prenons"],
+          rule: "💡 Avec « Les voyageurs » (ils), le verbe prendre double le n : ils prennent !",
+          speech: "Défi Boss : Les voyageurs prennent le train rapide."
+        },
+        en: {
+          cat: "⏳ PRIMARY 4 VERBS • MODE 3: IRREGULAR PAST (WRITE -> WROTE)",
+          sentence: "Amadou Hampâté Bâ ___ wonderful books about African wisdom.",
+          blank: "wrote 📚",
+          options: ["wrote 📚", "write", "writes", "writing"],
+          rule: "💡 The past simple tense of 'write' is 'wrote'!",
+          speech: "Boss Round: Amadou Hampâté Bâ wrote wonderful books."
+        }
+      },
+      {
+        grade: 'CM1',
+        fr: {
+          cat: "⏳ CONJUGAISON CM1 • MODE 2 : LE PASSÉ COMPOSÉ AVEC ÊTRE",
+          sentence: "Mes cousines sont ___ à Yaoundé hier soir.",
+          blank: "arrivées ✈️",
+          options: ["arrivées ✈️", "arrivé", "arrivés", "arriver"],
+          rule: "💡 Avec l'auxiliaire ÊTRE, le participe passé s'accorde avec le sujet « Mes cousines » (féminin pluriel : -ées) !",
+          speech: "Mode Arcade : Mes cousines sont arrivées à Yaoundé hier soir."
+        },
+        en: {
+          cat: "⏳ PRIMARY 5 VERBS • MODE 2: PAST CONTINUOUS",
+          sentence: "While I ___ studying math, my brother was drawing a map of Africa.",
+          blank: "was 📐",
+          options: ["was 📐", "were", "am", "have"],
+          rule: "💡 Past continuous with 'I': I was studying!",
+          speech: "Arcade Mode: While I was studying math, my brother was drawing."
+        }
+      },
+      {
+        grade: 'CM1',
+        fr: {
+          cat: "⏳ CONJUGAISON CM1 • MODE 3 : L'IMPÉRATIF PRÉSENT",
+          sentence: "Écoute bien la consigne et ___ la bonne réponse ! (2e pers. sing., 1er groupe)",
+          blank: "trouve 🎯",
+          options: ["trouve 🎯", "trouves", "trouvent", "trouver"],
+          rule: "💡 À l'impératif présent (2e personne du singulier), les verbes en -ER ne prennent PAS de -s : trouve !",
+          speech: "Défi Boss : Écoute bien la consigne et trouve la bonne réponse !"
+        },
+        en: {
+          cat: "⏳ PRIMARY 5 VERBS • MODE 3: PRESENT PERFECT (SINCE / FOR)",
+          sentence: "She ___ lived in Nairobi for five years.",
+          blank: "has 🏛️",
+          options: ["has 🏛️", "have", "is", "was"],
+          rule: "💡 Present perfect with 'She' + past participle: She has lived!",
+          speech: "Boss Challenge: She has lived in Nairobi for five years."
+        }
+      },
+      {
+        grade: 'CM',
+        fr: {
+          cat: "⏳ CONJUGAISON CM2 • MODE 2 : LE CONDITIONNEL PRÉSENT",
+          sentence: "Si nous avions un télescope géant, nous ___ les anneaux de Saturne.",
+          blank: "observerions 🪐",
+          options: ["observerions 🪐", "observons", "observions", "observerons"],
+          rule: "💡 Après « Si + imparfait », on emploie le conditionnel présent (infinitif + terminaison de l'imparfait : -rions) !",
+          speech: "Mode Duel : Si nous avions un télescope, nous observerions Saturne."
+        },
+        en: {
+          cat: "⏳ PRIMARY 6 VERBS • MODE 2: PAST PERFECT (HAD + PARTICIPLE)",
+          sentence: "By the time the bell rang, the students ___ finished the exam.",
+          blank: "had 🎓",
+          options: ["had 🎓", "have", "has", "were"],
+          rule: "💡 Past perfect ('had + past participle') shows an action completed before another past moment!",
+          speech: "Speed Duel: By the time the bell rang, the students had finished the exam."
+        }
+      },
+      {
+        grade: 'CM',
+        fr: {
+          cat: "⏳ CONJUGAISON CM2 • MODE 3 : LE FUTUR ANTÉRIEUR",
+          sentence: "Dès que tu ___ terminé ton expérience, tu noteras le résultat.",
+          blank: "auras 🔬",
+          options: ["auras 🔬", "avais", "as", "aurais"],
+          rule: "💡 Le futur antérieur se forme avec l'auxiliaire au futur simple (« tu auras ») + participe passé !",
+          speech: "Défi Boss : Dès que tu auras terminé ton expérience, tu noteras le résultat."
+        },
+        en: {
+          cat: "⏳ PRIMARY 6 VERBS • MODE 3: MODAL PERFECT",
+          sentence: "You solved all fifteen challenges! That ___ have taken great focus!",
+          blank: "must 🏆",
+          options: ["must 🏆", "did", "was", "were"],
+          rule: "💡 'Must have + past participle' expresses a strong logical deduction about the past!",
+          speech: "Boss Round: You solved all fifteen challenges! That must have taken great focus!"
         }
       }
     ],
@@ -4882,7 +5801,126 @@ body {
   // ACTIVITY COMPLETION & GUARANTEED PROGRESSION:
   // Activity (1/3 ➜ 2/3 ➜ 3/3) ➜ Exercise (1/5 ➜ 5/5) ➜ Next Level Unlocked
   // ============================================================================
+  
+  // ============================================================================
+  // V7.0 REA-ULTRA-3D: 60FPS 3D RIBBON CONFETTI ENGINE (CATDAD/CANVAS-CONFETTI)
+  // & MULTI-MODE ACTIVITY CONTROLLER (ENSURES ACTIVITY 1, 2, AND 3 ARE DISTINCT!)
+  // ============================================================================
+  state.confetti3D = [];
+  state.usedChallengesByGame = {};
+
+  function getUniqueChallengeItem(pool, gameKey, rawIdx) {
+    if (!pool || pool.length === 0) return null;
+    if (!state.usedChallengesByGame[gameKey]) {
+      state.usedChallengesByGame[gameKey] = [];
+    }
+    const used = state.usedChallengesByGame[gameKey];
+    if (used.length >= pool.length) {
+      used.length = 0; // Reset cycle only after every single item in pool has been played!
+    }
+    let candidateIdx = rawIdx % pool.length;
+    for (let offset = 0; offset < pool.length; offset++) {
+      const tryIdx = (candidateIdx + offset) % pool.length;
+      if (!used.includes(tryIdx)) {
+        used.push(tryIdx);
+        return pool[tryIdx];
+      }
+    }
+    return pool[candidateIdx];
+  }
+
+  function spawn3DConfettiBurst() {
+    const colors = ['#FF2A32', '#FBBF24', '#10B981', '#38BDF8', '#A855F7', '#F472B6', '#FDE047'];
+    for (let i = 0; i < 42; i++) {
+      const angle = (Math.PI * 2 * i) / 42 + (Math.random() - 0.5) * 0.25;
+      const speed = 4 + Math.random() * 9;
+      state.confetti3D.push({
+        x: CW / 2,
+        y: CH / 2 - 20,
+        vx: Math.cos(angle) * speed,
+        vy: Math.sin(angle) * speed - 4,
+        gravity: 0.22,
+        drag: 0.96,
+        w: 9 + Math.random() * 7,
+        h: 5 + Math.random() * 5,
+        tilt: Math.random() * Math.PI * 2,
+        tiltSpeed: 0.14 + Math.random() * 0.22,
+        wobble: Math.random() * 10,
+        wobbleSpeed: 0.1 + Math.random() * 0.12,
+        color: colors[i % colors.length],
+        alpha: 1.0
+      });
+    }
+  }
+
+  function updateActivityModeBanner() {
+    const banner = $('activity-mode-banner');
+    if (!banner) return;
+    const phase = state.activityPhase || 1;
+    const isEn = state.lang === 'en';
+    const g = state.game;
+
+    banner.className = 'activity-mode-banner mode-phase-' + phase;
+
+    const modeConfigs = {
+      1: {
+        icon: '🧭',
+        kickerFr: 'ACTIVITÉ 1 SUR 3 • MODE 1 : DÉCOUVERTE INTERACTIVE 3D',
+        kickerEn: 'ACTIVITY 1 OF 3 • MODE 1: 3D INTERACTIVE DISCOVERY',
+        headFr: g === 'maze_quest' ? 'Vue Isométrique 3D du Temple aux Flambeaux'
+              : g === 'math_lab' ? 'Atelier Cubes 3D & Manipulation Tactile'
+              : g === 'circuit' ? 'Montage Série 3D (4,5 V) & Flux d’Électrons'
+              : 'Exploration Visuelle & Règle Guidée avec Voix Native',
+        headEn: g === 'maze_quest' ? '3D Isometric Torchlight Temple View'
+              : g === 'math_lab' ? '3D Cube Workshop & Tactile Manipulation'
+              : g === 'circuit' ? '3D Series Breadboard (4.5V) & Electron Flow'
+              : 'Visual Discovery & Guided Rule with Native Voice',
+        xp: '⭐ +50 XP • Mode 1/3'
+      },
+      2: {
+        icon: '⚡',
+        kickerFr: 'ACTIVITÉ 2 SUR 3 • MODE 2 : DÉFI ARCADE RAPIDE',
+        kickerEn: 'ACTIVITY 2 OF 3 • MODE 2: SPEED ARCADE CHALLENGE',
+        headFr: g === 'maze_quest' ? 'Vue Immersive 3D Raycast (Couloir 1re Personne + Radar)'
+              : g === 'math_lab' ? 'Cylindre 3D des Fractions & Tube Décimal'
+              : g === 'circuit' ? 'Réseau Solaire 3D (9,0 V) & Turbine Éolienne'
+              : 'Duel Éclair Chronométré • Cartes Dynamiques (x1.5 XP)',
+        headEn: g === 'maze_quest' ? 'First-Person 3D Raycast Corridor View + Radar'
+              : g === 'math_lab' ? '3D Extruded Fraction Cylinder & Decimal Tube'
+              : g === 'circuit' ? '3D Solar Grid (9.0V) & Wind Turbine'
+              : 'Timed Speed Arcade Duel • Dynamic Cards (1.5x XP)',
+        xp: '🔥 +75 XP • Mode 2/3'
+      },
+      3: {
+        icon: '👑',
+        kickerFr: 'ACTIVITÉ 3 SUR 3 • MODE 3 : DÉFI DU BOSS & MAÎTRISE',
+        kickerEn: 'ACTIVITY 3 OF 3 • MODE 3: MASTER BOSS CHALLENGE',
+        headFr: g === 'maze_quest' ? 'Citadelle Cyber-3D du Boss & Cristaux Turbo'
+              : g === 'math_lab' ? 'Balance Algébrique 3D Holographique (Équilibre du Boss)'
+              : g === 'circuit' ? 'Super-Labo Haute Tension (12 V) & Oscilloscope Loi d’Ohm'
+              : 'Grand Défi du Griot • Double Multiplicateur XP !',
+        headEn: g === 'maze_quest' ? '3D Cyber-Citadel Boss Maze & Turbo Crystals'
+              : g === 'math_lab' ? '3D Holographic Algebraic Balance Scale (Boss Round)'
+              : g === 'circuit' ? '12V High-Voltage Super-Lab & Live Ohm’s Law Oscilloscope'
+              : 'Grand Master Boss Round • 2x XP Multiplier!',
+        xp: '👑 +100 XP • BOSS 3/3'
+      }
+    };
+
+    const cfg = modeConfigs[phase] || modeConfigs[1];
+    if ($('mode-mascot-icon')) $('mode-mascot-icon').textContent = cfg.icon;
+    if ($('mode-phase-kicker')) $('mode-phase-kicker').textContent = isEn ? cfg.kickerEn : cfg.kickerFr;
+    if ($('mode-phase-headline')) $('mode-phase-headline').textContent = isEn ? cfg.headEn : cfg.headFr;
+    if ($('mode-xp-pill')) $('mode-xp-pill').textContent = cfg.xp;
+
+    // Also update the 3-step stepper labels so the student sees the 3 distinct modes!
+    if ($('step-lbl-1')) $('step-lbl-1').textContent = isEn ? '1. 3D Discovery' : '1. Découverte 3D';
+    if ($('step-lbl-2')) $('step-lbl-2').textContent = isEn ? '2. Speed Arcade' : '2. Duel Arcade';
+    if ($('step-lbl-3')) $('step-lbl-3').textContent = isEn ? '3. Boss Mastery 👑' : '3. Défi Boss 👑';
+  }
+
   function onActivityTaskCompleted() {
+    spawn3DConfettiBurst();
     state.score++;
     state.combo++;
     AudioEngine.playSuccess();
@@ -4939,7 +5977,7 @@ body {
   function nextActivityChallenge(isWelcome = false) {
     const isEn = state.lang === 'en';
     const g = state.game;
-    const challengeIndex = ((state.level - 1) * 5 + (state.exerciseInLevel - 1) * 3 + (state.activityPhase - 1));
+    const challengeIndex = ((state.level - 1) * 15 + (state.exerciseInLevel - 1) * 3 + (state.activityPhase - 1));
 
     // Reset game-specific progress objects for the new activity
     if (g === 'tangram_puzzle') {
@@ -5006,6 +6044,7 @@ body {
     const overallPct = Math.min(100, Math.round((currentStep / totalSteps) * 100));
     $('progress-fill').style.width = overallPct + '%';
 
+    updateActivityModeBanner();
     // Show D-pad if maze
     $('maze-dpad-container').classList.toggle('active', g === 'maze_quest');
 
@@ -5234,8 +6273,8 @@ body {
     $('story-overlay').classList.remove('active');
 
     const list = DB.phonics;
-    const challengeIndex = ((state.level - 1) * 5 + (state.exerciseInLevel - 1) * 3 + (state.activityPhase - 1));
-    const item = list[challengeIndex % list.length];
+    const challengeIndex = ((state.level - 1) * 15 + (state.exerciseInLevel - 1) * 3 + (state.activityPhase - 1));
+    const item = getUniqueChallengeItem(list, "read_" + state.grade, challengeIndex);
     state.readingTarget = item;
     state.readingSlots = [];
 
@@ -5333,8 +6372,8 @@ body {
     $('story-overlay').classList.remove('active');
 
     const list = DB.pronunciation;
-    const challengeIndex = ((state.level - 1) * 5 + (state.exerciseInLevel - 1) * 3 + (state.activityPhase - 1));
-    const item = list[challengeIndex % list.length];
+    const challengeIndex = ((state.level - 1) * 15 + (state.exerciseInLevel - 1) * 3 + (state.activityPhase - 1));
+    const item = getUniqueChallengeItem(list, "pron_" + state.grade, challengeIndex);
     state.pronunciationItem = item;
 
     const isEn = state.lang === 'en';
@@ -5481,7 +6520,7 @@ body {
     $('story-overlay').classList.add('active');
 
     const gradeStories = DB.stories[state.grade] || (state.grade === 'CP' ? DB.stories.CP : DB.stories.MAT);
-    const challengeIndex = ((state.level - 1) * 5 + (state.exerciseInLevel - 1) * 3 + (state.activityPhase - 1));
+    const challengeIndex = ((state.level - 1) * 15 + (state.exerciseInLevel - 1) * 3 + (state.activityPhase - 1));
     const story = gradeStories[challengeIndex % gradeStories.length];
     state.storyItem = story;
 
@@ -5577,11 +6616,11 @@ body {
 
     const isEn = state.lang === 'en';
     const langKey = isEn ? 'en' : 'fr';
-    const challengeIndex = ((state.level - 1) * 5 + (state.exerciseInLevel - 1) * 3 + (state.activityPhase - 1));
+    const challengeIndex = ((state.level - 1) * 15 + (state.exerciseInLevel - 1) * 3 + (state.activityPhase - 1));
     const normG = state.grade === 'CE1' ? 'CE' : (state.grade === 'CM2' ? 'CM' : state.grade);
     const list = DB.math.filter(m => m.grade === normG || (normG === 'CP' && m.grade === 'SIL') || (normG === 'CM' && m.grade === 'CM1') || (normG === 'CE' && m.grade === 'CE2'));
     const pool = list.length > 0 ? list : DB.math;
-    const item = pool[challengeIndex % pool.length];
+    const item = getUniqueChallengeItem(pool, "math_" + state.grade, challengeIndex);
     state.currentMathItem = item;
 
     $('instruction-title').textContent = item.prompt[langKey];
@@ -5634,13 +6673,13 @@ body {
 
     const isEn = state.lang === 'en';
     const langKey = isEn ? 'en' : 'fr';
-    const challengeIndex = ((state.level - 1) * 5 + (state.exerciseInLevel - 1) * 3 + (state.activityPhase - 1));
+    const challengeIndex = ((state.level - 1) * 15 + (state.exerciseInLevel - 1) * 3 + (state.activityPhase - 1));
 
     // Filter questions prioritizing current grade, while ensuring zero repetition across 3 activities
     const gradePool = DB.africaGeographyQuestions.filter(q => q.grade === state.grade);
     const otherPool = DB.africaGeographyQuestions.filter(q => q.grade !== state.grade);
     const combinedPool = [...gradePool, ...otherPool];
-    const qItem = combinedPool[challengeIndex % combinedPool.length];
+    const qItem = getUniqueChallengeItem(combinedPool, "geo_" + state.grade, challengeIndex);
     state.currentGeographyItem = qItem;
 
     const countryMeta = DB.africaMapData.find(c => c.id === qItem.iso) || DB.africaMapData[0];
@@ -5719,12 +6758,12 @@ body {
 
     const isEn = state.lang === 'en';
     const langKey = isEn ? 'en' : 'fr';
-    const challengeIndex = ((state.level - 1) * 5 + (state.exerciseInLevel - 1) * 3 + (state.activityPhase - 1));
+    const challengeIndex = ((state.level - 1) * 15 + (state.exerciseInLevel - 1) * 3 + (state.activityPhase - 1));
 
     const gradeFacts = DB.funFactsQuiz.filter(f => f.grade === state.grade);
     const otherFacts = DB.funFactsQuiz.filter(f => f.grade !== state.grade);
     const pool = [...gradeFacts, ...otherFacts];
-    const item = pool[challengeIndex % pool.length];
+    const item = getUniqueChallengeItem(pool, "fun_" + state.grade, challengeIndex);
     state.currentFunFactItem = item;
 
     $('funfact-cat-pill').textContent = item.cat[langKey];
@@ -5790,7 +6829,7 @@ body {
 
     const isEn = state.lang === 'en';
     const langKey = isEn ? 'en' : 'fr';
-    const challengeIndex = ((state.level - 1) * 5 + (state.exerciseInLevel - 1) * 3 + (state.activityPhase - 1));
+    const challengeIndex = ((state.level - 1) * 15 + (state.exerciseInLevel - 1) * 3 + (state.activityPhase - 1));
 
     const sourceList = gameType === 'grammar_lab'
       ? DB.grammarExercises
@@ -5799,11 +6838,14 @@ body {
     const gradeMatches = sourceList.filter(item => item.grade === state.grade);
     const otherMatches = sourceList.filter(item => item.grade !== state.grade);
     const orderedPool = [...gradeMatches, ...otherMatches];
-    const rawEntry = orderedPool[challengeIndex % orderedPool.length];
+    const rawEntry = getUniqueChallengeItem(orderedPool, gameType + "_" + state.grade, challengeIndex);
     const data = rawEntry[langKey];
     state.currentLangQuestItem = data;
 
-    $('lang-quest-badge').textContent = data.cat + (isEn ? ' • 🇬🇧 ENGLISH VOICE' : ' • 🇫🇷 VOIX FRANÇAISE');
+    const lStage = document.querySelector('.lang-quest-stage');
+    if (lStage) lStage.setAttribute('data-phase', String(state.activityPhase));
+    const phasePrefix = state.activityPhase === 1 ? '🧭 MODE 1/3 (DÉCOUVERTE) • ' : (state.activityPhase === 2 ? '⚡ MODE 2/3 (ARCADE) • ' : '👑 MODE 3/3 (BOSS) • ');
+    $('lang-quest-badge').textContent = phasePrefix + data.cat + (isEn ? ' • 🇬🇧 ENGLISH VOICE' : ' • 🇫🇷 VOIX FRANÇAISE');
     $('lang-quest-sentence').innerHTML = data.sentence.replace('___', '<span class="lang-blank-slot" id="lang-active-blank">?</span>');
     $('lang-quest-rule').textContent = data.rule;
     $('instruction-title').textContent = data.speech;
@@ -6134,6 +7176,77 @@ body {
       ctx.font = '34px sans-serif';
       ctx.fillText('🦁', -17, 10 + Math.sin(tNow * 8) * 3);
       ctx.restore();
+
+      // V7.0 MULTI-MODE 3D ENGINE FOR MAZE QUEST:
+      // Activity 2/3: First-Person 3D Perspective Corridor Raycaster Split-Screen + Top-Down Radar!
+      if (state.activityPhase === 2) {
+        ctx.save();
+        // Right-side First-Person 3D Corridor Viewport (x: 470..785, y: 18..362)
+        const fpX = 475, fpY = 18, fpW = 305, fpH = 340;
+        ctx.fillStyle = '#020617';
+        ctx.fillRect(fpX, fpY, fpW, fpH);
+        // 3D Ceiling & Floor perspective gradient
+        const ceilG = ctx.createLinearGradient(fpX, fpY, fpX, fpY + fpH / 2);
+        ceilG.addColorStop(0, '#1E1B4B');
+        ceilG.addColorStop(1, '#0F172A');
+        ctx.fillStyle = ceilG;
+        ctx.fillRect(fpX, fpY, fpW, fpH / 2);
+        const flrG = ctx.createLinearGradient(fpX, fpY + fpH / 2, fpX, fpY + fpH);
+        flrG.addColorStop(0, '#064E3B');
+        flrG.addColorStop(1, '#022C22');
+        ctx.fillStyle = flrG;
+        ctx.fillRect(fpX, fpY + fpH / 2, fpW, fpH / 2);
+
+        // Draw 3D Corridor Perspective Depth Rings (Wolf3D / Astray Tunnel Effect)
+        const distToExit = Math.max(1, Math.hypot(mz.exit.r - mz.player.r, mz.exit.c - mz.player.c));
+        for (let d = 4; d >= 1; d--) {
+          const scale = d / 5;
+          const rw = fpW * scale;
+          const rh = fpH * scale;
+          const rx = fpX + (fpW - rw) / 2;
+          const ry = fpY + (fpH - rh) / 2;
+          ctx.strokeStyle = d % 2 === 0 ? 'rgba(56, 189, 248, 0.45)' : 'rgba(251, 191, 36, 0.35)';
+          ctx.lineWidth = 2;
+          ctx.strokeRect(rx, ry, rw, rh);
+          // Diagonal corridor perspective corners
+          ctx.beginPath();
+          ctx.moveTo(fpX, fpY); ctx.lineTo(rx, ry);
+          ctx.moveTo(fpX + fpW, fpY); ctx.lineTo(rx + rw, ry);
+          ctx.moveTo(fpX, fpY + fpH); ctx.lineTo(rx, ry + rh);
+          ctx.moveTo(fpX + fpW, fpY + fpH); ctx.lineTo(rx + rw, ry + rh);
+          ctx.stroke();
+        }
+        // Glowing 3D Exit Portal inside the 3D First-Person Corridor
+        const portalRadius = Math.max(14, Math.min(62, 90 / distToExit));
+        const pCx = fpX + fpW / 2, pCy = fpY + fpH / 2;
+        const pGlow = ctx.createRadialGradient(pCx, pCy, 4, pCx, pCy, portalRadius * 1.6);
+        pGlow.addColorStop(0, '#FEF08A');
+        pGlow.addColorStop(0.5, '#10B981');
+        pGlow.addColorStop(1, 'rgba(16, 185, 129, 0)');
+        ctx.fillStyle = pGlow;
+        ctx.beginPath();
+        ctx.arc(pCx, pCy, portalRadius * 1.6, 0, Math.PI * 2);
+        ctx.fill();
+
+        ctx.strokeStyle = '#38BDF8';
+        ctx.lineWidth = 3;
+        ctx.strokeRect(fpX, fpY, fpW, fpH);
+        ctx.fillStyle = '#FDE047';
+        ctx.font = 'bold 12px monospace';
+        ctx.fillText('🎥 VUE 3D RAYCAST 1re PERSONNE • DIST: ' + distToExit.toFixed(1) + 'm', fpX + 12, fpY + 20);
+        ctx.restore();
+      } else if (state.activityPhase === 3) {
+        // Activity 3/3: Boss Cyber-Citadel Golden Laser Frame
+        ctx.save();
+        ctx.strokeStyle = '#FBBF24';
+        ctx.lineWidth = 3;
+        ctx.strokeRect(8, 8, CW - 16, CH - 16);
+        ctx.fillStyle = '#FDE047';
+        ctx.font = 'bold 13px sans-serif';
+        ctx.fillText('👑 CITADELLE 3D DU BOSS • BONUS XP x2 ACTIF !', 515, 28);
+        ctx.restore();
+      }
+
     }
 
         // 2. TANGRAM PUZZLE SNAP
@@ -6854,6 +7967,27 @@ body {
       if (p.alpha <= 0) state.particles.splice(idx, 1);
     });
 
+
+    // Render 60fps 3D Rotating Ribbon Confetti (catdad/canvas-confetti physics)
+    state.confetti3D.forEach((c, idx) => {
+      c.x += c.vx + Math.sin(c.wobble) * 1.2;
+      c.y += c.vy;
+      c.vy += c.gravity;
+      c.vx *= c.drag;
+      c.tilt += c.tiltSpeed;
+      c.wobble += c.wobbleSpeed;
+      c.alpha -= 0.012;
+      ctx.save();
+      ctx.globalAlpha = Math.max(0, c.alpha);
+      ctx.translate(c.x, c.y);
+      ctx.rotate(c.wobble * 0.3);
+      ctx.scale(Math.cos(c.tilt), Math.sin(c.tilt * 0.7) * 0.7 + 0.3);
+      ctx.fillStyle = c.color;
+      ctx.fillRect(-c.w / 2, -c.h / 2, c.w, c.h);
+      ctx.restore();
+      if (c.alpha <= 0 || c.y > CH + 30) state.confetti3D.splice(idx, 1);
+    });
+
     // Render Floating Scores
     state.floatingScores.forEach((f, idx) => {
       f.y += f.vy;
@@ -6939,7 +8073,7 @@ body {
         sessionStorage.clear();
       } catch (e) {}
       const url = new URL(window.location.href);
-      url.searchParams.set('v', '6.0.' + Date.now());
+      url.searchParams.set('v', '7.0.' + Date.now());
       window.location.replace(url.toString());
     });
   }
