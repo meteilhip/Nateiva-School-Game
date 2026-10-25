@@ -48,7 +48,17 @@ All code changes, features, and assets in **Nateiva School Game** MUST be pushed
 ## 4. Pedagogical & Gameplay Laws
 1. **Zero Repetition Across Activities:**
    - Every level consists of **3 Activities**, and each Activity contains **5 Exercises**.
-   - Exercises and activities **MUST NEVER repeat** after a completed activity. Each activity and exercise within a level must present a distinct word, story, equation, maze map, tangram silhouette, or simulation challenge.
+   - Exercises and activities **MUST NEVER repeat** after a completed activity. Each activity and exercise within a level must present a distinct word, story, equation, maze map, tangram silhouette, African country geography mission, fun fact trivia question, or simulation challenge.
+2. **Mandatory Subjects in Every Class Level (Kindergarten to Primary 6 / Maternelle to CM2):**
+   - Every class selector pill displays **both its French and English class names** side-by-side (e.g., `🐣 Maternelle / Nursery & KG`, `🌱 SIL / Primary 1 (Grade 1)`, `🌿 CP / Primary 2`, `🌴 CE1 / Primary 3`, `🌍 CE2 / Primary 4`, `🦅 CM1 / Primary 5`, `🎓 CM2 / Primary 6`).
+   - Selecting any class updates the **Class Curriculum Matrix Banner** and dynamically adapts every game's content and card badges to that exact class.
+   - **Mandatory Core Subjects in ALL Classes:**
+     1. **English Pronunciation & Bilingual Phonetics (`pronunciation_lab` + `reading_lab`)** — Mandatory in every class to help children master spoken English and French.
+     2. **Text Comprehension & Bilingual Stories (`story_lab`)** — Synchronized audio reading + comprehension questions in every class.
+     3. **Mathematics (`math_lab` + `comet`)** — Class-tailored counting, mental math, fractions, geometry, and algebraic balance.
+     4. **Interactive Sciences (`chemistry`, `botany`, `density`, `circuit`)** — Real 2D tactile physics simulations adapted to each class.
+     5. **Geography of African Countries (`africa_geography`)** — Interactive SVG Map of 49 African countries (flags, capitals, regions, rivers, landmarks) built from REA analysis of `VictorCazanave/svg-maps` & *Seterra Geography*.
+     6. **Fun Facts & General Knowledge MCQ (`fun_facts_quiz`)** — Multiple-choice trivia game show covering African wildlife, inventions, space, human body, and culture.
 2. **Automatic Progression:**
    - Completing all 5 exercises advances automatically to the next Activity (`Activité 1/3 -> 2/3 -> 3/3`).
    - Completing all 3 activities unlocks and advances to the next Level (`Niveau N -> Niveau N+1`).
