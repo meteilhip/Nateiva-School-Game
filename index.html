@@ -1592,6 +1592,44 @@ body {
     cursor: not-allowed;
   }
 
+
+  /* TOP-RIGHT VERSION & CACHE BUSTER PILL */
+  .version-cache-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 14px;
+    border-radius: 999px;
+    background: linear-gradient(135deg, #111827 0%, #1E293B 100%);
+    color: #FBBF24;
+    font-size: 0.78rem;
+    font-weight: 900;
+    border: 2px solid #F59E0B;
+    cursor: pointer;
+    box-shadow: 0 4px 14px rgba(245, 158, 11, 0.28);
+    transition: all 0.2s ease;
+    letter-spacing: 0.02em;
+  }
+  .version-cache-pill:hover {
+    transform: translateY(-2px) scale(1.03);
+    background: linear-gradient(135deg, #E5252A 0%, #B91C1C 100%);
+    color: #FFFFFF;
+    border-color: #FFFFFF;
+  }
+  .card-rea-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 3px 9px;
+    border-radius: 999px;
+    font-size: 0.68rem;
+    font-weight: 900;
+    background: rgba(16, 185, 129, 0.14);
+    color: #065F46;
+    border: 1.5px solid rgba(16, 185, 129, 0.45);
+    margin-left: auto;
+  }
+
 </style>
 </head>
 <body>
@@ -1622,6 +1660,7 @@ body {
         <option value="en">🇬🇧 English (Studio Voice)</option>
       </select>
       <button class="btn-pill" id="btn-sound-toggle">🔊 Son</button>
+      <button class="version-cache-pill" id="btn-version-cache" title="Version active • Cliquer pour vider le cache et recharger">🚀 v5.0 REA-PRO • 🔄 Vider Cache</button>
     </div>
   </header>
 
@@ -1712,237 +1751,250 @@ body {
     <button class="tab-btn" data-filter="sci">🔬 Sciences Réalistes</button>
   </nav>
 
-  <!-- PORTALS GRID (WITH APPLE FLOTATION) -->
+  <!-- PORTALS GRID (WITH APPLE FLOTATION — ORDERED BY MANDATORY CORE SUBJECTS FIRST) -->
   <section class="portals-grid" id="portals-grid">
-    <!-- 1. Maze Quest Arcade (NEW) -->
-    <button class="portal-card" data-cat="arcade" data-game="maze_quest">
-      <div class="card-top-glow"></div>
-      <div class="portal-card-header">
-        <div class="portal-badge">🦁</div>
-        <div class="portal-titles">
-          <h3>Labyrinthe Magique</h3>
-          <div class="portal-curriculum-tag">Arcade • Réflexes & Repérage</div>
-        </div>
-      </div>
-      <p class="portal-desc">Guide Léo le Lion au doigt dans le labyrinthe, attrape les étoiles et les clés d'or pour débloquer la sortie magique !</p>
-      <div class="portal-counts-badge-bar">
-        <span class="count-pill highlight">🎯 5 Exercices / Niveau</span>
-        <span class="count-pill black">⚡ 3 Activités / Exercice</span>
-        <span class="count-pill">🏆 10 Niveaux</span>
-      </div>
-    </button>
-
-    <!-- 2. Tangram Puzzle Snap (NEW) -->
-    <button class="portal-card" data-cat="puzzle" data-game="tangram_puzzle">
-      <div class="card-top-glow"></div>
-      <div class="portal-card-header">
-        <div class="portal-badge">🧩</div>
-        <div class="portal-titles">
-          <h3>Puzzle & Tangram Snap</h3>
-          <div class="portal-curriculum-tag">Géométrie • Formes & Logique</div>
-        </div>
-      </div>
-      <p class="portal-desc">Glisse les pièces géométriques magnétiques au doigt sur la silhouette pour reconstituer l'animal secret avec effet cartoon !</p>
-      <div class="portal-counts-badge-bar">
-        <span class="count-pill highlight">🎯 5 Exercices / Niveau</span>
-        <span class="count-pill black">⚡ 3 Activités / Exercice</span>
-        <span class="count-pill">🏆 10 Niveaux</span>
-      </div>
-    </button>
-
-    <!-- 3. Math Lab -->
-    <button class="portal-card" data-cat="math" data-game="math_lab">
-      <div class="card-top-glow"></div>
-      <div class="portal-card-header">
-        <div class="portal-badge">🧮</div>
-        <div class="portal-titles">
-          <h3>Maths & Dénombrement</h3>
-          <div class="portal-curriculum-tag">Nombres • Additions • Astuces</div>
-        </div>
-      </div>
-      <p class="portal-desc">Glisse les blocs et les fruits dans les boîtes de 10, compte avec ton doigt et découvre les astuces secrètes de calcul mental !</p>
-      <div class="portal-counts-badge-bar">
-        <span class="count-pill highlight">🎯 5 Exercices / Niveau</span>
-        <span class="count-pill black">⚡ 3 Activités / Exercice</span>
-        <span class="count-pill">🏆 10 Niveaux</span>
-      </div>
-    </button>
-
-    <!-- 4. Reading & Syllables Lab -->
-    <button class="portal-card" data-cat="read" data-game="reading_lab">
-      <div class="card-top-glow"></div>
-      <div class="portal-card-header">
-        <div class="portal-badge">📖</div>
-        <div class="portal-titles">
-          <h3>Atelier de Lecture & Syllabes</h3>
-          <div class="portal-curriculum-tag">Phonétique • Mots • Phrases</div>
-        </div>
-      </div>
-      <p class="portal-desc">Écoute chaque son de syllabe, assemble les tuiles pour former les mots illustrés et construis des phrases magiques !</p>
-      <div class="portal-counts-badge-bar">
-        <span class="count-pill highlight">🎯 5 Exercices / Niveau</span>
-        <span class="count-pill black">⚡ 3 Activités / Exercice</span>
-        <span class="count-pill">🏆 10 Niveaux</span>
-      </div>
-    </button>
-
-    <!-- 5. Pronunciation Studio -->
+    <!-- 1. Pronunciation Studio (MANDATORY IN ALL CLASSES • ELSA Speak × Google Read Along) -->
     <button class="portal-card" data-cat="voice" data-game="pronunciation_lab">
       <div class="card-top-glow"></div>
       <div class="portal-card-header">
         <div class="portal-badge">🗣️</div>
         <div class="portal-titles">
-          <h3>Studio de Prononciation</h3>
-          <div class="portal-curriculum-tag">Sons Purs • Rythme • Ralenti</div>
+          <h3>Studio Prononciation (FR ⇄ EN)</h3>
+          <div class="portal-curriculum-tag">Anglais & Français • Micro Live • Spectre</div>
         </div>
+        <span class="card-rea-badge">✨ REA v5.0</span>
       </div>
-      <p class="portal-desc">Écoute la vraie voix française et anglaise en vitesse normale ou au ralenti, suis les billes de rythme et entraîne-toi à répéter !</p>
+      <p class="portal-desc">Écoute la vraie voix studio française et anglaise, parle dans ton micro pour obtenir ton score de prononciation et suis les billes de rythme !</p>
       <div class="portal-counts-badge-bar">
-        <span class="count-pill highlight">🎯 5 Exercices / Niveau</span>
+        <span class="count-pill highlight">🎙️ Micro + Voix Studio FR/EN</span>
         <span class="count-pill black">⚡ 3 Activités / Exercice</span>
-        <span class="count-pill">🏆 10 Niveaux</span>
+        <span class="count-pill">🏆 Obligatoire Maternelle–CM2</span>
       </div>
     </button>
 
-    <!-- 6. Stories & Comprehension Lab -->
-    <button class="portal-card" data-cat="story" data-game="story_lab">
-      <div class="card-top-glow"></div>
-      <div class="portal-card-header">
-        <div class="portal-badge">📚</div>
-        <div class="portal-titles">
-          <h3>Histoires & Compréhension</h3>
-          <div class="portal-curriculum-tag">Contes Narrés • Suivi • Quiz Audio</div>
-        </div>
-      </div>
-      <p class="portal-desc">Écoute un conte captivant avec surlignage du texte en direct, puis réponds aux questions sur l'histoire. 100% accessible en écoute audio !</p>
-      <div class="portal-counts-badge-bar">
-        <span class="count-pill highlight">🎯 5 Exercices / Niveau</span>
-        <span class="count-pill black">⚡ 3 Activités / Exercice</span>
-        <span class="count-pill">🏆 10 Niveaux</span>
-      </div>
-    </button>
-
-    <!-- 7. Comet Defender Arcade -->
-    <button class="portal-card" data-cat="arcade" data-game="comet">
-      <div class="card-top-glow"></div>
-      <div class="portal-card-header">
-        <div class="portal-badge">🚀</div>
-        <div class="portal-titles">
-          <h3>Comet Defender</h3>
-          <div class="portal-curriculum-tag">Calcul Mental & Réflexes</div>
-        </div>
-      </div>
-      <p class="portal-desc">Glisse le vaisseau pour viser les météorites en temps réel et tire au laser pour désintégrer la bonne réponse !</p>
-      <div class="portal-counts-badge-bar">
-        <span class="count-pill highlight">🎯 5 Exercices / Niveau</span>
-        <span class="count-pill black">⚡ 3 Activités / Exercice</span>
-        <span class="count-pill">🏆 10 Niveaux</span>
-      </div>
-    </button>
-
-    <!-- 8. Chemistry Real Simulation -->
-    <button class="portal-card" data-cat="sci" data-game="chemistry">
-      <div class="card-top-glow"></div>
-      <div class="portal-card-header">
-        <div class="portal-badge">🧪</div>
-        <div class="portal-titles">
-          <h3>Labo de Chimie</h3>
-          <div class="portal-curriculum-tag">Sciences • Découverte Sensorielle</div>
-        </div>
-      </div>
-      <p class="portal-desc">Prends les éprouvettes au doigt, verse les liquides dans le flacon et observe les couleurs changer avec de vraies bulles de gaz !</p>
-      <div class="portal-counts-badge-bar">
-        <span class="count-pill highlight">🎯 5 Exercices / Niveau</span>
-        <span class="count-pill black">⚡ 3 Activités / Exercice</span>
-        <span class="count-pill">🏆 10 Niveaux</span>
-      </div>
-    </button>
-
-    <!-- 9. Botany Real Simulation -->
-    <button class="portal-card" data-cat="sci" data-game="botany">
-      <div class="card-top-glow"></div>
-      <div class="portal-card-header">
-        <div class="portal-badge">🌻</div>
-        <div class="portal-titles">
-          <h3>Jardin & Germination</h3>
-          <div class="portal-curriculum-tag">Nature & Cycle Vivant</div>
-        </div>
-      </div>
-      <p class="portal-desc">Verse l'arrosoir au doigt, place le soleil et observe les racines grandir sous terre et la fleur éclore au fil des jours !</p>
-      <div class="portal-counts-badge-bar">
-        <span class="count-pill highlight">🎯 5 Exercices / Niveau</span>
-        <span class="count-pill black">⚡ 3 Activités / Exercice</span>
-        <span class="count-pill">🏆 10 Niveaux</span>
-      </div>
-    </button>
-
-    <!-- 10. Buoyancy Density Tank -->
-    <button class="portal-card" data-cat="sci" data-game="density">
-      <div class="card-top-glow"></div>
-      <div class="portal-card-header">
-        <div class="portal-badge">🌊</div>
-        <div class="portal-titles">
-          <h3>Flotte ou Coule (Archimède)</h3>
-          <div class="portal-curriculum-tag">Physique Réaliste & Eau</div>
-        </div>
-      </div>
-      <p class="portal-desc">Glisse les objets dans l'eau au doigt, observe les éclaboussures et pousse le liège sous l'eau pour le voir remonter !</p>
-      <div class="portal-counts-badge-bar">
-        <span class="count-pill highlight">🎯 5 Exercices / Niveau</span>
-        <span class="count-pill black">⚡ 3 Activités / Exercice</span>
-        <span class="count-pill">🏆 10 Niveaux</span>
-      </div>
-    </button>
-
-    <!-- 11. Electric Circuit Simulation -->
-    <button class="portal-card" data-cat="sci" data-game="circuit">
-      <div class="card-top-glow"></div>
-      <div class="portal-card-header">
-        <div class="portal-badge">💡</div>
-        <div class="portal-titles">
-          <h3>Circuit Électrique & Multimètre</h3>
-          <div class="portal-curriculum-tag">Énergie & Moteur</div>
-        </div>
-      </div>
-      <p class="portal-desc">Ferme l'interrupteur au doigt pour déclencher les étincelles, voir le courant circuler et faire tourner l'hélice !</p>
-      <div class="portal-counts-badge-bar">
-        <span class="count-pill highlight">🎯 5 Exercices / Niveau</span>
-        <span class="count-pill black">⚡ 3 Activités / Exercice</span>
-        <span class="count-pill">🏆 10 Niveaux</span>
-      </div>
-    </button>
-
-    <!-- 12. Geography of African Countries (Seterra × SVG-Maps Engine) -->
+    <!-- 2. Geography of African Countries (MANDATORY IN ALL CLASSES • Seterra × SVG-Maps) -->
     <button class="portal-card" data-cat="geo" data-game="africa_geography">
       <div class="card-top-glow"></div>
       <div class="portal-card-header">
         <div class="portal-badge">🌍</div>
         <div class="portal-titles">
           <h3>Géographie des Pays d'Afrique</h3>
-          <div class="portal-curriculum-tag">Carte Interactive • Drapeaux • Capitales</div>
+          <div class="portal-curriculum-tag">Carte SVG Interactive • Drapeaux • Capitales</div>
         </div>
+        <span class="card-rea-badge">✨ REA v5.0</span>
       </div>
-      <p class="portal-desc">Explore la vraie carte interactive des 54 pays d'Afrique ! Localise les pays au doigt, découvre leurs drapeaux, leurs capitales et leurs fleuves en français et en anglais !</p>
+      <p class="portal-desc">Explore la vraie carte vectorielle interactive des pays d'Afrique ! Touche les pays au doigt, découvre leurs drapeaux, leurs capitales et leurs fleuves !</p>
       <div class="portal-counts-badge-bar">
-        <span class="count-pill highlight">🎯 5 Exercices / Niveau</span>
+        <span class="count-pill highlight">🌍 49 Pays Africains SVG</span>
         <span class="count-pill black">⚡ 3 Activités / Exercice</span>
-        <span class="count-pill">🌍 49+ Pays SVG</span>
+        <span class="count-pill">🏆 Maternelle–CM2</span>
       </div>
     </button>
 
-    <!-- 13. Fun Facts & General Knowledge Multiple-Choice Game Show -->
+    <!-- 3. Fun Facts & General Knowledge Multiple-Choice Game Show (MANDATORY • Kahoot! × Trivia Crack) -->
     <button class="portal-card" data-cat="quiz" data-game="fun_facts_quiz">
       <div class="card-top-glow"></div>
       <div class="portal-card-header">
         <div class="portal-badge">🧠</div>
         <div class="portal-titles">
           <h3>Fun Facts & Culture Générale (QCM)</h3>
-          <div class="portal-curriculum-tag">Quiz Choix Multiples • Animaux • Espace • Afrique</div>
+          <div class="portal-curriculum-tag">Quiz Choix Multiples • Indice 50/50 • Afrique</div>
         </div>
+        <span class="card-rea-badge">✨ REA v5.0</span>
       </div>
-      <p class="portal-desc">Réponds aux questions à choix multiples (QCM) sur les merveilles d'Afrique, les animaux de la savane, l'espace, le corps humain et les grandes inventions !</p>
+      <p class="portal-desc">Réponds aux questions à choix multiples (A, B, C, D) avec l'indice 50/50 sur les merveilles d'Afrique, les animaux, l'espace et les sciences !</p>
       <div class="portal-counts-badge-bar">
-        <span class="count-pill highlight">🎯 5 Exercices / Niveau</span>
+        <span class="count-pill highlight">💡 Indice 50/50 + QCM</span>
+        <span class="count-pill black">⚡ 3 Activités / Exercice</span>
+        <span class="count-pill">🏆 Maternelle–CM2</span>
+      </div>
+    </button>
+
+    <!-- 4. Stories & Comprehension Lab (MANDATORY • Bookdash × StoryWeaver) -->
+    <button class="portal-card" data-cat="story" data-game="story_lab">
+      <div class="card-top-glow"></div>
+      <div class="portal-card-header">
+        <div class="portal-badge">📚</div>
+        <div class="portal-titles">
+          <h3>Compréhension de Texte & Contes</h3>
+          <div class="portal-curriculum-tag">Lecture Karaoké FR/EN • Quiz Compréhension</div>
+        </div>
+        <span class="card-rea-badge">✨ REA v5.0</span>
+      </div>
+      <p class="portal-desc">Écoute et lis des contes africains et scientifiques bilingues avec surlignage phrase par phrase, puis réponds aux questions de compréhension !</p>
+      <div class="portal-counts-badge-bar">
+        <span class="count-pill highlight">📖 FR & EN Synchronisé</span>
+        <span class="count-pill black">⚡ 3 Activités / Exercice</span>
+        <span class="count-pill">🏆 Obligatoire Maternelle–CM2</span>
+      </div>
+    </button>
+
+    <!-- 5. Reading & Syllables Monster Lab (Feed The Monster × Duolingo ABC) -->
+    <button class="portal-card" data-cat="read" data-game="reading_lab">
+      <div class="card-top-glow"></div>
+      <div class="portal-card-header">
+        <div class="portal-badge">📖</div>
+        <div class="portal-titles">
+          <h3>Monstre des Syllabes & Lecture</h3>
+          <div class="portal-curriculum-tag">Feed The Monster • Voyelles & Consonnes</div>
+        </div>
+        <span class="card-rea-badge">✨ REA v5.0</span>
+      </div>
+      <p class="portal-desc">Nourris le Monstre magique avec les bonnes syllabes colorées (voyelles en rouge, consonnes en bleu) pour former des mots en français et en anglais !</p>
+      <div class="portal-counts-badge-bar">
+        <span class="count-pill highlight">🦖 Monstre Interactif</span>
+        <span class="count-pill black">⚡ 3 Activités / Exercice</span>
+        <span class="count-pill">🏆 10 Niveaux</span>
+      </div>
+    </button>
+
+    <!-- 6. Math Lab (PhET Number Play × Fraction Matcher × Equality Explorer) -->
+    <button class="portal-card" data-cat="math" data-game="math_lab">
+      <div class="card-top-glow"></div>
+      <div class="portal-card-header">
+        <div class="portal-badge">🧮</div>
+        <div class="portal-titles">
+          <h3>Labo Maths, Fractions & Algèbre</h3>
+          <div class="portal-curriculum-tag">Boîtes de 10 • Disque Fractions • Balance 2x+4</div>
+        </div>
+        <span class="card-rea-badge">✨ REA v5.0</span>
+      </div>
+      <p class="portal-desc">Manipule les boîtes de 10, le disque interactif des fractions et la balance algébrique selon ta classe (de la Maternelle au CM2 / Primary 6) !</p>
+      <div class="portal-counts-badge-bar">
+        <span class="count-pill highlight">⚖️ Adapté par Classe</span>
+        <span class="count-pill black">⚡ 3 Activités / Exercice</span>
+        <span class="count-pill">🏆 10 Niveaux</span>
+      </div>
+    </button>
+
+    <!-- 7. Chemistry Real Simulation (PhET pH Scale) -->
+    <button class="portal-card" data-cat="sci" data-game="chemistry">
+      <div class="card-top-glow"></div>
+      <div class="portal-card-header">
+        <div class="portal-badge">🧪</div>
+        <div class="portal-titles">
+          <h3>Labo Chimie & Échelle pH</h3>
+          <div class="portal-curriculum-tag">Sciences • Réactions • Indicateur pH 0–14</div>
+        </div>
+        <span class="card-rea-badge">✨ REA v5.0</span>
+      </div>
+      <p class="portal-desc">Verse les éprouvettes dans l'erlenmeyer, observe l'indicateur de pH en direct, les mélanges de couleurs et l'effervescence des bulles de gaz !</p>
+      <div class="portal-counts-badge-bar">
+        <span class="count-pill highlight">⚗️ Échelle pH Live</span>
+        <span class="count-pill black">⚡ 3 Activités / Exercice</span>
+        <span class="count-pill">🏆 10 Niveaux</span>
+      </div>
+    </button>
+
+    <!-- 8. Buoyancy Density Tank (PhET Density & Archimedes) -->
+    <button class="portal-card" data-cat="sci" data-game="density">
+      <div class="card-top-glow"></div>
+      <div class="portal-card-header">
+        <div class="portal-badge">🌊</div>
+        <div class="portal-titles">
+          <h3>Bassin d'Archimède (Flotte/Coule)</h3>
+          <div class="portal-curriculum-tag">Physique • Vecteurs Poussée ↑Fa & Poids ↓P</div>
+        </div>
+        <span class="card-rea-badge">✨ REA v5.0</span>
+      </div>
+      <p class="portal-desc">Plonge le bois, la mangue, l'or ou la brique dans l'eau et visualise en direct les vecteurs de la poussée d'Archimède (↑Fa) et du poids (↓P) !</p>
+      <div class="portal-counts-badge-bar">
+        <span class="count-pill highlight">🌊 Vecteurs ↑Fa / ↓P</span>
+        <span class="count-pill black">⚡ 3 Activités / Exercice</span>
+        <span class="count-pill">🏆 10 Niveaux</span>
+      </div>
+    </button>
+
+    <!-- 9. Electric Circuit Simulation (PhET Circuit Construction Kit) -->
+    <button class="portal-card" data-cat="sci" data-game="circuit">
+      <div class="card-top-glow"></div>
+      <div class="portal-card-header">
+        <div class="portal-badge">💡</div>
+        <div class="portal-titles">
+          <h3>Circuit Électrique & Moteur</h3>
+          <div class="portal-curriculum-tag">Loi d'Ohm (U=R×I) • Électrons & Hélice</div>
+        </div>
+        <span class="card-rea-badge">✨ REA v5.0</span>
+      </div>
+      <p class="portal-desc">Ferme l'interrupteur pour observer la circulation des électrons bleus, allumer l'ampoule de 4,5 V et faire tourner l'hélice du moteur électrique !</p>
+      <div class="portal-counts-badge-bar">
+        <span class="count-pill highlight">⚡ Moteur + Loi d'Ohm</span>
+        <span class="count-pill black">⚡ 3 Activités / Exercice</span>
+        <span class="count-pill">🏆 10 Niveaux</span>
+      </div>
+    </button>
+
+    <!-- 10. Botany Real Simulation -->
+    <button class="portal-card" data-cat="sci" data-game="botany">
+      <div class="card-top-glow"></div>
+      <div class="portal-card-header">
+        <div class="portal-badge">🌻</div>
+        <div class="portal-titles">
+          <h3>Jardin Botanique & Photosynthèse</h3>
+          <div class="portal-curriculum-tag">Biologie • Racines, Tige & Floraison 21 Jours</div>
+        </div>
+        <span class="card-rea-badge">✨ REA v5.0</span>
+      </div>
+      <p class="portal-desc">Dose la pluie et le soleil pour faire germer le Baobab, le Tournesol, le Cacaoyer et l'Hibiscus en observant les racines pousser sous terre !</p>
+      <div class="portal-counts-badge-bar">
+        <span class="count-pill highlight">🌱 Morphogenèse 21J</span>
+        <span class="count-pill black">⚡ 3 Activités / Exercice</span>
+        <span class="count-pill">🏆 10 Niveaux</span>
+      </div>
+    </button>
+
+    <!-- 11. Comet Defender Arcade (TuxMath Space Arcade) -->
+    <button class="portal-card" data-cat="arcade" data-game="comet">
+      <div class="card-top-glow"></div>
+      <div class="portal-card-header">
+        <div class="portal-badge">🚀</div>
+        <div class="portal-titles">
+          <h3>Comet Defender : Calcul Spatial</h3>
+          <div class="portal-curriculum-tag">TuxMath Arcade • Lasers & Calcul Mental</div>
+        </div>
+        <span class="card-rea-badge">✨ REA v5.0</span>
+      </div>
+      <p class="portal-desc">Pilote le vaisseau spatial et tire au laser sur la comète qui porte la bonne réponse à l'équation affichée sur le tableau de bord !</p>
+      <div class="portal-counts-badge-bar">
+        <span class="count-pill highlight">☄️ Équations Dynamiques</span>
+        <span class="count-pill black">⚡ 3 Activités / Exercice</span>
+        <span class="count-pill">🏆 10 Niveaux</span>
+      </div>
+    </button>
+
+    <!-- 12. Tangram Puzzle Snap (Mathigon Euclid × Osmo Tangram) -->
+    <button class="portal-card" data-cat="puzzle" data-game="tangram_puzzle">
+      <div class="card-top-glow"></div>
+      <div class="portal-card-header">
+        <div class="portal-badge">🧩</div>
+        <div class="portal-titles">
+          <h3>Tangram Géométrique Magnétique</h3>
+          <div class="portal-curriculum-tag">Mathigon Euclid • Polygones & Silhouettes</div>
+        </div>
+        <span class="card-rea-badge">✨ REA v5.0</span>
+      </div>
+      <p class="portal-desc">Assemble la Fusée, le Bateau, le Chat, le Lion et le Papillon en glissant les polygones géométriques avec aimantation de précision !</p>
+      <div class="portal-counts-badge-bar">
+        <span class="count-pill highlight">📐 5 Silhouettes Uniques</span>
+        <span class="count-pill black">⚡ 3 Activités / Exercice</span>
+        <span class="count-pill">🏆 10 Niveaux</span>
+      </div>
+    </button>
+
+    <!-- 13. Maze Quest Arcade (Blockly Maze × Word/Math Checkpoints) -->
+    <button class="portal-card" data-cat="arcade" data-game="maze_quest">
+      <div class="card-top-glow"></div>
+      <div class="portal-card-header">
+        <div class="portal-badge">🦁</div>
+        <div class="portal-titles">
+          <h3>Mission Savane : Code & Labyrinthe</h3>
+          <div class="portal-curriculum-tag">Blockly Maze • Algorithme & Syllabes</div>
+        </div>
+        <span class="card-rea-badge">✨ REA v5.0</span>
+      </div>
+      <p class="portal-desc">Guide Léo dans les 5 cartes de la Savane (Oasis, Pyramide, Volcan, Jungle) en collectant les syllabes et nombres d'or ou utilise le bouton Auto-Pas !</p>
+      <div class="portal-counts-badge-bar">
+        <span class="count-pill highlight">🧭 5 Cartes + Auto-Guide</span>
         <span class="count-pill black">⚡ 3 Activités / Exercice</span>
         <span class="count-pill">🏆 10 Niveaux</span>
       </div>
@@ -4371,11 +4423,39 @@ body {
       $('story-overlay').classList.remove('active');
 
       if (g === 'maze_quest') {
-        $('answers-container').innerHTML = '';
         const mzName = state.maze.name ? (isEn ? state.maze.name.en : state.maze.name.fr) : "";
-        const mazeSpeech = isEn ? "Guide Leo through " + mzName + "! Collect stars to reach the portal." : "Guide Léo dans " + mzName + " ! Ramasse les étoiles pour ouvrir le portail.";
+        const mazeSpeech = isEn ? "Savannah Mission (" + mzName + "): Guide Leo to collect the syllables and reach the portal!" : "Mission Savane (" + mzName + ") : Guide Léo pour ramasser les syllabes d'or jusqu'au portail !";
         $('instruction-title').textContent = mazeSpeech;
         VoiceEngine.speak(mazeSpeech);
+        const ansBox = $('answers-container');
+        ansBox.innerHTML = '';
+        const btnStep = document.createElement('button');
+        btnStep.className = 'btn-interactive';
+        btnStep.textContent = isEn ? "🧭 Smart Step Toward Portal (Blockly Path)" : "🧭 Avancer d'un Pas Intelligent (Blockly)";
+        btnStep.onclick = () => {
+          // BFS shortest path from player to exit
+          const mz = state.maze;
+          const q = [[mz.player.r, mz.player.c, []]];
+          const vis = new Set([mz.player.r + ',' + mz.player.c]);
+          let bestMove = null;
+          while (q.length > 0) {
+            const [r, c, pathArr] = q.shift();
+            if (r === mz.exit.r && c === mz.exit.c) {
+              bestMove = pathArr[0];
+              break;
+            }
+            for (const [dr, dc] of [[-1,0],[1,0],[0,-1],[0,1]]) {
+              const nr = r + dr, nc = c + dc;
+              const key = nr + ',' + nc;
+              if (nr >= 0 && nr < mz.rows && nc >= 0 && nc < mz.cols && mz.walls[nr][nc] !== '1' && !vis.has(key)) {
+                vis.add(key);
+                q.push([nr, nc, [...pathArr, [dr, dc]]]);
+              }
+            }
+          }
+          if (bestMove) moveMazePlayer(bestMove[0], bestMove[1]);
+        };
+        ansBox.appendChild(btnStep);
       } else if (g === 'tangram_puzzle') {
         const tgName = state.tangram.name ? (isEn ? state.tangram.name.en : state.tangram.name.fr) : "";
         const tangramSpeech = isEn ? "Assemble " + tgName + "! Drag pieces onto the silhouette." : "Assemble " + tgName + " ! Glisse les pièces pour compléter la silhouette.";
@@ -5840,6 +5920,26 @@ body {
     state.lang = e.target.value;
     VoiceEngine.stop();
   });
+
+  if ($('btn-version-cache')) {
+    $('btn-version-cache').addEventListener('click', async () => {
+      try {
+        if ('caches' in window) {
+          const names = await caches.keys();
+          await Promise.all(names.map(n => caches.delete(n)));
+        }
+        if ('serviceWorker' in navigator) {
+          const regs = await navigator.serviceWorker.getRegistrations();
+          await Promise.all(regs.map(r => r.unregister()));
+        }
+        localStorage.clear();
+        sessionStorage.clear();
+      } catch (e) {}
+      const url = new URL(window.location.href);
+      url.searchParams.set('v', '5.0.' + Date.now());
+      window.location.replace(url.toString());
+    });
+  }
 
   $('btn-sound-toggle').addEventListener('click', () => {
     state.soundEnabled = !state.soundEnabled;
