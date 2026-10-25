@@ -1207,10 +1207,13 @@ canvas#simCanvas {
     </div>
     <div class="nav-actions">
       <select class="select-pill" id="grade-select" aria-label="Classe">
-        <option value="MAT">🐣 Maternelle (2–4 ans • Tout en écoute)</option>
-        <option value="SIL">🌱 SIL / CP (5–6 ans • Sons & Éveil)</option>
-        <option value="CE">🌿 CE1 / CE2 (7–8 ans)</option>
-        <option value="CM">🌳 CM1 / CM2 (9–10+ ans)</option>
+        <option value="MAT">🐣 Maternelle 1-2-3 / Nursery & KG / PP1-PP2 (2–5 ans • 100% Audio)</option>
+        <option value="SIL">🌱 SIL - CI / Primary 1 - Grade 1 (5–6 ans • Voyelles & Calcul 1–20)</option>
+        <option value="CP">🌿 CP - CP2 / Primary 2 - Grade 1–2 (6–7 ans • Syllabes & Calcul 1–100)</option>
+        <option value="CE">🌴 CE1 / Primary 3 - Grade 2 (7–8 ans • Lecture, Tables & Formes)</option>
+        <option value="CE2">🌍 CE2 / Primary 4 - Grade 3 (8–9 ans • Contes d'Afrique, Division & Sciences)</option>
+        <option value="CM1">🦅 CM1 / Primary 5 - Grade 4 (9–10 ans • Fractions, Décimaux & Énergie)</option>
+        <option value="CM">🎓 CM2 / Primary 6 - Grade 5–6 (10–12 ans • Proportionnalité, Algèbre & Examen)</option>
       </select>
       <select class="select-pill" id="lang-select" aria-label="Langue">
         <option value="fr">🇫🇷 Français (Voix Studio)</option>
@@ -1534,6 +1537,7 @@ canvas#simCanvas {
           <div class="word-phonetic-banner">
             <h2 id="pronounce-word-title">Bateau</h2>
             <span id="pronounce-syllables-text">ba • teau</span>
+            <canvas id="voiceWaveCanvas" width="420" height="58" style="width:100%;max-width:420px;height:58px;margin-top:10px;border-radius:12px;background:#0F172A;border:2px solid rgba(229,37,42,0.35);display:block;"></canvas>
           </div>
           <div class="audio-controls-row">
             <button class="btn-pronounce primary" id="btn-listen-normal">🐰 Vitesse normale</button>
@@ -1602,6 +1606,80 @@ canvas#simCanvas {
     // 20+ Stories (5 per grade)
     stories: {
       MAT: [
+        {
+          id: 'mat_baobab',
+          title: { fr: "🌳 Mama Koko et le Grand Baobab (Maternelle / Nursery)", en: "🌳 Mama Koko and the Great Baobab (Nursery / KG)" },
+          text: {
+            fr: "Sous le grand arbre baobab du village, Mama Koko chante une douce chanson. Le petit singe Kiki tape dans ses mains avec joie. Trois oiseaux bleus viennent danser sur les branches. Tout le monde rit sous le beau soleil d'Afrique.",
+            en: "Under the great village baobab tree, Mama Koko sings a sweet song. Little monkey Kiki claps his hands with joy. Three blue birds come to dance on the branches. Everyone laughs under the bright African sun."
+          },
+          questions: [
+            {
+              q: { fr: "Sous quel grand arbre chante Mama Koko ?", en: "Under which big tree does Mama Koko sing?" },
+              options: [
+                { fr: "🌳 Le grand Baobab", en: "🌳 The great Baobab", correct: true },
+                { fr: "🌵 Un petit cactus", en: "🌵 A small cactus", correct: false },
+                { fr: "🍄 Un champignon", en: "🍄 A mushroom", correct: false }
+              ],
+              explain: { fr: "Bravo ! C'est le grand baobab du village !", en: "Well done! It is the great village baobab!" }
+            },
+            {
+              q: { fr: "Que fait le petit singe Kiki ?", en: "What does little monkey Kiki do?" },
+              options: [
+                { fr: "👏 Il tape dans ses mains", en: "👏 He claps his hands", correct: true },
+                { fr: "😴 Il dort profondément", en: "😴 He sleeps deeply", correct: false },
+                { fr: "😢 Il pleure", en: "😢 He cries", correct: false }
+              ],
+              explain: { fr: "Kiki tape dans ses mains avec joie !", en: "Kiki claps his hands with joy!" }
+            },
+            {
+              q: { fr: "Combien d'oiseaux bleus viennent danser ?", en: "How many blue birds come to dance?" },
+              options: [
+                { fr: "🐦 3 oiseaux bleus", en: "🐦 3 blue birds", correct: true },
+                { fr: "🐦 10 oiseaux", en: "🐦 10 birds", correct: false },
+                { fr: "🐦 1 seul oiseau", en: "🐦 Only 1 bird", correct: false }
+              ],
+              explain: { fr: "Un, deux, trois oiseaux bleus !", en: "One, two, three blue birds!" }
+            }
+          ]
+        },
+        {
+          id: 'mat_tambour',
+          title: { fr: "🥁 Le Petit Djembé de Moussa (Maternelle / KG)", en: "🥁 Moussa's Little Djembe Drum (Kindergarten)" },
+          text: {
+            fr: "Moussa a un petit tambour djembé rouge et jaune. Quand il frappe doucement, le tambour fait Boum Boum ! Son amie Amina danse en tournant sa jolie robe orange. Les animaux de la savane écoutent la musique.",
+            en: "Moussa has a red and yellow djembe drum. When he taps gently, the drum goes Boom Boom! His friend Amina dances, spinning her pretty orange dress. The savanna animals listen to the music."
+          },
+          questions: [
+            {
+              q: { fr: "Quel instrument de musique a Moussa ?", en: "What musical instrument does Moussa have?" },
+              options: [
+                { fr: "🥁 Un tambour djembé", en: "🥁 A djembe drum", correct: true },
+                { fr: "🎻 Un violon", en: "🎻 A violin", correct: false },
+                { fr: "🎺 Une trompette", en: "🎺 A trumpet", correct: false }
+              ],
+              explain: { fr: "C'est un beau tambour djembé !", en: "It is a wonderful djembe drum!" }
+            },
+            {
+              q: { fr: "Quel bruit fait le tambour de Moussa ?", en: "What sound does Moussa's drum make?" },
+              options: [
+                { fr: "🎶 Boum Boum !", en: "🎶 Boom Boom!", correct: true },
+                { fr: "🐱 Miaou Miaou !", en: "🐱 Meow Meow!", correct: false },
+                { fr: "🚗 Tut Tut !", en: "🚗 Beep Beep!", correct: false }
+              ],
+              explain: { fr: "Le tambour résonne : Boum Boum !", en: "The drum resonates: Boom Boom!" }
+            },
+            {
+              q: { fr: "De quelle couleur est la robe d'Amina ?", en: "What color is Amina's dress?" },
+              options: [
+                { fr: "🟠 Orange", en: "🟠 Orange", correct: true },
+                { fr: "⚫ Noire", en: "⚫ Black", correct: false },
+                { fr: "⚪ Grise", en: "⚪ Grey", correct: false }
+              ],
+              explain: { fr: "Sa jolie robe est orange !", en: "Her pretty dress is orange!" }
+            }
+          ]
+        },
         {
           id: 'mat_1',
           title: { fr: "🦁 Le Petit Lionceau", en: "🦁 The Little Lion Cub" },
@@ -1677,7 +1755,120 @@ canvas#simCanvas {
           ]
         }
       ],
+      CP: [
+        {
+          id: 'cp_marche',
+          title: { fr: "🥭 Le Panier de Mangues d'Awa (CP / Primary 2)", en: "🥭 Awa's Basket of Mangoes (Primary 2 / Grade 1-2)" },
+          text: {
+            fr: "Ce matin, Awa accompagne sa maman au grand marché coloré. Elles achètent cinq mangues bien mûres, quatre bananes douces et deux ananas parfumés. Awa aide à compter la monnaie avec le sourire avant de rentrer à la maison.",
+            en: "This morning, Awa goes with her mother to the colorful market. They buy five ripe mangoes, four sweet bananas, and two fragrant pineapples. Awa helps count the coins with a smile before walking home."
+          },
+          questions: [
+            {
+              q: { fr: "Où Awa va-t-elle avec sa maman ?", en: "Where does Awa go with her mother?" },
+              options: [
+                { fr: "🧺 Au grand marché coloré", en: "🧺 To the colorful market", correct: true },
+                { fr: "🏔️ Sur la montagne enneigée", en: "🏔️ Up a snowy mountain", correct: false },
+                { fr: "🚀 Dans l'espace", en: "🚀 Into outer space", correct: false }
+              ],
+              explain: { fr: "Elles vont au grand marché acheter des fruits frais !", en: "They go to the market to buy fresh fruit!" }
+            },
+            {
+              q: { fr: "Combien de mangues mûres achètent-elles ?", en: "How many ripe mangoes do they buy?" },
+              options: [
+                { fr: "🥭 5 mangues", en: "🥭 5 mangoes", correct: true },
+                { fr: "🥭 1 seule mangue", en: "🥭 1 mango", correct: false },
+                { fr: "🥭 20 mangues", en: "🥭 20 mangoes", correct: false }
+              ],
+              explain: { fr: "Elles achètent 5 belles mangues mûres !", en: "They buy 5 ripe mangoes!" }
+            },
+            {
+              q: { fr: "Que fait Awa avant de rentrer à la maison ?", en: "What does Awa help do before going home?" },
+              options: [
+                { fr: "🪙 Elle aide à compter la monnaie", en: "🪙 She helps count the coins", correct: true },
+                { fr: "🎈 Elle s'envole avec un ballon", en: "🎈 She flies away with a balloon", correct: false },
+                { fr: "🎨 Elle peint un mur", en: "🎨 She paints a wall", correct: false }
+              ],
+              explain: { fr: "Bien compter au marché est très utile tous les jours !", en: "Counting at the market is super useful every day!" }
+            }
+          ]
+        },
+        {
+          id: 'cp_tortue_sagesse',
+          title: { fr: "🐢 La Tortue et la Calebasse de Sagesse (Conte d'Afrique - CP)", en: "🐢 The Tortoise and the Calabash of Wisdom (African Tale - Primary 2)" },
+          text: {
+            fr: "Kulu la tortue voulait garder toute la sagesse du monde dans une grande calebasse. En voulant grimper au palmier avec la calebasse attachée sur son ventre, elle n'arrivait plus à avancer. Un petit enfant lui conseilla de mettre la calebasse sur son dos. Kulu comprit alors que chaque personne possède une part de sagesse.",
+            en: "Kulu the tortoise wanted to keep all the world's wisdom inside a big calabash gourd. Trying to climb a palm tree with the calabash tied to his belly, he could not move up. A young child advised him to tie the calabash on his back. Kulu realized that everyone shares a piece of wisdom."
+          },
+          questions: [
+            {
+              q: { fr: "Dans quoi Kulu la tortue avait-elle mis la sagesse ?", en: "What did Kulu the tortoise put the wisdom inside?" },
+              options: [
+                { fr: "🏺 Dans une grande calebasse", en: "🏺 Inside a big calabash gourd", correct: true },
+                { fr: "👟 Dans une chaussure", en: "👟 Inside a shoe", correct: false },
+                { fr: "🎩 Sous un chapeau", en: "🎩 Under a hat", correct: false }
+              ],
+              explain: { fr: "Dans une calebasse traditionnelle !", en: "Inside a traditional calabash gourd!" }
+            },
+            {
+              q: { fr: "Qui a donné un bon conseil à la tortue ?", en: "Who gave good advice to the tortoise?" },
+              options: [
+                { fr: "👧 Un petit enfant", en: "👧 A young child", correct: true },
+                { fr: "🐊 Un crocodile", en: "🐊 A crocodile", correct: false },
+                { fr: "🪨 Un caillou", en: "🪨 A rock", correct: false }
+              ],
+              explain: { fr: "Même un petit enfant peut avoir une grande idée !", en: "Even a young child can have a wise idea!" }
+            },
+            {
+              q: { fr: "Quelle est la leçon de ce conte africain ?", en: "What is the moral of this African tale?" },
+              options: [
+                { fr: "🤝 Tout le monde possède une part de sagesse à partager", en: "🤝 Everyone has wisdom to share with others", correct: true },
+                { fr: "🙈 Il ne faut jamais écouter les autres", en: "🙈 Never listen to anyone else", correct: false },
+                { fr: "🌴 Les tortues volent dans les arbres", en: "🌴 Tortoises can fly into trees", correct: false }
+              ],
+              explain: { fr: "La sagesse se partage entre tous !", en: "Wisdom grows when shared by all!" }
+            }
+          ]
+        }
+      ],
       SIL: [
+        {
+          id: 'sil_ecole',
+          title: { fr: "🎒 Le Premier Jour d'École de Kofi (SIL / Primary 1)", en: "🎒 Kofi's First Day at Primary School (Primary 1 / Grade 1)" },
+          text: {
+            fr: "Kofi porte son cartable bleu tout neuf. Dans la cour de l'école, la maîtresse sourit et écrit les voyelles A, E, I, O, U au tableau noir. Kofi lève la main et lit la syllabe BA à haute voix. Toute la classe applaudit !",
+            en: "Kofi carries his brand-new blue schoolbag. In the schoolyard, the teacher smiles and writes the vowels A, E, I, O, U on the chalkboard. Kofi raises his hand and reads the syllable BA out loud. The whole class claps!"
+          },
+          questions: [
+            {
+              q: { fr: "De quelle couleur est le cartable de Kofi ?", en: "What color is Kofi's schoolbag?" },
+              options: [
+                { fr: "🔵 Bleu", en: "🔵 Blue", correct: true },
+                { fr: "🟣 Violet", en: "🟣 Purple", correct: false },
+                { fr: "⚫ Noir", en: "⚫ Black", correct: false }
+              ],
+              explain: { fr: "Kofi porte un cartable bleu tout neuf !", en: "Kofi carries a brand-new blue schoolbag!" }
+            },
+            {
+              q: { fr: "Qu'est-ce que la maîtresse écrit au tableau ?", en: "What does the teacher write on the board?" },
+              options: [
+                { fr: "🔤 Les voyelles A, E, I, O, U", en: "🔤 The vowels A, E, I, O, U", correct: true },
+                { fr: "🍕 Une recette de cuisine", en: "🍕 A cooking recipe", correct: false },
+                { fr: "⚽ Un terrain de football", en: "⚽ A soccer field", correct: false }
+              ],
+              explain: { fr: "Les voyelles A, E, I, O, U sont la base de la lecture en SIL/CP !", en: "Vowels A, E, I, O, U are the foundation of Grade 1 reading!" }
+            },
+            {
+              q: { fr: "Quelle syllabe Kofi lit-il à haute voix ?", en: "Which syllable does Kofi read out loud?" },
+              options: [
+                { fr: "🗣️ La syllabe BA", en: "🗣️ The syllable BA", correct: true },
+                { fr: "🗣️ Le mot Hippopotame", en: "🗣️ The word Hippopotamus", correct: false },
+                { fr: "🗣️ Il ne dit rien", en: "🗣️ He says nothing", correct: false }
+              ],
+              explain: { fr: "B + A donne la syllabe BA !", en: "B + A makes the syllable BA!" }
+            }
+          ]
+        },
         {
           id: 'sil_1',
           title: { fr: "⛵ Le Bateau de Paul", en: "⛵ Paul's Little Boat" },
@@ -1755,6 +1946,121 @@ canvas#simCanvas {
           ]
         }
       ],
+      CM1: [
+        {
+          id: 'cm1_1',
+          title: { fr: "🪐 L'Exploration du Système Solaire (CM1 / Grade 4)", en: "🪐 Exploring the Solar System (Grade 4 / CM1)" },
+          text: {
+            fr: "Autour de notre étoile le Soleil gravitent huit planètes principales. Les quatre premières — Mercure, Vénus, la Terre et Mars — sont des planètes rocheuses dites telluriques. Au-delà de la ceinture d'astéroïdes se trouvent les géantes gazeuses comme Jupiter et Saturne, entourée de ses spectaculaires anneaux de glace.",
+            en: "Eight major planets orbit our star, the Sun. The first four—Mercury, Venus, Earth, and Mars—are rocky terrestrial planets. Beyond the asteroid belt lie the gas giants such as Jupiter and Saturn, surrounded by its spectacular icy rings."
+          },
+          questions: [
+            {
+              q: { fr: "Comment appelle-t-on les quatre planètes rocheuses proches du Soleil ?", en: "What are the four rocky planets closest to the Sun called?" },
+              options: [
+                { fr: "🪨 Les planètes telluriques", en: "🪨 Terrestrial rocky planets", correct: true },
+                { fr: "💨 Les géantes gazeuses", en: "💨 Gas giants", correct: false },
+                { fr: "☄️ Les comètes glacées", en: "☄️ Icy comets", correct: false }
+              ],
+              explain: { fr: "Mercure, Vénus, la Terre et Mars sont les 4 planètes telluriques (rocheuses) !", en: "Mercury, Venus, Earth, and Mars are the 4 rocky terrestrial planets!" }
+            },
+            {
+              q: { fr: "De quoi sont composés les célèbres anneaux de Saturne ?", en: "What are Saturn's famous rings made of?" },
+              options: [
+                { fr: "🧊 De glace et de poussières cosmiques", en: "🧊 Ice and cosmic dust", correct: true },
+                { fr: "🔥 De lave en fusion", en: "🔥 Molten lava", correct: false },
+                { fr: "🌿 De feuilles d'arbres", en: "🌿 Tree leaves", correct: false }
+              ],
+              explain: { fr: "Les anneaux de Saturne sont formés de milliards de morceaux de glace !", en: "Saturn's rings are composed of billions of ice fragments!" }
+            },
+            {
+              q: { fr: "Qu'est-ce qui sépare Mars de Jupiter ?", en: "What separates Mars from Jupiter?" },
+              options: [
+                { fr: "☄️ La ceinture d'astéroïdes", en: "☄️ The asteroid belt", correct: true },
+                { fr: "🌊 Un océan géant", en: "🌊 A giant ocean", correct: false },
+                { fr: "🌙 La Lune", en: "🌙 The Moon", correct: false }
+              ],
+              explain: { fr: "La ceinture d'astéroïdes marque la frontière entre planètes rocheuses et géantes gazeuses !", en: "The asteroid belt separates the rocky planets from the gas giants!" }
+            }
+          ]
+        },
+        {
+          id: 'cm1_2',
+          title: { fr: "💧 Le Grand Cycle de l'Eau sur Terre (CM1 / Grade 4)", en: "💧 Earth's Great Water Cycle (Grade 4 / CM1)" },
+          text: {
+            fr: "Sous l'effet de la chaleur du Soleil, l'eau des océans s'évapore dans l'atmosphère sous forme de vapeur invisible. En s'élevant vers les couches froides du ciel, cette vapeur se condense en fines gouttelettes pour former les nuages. Lorsque les gouttes deviennent trop lourdes, elles retombent en pluie ou en neige : ce sont les précipitations.",
+            en: "Heated by the Sun, ocean water evaporates into the atmosphere as invisible vapor. Rising into colder air, this vapor condenses into tiny droplets to form clouds. When droplets grow heavy, they fall as rain or snow, known as precipitation."
+          },
+          questions: [
+            {
+              q: { fr: "Comment appelle-t-on le passage de l'eau liquide à la vapeur sous l'effet du Soleil ?", en: "What is the change from liquid water to vapor caused by the Sun called?" },
+              options: [
+                { fr: "☀️ L'évaporation", en: "☀️ Evaporation", correct: true },
+                { fr: "❄️ La solidification", en: "❄️ Freezing", correct: false },
+                { fr: "🪨 La fossilisation", en: "🪨 Fossilization", correct: false }
+              ],
+              explain: { fr: "L'évaporation transforme l'eau liquide en vapeur d'eau !", en: "Evaporation turns liquid water into water vapor!" }
+            },
+            {
+              q: { fr: "Quel phénomène transforme la vapeur d'eau en nuages ?", en: "Which process turns water vapor into clouds?" },
+              options: [
+                { fr: "☁️ La condensation en altitude", en: "☁️ Condensation at high altitude", correct: true },
+                { fr: "🌋 L'éruption volcanique", en: "🌋 Volcanic eruption", correct: false },
+                { fr: "🌪️ La rotation terrestre", en: "🌪️ Earth's rotation", correct: false }
+              ],
+              explain: { fr: "En refroidissant en altitude, la vapeur se condense en fines gouttelettes !", en: "Cooling at high altitude causes vapor to condense into cloud droplets!" }
+            },
+            {
+              q: { fr: "Quel mot scientifique désigne la pluie et la neige qui tombent des nuages ?", en: "What scientific term describes rain and snow falling from clouds?" },
+              options: [
+                { fr: "🌧️ Les précipitations", en: "🌧️ Precipitation", correct: true },
+                { fr: "🌱 La photosynthèse", en: "🌱 Photosynthesis", correct: false },
+                { fr: "🧲 Le magnétisme", en: "🧲 Magnetism", correct: false }
+              ],
+              explain: { fr: "La pluie, la grêle et la neige constituent les précipitations !", en: "Rain, hail, and snow are forms of precipitation!" }
+            }
+          ]
+        }
+      ],
+      CE2: [
+        {
+          id: 'ce2_1',
+          title: { fr: "🧭 Les Grands Navigateurs et la Boussole (CE2 / Grade 3)", en: "🧭 Great Navigators and the Compass (Grade 3 / CE2)" },
+          text: {
+            fr: "Autrefois, les marins observaient les étoiles pour se repérer en pleine mer. L'arrivée de la boussole magnétique a révolutionné la navigation : son aiguille aimantée pointe toujours vers le Nord, même lorsque le ciel est caché par d'épais nuages.",
+            en: "Long ago, sailors watched the stars to find their way at sea. The magnetic compass revolutionized navigation: its magnetized needle always points North, even when thick clouds hide the sky."
+          },
+          questions: [
+            {
+              q: { fr: "Vers quelle direction pointe toujours l'aiguille de la boussole ?", en: "Which direction does the compass needle always point toward?" },
+              options: [
+                { fr: "⬆️ Vers le Nord magnétique", en: "⬆️ Magnetic North", correct: true },
+                { fr: "⬇️ Uniquement vers le fond de l'eau", en: "⬇️ Only to the ocean floor", correct: false },
+                { fr: "🌀 Elle tourne au hasard", en: "🌀 It spins randomly", correct: false }
+              ],
+              explain: { fr: "L'aiguille aimantée s'aligne avec le champ magnétique terrestre vers le Nord !", en: "The magnetized needle aligns with Earth's magnetic field toward the North!" }
+            },
+            {
+              q: { fr: "Pourquoi la boussole était-elle si précieuse par temps nuageux ?", en: "Why was the compass so valuable on cloudy days?" },
+              options: [
+                { fr: "☁️ Elle fonctionne même quand on ne voit pas les étoiles", en: "☁️ It works even when stars are hidden by clouds", correct: true },
+                { fr: "💨 Elle chasse les nuages", en: "💨 It blows the clouds away", correct: false },
+                { fr: "🔥 Elle réchauffe le navire", en: "🔥 It warms the ship", correct: false }
+              ],
+              explain: { fr: "Contrairement à l'observation des étoiles, la boussole fonctionne par tous les temps !", en: "Unlike star navigation, a compass works in any weather!" }
+            },
+            {
+              q: { fr: "Comment les marins se repéraient-ils avant la boussole ?", en: "How did sailors navigate before the compass?" },
+              options: [
+                { fr: "✨ En observant les étoiles et le Soleil", en: "✨ By observing the stars and the Sun", correct: true },
+                { fr: "📱 Avec un téléphone GPS", en: "📱 With a GPS phone", correct: false },
+                { fr: "🐟 En suivant les poissons", en: "🐟 By following fish", correct: false }
+              ],
+              explain: { fr: "Ils utilisaient l'étoile Polaire la nuit et la position du Soleil le jour !", en: "They used the North Star at night and the Sun's position by day!" }
+            }
+          ]
+        }
+      ],
       CM: [
         {
           id: 'cm_1',
@@ -1790,6 +2096,43 @@ canvas#simCanvas {
                 { fr: "🪨 Une boîte en pierre", en: "🪨 A stone box", correct: false }
               ],
               explain: { fr: "Le vide empêche le filament de brûler au contact de l'oxygène !", en: "The vacuum prevents the filament from combusting!" }
+            }
+          ]
+        },
+        {
+          id: 'cm_2',
+          title: { fr: "🌿 La Photosynthèse et les Poumons de la Terre (CM2 / Grade 5)", en: "🌿 Photosynthesis and Earth's Lungs (Grade 5 / CM2)" },
+          text: {
+            fr: "Les forêts tropicales et le phytoplancton des océans jouent un rôle vital pour le climat terrestre. Grâce à la chlorophylle contenue dans leurs cellules, les plantes captent l'énergie solaire pour transformer l'eau et le dioxyde de carbone (CO₂) en glucose nutritif, tout en libérant le dioxygène (O₂) indispensable à la respiration des êtres vivants.",
+            en: "Tropical forests and ocean phytoplankton play a vital role in Earth's climate. Using chlorophyll inside their cells, plants capture solar energy to transform water and carbon dioxide (CO₂) into nourishing glucose, while releasing the oxygen (O₂) essential for living beings."
+          },
+          questions: [
+            {
+              q: { fr: "Quel pigment vert permet aux feuilles de capter l'énergie lumineuse du Soleil ?", en: "Which green pigment allows leaves to capture solar light energy?" },
+              options: [
+                { fr: "🍃 La chlorophylle", en: "🍃 Chlorophyll", correct: true },
+                { fr: "🪨 Le calcaire", en: "🪨 Limestone", correct: false },
+                { fr: "🧲 La magnétite", en: "🧲 Magnetite", correct: false }
+              ],
+              explain: { fr: "La chlorophylle donne leur couleur verte aux plantes et capte les photons solaires !", en: "Chlorophyll gives plants their green color and captures solar photons!" }
+            },
+            {
+              q: { fr: "Quel gaz les plantes absorbent-elles dans l'atmosphère pendant la photosynthèse ?", en: "Which gas do plants absorb from the atmosphere during photosynthesis?" },
+              options: [
+                { fr: "🌫️ Le dioxyde de carbone (CO₂)", en: "🌫️ Carbon dioxide (CO₂)", correct: true },
+                { fr: "🎈 L'hélium pur", en: "🎈 Pure helium", correct: false },
+                { fr: "❄️ L'azote liquide", en: "❄️ Liquid nitrogen", correct: false }
+              ],
+              explain: { fr: "Elles absorbent le CO₂ ce qui aide à réguler l'effet de serre !", en: "They absorb CO₂, helping regulate Earth's greenhouse effect!" }
+            },
+            {
+              q: { fr: "Quel gaz vital est rejeté par les végétaux grâce à la photosynthèse ?", en: "Which vital gas is released by plants through photosynthesis?" },
+              options: [
+                { fr: "💨 Le dioxygène (O₂) que nous respirons", en: "💨 Oxygen (O₂) that we breathe", correct: true },
+                { fr: "🔥 Le méthane", en: "🔥 Methane", correct: false },
+                { fr: "☁️ Le néon", en: "☁️ Neon", correct: false }
+              ],
+              explain: { fr: "La photosynthèse produit le dioxygène (O₂) indispensable à la vie animale et humaine !", en: "Photosynthesis produces the oxygen (O₂) essential for animal and human life!" }
             }
           ]
         }
@@ -1877,6 +2220,46 @@ canvas#simCanvas {
         player: { r: 1, c: 1 }, exit: { r: 4, c: 9 },
         stars: [{ r: 2, c: 3 }, { r: 3, c: 7 }, { r: 1, c: 7 }],
         walls: ["11111111111", "10000000001", "10111011101", "10001000101", "10100010001", "11111111111"]
+      },
+      {
+        id: 'maze_11',
+        name: { fr: "🌿 Jungle d'Émeraude Mystique", en: "🌿 Mystic Emerald Jungle" },
+        cols: 11, rows: 6,
+        player: { r: 4, c: 1 }, exit: { r: 1, c: 9 },
+        stars: [{ r: 1, c: 2 }, { r: 2, c: 5 }, { r: 4, c: 7 }],
+        walls: ["11111111111", "10001000001", "10101011101", "10100010001", "10001110101", "11111111111"]
+      },
+      {
+        id: 'maze_12',
+        name: { fr: "⚛️ Laboratoire Quantique Secret", en: "⚛️ Secret Quantum Lab" },
+        cols: 11, rows: 6,
+        player: { r: 1, c: 9 }, exit: { r: 4, c: 1 },
+        stars: [{ r: 1, c: 4 }, { r: 3, c: 3 }, { r: 4, c: 8 }],
+        walls: ["11111111111", "10100010001", "10101010101", "10001000101", "10111110001", "11111111111"]
+      },
+      {
+        id: 'maze_13',
+        name: { fr: "🔭 Observatoire des Étoiles", en: "🔭 Starlight Observatory" },
+        cols: 11, rows: 6,
+        player: { r: 2, c: 1 }, exit: { r: 3, c: 9 },
+        stars: [{ r: 1, c: 5 }, { r: 4, c: 4 }, { r: 2, c: 8 }],
+        walls: ["11111111111", "10000010001", "10111000101", "10100011101", "10001000001", "11111111111"]
+      },
+      {
+        id: 'maze_14',
+        name: { fr: "🏛️ Temple Aztèque des Énigmes", en: "🏛️ Aztec Riddle Temple" },
+        cols: 11, rows: 6,
+        player: { r: 4, c: 5 }, exit: { r: 1, c: 5 },
+        stars: [{ r: 1, c: 1 }, { r: 1, c: 9 }, { r: 3, c: 5 }],
+        walls: ["11111111111", "10001010001", "10100000101", "10111011101", "10000000001", "11111111111"]
+      },
+      {
+        id: 'maze_15',
+        name: { fr: "🤖 Citadelle Cybernétique", en: "🤖 Cybernetic Citadel" },
+        cols: 11, rows: 6,
+        player: { r: 1, c: 1 }, exit: { r: 4, c: 9 },
+        stars: [{ r: 4, c: 2 }, { r: 1, c: 6 }, { r: 3, c: 8 }],
+        walls: ["11111111111", "10001000101", "10101010101", "10100010001", "10001110001", "11111111111"]
       }
     ],
 
@@ -1969,16 +2352,76 @@ canvas#simCanvas {
       {
         id: 'tangram_airplane',
         name: { fr: "✈️ L'Avion à Réaction", en: "✈️ The Jet Airplane" },
+        geoInfo: { fr: "Symétrie axiale • 1 Rectangle + 2 Triangles isocèles", en: "Axial Symmetry • 1 Rectangle + 2 Isosceles Triangles" },
         pieces: [
           { id: 'tp1', name: 'Fuselage Blanc', color: '#FFFFFF', x: 140, y: 310, targetX: 430, targetY: 185, snapped: false, w: 120, h: 40, type: 'rectangle' },
           { id: 'tp2', name: 'Aile Supérieure', color: '#E5252A', x: 250, y: 310, targetX: 430, targetY: 135, snapped: false, w: 60, h: 50, type: 'triangle' },
           { id: 'tp3', name: 'Aile Inférieure', color: '#E5252A', x: 350, y: 310, targetX: 430, targetY: 235, snapped: false, w: 60, h: 50, type: 'triangle' }
+        ]
+      },
+      {
+        id: 'tangram_swan',
+        name: { fr: "🦢 Le Cygne Royal du Lac", en: "🦢 The Royal Lake Swan" },
+        geoInfo: { fr: "Aire composite • Fraction 1/3 par pièce", en: "Composite Area • 1/3 Fraction per piece" },
+        pieces: [
+          { id: 'tp1', name: 'Cou Élancé', color: '#F8FAFC', x: 140, y: 310, targetX: 380, targetY: 140, snapped: false, w: 36, h: 75, type: 'rectangle' },
+          { id: 'tp2', name: 'Aile Blanche', color: '#38BDF8', x: 250, y: 310, targetX: 445, targetY: 165, snapped: false, w: 85, h: 65, type: 'triangle' },
+          { id: 'tp3', name: 'Corps Flottant', color: '#0284C7', x: 360, y: 310, targetX: 435, targetY: 225, snapped: false, w: 110, h: 45, type: 'trapeze' }
+        ]
+      },
+      {
+        id: 'tangram_heli',
+        name: { fr: "🚁 L'Hélicoptère de Secours", en: "🚁 The Rescue Helicopter" },
+        geoInfo: { fr: "Perpendicularité • Rotor horizontal & Cabine", en: "Perpendicularity • Horizontal Rotor & Cabin" },
+        pieces: [
+          { id: 'tp1', name: 'Pales Rotor', color: '#F59E0B', x: 140, y: 310, targetX: 430, targetY: 120, snapped: false, w: 140, h: 22, type: 'rectangle' },
+          { id: 'tp2', name: 'Cabine Rouge', color: '#E5252A', x: 250, y: 310, targetX: 415, targetY: 185, snapped: false, w: 80, h: 70, type: 'square' },
+          { id: 'tp3', name: 'Queue Stabilo', color: '#3B82F6', x: 360, y: 310, targetX: 495, targetY: 185, snapped: false, w: 70, h: 40, type: 'triangle' }
+        ]
+      },
+      {
+        id: 'tangram_turtle',
+        name: { fr: "🐢 La Tortue des Galápagos", en: "🐢 The Galapagos Turtle" },
+        geoInfo: { fr: "Polygones • Carapace hexagonale & Triangles", en: "Polygons • Hexagonal Shell & Triangles" },
+        pieces: [
+          { id: 'tp1', name: 'Carapace Dôme', color: '#10B981', x: 140, y: 310, targetX: 430, targetY: 175, snapped: false, w: 105, h: 70, type: 'triangle' },
+          { id: 'tp2', name: 'Tête Tortue', color: '#059669', x: 250, y: 310, targetX: 355, targetY: 195, snapped: false, w: 42, h: 42, type: 'square' },
+          { id: 'tp3', name: 'Nageoires', color: '#34D399', x: 360, y: 310, targetX: 430, targetY: 230, snapped: false, w: 115, h: 35, type: 'rectangle' }
+        ]
+      },
+      {
+        id: 'tangram_castle',
+        name: { fr: "🏰 La Forteresse Géométrique", en: "🏰 The Geometric Fortress" },
+        geoInfo: { fr: "Symétrie & Périmètre • 2 Tours + Courtine centrale", en: "Symmetry & Perimeter • 2 Towers + Central Wall" },
+        pieces: [
+          { id: 'tp1', name: 'Tour Gauche', color: '#8B5CF6', x: 140, y: 310, targetX: 365, targetY: 185, snapped: false, w: 45, h: 95, type: 'rectangle' },
+          { id: 'tp2', name: 'Muraille Centre', color: '#F59E0B', x: 250, y: 310, targetX: 430, targetY: 205, snapped: false, w: 80, h: 55, type: 'square' },
+          { id: 'tp3', name: 'Tour Droite', color: '#8B5CF6', x: 360, y: 310, targetX: 495, targetY: 185, snapped: false, w: 45, h: 95, type: 'rectangle' }
+        ]
+      },
+      {
+        id: 'tangram_star',
+        name: { fr: "🌟 L'Étoile Polaire du Nord", en: "🌟 The Polaris North Star" },
+        geoInfo: { fr: "Triangles équilatéraux • Sommets opposés", en: "Equilateral Triangles • Opposite Vertices" },
+        pieces: [
+          { id: 'tp1', name: 'Rayon Nord', color: '#FBBF24', x: 140, y: 310, targetX: 430, targetY: 135, snapped: false, w: 75, h: 65, type: 'triangle' },
+          { id: 'tp2', name: 'Coeur Stellaire', color: '#E5252A', x: 250, y: 310, targetX: 430, targetY: 190, snapped: false, w: 65, h: 65, type: 'square' },
+          { id: 'tp3', name: 'Socle Lumière', color: '#F59E0B', x: 360, y: 310, targetX: 430, targetY: 245, snapped: false, w: 95, h: 40, type: 'triangle' }
         ]
       }
     ],
 
     // 25+ Phonics & Syllables (Never repeats!)
     phonics: [
+      { emoji: '🥭', word: { fr: 'Mangue', en: 'Mango' }, syllables: { fr: ['man', 'gue'], en: ['man', 'go'] }, distractors: ['ma', 'ti', 'ro'], grade: 'MAT' },
+      { emoji: '🥁', word: { fr: 'Tam-tam', en: 'Drum' }, syllables: { fr: ['tam', 'tam'], en: ['djem', 'be'] }, distractors: ['to', 'la', 'pi'], grade: 'MAT' },
+      { emoji: '🌳', word: { fr: 'Baobab', en: 'Baobab' }, syllables: { fr: ['ba', 'o', 'bab'], en: ['ba', 'o', 'bab'] }, distractors: ['bi', 'lu', 'te'], grade: 'SIL' },
+      { emoji: '🦓', word: { fr: 'Zèbre', en: 'Zebra' }, syllables: { fr: ['zè', 'bre'], en: ['ze', 'bra'] }, distractors: ['za', 'bro', 'mi'], grade: 'SIL' },
+      { emoji: '🐊', word: { fr: 'Croco', en: 'Croco' }, syllables: { fr: ['cro', 'co'], en: ['cro', 'co'] }, distractors: ['cra', 'cu', 'li'], grade: 'CP' },
+      { emoji: '🌺', word: { fr: 'Hibiscus', en: 'Hibiscus' }, syllables: { fr: ['hi', 'bis', 'cus'], en: ['hi', 'bis', 'cus'] }, distractors: ['ha', 'bos', 'ta'], grade: 'CE' },
+      { emoji: '🌍', word: { fr: 'Afrique', en: 'Africa' }, syllables: { fr: ['a', 'fri', 'que'], en: ['af', 'ri', 'ca'] }, distractors: ['o', 'fra', 'ki'], grade: 'CE2' },
+      { emoji: '⚡', word: { fr: 'Énergie', en: 'Energy' }, syllables: { fr: ['é', 'ner', 'gie'], en: ['en', 'er', 'gy'] }, distractors: ['a', 'nar', 'jo'], grade: 'CM1' },
+      { emoji: '🔬', word: { fr: 'Science', en: 'Science' }, syllables: { fr: ['scien', 'ce'], en: ['sci', 'ence'] }, distractors: ['sa', 'co', 'ti'], grade: 'CM' },
       { emoji: '🍎', word: { fr: 'Pomme', en: 'Apple' }, syllables: { fr: ['pom', 'me'], en: ['ap', 'ple'] }, distractors: ['ma', 'po', 're'] },
       { emoji: '🍌', word: { fr: 'Banane', en: 'Banana' }, syllables: { fr: ['ba', 'na', 'ne'], en: ['ba', 'na', 'na'] }, distractors: ['to', 'li', 'ka'] },
       { emoji: '🦁', word: { fr: 'Lion', en: 'Lion' }, syllables: { fr: ['li', 'on'], en: ['li', 'on'] }, distractors: ['lo', 'an', 'mi'] },
@@ -2102,6 +2545,48 @@ canvas#simCanvas {
     // 25+ Math Challenges across Grades & Operations (Never repeats!)
     math: [
       {
+        grade: 'MAT', type: 'count', targetCount: 2, itemEmoji: '🥭',
+        prompt: { fr: "[Maternelle / KG] Compte les 🥭 mangues sucrées avec ton doigt !", en: "[Nursery / KG] Count the sweet 🥭 mangoes with your finger!" },
+        speech: { fr: "Touche les mangues et compte : combien y a-t-il de mangues ?", en: "Touch the mangoes and count: how many mangoes are there?" },
+        ans: 2, options: [1, 2, 3, 4],
+        tip: { fr: "Une et deux ! Il y a 2 belles mangues !", en: "One and two! There are 2 sweet mangoes!" }
+      },
+      {
+        grade: 'MAT', type: 'count', targetCount: 4, itemEmoji: '🥁',
+        prompt: { fr: "[Maternelle / KG] Combien de tambours 🥁 djembé vois-tu ?", en: "[Nursery / KG] How many 🥁 djembe drums do you see?" },
+        speech: { fr: "Compte les tambours djembé un par un !", en: "Count the djembe drums one by one!" },
+        ans: 4, options: [2, 3, 4, 5],
+        tip: { fr: "1, 2, 3, 4 tambours djembé pour faire la fête !", en: "1, 2, 3, 4 djembe drums for the festival!" }
+      },
+      {
+        grade: 'SIL', type: 'addition', a: 5, b: 3, itemEmoji: '🍌',
+        prompt: { fr: "[SIL / Primary 1] Au marché : 5 bananes 🍌 + 3 bananes 🍌 = combien ?", en: "[Primary 1 / Grade 1] At the market: 5 bananas 🍌 + 3 bananas 🍌 = how many?" },
+        speech: { fr: "Cinq bananes sur une main, plus trois bananes sur l'autre main !", en: "Five bananas on one hand, plus three more bananas!" },
+        ans: 8, options: [6, 7, 8, 9],
+        tip: { fr: "5 dans une main + 3 doigts = 8 bananes !", en: "5 on one hand + 3 fingers = 8 bananas!" }
+      },
+      {
+        grade: 'CP', type: 'addition', a: 10, b: 6, itemEmoji: '🍍',
+        prompt: { fr: "[CP / Primary 2] Une dizaine (10) d'ananas 🍍 + 6 unités = combien ?", en: "[Primary 2 / Grade 2] One ten (10) pineapples 🍍 + 6 ones = how many?" },
+        speech: { fr: "Dix plus six font combien ? Une dizaine et six unités !", en: "Ten plus six equals how many? One ten and six ones!" },
+        ans: 16, options: [14, 15, 16, 18],
+        tip: { fr: "1 dizaine (10) + 6 unités = 16 !", en: "1 ten (10) + 6 ones = 16!" }
+      },
+      {
+        grade: 'CP', type: 'subtraction', a: 9, b: 4, itemEmoji: '🥥',
+        prompt: { fr: "[CP / Primary 2] Moussa a 9 noix de coco 🥥. Il en donne 4 à Awa. Combien lui en reste-t-il ?", en: "[Primary 2 / Grade 2] Moussa has 9 coconuts 🥥. He gives 4 to Awa. How many are left?" },
+        speech: { fr: "Soustraction : neuf moins quatre égale combien ?", en: "Subtraction: nine minus four equals how many?" },
+        ans: 5, options: [3, 4, 5, 6],
+        tip: { fr: "9 - 4 = 5 noix de coco restantes !", en: "9 - 4 = 5 coconuts left!" }
+      },
+      {
+        grade: 'CE', type: 'addition', a: 25, b: 15, itemEmoji: '🪙',
+        prompt: { fr: "[CE1 / Primary 3] Calcul au marché : 25 pièces 🪙 + 15 pièces 🪙 = combien ?", en: "[Primary 3 / Grade 2] Market math: 25 coins 🪙 + 15 coins 🪙 = how many?" },
+        speech: { fr: "Additionne vingt-cinq plus quinze ! Regroupe les unités cinq plus cinq.", en: "Add twenty-five plus fifteen! Group the ones five plus five." },
+        ans: 40, options: [30, 35, 40, 45],
+        tip: { fr: "20 + 10 = 30, et 5 + 5 = 10 -> 30 + 10 = 40 !", en: "20 + 10 = 30, and 5 + 5 = 10 -> 30 + 10 = 40!" }
+      },
+      {
         grade: 'MAT', type: 'count', targetCount: 3, itemEmoji: '🍎',
         prompt: { fr: "Compte les 🍎 pommes avec ton doigt !", en: "Count the 🍎 apples with your finger!" },
         speech: { fr: "Touche les pommes pour compter combien il y en a !", en: "Touch the apples to count how many there are!" },
@@ -2170,6 +2655,83 @@ canvas#simCanvas {
         speech: { fr: "Calcule le produit de six multiplié par quatre !", en: "Calculate six multiplied by four!" },
         ans: 24, options: [20, 22, 24, 26],
         tip: { fr: "6 x 4 = 24 volts !", en: "6 x 4 = 24 volts!" }
+      },
+      {
+        grade: 'CE2', type: 'multiply', a: 7, b: 8, itemEmoji: '📦',
+        prompt: { fr: "[CE2 / Grade 3] 7 rangées de 8 caisses 📦 = combien au total ?", en: "[Grade 3 / CE2] 7 rows of 8 crates 📦 = how many in total?" },
+        speech: { fr: "Table de multiplication : combien font sept fois huit ?", en: "Multiplication table: what is seven times eight?" },
+        ans: 56, options: [48, 54, 56, 64],
+        tip: { fr: "Astuce : 5, 6, 7, 8 -> 56 = 7 x 8 !", en: "Trick: 5, 6, 7, 8 -> 56 = 7 x 8!" }
+      },
+      {
+        grade: 'CE2', type: 'division', a: 36, b: 4, itemEmoji: '🍪',
+        prompt: { fr: "[CE2 / Grade 3] Partage équitablement 36 biscuits 🍪 entre 4 enfants :", en: "[Grade 3 / CE2] Share 36 cookies 🍪 equally among 4 children:" },
+        speech: { fr: "Division : trente-six divisé par quatre égale combien ?", en: "Division: thirty-six divided by four equals how many?" },
+        ans: 9, options: [7, 8, 9, 10],
+        tip: { fr: "Car 4 x 9 = 36 ! Chaque enfant reçoit 9 biscuits.", en: "Because 4 x 9 = 36! Each child gets 9 cookies." }
+      },
+      {
+        grade: 'CE2', type: 'geometry', a: 6, b: 4, itemEmoji: '📐',
+        prompt: { fr: "[CE2 / Grade 3] Périmètre d'un jardin rectangulaire de 6 m sur 4 m :", en: "[Grade 3 / CE2] Perimeter of a rectangular garden 6 m by 4 m:" },
+        speech: { fr: "Calcule le périmètre du rectangle de longueur six mètres et largeur quatre mètres !", en: "Calculate the perimeter of a rectangle 6 meters long and 4 meters wide!" },
+        ans: 20, options: [10, 16, 20, 24],
+        tip: { fr: "Périmètre = (6 + 4) x 2 = 20 mètres !", en: "Perimeter = (6 + 4) x 2 = 20 meters!" }
+      },
+      {
+        grade: 'CM1', type: 'fraction', num: 3, den: 4, itemEmoji: '🍕',
+        prompt: { fr: "[CM1 / Grade 4] Fraction & Décimal : Quelle est la valeur décimale de 3/4 ?", en: "[Grade 4 / CM1] Fractions & Decimals: What is the decimal value of 3/4?" },
+        speech: { fr: "Observe le disque de fraction trois quarts. Combien cela fait-il en nombre décimal ?", en: "Look at the three-quarters fraction pie. What is 3/4 as a decimal?" },
+        ans: "0.75", options: ["0.25", "0.50", "0.75", "1.25"],
+        tip: { fr: "1/4 = 0,25 donc 3 quarts = 3 x 0,25 = 0,75 !", en: "1/4 = 0.25, so 3 quarters = 3 x 0.25 = 0.75!" }
+      },
+      {
+        grade: 'CM1', type: 'fraction', num: 2, den: 5, addNum: 2, itemEmoji: '🍫',
+        prompt: { fr: "[CM1 / Grade 4] Addition de fractions : 2/5 + 2/5 de la tablette =", en: "[Grade 4 / CM1] Adding fractions: 2/5 + 2/5 of the bar =" },
+        speech: { fr: "Additionne deux cinquièmes plus deux cinquièmes !", en: "Add two-fifths plus two-fifths!" },
+        ans: "4/5", options: ["2/10", "4/5", "4/10", "1/5"],
+        tip: { fr: "Même dénominateur : on additionne les numérateurs (2 + 2 = 4), soit 4/5 !", en: "Same denominator: add the numerators (2 + 2 = 4) to get 4/5!" }
+      },
+      {
+        grade: 'CM1', type: 'geometry_area', a: 8, b: 5, itemEmoji: '🟦',
+        prompt: { fr: "[CM1 / Grade 4] Aire d'une salle rectangulaire de 8 m de long sur 5 m de large (en m²) :", en: "[Grade 4 / CM1] Area of a rectangular room 8 m long by 5 m wide (in m²):" },
+        speech: { fr: "Calcule l'aire du rectangle : longueur huit mètres multipliée par largeur cinq mètres !", en: "Calculate the area of the rectangle: length 8 meters times width 5 meters!" },
+        ans: 40, options: [26, 35, 40, 45],
+        tip: { fr: "Aire du rectangle = Longueur x largeur = 8 x 5 = 40 m² !", en: "Area of a rectangle = Length x width = 8 x 5 = 40 m²!" }
+      },
+      {
+        grade: 'CM1', type: 'decimal', a: 3.4, b: 2.6, itemEmoji: '📏',
+        prompt: { fr: "[CM1 / Grade 4] Calcul décimal : 3,4 + 2,6 = combien ?", en: "[Grade 4 / CM1] Decimal addition: 3.4 + 2.6 = how much?" },
+        speech: { fr: "Additionne les nombres décimaux : trois virgule quatre plus deux virgule six !", en: "Add the decimals: three point four plus two point six!" },
+        ans: 6, options: [5, 5.8, 6, 6.2],
+        tip: { fr: "0,4 + 0,6 = 1,0 unité, et 3 + 2 + 1 = 6 !", en: "0.4 + 0.6 = 1.0 whole, and 3 + 2 + 1 = 6!" }
+      },
+      {
+        grade: 'CM', type: 'algebra', coeff: 2, constVal: 4, rhs: 10, itemEmoji: '⚖️',
+        prompt: { fr: "[CM2 / Grade 5] Balance Algébrique : Si 2 coffres (2x) + 4 kg = 10 kg, combien pèse 1 coffre (x) ?", en: "[Grade 5 / CM2] Algebraic Balance: If 2 chests (2x) + 4 kg = 10 kg, what does 1 chest (x) weigh?" },
+        speech: { fr: "Équilibre la balance algébrique : deux x plus quatre égale dix. Trouve la valeur de x !", en: "Balance the algebraic scale: two x plus four equals ten. Find x!" },
+        ans: 3, options: [2, 3, 4, 6],
+        tip: { fr: "Retire 4 kg de chaque côté : 2x = 6 kg, donc 1 coffre x = 6 ÷ 2 = 3 kg !", en: "Subtract 4 kg from both sides: 2x = 6 kg, so x = 6 ÷ 2 = 3 kg!" }
+      },
+      {
+        grade: 'CM', type: 'percentage', pct: 25, total: 120, itemEmoji: '🏷️',
+        prompt: { fr: "[CM2 / Grade 5] Proportionnalité & Pourcentages : Combien font 25 % de 120 € ?", en: "[Grade 5 / CM2] Proportionality & Percentages: What is 25% of $120?" },
+        speech: { fr: "Calcule vingt-cinq pour cent de cent-vingt euros !", en: "Calculate twenty-five percent of one hundred twenty!" },
+        ans: 30, options: [20, 25, 30, 40],
+        tip: { fr: "25 % correspond au quart (1/4) : 120 ÷ 4 = 30 !", en: "25% is one-quarter (1/4): 120 ÷ 4 = 30!" }
+      },
+      {
+        grade: 'CM', type: 'proportionality', a: 3, b: 6, targetA: 7, itemEmoji: '🚅',
+        prompt: { fr: "[CM2 / Grade 5] Règle de trois : Si 3 billets coûtent 15 €, combien coûtent 7 billets ?", en: "[Grade 5 / CM2] Unit Rate: If 3 tickets cost $15, how much do 7 tickets cost?" },
+        speech: { fr: "Proportionnalité : trois billets coûtent quinze euros. Combien coûtent sept billets ?", en: "Proportionality: three tickets cost fifteen dollars. How much do seven tickets cost?" },
+        ans: 35, options: [25, 30, 35, 45],
+        tip: { fr: "1 billet coûte 15 ÷ 3 = 5 €, donc 7 billets coûtent 7 x 5 = 35 € !", en: "1 ticket costs 15 ÷ 3 = $5, so 7 tickets cost 7 x 5 = $35!" }
+      },
+      {
+        grade: 'CM', type: 'volume', a: 4, b: 4, itemEmoji: '🧊',
+        prompt: { fr: "[CM2 / Grade 5] Géométrie 3D : Quel est le volume d'un cube d'arête 4 cm (en cm³) ?", en: "[Grade 5 / CM2] 3D Geometry: What is the volume of a cube with 4 cm edges (in cm³)?" },
+        speech: { fr: "Calcule le volume du cube de quatre centimètres de côté : quatre fois quatre fois quatre !", en: "Calculate the volume of a 4 cm cube: four times four times four!" },
+        ans: 64, options: [16, 32, 48, 64],
+        tip: { fr: "Volume du cube = c × c × c = 4 × 4 × 4 = 64 cm³ !", en: "Cube volume = s × s × s = 4 × 4 × 4 = 64 cm³!" }
       }
     ],
 
@@ -2668,6 +3230,115 @@ canvas#simCanvas {
   $('dpad-left').onclick = () => moveMazePlayer(0, -1);
   $('dpad-right').onclick = () => moveMazePlayer(0, 1);
 
+
+  // ============================================================================
+  // CHEMISTRY, BOTANY & CIRCUIT REAL SIMULATION CONTROLLERS
+  // ============================================================================
+  function onChemistryColorBlend() {
+    const hasRed = state.pouredColors.includes('red');
+    const hasBlue = state.pouredColors.includes('blue');
+    const hasYellow = state.pouredColors.includes('yellow');
+    AudioEngine.playSplash();
+
+    if (hasBlue && hasYellow && !hasRed) {
+      state.flask.fluidColor = '#10B981'; // Emerald Green
+    } else if (hasRed && hasYellow && !hasBlue) {
+      state.flask.fluidColor = '#F97316'; // Vibrant Orange
+    } else if (hasRed && hasBlue && !hasYellow) {
+      state.flask.fluidColor = '#8B5CF6'; // Royal Purple
+    } else if (hasRed && hasBlue && hasYellow) {
+      state.flask.fluidColor = '#F59E0B'; // Golden Amber Synthesis
+    } else if (hasRed) {
+      state.flask.fluidColor = '#EF4444';
+    } else if (hasBlue) {
+      state.flask.fluidColor = '#3B82F6';
+    } else if (hasYellow) {
+      state.flask.fluidColor = '#EAB308';
+    }
+
+    // Spawn effervescent gas bubbles
+    for (let i = 0; i < 10; i++) {
+      state.flask.bubbles.push({
+        x: state.flask.x - 30 + Math.random() * 60,
+        y: state.flask.y + 35,
+        r: 3 + Math.random() * 5,
+        vy: -1.2 - Math.random() * 1.8,
+        alpha: 1.0
+      });
+    }
+
+    if (state.pouredColors.length >= 2) {
+      createExplosion(state.flask.x, state.flask.y, state.flask.fluidColor, 20);
+      addFloatingScore(state.lang === 'en' ? "REACTION! ⚗️ +100 XP" : "RÉACTION ! ⚗️ +100 XP", state.flask.x, state.flask.y - 60, state.flask.fluidColor);
+      setTimeout(() => {
+        if (state.game === 'chemistry') onActivityTaskCompleted();
+      }, 900);
+    }
+  }
+
+  function advanceBotanyGrowth() {
+    state.simDay = Math.min(21, state.simDay + 0.25);
+    state.stemHeight = Math.min(135, (state.simDay / 21) * 135);
+    state.leafSpread = Math.min(45, (state.simDay / 21) * 45);
+    state.flowerBloom = state.simDay >= 16 ? Math.min(28, ((state.simDay - 16) / 5) * 28) : 0;
+
+    if (state.simDay >= 21 && !state.botanyAwarded) {
+      state.botanyAwarded = true;
+      AudioEngine.playLevelUp();
+      createExplosion(CW / 2, 240 - state.stemHeight, '#10B981', 24);
+      addFloatingScore(state.lang === 'en' ? "BLOOM! 🌻 +100 XP" : "FLORAISON ! 🌻 +100 XP", CW / 2, 100, '#10B981');
+      setTimeout(() => {
+        if (state.game === 'botany') onActivityTaskCompleted();
+      }, 900);
+    }
+  }
+
+  function checkCircuitClosed() {
+    if (state.switchBlade.angle <= 6) {
+      state.circuitClosed = true;
+      state.currentAmps = 0.85;
+      state.lampGlow = 1.0;
+      AudioEngine.playZap();
+      createExplosion(CW / 2, 100, '#FBBF24', 22);
+      addFloatingScore("⚡ I = U/R = 0.85 A !", CW / 2, 70, '#FBBF24');
+      setTimeout(() => {
+        if (state.game === 'circuit') onActivityTaskCompleted();
+      }, 950);
+    } else {
+      state.circuitClosed = false;
+      state.currentAmps = 0.0;
+      state.lampGlow = 0;
+    }
+  }
+
+  // Live Pronunciation Acoustic Waveform Animator
+  function drawPronunciationWaveform() {
+    const wCanvas = $('voiceWaveCanvas');
+    if (!wCanvas) return;
+    const wCtx = wCanvas.getContext('2d');
+    const W = wCanvas.width;
+    const H = wCanvas.height;
+    wCtx.clearRect(0, 0, W, H);
+    const t = Date.now() / 140;
+    const isSpeaking = Boolean(VoiceEngine.audio || (window.speechSynthesis && window.speechSynthesis.speaking));
+    const bars = 32;
+    const barW = (W - 24) / bars;
+    for (let i = 0; i < bars; i++) {
+      const amp = isSpeaking
+        ? (10 + Math.abs(Math.sin(t + i * 0.45)) * 34 + Math.abs(Math.cos(t * 1.7 - i * 0.3)) * 10)
+        : (6 + Math.sin(t * 0.5 + i * 0.35) * 4);
+      const x = 12 + i * barW;
+      const y = (H - amp) / 2;
+      const grad = wCtx.createLinearGradient(0, y, 0, y + amp);
+      grad.addColorStop(0, '#FF2A32');
+      grad.addColorStop(1, '#38BDF8');
+      wCtx.fillStyle = grad;
+      wCtx.beginPath();
+      wCtx.roundRect(x + 1, y, Math.max(3, barW - 3), amp, 3);
+      wCtx.fill();
+    }
+  }
+
   // ============================================================================
   // MAZE QUEST GAME LOGIC
   // ============================================================================
@@ -2862,6 +3533,7 @@ canvas#simCanvas {
       $('story-overlay').classList.remove('active');
 
       if (g === 'maze_quest') {
+        $('answers-container').innerHTML = '';
         const mzName = state.maze.name ? (isEn ? state.maze.name.en : state.maze.name.fr) : "";
         const mazeSpeech = isEn ? "Guide Leo through " + mzName + "! Collect stars to reach the portal." : "Guide Léo dans " + mzName + " ! Ramasse les étoiles pour ouvrir le portail.";
         $('instruction-title').textContent = mazeSpeech;
@@ -2873,48 +3545,144 @@ canvas#simCanvas {
         VoiceEngine.speak(tangramSpeech);
       } else if (g === 'chemistry') {
         const chemTarget = DB.chemistryTargets[challengeIndex % DB.chemistryTargets.length];
-        state.flask.fluidHeight = 30;
+        state.chemTarget = chemTarget;
+        state.flask.fluidHeight = 34;
         state.flask.fluidColor = '#38BDF8';
         state.flask.bubbles = [];
         state.pouredColors = [];
         state.tubes.forEach(t => { t.x = t.origX; t.y = t.origY; t.tilt = 0; t.isPouring = false; });
-        const chemSpeech = isEn ? "Chemistry challenge: Blend colors to create " + chemTarget.title.en + "!" : "Défi chimie : Mélange les fioles pour créer " + chemTarget.title.fr + " !";
+        const chemSpeech = isEn ? "Chemistry Lab: Pour the test tubes into the flask to create " + chemTarget.title.en + "!" : "Labo de Chimie : Verse les éprouvettes dans le flacon pour créer " + chemTarget.title.fr + " !";
         $('instruction-title').textContent = chemSpeech;
         VoiceEngine.speak(chemSpeech);
+        const ansBox = $('answers-container');
+        ansBox.innerHTML = '';
+        state.tubes.forEach(t => {
+          const b = document.createElement('button');
+          b.className = 'btn-interactive';
+          b.textContent = (isEn ? "🧪 Pour " : "🧪 Verser ") + t.fluidName;
+          b.onclick = () => {
+            if (!state.pouredColors.includes(t.name)) state.pouredColors.push(t.name);
+            state.flask.fluidHeight = Math.min(95, state.flask.fluidHeight + 18);
+            onChemistryColorBlend();
+          };
+          ansBox.appendChild(b);
+        });
       } else if (g === 'botany') {
         const botTarget = DB.botanyPlants[challengeIndex % DB.botanyPlants.length];
+        state.botanyTarget = botTarget;
         state.simDay = 1;
         state.stemHeight = 0;
         state.leafSpread = 0;
         state.flowerBloom = 0;
-        state.soilMoisture = 30;
+        state.soilMoisture = 35;
         state.botanyAwarded = false;
         state.roots = [];
-        const botSpeech = isEn ? "Botany: Water the soil to grow the " + botTarget.title.en + " " + botTarget.emoji + "!" : "Botanique : Arrose la terre pour faire grandir le " + botTarget.title.fr + " " + botTarget.emoji + " !";
+        const botSpeech = isEn ? "Botany Garden: Water the seed and bring sunshine to grow the " + botTarget.title.en + " " + botTarget.emoji + "!" : "Jardin Botanique : Arrose la graine sous le soleil pour faire éclore " + botTarget.title.fr + " " + botTarget.emoji + " !";
         $('instruction-title').textContent = botSpeech;
         VoiceEngine.speak(botSpeech);
+        const ansBox = $('answers-container');
+        ansBox.innerHTML = '';
+        const btnWater = document.createElement('button');
+        btnWater.className = 'btn-interactive';
+        btnWater.textContent = isEn ? "💧 Water + ☀️ Sunshine (Grow!)" : "💧 Arroser + ☀️ Soleil (Faire pousser !)";
+        btnWater.onclick = () => {
+          for (let s = 0; s < 30; s++) advanceBotanyGrowth();
+        };
+        ansBox.appendChild(btnWater);
       } else if (g === 'density') {
         state.densityItems.forEach(item => { item.x = item.origX; item.y = item.origY; item.inWater = false; item.vy = 0; });
-        const denSpeech = isEn ? "Drag objects into the tank to test if they float or sink!" : "Glisse les objets dans l'eau pour tester s'ils flottent ou s'ils coulent !";
+        const targetItem = state.densityItems[challengeIndex % state.densityItems.length];
+        state.densityTarget = targetItem;
+        const denSpeech = isEn
+          ? "Archimedes Tank: Drag " + targetItem.emoji + " (" + targetItem.name + ") into the water! Does it float or sink?"
+          : "Bassin d'Archimède : Glisse " + targetItem.emoji + " (" + targetItem.name + ") dans l'eau ! Flotte-t-il ou coule-t-il ?";
         $('instruction-title').textContent = denSpeech;
         VoiceEngine.speak(denSpeech);
+        const ansBox = $('answers-container');
+        ansBox.innerHTML = '';
+        const floats = targetItem.rho < 1.0;
+        [
+          { label: isEn ? "🌊 It Floats! (Density < 1)" : "🌊 Il Flotte ! (Plus léger que l'eau)", ok: floats },
+          { label: isEn ? "⚓ It Sinks! (Density > 1)" : "⚓ Il Coule ! (Plus lourd que l'eau)", ok: !floats }
+        ].forEach(choice => {
+          const b = document.createElement('button');
+          b.className = 'btn-interactive';
+          b.textContent = choice.label;
+          b.onclick = () => {
+            targetItem.x = CW / 2;
+            targetItem.y = state.waterSurfaceY + 20;
+            targetItem.inWater = true;
+            AudioEngine.playSplash();
+            if (choice.ok) {
+              AudioEngine.playLevelUp();
+              createExplosion(CW / 2, state.waterSurfaceY, '#38BDF8', 20);
+              setTimeout(() => onActivityTaskCompleted(), 700);
+            } else {
+              AudioEngine.playWrong();
+              VoiceEngine.speak(isEn ? "Look at the object in the water and try again!" : "Observe bien l'objet dans l'eau et réessaie !");
+            }
+          };
+          ansBox.appendChild(b);
+        });
       } else if (g === 'circuit') {
         state.circuitClosed = false;
         state.switchBlade.angle = 36;
         state.currentAmps = 0.0;
         state.lampGlow = 0;
-        const circSpeech = isEn ? "Drag the knife switch down to close the circuit and turn on the light!" : "Glisse le levier pour fermer le circuit et allumer la lampe !";
+        const circModes = [
+          { fr: "Circuit Simple : Ferme l'interrupteur pour allumer la lampe de 4,5 V !", en: "Simple Circuit: Close the switch to light the 4.5V bulb!" },
+          { fr: "Énergie Solaire au Village : Ferme le circuit pour alimenter le lampadaire !", en: "Village Solar Power: Close the switch to power the street lamp!" },
+          { fr: "Loi d'Ohm (U = R × I) : Ferme le circuit et observe le courant de 0,85 A !", en: "Ohm's Law (V = I × R): Close the switch and watch the 0.85 A current!" }
+        ];
+        const cMode = circModes[challengeIndex % circModes.length];
+        const circSpeech = isEn ? cMode.en : cMode.fr;
         $('instruction-title').textContent = circSpeech;
         VoiceEngine.speak(circSpeech);
+        const ansBox = $('answers-container');
+        ansBox.innerHTML = '';
+        const btnClose = document.createElement('button');
+        btnClose.className = 'btn-interactive';
+        btnClose.textContent = isEn ? "⚡ Close Switch (ON)" : "⚡ Fermer l'interrupteur (ON)";
+        btnClose.onclick = () => {
+          state.switchBlade.angle = 0;
+          checkCircuitClosed();
+        };
+        ansBox.appendChild(btnClose);
       } else if (g === 'comet') {
-        const cometSpeech = isEn ? "Aim the spaceship and shoot comets with lasers!" : "Glisse le vaisseau pour viser les comètes et tire au laser !";
+        const a = 1 + (challengeIndex % 6);
+        const b = 1 + ((challengeIndex * 2) % 5);
+        const correctSum = a + b;
+        state.cometEquation = a + " + " + b + " = ?";
+        state.cometAnswer = correctSum;
+        const cometSpeech = isEn
+          ? "Comet Defender: Shoot the comet with the answer to " + a + " plus " + b + "!"
+          : "Comet Defender : Tire au laser sur la comète qui porte le résultat de " + a + " plus " + b + " !";
         $('instruction-title').textContent = cometSpeech;
         VoiceEngine.speak(cometSpeech);
         state.meteors = [
-          { val: String(1 + (challengeIndex % 5)), x: 180, y: 60, vy: 0.35, r: 28, color: '#E5252A' },
-          { val: String(2 + ((challengeIndex + 1) % 5)), x: 400, y: 60, vy: 0.35, r: 28, color: '#111827' },
-          { val: String(3 + ((challengeIndex + 2) % 5)), x: 620, y: 60, vy: 0.35, r: 28, color: '#111827' }
+          { val: String(correctSum), correct: true, x: 180 + (challengeIndex % 3) * 200, y: 65, vy: 0.28, r: 30, color: '#E5252A' },
+          { val: String(correctSum + 1), correct: false, x: 180 + ((challengeIndex + 1) % 3) * 200, y: 65, vy: 0.28, r: 30, color: '#374151' },
+          { val: String(Math.max(1, correctSum - 1)), correct: false, x: 180 + ((challengeIndex + 2) % 3) * 200, y: 65, vy: 0.28, r: 30, color: '#374151' }
         ];
+        const ansBox = $('answers-container');
+        ansBox.innerHTML = '';
+        state.meteors.forEach(m => {
+          const btn = document.createElement('button');
+          btn.className = 'btn-interactive';
+          btn.textContent = "☄️ Laser ➜ " + m.val;
+          btn.onclick = () => {
+            state.ship.x = m.x;
+            state.lasers.push({ x: m.x, y: state.ship.y - 20, vy: -14, color: '#E5252A' });
+            AudioEngine.playZap();
+            if (m.correct) {
+              createExplosion(m.x, m.y, '#E5252A', 22);
+              setTimeout(() => onActivityTaskCompleted(), 550);
+            } else {
+              AudioEngine.playWrong();
+            }
+          };
+          ansBox.appendChild(btn);
+        });
       }
     }
   }
@@ -3094,7 +3862,7 @@ canvas#simCanvas {
     $('pronunciation-overlay').classList.remove('active');
     $('story-overlay').classList.add('active');
 
-    const gradeStories = DB.stories[state.grade] || DB.stories.MAT;
+    const gradeStories = DB.stories[state.grade] || (state.grade === 'CP' ? DB.stories.CP : DB.stories.MAT);
     const challengeIndex = ((state.level - 1) * 5 + (state.exerciseInLevel - 1) * 3 + (state.activityPhase - 1));
     const story = gradeStories[challengeIndex % gradeStories.length];
     state.storyItem = story;
@@ -3192,9 +3960,11 @@ canvas#simCanvas {
     const isEn = state.lang === 'en';
     const langKey = isEn ? 'en' : 'fr';
     const challengeIndex = ((state.level - 1) * 5 + (state.exerciseInLevel - 1) * 3 + (state.activityPhase - 1));
-    const list = DB.math.filter(m => m.grade === state.grade);
+    const normG = state.grade === 'CE1' ? 'CE' : (state.grade === 'CM2' ? 'CM' : state.grade);
+    const list = DB.math.filter(m => m.grade === normG || (normG === 'CP' && m.grade === 'SIL') || (normG === 'CM' && m.grade === 'CM1') || (normG === 'CE' && m.grade === 'CE2'));
     const pool = list.length > 0 ? list : DB.math;
     const item = pool[challengeIndex % pool.length];
+    state.currentMathItem = item;
 
     $('instruction-title').textContent = item.prompt[langKey];
     VoiceEngine.speak(item.speech[langKey]);
@@ -3446,16 +4216,37 @@ canvas#simCanvas {
       ctx.lineWidth = 3.5;
       ctx.stroke();
 
-      // Fluid
+      // Fluid with animated meniscus wave
       ctx.beginPath();
       const fh = state.flask.fluidHeight;
+      const wave = Math.sin(Date.now() / 220) * 3;
       ctx.moveTo(fx - 60, fy + 45);
       ctx.lineTo(fx + 60, fy + 45);
-      ctx.lineTo(fx + 40, fy + 45 - fh);
-      ctx.lineTo(fx - 40, fy + 45 - fh);
+      ctx.lineTo(fx + 42, fy + 45 - fh + wave);
+      ctx.lineTo(fx - 42, fy + 45 - fh - wave);
       ctx.closePath();
       ctx.fillStyle = state.flask.fluidColor;
       ctx.fill();
+
+      // Effervescent rising gas bubbles
+      state.flask.bubbles.forEach((b, bIdx) => {
+        b.y += b.vy;
+        b.alpha -= 0.015;
+        ctx.save();
+        ctx.globalAlpha = Math.max(0, b.alpha);
+        ctx.fillStyle = '#FFFFFF';
+        ctx.beginPath();
+        ctx.arc(b.x + Math.sin(Date.now() / 150 + bIdx) * 3, b.y, b.r, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.restore();
+        if (b.alpha <= 0) state.flask.bubbles.splice(bIdx, 1);
+      });
+
+      // Chemistry HUD Banner
+      ctx.fillStyle = '#FFFFFF';
+      ctx.font = 'bold 15px sans-serif';
+      const cTitle = state.chemTarget ? (state.lang === 'en' ? state.chemTarget.title.en : state.chemTarget.title.fr) : '';
+      ctx.fillText('⚗️ ' + cTitle, 24, 38);
 
       // Tubes
       state.tubes.forEach(t => {
@@ -3491,19 +4282,81 @@ canvas#simCanvas {
       ctx.arc(state.sun.x, state.sun.y, 34, 0, Math.PI * 2);
       ctx.fill();
 
-      // Stem & Bloom
+      // Animated Sun Rays
+      ctx.save();
+      ctx.strokeStyle = 'rgba(251, 191, 36, 0.45)';
+      ctx.lineWidth = 3;
+      for (let r = 0; r < 8; r++) {
+        const ang = (Date.now() / 1000) + (r * Math.PI) / 4;
+        ctx.beginPath();
+        ctx.moveTo(state.sun.x + Math.cos(ang) * 40, state.sun.y + Math.sin(ang) * 40);
+        ctx.lineTo(state.sun.x + Math.cos(ang) * 54, state.sun.y + Math.sin(ang) * 54);
+        ctx.stroke();
+      }
+      ctx.restore();
+
+      // Watering Can & Falling Droplets
+      ctx.save();
+      ctx.translate(state.wateringCan.x, state.wateringCan.y);
+      ctx.rotate((state.wateringCan.tilt * Math.PI) / 180);
+      ctx.fillStyle = '#3B82F6';
+      ctx.beginPath();
+      ctx.roundRect(-26, -20, 52, 40, 10);
+      ctx.fill();
+      ctx.strokeStyle = '#FFFFFF';
+      ctx.lineWidth = 2;
+      ctx.stroke();
+      ctx.font = '24px sans-serif';
+      ctx.fillText('🚿', -14, 8);
+      ctx.restore();
+
+      if (state.wateringCan.isWatering) {
+        ctx.fillStyle = '#38BDF8';
+        for (let d = 0; d < 5; d++) {
+          const dy = (Date.now() / 4 + d * 22) % 90;
+          ctx.beginPath();
+          ctx.arc(state.wateringCan.x + 25 + (d - 2) * 6, state.wateringCan.y + 20 + dy, 3.5, 0, Math.PI * 2);
+          ctx.fill();
+        }
+      }
+
+      // Underground Roots, Stem, Leaves & Blooming Plant
       if (state.stemHeight > 0) {
+        // Roots in soil
+        ctx.strokeStyle = '#D97706';
+        ctx.lineWidth = 3;
+        for (let rt = -2; rt <= 2; rt++) {
+          ctx.beginPath();
+          ctx.moveTo(CW / 2, 240);
+          ctx.lineTo(CW / 2 + rt * 18, 240 + Math.min(65, state.stemHeight * 0.45));
+          ctx.stroke();
+        }
+        // Green Stem
         ctx.strokeStyle = '#15803D';
-        ctx.lineWidth = 7;
+        ctx.lineWidth = 8;
         ctx.beginPath();
         ctx.moveTo(CW / 2, 240);
         ctx.lineTo(CW / 2, 240 - state.stemHeight);
         ctx.stroke();
+        // Leaves
+        if (state.leafSpread > 8) {
+          ctx.fillStyle = '#22C55E';
+          ctx.beginPath();
+          ctx.ellipse(CW / 2 - 18, 240 - state.stemHeight * 0.55, 18, 9, -0.4, 0, Math.PI * 2);
+          ctx.ellipse(CW / 2 + 18, 240 - state.stemHeight * 0.55, 18, 9, 0.4, 0, Math.PI * 2);
+          ctx.fill();
+        }
+        // Flower / Tree Crown
+        if (state.simDay >= 10) {
+          const bEmoji = (state.botanyTarget && state.botanyTarget.emoji) ? state.botanyTarget.emoji : '🌻';
+          ctx.font = '46px sans-serif';
+          ctx.fillText(bEmoji, CW / 2 - 23, 240 - state.stemHeight + 10);
+        }
       }
 
       ctx.fillStyle = '#FFFFFF';
       ctx.font = 'bold 16px sans-serif';
-      ctx.fillText((state.lang === 'en' ? 'DAY ' : 'JOUR ') + Math.floor(state.simDay) + ' / 21', 20, 40);
+      ctx.fillText((state.lang === 'en' ? '🌱 DAY ' : '🌱 JOUR ') + Math.floor(state.simDay) + ' / 21 • 💧 ' + Math.round(state.soilMoisture) + '%', 20, 38);
     }
 
     // 5. DENSITY TANK
@@ -3544,16 +4397,39 @@ canvas#simCanvas {
       ctx.font = '24px sans-serif';
       ctx.fillText('💡', CW / 2 - 14, 108);
 
+      // Animated Electrons when Circuit is Closed
+      if (state.circuitClosed) {
+        const t = (Date.now() / 18) % 100;
+        ctx.fillStyle = '#38BDF8';
+        for (let e = 0; e < 12; e++) {
+          const pos = ((e * 80 + t * 4) % 560);
+          ctx.beginPath();
+          ctx.arc(120 + pos, 100, 5, 0, Math.PI * 2);
+          ctx.arc(680 - pos, 280, 5, 0, Math.PI * 2);
+          ctx.fill();
+        }
+      }
+
       ctx.save();
       ctx.translate(state.switchBlade.x, state.switchBlade.y);
       ctx.rotate((-state.switchBlade.angle * Math.PI) / 180);
       ctx.fillStyle = '#D97706';
       ctx.fillRect(0, -6, 60, 12);
       ctx.restore();
+
+      ctx.fillStyle = '#FFFFFF';
+      ctx.font = 'bold 16px sans-serif';
+      ctx.fillText(state.circuitClosed ? '⚡ ON • U = 4.5 V • I = 0.85 A (Circuit Fermé)' : '🔌 OFF • I = 0.00 A (Circuit Ouvert)', 24, 38);
     }
 
     // 7. COMET DEFENDER
     else if (g === 'comet') {
+      // Cockpit Math HUD Banner
+      if (state.cometEquation) {
+        ctx.fillStyle = '#FBBF24';
+        ctx.font = 'bold 22px sans-serif';
+        ctx.fillText('🎯 ' + state.cometEquation, CW / 2 - 65, 36);
+      }
       ctx.fillStyle = '#E5252A';
       ctx.beginPath();
       ctx.moveTo(state.ship.x, state.ship.y - 24);
@@ -3590,16 +4466,101 @@ canvas#simCanvas {
       });
     }
 
-    // 8. MATH LAB
+    // 8. MATH LAB (CURRICULUM VISUALIZER: TEN-FRAME, FRACTIONS, GEOMETRY & ALGEBRAIC BALANCE)
     else if (g === 'math_lab') {
       ctx.fillStyle = 'rgba(255, 255, 255, 0.05)';
-      ctx.roundRect(80, 80, CW - 160, 220, 16);
+      ctx.beginPath();
+      ctx.roundRect(60, 45, CW - 120, 285, 18);
       ctx.fill();
+      ctx.strokeStyle = 'rgba(255, 255, 255, 0.16)';
+      ctx.lineWidth = 2;
+      ctx.stroke();
 
-      state.mathItemsOnStage.forEach(it => {
-        ctx.font = '42px sans-serif';
-        ctx.fillText(it.emoji, it.x - 21, it.y + 16);
-      });
+      const mItem = state.currentMathItem || {};
+      if (mItem.type === 'fraction') {
+        // Draw PhET-Style Interactive Fraction Pie & Decimal Bar
+        const cx = 250, cy = 185, radius = 82;
+        const num = mItem.num || 3, den = mItem.den || 4;
+        for (let s = 0; s < den; s++) {
+          const a0 = (s * 2 * Math.PI) / den - Math.PI / 2;
+          const a1 = ((s + 1) * 2 * Math.PI) / den - Math.PI / 2;
+          ctx.beginPath();
+          ctx.moveTo(cx, cy);
+          ctx.arc(cx, cy, radius, a0, a1);
+          ctx.closePath();
+          ctx.fillStyle = s < (num + (mItem.addNum || 0)) ? (s < num ? '#E5252A' : '#F59E0B') : 'rgba(255,255,255,0.12)';
+          ctx.fill();
+          ctx.strokeStyle = '#FFFFFF';
+          ctx.lineWidth = 2.5;
+          ctx.stroke();
+        }
+        // Decimal Equivalence Bar
+        ctx.fillStyle = '#FFFFFF';
+        ctx.font = 'bold 20px sans-serif';
+        ctx.fillText('Fraction : ' + num + '/' + den + (mItem.addNum ? ' + ' + mItem.addNum + '/' + den : ''), 410, 145);
+        ctx.fillStyle = 'rgba(255,255,255,0.15)';
+        ctx.fillRect(410, 170, 260, 32);
+        const fillRatio = Math.min(1, (num + (mItem.addNum || 0)) / den);
+        ctx.fillStyle = '#10B981';
+        ctx.fillRect(410, 170, 260 * fillRatio, 32);
+        ctx.strokeStyle = '#FFFFFF';
+        ctx.strokeRect(410, 170, 260, 32);
+        ctx.fillStyle = '#FBBF24';
+        ctx.font = 'bold 16px sans-serif';
+        ctx.fillText('0', 410, 224);
+        ctx.fillText('0.5 (1/2)', 515, 224);
+        ctx.fillText('1.0', 655, 224);
+      } else if (mItem.type === 'algebra') {
+        // Draw DragonBox-Style Algebraic Torque Balance Scale
+        const pivotX = CW / 2, pivotY = 265;
+        const beamAngle = Math.sin(Date.now() / 600) * 0.04;
+        ctx.save();
+        ctx.translate(pivotX, pivotY);
+        ctx.fillStyle = '#94A3B8';
+        ctx.beginPath();
+        ctx.moveTo(0, 0);
+        ctx.lineTo(-28, 50);
+        ctx.lineTo(28, 50);
+        ctx.closePath();
+        ctx.fill();
+
+        ctx.rotate(beamAngle);
+        ctx.fillStyle = '#F59E0B';
+        ctx.fillRect(-210, -8, 420, 12);
+        // Left Pan: 2x + 4
+        ctx.fillStyle = '#E5252A';
+        ctx.fillRect(-195, -58, 48, 48);
+        ctx.fillRect(-138, -58, 48, 48);
+        ctx.fillStyle = '#FFFFFF';
+        ctx.font = 'bold 18px sans-serif';
+        ctx.fillText('x', -176, -28);
+        ctx.fillText('x', -119, -28);
+        ctx.fillStyle = '#3B82F6';
+        ctx.fillRect(-82, -46, 44, 36);
+        ctx.fillStyle = '#FFFFFF';
+        ctx.fillText('+4', -72, -22);
+        // Right Pan: = 10
+        ctx.fillStyle = '#10B981';
+        ctx.fillRect(95, -62, 90, 52);
+        ctx.fillStyle = '#FFFFFF';
+        ctx.font = 'bold 22px sans-serif';
+        ctx.fillText('10 kg', 112, -28);
+        ctx.restore();
+      } else {
+        // Ten-Frame / Array Grid Manipulation
+        state.mathItemsOnStage.forEach((it, idx) => {
+          const bounceY = Math.sin(Date.now() / 300 + idx) * 4;
+          ctx.fillStyle = 'rgba(255,255,255,0.08)';
+          ctx.beginPath();
+          ctx.roundRect(it.x - 32, it.y - 30 + bounceY, 64, 64, 14);
+          ctx.fill();
+          ctx.strokeStyle = 'rgba(229, 37, 42, 0.45)';
+          ctx.lineWidth = 2;
+          ctx.stroke();
+          ctx.font = '38px sans-serif';
+          ctx.fillText(it.emoji, it.x - 20, it.y + 14 + bounceY);
+        });
+      }
     }
 
     // Render Particles
@@ -3630,6 +4591,7 @@ canvas#simCanvas {
       if (f.alpha <= 0) state.floatingScores.splice(idx, 1);
     });
 
+    drawPronunciationWaveform();
     ctx.restore();
     requestAnimationFrame(renderLoop);
   }

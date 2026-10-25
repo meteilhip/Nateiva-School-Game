@@ -7,8 +7,15 @@
 
 ## 1. Project Identity & Canonical Naming
 - **Official Project Name:** **Nateiva School Game** (`nateiva-school-game`)
-- **Primary Audience:** Children from Pre-K (*Maternelle*, ages 2–4) through Primary School (*SIL, CP, CE1, CE2, CM1, CM2*, ages 5–12).
-- **Mission:** Deliver an Apple-grade, video-game quality bilingual (French & English) educational arcade and interactive simulation platform covering Reading/Phonics, Pronunciation, Story Narration & Comprehension, Mathematics, Logic Mazes, Tangram Puzzles, and Tactile Science Simulations.
+- **Primary Audience:** Children in **Kindergarten (*Maternelle*) and Primary School everywhere in Africa** across all class levels:
+  - **MAT (Maternelle 1, 2, 3 / Pre-K, Nursery & Kindergarten / PP1–PP2 / Crèche, ages 2–5):** 100% Audio-First, colors, shapes, animal sounds, counting 1–10, African fables, sensory exploration.
+  - **SIL / CI / CP1 (Grade 1 / Primary 1, ages 5–6):** Vowels, consonants, CV syllables (*ba, ma, ta, li*), numbers 1–20, simple addition, floating/sinking, germination.
+  - **CP / CP2 (Grade 1–2 / Primary 2, ages 6–7):** Digraphs & nasal sounds (*ou, on, ch, an, in*), numbers 1–100, mental addition & subtraction, water cycle & plant organs.
+  - **CE1 (Grade 2 / Primary 2–3, ages 7–8):** Polysyllabic reading, grammar (noun/verb/adjective), multiplication tables (2–5), geometry shapes, states of matter.
+  - **CE2 (Grade 3 / Primary 3–4, ages 8–9):** Reading comprehension of African & world tales, conjugation, multiplication tables (6–9), division, perimeter, compass & electricity.
+  - **CM1 (Grade 4 / Primary 4–5, ages 9–10):** Fractions, decimals, area ($L \times l$), solar system, energy & water cycle, morphology & prefixes.
+  - **CM2 (Grade 5–6 / Primary 6 / CEP-FSLC-KCPE-PSLE Prep, ages 10–12):** Proportionality, percentages, algebraic balance scale, 3D volume, photosynthesis, Ohm's law & Archimedes buoyancy.
+- **Mission:** Deliver an Apple-grade, video-game quality bilingual (French & English) educational arcade and interactive simulation platform tailored for Kindergarten and Primary Schools across all African countries (Francophone, Anglophone, and Bilingual curricula: CONFEMEN, PASEC, WAEC/NERDC, CBC, MINEDUB/MINEDUC).
 
 ---
 
