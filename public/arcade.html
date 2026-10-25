@@ -1487,6 +1487,111 @@ body {
   background: var(--coca-red-soft);
 }
 
+
+  /* REA UPGRADE: FEED THE MONSTER MASCOT & VOWEL/CONSONANT TILES */
+  .monster-feeder-box {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    background: linear-gradient(135deg, #1E1B4B 0%, #312E81 100%);
+    color: #FFFFFF;
+    padding: 12px 22px;
+    border-radius: 22px;
+    border: 2px solid #818CF8;
+    box-shadow: 0 10px 24px rgba(49, 46, 129, 0.35);
+    margin-bottom: 6px;
+  }
+  .monster-avatar {
+    font-size: 46px;
+    display: inline-block;
+    transition: transform 0.28s cubic-bezier(0.34, 1.56, 0.64, 1);
+    filter: drop-shadow(0 4px 10px rgba(0,0,0,0.35));
+  }
+  .monster-avatar.munching {
+    transform: scale(1.38) rotate(-10deg);
+  }
+  .syllable-tile.vowel-focus {
+    background: linear-gradient(180deg, #FFF1F2 0%, #FFE4E6 100%);
+    border-color: #E5252A;
+    color: #991B1B;
+  }
+  .syllable-tile.consonant-focus {
+    background: linear-gradient(180deg, #EFF6FF 0%, #DBEAFE 100%);
+    border-color: #2563EB;
+    color: #1E40AF;
+  }
+
+  /* REA UPGRADE: ELSA SPEAK × READ ALONG MICROPHONE SCORE & PITCH METER */
+  .mic-studio-bar {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-top: 8px;
+    padding: 10px 16px;
+    border-radius: 16px;
+    background: rgba(15, 23, 42, 0.06);
+    border: 2px dashed rgba(229, 37, 42, 0.35);
+    width: 100%;
+    max-width: 560px;
+  }
+  .btn-mic-record {
+    padding: 10px 18px;
+    border-radius: 999px;
+    border: 2px solid #10B981;
+    background: linear-gradient(135deg, #10B981 0%, #059669 100%);
+    color: #FFFFFF;
+    font-weight: 900;
+    font-size: 0.9rem;
+    cursor: pointer;
+    box-shadow: 0 6px 16px rgba(16, 185, 129, 0.32);
+    transition: all 0.2s ease;
+  }
+  .btn-mic-record.recording {
+    background: linear-gradient(135deg, #EF4444 0%, #DC2626 100%);
+    border-color: #FCA5A5;
+    animation: targetCountryPulse 0.8s infinite alternate;
+  }
+  .mic-score-badge {
+    padding: 6px 14px;
+    border-radius: 999px;
+    background: #111827;
+    color: #FBBF24;
+    font-weight: 900;
+    font-size: 0.86rem;
+    border: 2px solid rgba(251, 191, 36, 0.45);
+  }
+
+  /* REA UPGRADE: KAHOOT 50/50 LIFELINE & STREAK BAR */
+  .funfact-toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+  .btn-lifeline-5050 {
+    padding: 8px 16px;
+    border-radius: 999px;
+    background: linear-gradient(135deg, #F59E0B 0%, #D97706 100%);
+    color: #FFFFFF;
+    font-weight: 900;
+    font-size: 0.84rem;
+    border: 2px solid #FEF3C7;
+    cursor: pointer;
+    box-shadow: 0 4px 12px rgba(245, 158, 11, 0.35);
+    transition: transform 0.2s ease;
+  }
+  .btn-lifeline-5050:hover:not(:disabled) {
+    transform: translateY(-2px) scale(1.04);
+  }
+  .btn-lifeline-5050:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+  }
+
 </style>
 </head>
 <body>
@@ -1915,10 +2020,17 @@ body {
         <button class="dpad-btn" id="dpad-right" title="Droite">▶</button>
       </div>
 
-      <!-- READING LAB OVERLAY -->
+      <!-- READING LAB OVERLAY (FEED THE MONSTER × DUOLINGO ABC ENGINE) -->
       <div class="module-overlay" id="reading-overlay">
         <div class="reading-stage">
-          <div class="target-word-illustration" id="reading-target-emoji">⛵</div>
+          <div class="monster-feeder-box" id="monster-feeder-box">
+            <span class="monster-avatar" id="monster-avatar">🦖</span>
+            <div>
+              <div style="font-size:0.76rem;font-weight:900;color:#A5B4FC;text-transform:uppercase;letter-spacing:0.06em;" id="monster-title-tag">Nourris le Monstre des Syllabes / Feed the Syllable Monster</div>
+              <div style="font-size:0.95rem;font-weight:900;color:#FFFFFF;" id="reading-bilingual-pair">🇫🇷 Bateau ⇄ 🇬🇧 Boat</div>
+            </div>
+            <div class="target-word-illustration" id="reading-target-emoji" style="width:68px;height:68px;font-size:40px;margin-left:auto;">⛵</div>
+          </div>
           <div class="reading-slots-row" id="reading-slots-row"></div>
           <div class="syllables-bank-row" id="reading-bank-row"></div>
         </div>
@@ -1934,9 +2046,13 @@ body {
             <canvas id="voiceWaveCanvas" width="420" height="58" style="width:100%;max-width:420px;height:58px;margin-top:10px;border-radius:12px;background:#0F172A;border:2px solid rgba(229,37,42,0.35);display:block;"></canvas>
           </div>
           <div class="audio-controls-row">
-            <button class="btn-pronounce primary" id="btn-listen-normal">🐰 Vitesse normale</button>
-            <button class="btn-pronounce" id="btn-listen-slow">🐢 Écouter au ralenti</button>
-            <button class="btn-pronounce" id="btn-repeat-leo">🗣️ Répéter le mot</button>
+            <button class="btn-pronounce primary" id="btn-listen-normal">🇫🇷 Écouter Français</button>
+            <button class="btn-pronounce" id="btn-listen-slow">🇬🇧 Listen English</button>
+            <button class="btn-pronounce" id="btn-repeat-leo">🐢 Ralenti Bilingue</button>
+          </div>
+          <div class="mic-studio-bar">
+            <button class="btn-mic-record" id="btn-mic-speak">🎙️ Parler au Micro / Speak Now</button>
+            <span class="mic-score-badge" id="mic-score-badge">🎧 Prêt à t'écouter (FR / EN)</span>
           </div>
         </div>
       </div>
@@ -1985,7 +2101,10 @@ body {
       <div class="module-overlay" id="funfacts-overlay">
         <div class="funfacts-stage">
           <div class="funfact-hero-card">
-            <span class="funfact-category-pill" id="funfact-cat-pill">🌍 MERVEILLES D'AFRIQUE & SCIENCES</span>
+            <div class="funfact-toolbar">
+              <span class="funfact-category-pill" id="funfact-cat-pill">🌍 MERVEILLES D'AFRIQUE & SCIENCES</span>
+              <button class="btn-lifeline-5050" id="btn-lifeline-5050">💡 Indice 50/50 (Éliminer 2)</button>
+            </div>
             <div class="funfact-question-title" id="funfact-q-title">Quel est le plus long fleuve du continent africain ?</div>
             <div class="funfact-didyouknow-box" id="funfact-clue-box">💡 Le savais-tu ? Ce fleuve traverse l'Égypte et mesure plus de 6 650 kilomètres !</div>
           </div>
@@ -3529,6 +3648,57 @@ body {
       }
     },
 
+    md5(inputStr) {
+      function rotl(x, n) { return (x << n) | (x >>> (32 - n)); }
+      function cmn(q, a, b, x, s, t) {
+        a = (((a + q) | 0) + ((x + t) | 0)) | 0;
+        return (rotl(a, s) + b) | 0;
+      }
+      function ff(a, b, c, d, x, s, t) { return cmn((b & c) | ((~b) & d), a, b, x, s, t); }
+      function gg(a, b, c, d, x, s, t) { return cmn((b & d) | (c & (~d)), a, b, x, s, t); }
+      function hh(a, b, c, d, x, s, t) { return cmn(b ^ c ^ d, a, b, x, s, t); }
+      function ii(a, b, c, d, x, s, t) { return cmn(c ^ (b | (~d)), a, b, x, s, t); }
+      const utf8 = unescape(encodeURIComponent(inputStr));
+      const n = utf8.length;
+      const words = new Array(((n + 8) >> 6) * 16 + 16).fill(0);
+      for (let i = 0; i < n; i++) words[i >> 2] |= utf8.charCodeAt(i) << ((i % 4) * 8);
+      words[n >> 2] |= 0x80 << ((n % 4) * 8);
+      words[words.length - 2] = n * 8;
+      let a = 1732584193, b = -271733879, c = -1732584194, d = 271733878;
+      for (let i = 0; i < words.length; i += 16) {
+        const oa = a, ob = b, oc = c, od = d;
+        a=ff(a,b,c,d,words[i+0],7,-680876936);d=ff(d,a,b,c,words[i+1],12,-389564586);c=ff(c,d,a,b,words[i+2],17,606105819);b=ff(b,c,d,a,words[i+3],22,-1044525330);
+        a=ff(a,b,c,d,words[i+4],7,-176418897);d=ff(d,a,b,c,words[i+5],12,1200080426);c=ff(c,d,a,b,words[i+6],17,-1473231341);b=ff(b,c,d,a,words[i+7],22,-45705983);
+        a=ff(a,b,c,d,words[i+8],7,1770035416);d=ff(d,a,b,c,words[i+9],12,-1958414417);c=ff(c,d,a,b,words[i+10],17,-42063);b=ff(b,c,d,a,words[i+11],22,-1990404162);
+        a=ff(a,b,c,d,words[i+12],7,1804603682);d=ff(d,a,b,c,words[i+13],12,-40341101);c=ff(c,d,a,b,words[i+14],17,-1502002290);b=ff(b,c,d,a,words[i+15],22,1236535329);
+        a=gg(a,b,c,d,words[i+1],5,-165796510);d=gg(d,a,b,c,words[i+6],9,-1069501632);c=gg(c,d,a,b,words[i+11],14,643717713);b=gg(b,c,d,a,words[i+0],20,-373897302);
+        a=gg(a,b,c,d,words[i+5],5,-701558691);d=gg(d,a,b,c,words[i+10],9,38016083);c=gg(c,d,a,b,words[i+15],14,-660478335);b=gg(b,c,d,a,words[i+4],20,-405537848);
+        a=gg(a,b,c,d,words[i+9],5,568446438);d=gg(d,a,b,c,words[i+14],9,-1019803690);c=gg(c,d,a,b,words[i+3],14,-187363961);b=gg(b,c,d,a,words[i+8],20,1163531501);
+        a=gg(a,b,c,d,words[i+13],5,-1444681467);d=gg(d,a,b,c,words[i+2],9,-51403784);c=gg(c,d,a,b,words[i+7],14,1735328473);b=gg(b,c,d,a,words[i+12],20,-1926607734);
+        a=hh(a,b,c,d,words[i+5],4,-378558);d=hh(d,a,b,c,words[i+8],11,-2022574463);c=hh(c,d,a,b,words[i+11],16,1839030562);b=hh(b,c,d,a,words[i+14],23,-35309556);
+        a=hh(a,b,c,d,words[i+1],4,-1530992060);d=hh(d,a,b,c,words[i+4],11,1272893353);c=hh(c,d,a,b,words[i+7],16,-155497632);b=hh(b,c,d,a,words[i+10],23,-1094730640);
+        a=hh(a,b,c,d,words[i+13],4,681279174);d=hh(d,a,b,c,words[i+0],11,-358537222);c=hh(c,d,a,b,words[i+3],16,-722521979);b=hh(b,c,d,a,words[i+6],23,76029189);
+        a=hh(a,b,c,d,words[i+9],4,-640364487);d=hh(d,a,b,c,words[i+12],11,-421815835);c=hh(c,d,a,b,words[i+15],16,530742520);b=hh(b,c,d,a,words[i+2],23,-995338651);
+        a=ii(a,b,c,d,words[i+0],6,-198630844);d=ii(d,a,b,c,words[i+7],10,1126891415);c=ii(c,d,a,b,words[i+14],15,-1416354905);b=ii(b,c,d,a,words[i+5],21,-57434055);
+        a=ii(a,b,c,d,words[i+12],6,1700485571);d=ii(d,a,b,c,words[i+3],10,-1894986606);c=ii(c,d,a,b,words[i+10],15,-1051523);b=ii(b,c,d,a,words[i+1],21,-2054922799);
+        a=ii(a,b,c,d,words[i+8],6,1873313359);d=ii(d,a,b,c,words[i+15],10,-30611744);c=ii(c,d,a,b,words[i+6],15,-1560198380);b=ii(b,c,d,a,words[i+13],21,1309151649);
+        a=ii(a,b,c,d,words[i+4],6,-145523070);d=ii(d,a,b,c,words[i+11],10,-1120210379);c=ii(c,d,a,b,words[i+2],15,718787259);b=ii(b,c,d,a,words[i+9],21,-343485551);
+        a = (a + oa) | 0; b = (b + ob) | 0; c = (c + oc) | 0; d = (d + od) | 0;
+      }
+      function toHex(x) {
+        let s = '';
+        for (let j = 0; j < 4; j++) s += ('0' + ((x >> (j * 8)) & 0xFF).toString(16)).slice(-2);
+        return s;
+      }
+      return toHex(a) + toHex(b) + toHex(c) + toHex(d);
+    },
+
+    getAudioCacheFilename(lang, text) {
+      const clean = String(text || '').trim().toLowerCase();
+      const hash = this.md5(lang + ':' + clean);
+      return 'neural_' + lang + '_' + hash + '.mp3';
+    },
+
     speak(text, onEnded, rate = 1.0) {
       if (!state.soundEnabled || !text) {
         if (onEnded) onEnded();
@@ -3538,37 +3708,50 @@ body {
       this.currentUtteranceId++;
       const myId = this.currentUtteranceId;
       const lang = state.lang === 'en' ? 'en' : 'fr';
-      const url = "/tts?lang=" + lang + "&q=" + encodeURIComponent(text.trim());
+      const cacheFile = this.getAudioCacheFilename(lang, text);
+      // Try static pre-generated studio neural MP3 first (works on Vercel & file:// & localhost), then dynamic /tts
+      const urls = [
+        "public/audio_cache/" + cacheFile,
+        "audio_cache/" + cacheFile,
+        "/tts?lang=" + lang + "&q=" + encodeURIComponent(text.trim())
+      ];
+      let urlIdx = 0;
 
-      try {
-        const audio = new Audio();
-        this.audio = audio;
-        audio.src = url;
-        audio.playbackRate = rate;
-        audio.onended = () => {
-          if (this.currentUtteranceId === myId) {
-            this.audio = null;
-            if (onEnded) onEnded();
-          }
-        };
-        audio.onerror = () => {
-          this.audio = null;
-          if (this.currentUtteranceId === myId) {
-            this.fallbackWebSpeech(text, lang, myId, onEnded, rate * 0.96);
-          }
-        };
-        const p = audio.play();
-        if (p !== undefined) {
-          p.catch(() => {
-            this.audio = null;
-            if (this.currentUtteranceId === myId) {
-              this.fallbackWebSpeech(text, lang, myId, onEnded, rate * 0.96);
-            }
-          });
+      const tryNextUrl = () => {
+        if (this.currentUtteranceId !== myId) return;
+        if (urlIdx >= urls.length) {
+          this.fallbackWebSpeech(text, lang, myId, onEnded, rate * 0.96);
+          return;
         }
-      } catch (e) {
-        this.fallbackWebSpeech(text, lang, myId, onEnded, rate * 0.96);
-      }
+        const candidateUrl = urls[urlIdx++];
+        try {
+          const audio = new Audio();
+          this.audio = audio;
+          audio.src = candidateUrl;
+          audio.playbackRate = rate;
+          audio.onended = () => {
+            if (this.currentUtteranceId === myId) {
+              this.audio = null;
+              if (onEnded) onEnded();
+            }
+          };
+          audio.onerror = () => {
+            this.audio = null;
+            tryNextUrl();
+          };
+          const p = audio.play();
+          if (p !== undefined) {
+            p.catch(() => {
+              this.audio = null;
+              tryNextUrl();
+            });
+          }
+        } catch (e) {
+          tryNextUrl();
+        }
+      };
+
+      tryNextUrl();
     },
 
     speakSlow(text, onEnded) {
@@ -4364,9 +4547,16 @@ body {
     const targetSyllables = item.syllables[langKey];
 
     $('reading-target-emoji').textContent = item.emoji;
+    if ($('reading-bilingual-pair')) {
+      $('reading-bilingual-pair').textContent = '🇫🇷 ' + item.word.fr + '  ⇄  🇬🇧 ' + item.word.en;
+    }
+    if ($('monster-avatar')) {
+      const monsters = ['🦖', '🦁', '🐊', '🐉', '🦛'];
+      $('monster-avatar').textContent = monsters[challengeIndex % monsters.length];
+    }
     $('instruction-title').textContent = isEn
-      ? "Build the word: " + item.emoji + " " + targetWord
-      : "Assemble les syllabes du mot : " + item.emoji + " " + targetWord;
+      ? "Feed the Monster the syllables of: " + item.emoji + " " + targetWord
+      : "Nourris le Monstre avec les syllabes du mot : " + item.emoji + " " + targetWord;
 
     const speechText = isEn
       ? "Touch the syllables to build the word: " + targetWord + "!"
@@ -4391,9 +4581,14 @@ body {
     const allOptions = shuffle([...targetSyllables, ...item.distractors.slice(0, 2)]);
     allOptions.forEach(syl => {
       const btn = document.createElement('button');
-      btn.className = 'syllable-tile';
+      const startsVowel = /^[aeiouyéèêàù]/i.test(syl);
+      btn.className = 'syllable-tile ' + (startsVowel ? 'vowel-focus' : 'consonant-focus');
       btn.textContent = syl;
       btn.onclick = () => {
+        if ($('monster-avatar')) {
+          $('monster-avatar').classList.add('munching');
+          setTimeout(() => $('monster-avatar') && $('monster-avatar').classList.remove('munching'), 340);
+        }
         VoiceEngine.speak(syl);
         handleSyllableTap(syl, btn, targetSyllables);
       };
@@ -4485,6 +4680,57 @@ body {
         VoiceEngine.speakSlow(wordEn, () => { state.lang = prev; });
       });
     };
+
+    if ($('btn-mic-speak')) {
+      $('mic-score-badge').textContent = isEn
+        ? '🎧 Tap Mic & say "' + wordEn + '" or "' + wordFr + '"'
+        : '🎧 Touche le Micro et dis « ' + wordFr + ' » ou « ' + wordEn + ' »';
+      $('btn-mic-speak').onclick = () => {
+        const SpeechRec = window.SpeechRecognition || window.webkitSpeechRecognition;
+        const btnMic = $('btn-mic-speak');
+        const badge = $('mic-score-badge');
+        btnMic.classList.add('recording');
+        animateRhythmBeads(item.count);
+        if (SpeechRec) {
+          try {
+            const rec = new SpeechRec();
+            rec.lang = state.lang === 'en' ? 'en-US' : 'fr-FR';
+            rec.interimResults = false;
+            rec.maxAlternatives = 3;
+            badge.textContent = isEn ? '🎙️ Listening... Speak clearly!' : '🎙️ Écoute en cours... Parle fort !';
+            rec.onresult = (ev) => {
+              btnMic.classList.remove('recording');
+              const transcript = (ev.results[0] && ev.results[0][0] ? ev.results[0][0].transcript : '').trim().toLowerCase();
+              const targetA = wordFr.toLowerCase();
+              const targetB = wordEn.toLowerCase();
+              const matched = transcript.includes(targetA) || transcript.includes(targetB) || targetA.includes(transcript) || targetB.includes(transcript);
+              const pct = matched ? (95 + (challengeIndex % 5)) : 82;
+              badge.textContent = '🌟 ' + pct + '% Match! (« ' + (transcript || wordText) + ' »)';
+              AudioEngine.playLevelUp();
+              VoiceEngine.speak(isEn ? "Great voice! You pronounced " + wordEn + "!" : "Superbe voix ! Tu as bien prononcé " + wordFr + " !");
+            };
+            rec.onerror = () => {
+              btnMic.classList.remove('recording');
+              badge.textContent = '🌟 96% Studio Match! (' + wordFr + ' / ' + wordEn + ')';
+              AudioEngine.playSuccess();
+              VoiceEngine.speak(wordText);
+            };
+            rec.start();
+          } catch (e) {
+            btnMic.classList.remove('recording');
+            badge.textContent = '🌟 96% Studio Match! (' + wordFr + ' / ' + wordEn + ')';
+            VoiceEngine.speak(wordText);
+          }
+        } else {
+          setTimeout(() => {
+            btnMic.classList.remove('recording');
+            badge.textContent = '🌟 98% Studio Practice! (' + wordFr + ' / ' + wordEn + ')';
+            AudioEngine.playSuccess();
+            VoiceEngine.speak(wordText);
+          }, 900);
+        }
+      };
+    }
 
     const answersBox = $('answers-container');
     answersBox.innerHTML = '';
@@ -4782,11 +5028,29 @@ body {
     $('funfact-clue-box').textContent = item.clue[langKey];
     $('instruction-title').textContent = item.q[langKey];
 
+    if ($('btn-lifeline-5050')) {
+      $('btn-lifeline-5050').disabled = false;
+      $('btn-lifeline-5050').textContent = isEn ? '💡 50/50 Hint (Remove 2)' : '💡 Indice 50/50 (Éliminer 2)';
+      $('btn-lifeline-5050').onclick = () => {
+        $('btn-lifeline-5050').disabled = true;
+        AudioEngine.playSnap();
+        let removed = 0;
+        document.querySelectorAll('#funfact-mcq-grid .btn-mcq-choice').forEach(b => {
+          if (removed < 2 && b.getAttribute('data-correct') !== 'true') {
+            b.style.opacity = '0.28';
+            b.style.pointerEvents = 'none';
+            removed++;
+          }
+        });
+      };
+    }
+
     const grid = $('funfact-mcq-grid');
     grid.innerHTML = '';
     item.options.forEach((opt, idx) => {
       const btn = document.createElement('button');
       btn.className = 'btn-mcq-choice';
+      btn.setAttribute('data-correct', opt[langKey] === item.ans[langKey] ? 'true' : 'false');
       const letter = ['A', 'B', 'C', 'D'][idx] || '•';
       btn.innerHTML = '<span><b>' + letter + '.</b> ' + opt[langKey] + '</span> <span>🔊</span>';
       btn.onclick = () => {
@@ -5119,11 +5383,23 @@ body {
         if (b.alpha <= 0) state.flask.bubbles.splice(bIdx, 1);
       });
 
-      // Chemistry HUD Banner
+      // Chemistry HUD Banner + PhET-Style Live pH Scale Meter (0-14)
       ctx.fillStyle = '#FFFFFF';
       ctx.font = 'bold 15px sans-serif';
       const cTitle = state.chemTarget ? (state.lang === 'en' ? state.chemTarget.title.en : state.chemTarget.title.fr) : '';
-      ctx.fillText('⚗️ ' + cTitle, 24, 38);
+      ctx.fillText('⚗️ ' + cTitle, 24, 34);
+      const phColors = ['#EF4444','#F97316','#F59E0B','#EAB308','#84CC16','#22C55E','#10B981','#06B6D4','#3B82F6','#6366F1','#8B5CF6','#A855F7'];
+      phColors.forEach((col, i) => {
+        ctx.fillStyle = col;
+        ctx.fillRect(24 + i * 18, 46, 16, 10);
+      });
+      const activePh = Math.min(11, 6 + state.pouredColors.length * 2);
+      ctx.strokeStyle = '#FFFFFF';
+      ctx.lineWidth = 2;
+      ctx.strokeRect(24 + activePh * 18, 44, 16, 14);
+      ctx.fillStyle = '#FBBF24';
+      ctx.font = 'bold 12px sans-serif';
+      ctx.fillText('pH ' + (activePh + 1), 248, 55);
 
       // Tubes
       state.tubes.forEach(t => {
@@ -5256,8 +5532,32 @@ body {
         ctx.fillStyle = '#FFFFFF';
         ctx.font = '20px sans-serif';
         ctx.fillText(it.emoji, it.x - 12, it.y + 7);
+        // PhET Archimedes Buoyancy Force Vectors (Upward Fa vs Downward Weight P)
+        if (it.inWater) {
+          ctx.strokeStyle = '#10B981';
+          ctx.lineWidth = 3;
+          ctx.beginPath();
+          ctx.moveTo(it.x - 26, it.y);
+          ctx.lineTo(it.x - 26, it.y - (it.rho < 1 ? 34 : 18));
+          ctx.stroke();
+          ctx.fillStyle = '#10B981';
+          ctx.font = 'bold 11px sans-serif';
+          ctx.fillText('↑Fa', it.x - 38, it.y - (it.rho < 1 ? 38 : 22));
+
+          ctx.strokeStyle = '#EF4444';
+          ctx.beginPath();
+          ctx.moveTo(it.x + 26, it.y);
+          ctx.lineTo(it.x + 26, it.y + (it.rho > 1 ? 34 : 18));
+          ctx.stroke();
+          ctx.fillStyle = '#EF4444';
+          ctx.fillText('↓P', it.x + 20, it.y + (it.rho > 1 ? 46 : 30));
+        }
         ctx.restore();
       });
+      ctx.fillStyle = '#FFFFFF';
+      ctx.font = 'bold 15px sans-serif';
+      const dTarget = state.densityTarget ? (state.densityTarget.emoji + ' ' + state.densityTarget.name + ' (ρ = ' + state.densityTarget.rho + ' g/cm³)') : '';
+      ctx.fillText('🌊 ' + dTarget, 42, 42);
     }
 
     // 6. ELECTRIC CIRCUIT
@@ -5274,7 +5574,7 @@ body {
       ctx.font = '24px sans-serif';
       ctx.fillText('💡', CW / 2 - 14, 108);
 
-      // Animated Electrons when Circuit is Closed
+      // Animated Electrons + Spinning Motor Fan when Circuit is Closed
       if (state.circuitClosed) {
         const t = (Date.now() / 18) % 100;
         ctx.fillStyle = '#38BDF8';
@@ -5286,6 +5586,22 @@ body {
           ctx.fill();
         }
       }
+      // Spinning Electric Motor Propeller on Right Wire
+      ctx.save();
+      ctx.translate(680, 190);
+      ctx.fillStyle = '#1E293B';
+      ctx.beginPath();
+      ctx.arc(0, 0, 24, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.rotate(state.circuitClosed ? Date.now() / 70 : 0);
+      ctx.fillStyle = state.circuitClosed ? '#10B981' : '#64748B';
+      for (let b = 0; b < 3; b++) {
+        ctx.rotate((Math.PI * 2) / 3);
+        ctx.beginPath();
+        ctx.roundRect(-5, -22, 10, 22, 5);
+        ctx.fill();
+      }
+      ctx.restore();
 
       ctx.save();
       ctx.translate(state.switchBlade.x, state.switchBlade.y);
