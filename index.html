@@ -1593,6 +1593,119 @@ body {
   }
 
 
+  
+  /* V8.0 KHAN ACADEMY KIDS × PERSEUS VISUAL & AUDIO STEP-BY-STEP STUDIO */
+  .khan-visual-explainer {
+    display: none;
+    flex-direction: column;
+    gap: 10px;
+    background: linear-gradient(135deg, #0F172A 0%, #1E1B4B 60%, #172554 100%);
+    color: #FFFFFF;
+    border-radius: 20px;
+    padding: 14px 18px;
+    border: 2px solid #38BDF8;
+    box-shadow: 0 12px 28px rgba(15, 23, 42, 0.28);
+    margin: 6px 0;
+  }
+  .khan-visual-explainer.active {
+    display: flex;
+  }
+  .khan-explainer-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+  .khan-coach-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(56, 189, 248, 0.18);
+    color: #7DD3FC;
+    font-size: 0.78rem;
+    font-weight: 900;
+    padding: 5px 12px;
+    border-radius: 999px;
+    border: 1.5px solid rgba(56, 189, 248, 0.55);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+  .khan-steps-track {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+    background: rgba(255, 255, 255, 0.07);
+    border-radius: 14px;
+    padding: 10px 14px;
+    border: 1.5px dashed rgba(251, 191, 36, 0.45);
+    font-size: 1.02rem;
+    font-weight: 900;
+    color: #FDE68A;
+  }
+  .khan-step-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 5px 11px;
+    border-radius: 10px;
+    background: rgba(15, 23, 42, 0.75);
+    border: 1.5px solid rgba(255, 255, 255, 0.25);
+    color: #FFFFFF;
+    font-size: 0.92rem;
+    transition: all 0.25s ease;
+  }
+  .khan-step-chip.highlighted {
+    background: linear-gradient(135deg, #10B981 0%, #059669 100%);
+    border-color: #FEF08A;
+    transform: scale(1.06);
+    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.4);
+  }
+  .khan-actions-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+  .btn-khan-explain {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 8px 16px;
+    border-radius: 999px;
+    background: linear-gradient(135deg, #F59E0B 0%, #D97706 100%);
+    color: #111827;
+    font-weight: 900;
+    font-size: 0.84rem;
+    border: 2px solid #FEF3C7;
+    cursor: pointer;
+    box-shadow: 0 4px 14px rgba(245, 158, 11, 0.35);
+    transition: all 0.2s ease;
+  }
+  .btn-khan-explain:hover {
+    transform: translateY(-2px) scale(1.03);
+    background: linear-gradient(135deg, #FBBF24 0%, #F59E0B 100%);
+  }
+  .btn-khan-manipulate {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 15px;
+    border-radius: 999px;
+    background: linear-gradient(135deg, #38BDF8 0%, #0284C7 100%);
+    color: #FFFFFF;
+    font-weight: 900;
+    font-size: 0.84rem;
+    border: 2px solid #BAE6FD;
+    cursor: pointer;
+    box-shadow: 0 4px 14px rgba(2, 132, 199, 0.35);
+    transition: all 0.2s ease;
+  }
+  .btn-khan-manipulate:hover {
+    transform: translateY(-2px) scale(1.03);
+  }
+
   /* TOP-RIGHT VERSION & CACHE BUSTER PILL */
   .version-cache-pill {
     display: inline-flex;
@@ -1887,7 +2000,7 @@ body {
         <option value="en">🇬🇧 English (Studio Voice)</option>
       </select>
       <button class="btn-pill" id="btn-sound-toggle">🔊 Son</button>
-      <button class="version-cache-pill" id="btn-version-cache" title="Version active • Cliquer pour vider le cache et recharger">🚀 v7.0 REA-ULTRA-3D • 🔄 Vider Cache</button>
+      <button class="version-cache-pill" id="btn-version-cache" title="Version active • Cliquer pour vider le cache et recharger">🚀 v8.0 KHAN-REA • 🔄 Vider Cache</button>
     </div>
   </header>
 
@@ -1991,7 +2104,7 @@ body {
           <h3>Grammaire & Syntaxe (FR / EN)</h3>
           <div class="portal-curriculum-tag">Noms • Verbes • Adjectifs • Accords</div>
         </div>
-        <span class="card-rea-badge">✨ REA 3D v7.0 • 3 Modes</span>
+        <span class="card-rea-badge">✨ KHAN-REA v8.0 • Visuel + Son</span>
       </div>
       <p class="portal-desc">Maîtrise la grammaire en français et en anglais (articles, pluriels, nature des mots, accords sujet-verbe) avec une seule voix native pure !</p>
       <div class="portal-counts-badge-bar">
@@ -2010,7 +2123,7 @@ body {
           <h3>Vocabulaire & Mots du Monde (FR / EN)</h3>
           <div class="portal-curriculum-tag">Synonymes • Contraires • Thèmes d'Afrique</div>
         </div>
-        <span class="card-rea-badge">✨ REA 3D v7.0 • 3 Modes</span>
+        <span class="card-rea-badge">✨ KHAN-REA v8.0 • Visuel + Son</span>
       </div>
       <p class="portal-desc">Enrichis ton vocabulaire en français et en anglais : synonymes, contraires, objets de l'école, animaux et métiers avec prononciation native !</p>
       <div class="portal-counts-badge-bar">
@@ -2029,7 +2142,7 @@ body {
           <h3>Conjugaison & Temps (FR / EN)</h3>
           <div class="portal-curriculum-tag">Présent • Passé • Futur • Être/Avoir & To Be</div>
         </div>
-        <span class="card-rea-badge">✨ REA 3D v7.0 • 3 Modes</span>
+        <span class="card-rea-badge">✨ KHAN-REA v8.0 • Visuel + Son</span>
       </div>
       <p class="portal-desc">Voyage dans le temps (Passé, Présent, Futur) pour conjuguer les verbes en français et en anglais selon le pronom sujet !</p>
       <div class="portal-counts-badge-bar">
@@ -2048,7 +2161,7 @@ body {
           <h3>Studio Prononciation (FR ⇄ EN)</h3>
           <div class="portal-curriculum-tag">Anglais & Français • Micro Live • Spectre</div>
         </div>
-        <span class="card-rea-badge">✨ REA 3D v7.0 • 3 Modes</span>
+        <span class="card-rea-badge">✨ KHAN-REA v8.0 • Visuel + Son</span>
       </div>
       <p class="portal-desc">Écoute la vraie voix studio française et anglaise, parle dans ton micro pour obtenir ton score de prononciation et suis les billes de rythme !</p>
       <div class="portal-counts-badge-bar">
@@ -2067,7 +2180,7 @@ body {
           <h3>Géographie des Pays d'Afrique</h3>
           <div class="portal-curriculum-tag">Carte SVG Interactive • Drapeaux • Capitales</div>
         </div>
-        <span class="card-rea-badge">✨ REA 3D v7.0 • 3 Modes</span>
+        <span class="card-rea-badge">✨ KHAN-REA v8.0 • Visuel + Son</span>
       </div>
       <p class="portal-desc">Explore la vraie carte vectorielle interactive des pays d'Afrique ! Touche les pays au doigt, découvre leurs drapeaux, leurs capitales et leurs fleuves !</p>
       <div class="portal-counts-badge-bar">
@@ -2086,7 +2199,7 @@ body {
           <h3>Fun Facts & Culture Générale (QCM)</h3>
           <div class="portal-curriculum-tag">Quiz Choix Multiples • Indice 50/50 • Afrique</div>
         </div>
-        <span class="card-rea-badge">✨ REA 3D v7.0 • 3 Modes</span>
+        <span class="card-rea-badge">✨ KHAN-REA v8.0 • Visuel + Son</span>
       </div>
       <p class="portal-desc">Réponds aux questions à choix multiples (A, B, C, D) avec l'indice 50/50 sur les merveilles d'Afrique, les animaux, l'espace et les sciences !</p>
       <div class="portal-counts-badge-bar">
@@ -2105,7 +2218,7 @@ body {
           <h3>Compréhension de Texte & Contes</h3>
           <div class="portal-curriculum-tag">Lecture Karaoké FR/EN • Quiz Compréhension</div>
         </div>
-        <span class="card-rea-badge">✨ REA 3D v7.0 • 3 Modes</span>
+        <span class="card-rea-badge">✨ KHAN-REA v8.0 • Visuel + Son</span>
       </div>
       <p class="portal-desc">Écoute et lis des contes africains et scientifiques bilingues avec surlignage phrase par phrase, puis réponds aux questions de compréhension !</p>
       <div class="portal-counts-badge-bar">
@@ -2124,7 +2237,7 @@ body {
           <h3>Monstre des Syllabes & Lecture</h3>
           <div class="portal-curriculum-tag">Feed The Monster • Voyelles & Consonnes</div>
         </div>
-        <span class="card-rea-badge">✨ REA 3D v7.0 • 3 Modes</span>
+        <span class="card-rea-badge">✨ KHAN-REA v8.0 • Visuel + Son</span>
       </div>
       <p class="portal-desc">Nourris le Monstre magique avec les bonnes syllabes colorées (voyelles en rouge, consonnes en bleu) pour former des mots en français et en anglais !</p>
       <div class="portal-counts-badge-bar">
@@ -2143,7 +2256,7 @@ body {
           <h3>Maths 3D, Fractions & Balance Algébrique</h3>
           <div class="portal-curriculum-tag">Boîtes de 10 • Disque Fractions • Balance 2x+4</div>
         </div>
-        <span class="card-rea-badge">✨ REA 3D v7.0 • 3 Modes</span>
+        <span class="card-rea-badge">✨ KHAN-REA v8.0 • Visuel + Son</span>
       </div>
       <p class="portal-desc">Manipule les boîtes de 10, le disque interactif des fractions et la balance algébrique selon ta classe (de la Maternelle au CM2 / Primary 6) !</p>
       <div class="portal-counts-badge-bar">
@@ -2162,7 +2275,7 @@ body {
           <h3>Labo Chimie & Échelle pH</h3>
           <div class="portal-curriculum-tag">Sciences • Réactions • Indicateur pH 0–14</div>
         </div>
-        <span class="card-rea-badge">✨ REA 3D v7.0 • 3 Modes</span>
+        <span class="card-rea-badge">✨ KHAN-REA v8.0 • Visuel + Son</span>
       </div>
       <p class="portal-desc">Verse les éprouvettes dans l'erlenmeyer, observe l'indicateur de pH en direct, les mélanges de couleurs et l'effervescence des bulles de gaz !</p>
       <div class="portal-counts-badge-bar">
@@ -2181,7 +2294,7 @@ body {
           <h3>Bassin d'Archimède (Flotte/Coule)</h3>
           <div class="portal-curriculum-tag">Physique • Vecteurs Poussée ↑Fa & Poids ↓P</div>
         </div>
-        <span class="card-rea-badge">✨ REA 3D v7.0 • 3 Modes</span>
+        <span class="card-rea-badge">✨ KHAN-REA v8.0 • Visuel + Son</span>
       </div>
       <p class="portal-desc">Plonge le bois, la mangue, l'or ou la brique dans l'eau et visualise en direct les vecteurs de la poussée d'Archimède (↑Fa) et du poids (↓P) !</p>
       <div class="portal-counts-badge-bar">
@@ -2200,7 +2313,7 @@ body {
           <h3>Circuit Électrique 3D & Oscilloscope</h3>
           <div class="portal-curriculum-tag">Loi d'Ohm (U=R×I) • Électrons & Hélice</div>
         </div>
-        <span class="card-rea-badge">✨ REA 3D v7.0 • 3 Modes</span>
+        <span class="card-rea-badge">✨ KHAN-REA v8.0 • Visuel + Son</span>
       </div>
       <p class="portal-desc">Ferme l'interrupteur pour observer la circulation des électrons bleus, allumer l'ampoule de 4,5 V et faire tourner l'hélice du moteur électrique !</p>
       <div class="portal-counts-badge-bar">
@@ -2219,7 +2332,7 @@ body {
           <h3>Jardin Botanique & Photosynthèse</h3>
           <div class="portal-curriculum-tag">Biologie • Racines, Tige & Floraison 21 Jours</div>
         </div>
-        <span class="card-rea-badge">✨ REA 3D v7.0 • 3 Modes</span>
+        <span class="card-rea-badge">✨ KHAN-REA v8.0 • Visuel + Son</span>
       </div>
       <p class="portal-desc">Dose la pluie et le soleil pour faire germer le Baobab, le Tournesol, le Cacaoyer et l'Hibiscus en observant les racines pousser sous terre !</p>
       <div class="portal-counts-badge-bar">
@@ -2238,7 +2351,7 @@ body {
           <h3>Comet Defender : Calcul Spatial</h3>
           <div class="portal-curriculum-tag">TuxMath Arcade • Lasers & Calcul Mental</div>
         </div>
-        <span class="card-rea-badge">✨ REA 3D v7.0 • 3 Modes</span>
+        <span class="card-rea-badge">✨ KHAN-REA v8.0 • Visuel + Son</span>
       </div>
       <p class="portal-desc">Pilote le vaisseau spatial et tire au laser sur la comète qui porte la bonne réponse à l'équation affichée sur le tableau de bord !</p>
       <div class="portal-counts-badge-bar">
@@ -2257,7 +2370,7 @@ body {
           <h3>Tangram Géométrique Magnétique</h3>
           <div class="portal-curriculum-tag">Mathigon Euclid • Polygones & Silhouettes</div>
         </div>
-        <span class="card-rea-badge">✨ REA 3D v7.0 • 3 Modes</span>
+        <span class="card-rea-badge">✨ KHAN-REA v8.0 • Visuel + Son</span>
       </div>
       <p class="portal-desc">Assemble la Fusée, le Bateau, le Chat, le Lion et le Papillon en glissant les polygones géométriques avec aimantation de précision !</p>
       <div class="portal-counts-badge-bar">
@@ -2276,7 +2389,7 @@ body {
           <h3>Donjon Labyrinthe 3D (Vue 3D & Raycast)</h3>
           <div class="portal-curriculum-tag">Blockly Maze • Algorithme & Syllabes</div>
         </div>
-        <span class="card-rea-badge">✨ REA 3D v7.0 • 3 Modes</span>
+        <span class="card-rea-badge">✨ KHAN-REA v8.0 • Visuel + Son</span>
       </div>
       <p class="portal-desc">Guide Léo dans les 5 cartes de la Savane (Oasis, Pyramide, Volcan, Jungle) en collectant les syllabes et nombres d'or ou utilise le bouton Auto-Pas !</p>
       <div class="portal-counts-badge-bar">
@@ -2476,6 +2589,19 @@ body {
           </div>
           <div class="lang-options-grid" id="lang-quest-options"></div>
         </div>
+      </div>
+
+      
+      <!-- V8.0 KHAN ACADEMY KIDS × PERSEUS VISUAL & SOUND STEP-BY-STEP EXPLAINER BAR -->
+      <div class="khan-visual-explainer" id="khan-visual-explainer">
+        <div class="khan-explainer-top">
+          <span class="khan-coach-badge" id="khan-coach-badge">🐻 KHAN KIDS STUDIO • EXPLICATION VISUELLE & SONORE PAS-À-PAS</span>
+          <div class="khan-actions-row">
+            <button class="btn-khan-explain" id="btn-khan-step-audio">🔊🎬 Voir & Écouter l'Explication Pas-à-Pas</button>
+            <button class="btn-khan-manipulate" id="btn-khan-manipulate" style="display:none;">⚖️ Manipuler & Simplifier sur l'Écran 3D</button>
+          </div>
+        </div>
+        <div class="khan-steps-track" id="khan-steps-track"></div>
       </div>
 
       <!-- INTERACTIVE QUICK ANSWERS BOX -->
@@ -3617,6 +3743,41 @@ body {
         speech: { fr: "Additionne les nombres décimaux : trois virgule quatre plus deux virgule six !", en: "Add the decimals: three point four plus two point six!" },
         ans: 6, options: [5, 5.8, 6, 6.2],
         tip: { fr: "0,4 + 0,6 = 1,0 unité, et 3 + 2 + 1 = 6 !", en: "0.4 + 0.6 = 1.0 whole, and 3 + 2 + 1 = 6!" }
+      },
+      {
+        grade: 'CP', type: 'algebra', coeff: 1, constVal: 3, rhs: 8, itemEmoji: '⚖️',
+        prompt: { fr: "[CP / Primary 2] Balance Mystère : Si 1 boîte (x) + 3 billes = 8 billes, combien y a-t-il dans la boîte (x) ?", en: "[Primary 2] Mystery Balance: If 1 box (x) + 3 marbles = 8 marbles, how many are in the box (x)?" },
+        speech: { fr: "Équilibre la balance : x plus trois égale huit. Combien vaut x ?", en: "Balance the scale: x plus three equals eight. What is x?" },
+        ans: 5, options: [3, 4, 5, 6],
+        tip: { fr: "Retire 3 billes de chaque côté : 8 - 3 = 5 billes dans la boîte !", en: "Remove 3 marbles from both sides: 8 - 3 = 5 marbles in the box!" }
+      },
+      {
+        grade: 'CE', type: 'algebra', coeff: 2, constVal: 2, rhs: 10, itemEmoji: '⚖️',
+        prompt: { fr: "[CE1 / Primary 3] Balance Algébrique : 2 sacs (2x) + 2 kg = 10 kg. Combien pèse 1 sac (x) ?", en: "[Primary 3] Algebraic Balance: 2 bags (2x) + 2 kg = 10 kg. What does 1 bag (x) weigh?" },
+        speech: { fr: "Deux sacs identiques plus deux kilos pèsent dix kilos. Trouve le poids d'un sac !", en: "Two identical bags plus two kilos weigh ten kilos. Find the weight of one bag!" },
+        ans: 4, options: [3, 4, 5, 6],
+        tip: { fr: "10 - 2 = 8 kg pour les 2 sacs, puis 8 ÷ 2 = 4 kg par sac !", en: "10 - 2 = 8 kg for 2 bags, then 8 ÷ 2 = 4 kg per bag!" }
+      },
+      {
+        grade: 'CE2', type: 'algebra', coeff: 3, constVal: 3, rhs: 15, itemEmoji: '⚖️',
+        prompt: { fr: "[CE2 / Primary 4] Algèbre Visuelle : 3 coffres (3x) + 3 kg = 15 kg. Combien vaut x ?", en: "[Primary 4] Visual Algebra: 3 chests (3x) + 3 kg = 15 kg. What is x?" },
+        speech: { fr: "Trois x plus trois égale quinze. Enlève trois de chaque côté et partage en trois !", en: "Three x plus three equals fifteen. Subtract three from both sides and divide by three!" },
+        ans: 4, options: [3, 4, 5, 6],
+        tip: { fr: "Retire 3 kg : 3x = 12 kg, donc x = 12 ÷ 3 = 4 kg !", en: "Subtract 3 kg: 3x = 12 kg, so x = 12 ÷ 3 = 4 kg!" }
+      },
+      {
+        grade: 'CM1', type: 'algebra', coeff: 3, constVal: 5, rhs: 20, itemEmoji: '⚖️',
+        prompt: { fr: "[CM1 / Primary 5] Équation sur Balance : 3x + 5 = 20. Quelle est la valeur de l'inconnue x ?", en: "[Primary 5] Balance Equation: 3x + 5 = 20. What is the value of unknown x?" },
+        speech: { fr: "Résous l'équation trois x plus cinq égale vingt sur la balance 3D !", en: "Solve the equation three x plus five equals twenty on the 3D scale!" },
+        ans: 5, options: [4, 5, 6, 7],
+        tip: { fr: "Étape 1 : 20 - 5 = 15 (3x = 15). Étape 2 : x = 15 ÷ 3 = 5 !", en: "Step 1: 20 - 5 = 15 (3x = 15). Step 2: x = 15 ÷ 3 = 5!" }
+      },
+      {
+        grade: 'CM', type: 'algebra', coeff: 4, constVal: 4, rhs: 24, itemEmoji: '⚖️',
+        prompt: { fr: "[CM2 / Primary 6] Défi Algèbre Examen : 4x + 4 = 24. Trouve la valeur exacte de x :", en: "[Primary 6] Exam Algebra Challenge: 4x + 4 = 24. Find the exact value of x:" },
+        speech: { fr: "Quatre x plus quatre égale vingt-quatre. Simplifie la balance pour trouver x !", en: "Four x plus four equals twenty-four. Simplify the balance to find x!" },
+        ans: 5, options: [4, 5, 6, 8],
+        tip: { fr: "Retire 4 de chaque côté : 4x = 20, donc x = 20 ÷ 4 = 5 !", en: "Subtract 4 from both sides: 4x = 20, so x = 20 ÷ 4 = 5!" }
       },
       {
         grade: 'CM', type: 'algebra', coeff: 2, constVal: 4, rhs: 10, itemEmoji: '⚖️',
@@ -5286,6 +5447,9 @@ body {
         return;
       }
       this.stop();
+      state.narrationLog = state.narrationLog || [];
+      state.narrationLog.push({ text: String(text).trim(), ts: Date.now(), lang: state.lang });
+      window.__NATEIVA_NARRATION_LOG__ = state.narrationLog;
       this.currentUtteranceId++;
       const myId = this.currentUtteranceId;
       const lang = state.lang === 'en' ? 'en' : 'fr';
@@ -5341,6 +5505,10 @@ body {
 
     stop() {
       this.currentUtteranceId++;
+      if (state.storySentenceTimer) {
+        clearTimeout(state.storySentenceTimer);
+        state.storySentenceTimer = null;
+      }
       if ('speechSynthesis' in window) {
         try { window.speechSynthesis.cancel(); } catch (e) {}
       }
@@ -5522,8 +5690,36 @@ body {
     } else if (g === 'comet') {
       state.ship.isDragging = true;
       state.ship.x = Math.max(60, Math.min(CW - 60, p.x));
-      state.lasers.push({ x: state.ship.x, y: state.ship.y - 20, vy: -10, color: '#E5252A' });
-      AudioEngine.playTone(720, 0.05, 'square');
+      // If user tapped directly on a comet, steer ship there and fire twin plasma lasers!
+      let hitMeteor = null;
+      state.meteors.forEach(m => {
+        if (Math.hypot(p.x - m.x, p.y - m.y) < m.r + 18) hitMeteor = m;
+      });
+      if (hitMeteor) state.ship.x = hitMeteor.x;
+      state.lasers.push({ x: state.ship.x - 8, y: state.ship.y - 22, vy: -15, color: '#38BDF8' });
+      state.lasers.push({ x: state.ship.x + 8, y: state.ship.y - 22, vy: -15, color: '#FF2A32' });
+      AudioEngine.playZap();
+    } else if (g === 'math_lab') {
+      const mItem = state.currentMathItem || {};
+      if (mItem.type === 'algebra') {
+        state.mathAlgebraSimplified = !state.mathAlgebraSimplified;
+        AudioEngine.playSnap();
+        createExplosion(p.x, p.y, '#38BDF8', 14);
+        const kVal = mItem.constVal || 4, cVal = mItem.coeff || 2, rVal = mItem.rhs || 10;
+        addFloatingScore('-' + kVal + ' kg ➜ ' + cVal + 'x = ' + (rVal - kVal), p.x, p.y - 20, '#FBBF24');
+        VoiceEngine.speak(mItem.tip[state.lang === 'en' ? 'en' : 'fr']);
+      } else {
+        // Touch-to-count any 3D math manipulative on canvas (Khan Kids style!)
+        state.mathItemsOnStage.forEach((tok, idx) => {
+          if (Math.hypot(p.x - tok.x, p.y - tok.y) < 38) {
+            tok.counted = true;
+            AudioEngine.playTone(440 + idx * 55, 0.1, 'sine');
+            createExplosion(tok.x, tok.y, '#FBBF24', 10);
+            addFloatingScore(String(idx + 1) + ' ' + tok.emoji, tok.x, tok.y - 25, '#FDE047');
+            VoiceEngine.speak(String(idx + 1));
+          }
+        });
+      }
     }
   }
 
@@ -5552,9 +5748,7 @@ body {
           const allSnapped = state.tangram.pieces.every(pc => pc.snapped);
           if (allSnapped) {
             AudioEngine.playLevelUp();
-            VoiceEngine.speak(state.lang === 'en' ? "Tangram completed! Amazing geometry!" : "Tangram réussi ! Magnifique puzzle !", () => {
-              onActivityTaskCompleted();
-            });
+            onActivityTaskCompleted();
           }
         }
       } else if (g === 'chemistry') {
@@ -5779,9 +5973,7 @@ body {
         if (pl.r === state.maze.exit.r && pl.c === state.maze.exit.c) {
           AudioEngine.playLevelUp();
           createExplosion(pl.targetX, pl.targetY, '#E5252A', 24);
-          VoiceEngine.speak(state.lang === 'en' ? "Portal reached! Maze conquered!" : "Sortie trouvée ! Labyrinthe réussi !", () => {
-            onActivityTaskCompleted();
-          });
+          onActivityTaskCompleted();
         }
       } else {
         AudioEngine.playWrong();
@@ -5941,30 +6133,18 @@ body {
         state.selectedLevel = state.level;
         buildLevelPillsTrack();
         AudioEngine.playLevelUp();
-
-        const levelCompleteMsg = state.lang === 'en'
-          ? "Champion! Level " + (state.level - 1) + " completed! Unlocking Level " + state.level + "!"
-          : "Félicitations champion ! Niveau " + (state.level - 1) + " terminé avec succès ! Déblocage du Niveau " + state.level + " !";
-
+        addFloatingScore(state.lang === 'en' ? "🏆 LEVEL " + state.level + " UNLOCKED!" : "🏆 NIVEAU " + state.level + " DÉBLOQUÉ !", CW / 2, CH / 2 - 40, '#FBBF24');
+        // SINGLE NARRATION RULE: nextActivityChallenge(false) speaks the new activity prompt once (no double narration!)
         nextActivityChallenge(false);
-        VoiceEngine.speak(levelCompleteMsg);
       } else {
         // Moving to next exercise in the same level
-        const exCompleteMsg = state.lang === 'en'
-          ? "Exercise cleared! Moving to Exercise " + state.exerciseInLevel + " of " + state.totalExercisesPerLevel + "!"
-          : "Bravo ! Exercice validé ! Passage à l'Exercice " + state.exerciseInLevel + " sur " + state.totalExercisesPerLevel + " !";
-
+        addFloatingScore(state.lang === 'en' ? "🎯 EXERCISE " + state.exerciseInLevel + "/5" : "🎯 EXERCICE " + state.exerciseInLevel + "/5", CW / 2, CH / 2 - 35, '#10B981');
         nextActivityChallenge(false);
-        VoiceEngine.speak(exCompleteMsg);
       }
     } else {
-      // Moving to next activity in the same exercise
-      const nextActMsg = state.lang === 'en'
-        ? "Awesome! Activity " + (state.activityPhase - 1) + " done! Ready for Activity " + state.activityPhase + " of 3!"
-        : "Super ! Activité " + (state.activityPhase - 1) + " réussie ! Prêt pour l'Activité " + state.activityPhase + " sur 3 !";
-
+      // Moving to next activity in the same exercise (SINGLE NARRATION ONLY)
+      addFloatingScore(state.lang === 'en' ? "⚡ ACTIVITY " + state.activityPhase + "/3" : "⚡ ACTIVITÉ " + state.activityPhase + "/3", CW / 2, CH / 2 - 30, '#38BDF8');
       nextActivityChallenge(false);
-      VoiceEngine.speak(nextActMsg);
     }
   }
 
@@ -6052,6 +6232,7 @@ body {
     if ($('geography-overlay')) $('geography-overlay').classList.remove('active');
     if ($('funfacts-overlay')) $('funfacts-overlay').classList.remove('active');
     if ($('lang-quest-overlay')) $('lang-quest-overlay').classList.remove('active');
+    if ($('khan-visual-explainer')) $('khan-visual-explainer').classList.remove('active');
 
     // Route to module
     if (g === 'reading_lab') {
@@ -6224,21 +6405,95 @@ body {
           ansBox.appendChild(btn);
         });
       } else if (g === 'comet') {
-        const a = 1 + (challengeIndex % 6);
-        const b = 1 + ((challengeIndex * 2) % 5);
-        const correctSum = a + b;
-        state.cometEquation = a + " + " + b + " = ?";
-        state.cometAnswer = correctSum;
+        const cometBank = {
+          MAT: [
+            { eq: "🍎🍎 + 🍎 = ?", ans: 3, opts: [2, 3, 4], steps: ["2 🍎", "+ 1 🍎", "= 3 🍎"], explainFr: "Deux pommes plus une pomme font trois pommes !", explainEn: "Two apples plus one apple equals three apples!" },
+            { eq: "⭐⭐ + ⭐⭐ = ?", ans: 4, opts: [3, 4, 5], steps: ["2 ⭐", "+ 2 ⭐", "= 4 ⭐"], explainFr: "Deux étoiles plus deux étoiles font quatre étoiles !", explainEn: "Two stars plus two stars make four stars!" },
+            { eq: "3 + 2 = ?", ans: 5, opts: [4, 5, 6], steps: ["Départ: 3", "Avance +2 (4, 5)", "= 5"], explainFr: "Pars de trois et avance de deux : quatre, cinq !", explainEn: "Start at three and count two more: four, five!" }
+          ],
+          SIL: [
+            { eq: "6 + 4 = ?", ans: 10, opts: [8, 10, 11], steps: ["6 unités", "+ 4 unités", "= 10 (1 dizaine)"], explainFr: "Six plus quatre forment une dizaine complète : dix !", explainEn: "Six plus four make a full ten: ten!" },
+            { eq: "7 + 5 = ?", ans: 12, opts: [11, 12, 13], steps: ["7 + 3 = 10", "10 + 2 = 12", "= 12"], explainFr: "Passe par dix : sept plus trois font dix, plus deux égale douze !", explainEn: "Make a ten first: 7 plus 3 is 10, plus 2 is 12!" },
+            { eq: "9 - 3 = ?", ans: 6, opts: [5, 6, 7], steps: ["Départ: 9", "Recule -3 (8, 7, 6)", "= 6"], explainFr: "Neuf moins trois : recule de trois pas sur la droite graduée, cela fait six !", explainEn: "Nine minus three: hop back 3 steps on the number line to get 6!" }
+          ],
+          CP: [
+            { eq: "14 + 6 = ?", ans: 20, opts: [18, 20, 22], steps: ["10 + (4 + 6)", "10 + 10", "= 20"], explainFr: "Quatre plus six font dix, et dix plus dix font vingt !", explainEn: "Four plus six makes ten, and ten plus ten is twenty!" },
+            { eq: "18 - 5 = ?", ans: 13, opts: [12, 13, 15], steps: ["Unités: 8 - 5 = 3", "Dizaine: 10 + 3", "= 13"], explainFr: "Huit moins cinq égale trois, plus la dizaine égale treize !", explainEn: "Eight minus five is three, plus ten equals thirteen!" },
+            { eq: "x + 4 = 10  (x = ?)", ans: 6, opts: [5, 6, 7], steps: ["x + 4 = 10", "10 - 4 = 6", "x = 6"], explainFr: "Quel nombre plus quatre donne dix ? Dix moins quatre égale six !", explainEn: "What number plus four makes ten? Ten minus four is six!" }
+          ],
+          CE: [
+            { eq: "4 × 6 = ?", ans: 24, opts: [20, 24, 28], steps: ["2 × 6 = 12", "12 + 12 = 24", "= 24"], explainFr: "Le double de six est douze, et le double de douze est vingt-quatre !", explainEn: "Double 6 is 12, and double 12 is 24!" },
+            { eq: "35 + 25 = ?", ans: 60, opts: [50, 60, 65], steps: ["30 + 20 = 50", "5 + 5 = 10", "50 + 10 = 60"], explainFr: "Trente plus vingt font cinquante, et cinq plus cinq font dix : soixante !", explainEn: "30 plus 20 is 50, and 5 plus 5 is 10: 60!" },
+            { eq: "2x = 14  (x = ?)", ans: 7, opts: [6, 7, 8], steps: ["2 × x = 14", "x = 14 ÷ 2", "x = 7"], explainFr: "La moitié de quatorze est sept, donc x égale sept !", explainEn: "Half of fourteen is seven, so x equals seven!" }
+          ],
+          CE2: [
+            { eq: "7 × 8 = ?", ans: 56, opts: [48, 56, 64], steps: ["Astuce: 5, 6, 7, 8", "7 × 8 = 56", "= 56"], explainFr: "Astuce magique : cinq, six, sept, huit -> cinquante-six égale sept fois huit !", explainEn: "Magic trick: 5, 6, 7, 8 -> 56 equals 7 times 8!" },
+            { eq: "45 ÷ 5 = ?", ans: 9, opts: [7, 8, 9], steps: ["5 × ? = 45", "5 × 9 = 45", "= 9"], explainFr: "Cinq fois neuf égale quarante-cinq, donc quarante-cinq divisé par cinq fait neuf !", explainEn: "5 times 9 is 45, so 45 divided by 5 is 9!" },
+            { eq: "3x + 2 = 17 (x = ?)", ans: 5, opts: [4, 5, 6], steps: ["3x = 17 - 2 = 15", "x = 15 ÷ 3", "x = 5"], explainFr: "Enlève deux : trois x égale quinze, puis quinze divisé par trois égale cinq !", explainEn: "Subtract 2: 3x = 15, then 15 divided by 3 is 5!" }
+          ],
+          CM1: [
+            { eq: "3/4 de 20 = ?", ans: 15, opts: [12, 15, 16], steps: ["1/4 de 20 = 20 ÷ 4 = 5", "3 quarts = 3 × 5", "= 15"], explainFr: "Un quart de vingt est cinq, donc trois quarts font trois fois cinq égale quinze !", explainEn: "One-fourth of 20 is 5, so three-fourths is 3 times 5 = 15!" },
+            { eq: "2,5 + 3,5 = ?", ans: 6, opts: [5, 6, 7], steps: ["2 + 3 = 5", "0,5 + 0,5 = 1", "5 + 1 = 6"], explainFr: "Deux plus trois font cinq, et deux moitiés (0,5 + 0,5) font un : total six !", explainEn: "2 plus 3 is 5, and 0.5 + 0.5 is 1: total 6!" },
+            { eq: "4x - 3 = 17 (x = ?)", ans: 5, opts: [4, 5, 6], steps: ["4x = 17 + 3 = 20", "x = 20 ÷ 4", "x = 5"], explainFr: "Ajoute trois des deux côtés : quatre x égale vingt, donc x égale cinq !", explainEn: "Add 3 to both sides: 4x = 20, so x = 5!" }
+          ],
+          CM: [
+            { eq: "25% de 80 = ?", ans: 20, opts: [15, 20, 25], steps: ["25% = 1/4", "80 ÷ 4 = 20", "= 20"], explainFr: "Vingt-cinq pour cent c'est le quart : quatre-vingts divisé par quatre égale vingt !", explainEn: "25% is one-quarter: 80 divided by 4 equals 20!" },
+            { eq: "3x + 6 = 21 (x = ?)", ans: 5, opts: [4, 5, 7], steps: ["3x = 21 - 6 = 15", "x = 15 ÷ 3", "x = 5"], explainFr: "Retire six : trois x égale quinze, donc x égale quinze divisé par trois, soit cinq !", explainEn: "Subtract 6: 3x = 15, so x = 15 ÷ 3 = 5!" },
+            { eq: "Cube arête 3cm (Vol = ?)", ans: 27, opts: [9, 18, 27], steps: ["V = c × c × c", "3 × 3 = 9", "9 × 3 = 27 cm³"], explainFr: "Volume du cube : trois fois trois font neuf, et neuf fois trois font vingt-sept !", explainEn: "Cube volume: 3 × 3 = 9, and 9 × 3 = 27!" }
+          ]
+        };
+        const normG = state.grade === 'CE1' ? 'CE' : (state.grade === 'CM2' ? 'CM' : state.grade);
+        const cList = cometBank[normG] || cometBank.SIL;
+        const cProb = cList[challengeIndex % cList.length];
+        state.cometEquation = cProb.eq;
+        state.cometAnswer = cProb.ans;
+        state.cometSteps = cProb.steps;
+        state.cometExplain = isEn ? cProb.explainEn : cProb.explainFr;
+
         const cometSpeech = isEn
-          ? "Comet Defender: Shoot the comet with the answer to " + a + " plus " + b + "!"
-          : "Comet Defender : Tire au laser sur la comète qui porte le résultat de " + a + " plus " + b + " !";
+          ? "Galactic Calculation: Solve " + cProb.eq.replace('= ?', '') + " and zap the matching comet!"
+          : "Calcul Galactique : Résous " + cProb.eq.replace('= ?', '') + " et tire au laser sur la bonne comète !";
         $('instruction-title').textContent = cometSpeech;
         VoiceEngine.speak(cometSpeech);
-        state.meteors = [
-          { val: String(correctSum), correct: true, x: 180 + (challengeIndex % 3) * 200, y: 65, vy: 0.28, r: 30, color: '#E5252A' },
-          { val: String(correctSum + 1), correct: false, x: 180 + ((challengeIndex + 1) % 3) * 200, y: 65, vy: 0.28, r: 30, color: '#374151' },
-          { val: String(Math.max(1, correctSum - 1)), correct: false, x: 180 + ((challengeIndex + 2) % 3) * 200, y: 65, vy: 0.28, r: 30, color: '#374151' }
-        ];
+
+        // Populate Khan Kids Visual Step-by-Step Bar for Comet Calculation
+        const khanBox = $('khan-visual-explainer');
+        if (khanBox) {
+          khanBox.classList.add('active');
+          $('khan-coach-badge').textContent = isEn
+            ? '🚀 KHAN KIDS MENTAL MATH COACH • STEP-BY-STEP STRATEGY'
+            : '🚀 COACH CALCUL MENTAL KHAN KIDS • DÉCOMPOSITION VISUELLE PAS-À-PAS';
+          const track = $('khan-steps-track');
+          track.innerHTML = '';
+          cProb.steps.forEach((st, idx) => {
+            const chip = document.createElement('span');
+            chip.className = 'khan-step-chip';
+            chip.id = 'khan-chip-' + idx;
+            chip.textContent = '✨ Étape ' + (idx + 1) + ' : ' + st;
+            track.appendChild(chip);
+          });
+          if ($('btn-khan-manipulate')) $('btn-khan-manipulate').style.display = 'none';
+          if ($('btn-khan-step-audio')) {
+            $('btn-khan-step-audio').onclick = () => {
+              document.querySelectorAll('.khan-step-chip').forEach((el, i) => {
+                setTimeout(() => el.classList.add('highlighted'), i * 350);
+              });
+              VoiceEngine.speak(state.cometExplain);
+            };
+          }
+        }
+
+        state.meteors = cProb.opts.map((optVal, i) => ({
+          val: String(optVal),
+          correct: optVal === cProb.ans,
+          x: 175 + i * 220,
+          y: 82 + (i % 2) * 18,
+          vy: 0.16,
+          r: 36,
+          angle: i * 1.2,
+          color: optVal === cProb.ans ? '#E5252A' : '#3B82F6'
+        }));
+
         const ansBox = $('answers-container');
         ansBox.innerHTML = '';
         state.meteors.forEach(m => {
@@ -6247,13 +6502,16 @@ body {
           btn.textContent = "☄️ Laser ➜ " + m.val;
           btn.onclick = () => {
             state.ship.x = m.x;
-            state.lasers.push({ x: m.x, y: state.ship.y - 20, vy: -14, color: '#E5252A' });
+            state.lasers.push({ x: m.x - 10, y: state.ship.y - 24, vy: -16, color: '#38BDF8', targetM: m });
+            state.lasers.push({ x: m.x + 10, y: state.ship.y - 24, vy: -16, color: '#FF2A32', targetM: m });
             AudioEngine.playZap();
             if (m.correct) {
-              createExplosion(m.x, m.y, '#E5252A', 22);
-              setTimeout(() => onActivityTaskCompleted(), 550);
+              createExplosion(m.x, m.y, '#FBBF24', 28);
+              addFloatingScore("💥 " + m.val + " ! +100 XP", m.x, m.y - 20, '#FBBF24');
+              setTimeout(() => onActivityTaskCompleted(), 480);
             } else {
               AudioEngine.playWrong();
+              VoiceEngine.speak(state.cometExplain);
             }
           };
           ansBox.appendChild(btn);
@@ -6351,9 +6609,7 @@ body {
         if (state.readingSlots.length === targetSyllables.length) {
           const isEn = state.lang === 'en';
           const fullWord = state.readingTarget.word[isEn ? 'en' : 'fr'];
-          VoiceEngine.speak(fullWord + (isEn ? "! Fantastic reading!" : " ! Bravo, tu as bien lu !"), () => {
-            onActivityTaskCompleted();
-          });
+          onActivityTaskCompleted();
         }
       } else {
         AudioEngine.playWrong();
@@ -6485,9 +6741,7 @@ body {
       btn.onclick = () => {
         if (String(opt).toLowerCase() === String(correctAns).toLowerCase()) {
           AudioEngine.playLevelUp();
-          VoiceEngine.speak((isEn ? "Perfect pronunciation! " : "Parfaitement prononcé ! ") + (item.tip[langKey] || ""), () => {
-            onActivityTaskCompleted();
-          });
+          onActivityTaskCompleted();
         } else {
           AudioEngine.playWrong();
           VoiceEngine.speak(isEn ? "Listen again!" : "Réécoute le son !");
@@ -6545,30 +6799,37 @@ body {
       container.appendChild(sSpan);
     });
 
+    const qIdxNow = (state.activityPhase - 1) % story.questions.length;
+    showComprehensionQuestion(qIdxNow, false);
+
     const narrateStory = () => {
       let cur = 0;
       function stepSentence() {
+        if (state.game !== 'story_lab') return;
         if (cur < sentences.length) {
           document.querySelectorAll('.story-sentence').forEach(el => el.classList.remove('active'));
           const curEl = $('story-sent-' + cur);
           if (curEl) curEl.classList.add('active');
           VoiceEngine.speak(sentences[cur], () => {
             cur++;
-            setTimeout(stepSentence, 300);
+            state.storySentenceTimer = setTimeout(stepSentence, 260);
           });
         } else {
           document.querySelectorAll('.story-sentence').forEach(el => el.classList.remove('active'));
-          showComprehensionQuestion((state.activityPhase - 1) % story.questions.length);
+          const qData = story.questions[qIdxNow];
+          if (qData) VoiceEngine.speak(qData.q[langKey]);
         }
       }
       stepSentence();
     };
 
     $('btn-read-full-story').onclick = narrateStory;
-    narrateStory();
+    // Speak ONLY the current comprehension question on load so there is zero double narration; clicking "Lire toute l'histoire" reads the full passage!
+    const activeQ = story.questions[qIdxNow];
+    if (activeQ) VoiceEngine.speak(activeQ.q[langKey]);
   }
 
-  function showComprehensionQuestion(qIdx) {
+  function showComprehensionQuestion(qIdx, shouldSpeak = true) {
     const compPanel = $('comprehension-panel');
     compPanel.classList.add('active');
 
@@ -6580,7 +6841,7 @@ body {
     const qText = qData.q[langKey];
     $('comp-q-text').textContent = (qIdx + 1) + ". " + qText;
     $('btn-comp-q-audio').onclick = () => VoiceEngine.speak(qText);
-    VoiceEngine.speak(qText);
+    if (shouldSpeak) VoiceEngine.speak(qText);
 
     const optionsGrid = $('comp-options-grid');
     optionsGrid.innerHTML = '';
@@ -6591,10 +6852,7 @@ body {
       btn.onclick = () => {
         if (opt.correct) {
           AudioEngine.playLevelUp();
-          const explainText = qData.explain[langKey];
-          VoiceEngine.speak((isEn ? "Correct! " : "Exactement ! ") + explainText, () => {
-            onActivityTaskCompleted();
-          });
+          onActivityTaskCompleted();
         } else {
           AudioEngine.playWrong();
           VoiceEngine.speak(isEn ? "Try again! Think about the story." : "Réessaie ! Réfléchis bien à l'histoire.");
@@ -6607,6 +6865,79 @@ body {
   // ============================================================================
   // MATH LAB
   // ============================================================================
+  function buildKhanMathSteps(item, isEn) {
+    const t = item.type || 'count';
+    const em = item.itemEmoji || '🍎';
+    if (t === 'count') {
+      const n = item.targetCount || item.ans || 3;
+      const seq = Array.from({ length: n }, (_, i) => (i + 1) + em).join(' ➜ ');
+      return [
+        isEn ? ('1. Touch each ' + em + ' on the Ten-Frame: ' + seq) : ('1. Touche chaque ' + em + ' dans la Boîte de 10 : ' + seq),
+        isEn ? ('2. Last number counted = ' + n) : ('2. Dernier nombre compté = ' + n)
+      ];
+    }
+    if (t === 'addition') {
+      const a = item.a || 3, b = item.b || 2, sum = item.ans || (a + b);
+      return [
+        isEn ? ('1. Start at ' + a + ' ' + em) : ('1. Groupe A : ' + a + ' ' + em),
+        isEn ? ('2. Frog jumps +' + b + ' steps on the number line') : ('2. Saute de +' + b + ' sur la droite graduée'),
+        isEn ? ('3. Total: ' + a + ' + ' + b + ' = ' + sum) : ('3. Total : ' + a + ' + ' + b + ' = ' + sum)
+      ];
+    }
+    if (t === 'subtraction') {
+      const a = item.a || 9, b = item.b || 4, diff = item.ans || (a - b);
+      return [
+        isEn ? ('1. Start with ' + a + ' ' + em) : ('1. Au départ : ' + a + ' ' + em),
+        isEn ? ('2. Take away -' + b + ' ' + em) : ('2. Enlève -' + b + ' ' + em + ' (barrés en rouge)'),
+        isEn ? ('3. Remaining: ' + a + ' - ' + b + ' = ' + diff) : ('3. Il reste : ' + a + ' - ' + b + ' = ' + diff)
+      ];
+    }
+    if (t === 'multiply') {
+      const a = item.a || 3, b = item.b || 4, prod = item.ans || (a * b);
+      return [
+        isEn ? ('1. ' + a + ' rows of ' + b + ' ' + em) : ('1. Grille 3D : ' + a + ' rangées de ' + b + ' ' + em),
+        isEn ? ('2. Skip-count: ' + Array.from({length: Math.min(a, 6)}, (_, i) => (i + 1) * b).join(', ')) : ('2. Compte par bond : ' + Array.from({length: Math.min(a, 6)}, (_, i) => (i + 1) * b).join(', ')),
+        isEn ? ('3. Product: ' + a + ' × ' + b + ' = ' + prod) : ('3. Produit : ' + a + ' × ' + b + ' = ' + prod)
+      ];
+    }
+    if (t === 'division') {
+      const a = item.a || 36, b = item.b || 4, quot = item.ans || (a / b);
+      return [
+        isEn ? ('1. Share ' + a + ' ' + em + ' into ' + b + ' equal boxes') : ('1. Partage ' + a + ' ' + em + ' dans ' + b + ' paniers égaux'),
+        isEn ? ('2. Check inverse: ' + b + ' × ' + quot + ' = ' + a) : ('2. Vérifie : ' + b + ' × ' + quot + ' = ' + a),
+        isEn ? ('3. Each box gets ' + quot) : ('3. Chaque panier reçoit ' + quot + ' ' + em)
+      ];
+    }
+    if (t === 'fraction') {
+      const num = item.num || 3, den = item.den || 4, addN = item.addNum || 0;
+      if (addN > 0) {
+        return [
+          isEn ? ('1. Same denominator: /' + den) : ('1. Même dénominateur : /' + den),
+          isEn ? ('2. Add numerators: ' + num + ' + ' + addN + ' = ' + (num + addN)) : ('2. Additionne les parts : ' + num + ' + ' + addN + ' = ' + (num + addN)),
+          isEn ? ('3. Result = ' + (num + addN) + '/' + den) : ('3. Résultat = ' + (num + addN) + '/' + den)
+        ];
+      }
+      return [
+        isEn ? ('1. Whole split into ' + den + ' equal parts (1/' + den + ' = ' + (1/den).toFixed(2) + ')') : ('1. Disque coupé en ' + den + ' parts égales (1/' + den + ' = ' + (1/den).toFixed(2) + ')'),
+        isEn ? ('2. Color ' + num + ' parts: ' + num + ' × ' + (1/den).toFixed(2)) : ('2. Colorie ' + num + ' parts : ' + num + ' × ' + (1/den).toFixed(2)),
+        isEn ? ('3. Decimal = ' + item.ans) : ('3. Valeur décimale = ' + item.ans)
+      ];
+    }
+    if (t === 'algebra') {
+      const c = item.coeff || 2, k = item.constVal || 4, r = item.rhs || 10;
+      const rem = r - k;
+      return [
+        isEn ? ('1. Scale Equation: ' + (c === 1 ? 'x' : c + 'x') + ' + ' + k + ' = ' + r) : ('1. Balance : ' + (c === 1 ? 'x' : c + 'x') + ' + ' + k + ' = ' + r),
+        isEn ? ('2. Remove ' + k + ' kg from both pans ➜ ' + (c === 1 ? 'x' : c + 'x') + ' = ' + rem) : ('2. Retire ' + k + ' kg des 2 côtés ➜ ' + (c === 1 ? 'x' : c + 'x') + ' = ' + rem),
+        isEn ? ('3. Divide by ' + c + ' ➜ x = ' + rem + ' ÷ ' + c + ' = ' + item.ans) : ('3. Divise par ' + c + ' ➜ x = ' + rem + ' ÷ ' + c + ' = ' + item.ans)
+      ];
+    }
+    return [
+      item.tip ? item.tip[isEn ? 'en' : 'fr'] : '',
+      isEn ? ('Answer = ' + item.ans) : ('Réponse = ' + item.ans)
+    ];
+  }
+
   function setupMathLabActivity() {
     $('canvas-wrapper').style.display = 'block';
     $('maze-dpad-container').classList.remove('active');
@@ -6622,19 +6953,102 @@ body {
     const pool = list.length > 0 ? list : DB.math;
     const item = getUniqueChallengeItem(pool, "math_" + state.grade, challengeIndex);
     state.currentMathItem = item;
+    state.mathAlgebraSimplified = false;
+    state.mathCountedIndex = 0;
+    state.mathStepAnimProgress = 0;
 
     $('instruction-title').textContent = item.prompt[langKey];
     VoiceEngine.speak(item.speech[langKey]);
 
+    // Build interactive touchable tokens on canvas (Ten-Frame / Array layout)
     state.mathItemsOnStage = [];
-    const count = item.targetCount || item.a || 4;
-    for (let i = 0; i < count; i++) {
+    const totalTokens = item.type === 'addition' ? ((item.a || 3) + (item.b || 2))
+                      : item.type === 'subtraction' ? (item.a || 6)
+                      : item.type === 'multiply' ? Math.min(24, (item.a || 3) * (item.b || 4))
+                      : (item.targetCount || item.a || 4);
+    const cols = item.type === 'multiply' ? (item.b || 4) : 5;
+    for (let i = 0; i < Math.min(24, totalTokens); i++) {
+      const col = i % cols;
+      const row = Math.floor(i / cols);
       state.mathItemsOnStage.push({
         id: 'math_' + i,
+        idx: i + 1,
         emoji: item.itemEmoji || '🍎',
-        x: 180 + (i % 5) * 80,
-        y: 160 + Math.floor(i / 5) * 80
+        isSecondGroup: item.type === 'addition' && i >= (item.a || 0),
+        isSubtracted: item.type === 'subtraction' && i >= ((item.a || 0) - (item.b || 0)),
+        counted: false,
+        x: 115 + col * (cols > 5 ? 54 : 74),
+        y: 125 + row * (totalTokens > 10 ? 52 : 74)
       });
+    }
+
+    // Activate Khan Academy Kids Visual & Audio Step-by-Step Studio Bar
+    const khanBox = $('khan-visual-explainer');
+    if (khanBox) {
+      khanBox.classList.add('active');
+      $('khan-coach-badge').textContent = isEn
+        ? '🐻 KHAN KIDS × PERSEUS STUDIO • INTERACTIVE VISUAL & SOUND EXPLANATION'
+        : '🐻 STUDIO KHAN KIDS × PERSEUS • EXPLICATION VISUELLE & SONORE INTERACTIVE';
+      const steps = buildKhanMathSteps(item, isEn);
+      const track = $('khan-steps-track');
+      track.innerHTML = '';
+      steps.forEach((st, idx) => {
+        const chip = document.createElement('span');
+        chip.className = 'khan-step-chip';
+        chip.id = 'khan-math-chip-' + idx;
+        chip.textContent = st;
+        track.appendChild(chip);
+      });
+
+      const btnManip = $('btn-khan-manipulate');
+      if (btnManip) {
+        btnManip.style.display = 'inline-flex';
+        if (item.type === 'algebra') {
+          const kVal = item.constVal || 4;
+          btnManip.textContent = isEn
+            ? ('⚖️ Simplify Scale (-' + kVal + ' kg from both sides)')
+            : ('⚖️ Simplifier la Balance (-' + kVal + ' kg des 2 côtés)');
+          btnManip.onclick = () => {
+            state.mathAlgebraSimplified = !state.mathAlgebraSimplified;
+            AudioEngine.playSnap();
+            createExplosion(CW / 2, 180, '#38BDF8', 18);
+            const c = item.coeff || 2, r = item.rhs || 10;
+            const explainSimp = isEn
+              ? ('We removed ' + kVal + ' kilos from both pans! Now ' + c + ' x equals ' + (r - kVal) + ', so x equals ' + item.ans + '!')
+              : ('On a retiré ' + kVal + ' kilos des deux plateaux ! Maintenant ' + c + ' x égale ' + (r - kVal) + ', donc x vaut ' + item.ans + ' !');
+            document.querySelectorAll('.khan-step-chip').forEach(el => el.classList.add('highlighted'));
+            VoiceEngine.speak(explainSimp);
+          };
+        } else {
+          btnManip.textContent = isEn
+            ? '👆 Count & Animate Objects with Voice (1, 2, 3...)'
+            : '👆 Compter & Animer les Objets à Voix Haute (1, 2, 3...)';
+          btnManip.onclick = () => {
+            AudioEngine.playSuccess();
+            state.mathItemsOnStage.forEach((tok, idx) => {
+              setTimeout(() => {
+                tok.counted = true;
+                AudioEngine.playTone(440 + idx * 45, 0.08, 'sine');
+              }, idx * 140);
+            });
+            document.querySelectorAll('.khan-step-chip').forEach((el, idx) => {
+              setTimeout(() => el.classList.add('highlighted'), idx * 320);
+            });
+            VoiceEngine.speak(item.tip[langKey]);
+          };
+        }
+      }
+
+      if ($('btn-khan-step-audio')) {
+        $('btn-khan-step-audio').onclick = () => {
+          state.mathAlgebraSimplified = true;
+          document.querySelectorAll('.khan-step-chip').forEach((el, idx) => {
+            setTimeout(() => el.classList.add('highlighted'), idx * 320);
+          });
+          AudioEngine.playSuccess();
+          VoiceEngine.speak(steps.join('. ') + '. ' + item.tip[langKey]);
+        };
+      }
     }
 
     const answersBox = $('answers-container');
@@ -6642,16 +7056,17 @@ body {
     item.options.forEach(opt => {
       const btn = document.createElement('button');
       btn.className = 'btn-interactive';
-      btn.textContent = String(opt);
+      btn.textContent = '✨ ' + String(opt);
       btn.onclick = () => {
         if (opt === item.ans) {
           AudioEngine.playLevelUp();
-          VoiceEngine.speak((isEn ? "Brilliant math! " : "Bravo, excellent calcul ! ") + item.tip[langKey], () => {
-            onActivityTaskCompleted();
-          });
+          document.querySelectorAll('.khan-step-chip').forEach(el => el.classList.add('highlighted'));
+          // SINGLE NARRATION RULE: Complete activity immediately so nextActivityChallenge speaks ONLY the next question!
+          onActivityTaskCompleted();
         } else {
           AudioEngine.playWrong();
-          VoiceEngine.speak(isEn ? "Count again carefully!" : "Recompte bien avec ton doigt !");
+          document.querySelectorAll('.khan-step-chip').forEach(el => el.classList.add('highlighted'));
+          VoiceEngine.speak(item.tip[langKey]);
         }
       };
       answersBox.appendChild(btn);
@@ -6708,9 +7123,7 @@ body {
         if (c.id === qItem.iso) {
           pathEl.setAttribute('class', 'africa-country-path found-country');
           AudioEngine.playLevelUp();
-          VoiceEngine.speak((isEn ? "Bravo! " : "Bravo ! ") + qItem.fact[langKey], () => {
-            onActivityTaskCompleted();
-          });
+          onActivityTaskCompleted();
         } else {
           AudioEngine.playSnap();
           VoiceEngine.speak(c.fr + " / " + c.en + ". " + (isEn ? "Capital: " : "Capitale : ") + c.cap);
@@ -6729,9 +7142,7 @@ body {
       btn.onclick = () => {
         if (opt[langKey] === qItem.ans[langKey]) {
           AudioEngine.playLevelUp();
-          VoiceEngine.speak((isEn ? "Excellent geography! " : "Excellente géographie ! ") + qItem.fact[langKey], () => {
-            onActivityTaskCompleted();
-          });
+          onActivityTaskCompleted();
         } else {
           AudioEngine.playWrong();
           VoiceEngine.speak(isEn ? "Look closely at the highlighted country on the map of Africa!" : "Observe bien le pays illuminé en rouge sur la carte d'Afrique !");
@@ -6799,9 +7210,7 @@ body {
       btn.onclick = () => {
         if (opt[langKey] === item.ans[langKey]) {
           AudioEngine.playLevelUp();
-          VoiceEngine.speak((isEn ? "Correct! " : "Bonne réponse ! ") + item.clue[langKey], () => {
-            onActivityTaskCompleted();
-          });
+          onActivityTaskCompleted();
         } else {
           AudioEngine.playWrong();
           VoiceEngine.speak(isEn ? "Not quite! Read the clue and try again." : "Pas tout à fait ! Écoute bien l'indice et réessaie.");
@@ -6878,9 +7287,7 @@ body {
             slot.style.color = '#FFFFFF';
           }
           AudioEngine.playLevelUp();
-          VoiceEngine.speak(choice + ". " + (isEn ? "Excellent! " : "Bravo ! "), () => {
-            onActivityTaskCompleted();
-          });
+          onActivityTaskCompleted();
         } else {
           AudioEngine.playWrong();
           VoiceEngine.speak(isEn ? "Look at the grammar rule and try again!" : "Regarde bien l'indice de la règle et réessaie !");
@@ -7737,75 +8144,162 @@ body {
       ctx.restore();
     }
 
-        // 7. COMET DEFENDER
+        // 7. GALACTIC CALCULATION & MENTAL MATH BLASTER 3D (COMET DEFENDER v8.0)
     else if (g === 'comet') {
-      // Cockpit Math HUD Banner
-      if (state.cometEquation) {
-        ctx.fillStyle = '#FBBF24';
-        ctx.font = 'bold 22px sans-serif';
-        ctx.fillText('🎯 ' + state.cometEquation, CW / 2 - 65, 36);
+      const tNow = Date.now() / 1000;
+      // Deep Space Starfield & Nebula
+      const spaceBg = ctx.createRadialGradient(CW / 2, CH / 2, 30, CW / 2, CH / 2, 460);
+      spaceBg.addColorStop(0, '#1E1B4B');
+      spaceBg.addColorStop(0.6, '#0F172A');
+      spaceBg.addColorStop(1, '#020617');
+      ctx.fillStyle = spaceBg;
+      ctx.fillRect(0, 0, CW, CH);
+
+      for (let s = 0; s < 28; s++) {
+        const sx = (s * 97 + Math.floor(tNow * 18)) % CW;
+        const sy = (s * 53) % (CH - 60);
+        ctx.fillStyle = s % 3 === 0 ? '#38BDF8' : '#FFFFFF';
+        ctx.fillRect(sx, sy, s % 2 === 0 ? 2.5 : 1.5, s % 2 === 0 ? 2.5 : 1.5);
       }
-      ctx.fillStyle = '#E5252A';
+
+      // Top Holographic Equation & Visual Strategy Banner inside Canvas
+      ctx.save();
+      ctx.fillStyle = 'rgba(15, 23, 42, 0.88)';
       ctx.beginPath();
-      ctx.moveTo(state.ship.x, state.ship.y - 24);
-      ctx.lineTo(state.ship.x - 22, state.ship.y + 16);
-      ctx.lineTo(state.ship.x + 22, state.ship.y + 16);
+      ctx.roundRect(140, 10, CW - 280, 52, 16);
+      ctx.fill();
+      ctx.strokeStyle = '#38BDF8';
+      ctx.lineWidth = 2;
+      ctx.stroke();
+
+      ctx.fillStyle = '#FDE047';
+      ctx.font = 'bold 21px sans-serif';
+      ctx.fillText('🎯 ' + (state.cometEquation || '6 + 4 = ?'), 165, 35);
+      if (state.cometSteps && state.cometSteps.length) {
+        ctx.fillStyle = '#7DD3FC';
+        ctx.font = 'bold 13px sans-serif';
+        ctx.fillText('💡 ' + state.cometSteps.join('  ➜  '), 165, 54);
+      }
+      ctx.restore();
+
+      // 3D Starfighter Ship with Twin Thrusters
+      const sx = state.ship.x, sy = state.ship.y;
+      ctx.save();
+      ctx.translate(sx, sy);
+      // Thruster Flame
+      ctx.fillStyle = '#F59E0B';
+      ctx.beginPath();
+      ctx.moveTo(-10, 16);
+      ctx.lineTo(0, 28 + Math.sin(tNow * 25) * 6);
+      ctx.lineTo(10, 16);
       ctx.closePath();
       ctx.fill();
+      // Wings
+      ctx.fillStyle = '#1D4ED8';
+      ctx.beginPath();
+      ctx.moveTo(0, -24);
+      ctx.lineTo(-32, 16);
+      ctx.lineTo(32, 16);
+      ctx.closePath();
+      ctx.fill();
+      ctx.strokeStyle = '#93C5FD';
+      ctx.lineWidth = 2;
+      ctx.stroke();
+      // Fuselage
+      ctx.fillStyle = '#E5252A';
+      ctx.beginPath();
+      ctx.moveTo(0, -30);
+      ctx.lineTo(-14, 16);
+      ctx.lineTo(14, 16);
+      ctx.closePath();
+      ctx.fill();
+      // Cockpit Canopy
+      ctx.fillStyle = '#38BDF8';
+      ctx.beginPath();
+      ctx.ellipse(0, -4, 6, 11, 0, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.restore();
 
+      // Twin Plasma Lasers
       state.lasers.forEach((l, idx) => {
         l.y += l.vy;
         ctx.fillStyle = l.color;
-        ctx.fillRect(l.x - 3, l.y, 6, 16);
+        ctx.fillRect(l.x - 3, l.y, 6, 20);
         if (l.y < 0) state.lasers.splice(idx, 1);
       });
 
+      // 3D Flaming Comets with Orbital Rings
       state.meteors.forEach((m, idx) => {
         m.y += m.vy;
-        ctx.fillStyle = m.color;
+        if (m.y > 235) m.y = 82; // Keep comets in playable orbital zone!
+
+        ctx.save();
+        ctx.translate(m.x, m.y);
+        // Comet Flame Tail
+        const tailGrad = ctx.createLinearGradient(0, -m.r - 28, 0, 0);
+        tailGrad.addColorStop(0, 'rgba(245, 158, 11, 0)');
+        tailGrad.addColorStop(1, 'rgba(239, 68, 68, 0.55)');
+        ctx.fillStyle = tailGrad;
         ctx.beginPath();
-        ctx.arc(m.x, m.y, m.r, 0, Math.PI * 2);
+        ctx.moveTo(-m.r * 0.7, 0);
+        ctx.lineTo(0, -m.r - 32);
+        ctx.lineTo(m.r * 0.7, 0);
+        ctx.closePath();
         ctx.fill();
+
+        // 3D Glowing Core Sphere
+        const sph = ctx.createRadialGradient(-10, -10, 4, 0, 0, m.r);
+        sph.addColorStop(0, '#FDE047');
+        sph.addColorStop(0.45, '#EF4444');
+        sph.addColorStop(1, '#7F1D1D');
+        ctx.fillStyle = sph;
+        ctx.beginPath();
+        ctx.arc(0, 0, m.r, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.strokeStyle = '#FEF08A';
+        ctx.lineWidth = 2.5;
+        ctx.stroke();
+
+        // Answer Number Badge on Comet
         ctx.fillStyle = '#FFFFFF';
-        ctx.font = 'bold 18px sans-serif';
-        ctx.fillText(String(m.val), m.x - 7, m.y + 6);
+        ctx.font = 'bold 22px sans-serif';
+        const txt = String(m.val);
+        ctx.fillText(txt, -ctx.measureText(txt).width / 2, 8);
+        ctx.restore();
 
         state.lasers.forEach((l, lIdx) => {
-          if (Math.hypot(l.x - m.x, l.y - m.y) < m.r) {
-            createExplosion(m.x, m.y, '#E5252A', 18);
+          if (Math.hypot(l.x - m.x, l.y - m.y) < m.r + 6) {
             state.lasers.splice(lIdx, 1);
-            state.meteors.splice(idx, 1);
-            onActivityTaskCompleted();
+            if (m.correct) {
+              createExplosion(m.x, m.y, '#FBBF24', 24);
+              state.meteors.splice(idx, 1);
+              onActivityTaskCompleted();
+            } else {
+              AudioEngine.playWrong();
+              createExplosion(m.x, m.y, '#64748B', 10);
+              if (state.cometExplain) VoiceEngine.speak(state.cometExplain);
+            }
           }
         });
       });
     }
 
-    // 8. 3D HOLOGRAPHIC MATH, FRACTION CYLINDERS & 3D ALGEBRAIC FULCRUM ARENA
+    // 8. KHAN ACADEMY KIDS × PERSEUS VISUAL & AUDIO MATH, CALCULATION & ALGEBRA 3D STUDIO
     else if (g === 'math_lab') {
       const tNow = Date.now() / 1000;
+      const isEn = state.lang === 'en';
 
       // 3D Perspective Math Stage Floor
-      const stageGrad = ctx.createLinearGradient(0, 35, 0, 345);
+      const stageGrad = ctx.createLinearGradient(0, 20, 0, 360);
       stageGrad.addColorStop(0, '#0F172A');
       stageGrad.addColorStop(1, '#1E1B4B');
       ctx.fillStyle = stageGrad;
       ctx.beginPath();
-      ctx.roundRect(45, 35, CW - 90, 305, 22);
+      ctx.roundRect(28, 18, CW - 56, 342, 22);
       ctx.fill();
-      ctx.strokeStyle = '#6366F1';
+      ctx.strokeStyle = '#38BDF8';
       ctx.lineWidth = 2.5;
       ctx.stroke();
-
-      // 3D Isometric Floor Grid inside Stage
-      ctx.strokeStyle = 'rgba(129, 140, 248, 0.15)';
-      ctx.lineWidth = 1;
-      for (let gx = 80; gx < CW - 60; gx += 45) {
-        ctx.beginPath();
-        ctx.moveTo(gx, 40);
-        ctx.lineTo(gx - 25, 335);
-        ctx.stroke();
-      }
 
       // Helper to draw a real 3D Isometric Shaded Cube at (cx, cy, size, topCol, leftCol, rightCol)
       const drawIsoCube = (cx, cy, sz, topC, leftC, rightC, labelText) => {
@@ -7820,7 +8314,7 @@ body {
         ctx.lineTo(-sz * 1.1, -sz * 0.45);
         ctx.closePath();
         ctx.fill();
-        ctx.strokeStyle = 'rgba(255,255,255,0.45)';
+        ctx.strokeStyle = 'rgba(255,255,255,0.5)';
         ctx.stroke();
         // Left Face
         ctx.fillStyle = leftC;
@@ -7845,30 +8339,32 @@ body {
         if (labelText) {
           ctx.fillStyle = '#FFFFFF';
           ctx.font = 'bold 14px sans-serif';
-          ctx.fillText(labelText, -10, -sz * 0.25);
+          ctx.fillText(labelText, -ctx.measureText(labelText).width / 2, -sz * 0.2);
         }
         ctx.restore();
       };
 
       const mItem = state.currentMathItem || {};
-      if (mItem.type === 'fraction') {
-        // 3D Extruded Fraction Cylinder Cake + 3D Liquid Equivalence Tube
-        const cx = 240, cy = 175, radius = 84;
-        const num = mItem.num || 3, den = mItem.den || 4;
-        const totalActive = num + (mItem.addNum || 0);
 
-        // 3D Cylinder Bottom Rim (Extrusion Depth)
+      // MODE A: FRACTIONS & DECIMALS (3D Pizza Cylinder + Graduated Perseus Number Line)
+      if (mItem.type === 'fraction' || mItem.type === 'decimal') {
+        const cx = 210, cy = 175, radius = 82;
+        const num = mItem.num || 3, den = mItem.den || 4;
+        const totalActive = mItem.type === 'decimal' ? 6 : (num + (mItem.addNum || 0));
+        const totalSlices = mItem.type === 'decimal' ? 10 : den;
+
+        // 3D Cylinder Bottom Rim
         ctx.fillStyle = '#7F1D1D';
         ctx.beginPath();
-        ctx.ellipse(cx, cy + 22, radius, radius * 0.62, 0, 0, Math.PI * 2);
+        ctx.ellipse(cx, cy + 20, radius, radius * 0.64, 0, 0, Math.PI * 2);
         ctx.fill();
 
-        for (let s = 0; s < den; s++) {
-          const a0 = (s * 2 * Math.PI) / den - Math.PI / 2;
-          const a1 = ((s + 1) * 2 * Math.PI) / den - Math.PI / 2;
+        for (let s = 0; s < totalSlices; s++) {
+          const a0 = (s * 2 * Math.PI) / totalSlices - Math.PI / 2;
+          const a1 = ((s + 1) * 2 * Math.PI) / totalSlices - Math.PI / 2;
           ctx.save();
           ctx.translate(cx, cy);
-          ctx.scale(1, 0.62);
+          ctx.scale(1, 0.64);
           ctx.beginPath();
           ctx.moveTo(0, 0);
           ctx.arc(0, 0, radius, a0, a1);
@@ -7876,35 +8372,76 @@ body {
           ctx.fillStyle = s < totalActive ? (s < num ? '#EF4444' : '#F59E0B') : 'rgba(255,255,255,0.14)';
           ctx.fill();
           ctx.strokeStyle = '#FFFFFF';
-          ctx.lineWidth = 3;
+          ctx.lineWidth = 2.5;
           ctx.stroke();
           ctx.restore();
         }
-        // 3D Decimal Equivalence Bar
-        ctx.fillStyle = '#FFFFFF';
-        ctx.font = 'bold 19px sans-serif';
-        ctx.fillText('🧊 Fraction 3D : ' + num + '/' + den + (mItem.addNum ? ' + ' + mItem.addNum + '/' + den : ''), 405, 130);
+
+        // Right-side Khan Perseus Graduated Number Line & Step Breakdown
+        ctx.fillStyle = '#FDE047';
+        ctx.font = 'bold 18px sans-serif';
+        const fracTitle = mItem.type === 'decimal'
+          ? ('📏 Calcul Décimal : ' + mItem.a + ' + ' + mItem.b + ' = ' + mItem.ans)
+          : ('🍕 Fraction Visuelle : ' + num + '/' + den + (mItem.addNum ? (' + ' + mItem.addNum + '/' + den + ' = ' + totalActive + '/' + den) : (' = ' + (num / den).toFixed(2))));
+        ctx.fillText(fracTitle, 355, 95);
+
+        // Visual Fraction Bar
         ctx.fillStyle = 'rgba(255,255,255,0.12)';
-        ctx.fillRect(405, 155, 280, 36);
-        const fillRatio = Math.min(1, totalActive / den);
-        const barGrad = ctx.createLinearGradient(405, 155, 405 + 280 * fillRatio, 191);
+        ctx.fillRect(355, 125, 360, 38);
+        const fillRatio = Math.min(1, totalActive / totalSlices);
+        const barGrad = ctx.createLinearGradient(355, 125, 355 + 360 * fillRatio, 163);
         barGrad.addColorStop(0, '#10B981');
         barGrad.addColorStop(1, '#059669');
         ctx.fillStyle = barGrad;
-        ctx.fillRect(405, 155, 280 * fillRatio, 36);
-        ctx.strokeStyle = '#FFFFFF';
-        ctx.strokeRect(405, 155, 280, 36);
-        ctx.fillStyle = '#FBBF24';
+        ctx.fillRect(355, 125, 360 * fillRatio, 38);
+        for (let d = 0; d <= totalSlices; d++) {
+          const tx = 355 + (d / totalSlices) * 360;
+          ctx.strokeStyle = '#FFFFFF';
+          ctx.lineWidth = 2;
+          ctx.beginPath();
+          ctx.moveTo(tx, 125);
+          ctx.lineTo(tx, 163);
+          ctx.stroke();
+          ctx.fillStyle = '#BAE6FD';
+          ctx.font = 'bold 12px sans-serif';
+          ctx.fillText(d + '/' + totalSlices, tx - 10, 182);
+        }
+
+        ctx.fillStyle = '#FFFFFF';
         ctx.font = 'bold 15px sans-serif';
-        ctx.fillText('0.0', 405, 215);
-        ctx.fillText('0.50 (1/2)', 515, 215);
-        ctx.fillText('1.00', 655, 215);
-      } else if (mItem.type === 'algebra') {
-        // 3D Holographic Torque Balance Scale with 3D Mystery X Cubes
+        ctx.fillText('💡 ' + (mItem.tip ? mItem.tip[isEn ? 'en' : 'fr'] : ''), 355, 235);
+      }
+
+      // MODE B: DYNAMIC ALGEBRAIC BALANCE SCALE (Adaptively renders coeff*x + constVal = rhs!)
+      else if (mItem.type === 'algebra') {
+        const coeff = mItem.coeff || 2;
+        const constVal = mItem.constVal || 4;
+        const rhs = mItem.rhs || 10;
+        const simplified = Boolean(state.mathAlgebraSimplified);
+        const activeConst = simplified ? 0 : constVal;
+        const activeRhs = simplified ? (rhs - constVal) : rhs;
+
+        // Top Equation Step Banner on Canvas
+        ctx.fillStyle = 'rgba(15, 23, 42, 0.9)';
+        ctx.beginPath();
+        ctx.roundRect(90, 30, CW - 180, 48, 14);
+        ctx.fill();
+        ctx.strokeStyle = simplified ? '#10B981' : '#F59E0B';
+        ctx.lineWidth = 2;
+        ctx.stroke();
+
+        ctx.fillStyle = '#FDE047';
+        ctx.font = 'bold 18px sans-serif';
+        const eqStr = simplified
+          ? ('✅ Balance Simplifiée (-' + constVal + ' kg) :   ' + (coeff === 1 ? 'x' : coeff + 'x') + ' = ' + activeRhs + ' kg   ➜   x = ' + activeRhs + ' ÷ ' + coeff + ' = ' + mItem.ans + ' kg !')
+          : ('⚖️ Équation sur Balance :   ' + (coeff === 1 ? 'x' : coeff + 'x') + ' + ' + constVal + ' kg = ' + rhs + ' kg   (Touche la balance pour retirer ' + constVal + ' kg !)');
+        ctx.fillText(eqStr, 110, 60);
+
         const pivotX = CW / 2, pivotY = 278;
-        const beamAngle = Math.sin(tNow * 2.2) * 0.045;
+        const beamAngle = simplified ? 0 : Math.sin(tNow * 2.2) * 0.035;
         ctx.save();
         ctx.translate(pivotX, pivotY);
+
         // 3D Pyramid Fulcrum
         const fulGrad = ctx.createLinearGradient(-35, 0, 35, 55);
         fulGrad.addColorStop(0, '#F59E0B');
@@ -7912,8 +8449,8 @@ body {
         ctx.fillStyle = fulGrad;
         ctx.beginPath();
         ctx.moveTo(0, -10);
-        ctx.lineTo(-36, 48);
-        ctx.lineTo(36, 48);
+        ctx.lineTo(-40, 52);
+        ctx.lineTo(40, 52);
         ctx.closePath();
         ctx.fill();
         ctx.strokeStyle = '#FEF3C7';
@@ -7922,33 +8459,113 @@ body {
         ctx.rotate(beamAngle);
         // 3D Metallic Beam
         ctx.fillStyle = '#E2E8F0';
-        ctx.fillRect(-230, -10, 460, 14);
+        ctx.fillRect(-250, -10, 500, 14);
         ctx.strokeStyle = '#38BDF8';
-        ctx.strokeRect(-230, -10, 460, 14);
+        ctx.strokeRect(-250, -10, 500, 14);
 
-        // Left Pan 3D Mystery Cubes (2x + 4)
-        drawIsoCube(-185, -38, 22, '#FF2A32', '#B91C1C', '#7F1D1D', 'x');
-        drawIsoCube(-125, -38, 22, '#FF2A32', '#B91C1C', '#7F1D1D', 'x');
-        drawIsoCube(-68, -32, 18, '#38BDF8', '#0284C7', '#0369A1', '+4');
+        // Left Pan Plate
+        ctx.fillStyle = '#475569';
+        ctx.fillRect(-235, -18, 190, 8);
+        // Draw 'coeff' Mystery X Cubes on Left Pan
+        for (let c = 0; c < coeff; c++) {
+          const cxPos = -210 + c * (coeff > 2 ? 42 : 55);
+          drawIsoCube(cxPos, -42, 21, '#FF2A32', '#B91C1C', '#7F1D1D', 'x');
+        }
+        // Draw Constant Weight on Left Pan if not yet simplified
+        if (!simplified && activeConst > 0) {
+          drawIsoCube(-75, -36, 18, '#38BDF8', '#0284C7', '#0369A1', '+' + activeConst + 'kg');
+        }
 
-        // Right Pan 3D Golden Weight (= 10 kg)
-        drawIsoCube(145, -42, 28, '#34D399', '#059669', '#065F46', '10kg');
+        // Right Pan Plate
+        ctx.fillStyle = '#475569';
+        ctx.fillRect(45, -18, 190, 8);
+        // Draw Right-Hand Side Golden Weight
+        drawIsoCube(140, -45, 28, '#10B981', '#059669', '#065F46', activeRhs + ' kg');
         ctx.restore();
+      }
 
-        ctx.fillStyle = '#FDE68A';
-        ctx.font = 'bold 17px sans-serif';
-        ctx.fillText('⚖️ Équation 3D : 2x + 4 = 10   ➜   2x = 6   ➜   x = ?', CW / 2 - 195, 72);
-      } else {
-        // 3D Isometric Cube Blocks + Floating Emoji Tokens for Counting, Multiplication & Geometry
+      // MODE C: KHAN KIDS TEN-FRAME (BOÎTE DE 10), FROG NUMBER LINE & 3D ARRAY MATRIX
+      else {
+        // Draw Khan Kids Ten-Frame Grid Outline behind tokens
+        ctx.fillStyle = '#7DD3FC';
+        ctx.font = 'bold 15px sans-serif';
+        const modeTitle = mItem.type === 'multiply'
+          ? ('🟦 Grille 3D (' + mItem.a + ' rangées × ' + mItem.b + ' colonnes = ' + mItem.ans + ') • Touche chaque cube pour compter !')
+          : mItem.type === 'subtraction'
+          ? ('✂️ Soustraction Visuelle : ' + mItem.a + ' - ' + mItem.b + ' = ' + mItem.ans + ' (Les objets retirés sont barrés)')
+          : ('🐻 Boîte de 10 Khan Kids & Manipulation Tactile • Touche les objets pour les compter à voix haute !');
+        ctx.fillText(modeTitle, 55, 48);
+
         state.mathItemsOnStage.forEach((it, idx) => {
-          const bounceY = Math.sin(tNow * 3.5 + idx * 0.7) * 5;
-          drawIsoCube(it.x, it.y + bounceY, 26, '#6366F1', '#4338CA', '#312E81', '');
-          ctx.font = '30px sans-serif';
-          ctx.fillText(it.emoji, it.x - 16, it.y - 10 + bounceY);
-          ctx.fillStyle = '#FDE68A';
+          const bounceY = Math.sin(tNow * 3.5 + idx * 0.7) * 4;
+          const topCol = it.counted ? '#10B981' : (it.isSecondGroup ? '#F59E0B' : (it.isSubtracted ? '#64748B' : '#6366F1'));
+          const leftCol = it.counted ? '#059669' : (it.isSecondGroup ? '#D97706' : (it.isSubtracted ? '#475569' : '#4338CA'));
+          const rightCol = it.counted ? '#047857' : (it.isSecondGroup ? '#B45309' : (it.isSubtracted ? '#334155' : '#312E81'));
+
+          drawIsoCube(it.x, it.y + bounceY, 22, topCol, leftCol, rightCol, '');
+          ctx.font = '26px sans-serif';
+          ctx.fillText(it.emoji, it.x - 14, it.y - 8 + bounceY);
+
+          // If subtracted, draw red cross-out X over the taken-away items!
+          if (it.isSubtracted) {
+            ctx.strokeStyle = '#EF4444';
+            ctx.lineWidth = 3.5;
+            ctx.beginPath();
+            ctx.moveTo(it.x - 18, it.y - 24 + bounceY);
+            ctx.lineTo(it.x + 18, it.y + 12 + bounceY);
+            ctx.moveTo(it.x + 18, it.y - 24 + bounceY);
+            ctx.lineTo(it.x - 18, it.y + 12 + bounceY);
+            ctx.stroke();
+          }
+
+          ctx.fillStyle = it.counted ? '#FEF08A' : '#E2E8F0';
           ctx.font = 'bold 13px sans-serif';
-          ctx.fillText('#' + (idx + 1), it.x - 10, it.y + 42 + bounceY);
+          ctx.fillText(String(idx + 1), it.x - 5, it.y + 36 + bounceY);
         });
+
+        // Bottom Interactive Khan Perseus Graduated Number Line with Frog Hops!
+        const nlY = 318, nlX0 = 75, nlX1 = CW - 75;
+        const maxTick = Math.max(10, Number(mItem.ans) || 10, (mItem.a || 0) + (mItem.b || 0));
+        if (maxTick <= 20) {
+          ctx.strokeStyle = '#38BDF8';
+          ctx.lineWidth = 3;
+          ctx.beginPath();
+          ctx.moveTo(nlX0, nlY);
+          ctx.lineTo(nlX1, nlY);
+          ctx.stroke();
+
+          const stepW = (nlX1 - nlX0) / maxTick;
+          for (let t = 0; t <= maxTick; t++) {
+            const tx = nlX0 + t * stepW;
+            const isTarget = t === Number(mItem.ans);
+            ctx.strokeStyle = isTarget ? '#FBBF24' : '#94A3B8';
+            ctx.lineWidth = isTarget ? 3 : 1.5;
+            ctx.beginPath();
+            ctx.moveTo(tx, nlY - 7);
+            ctx.lineTo(tx, nlY + 7);
+            ctx.stroke();
+            ctx.fillStyle = isTarget ? '#FDE047' : '#CBD5E1';
+            ctx.font = isTarget ? 'bold 14px sans-serif' : 'bold 11px sans-serif';
+            ctx.fillText(String(t), tx - 5, nlY + 22);
+          }
+
+          // Animated Frog Jump Arcs for Addition / Counting
+          const targetN = Math.min(maxTick, Number(mItem.ans) || (mItem.targetCount || 3));
+          for (let j = 0; j < targetN; j++) {
+            const xA = nlX0 + j * stepW;
+            const xB = nlX0 + (j + 1) * stepW;
+            const midX = (xA + xB) / 2;
+            ctx.strokeStyle = (mItem.type === 'addition' && j >= (mItem.a || 0)) ? '#F59E0B' : '#10B981';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.moveTo(xA, nlY - 4);
+            ctx.quadraticCurveTo(midX, nlY - 24, xB, nlY - 4);
+            ctx.stroke();
+          }
+          const frogX = nlX0 + targetN * stepW;
+          ctx.font = '20px sans-serif';
+          ctx.fillText('🐸', frogX - 10, nlY - 12 + Math.sin(tNow * 6) * 3);
+        }
       }
     }
 
