@@ -7,7 +7,6 @@ node_modules/
 .expo/
 dist/
 web-build/
-public/audio_cache/
 expo-env.d.ts
 
 # Native
