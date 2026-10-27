@@ -1,0 +1,2076 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Orra by Nateiva · A Global Creator Platform — Create. Engage. Sell. Grow.</title>
+<meta name="description" content="Build your own platform or website for events, voting, fundraising, products, and community in one place. Powered by Orra by Nateiva.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500&family=Outfit:wght@500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 36 36'><rect width='36' height='36' rx='8' fill='%23070811'/><circle cx='18' cy='18' r='12' fill='none' stroke='%23F4B63F' stroke-width='2.5'/><rect x='12' y='18' width='2.6' height='6' rx='1' fill='%23F4B63F'/><rect x='16.7' y='14' width='2.6' height='10' rx='1' fill='%23F4B63F'/><rect x='21.4' y='11' width='2.6' height='13' rx='1' fill='%23F4B63F'/></svg>">
+<link rel="stylesheet" href="scrollcraft.css">
+<style>
+  :root {
+    --sc-canvas:      #070811;
+    --sc-surface:     #0E1222;
+    --sc-ink:         #F8FAFC;
+    --sc-ink-soft:    #A3B1CC;
+    --sc-accent:      #F4B63F;
+    --sc-accent-ink:  #070811;
+    --sc-font-display: "Outfit", system-ui, sans-serif;
+    --sc-font-text:    "Plus Jakarta Sans", system-ui, sans-serif;
+    --sc-font-mono:    "Geist Mono", ui-monospace, monospace;
+  }
+
+  body {
+    background-color: var(--sc-canvas);
+    color: var(--sc-ink);
+    letter-spacing: 0.003em;
+    line-height: 1.62;
+  }
+
+  .sc-display {
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    line-height: 0.98;
+  }
+
+  /* --------------------------------------------------- TOP NAVIGATION BAR -- */
+  .orra-header {
+    position: fixed;
+    inset: 0 0 auto 0;
+    z-index: var(--sc-z-chrome);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.85rem var(--sc-gutter);
+    background: rgba(7, 8, 17, 0.82);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid rgba(244, 182, 63, 0.14);
+  }
+
+  .orra-logo {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.65rem;
+    text-decoration: none;
+    color: var(--sc-ink);
+  }
+  .orra-logo__icon {
+    width: 38px;
+    height: 38px;
+    flex-shrink: 0;
+  }
+  .orra-logo__text {
+    display: flex;
+    flex-direction: column;
+    line-height: 1;
+  }
+  .orra-logo__title {
+    font-family: var(--sc-font-display);
+    font-size: 1.55rem;
+    font-weight: 800;
+    letter-spacing: -0.02em;
+    color: #F4B63F;
+  }
+  .orra-logo__sub {
+    font-size: 0.65rem;
+    color: var(--sc-ink-soft);
+    letter-spacing: 0.04em;
+    margin-top: 2px;
+    padding-left: 2px;
+  }
+
+  .orra-nav-links {
+    display: flex;
+    align-items: center;
+    gap: 1.8rem;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .orra-nav-links a {
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--sc-ink-soft);
+    padding-bottom: 0.25rem;
+    border-bottom: 2px solid transparent;
+    transition: color var(--sc-d-fast) var(--sc-ease-out),
+                border-color var(--sc-d-fast) var(--sc-ease-out);
+  }
+  .orra-nav-links a.is-active,
+  .orra-nav-links a:hover {
+    color: var(--sc-ink);
+    border-bottom-color: var(--sc-accent);
+  }
+
+  .orra-nav-actions {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+  .orra-lang-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    font-family: var(--sc-font-mono);
+    font-size: 0.78rem;
+    color: var(--sc-ink-soft);
+    padding: 0.35rem 0.6rem;
+    border-radius: var(--sc-r-sm);
+    border: 1px solid var(--sc-hairline);
+    background: rgba(14, 18, 34, 0.75);
+  }
+  .orra-login-link {
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: var(--sc-ink);
+    text-decoration: none;
+    padding: 0.4rem 0.6rem;
+  }
+
+  /* Single primary CTA button style used everywhere */
+  .orra-btn-primary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.45rem;
+    padding: 0.68rem 1.3rem;
+    background-color: #F4B63F;
+    background-image: linear-gradient(180deg, #FAD161 0%, #E8A328 100%);
+    color: #070811;
+    font-family: var(--sc-font-text);
+    font-size: 0.9rem;
+    font-weight: 700;
+    text-decoration: none;
+    border-radius: 10px;
+    border: 1px solid #FFE28A;
+    box-shadow: var(--sc-e2);
+    white-space: nowrap;
+    cursor: pointer;
+    transition: transform var(--sc-d-fast) var(--sc-ease-out),
+                filter var(--sc-d-fast) var(--sc-ease-out);
+  }
+  @media (hover: hover) and (pointer: fine) {
+    .orra-btn-primary:hover {
+      filter: brightness(1.07);
+      transform: translateY(-1px);
+    }
+  }
+  .orra-btn-primary:active {
+    transform: scale(0.97);
+  }
+
+  .orra-btn-ghost {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.55rem;
+    padding: 0.68rem 1.25rem;
+    background: rgba(14, 18, 34, 0.78);
+    color: var(--sc-ink);
+    font-size: 0.9rem;
+    font-weight: 600;
+    text-decoration: none;
+    border-radius: 10px;
+    border: 1px solid rgba(244, 182, 63, 0.45);
+    white-space: nowrap;
+    cursor: pointer;
+    transition: background-color var(--sc-d-fast) var(--sc-ease-out),
+                transform var(--sc-d-fast) var(--sc-ease-out);
+  }
+  @media (hover: hover) and (pointer: fine) {
+    .orra-btn-ghost:hover {
+      background: rgba(244, 182, 63, 0.14);
+      transform: translateY(-1px);
+    }
+  }
+
+  /* ------------------------------------ ACT 1: LAYERED 3D GLOBE HERO ------- */
+  .hero-stage {
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    height: 100svh;
+    overflow: clip;
+    background:
+      radial-gradient(60% 65% at 68% 48%, rgba(244, 182, 63, 0.18) 0%, rgba(168, 85, 247, 0.12) 42%, rgba(7, 8, 17, 0.96) 78%),
+      #070811;
+  }
+
+  /* Plane 1: Far City Skyline & Cosmic Horizon */
+  .hero-plane-skyline {
+    position: absolute;
+    inset: auto 0 0 0;
+    height: 36%;
+    z-index: 1;
+    pointer-events: none;
+    opacity: 0.65;
+  }
+
+  /* Plane 2: Interactive 3D Globe & Orbital Rings Canvas */
+  .hero-globe-rig {
+    position: absolute;
+    top: 3.8rem;
+    bottom: 4.3rem;
+    right: 2.5%;
+    margin-block: auto;
+    width: clamp(320px, 47vw, 650px);
+    height: clamp(320px, 47vw, 650px);
+    z-index: 3;
+    pointer-events: auto;
+    cursor: grab;
+  }
+  .hero-globe-rig:active {
+    cursor: grabbing;
+  }
+  #orra-globe-canvas {
+    width: 100%;
+    height: 100%;
+    display: block;
+  }
+
+  /* Plane 3: Six Independent Floating 3D Orbital Cards around the Globe */
+  .orbital-cards-layer {
+    position: absolute;
+    top: 3.8rem;
+    bottom: 4.3rem;
+    right: 2.5%;
+    margin-block: auto;
+    width: clamp(320px, 47vw, 650px);
+    height: clamp(320px, 47vw, 650px);
+    z-index: 6;
+    pointer-events: none;
+  }
+  .orbital-card {
+    position: absolute;
+    pointer-events: auto;
+    width: clamp(165px, 15.5vw, 220px);
+    padding: 0.65rem 0.85rem;
+    border-radius: 14px;
+    background-color: #0C0F1D;
+    background: rgba(12, 15, 29, 0.90);
+    backdrop-filter: blur(14px);
+    border: 1px solid rgba(244, 182, 63, 0.52);
+    box-shadow: var(--sc-e3), var(--sc-edge);
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+    cursor: pointer;
+    transition: border-color var(--sc-d-fast) var(--sc-ease-out),
+                background-color var(--sc-d-fast) var(--sc-ease-out);
+  }
+  .orbital-card:hover {
+    border-color: #FAD161;
+    background: rgba(20, 25, 46, 0.96);
+  }
+  .orbital-card__badge {
+    width: 36px;
+    height: 36px;
+    border-radius: 9px;
+    background: rgba(244, 182, 63, 0.16);
+    border: 1px solid rgba(244, 182, 63, 0.45);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    color: var(--sc-accent);
+  }
+  .orbital-card__title {
+    font-family: var(--sc-font-display);
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--sc-ink);
+    margin: 0;
+    line-height: 1.15;
+  }
+  .orbital-card__sub {
+    font-size: 0.7rem;
+    color: var(--sc-ink-soft);
+    margin: 2px 0 0 0;
+    line-height: 1.2;
+  }
+
+  /* Orbital Card Coordinates matching the uploaded reference image + SMS Campaign */
+  .orbital-card--voting      { top: 4%;  left: 4%; }
+  .orbital-card--events      { top: 4%;  right: 2%; }
+  .orbital-card--fundraising { top: 42%; left: -5%; }
+  .orbital-card--community   { top: 42%; right: -2%; }
+  .orbital-card--shop        { bottom: 6%; left: 4%; }
+  .orbital-card--sms         { bottom: 6%; right: 2%; }
+
+  /* Left Hero Copy Column */
+  .hero-copy-wrap {
+    position: absolute;
+    inset: 0;
+    z-index: 8;
+    pointer-events: none;
+    display: flex;
+    align-items: center;
+  }
+  .hero-copy-scrim {
+    position: absolute;
+    inset: 0 auto 0 0;
+    width: min(46rem, 62vw);
+    background: radial-gradient(90% 75% at 38% 50%, rgba(7, 8, 17, 0.94) 0%, rgba(7, 8, 17, 0.78) 62%, rgba(7, 8, 17, 0) 100%);
+    pointer-events: none;
+    z-index: 7;
+  }
+  .hero-copy-box {
+    pointer-events: auto;
+    margin-left: var(--sc-gutter);
+    max-width: min(36rem, 46vw);
+    margin-bottom: 2.2rem;
+    position: relative;
+    z-index: 8;
+    background-color: rgba(7, 8, 17, 0.72);
+    padding: 1.1rem 1.25rem;
+    border-radius: 16px;
+  }
+  .hero-kicker {
+    font-family: var(--sc-font-mono);
+    font-size: 0.78rem;
+    font-weight: 500;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: #CBD5E1;
+    margin: 0 0 0.75rem 0;
+  }
+  .hero-headline {
+    font-family: var(--sc-font-display);
+    font-size: clamp(2.6rem, 4.4vw, 4.5rem);
+    font-weight: 800;
+    line-height: 1.02;
+    letter-spacing: -0.03em;
+    margin: 0;
+    color: var(--sc-ink);
+  }
+  .hero-headline-gold {
+    color: var(--sc-accent);
+  }
+  .hero-subcopy {
+    margin: 1.1rem 0 0 0;
+    font-size: clamp(0.98rem, 1.15vw, 1.15rem);
+    color: #CBD5E1;
+    max-width: 44ch;
+    line-height: 1.55;
+  }
+  .hero-cta-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.9rem;
+    margin-top: 1.65rem;
+  }
+
+  /* Bottom Feature Strip from Reference Image */
+  .hero-pillars-bar {
+    position: absolute;
+    inset: auto 0 0 0;
+    z-index: 9;
+    padding: 0.95rem var(--sc-gutter);
+    background: linear-gradient(180deg, rgba(7, 8, 17, 0.45) 0%, rgba(7, 8, 17, 0.95) 100%);
+    border-top: 1px solid rgba(244, 182, 63, 0.22);
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+  }
+  .hero-pillar {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+  .hero-pillar__icon {
+    width: 34px;
+    height: 34px;
+    border-radius: 8px;
+    background: rgba(244, 182, 63, 0.12);
+    border: 1px solid rgba(244, 182, 63, 0.35);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--sc-accent);
+    flex-shrink: 0;
+  }
+  .hero-pillar__title {
+    font-size: 0.86rem;
+    font-weight: 700;
+    color: var(--sc-ink);
+    margin: 0;
+  }
+  .hero-pillar__sub {
+    font-size: 0.74rem;
+    color: var(--sc-ink-soft);
+    margin: 0;
+  }
+
+  /* -------------------------------------- ACT 2: TENSION + BLUEPRINT ------- */
+  .tension-section {
+    padding-top: var(--sc-8);
+    padding-bottom: var(--sc-8);
+    background: #090C18;
+    border-bottom: 1px solid var(--sc-hairline);
+  }
+  .tension-split {
+    display: grid;
+    grid-template-columns: 0.95fr 1.05fr;
+    gap: var(--sc-7);
+    align-items: center;
+  }
+  .reference-showcase-frame {
+    margin: 0;
+    border-radius: var(--sc-r-md);
+    border: 1px solid rgba(244, 182, 63, 0.38);
+    background: #05070E;
+    box-shadow: var(--sc-e3), var(--sc-edge);
+    overflow: hidden;
+  }
+  .reference-showcase-frame img {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+  .reference-caption {
+    padding: 0.75rem 1rem;
+    background: #0D1120;
+    border-top: 1px solid var(--sc-hairline);
+    display: flex;
+    justify-content: space-between;
+    font-family: var(--sc-font-mono);
+    font-size: 0.74rem;
+    color: var(--sc-ink-soft);
+  }
+
+  /* --------- ACT 3: THE PEAK — 3-PERSPECTIVE LIVE COMMAND DECK ------------- */
+  .command-stage {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 4.4rem var(--sc-gutter) 1.5rem var(--sc-gutter);
+    background: radial-gradient(80% 75% at 50% 45%, rgba(244, 182, 63, 0.11) 0%, #070811 75%);
+  }
+  .command-top-row {
+    width: 100%;
+    max-width: var(--sc-maxw);
+    margin-inline: auto;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 1rem;
+    position: relative;
+    z-index: var(--sc-z-copy);
+  }
+  .command-tabs {
+    display: inline-flex;
+    gap: 0.45rem;
+    padding: 0.35rem;
+    background: #0D1120;
+    border: 1px solid rgba(244, 182, 63, 0.32);
+    border-radius: 12px;
+  }
+  .command-tab {
+    padding: 0.55rem 1rem;
+    border-radius: 8px;
+    border: none;
+    background: transparent;
+    color: var(--sc-ink-soft);
+    font-size: 0.82rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color var(--sc-d-fast) var(--sc-ease-out),
+                color var(--sc-d-fast) var(--sc-ease-out);
+  }
+  .command-tab[aria-selected="true"] {
+    background: var(--sc-accent);
+    color: #070811;
+    font-weight: 700;
+  }
+
+  .command-deck-window {
+    width: 100%;
+    max-width: var(--sc-maxw);
+    margin-inline: auto;
+    border-radius: 16px;
+    border: 1px solid rgba(244, 182, 63, 0.36);
+    box-shadow: var(--sc-e3), var(--sc-edge);
+    overflow: hidden;
+    position: relative;
+    z-index: var(--sc-z-copy);
+    background: #0B0E1A;
+  }
+
+  .deck-pane {
+    display: none;
+    padding: 1.25rem 1.5rem;
+  }
+  .deck-pane.is-active {
+    display: block;
+  }
+
+  /* Pane 1: Super Admin Platform Control (Dark Mode from Bottom-Left Reference) */
+  .admin-layout {
+    display: grid;
+    grid-template-columns: 185px 1fr;
+    gap: 1.25rem;
+    align-items: start;
+  }
+  .admin-sidebar {
+    background: #080A14;
+    border: 1px solid var(--sc-hairline);
+    border-radius: 12px;
+    padding: 0.85rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    font-size: 0.78rem;
+  }
+  .admin-nav-item {
+    padding: 0.45rem 0.65rem;
+    border-radius: 7px;
+    color: var(--sc-ink-soft);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .admin-nav-item.is-current {
+    background: rgba(244, 182, 63, 0.16);
+    color: var(--sc-accent);
+    font-weight: 600;
+  }
+  .admin-kpis {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0.85rem;
+    margin-bottom: 1rem;
+  }
+  .admin-kpi-box {
+    background: #111629;
+    border: 1px solid var(--sc-hairline);
+    border-radius: 10px;
+    padding: 0.75rem 0.9rem;
+  }
+  .admin-kpi-label {
+    font-size: 0.72rem;
+    color: var(--sc-ink-soft);
+  }
+  .admin-kpi-val {
+    font-family: var(--sc-font-display);
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--sc-ink);
+    margin-top: 0.2rem;
+  }
+  .admin-kpi-delta {
+    font-family: var(--sc-font-mono);
+    font-size: 0.7rem;
+    color: #34D399;
+    margin-top: 0.15rem;
+  }
+  .admin-mid-grid {
+    display: grid;
+    grid-template-columns: 1.25fr 0.75fr;
+    gap: 0.85rem;
+    margin-bottom: 0.9rem;
+  }
+  .admin-panel {
+    background: #111629;
+    border: 1px solid var(--sc-hairline);
+    border-radius: 10px;
+    padding: 0.85rem 1rem;
+  }
+  .admin-panel-title {
+    font-size: 0.84rem;
+    font-weight: 700;
+    margin: 0 0 0.6rem 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .admin-tx-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.76rem;
+  }
+  .admin-tx-table th {
+    text-align: left;
+    color: var(--sc-ink-soft);
+    font-weight: 500;
+    padding: 0.4rem 0.5rem;
+    border-bottom: 1px solid var(--sc-hairline);
+  }
+  .admin-tx-table td {
+    padding: 0.45rem 0.5rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    color: var(--sc-ink);
+  }
+  .tx-badge-ok {
+    background: rgba(16, 185, 129, 0.18);
+    color: #34D399;
+    padding: 0.15rem 0.45rem;
+    border-radius: 4px;
+    font-family: var(--sc-font-mono);
+    font-size: 0.68rem;
+  }
+
+  /* Pane 2: African Stars Organizer Workspace (Light Surface from Bottom-Center Reference) */
+  .deck-pane--organizer {
+    background: #F8FAFC;
+    color: #0F172A;
+    --sc-ink: #0F172A;
+    --sc-ink-soft: #475569;
+  }
+  .org-header-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid #E2E8F0;
+  }
+  .org-kpis {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0.85rem;
+    margin-bottom: 1rem;
+  }
+  .org-kpi-card {
+    background: #FFFFFF;
+    border: 1px solid #E2E8F0;
+    border-radius: 10px;
+    padding: 0.75rem 0.9rem;
+    box-shadow: 0 2px 6px rgba(15, 23, 42, 0.04);
+  }
+  .org-quick-actions {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 0.6rem;
+    margin-bottom: 1rem;
+  }
+  .org-action-btn {
+    background: #FFFFFF;
+    border: 1px solid #CBD5E1;
+    border-radius: 9px;
+    padding: 0.6rem 0.4rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: #0F172A;
+    cursor: pointer;
+    text-align: center;
+    transition: border-color var(--sc-d-fast) var(--sc-ease-out),
+                transform var(--sc-d-fast) var(--sc-ease-out);
+  }
+  .org-action-btn:hover {
+    border-color: #7C3AED;
+    transform: translateY(-1px);
+  }
+
+  /* Pane 3: MISS AFRICA 2025 Live Creator Storefront (from Bottom-Right Reference) */
+  .storefront-banner {
+    background: linear-gradient(125deg, #190D2E 0%, #311042 52%, #593214 100%);
+    border-radius: 12px;
+    padding: 1.25rem 1.5rem;
+    border: 1px solid rgba(244, 182, 63, 0.42);
+    display: grid;
+    grid-template-columns: 1.2fr 0.8fr;
+    gap: 1rem;
+    align-items: center;
+    margin-bottom: 1rem;
+  }
+  .countdown-boxes {
+    display: flex;
+    gap: 0.6rem;
+    margin: 0.85rem 0;
+  }
+  .countdown-cell {
+    background: rgba(7, 8, 17, 0.72);
+    border: 1px solid rgba(244, 182, 63, 0.35);
+    border-radius: 8px;
+    padding: 0.4rem 0.7rem;
+    text-align: center;
+    min-width: 58px;
+  }
+  .countdown-cell strong {
+    display: block;
+    font-family: var(--sc-font-display);
+    font-size: 1.2rem;
+    color: var(--sc-accent);
+  }
+  .countdown-cell span {
+    font-size: 0.65rem;
+    color: var(--sc-ink-soft);
+    text-transform: uppercase;
+  }
+  .storefront-cards {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0.8rem;
+  }
+  .sf-mini-card {
+    background: #12172B;
+    border: 1px solid var(--sc-hairline);
+    border-radius: 10px;
+    padding: 0.75rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 0.5rem;
+  }
+  .sf-mini-card h4 {
+    margin: 0;
+    font-size: 0.85rem;
+    color: var(--sc-ink);
+  }
+  .sf-mini-card p {
+    margin: 0;
+    font-size: 0.72rem;
+    color: var(--sc-ink-soft);
+  }
+
+  /* ------------------------------------ ACT 4: SUBSTANCE (METRICS) --------- */
+  .substance-section {
+    padding-block: var(--sc-8);
+    background: #080B16;
+    border-top: 1px solid var(--sc-hairline);
+    border-bottom: 1px solid var(--sc-hairline);
+  }
+  .substance-grid {
+    display: grid;
+    grid-template-columns: 0.9fr 1.1fr;
+    gap: var(--sc-8);
+    align-items: start;
+  }
+  .stats-2x2 {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--sc-6);
+  }
+  .stat-item {
+    padding-top: var(--sc-4);
+    border-top: 1px solid rgba(244, 182, 63, 0.35);
+  }
+  .stat-number {
+    font-family: var(--sc-font-display);
+    font-size: var(--sc-t-3xl);
+    font-weight: 800;
+    color: var(--sc-ink);
+    line-height: 1;
+  }
+  .stat-suffix {
+    color: var(--sc-accent);
+    font-size: var(--sc-t-xl);
+    margin-left: 0.15rem;
+  }
+
+  /* ------------------------------------ ACT 5: RANGE (5 MODULE RAIL) ------- */
+  .modules-rail-stage {
+    display: flex;
+    align-items: center;
+    background: #070811;
+  }
+  .modules-rail {
+    display: flex;
+    align-items: stretch;
+    gap: var(--sc-5);
+    padding-inline: var(--sc-gutter);
+    padding-top: 3.5rem;
+  }
+  .rail-intro {
+    width: clamp(19rem, 26vw, 24rem);
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding-right: var(--sc-3);
+  }
+  .module-card {
+    width: clamp(20rem, 27vw, 25rem);
+    flex-shrink: 0;
+    background: var(--sc-surface);
+    border: 1px solid rgba(244, 182, 63, 0.25);
+    border-radius: 14px;
+    padding: var(--sc-5);
+    box-shadow: var(--sc-e2), var(--sc-edge);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: var(--sc-4);
+  }
+  .module-card.is-selected {
+    border-color: var(--sc-accent);
+  }
+  .module-visual {
+    height: 140px;
+    border-radius: 10px;
+    background: radial-gradient(75% 75% at 50% 50%, rgba(244, 182, 63, 0.2) 0%, #070811 100%);
+    border: 1px solid var(--sc-hairline);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+  }
+  .module-meta-list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    font-family: var(--sc-font-mono);
+    font-size: 0.74rem;
+    color: var(--sc-ink-soft);
+    display: grid;
+    gap: 0.35rem;
+  }
+  .module-meta-list li {
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid var(--sc-hairline);
+    padding-bottom: 0.25rem;
+  }
+  .module-meta-list strong {
+    color: var(--sc-ink);
+  }
+
+  /* ------------------------------------ ACT 6: COMMITMENT (LAUNCH) --------- */
+  .close-stage {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 5.2rem var(--sc-gutter) var(--sc-4) var(--sc-gutter);
+    background: radial-gradient(75% 70% at 50% 42%, rgba(244, 182, 63, 0.14) 0%, #070811 76%);
+  }
+  .close-grid {
+    width: 100%;
+    max-width: var(--sc-maxw);
+    margin-inline: auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--sc-7);
+    align-items: center;
+    margin-block: auto;
+  }
+  .launch-card {
+    background: rgba(14, 18, 34, 0.94);
+    border: 1px solid rgba(244, 182, 63, 0.42);
+    border-radius: 16px;
+    padding: var(--sc-5);
+    box-shadow: var(--sc-e3), var(--sc-edge);
+    position: relative;
+    z-index: var(--sc-z-copy);
+  }
+  .launch-form {
+    display: grid;
+    gap: 0.85rem;
+    margin-top: 0.85rem;
+  }
+  .launch-field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+  }
+  .launch-field label {
+    font-family: var(--sc-font-mono);
+    font-size: 0.72rem;
+    color: var(--sc-ink-soft);
+    text-transform: uppercase;
+  }
+  .launch-input {
+    padding: 0.65rem 0.85rem;
+    border-radius: 8px;
+    border: 1px solid var(--sc-hairline-strong);
+    background: #070811;
+    color: var(--sc-ink);
+    font-size: 0.88rem;
+  }
+  .launch-feedback {
+    display: none;
+    padding: 0.7rem 0.9rem;
+    border-radius: 8px;
+    background: rgba(16, 185, 129, 0.16);
+    border: 1px solid #34D399;
+    color: #ECFDF5;
+    font-size: 0.82rem;
+  }
+  .launch-feedback.is-shown {
+    display: block;
+  }
+
+  .orra-footer {
+    width: 100%;
+    max-width: var(--sc-maxw);
+    margin-inline: auto;
+    padding-top: 0.9rem;
+    border-top: 1px solid var(--sc-hairline);
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 1rem;
+    font-family: var(--sc-font-mono);
+    font-size: 0.72rem;
+    color: var(--sc-ink-soft);
+    position: relative;
+    z-index: var(--sc-z-copy);
+  }
+
+  /* --------------------------------------------------- MOBILE RESPONSIVE --- */
+  @media (max-width: 900px) {
+    .orra-nav-links,
+    .orra-lang-pill,
+    .orra-login-link,
+    .admin-sidebar {
+      display: none;
+    }
+    .hero-globe-rig {
+      top: 3.6rem;
+      bottom: auto;
+      left: 0;
+      right: 0;
+      margin-inline: auto;
+      width: min(52vw, 195px);
+      height: min(52vw, 195px);
+    }
+    .orbital-cards-layer {
+      top: 3.6rem;
+      bottom: auto;
+      left: 0;
+      right: 0;
+      margin-inline: auto;
+      width: min(94vw, 355px);
+      height: min(52vw, 195px);
+    }
+    .orbital-card {
+      width: auto;
+      padding: 0.28rem 0.5rem;
+      border-radius: 9px;
+      gap: 0.35rem;
+    }
+    .orbital-card__badge {
+      width: 22px;
+      height: 22px;
+      font-size: 0.72rem;
+    }
+    .orbital-card__title {
+      font-size: 0.72rem;
+    }
+    .orbital-card__sub {
+      display: none;
+    }
+    .orbital-card--voting      { top: 2%;  left: 0; }
+    .orbital-card--events      { top: 2%;  right: 0; }
+    .orbital-card--fundraising { top: 42%; left: -2%; }
+    .orbital-card--community   { top: 42%; right: -2%; }
+    .orbital-card--shop        { bottom: 2%; left: 0; }
+    .orbital-card--sms         { bottom: 2%; right: 0; }
+
+    .hero-copy-scrim {
+      inset: 30% 0 0 0;
+      width: 100%;
+      background: linear-gradient(180deg, rgba(7, 8, 17, 0) 0%, rgba(7, 8, 17, 0.94) 18%, rgba(7, 8, 17, 0.99) 100%);
+    }
+    .hero-copy-wrap {
+      align-items: flex-end;
+    }
+    .hero-copy-box {
+      max-width: none;
+      margin-inline: var(--sc-gutter);
+      margin-bottom: 5.1rem;
+      padding: 0.95rem 1.05rem;
+      background-color: rgba(7, 8, 17, 0.92);
+      border: 1px solid rgba(244, 182, 63, 0.22);
+    }
+    .hero-headline {
+      font-size: clamp(1.75rem, 6.2vw, 2.35rem);
+    }
+    .hero-subcopy {
+      font-size: 0.88rem;
+      margin-top: 0.65rem;
+    }
+    .hero-cta-row {
+      margin-top: 0.95rem;
+      gap: 0.6rem;
+    }
+    .hero-pillars-bar {
+      grid-template-columns: repeat(2, 1fr);
+      padding: 0.5rem var(--sc-gutter);
+      gap: 0.4rem;
+    }
+    .hero-pillar__sub {
+      display: none;
+    }
+    .tension-split,
+    .substance-grid,
+    .close-grid,
+    .admin-layout,
+    .admin-mid-grid,
+    .storefront-banner {
+      grid-template-columns: 1fr;
+    }
+    .admin-kpis,
+    .org-kpis,
+    .storefront-cards {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    .org-quick-actions {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+</style>
+</head>
+<body>
+
+<span data-sc-progress></span>
+<div class="sc-grain" aria-hidden="true"></div>
+
+<!-- ========================================================= HEADER BAR ==== -->
+<header class="orra-header">
+  <a href="#top" class="orra-logo" aria-label="Orra by Nateiva Home">
+    <svg class="orra-logo__icon" viewBox="0 0 40 40" fill="none" aria-hidden="true">
+      <circle cx="20" cy="20" r="16" stroke="#F4B63F" stroke-width="2.6"/>
+      <path d="M8 26 C14 32, 26 32, 32 26" stroke="#F4B63F" stroke-width="1.8" stroke-linecap="round"/>
+      <rect x="13" y="19" width="3.2" height="7" rx="1" fill="#F4B63F"/>
+      <rect x="18.4" y="14" width="3.2" height="12" rx="1" fill="#F4B63F"/>
+      <rect x="23.8" y="10" width="3.2" height="16" rx="1" fill="#F4B63F"/>
+    </svg>
+    <div class="orra-logo__text">
+      <span class="orra-logo__title">Orra</span>
+      <span class="orra-logo__sub">by Nateiva</span>
+    </div>
+  </a>
+
+  <nav aria-label="Primary Navigation">
+    <ul class="orra-nav-links">
+      <li><a href="#top" class="is-active">Home</a></li>
+      <li><a href="#act-peak">Features</a></li>
+      <li><a href="#act-modules">Templates</a></li>
+      <li><a href="#act-substance">Pricing</a></li>
+      <li><a href="#act-blueprint">Resources</a></li>
+    </ul>
+  </nav>
+
+  <div class="orra-nav-actions">
+    <span class="orra-lang-pill">🌐 EN</span>
+    <a href="#act-peak" class="orra-login-link">Login</a>
+    <a href="#launch" class="orra-btn-primary">Get Started Free →</a>
+  </div>
+</header>
+
+<main id="top">
+
+  <!-- =======================================================================
+       ACT 1 · RECOGNITION: Layered 3D Globe & 5 Orbital Creator Modules (pin)
+       ======================================================================= -->
+  <section id="act-hero" data-sc-act="pin" data-sc-span="2.6" data-sc-drift="#070811">
+    <div data-sc-stage class="hero-stage">
+
+      <!-- Plane 1: Far Golden Night Skyline Silhouette -->
+      <div class="hero-plane-skyline" data-sc-parallax="-1.1" aria-hidden="true">
+        <svg viewBox="0 0 1600 320" width="100%" height="100%" preserveAspectRatio="none" fill="none">
+          <path d="M0,320 L0,250 L45,250 L45,190 L80,190 L80,240 L130,240 L130,155 L175,155 L175,235 L260,235 L260,180 L310,180 L310,255 L420,255 L420,210 L470,210 L470,265 L1120,265 L1120,195 L1165,195 L1165,245 L1230,245 L1230,140 L1275,140 L1275,230 L1345,230 L1345,170 L1395,170 L1395,250 L1470,250 L1470,185 L1525,185 L1525,245 L1600,245 L1600,320 Z" fill="#0B0E1D"/>
+          <line x1="0" y1="265" x2="1600" y2="265" stroke="#F4B63F" stroke-opacity="0.28" stroke-width="1.5"/>
+        </svg>
+      </div>
+
+      <!-- Plane 2: Interactive 3D Illuminated Globe (Centered on Africa + Orbital Arcs) -->
+      <div class="hero-globe-rig" id="hero-globe-rig" data-sc-parallax="-0.35" role="img" aria-label="Interactive 3D illuminated Earth centered on Africa with golden city networks and orbital creator rings.">
+        <canvas id="orra-globe-canvas" width="760" height="760"></canvas>
+      </div>
+
+      <!-- Plane 3: Five Independent 3D Floating Glass Cards from Reference Image -->
+      <div class="orbital-cards-layer" data-sc-parallax="0.35">
+        <!-- 1. Voting -->
+        <div class="orbital-card orbital-card--voting" data-sc-tilt="7" data-jump-tab="storefront">
+          <div class="orbital-card__badge" aria-hidden="true">🏆</div>
+          <div>
+            <p class="orbital-card__title">Voting</p>
+            <p class="orbital-card__sub">Competitions &amp; Contests</p>
+          </div>
+        </div>
+
+        <!-- 2. Events -->
+        <div class="orbital-card orbital-card--events" data-sc-tilt="7" data-jump-tab="organizer">
+          <div class="orbital-card__badge" aria-hidden="true">📅</div>
+          <div>
+            <p class="orbital-card__title">Events</p>
+            <p class="orbital-card__sub">Plan &amp; Sell Tickets</p>
+          </div>
+        </div>
+
+        <!-- 3. Fundraising -->
+        <div class="orbital-card orbital-card--fundraising" data-sc-tilt="7" data-jump-tab="admin">
+          <div class="orbital-card__badge" aria-hidden="true">💛</div>
+          <div>
+            <p class="orbital-card__title">Fundraising</p>
+            <p class="orbital-card__sub">Rally Support &amp; Create Impact</p>
+          </div>
+        </div>
+
+        <!-- 4. Shop -->
+        <div class="orbital-card orbital-card--shop" data-sc-tilt="7" data-jump-tab="storefront">
+          <div class="orbital-card__badge" aria-hidden="true">🛍️</div>
+          <div>
+            <p class="orbital-card__title">Shop</p>
+            <p class="orbital-card__sub">Sell Merchandise &amp; Products</p>
+          </div>
+        </div>
+
+        <!-- 5. Community -->
+        <div class="orbital-card orbital-card--community" data-sc-tilt="7" data-jump-tab="organizer">
+          <div class="orbital-card__badge" aria-hidden="true">👥</div>
+          <div>
+            <p class="orbital-card__title">Community</p>
+            <p class="orbital-card__sub">Engage &amp; Grow Together</p>
+          </div>
+        </div>
+
+        <!-- 6. SMS Campaign -->
+        <div class="orbital-card orbital-card--sms" data-sc-tilt="7" data-jump-tab="organizer">
+          <div class="orbital-card__badge" aria-hidden="true">💬</div>
+          <div>
+            <p class="orbital-card__title">SMS Campaign</p>
+            <p class="orbital-card__sub">Instant Mobile Broadcasts</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Sibling Scrims for Contrast Protection -->
+      <div class="sc-scrim sc-scrim--lead" aria-hidden="true"></div>
+      <div class="sc-scrim sc-scrim--band" aria-hidden="true"></div>
+      <div class="hero-copy-scrim" aria-hidden="true"></div>
+
+      <!-- Plane 4: Hero Headline & Story Beats -->
+      <div class="hero-copy-wrap">
+        <!-- Beat 1A: Opening Greet matching exact reference typography -->
+        <div class="hero-copy-box" data-sc-cue="0 0.58 0 0.24">
+          <p class="hero-kicker">A GLOBAL CREATOR PLATFORM</p>
+          <h1 class="hero-headline" data-sc-kinetic="lines">Create. Engage. Sell. <span class="hero-headline-gold">Grow.</span></h1>
+          <p class="hero-subcopy">Build your own platform or website for events, voting, fundraising, products, and community: all in one place.</p>
+          <div class="hero-cta-row">
+            <a href="#launch" class="orra-btn-primary">Get Started Free →</a>
+            <a href="#act-peak" class="orra-btn-ghost">▶ Watch Live Demo</a>
+          </div>
+        </div>
+
+        <!-- Beat 1B: Second Scroll Beat as Globe Rotates -->
+        <div class="hero-copy-box" data-sc-cue="0.52 0.96 0.22 0.22">
+          <h2 class="hero-headline">Local Mobile Money meets <span class="hero-headline-gold">Global Cards.</span></h2>
+          <p class="hero-subcopy">Accept instant votes, ticket sales, and donations in FCFA, USD, EUR, CAD, and GBP via Fapshi, Notch Pay, Stripe, and PayPal.</p>
+          <div class="hero-cta-row">
+            <a href="#launch" class="orra-btn-primary">Get Started Free →</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Bottom 4 Trust Pillars from Reference Image -->
+      <div class="hero-pillars-bar">
+        <div class="hero-pillar">
+          <div class="hero-pillar__icon" aria-hidden="true">📱</div>
+          <div>
+            <p class="hero-pillar__title">60+ Stunning Templates</p>
+            <p class="hero-pillar__sub">Launch in minutes</p>
+          </div>
+        </div>
+        <div class="hero-pillar">
+          <div class="hero-pillar__icon" aria-hidden="true">⚡</div>
+          <div>
+            <p class="hero-pillar__title">All-in-One Platform</p>
+            <p class="hero-pillar__sub">Voting, Events, Shop &amp; Causes</p>
+          </div>
+        </div>
+        <div class="hero-pillar">
+          <div class="hero-pillar__icon" aria-hidden="true">🌍</div>
+          <div>
+            <p class="hero-pillar__title">Global Reach</p>
+            <p class="hero-pillar__sub">Local &amp; International</p>
+          </div>
+        </div>
+        <div class="hero-pillar">
+          <div class="hero-pillar__icon" aria-hidden="true">🔒</div>
+          <div>
+            <p class="hero-pillar__title">Trusted Payments</p>
+            <p class="hero-pillar__sub">Fapshi, Notch Pay, Stripe, PayPal</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- =======================================================================
+       ACT 2 · TENSION: Unified Architecture vs. Fragmented Tools (flow + reveal)
+       ======================================================================= -->
+  <section id="act-blueprint" class="sc-section tension-section" data-sc-act="flow" data-sc-drift="#090C18">
+    <div class="sc-wrap tension-split">
+      <div class="sc-stack" data-sc-in data-sc-stagger="65">
+        <h2 class="sc-display sc-display--lg">Stop stitching five separate tools together.</h2>
+        <p class="sc-body">Organizers across Africa and the global diaspora lose revenue when pageant voting lives on one site, concert ticketing on another, fundraising on a third, and merchandise on a fourth.</p>
+        <p class="sc-body">Orra by Nateiva unifies your public creator website, your organizer back-office, and enterprise platform control into a single high-speed system with native FCFA Mobile Money and international card settlement.</p>
+      </div>
+
+      <figure class="reference-showcase-frame" data-sc-reveal="up" data-sc-reveal-at="0.10 0.55">
+        <img src="assets/orra-reference.png" width="1366" height="900" alt="Orra by Nateiva complete platform ecosystem showing Hero, Super Admin Console, African Stars Organizer Dashboard, and Miss Africa 2025 Storefront.">
+        <figcaption class="reference-caption">
+          <span>ORRA ECOSYSTEM ARCHITECTURE</span>
+          <span>SUPER ADMIN · ORGANIZER · LIVE STOREFRONT</span>
+        </figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- =======================================================================
+       ACT 3 · TURN (THE PEAK): Interactive 3-Perspective Live Command Deck (pin)
+       Bespoke Signature Move: Live synchronized Super Admin, African Stars
+       Organizer, and Miss Africa 2025 Storefront simulator.
+       ======================================================================= -->
+  <section id="act-peak" data-sc-act="pin" data-sc-span="3.6" data-sc-dwell="0.36" data-sc-drift="#070811">
+    <div data-sc-stage class="command-stage">
+
+      <div class="command-top-row" data-sc-cue="0 1 0 0">
+        <div>
+          <h2 class="sc-display sc-display--md" id="peak-dynamic-title">Three Live Perspectives. One Synchronized Ledger.</h2>
+          <p class="sc-body" id="peak-dynamic-sub">Scroll or click the tabs below to inspect Super Admin Control, the African Stars Organizer Dashboard, and the Miss Africa 2025 Storefront.</p>
+        </div>
+
+        <div class="command-tabs" role="tablist" aria-label="Orra Platform Perspectives">
+          <button type="button" class="command-tab" role="tab" id="tab-btn-admin" aria-selected="true" data-deck-view="admin">1 · Super Admin</button>
+          <button type="button" class="command-tab" role="tab" id="tab-btn-organizer" aria-selected="false" data-deck-view="organizer">2 · Organizer (African Stars)</button>
+          <button type="button" class="command-tab" role="tab" id="tab-btn-storefront" aria-selected="false" data-deck-view="storefront">3 · Miss Africa 2025 Site</button>
+        </div>
+      </div>
+
+      <div class="command-deck-window" data-sc-cue="0 1 0 0">
+
+        <!-- VIEW 1: SUPER ADMIN PLATFORM CONTROL -->
+        <div class="deck-pane is-active" id="pane-admin" role="tabpanel" aria-labelledby="tab-btn-admin">
+          <div class="admin-layout">
+            <aside class="admin-sidebar" aria-label="Super Admin Sidebar">
+              <div class="admin-nav-item is-current"><span>🏠 Dashboard</span><span>●</span></div>
+              <div class="admin-nav-item"><span>🏢 Organizations</span><span>1,248</span></div>
+              <div class="admin-nav-item"><span>👥 Users</span><span>98.4k</span></div>
+              <div class="admin-nav-item"><span>💳 Transactions</span><span>24.8k</span></div>
+              <div class="admin-nav-item"><span>🏦 Payments</span></div>
+              <div class="admin-nav-item"><span>🎨 Templates</span><span>60+</span></div>
+              <div class="admin-nav-item"><span>📊 Analytics</span></div>
+            </aside>
+
+            <div>
+              <div class="admin-kpis">
+                <div class="admin-kpi-box">
+                  <div class="admin-kpi-label">Total Revenue</div>
+                  <div class="admin-kpi-val" id="admin-rev-val">284,562,000 FCFA</div>
+                  <div class="admin-kpi-delta">↑ +23.1% vs last period</div>
+                </div>
+                <div class="admin-kpi-box">
+                  <div class="admin-kpi-label">Organizations</div>
+                  <div class="admin-kpi-val">1,248</div>
+                  <div class="admin-kpi-delta">↑ +18.2% active</div>
+                </div>
+                <div class="admin-kpi-box">
+                  <div class="admin-kpi-label">Transactions</div>
+                  <div class="admin-kpi-val" id="admin-tx-val">24,892</div>
+                  <div class="admin-kpi-delta">↑ +25.1% settled</div>
+                </div>
+                <div class="admin-kpi-box">
+                  <div class="admin-kpi-label">Active Users</div>
+                  <div class="admin-kpi-val">98,442</div>
+                  <div class="admin-kpi-delta">↑ +14.7% global</div>
+                </div>
+              </div>
+
+              <div class="admin-mid-grid">
+                <div class="admin-panel">
+                  <div class="admin-panel-title">
+                    <span>Revenue Growth (Jan – Dec 2025)</span>
+                    <span style="color: var(--sc-accent); font-family: var(--sc-font-mono); font-size: 0.72rem;">Peak: 3,340,000 FCFA (Aug)</span>
+                  </div>
+                  <svg viewBox="0 0 520 110" width="100%" height="95" fill="none" role="img" aria-label="Monthly revenue bar and area chart peaking in August 2025">
+                    <rect x="18" y="68" width="22" height="34" rx="3" fill="#6D28D9"/>
+                    <rect x="58" y="54" width="22" height="48" rx="3" fill="#7C3AED"/>
+                    <rect x="98" y="60" width="22" height="42" rx="3" fill="#7C3AED"/>
+                    <rect x="138" y="38" width="22" height="64" rx="3" fill="#8B5CF6"/>
+                    <rect x="178" y="45" width="22" height="57" rx="3" fill="#8B5CF6"/>
+                    <rect x="218" y="32" width="22" height="70" rx="3" fill="#9333EA"/>
+                    <rect x="258" y="48" width="22" height="54" rx="3" fill="#8B5CF6"/>
+                    <rect x="298" y="14" width="22" height="88" rx="3" fill="#F4B63F"/>
+                    <rect x="338" y="28" width="22" height="74" rx="3" fill="#A855F7"/>
+                    <rect x="378" y="35" width="22" height="67" rx="3" fill="#9333EA"/>
+                    <rect x="418" y="24" width="22" height="78" rx="3" fill="#A855F7"/>
+                    <rect x="458" y="30" width="22" height="72" rx="3" fill="#C084FC"/>
+                    <polyline points="29,65 69,50 109,57 149,34 189,42 229,28 269,44 309,12 349,25 389,32 429,21 469,27" stroke="#F4B63F" stroke-width="2"/>
+                  </svg>
+                </div>
+
+                <div class="admin-panel">
+                  <div class="admin-panel-title"><span>Global Activity</span><span>Live Diaspora</span></div>
+                  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 0.45rem; font-size: 0.76rem; margin-top: 0.5rem;">
+                    <div>🟢 Cameroon: <strong>42%</strong></div>
+                    <div>🔵 France: <strong>15%</strong></div>
+                    <div>🟣 UK: <strong>13%</strong></div>
+                    <div>🟡 USA: <strong>12%</strong></div>
+                    <div>🟠 Canada: <strong>8%</strong></div>
+                    <div>⚪ Other: <strong>10%</strong></div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="admin-panel">
+                <div class="admin-panel-title">
+                  <span>Recent Transactions</span>
+                  <button type="button" class="orra-btn-primary" id="sim-live-tx-btn" style="padding: 0.32rem 0.75rem; font-size: 0.74rem;">+ Simulate Live Vote (+10,000 FCFA)</button>
+                </div>
+                <table class="admin-tx-table">
+                  <thead>
+                    <tr><th>Date</th><th>Organization</th><th>Type</th><th>Amount</th><th>Provider</th><th>Status</th></tr>
+                  </thead>
+                  <tbody id="admin-tx-tbody">
+                    <tr><td>Oct 26, 2025</td><td>African Stars</td><td>Vote Package</td><td>2,300,000 FCFA</td><td>Fapshi</td><td><span class="tx-badge-ok">Completed</span></td></tr>
+                    <tr><td>Oct 26, 2025</td><td>Hope for Children</td><td>Donation</td><td>850,000 FCFA</td><td>Notch Pay</td><td><span class="tx-badge-ok">Completed</span></td></tr>
+                    <tr><td>Oct 25, 2025</td><td>Tech Conference</td><td>Ticket Sale</td><td>1,250,000 FCFA</td><td>Stripe</td><td><span class="tx-badge-ok">Completed</span></td></tr>
+                    <tr><td>Oct 25, 2025</td><td>Creator Store</td><td>Product Order</td><td>430,000 FCFA</td><td>PayPal</td><td><span class="tx-badge-ok">Completed</span></td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- VIEW 2: AFRICAN STARS ORGANIZER WORKSPACE (LIGHT MODE) -->
+        <div class="deck-pane deck-pane--organizer" id="pane-organizer" role="tabpanel" aria-labelledby="tab-btn-organizer">
+          <div class="org-header-bar">
+            <div>
+              <h3 style="margin: 0; font-family: var(--sc-font-display); font-size: 1.35rem; color: #0F172A;">Welcome back, African Stars! 👋</h3>
+              <p style="margin: 2px 0 0 0; font-size: 0.8rem; color: #475569;">Here is what is happening with your organization today.</p>
+            </div>
+            <button type="button" class="orra-btn-primary" id="org-trigger-vote-btn" style="background: #7C3AED; color: #FFFFFF; border-color: #8B5CF6;">+ Record Contest Vote</button>
+          </div>
+
+          <div class="org-kpis">
+            <div class="org-kpi-card">
+              <div style="font-size: 0.74rem; color: #475569;">Total Revenue</div>
+              <div style="font-family: var(--sc-font-display); font-size: 1.3rem; font-weight: 800; color: #0F172A;" id="org-rev-val">12,480,000 FCFA</div>
+              <div style="font-size: 0.7rem; color: #059669; font-weight: 600;">↑ +18.3% this month</div>
+            </div>
+            <div class="org-kpi-card">
+              <div style="font-size: 0.74rem; color: #475569;">Total Votes</div>
+              <div style="font-family: var(--sc-font-display); font-size: 1.3rem; font-weight: 800; color: #0F172A;" id="org-votes-val">8,420</div>
+              <div style="font-size: 0.7rem; color: #059669; font-weight: 600;">↑ +25.4% Miss Africa 2025</div>
+            </div>
+            <div class="org-kpi-card">
+              <div style="font-size: 0.74rem; color: #475569;">Ticket Sales</div>
+              <div style="font-family: var(--sc-font-display); font-size: 1.3rem; font-weight: 800; color: #0F172A;" id="org-tickets-val">2,150</div>
+              <div style="font-size: 0.7rem; color: #059669; font-weight: 600;">↑ +14.3% Charity Gala</div>
+            </div>
+            <div class="org-kpi-card">
+              <div style="font-size: 0.74rem; color: #475569;">Followers</div>
+              <div style="font-family: var(--sc-font-display); font-size: 1.3rem; font-weight: 800; color: #0F172A;">14,280</div>
+              <div style="font-size: 0.7rem; color: #059669; font-weight: 600;">↑ +32.1% Community</div>
+            </div>
+          </div>
+
+          <div class="org-quick-actions">
+            <button type="button" class="org-action-btn" data-org-action="Miss Africa 2025 Voting">🏆 Create Voting</button>
+            <button type="button" class="org-action-btn" data-org-action="Charity Gala Night">📅 Create Event</button>
+            <button type="button" class="org-action-btn" data-org-action="Official Merch Hoodie">🛍️ Add Product</button>
+            <button type="button" class="org-action-btn" data-org-action="Education Fund">💛 Start Fundraising</button>
+            <button type="button" class="org-action-btn" data-org-action="SMS Broadcast">💬 Send SMS</button>
+            <button type="button" class="org-action-btn" data-org-action="Diaspora Campaign">🚀 Create Campaign</button>
+          </div>
+
+          <div style="background: #FFFFFF; border: 1px solid #E2E8F0; border-radius: 10px; padding: 0.75rem 1rem;">
+            <div style="font-size: 0.82rem; font-weight: 700; color: #0F172A; margin-bottom: 0.45rem;">Recent Activities · African Stars</div>
+            <div style="display: grid; gap: 0.35rem; font-size: 0.76rem; color: #334155;" id="org-activity-feed">
+              <div style="display: flex; justify-content: space-between;"><span>👑 <strong>Miss Africa 2025</strong> · Vote Package</span><span><strong>1,200,000 FCFA</strong> · Completed</span></div>
+              <div style="display: flex; justify-content: space-between;"><span>🥂 <strong>Charity Gala</strong> · Table Reservation</span><span><strong>950,000 FCFA</strong> · Completed</span></div>
+              <div style="display: flex; justify-content: space-between;"><span>👕 <strong>Fashion Collection</strong> · Product Sale</span><span><strong>780,000 FCFA</strong> · Completed</span></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- VIEW 3: MISS AFRICA 2025 PUBLIC CREATOR STOREFRONT -->
+        <div class="deck-pane" id="pane-storefront" role="tabpanel" aria-labelledby="tab-btn-storefront">
+          <div class="storefront-banner">
+            <div>
+              <div style="font-family: var(--sc-font-mono); font-size: 0.72rem; color: var(--sc-accent); letter-spacing: 0.12em;">AFRICAN STARS LIVE PAGEANT</div>
+              <h3 style="font-family: var(--sc-font-display); font-size: 2rem; margin: 0.2rem 0; color: var(--sc-ink);">MISS AFRICA 2025</h3>
+              <p style="margin: 0; font-size: 0.84rem; color: #E2E8F0;">Beauty · Culture · Leadership · Impact — Vote for your favourite contestant and empower African talent.</p>
+              <div class="countdown-boxes">
+                <div class="countdown-cell"><strong>28</strong><span>Days</span></div>
+                <div class="countdown-cell"><strong>12</strong><span>Hours</span></div>
+                <div class="countdown-cell"><strong>46</strong><span>Minutes</span></div>
+                <div class="countdown-cell"><strong id="sf-sec-counter">18</strong><span>Seconds</span></div>
+              </div>
+              <div style="display: flex; gap: 0.75rem; flex-wrap: wrap;">
+                <button type="button" class="orra-btn-primary" id="sf-vote-now-btn">Vote Now → (+10 Votes)</button>
+                <span style="align-self: center; font-family: var(--sc-font-mono); font-size: 0.76rem; color: var(--sc-accent);" id="sf-live-vote-badge">8,420 Votes Cast</span>
+              </div>
+            </div>
+
+            <div style="text-align: center; background: rgba(7, 8, 17, 0.55); border: 1px solid rgba(244, 182, 63, 0.35); border-radius: 12px; padding: 1rem;">
+              <div style="font-size: 2.4rem;" aria-hidden="true">👑</div>
+              <div style="font-family: var(--sc-font-display); font-size: 1.15rem; font-weight: 700; color: var(--sc-ink); margin-top: 0.25rem;">Contestant #01 · Amina N.</div>
+              <div style="font-size: 0.76rem; color: var(--sc-ink-soft); margin-top: 0.2rem;">Yaoundé, Cameroon · 3,410 Votes</div>
+            </div>
+          </div>
+
+          <div class="storefront-cards">
+            <div class="sf-mini-card">
+              <div>
+                <h4>🥂 Charity Gala Night</h4>
+                <p>Dec 15, 2025 · Yaoundé, Cameroon</p>
+              </div>
+              <button type="button" class="orra-btn-primary" data-sf-buy="Charity Gala Ticket" style="width: 100%; padding: 0.45rem; font-size: 0.78rem;">Get Tickets</button>
+            </div>
+            <div class="sf-mini-card">
+              <div>
+                <h4>👕 Official Merch Store</h4>
+                <p>T-Shirts, Hoodies, Caps</p>
+              </div>
+              <button type="button" class="orra-btn-primary" data-sf-buy="Official Orra Hoodie" style="width: 100%; padding: 0.45rem; font-size: 0.78rem;">Shop Now</button>
+            </div>
+            <div class="sf-mini-card">
+              <div>
+                <h4>💛 Education Fund</h4>
+                <p>Support a brighter future</p>
+              </div>
+              <button type="button" class="orra-btn-primary" data-sf-buy="Education Fund Donation" style="width: 100%; padding: 0.45rem; font-size: 0.78rem;">Donate Now</button>
+            </div>
+            <div class="sf-mini-card">
+              <div>
+                <h4>👥 Join Our Community</h4>
+                <p>Connect. Share. Grow.</p>
+              </div>
+              <button type="button" class="orra-btn-primary" data-sf-buy="African Stars Community" style="width: 100%; padding: 0.45rem; font-size: 0.78rem;">Join Now</button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- =======================================================================
+       ACT 4 · SUBSTANCE: Verified Platform Scale & Payment Rails (flow + count)
+       ======================================================================= -->
+  <section id="act-substance" class="sc-section substance-section" data-sc-act="flow" data-sc-drift="#080B16">
+    <div class="sc-wrap substance-grid">
+      <div class="sc-stack" data-sc-in data-sc-stagger="65">
+        <h2 class="sc-display sc-display--lg">Local Mobile Money and International Cards in One Checkout.</h2>
+        <p class="sc-body">Whether your supporters are voting from Douala and Yaoundé via Fapshi and Notch Pay, or buying gala tickets from Paris, London, Montreal, and New York via Stripe and PayPal, Orra settles every transaction into your unified ledger.</p>
+      </div>
+
+      <div class="stats-2x2" data-sc-in data-sc-stagger="75">
+        <div class="stat-item">
+          <div class="stat-number"><span class="sc-nums" data-sc-count="0 284,562,000">0</span><span class="stat-suffix">FCFA</span></div>
+          <p class="sc-body" style="margin-top: 0.4rem; font-size: 0.88rem;">Processed across voting, events, fundraising, and creator shops.</p>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number"><span class="sc-nums" data-sc-count="0 1,248">0</span><span class="stat-suffix">orgs</span></div>
+          <p class="sc-body" style="margin-top: 0.4rem; font-size: 0.88rem;">Active creator organizations, pageants, and non-profits on Orra.</p>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number"><span class="sc-nums" data-sc-count="0 98,442">0</span><span class="stat-suffix">users</span></div>
+          <p class="sc-body" style="margin-top: 0.4rem; font-size: 0.88rem;">Voters, attendees, donors, and community members across 5+ countries.</p>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number"><span class="sc-nums" data-sc-count="0 60">0</span><span class="stat-suffix">+ templates</span></div>
+          <p class="sc-body" style="margin-top: 0.4rem; font-size: 0.88rem;">Ready-to-launch themes for contests, concerts, galas, and stores.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =======================================================================
+       ACT 5 · RANGE: The 5 Creator Engines Lateral Rail (pan + tilt)
+       ======================================================================= -->
+  <section id="act-modules" data-sc-act="pan" data-sc-span="3.6" data-sc-drift="#070811">
+    <div data-sc-stage class="modules-rail-stage">
+      <div class="modules-rail" data-sc-pan="0.08">
+
+        <div class="rail-intro sc-stack">
+          <h2 class="sc-display sc-display--lg">Six Engines. One Creator OS.</h2>
+          <p class="sc-body">Select the primary template you want to start with. Every Orra site can turn on all six modules at any time.</p>
+        </div>
+
+        <!-- Module 1: Voting -->
+        <article class="module-card is-selected" data-module-card="Voting &amp; Contests (Miss Africa Template)">
+          <div>
+            <div class="module-visual" data-sc-tilt="6">
+              <span style="font-size: 3.2rem;" aria-hidden="true">🏆</span>
+            </div>
+            <h3 class="sc-display sc-display--md" style="margin-top: 1rem;">Voting &amp; Contests</h3>
+            <p class="sc-body" style="font-size: 0.86rem; margin-top: 0.4rem;">Run pageants, talent shows, and awards with paid or free vote packages, anti-fraud leaderboards, and instant Mobile Money checkout.</p>
+          </div>
+          <div>
+            <ul class="module-meta-list">
+              <li><span>Template</span><strong>Miss Africa 2025</strong></li>
+              <li><span>Payment Rails</span><strong>Fapshi · Notch Pay · Stripe</strong></li>
+            </ul>
+            <button type="button" class="orra-btn-primary" data-pick-module="Voting &amp; Contests (Miss Africa Template)" style="width: 100%; margin-top: 0.85rem;">Selected Template</button>
+          </div>
+        </article>
+
+        <!-- Module 2: Events -->
+        <article class="module-card" data-module-card="Events &amp; Ticketing (Charity Gala Template)">
+          <div>
+            <div class="module-visual" data-sc-tilt="6">
+              <span style="font-size: 3.2rem;" aria-hidden="true">📅</span>
+            </div>
+            <h3 class="sc-display sc-display--md" style="margin-top: 1rem;">Events &amp; Ticketing</h3>
+            <p class="sc-body" style="font-size: 0.86rem; margin-top: 0.4rem;">Plan concerts, conferences, and charity galas with QR e-tickets, VIP table reservations, and SMS attendee reminders.</p>
+          </div>
+          <div>
+            <ul class="module-meta-list">
+              <li><span>Template</span><strong>Charity Gala Night</strong></li>
+              <li><span>Check-In</span><strong>QR Scanner + SMS</strong></li>
+            </ul>
+            <button type="button" class="orra-btn-ghost" data-pick-module="Events &amp; Ticketing (Charity Gala Template)" style="width: 100%; margin-top: 0.85rem;">Select Template</button>
+          </div>
+        </article>
+
+        <!-- Module 3: Fundraising -->
+        <article class="module-card" data-module-card="Fundraising &amp; Impact (Education Fund Template)">
+          <div>
+            <div class="module-visual" data-sc-tilt="6">
+              <span style="font-size: 3.2rem;" aria-hidden="true">💛</span>
+            </div>
+            <h3 class="sc-display sc-display--md" style="margin-top: 1rem;">Fundraising &amp; Causes</h3>
+            <p class="sc-body" style="font-size: 0.86rem; margin-top: 0.4rem;">Rally local and diaspora donors with live goal meters, transparent impact walls, and recurring supporter tiers.</p>
+          </div>
+          <div>
+            <ul class="module-meta-list">
+              <li><span>Template</span><strong>Hope for Children</strong></li>
+              <li><span>Settlement</span><strong>Multi-Currency</strong></li>
+            </ul>
+            <button type="button" class="orra-btn-ghost" data-pick-module="Fundraising &amp; Impact (Education Fund Template)" style="width: 100%; margin-top: 0.85rem;">Select Template</button>
+          </div>
+        </article>
+
+        <!-- Module 4: Shop -->
+        <article class="module-card" data-module-card="Merchandise &amp; Shop (Official Merch Template)">
+          <div>
+            <div class="module-visual" data-sc-tilt="6">
+              <span style="font-size: 3.2rem;" aria-hidden="true">🛍️</span>
+            </div>
+            <h3 class="sc-display sc-display--md" style="margin-top: 1rem;">Shop &amp; Merchandise</h3>
+            <p class="sc-body" style="font-size: 0.86rem; margin-top: 0.4rem;">Sell physical apparel, digital downloads, and creator bundles directly alongside your events and contests.</p>
+          </div>
+          <div>
+            <ul class="module-meta-list">
+              <li><span>Template</span><strong>Creator Storefront</strong></li>
+              <li><span>Fulfillment</span><strong>Physical &amp; Digital</strong></li>
+            </ul>
+            <button type="button" class="orra-btn-ghost" data-pick-module="Merchandise &amp; Shop (Official Merch Template)" style="width: 100%; margin-top: 0.85rem;">Select Template</button>
+          </div>
+        </article>
+
+        <!-- Module 5: Community -->
+        <article class="module-card" data-module-card="Community &amp; Memberships (African Stars Hub)">
+          <div>
+            <div class="module-visual" data-sc-tilt="6">
+              <span style="font-size: 3.2rem;" aria-hidden="true">👥</span>
+            </div>
+            <h3 class="sc-display sc-display--md" style="margin-top: 1rem;">Community &amp; Hub</h3>
+            <p class="sc-body" style="font-size: 0.86rem; margin-top: 0.4rem;">Grow your member directory, host exclusive supporter circles, and turn one-time voters into lifelong fans.</p>
+          </div>
+          <div>
+            <ul class="module-meta-list">
+              <li><span>Template</span><strong>Community Hub</strong></li>
+              <li><span>Access</span><strong>Free &amp; VIP Tiers</strong></li>
+            </ul>
+            <button type="button" class="orra-btn-ghost" data-pick-module="Community &amp; Memberships (African Stars Hub)" style="width: 100%; margin-top: 0.85rem;">Select Template</button>
+          </div>
+        </article>
+
+        <!-- Module 6: SMS Campaign -->
+        <article class="module-card" data-module-card="SMS Campaign &amp; Broadcasts (Instant Mobile Reach)">
+          <div>
+            <div class="module-visual" data-sc-tilt="6">
+              <span style="font-size: 3.2rem;" aria-hidden="true">💬</span>
+            </div>
+            <h3 class="sc-display sc-display--md" style="margin-top: 1rem;">SMS Campaign</h3>
+            <p class="sc-body" style="font-size: 0.86rem; margin-top: 0.4rem;">Send instant bulk SMS blasts, voting alerts, event ticket reminders, and fundraising appeals straight to every supporter's phone.</p>
+          </div>
+          <div>
+            <ul class="module-meta-list">
+              <li><span>Delivery</span><strong>Direct Mobile SMS</strong></li>
+              <li><span>Open Rate</span><strong>98% Instant Read</strong></li>
+            </ul>
+            <button type="button" class="orra-btn-ghost" data-pick-module="SMS Campaign &amp; Broadcasts (Instant Mobile Reach)" style="width: 100%; margin-top: 0.85rem;">Select Template</button>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- =======================================================================
+       ACT 6 · COMMITMENT: Launch Your Orra Platform (pin + spotlight + magnet)
+       ======================================================================= -->
+  <section id="launch" data-sc-act="pin" data-sc-span="1.35" data-sc-drift="#070811">
+    <div data-sc-stage class="close-stage" data-sc-spotlight>
+
+      <div class="close-grid">
+        <div class="sc-stack">
+          <h2 class="sc-display sc-display--lg" data-sc-cue="0.04" data-sc-kinetic="lines">Create. Engage. Sell. Grow with Orra.</h2>
+          <p class="sc-lede" data-sc-cue="0.06" style="margin-top: var(--sc-4); color: var(--sc-ink-soft);">Launch your organization's voting, event, fundraising, and shop platform in under three minutes. Free to start, with instant local and global payouts.</p>
+          <div style="margin-top: var(--sc-5);" data-sc-cue="0.08">
+            <a href="#launch-org-input" class="orra-btn-primary" data-sc-magnet="0.26" data-sc-cue="0.08" data-sc-rise="0">Get Started Free →</a>
+          </div>
+        </div>
+
+        <div class="launch-card" data-sc-cue="0.06">
+          <h3 class="sc-display sc-display--md">Initialize Your Creator Workspace</h3>
+          <form class="launch-form" id="orra-launch-form" method="post" action="#launch">
+            <div class="launch-field">
+              <label for="launch-org-input">Organization or Brand Name</label>
+              <input type="text" id="launch-org-input" name="organization" class="launch-input" placeholder="e.g., African Stars Organization" required>
+            </div>
+            <div class="launch-field">
+              <label for="launch-template-input">Selected Starter Template</label>
+              <input type="text" id="launch-template-input" name="template" class="launch-input" value="Voting &amp; Contests (Miss Africa Template)" readonly>
+            </div>
+            <div class="launch-field">
+              <label for="launch-rails-select">Primary Settlement Rail</label>
+              <select id="launch-rails-select" name="rails" class="launch-input">
+                <option value="Fapshi + Notch Pay + Stripe (All-in-One)">Fapshi + Notch Pay + Stripe + PayPal (All-in-One)</option>
+                <option value="Fapshi &amp; Notch Pay (Cameroon / CEMAC FCFA)">Fapshi &amp; Notch Pay (Cameroon / FCFA Mobile Money)</option>
+                <option value="Stripe &amp; PayPal (Global Diaspora USD/EUR/GBP)">Stripe &amp; PayPal (Global Diaspora USD / EUR / CAD)</option>
+              </select>
+            </div>
+            <button type="submit" class="orra-btn-primary" style="width: 100%; justify-content: center;">Get Started Free →</button>
+            <div class="launch-feedback" id="launch-feedback" role="status" aria-live="polite"></div>
+          </form>
+        </div>
+      </div>
+
+      <footer class="orra-footer">
+        <span>ORRA BY NATEIVA · A GLOBAL CREATOR PLATFORM</span>
+        <span>VOTING · EVENTS · FUNDRAISING · SHOP · COMMUNITY · SMS CAMPAIGN</span>
+      </footer>
+
+    </div>
+  </section>
+
+</main>
+
+<script src="scrollcraft.js"></script>
+<script>
+(function () {
+  'use strict';
+
+  ScrollCraft.mount(document.body);
+
+  // =========================================================================
+  // 1. 3D ILLUMINATED EARTH GLOBE & ORBITAL NETWORK RENDERER (Hero Canvas)
+  // Matches the golden-and-violet illuminated Africa/Global globe in the
+  // uploaded Orra by Nateiva reference image.
+  // =========================================================================
+  var globeCanvas = document.getElementById('orra-globe-canvas');
+  var gCtx = globeCanvas ? globeCanvas.getContext('2d') : null;
+  var heroAct = document.getElementById('act-hero');
+  var peakAct = document.getElementById('act-peak');
+  var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // Generate continental node cloud centered on Africa + Europe + Americas
+  var globeNodes = [];
+  var continentPatches = [
+    // Africa core & horn & southern cone
+    { lat: 6, lon: 12, r: 24, d: 95 },   // Cameroon / Central Africa hub
+    { lat: 9, lon: -2, r: 18, d: 65 },   // West Africa
+    { lat: 24, lon: 14, r: 22, d: 70 },  // North Africa
+    { lat: -1, lon: 34, r: 18, d: 65 },  // East Africa
+    { lat: -22, lon: 24, r: 18, d: 60 }, // Southern Africa
+    // Europe
+    { lat: 47, lon: 10, r: 18, d: 60 },
+    // North America & South America
+    { lat: 38, lon: -78, r: 22, d: 55 },
+    { lat: -15, lon: -52, r: 18, d: 45 },
+    // Middle East / Asia
+    { lat: 25, lon: 48, r: 16, d: 45 }
+  ];
+
+  // Deterministic pseudo-random generator so screenshots are consistent
+  var seed = 42;
+  function rand() {
+    seed = (seed * 1664525 + 1013904223) % 4294967296;
+    return seed / 4294967296;
+  }
+
+  continentPatches.forEach(function (patch) {
+    for (var i = 0; i < patch.d; i++) {
+      var a = rand() * Math.PI * 2;
+      var dist = Math.sqrt(rand()) * patch.r;
+      var lat = (patch.lat + Math.sin(a) * dist) * (Math.PI / 180);
+      var lon = (patch.lon + Math.cos(a) * dist) * (Math.PI / 180);
+      var isHub = i < 4;
+      globeNodes.push({
+        lat: lat,
+        lon: lon,
+        hub: isHub,
+        size: isHub ? 2.8 : (1.1 + rand() * 1.2)
+      });
+    }
+  });
+
+  var dragGlobe = false, gx = 0, gy = 0;
+  var yawOffset = -0.22, pitchOffset = 0.08;
+  var targetYaw = -0.22, targetPitch = 0.08;
+
+  var globeRig = document.getElementById('hero-globe-rig');
+  if (globeRig) {
+    globeRig.addEventListener('pointerdown', function (e) {
+      dragGlobe = true;
+      gx = e.clientX;
+      gy = e.clientY;
+    });
+    window.addEventListener('pointermove', function (e) {
+      if (dragGlobe) {
+        targetYaw += (e.clientX - gx) * 0.01;
+        targetPitch = Math.max(-0.5, Math.min(0.5, targetPitch + (e.clientY - gy) * 0.008));
+        gx = e.clientX;
+        gy = e.clientY;
+      }
+    }, { passive: true });
+    window.addEventListener('pointerup', function () { dragGlobe = false; });
+  }
+
+  function readProgress(el) {
+    if (!el) return 0;
+    var p = parseFloat(el.style.getPropertyValue('--sc-p'));
+    return isNaN(p) ? 0 : p;
+  }
+
+  function drawGlobe(now) {
+    if (!gCtx || !globeCanvas) return;
+    var w = globeCanvas.width, h = globeCanvas.height;
+    var cx = w * 0.5, cy = h * 0.5;
+    var R = Math.min(w, h) * 0.34;
+
+    gCtx.clearRect(0, 0, w, h);
+
+    yawOffset += (targetYaw - yawOffset) * 0.1;
+    pitchOffset += (targetPitch - pitchOffset) * 0.1;
+
+    var hp = readProgress(heroAct);
+    var rotY = yawOffset + hp * 1.45 + (reduceMotion ? 0 : now * 0.00022);
+    var rotX = pitchOffset + hp * 0.18;
+
+    // 1. Outer Atmospheric Golden + Violet Glow matching Reference Image
+    var halo = gCtx.createRadialGradient(cx, cy, R * 0.5, cx, cy, R * 1.48);
+    halo.addColorStop(0, 'rgba(244, 182, 63, 0.32)');
+    halo.addColorStop(0.55, 'rgba(168, 85, 247, 0.22)');
+    halo.addColorStop(0.82, 'rgba(244, 182, 63, 0.08)');
+    halo.addColorStop(1, 'rgba(7, 8, 17, 0)');
+    gCtx.fillStyle = halo;
+    gCtx.fillRect(0, 0, w, h);
+
+    // 2. Sphere Core Body
+    var sphereGrad = gCtx.createRadialGradient(cx - R * 0.25, cy - R * 0.25, R * 0.1, cx, cy, R);
+    sphereGrad.addColorStop(0, '#2B1D3D');
+    sphereGrad.addColorStop(0.55, '#120E24');
+    sphereGrad.addColorStop(1, '#070811');
+    gCtx.beginPath();
+    gCtx.arc(cx, cy, R, 0, Math.PI * 2);
+    gCtx.fillStyle = sphereGrad;
+    gCtx.fill();
+
+    // Rim highlight
+    gCtx.lineWidth = 2;
+    gCtx.strokeStyle = 'rgba(244, 182, 63, 0.55)';
+    gCtx.stroke();
+
+    // 3. Latitude / Longitude Graticule Lines
+    gCtx.strokeStyle = 'rgba(244, 182, 63, 0.11)';
+    gCtx.lineWidth = 0.9;
+    for (var m = -60; m <= 60; m += 30) {
+      var latR = Math.cos(m * Math.PI / 180) * R;
+      var latY = cy - Math.sin(m * Math.PI / 180) * R * Math.cos(rotX);
+      gCtx.beginPath();
+      gCtx.ellipse(cx, latY, latR, Math.max(2, latR * 0.22), 0, 0, Math.PI * 2);
+      gCtx.stroke();
+    }
+
+    // 4. Project and Draw Illuminated Continental City Nodes
+    var visibleHubs = [];
+    for (var i = 0; i < globeNodes.length; i++) {
+      var nd = globeNodes[i];
+      var clat = Math.cos(nd.lat), slat = Math.sin(nd.lat);
+      var clon = Math.cos(nd.lon + rotY), slon = Math.sin(nd.lon + rotY);
+
+      var x = clat * slon;
+      var y = slat;
+      var z = clat * clon;
+
+      // Tilt by rotX
+      var y2 = y * Math.cos(rotX) - z * Math.sin(rotX);
+      var z2 = y * Math.sin(rotX) + z * Math.cos(rotX);
+
+      if (z2 > -0.05) {
+        var sx = cx + x * R;
+        var sy = cy - y2 * R;
+        var alpha = Math.min(1, (z2 + 0.1) * 1.15);
+
+        gCtx.beginPath();
+        gCtx.arc(sx, sy, nd.size, 0, Math.PI * 2);
+        gCtx.fillStyle = nd.hub
+          ? 'rgba(255, 230, 140, ' + alpha.toFixed(2) + ')'
+          : 'rgba(244, 182, 63, ' + (alpha * 0.78).toFixed(2) + ')';
+        gCtx.fill();
+
+        if (nd.hub && z2 > 0.2) {
+          visibleHubs.push({ x: sx, y: sy });
+        }
+      }
+    }
+
+    // 5. Golden Network Arcs Connecting Hub Cities (Cameroon <-> Diaspora)
+    if (visibleHubs.length > 1) {
+      var origin = visibleHubs[0];
+      gCtx.strokeStyle = 'rgba(244, 182, 63, 0.42)';
+      gCtx.lineWidth = 1.25;
+      for (var hIdx = 1; hIdx < Math.min(visibleHubs.length, 10); hIdx++) {
+        var target = visibleHubs[hIdx];
+        var midX = (origin.x + target.x) * 0.5;
+        var midY = (origin.y + target.y) * 0.5 - 28;
+        gCtx.beginPath();
+        gCtx.moveTo(origin.x, origin.y);
+        gCtx.quadraticCurveTo(midX, midY, target.x, target.y);
+        gCtx.stroke();
+      }
+    }
+
+    // 6. Sweeping 3D Orbital Rings around the Globe
+    var rings = [
+      { rx: R * 1.36, ry: R * 0.42, tilt: -0.38, color: 'rgba(244, 182, 63, 0.52)' },
+      { rx: R * 1.44, ry: R * 0.48, tilt: 0.32,  color: 'rgba(192, 132, 252, 0.42)' },
+      { rx: R * 1.24, ry: R * 0.34, tilt: -0.12, color: 'rgba(244, 182, 63, 0.30)' }
+    ];
+    rings.forEach(function (rg, idx) {
+      gCtx.save();
+      gCtx.translate(cx, cy);
+      gCtx.rotate(rg.tilt + hp * 0.25 * (idx % 2 === 0 ? 1 : -1));
+      gCtx.strokeStyle = rg.color;
+      gCtx.lineWidth = 1.6;
+      gCtx.beginPath();
+      gCtx.ellipse(0, 0, rg.rx, rg.ry, 0, 0, Math.PI * 2);
+      gCtx.stroke();
+
+      // Orbiting light spark on ring
+      var sparkAng = (now * 0.0012 + idx * 2.1) % (Math.PI * 2);
+      var spX = Math.cos(sparkAng) * rg.rx;
+      var spY = Math.sin(sparkAng) * rg.ry;
+      gCtx.fillStyle = '#FFE28A';
+      gCtx.beginPath();
+      gCtx.arc(spX, spY, 3.5, 0, Math.PI * 2);
+      gCtx.fill();
+      gCtx.restore();
+    });
+  }
+
+  // =========================================================================
+  // 2. BESPOKE SIGNATURE MOVE: 3-PERSPECTIVE LIVE COMMAND DECK CONTROLLER
+  // Scroll progress across Act 3 automatically transitions through the 3 views
+  // (Super Admin -> Organizer -> Miss Africa 2025 Storefront) unless the user
+  // manually clicks a tab to lock their preferred inspection view.
+  // =========================================================================
+  var userLockedTab = false;
+  var activeDeckView = 'admin';
+  var tabButtons = document.querySelectorAll('[data-deck-view]');
+  var panes = {
+    admin: document.getElementById('pane-admin'),
+    organizer: document.getElementById('pane-organizer'),
+    storefront: document.getElementById('pane-storefront')
+  };
+  var peakTitle = document.getElementById('peak-dynamic-title');
+  var peakSub = document.getElementById('peak-dynamic-sub');
+
+  function activateDeckView(viewName, manual) {
+    if (manual) userLockedTab = true;
+    if (activeDeckView === viewName && !manual) return;
+    activeDeckView = viewName;
+
+    Array.prototype.forEach.call(tabButtons, function (btn) {
+      var isMatch = btn.getAttribute('data-deck-view') === viewName;
+      btn.setAttribute('aria-selected', isMatch ? 'true' : 'false');
+    });
+
+    Object.keys(panes).forEach(function (k) {
+      if (panes[k]) panes[k].classList.toggle('is-active', k === viewName);
+    });
+
+    if (peakTitle && peakSub) {
+      if (viewName === 'admin') {
+        peakTitle.textContent = '1 · Super Admin Platform Control';
+        peakSub.textContent = 'Monitor 284,562,000 FCFA across 1,248 organizations, global diaspora activity, and Fapshi / Notch Pay / Stripe / PayPal settlements.';
+      } else if (viewName === 'organizer') {
+        peakTitle.textContent = '2 · Organizer Workspace: Welcome back, African Stars!';
+        peakSub.textContent = 'Track 12,480,000 FCFA in revenue, 8,420 Miss Africa votes, 2,150 gala tickets, and launch campaigns in one click.';
+      } else {
+        peakTitle.textContent = '3 · Live Creator Site: MISS AFRICA 2025';
+        peakSub.textContent = 'Beauty · Culture · Leadership · Impact. Cast a live vote below and watch it update the Organizer and Super Admin ledgers.';
+      }
+    }
+  }
+
+  Array.prototype.forEach.call(tabButtons, function (btn) {
+    btn.addEventListener('click', function () {
+      activateDeckView(btn.getAttribute('data-deck-view'), true);
+    });
+  });
+
+  // Clicking any of the 5 floating orbital cards in the hero jumps to Act 3 and opens that view
+  Array.prototype.forEach.call(document.querySelectorAll('[data-jump-tab]'), function (card) {
+    card.addEventListener('click', function () {
+      var targetTab = card.getAttribute('data-jump-tab');
+      activateDeckView(targetTab, true);
+      if (peakAct) peakAct.scrollIntoView({ behavior: 'smooth' });
+    });
+  });
+
+  // Live synchronized state across all 3 views
+  var liveState = {
+    adminRev: 284562000,
+    adminTx: 24892,
+    orgRev: 12480000,
+    orgVotes: 8420,
+    orgTickets: 2150
+  };
+
+  function formatFCFA(n) {
+    return n.toLocaleString('en-US') + ' FCFA';
+  }
+
+  function recordLiveTransaction(label, amountFCFA, votesAdded, provider) {
+    liveState.adminRev += amountFCFA;
+    liveState.adminTx += 1;
+    liveState.orgRev += amountFCFA;
+    liveState.orgVotes += votesAdded;
+
+    var elAdminRev = document.getElementById('admin-rev-val');
+    var elAdminTx = document.getElementById('admin-tx-val');
+    var elOrgRev = document.getElementById('org-rev-val');
+    var elOrgVotes = document.getElementById('org-votes-val');
+    var elSfVotes = document.getElementById('sf-live-vote-badge');
+
+    if (elAdminRev) elAdminRev.textContent = formatFCFA(liveState.adminRev);
+    if (elAdminTx) elAdminTx.textContent = liveState.adminTx.toLocaleString('en-US');
+    if (elOrgRev) elOrgRev.textContent = formatFCFA(liveState.orgRev);
+    if (elOrgVotes) elOrgVotes.textContent = liveState.orgVotes.toLocaleString('en-US');
+    if (elSfVotes) elSfVotes.textContent = liveState.orgVotes.toLocaleString('en-US') + ' Votes Cast (Updated Live!)';
+
+    var tbody = document.getElementById('admin-tx-tbody');
+    if (tbody) {
+      var tr = document.createElement('tr');
+      tr.innerHTML = '<td>Just now</td><td>African Stars</td><td>' + label + '</td><td>' + formatFCFA(amountFCFA) + '</td><td>' + provider + '</td><td><span class="tx-badge-ok">Completed</span></td>';
+      tbody.insertBefore(tr, tbody.firstChild);
+      if (tbody.children.length > 4) tbody.removeChild(tbody.lastChild);
+    }
+  }
+
+  var simTxBtn = document.getElementById('sim-live-tx-btn');
+  if (simTxBtn) {
+    simTxBtn.addEventListener('click', function () {
+      recordLiveTransaction('Vote Package', 10000, 10, 'Fapshi');
+    });
+  }
+  var orgVoteBtn = document.getElementById('org-trigger-vote-btn');
+  if (orgVoteBtn) {
+    orgVoteBtn.addEventListener('click', function () {
+      recordLiveTransaction('Miss Africa Vote', 10000, 10, 'Notch Pay');
+    });
+  }
+  var sfVoteBtn = document.getElementById('sf-vote-now-btn');
+  if (sfVoteBtn) {
+    sfVoteBtn.addEventListener('click', function () {
+      recordLiveTransaction('Miss Africa 2025 Vote', 10000, 10, 'Fapshi');
+    });
+  }
+  Array.prototype.forEach.call(document.querySelectorAll('[data-sf-buy]'), function (btn) {
+    btn.addEventListener('click', function () {
+      var item = btn.getAttribute('data-sf-buy');
+      recordLiveTransaction(item, 25000, 0, 'Stripe');
+      btn.textContent = 'Added to Ledger ✓';
+    });
+  });
+
+  // Main animation & scroll-sync loop
+  function tick(now) {
+    drawGlobe(now);
+
+    if (!userLockedTab && peakAct) {
+      var pp = readProgress(peakAct);
+      if (pp < 0.34) activateDeckView('admin', false);
+      else if (pp < 0.67) activateDeckView('organizer', false);
+      else activateDeckView('storefront', false);
+    }
+
+    if (!reduceMotion) {
+      requestAnimationFrame(tick);
+    }
+  }
+
+  tick(0);
+  window.addEventListener('scroll', function () {
+    if (reduceMotion) {
+      drawGlobe(0);
+      if (!userLockedTab && peakAct) {
+        var pp = readProgress(peakAct);
+        if (pp < 0.34) activateDeckView('admin', false);
+        else if (pp < 0.67) activateDeckView('organizer', false);
+        else activateDeckView('storefront', false);
+      }
+    }
+  }, { passive: true });
+
+  // ---- Act 5 Template Selection carries into Act 6 Launch Form ------------
+  var templateInput = document.getElementById('launch-template-input');
+  var moduleCards = document.querySelectorAll('.module-card');
+  Array.prototype.forEach.call(document.querySelectorAll('[data-pick-module]'), function (btn) {
+    btn.addEventListener('click', function () {
+      var picked = btn.getAttribute('data-pick-module');
+      if (templateInput) templateInput.value = picked;
+      Array.prototype.forEach.call(moduleCards, function (c) {
+        var match = c.getAttribute('data-module-card') === picked;
+        c.classList.toggle('is-selected', match);
+        var b = c.querySelector('[data-pick-module]');
+        if (b) {
+          b.textContent = match ? 'Selected Template' : 'Select Template';
+          b.className = match ? 'orra-btn-primary' : 'orra-btn-ghost';
+        }
+      });
+    });
+  });
+
+  // ---- Pinned Act Keyboard Focus Safety -----------------------------------
+  var launchAct = document.getElementById('launch');
+  if (launchAct) {
+    launchAct.addEventListener('focusin', function () {
+      var r = launchAct.getBoundingClientRect();
+      var top = r.top + window.scrollY;
+      var travel = Math.max(launchAct.offsetHeight - window.innerHeight, 1);
+      var targetY = top + travel * 0.5;
+      if (Math.abs(window.scrollY - targetY) > window.innerHeight * 0.4) {
+        window.scrollTo({ top: targetY, behavior: 'instant' });
+      }
+    });
+  }
+
+  // ---- Act 6 Workspace Initializer Form -----------------------------------
+  var launchForm = document.getElementById('orra-launch-form');
+  var launchFeedback = document.getElementById('launch-feedback');
+  if (launchForm) {
+    launchForm.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var orgName = document.getElementById('launch-org-input').value || 'Your Organization';
+      var tpl = document.getElementById('launch-template-input').value;
+      var rails = document.getElementById('launch-rails-select').value;
+      if (launchFeedback) {
+        launchFeedback.textContent = 'Workspace ready for "' + orgName + '" with ' + tpl + ' and ' + rails + '.';
+        launchFeedback.classList.add('is-shown');
+      }
+    });
+  }
+})();
+</script>
+</body>
+</html>
