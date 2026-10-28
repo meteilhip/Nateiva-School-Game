@@ -301,74 +301,86 @@
   .orbital-card-item {
     position: absolute;
     pointer-events: auto;
-    width: clamp(210px, 18vw, 248px);
-    height: 84px;
-    border-radius: 14px;
-    background: rgba(10, 14, 26, 0.90);
-    border: none !important;
-    box-shadow: 0 16px 36px rgba(0, 0, 0, 0.92), 0 2px 10px rgba(0, 0, 0, 0.6);
-    overflow: hidden;
     cursor: pointer;
     display: flex;
     align-items: center;
-    gap: 10px;
-    padding: 7px;
+    gap: 8px;
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    padding: 0 !important;
     top: 50%;
     left: 50%;
-    margin-top: -42px;
-    margin-left: -110px;
+    margin-top: -24px !important;
+    margin-left: -65px !important;
     will-change: transform, opacity;
     -webkit-tap-highlight-color: transparent;
     z-index: 30;
-    transition: transform 0.25s ease, box-shadow 0.25s ease;
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
+    user-select: none;
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    transition: filter 0.25s ease;
   }
-  .orbital-card-item:hover {
-    box-shadow: 0 22px 48px rgba(0, 0, 0, 0.98), 0 0 22px rgba(245, 158, 11, 0.35);
-    transform: scale(1.06) !important;
+  .card-avatar-wrap {
+    position: relative;
+    flex-shrink: 0;
   }
   .card-img-thumb {
-    width: 70px;
-    height: 70px;
-    border-radius: 10px;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
     background-size: cover;
     background-position: center;
-    border: none !important;
-    flex-shrink: 0;
-    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.65);
+    border: 2px solid rgba(245, 158, 11, 0.85);
+    box-shadow: 0 0 16px rgba(245, 158, 11, 0.45), 0 8px 24px rgba(0, 0, 0, 0.9);
+    transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+  }
+  .card-beacon-dot {
+    position: absolute;
+    top: -1px;
+    right: -1px;
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background: #EF4444;
+    border: 1.5px solid #FFFFFF;
+    box-shadow: 0 0 8px #EF4444;
   }
   .card-info-box {
     display: flex;
     flex-direction: column;
     justify-content: center;
     min-width: 0;
-    overflow: hidden;
+    text-align: left;
   }
   .card-tag {
     font-family: var(--font-mono);
-    font-size: 0.62rem;
+    font-size: 0.60rem;
     font-weight: 700;
-    color: var(--orra-gold);
+    color: #F59E0B;
     letter-spacing: 0.08em;
     margin-bottom: 2px;
     white-space: nowrap;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.98), 0 0 10px rgba(0, 0, 0, 0.95);
+    line-height: 1.15;
   }
   .card-title {
     font-family: var(--font-display);
-    font-size: 0.96rem;
+    font-size: 0.94rem;
     font-weight: 800;
     color: #FFFFFF;
     margin: 0;
     line-height: 1.15;
-  }
-  .card-desc {
-    font-size: 0.72rem;
-    color: #CBD5E1;
-    margin-top: 2px;
     white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.98), 0 0 12px rgba(0, 0, 0, 0.95);
+  }
+  .orbital-card-item:hover .card-img-thumb {
+    transform: scale(1.15);
+    border-color: #FDE68A;
+    box-shadow: 0 0 24px rgba(245, 158, 11, 0.85), 0 10px 28px rgba(0, 0, 0, 0.95);
+  }
+  .orbital-card-item:hover .card-title {
+    color: #FDE68A;
   }
 
   /* Hero Trust Pillars Strip */
@@ -855,25 +867,24 @@
       margin: 0.5rem auto 2rem auto;
     }
     .orbital-card-item {
-      width: 168px !important;
-      height: 64px !important;
-      margin-top: -32px !important;
-      margin-left: -84px !important;
-      padding: 5px !important;
-      gap: 7px !important;
+      gap: 6px !important;
+      margin-top: -20px !important;
+      margin-left: -52px !important;
+      background: transparent !important;
       border: none !important;
-      border-radius: 10px !important;
-      box-shadow: 0 12px 28px rgba(0, 0, 0, 0.92) !important;
+      box-shadow: none !important;
     }
     .card-img-thumb {
-      width: 54px !important;
-      height: 54px !important;
-      border: none !important;
-      border-radius: 8px !important;
+      width: 38px !important;
+      height: 38px !important;
+      border-width: 1.5px !important;
     }
-    .card-tag { font-size: 0.54rem !important; }
-    .card-title { font-size: 0.82rem !important; }
-    .card-desc { font-size: 0.64rem !important; }
+    .card-beacon-dot {
+      width: 7px !important;
+      height: 7px !important;
+    }
+    .card-tag { font-size: 0.52rem !important; }
+    .card-title { font-size: 0.80rem !important; }
     
     .hero-pillars {
       grid-template-columns: 1fr 1fr;
@@ -948,65 +959,73 @@
     <div class="orbital-system" id="orbital-cards-rotator">
       <!-- 1. Voting -->
       <div class="orbital-card-item" data-card-idx="0" onclick="scrollToSection('how-it-works')">
-        <div class="card-img-thumb" style="background-image: url('assets/card_voting.jpg');"></div>
+        <div class="card-avatar-wrap">
+          <div class="card-img-thumb" style="background-image: url('assets/card_voting.jpg');"></div>
+          <span class="card-beacon-dot"></span>
+        </div>
         <div class="card-info-box">
           <span class="card-tag">🏆 CONTESTS</span>
           <h4 class="card-title">Voting</h4>
-          <p class="card-desc">Pageants &amp; Awards</p>
         </div>
       </div>
 
       <!-- 2. Events -->
       <div class="orbital-card-item" data-card-idx="1" onclick="scrollToSection('engines')">
-        <div class="card-img-thumb" style="background-image: url('assets/card_events.jpg');"></div>
+        <div class="card-avatar-wrap">
+          <div class="card-img-thumb" style="background-image: url('assets/card_events.jpg');"></div>
+          <span class="card-beacon-dot"></span>
+        </div>
         <div class="card-info-box">
           <span class="card-tag">🎟️ EXPERIENCES</span>
           <h4 class="card-title">Events</h4>
-          <p class="card-desc">QR Gate Tickets</p>
         </div>
       </div>
 
       <!-- 3. Fundraising -->
       <div class="orbital-card-item" data-card-idx="2" onclick="scrollToSection('engines')">
-        <div class="card-img-thumb" style="background-image: url('assets/card_fundraising.jpg');"></div>
+        <div class="card-avatar-wrap">
+          <div class="card-img-thumb" style="background-image: url('assets/card_fundraising.jpg');"></div>
+          <span class="card-beacon-dot"></span>
+        </div>
         <div class="card-info-box">
           <span class="card-tag">❤️ IMPACT</span>
           <h4 class="card-title">Fundraising</h4>
-          <p class="card-desc">Causes &amp; Charity</p>
         </div>
       </div>
 
       <!-- 4. Community -->
       <div class="orbital-card-item" data-card-idx="3" onclick="scrollToSection('engines')">
-        <div class="card-img-thumb" style="background-image: url('assets/card_community.jpg');"></div>
+        <div class="card-avatar-wrap">
+          <div class="card-img-thumb" style="background-image: url('assets/card_community.jpg');"></div>
+          <span class="card-beacon-dot"></span>
+        </div>
         <div class="card-info-box">
           <span class="card-tag">👥 MEMBERS</span>
           <h4 class="card-title">Community</h4>
-          <p class="card-desc">VIP Fan Clubs</p>
         </div>
       </div>
 
       <!-- 5. Shop -->
       <div class="orbital-card-item" data-card-idx="4" onclick="scrollToSection('engines')">
-        <div class="card-img-thumb" style="background-image: url('assets/card_shop.jpg');"></div>
+        <div class="card-avatar-wrap">
+          <div class="card-img-thumb" style="background-image: url('assets/card_shop.jpg');"></div>
+          <span class="card-beacon-dot"></span>
+        </div>
         <div class="card-info-box">
           <span class="card-tag">🛍️ MERCH</span>
           <h4 class="card-title">Shop</h4>
-          <p class="card-desc">Physical &amp; Digital</p>
         </div>
       </div>
 
       <!-- 6. SMS Campaign -->
       <div class="orbital-card-item" data-card-idx="5" onclick="scrollToSection('how-it-works')">
-        <div class="card-img-thumb" style="background-image: url('assets/card_sms.jpg');"></div>
+        <div class="card-avatar-wrap">
+          <div class="card-img-thumb" style="background-image: url('assets/card_sms.jpg');"></div>
+          <span class="card-beacon-dot"></span>
+        </div>
         <div class="card-info-box">
           <span class="card-tag">📱 BROADCAST</span>
           <h4 class="card-title">SMS Campaign</h4>
-          <p class="card-desc">98% Direct Open Rate</p>
-        </div>
-      </div>
-    </div>    <h4 class="card-title">SMS Campaign</h4>
-          <p class="card-desc">Instant 98% Open Reach</p>
         </div>
       </div>
     </div>
@@ -1498,29 +1517,28 @@
         earthGroup.rotation.y += 0.00065; // Calm, steady, luxury rotation
       }
 
-      // Slower, graceful card orbit speed (~3.5x slower)
+      // Slower, graceful card orbit speed
       orbitAngle += 0.00055;
 
       // Render 3D Scene
       renderer.render(scene, camera);
 
-      // Animate All 6 Cards — ALWAYS IN FRONT OF THE GLOBE
+      // Animate All 6 Cards — FITTING PERFECTLY IN SCREEN WITHOUT OVERLAPPING
       const isMobile = width < 600;
       // Dimensions of foreground floating perimeter around globe
-      const radiusPx = Math.min(width, height) * (isMobile ? 0.38 : 0.33);
-      const cardOrbitRx = isMobile ? (radiusPx * 1.25) : (radiusPx * 1.65);
-      const cardOrbitRy = isMobile ? (radiusPx * 0.58) : (radiusPx * 0.85);
-      const orbitTilt = -0.16;
+      const radiusPx = Math.min(width, height) * (isMobile ? 0.36 : 0.33);
+      const cardOrbitRx = isMobile ? (radiusPx * 1.15) : (radiusPx * 1.42);
+      const cardOrbitRy = isMobile ? (radiusPx * 0.50) : (radiusPx * 0.68);
+      const orbitTilt = -0.15;
 
       cardElements.forEach((el, i) => {
-        // Spatial orbital distribution around globe
+        // Spatial orbital distribution around globe (spaced exactly 60 deg apart)
         const anglePos = orbitAngle + (i * (Math.PI * 2 / totalCards));
         const baseCos = Math.cos(anglePos);
         const baseSin = Math.sin(anglePos);
 
-        // Bring cards that come from the right side inward towards the left!
-        // Smooth continuous asymmetric pull: compresses right outward reach and flows leftward
-        const rightPullFactor = isMobile ? 0.24 : 0.20;
+        // Smooth asymmetric positioning: keeps right side comfortably inside screen
+        const rightPullFactor = isMobile ? 0.16 : 0.14;
         const rawX = (baseCos * cardOrbitRx) - (cardOrbitRx * rightPullFactor * (1.0 + baseCos));
         const rawY = baseSin * cardOrbitRy;
 
@@ -1529,20 +1547,28 @@
         const rotY = rawX * Math.sin(orbitTilt) + rawY * Math.cos(orbitTilt);
 
         // Slow, gentle weightless levitation waves
-        const floatBob = Math.sin(time * 0.0009 + i * 1.05) * 5.5;
-        const floatDrift = Math.cos(time * 0.0007 + i * 0.85) * 3.0;
+        const floatBob = Math.sin(time * 0.0009 + i * 1.05) * 4.5;
+        const floatDrift = Math.cos(time * 0.0007 + i * 0.85) * 2.5;
 
-        // Gentle perspective pitch/yaw for realistic 3D floating look
-        const yawTilt = baseSin * -7;
-        const pitchTilt = baseCos * 2.0;
-
-        // Depth perspective scale: stays prominent and in front at all times!
+        // Animated Depth Transition (baseSin: -1 back, +1 front)
         const depth = baseSin; // -1 to +1
-        const scale = isMobile ? (0.88 + (depth + 1) * 0.06) : (0.94 + (depth + 1) * 0.06);
-        const opacity = 0.95 + (depth + 1) * 0.025; // Always high opacity (0.95 - 1.0)
-        const zIdx = 30 + Math.round((depth + 1) * 5); // 30-40 (Always IN FRONT of canvas at 5)
+        // Smooth scale: active front item is largest (1.10x), back items gently scaled down (0.86x)
+        const scale = isMobile 
+          ? (0.84 + (depth + 1) * 0.10) 
+          : (0.88 + (depth + 1) * 0.11);
+        const opacity = 0.82 + (depth + 1) * 0.09; // 0.82 to 1.0
+        const zIdx = 30 + Math.round((depth + 1) * 5); // 30-40 (Always IN FRONT of canvas)
 
-        el.style.transform = `translate3d(${rotX + floatDrift}px, ${rotY + floatBob}px, 0) rotateY(${yawTilt}deg) rotateZ(${pitchTilt}deg) scale(${scale})`;
+        // Dynamically elevate the avatar glow when in the front transition
+        const thumb = el.querySelector('.card-img-thumb');
+        if (thumb) {
+          const glowIntensity = Math.max(0, depth);
+          const glowSpread = Math.round(14 + glowIntensity * 12);
+          const glowAlpha = (0.4 + glowIntensity * 0.4).toFixed(2);
+          thumb.style.boxShadow = `0 0 ${glowSpread}px rgba(245, 158, 11, ${glowAlpha}), 0 8px 24px rgba(0, 0, 0, 0.9)`;
+        }
+
+        el.style.transform = `translate3d(${rotX + floatDrift}px, ${rotY + floatBob}px, 0) scale(${scale})`;
         el.style.opacity = opacity;
         el.style.zIndex = zIdx;
       });
