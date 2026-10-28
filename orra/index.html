@@ -304,15 +304,15 @@
     cursor: pointer;
     display: flex;
     align-items: center;
-    gap: 13px;
+    gap: 12px;
     background: transparent !important;
     border: none !important;
     box-shadow: none !important;
     padding: 0 !important;
     top: 50%;
     left: 50%;
-    margin-top: -39px !important;
-    margin-left: -39px !important;
+    margin-top: -48px !important;
+    margin-left: -48px !important;
     will-change: transform, opacity;
     -webkit-tap-highlight-color: transparent;
     z-index: 30;
@@ -324,30 +324,30 @@
   .card-avatar-wrap {
     position: relative;
     flex-shrink: 0;
-    width: 78px;
-    height: 78px;
+    width: 96px;
+    height: 96px;
   }
   .card-img-thumb {
-    width: 78px;
-    height: 78px;
+    width: 96px;
+    height: 96px;
     border-radius: 50%;
     background-size: cover;
     background-position: center;
-    border: 2.6px solid rgba(245, 158, 11, 0.95);
-    box-shadow: 0 0 22px rgba(245, 158, 11, 0.6), 0 8px 26px rgba(0, 0, 0, 0.95);
-    filter: contrast(1.1) brightness(1.08);
+    border: 3px solid rgba(245, 158, 11, 0.98);
+    box-shadow: 0 0 28px rgba(245, 158, 11, 0.65), 0 10px 30px rgba(0, 0, 0, 0.98);
+    filter: contrast(1.16) brightness(1.12) saturate(1.12);
     transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
   }
   .card-beacon-dot {
     position: absolute;
-    top: 2px;
-    right: 2px;
-    width: 13px;
-    height: 13px;
+    top: 3px;
+    right: 3px;
+    width: 15px;
+    height: 15px;
     border-radius: 50%;
     background: #EF4444;
     border: 2px solid #FFFFFF;
-    box-shadow: 0 0 10px #EF4444;
+    box-shadow: 0 0 12px #EF4444;
   }
   .card-info-box {
     display: flex;
@@ -355,6 +355,13 @@
     justify-content: center;
     min-width: 0;
     text-align: left;
+    background: rgba(6, 9, 20, 0.88);
+    border: 1.5px solid rgba(245, 158, 11, 0.45);
+    border-radius: 12px;
+    padding: 7px 14px;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.85);
   }
   .card-tag {
     font-family: var(--font-mono);
@@ -866,37 +873,45 @@
     .hero-visual-stage {
       width: 100%;
       max-width: 360px;
-      height: 350px;
+      height: 360px;
       margin: 0.5rem auto 2rem auto;
       overflow: visible !important;
     }
     .orbital-card-item {
       gap: 8px !important;
-      margin-top: -31px !important;
-      margin-left: -31px !important;
+      margin-top: -39px !important;
+      margin-left: -39px !important;
       background: transparent !important;
       border: none !important;
       box-shadow: none !important;
     }
     .card-avatar-wrap {
-      width: 62px !important;
-      height: 62px !important;
+      width: 78px !important;
+      height: 78px !important;
     }
     .card-img-thumb {
-      width: 62px !important;
-      height: 62px !important;
-      border-width: 2.4px !important;
-      filter: contrast(1.12) brightness(1.08) !important;
-      box-shadow: 0 0 18px rgba(245, 158, 11, 0.58), 0 6px 20px rgba(0, 0, 0, 0.95) !important;
+      width: 78px !important;
+      height: 78px !important;
+      border-width: 2.6px !important;
+      filter: contrast(1.18) brightness(1.14) saturate(1.15) !important;
+      box-shadow: 0 0 22px rgba(245, 158, 11, 0.65), 0 8px 24px rgba(0, 0, 0, 0.98) !important;
     }
     .card-beacon-dot {
-      width: 10px !important;
-      height: 10px !important;
-      top: 1px !important;
-      right: 1px !important;
+      width: 12px !important;
+      height: 12px !important;
+      top: 2px !important;
+      right: 2px !important;
+      border-width: 1.8px !important;
     }
-    .card-tag { font-size: 0.52rem !important; }
-    .card-title { font-size: 0.86rem !important; }
+    .card-info-box {
+      padding: 5px 9px !important;
+      border-radius: 10px !important;
+      border-width: 1.2px !important;
+      background: rgba(5, 7, 16, 0.92) !important;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.95) !important;
+    }
+    .card-tag { font-size: 0.54rem !important; font-weight: 800 !important; color: #FBBF24 !important; }
+    .card-title { font-size: 0.88rem !important; font-weight: 800 !important; }
     
     .hero-pillars {
       grid-template-columns: 1fr 1fr;
@@ -972,11 +987,11 @@
       <!-- 1. SMS Campaign (Long writing -> Starts Upper-Left) -->
       <div class="orbital-card-item" data-card-idx="0" onclick="scrollToSection('how-it-works')">
         <div class="card-avatar-wrap">
-          <div class="card-img-thumb" style="background-image: url('assets/card_sms.jpg');"></div>
+          <div class="card-img-thumb" style="background-image: url('assets/thumb_card_sms.jpg');"></div>
           <span class="card-beacon-dot"></span>
         </div>
         <div class="card-info-box">
-          <span class="card-tag">📱 BROADCAST</span>
+          <span class="card-tag">📱 SMS BROADCAST</span>
           <h4 class="card-title">SMS Campaign</h4>
         </div>
       </div>
@@ -984,11 +999,11 @@
       <!-- 2. Fundraising (Long writing -> Starts Mid-Left) -->
       <div class="orbital-card-item" data-card-idx="1" onclick="scrollToSection('engines')">
         <div class="card-avatar-wrap">
-          <div class="card-img-thumb" style="background-image: url('assets/card_fundraising.jpg');"></div>
+          <div class="card-img-thumb" style="background-image: url('assets/thumb_card_fundraising.jpg');"></div>
           <span class="card-beacon-dot"></span>
         </div>
         <div class="card-info-box">
-          <span class="card-tag">❤️ IMPACT</span>
+          <span class="card-tag">❤️ DONATIONS</span>
           <h4 class="card-title">Fundraising</h4>
         </div>
       </div>
@@ -996,11 +1011,11 @@
       <!-- 3. Community (Long writing -> Starts Lower-Left) -->
       <div class="orbital-card-item" data-card-idx="2" onclick="scrollToSection('engines')">
         <div class="card-avatar-wrap">
-          <div class="card-img-thumb" style="background-image: url('assets/card_community.jpg');"></div>
+          <div class="card-img-thumb" style="background-image: url('assets/thumb_card_community.jpg');"></div>
           <span class="card-beacon-dot"></span>
         </div>
         <div class="card-info-box">
-          <span class="card-tag">👥 MEMBERS</span>
+          <span class="card-tag">👥 VIP ACCESS</span>
           <h4 class="card-title">Community</h4>
         </div>
       </div>
@@ -1008,11 +1023,11 @@
       <!-- 4. Shop (Short writing -> Starts Upper-Right) -->
       <div class="orbital-card-item" data-card-idx="3" onclick="scrollToSection('engines')">
         <div class="card-avatar-wrap">
-          <div class="card-img-thumb" style="background-image: url('assets/card_shop.jpg');"></div>
+          <div class="card-img-thumb" style="background-image: url('assets/thumb_card_shop.jpg');"></div>
           <span class="card-beacon-dot"></span>
         </div>
         <div class="card-info-box">
-          <span class="card-tag">🛍️ MERCH</span>
+          <span class="card-tag">🛍️ MERCH STORE</span>
           <h4 class="card-title">Shop</h4>
         </div>
       </div>
@@ -1020,7 +1035,7 @@
       <!-- 5. Voting (Short writing -> Starts Mid-Right) -->
       <div class="orbital-card-item" data-card-idx="4" onclick="scrollToSection('how-it-works')">
         <div class="card-avatar-wrap">
-          <div class="card-img-thumb" style="background-image: url('assets/card_voting.jpg');"></div>
+          <div class="card-img-thumb" style="background-image: url('assets/thumb_card_voting.jpg');"></div>
           <span class="card-beacon-dot"></span>
         </div>
         <div class="card-info-box">
@@ -1032,11 +1047,11 @@
       <!-- 6. Events (Short writing -> Starts Lower-Right) -->
       <div class="orbital-card-item" data-card-idx="5" onclick="scrollToSection('engines')">
         <div class="card-avatar-wrap">
-          <div class="card-img-thumb" style="background-image: url('assets/card_events.jpg');"></div>
+          <div class="card-img-thumb" style="background-image: url('assets/thumb_card_events.jpg');"></div>
           <span class="card-beacon-dot"></span>
         </div>
         <div class="card-info-box">
-          <span class="card-tag">🎟️ EXPERIENCES</span>
+          <span class="card-tag">🎟️ QR TICKETS</span>
           <h4 class="card-title">Events</h4>
         </div>
       </div>
@@ -1588,13 +1603,13 @@
         // We compress rightward reach so trailing text NEVER exceeds phone borders!
         let rawX = baseCos * curRx;
         if (baseCos > 0) {
-          rawX = rawX * (isMobile ? 0.42 : 0.72);
+          rawX = rawX * (isMobile ? 0.32 : 0.68);
         } else {
-          rawX = rawX * 0.80; // Keep left-side cards comfortably framed
+          rawX = rawX * 0.78; // Keep left-side cards comfortably framed
         }
         
         // Slight horizontal center balancing
-        const centerOffsetX = isMobile ? -6 : 0;
+        const centerOffsetX = isMobile ? -8 : 0;
         rawX = rawX + centerOffsetX;
 
         // Individual vertical altitude layer scattered across the globe
@@ -1629,9 +1644,9 @@
       }
 
       // 3. Collision Detection & Pairwise Repulsive Bounce:
-      // Minimum safe separation box adapted to larger icon lenses (ZERO overlap)
-      const safeDistX = isMobile ? 136 : 172;
-      const safeDistY = isMobile ? 58 : 74;
+      // Minimum safe separation box adapted to 96px/78px icon lenses (ZERO overlap)
+      const safeDistX = isMobile ? 148 : 188;
+      const safeDistY = isMobile ? 66 : 82;
 
       for (let i = 0; i < totalCards; i++) {
         for (let j = i + 1; j < totalCards; j++) {
@@ -1669,7 +1684,7 @@
 
       // Hard viewport clamp limits:
       // Prevents rightward text from exceeding phone screen edge even under elastic impulse
-      const maxAllowedRightX = isMobile ? 34 : 145;
+      const maxAllowedRightX = isMobile ? 24 : 140;
       const maxAllowedLeftX = isMobile ? -112 : -195;
 
       // 4. Render cards with collision-free positions and animated depth transition
