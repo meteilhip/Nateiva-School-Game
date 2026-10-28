@@ -19,15 +19,15 @@
     --orra-surface-elevated: #151C30;
     --orra-gold: #F59E0B;
     --orra-gold-light: #FDE68A;
-    --orra-gold-glow: rgba(245, 158, 11, 0.38);
+    --orra-gold-glow: rgba(245, 158, 11, 0.4);
     --orra-red: #EF4444;
     --orra-red-dark: #DC2626;
-    --orra-red-glow: rgba(239, 68, 68, 0.38);
+    --orra-red-glow: rgba(239, 68, 68, 0.4);
     --orra-text-main: #FFFFFF;
     --orra-text-body: #F1F5F9;
     --orra-text-muted: #CBD5E1;
-    --orra-border: rgba(245, 158, 11, 0.32);
-    --orra-border-strong: rgba(245, 158, 11, 0.65);
+    --orra-border: rgba(245, 158, 11, 0.35);
+    --orra-border-strong: rgba(245, 158, 11, 0.7);
     --font-display: 'Space Grotesk', system-ui, -apple-system, sans-serif;
     --font-body: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
     --font-mono: 'JetBrains Mono', monospace;
@@ -84,12 +84,12 @@
     height: 52px;
     width: auto;
     object-fit: contain;
-    filter: drop-shadow(0 2px 12px rgba(245, 158, 11, 0.5));
+    filter: drop-shadow(0 2px 12px rgba(245, 158, 11, 0.55));
     transition: transform 0.2s ease, filter 0.2s ease;
   }
   .orra-brand:hover .orra-brand-logo-img {
     transform: scale(1.04);
-    filter: drop-shadow(0 4px 16px rgba(245, 158, 11, 0.65));
+    filter: drop-shadow(0 4px 18px rgba(245, 158, 11, 0.7));
   }
   .orra-brand-by {
     font-size: 0.8rem;
@@ -207,7 +207,7 @@
   .hero-content {
     max-width: min(580px, 48vw);
     padding: 0 0 0 3.5rem;
-    z-index: 20;
+    z-index: 30;
     position: relative;
   }
   .hero-kicker {
@@ -263,7 +263,7 @@
     transform: translateY(-50%);
     width: clamp(340px, 44vw, 620px);
     height: clamp(340px, 44vw, 620px);
-    z-index: 5;
+    z-index: 10;
     pointer-events: none;
     display: flex;
     align-items: center;
@@ -288,13 +288,14 @@
   }
   #hero-webgl-canvas:active { cursor: grabbing; }
 
-  /* 6 Orbiting 3D Activity Cards with True Floating Physics */
+  /* 6 Orbiting 3D Activity Cards — ALWAYS IN FRONT OF GLOBE */
   .orbital-system {
     position: absolute;
     inset: 0;
     width: 100%;
     height: 100%;
     pointer-events: none;
+    z-index: 25; /* Guaranteed IN FRONT of the 3D globe */
     transform-style: preserve-3d;
   }
   .orbital-card-item {
@@ -305,8 +306,8 @@
     border-radius: 14px;
     background-size: cover;
     background-position: center right;
-    border: 1.5px solid rgba(245, 158, 11, 0.65);
-    box-shadow: 0 14px 36px rgba(0, 0, 0, 0.9), 0 0 20px rgba(239, 68, 68, 0.35);
+    border: 1.5px solid rgba(245, 158, 11, 0.7);
+    box-shadow: 0 14px 36px rgba(0, 0, 0, 0.95), 0 0 22px rgba(239, 68, 68, 0.35);
     overflow: hidden;
     cursor: pointer;
     transition: border-color 0.25s ease, box-shadow 0.25s ease;
@@ -318,17 +319,19 @@
     margin-left: -100px;
     will-change: transform, opacity;
     -webkit-tap-highlight-color: transparent;
+    z-index: 30; /* Always in front */
   }
   .orbital-card-item::before {
     content: '';
     position: absolute;
     inset: 0;
-    background: linear-gradient(90deg, rgba(5, 7, 15, 0.94) 0%, rgba(5, 7, 15, 0.82) 58%, rgba(5, 7, 15, 0.2) 100%);
+    background: linear-gradient(90deg, rgba(5, 7, 15, 0.94) 0%, rgba(5, 7, 15, 0.84) 58%, rgba(5, 7, 15, 0.2) 100%);
     z-index: 1;
   }
   .orbital-card-item:hover {
     border-color: #FDE68A;
-    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.95), 0 0 28px rgba(245, 158, 11, 0.7);
+    box-shadow: 0 18px 44px rgba(0, 0, 0, 0.98), 0 0 28px rgba(245, 158, 11, 0.75);
+    transform: scale(1.05) !important;
   }
   .card-content {
     position: relative;
@@ -851,15 +854,15 @@
       margin: 0 auto 2.2rem auto;
     }
     .orbital-card-item {
-      width: 135px !important;
-      height: 56px !important;
-      margin-top: -28px !important;
-      margin-left: -67px !important;
+      width: 140px !important;
+      height: 58px !important;
+      margin-top: -29px !important;
+      margin-left: -70px !important;
       border-radius: 10px !important;
     }
     .card-content { padding: 0.4rem 0.55rem !important; }
     .card-tag { font-size: 0.55rem !important; margin-bottom: 0.05rem !important; }
-    .card-title { font-size: 0.78rem !important; }
+    .card-title { font-size: 0.8rem !important; }
     .card-desc { display: none !important; }
     
     .hero-pillars {
@@ -887,6 +890,7 @@
     .step-media-overlay-badge span { font-size: 0.7rem; }
   }
 </style>
+<script src="assets/three.min.js"></script>
 </head>
 <body>
 
@@ -930,7 +934,7 @@
       <canvas id="hero-webgl-canvas"></canvas>
     </div>
 
-    <!-- 6 Orbital 3D Photographic Cards -->
+    <!-- 6 Orbital 3D Photographic Cards — ALL IN FRONT & FLOATING -->
     <div class="orbital-system" id="orbital-cards-rotator">
       <!-- 1. Voting -->
       <div class="orbital-card-item" data-card-idx="0" style="background-image: url('assets/card_voting.jpg');" onclick="scrollToSection('how-it-works')">
@@ -1340,46 +1344,95 @@
   <a href="#top" class="orra-btn-cta" style="padding: 0.85rem 1.65rem; font-size: 0.95rem;">Launch Your Platform Now →</a>
 </footer>
 
-<!-- 3D GLOBE, ORBITAL ROTATOR & INTERACTIVE SCRIPT -->
+<!-- 3D ROTATING GLOBE (THREE.JS) & 3D FLOATING CARDS SCRIPT -->
 <script>
-  // 1. 3D WebGL Canvas Globe Engine with Country Borders & 3D Orbital Floating Cards
-  (function initGlobe() {
+  // 1. Genuine 3D Rotating Earth Sphere with African Country Borders
+  (function initThreeGlobe() {
     const canvas = document.getElementById('hero-webgl-canvas');
     if (!canvas) return;
-    const ctx = canvas.getContext('2d');
-    const img = new Image();
-    img.src = 'assets/globe_africa.jpg';
 
-    const cardElements = document.querySelectorAll('#orbital-cards-rotator .orbital-card-item');
+    const parent = canvas.parentElement;
+    let width = parent.clientWidth || 340;
+    let height = parent.clientHeight || 340;
 
-    let width, height;
-    function resize() {
-      const parent = canvas.parentElement;
+    // Verify Three.js availability
+    if (typeof THREE === 'undefined') {
+      console.warn('Three.js not loaded, falling back');
+      return;
+    }
+
+    const scene = new THREE.Scene();
+    const camera = new THREE.PerspectiveCamera(42, width / height, 0.1, 1000);
+    camera.position.z = 6.2;
+
+    const renderer = new THREE.WebGLRenderer({
+      canvas: canvas,
+      alpha: true,
+      antialias: true,
+      powerPreference: 'high-performance'
+    });
+    renderer.setSize(width, height);
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+    renderer.setClearColor(0x000000, 0); // Pure transparent, no colored haze
+
+    // Earth Sphere Group
+    const earthGroup = new THREE.Group();
+    earthGroup.rotation.x = 0.22; // Tilted towards camera to showcase Africa
+    earthGroup.rotation.y = -1.15; // Initial orientation centered on Africa
+    scene.add(earthGroup);
+
+    // Load High-Def African Country Borders Texture
+    const textureLoader = new THREE.TextureLoader();
+    const earthTexture = textureLoader.load('assets/earth_africa_borders.jpg', function() {
+      renderer.render(scene, camera);
+    });
+    earthTexture.generateMipmaps = true;
+    earthTexture.minFilter = THREE.LinearMipmapLinearFilter;
+
+    // 3D Sphere Mesh
+    const sphereGeo = new THREE.SphereGeometry(2.35, 64, 64);
+    const sphereMat = new THREE.MeshBasicMaterial({
+      map: earthTexture
+    });
+    const earthMesh = new THREE.Mesh(sphereGeo, sphereMat);
+    earthGroup.add(earthMesh);
+
+    // Glowing Golden Atmosphere Rim Ring
+    const rimGeo = new THREE.RingGeometry(2.35, 2.45, 64);
+    const rimMat = new THREE.MeshBasicMaterial({
+      color: 0xF59E0B,
+      side: THREE.DoubleSide,
+      transparent: true,
+      opacity: 0.85
+    });
+    const rimMesh = new THREE.Mesh(rimGeo, rimMat);
+    rimMesh.position.z = 0.02;
+    scene.add(rimMesh);
+
+    // Resize Handler
+    function onResize() {
       width = parent.clientWidth || 340;
       height = parent.clientHeight || 340;
-      const dpr = Math.min(window.devicePixelRatio || 1, 2);
-      canvas.width = width * dpr;
-      canvas.height = height * dpr;
-      ctx.resetTransform ? ctx.resetTransform() : ctx.setTransform(1, 0, 0, 1, 0, 0);
-      ctx.scale(dpr, dpr);
+      camera.aspect = width / height;
+      camera.updateProjectionMatrix();
+      renderer.setSize(width, height);
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
     }
-    window.addEventListener('resize', resize);
-    resize();
+    window.addEventListener('resize', onResize);
 
-    let angle = 0;
+    // Interactive Drag to Spin the Globe
     let isDragging = false;
-    let startX = 0;
-
-    // Pointer events for desktop
+    let prevMouseX = 0;
     canvas.addEventListener('pointerdown', (e) => {
       isDragging = true;
-      startX = e.clientX;
+      prevMouseX = e.clientX;
       canvas.setPointerCapture(e.pointerId);
     });
     canvas.addEventListener('pointermove', (e) => {
       if (isDragging) {
-        angle += (e.clientX - startX) * 0.007;
-        startX = e.clientX;
+        const deltaX = e.clientX - prevMouseX;
+        earthGroup.rotation.y += deltaX * 0.007;
+        prevMouseX = e.clientX;
       }
     });
     canvas.addEventListener('pointerup', (e) => {
@@ -1388,218 +1441,99 @@
     });
     canvas.addEventListener('pointercancel', () => { isDragging = false; });
 
-    // Touch events for mobile phones (preserves vertical page scroll)
+    // Touch support for mobile (maintains vertical scroll)
     let touchStartX = 0;
     let touchStartY = 0;
-    let isHorizontalSwipe = false;
-
+    let isHorizSwipe = false;
     canvas.addEventListener('touchstart', (e) => {
       if (e.touches.length === 1) {
         touchStartX = e.touches[0].clientX;
         touchStartY = e.touches[0].clientY;
-        isHorizontalSwipe = false;
+        isHorizSwipe = false;
         isDragging = true;
       }
     }, { passive: true });
-
     window.addEventListener('touchmove', (e) => {
       if (!isDragging || e.touches.length !== 1) return;
       const dx = e.touches[0].clientX - touchStartX;
       const dy = e.touches[0].clientY - touchStartY;
-      if (!isHorizontalSwipe) {
+      if (!isHorizSwipe) {
         if (Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 6) {
-          isHorizontalSwipe = true;
+          isHorizSwipe = true;
         }
       }
-      if (isHorizontalSwipe) {
-        angle += dx * 0.008;
+      if (isHorizSwipe) {
+        earthGroup.rotation.y += dx * 0.008;
         touchStartX = e.touches[0].clientX;
         touchStartY = e.touches[0].clientY;
       }
     }, { passive: true });
-
     window.addEventListener('touchend', () => {
       isDragging = false;
-      isHorizontalSwipe = false;
-    }, { passive: true });
+      isHorizSwipe = false;
+    });
 
-    // Key African Metropolitan Hubs for Dynamic Beacons (Coordinates relative to continent)
-    const africaHubs = [
-      { name: "Cameroon", x: 0.02, y: 0.12 },
-      { name: "Nigeria", x: -0.12, y: 0.06 },
-      { name: "Ivory Coast", x: -0.32, y: 0.04 },
-      { name: "Senegal", x: -0.52, y: -0.10 },
-      { name: "DRC", x: 0.12, y: 0.28 },
-      { name: "Kenya", x: 0.35, y: 0.08 },
-      { name: "South Africa", x: 0.15, y: 0.65 },
-      { name: "Egypt", x: 0.28, y: -0.40 },
-      { name: "Morocco", x: -0.30, y: -0.42 }
-    ];
+    // 2. 6 FLOATING CARDS IN FRONT — Fluid Orbital Motion & Organic Levitation
+    const cardElements = document.querySelectorAll('#orbital-cards-rotator .orbital-card-item');
+    const totalCards = cardElements.length;
+    let orbitAngle = 0;
 
-    // Major Geopolitical Country Border Segments across Africa (normalized coordinates)
-    const countryBorderSegments = [
-      // West Africa borders (Senegal, Mali, Guinea, Ivory Coast, Ghana, Burkina Faso, Nigeria)
-      [[-0.52, -0.15], [-0.38, -0.05], [-0.32, 0.04]],
-      [[-0.38, -0.25], [-0.22, -0.08], [-0.20, 0.08]],
-      [[-0.18, -0.28], [-0.10, -0.10], [-0.12, 0.06]],
-      // Cameroon / Central Africa / Gulf of Guinea
-      [[-0.12, 0.06], [0.02, 0.08], [0.02, 0.18]],
-      [[0.02, 0.18], [-0.08, 0.28], [-0.04, 0.35]],
-      [[0.02, 0.18], [0.12, 0.28], [0.18, 0.42]],
-      // DRC boundaries
-      [[0.02, 0.18], [0.24, 0.22], [0.28, 0.45], [0.08, 0.48], [0.02, 0.32]],
-      // East Africa (Sudan, South Sudan, Ethiopia, Kenya, Tanzania)
-      [[0.08, -0.32], [0.36, -0.32]], // 22nd parallel
-      [[0.22, -0.25], [0.38, -0.08], [0.35, 0.08]],
-      [[0.24, 0.02], [0.42, 0.08], [0.32, 0.28]],
-      // Southern Africa (Angola, Zambia, Mozambique, South Africa)
-      [[0.02, 0.35], [0.18, 0.45]],
-      [[0.05, 0.52], [0.26, 0.58]],
-      [[-0.05, 0.65], [0.22, 0.65]]
-    ];
+    function animate(time) {
+      requestAnimationFrame(animate);
 
-    function render(time) {
+      // Steady 3D Globe Rotation
       if (!isDragging) {
-        angle += 0.0022; // Steady, fluid 3D globe animation
+        earthGroup.rotation.y += 0.0035;
       }
 
-      // 1. CLEAN DARK SPACE: Pure clear rect, NO colored haze or nebula behind the globe
-      ctx.clearRect(0, 0, width, height);
-      const cx = width / 2;
-      const cy = height / 2;
-      const radius = Math.min(width, height) * 0.38;
+      orbitAngle += 0.0022;
 
-      // 2. Spherical 3D Globe with Dynamic "Zoom-in Africa" Motion
-      ctx.save();
-      ctx.beginPath();
-      ctx.arc(cx, cy, radius, 0, Math.PI * 2);
-      ctx.clip();
+      // Render 3D Scene
+      renderer.render(scene, camera);
 
-      const panX = Math.sin(angle) * (radius * 0.14);
-      const panY = Math.cos(time * 0.0008) * (radius * 0.04);
-      const zoomPulse = 1.36 + Math.sin(time * 0.001) * 0.06;
-      const drawW = radius * 2 * zoomPulse;
-      const drawH = radius * 2 * zoomPulse;
-
-      if (img.complete) {
-        ctx.drawImage(img, cx - drawW / 2 + panX, cy - drawH / 2 + panY, drawW, drawH);
-      } else {
-        ctx.fillStyle = '#05070F';
-        ctx.fill();
-      }
-
-      // 3. AFRICAN COUNTRY BORDERS: Render visible, delicate illuminated golden geopolitical lines
-      const scaleRef = radius * zoomPulse * 0.85;
-      const originX = cx + panX;
-      const originY = cy + panY;
-
-      ctx.save();
-      ctx.strokeStyle = 'rgba(253, 230, 138, 0.55)'; // Solar Gold Geopolitical Lines
-      ctx.lineWidth = 1.35;
-      ctx.setLineDash([4, 3]);
-
-      countryBorderSegments.forEach(seg => {
-        ctx.beginPath();
-        seg.forEach((pt, idx) => {
-          const px = originX + pt[0] * scaleRef;
-          const py = originY + pt[1] * scaleRef;
-          if (idx === 0) ctx.moveTo(px, py);
-          else ctx.lineTo(px, py);
-        });
-        ctx.stroke();
-      });
-      ctx.setLineDash([]);
-
-      // 4. Metropolitan Hub Beacons & Pulsing Radar Waves
-      africaHubs.forEach((hub, idx) => {
-        const hx = originX + hub.x * scaleRef;
-        const hy = originY + hub.y * scaleRef;
-        const pulse = (time * 0.002 + idx * 0.7) % (Math.PI * 2);
-        const pulseRadius = 3 + Math.sin(pulse) * 3;
-        const pulseAlpha = 0.8 - (pulseRadius / 6) * 0.6;
-
-        // Radiant radar ring
-        ctx.beginPath();
-        ctx.arc(hx, hy, pulseRadius, 0, Math.PI * 2);
-        ctx.strokeStyle = `rgba(245, 158, 11, ${Math.max(0, pulseAlpha)})`;
-        ctx.lineWidth = 1;
-        ctx.stroke();
-
-        // Core golden beacon node
-        ctx.beginPath();
-        ctx.arc(hx, hy, 2, 0, Math.PI * 2);
-        ctx.fillStyle = '#FDE68A';
-        ctx.fill();
-      });
-      ctx.restore();
-
-      // 5. Realistic Volumetric Spherical Depth & Warm Red-Gold Edge Shadow
-      const shade = ctx.createRadialGradient(cx - radius * 0.25, cy - radius * 0.25, radius * 0.25, cx, cy, radius);
-      shade.addColorStop(0, 'rgba(254, 240, 138, 0.04)');
-      shade.addColorStop(0.55, 'rgba(5, 7, 15, 0.15)');
-      shade.addColorStop(0.90, 'rgba(220, 38, 38, 0.35)');
-      shade.addColorStop(1, 'rgba(245, 158, 11, 0.80)');
-      ctx.fillStyle = shade;
-      ctx.fillRect(cx - radius, cy - radius, radius * 2, radius * 2);
-      ctx.restore();
-
-      // 6. Crisp Golden Atmospheric Rim Light
-      ctx.beginPath();
-      ctx.arc(cx, cy, radius, 0, Math.PI * 2);
-      ctx.lineWidth = 2.4;
-      ctx.strokeStyle = 'rgba(245, 158, 11, 0.9)';
-      ctx.stroke();
-
-      // 7. 3D FLOATING CARDS ORBIT: Realistic In-Front & Behind Occlusion + Weightless Levitation
+      // Animate All 6 Cards — ALWAYS IN FRONT OF THE GLOBE
       const isMobile = width < 480;
-      const cardOrbitRx = isMobile ? radius * 1.32 : radius * 1.62;
-      const cardOrbitRy = isMobile ? radius * 0.42 : radius * 0.52;
-      const orbitTilt = -0.22; // Dynamic 3D orbital plane inclination
-      const totalCards = cardElements.length;
+      // Dimensions of foreground floating perimeter
+      const radiusPx = Math.min(width, height) * 0.44;
+      const cardOrbitRx = isMobile ? (radiusPx * 1.15) : (radiusPx * 1.48);
+      const cardOrbitRy = isMobile ? (radiusPx * 0.48) : (radiusPx * 0.58);
+      const orbitTilt = -0.18;
 
       cardElements.forEach((el, i) => {
-        const cardAngle = angle * 0.72 + (i * (Math.PI * 2 / totalCards));
-        const rawX = Math.cos(cardAngle) * cardOrbitRx;
-        const rawY = Math.sin(cardAngle) * cardOrbitRy;
+        // Spatial orbital distribution around globe
+        const anglePos = orbitAngle + (i * (Math.PI * 2 / totalCards));
+        const rawX = Math.cos(anglePos) * cardOrbitRx;
+        const rawY = Math.sin(anglePos) * cardOrbitRy;
+
+        // Apply smooth 3D tilt
         const rotX = rawX * Math.cos(orbitTilt) - rawY * Math.sin(orbitTilt);
         const rotY = rawX * Math.sin(orbitTilt) + rawY * Math.cos(orbitTilt);
 
-        // Organic weightless levitation bob
-        const floatBob = Math.sin(time * 0.0022 + i * 1.15) * 8;
-        // Subtle 3D perspective orientation
-        const yawTilt = Math.sin(cardAngle) * -15;
-        const pitchTilt = Math.cos(cardAngle) * 3.5;
+        // Organic weightless levitation waves (different frequency per card)
+        const floatBob = Math.sin(time * 0.0022 + i * 1.1) * 8.5;
+        const floatDrift = Math.cos(time * 0.0016 + i * 0.9) * 4;
 
-        // Depth: -1 is directly behind the Earth, +1 is directly in front
-        const depth = Math.sin(cardAngle);
+        // Gentle perspective pitch/yaw for realistic 3D floating look
+        const yawTilt = Math.sin(anglePos) * -12;
+        const pitchTilt = Math.cos(anglePos) * 3;
 
-        let scale, opacity, zIdx, blur;
-        if (depth < 0) {
-          // BEHIND THE GLOBE: Card passes behind the Earth with authentic spatial depth
-          scale = isMobile ? (0.70 + (depth + 1) * 0.12) : (0.78 + (depth + 1) * 0.12);
-          opacity = 0.42 + (depth + 1) * 0.28; // 0.42 to 0.70
-          zIdx = 2 + Math.round((depth + 1) * 2); // z-index 2-4 (canvas is at 5)
-          blur = Math.max(0, -depth * 1.2);
-        } else {
-          // IN FRONT OF THE GLOBE: Card glides in foreground at full brilliance
-          scale = isMobile ? (0.82 + depth * 0.22) : (0.90 + depth * 0.22); // up to 1.12
-          opacity = 0.82 + depth * 0.18; // 0.82 to 1.0
-          zIdx = 8 + Math.round(depth * 8); // z-index 8-16 (well in front of canvas at 5)
-          blur = 0;
-        }
+        // Depth perspective scale: stays prominent and in front at all times!
+        const depth = Math.sin(anglePos); // -1 to +1
+        // Smooth scale: 0.88 to 1.08 (desktop), 0.82 to 0.98 (mobile)
+        const scale = isMobile ? (0.84 + (depth + 1) * 0.07) : (0.92 + (depth + 1) * 0.08);
+        const opacity = 0.92 + (depth + 1) * 0.04; // Always high opacity (0.92 - 1.0)
+        const zIdx = 30 + Math.round((depth + 1) * 5); // 30-40 (Always IN FRONT of canvas at 5)
 
-        el.style.transform = `translate3d(${rotX}px, ${rotY + floatBob}px, 0) rotateY(${yawTilt}deg) rotateZ(${pitchTilt}deg) scale(${scale})`;
+        el.style.transform = `translate3d(${rotX + floatDrift}px, ${rotY + floatBob}px, 0) rotateY(${yawTilt}deg) rotateZ(${pitchTilt}deg) scale(${scale})`;
         el.style.opacity = opacity;
         el.style.zIndex = zIdx;
-        el.style.filter = blur > 0.2 ? `blur(${blur}px) brightness(0.75)` : 'none';
       });
-
-      requestAnimationFrame(render);
     }
-    requestAnimationFrame(render);
+
+    requestAnimationFrame(animate);
   })();
 
-  // 2. Interactive Activity Module Selector for Step 2
+  // 3. Interactive Activity Module Selector for Step 2
   const activityModules = {
     voting: {
       title: '🏆 Voting & Pageant Module',
