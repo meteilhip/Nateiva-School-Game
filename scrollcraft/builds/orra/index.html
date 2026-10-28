@@ -304,15 +304,15 @@
     cursor: pointer;
     display: flex;
     align-items: center;
-    gap: 12px;
+    gap: 13px;
     background: transparent !important;
     border: none !important;
     box-shadow: none !important;
     padding: 0 !important;
     top: 50%;
     left: 50%;
-    margin-top: -34px !important;
-    margin-left: -34px !important;
+    margin-top: -39px !important;
+    margin-left: -39px !important;
     will-change: transform, opacity;
     -webkit-tap-highlight-color: transparent;
     z-index: 30;
@@ -324,30 +324,30 @@
   .card-avatar-wrap {
     position: relative;
     flex-shrink: 0;
-    width: 68px;
-    height: 68px;
+    width: 78px;
+    height: 78px;
   }
   .card-img-thumb {
-    width: 68px;
-    height: 68px;
+    width: 78px;
+    height: 78px;
     border-radius: 50%;
     background-size: cover;
     background-position: center;
-    border: 2.5px solid rgba(245, 158, 11, 0.95);
-    box-shadow: 0 0 20px rgba(245, 158, 11, 0.55), 0 8px 25px rgba(0, 0, 0, 0.95);
-    filter: contrast(1.08) brightness(1.06);
+    border: 2.6px solid rgba(245, 158, 11, 0.95);
+    box-shadow: 0 0 22px rgba(245, 158, 11, 0.6), 0 8px 26px rgba(0, 0, 0, 0.95);
+    filter: contrast(1.1) brightness(1.08);
     transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
   }
   .card-beacon-dot {
     position: absolute;
-    top: 1px;
-    right: 1px;
-    width: 12px;
-    height: 12px;
+    top: 2px;
+    right: 2px;
+    width: 13px;
+    height: 13px;
     border-radius: 50%;
     background: #EF4444;
-    border: 1.5px solid #FFFFFF;
-    box-shadow: 0 0 8px #EF4444;
+    border: 2px solid #FFFFFF;
+    box-shadow: 0 0 10px #EF4444;
   }
   .card-info-box {
     display: flex;
@@ -872,27 +872,28 @@
     }
     .orbital-card-item {
       gap: 8px !important;
-      margin-top: -27px !important;
-      margin-left: -27px !important;
+      margin-top: -31px !important;
+      margin-left: -31px !important;
       background: transparent !important;
       border: none !important;
       box-shadow: none !important;
     }
     .card-avatar-wrap {
-      width: 54px !important;
-      height: 54px !important;
+      width: 62px !important;
+      height: 62px !important;
     }
     .card-img-thumb {
-      width: 54px !important;
-      height: 54px !important;
-      border-width: 2.2px !important;
-      filter: contrast(1.1) brightness(1.08) !important;
+      width: 62px !important;
+      height: 62px !important;
+      border-width: 2.4px !important;
+      filter: contrast(1.12) brightness(1.08) !important;
+      box-shadow: 0 0 18px rgba(245, 158, 11, 0.58), 0 6px 20px rgba(0, 0, 0, 0.95) !important;
     }
     .card-beacon-dot {
-      width: 9px !important;
-      height: 9px !important;
-      top: 0px !important;
-      right: 0px !important;
+      width: 10px !important;
+      height: 10px !important;
+      top: 1px !important;
+      right: 1px !important;
     }
     .card-tag { font-size: 0.52rem !important; }
     .card-title { font-size: 0.86rem !important; }
@@ -968,32 +969,20 @@
 
     <!-- 6 Orbital 3D Photographic Cards — ALL IN FRONT & FLOATING -->
     <div class="orbital-system" id="orbital-cards-rotator">
-      <!-- 1. Voting -->
+      <!-- 1. SMS Campaign (Long writing -> Starts Upper-Left) -->
       <div class="orbital-card-item" data-card-idx="0" onclick="scrollToSection('how-it-works')">
         <div class="card-avatar-wrap">
-          <div class="card-img-thumb" style="background-image: url('assets/card_voting.jpg');"></div>
+          <div class="card-img-thumb" style="background-image: url('assets/card_sms.jpg');"></div>
           <span class="card-beacon-dot"></span>
         </div>
         <div class="card-info-box">
-          <span class="card-tag">🏆 CONTESTS</span>
-          <h4 class="card-title">Voting</h4>
+          <span class="card-tag">📱 BROADCAST</span>
+          <h4 class="card-title">SMS Campaign</h4>
         </div>
       </div>
 
-      <!-- 2. Events -->
+      <!-- 2. Fundraising (Long writing -> Starts Mid-Left) -->
       <div class="orbital-card-item" data-card-idx="1" onclick="scrollToSection('engines')">
-        <div class="card-avatar-wrap">
-          <div class="card-img-thumb" style="background-image: url('assets/card_events.jpg');"></div>
-          <span class="card-beacon-dot"></span>
-        </div>
-        <div class="card-info-box">
-          <span class="card-tag">🎟️ EXPERIENCES</span>
-          <h4 class="card-title">Events</h4>
-        </div>
-      </div>
-
-      <!-- 3. Fundraising -->
-      <div class="orbital-card-item" data-card-idx="2" onclick="scrollToSection('engines')">
         <div class="card-avatar-wrap">
           <div class="card-img-thumb" style="background-image: url('assets/card_fundraising.jpg');"></div>
           <span class="card-beacon-dot"></span>
@@ -1004,8 +993,8 @@
         </div>
       </div>
 
-      <!-- 4. Community -->
-      <div class="orbital-card-item" data-card-idx="3" onclick="scrollToSection('engines')">
+      <!-- 3. Community (Long writing -> Starts Lower-Left) -->
+      <div class="orbital-card-item" data-card-idx="2" onclick="scrollToSection('engines')">
         <div class="card-avatar-wrap">
           <div class="card-img-thumb" style="background-image: url('assets/card_community.jpg');"></div>
           <span class="card-beacon-dot"></span>
@@ -1016,8 +1005,8 @@
         </div>
       </div>
 
-      <!-- 5. Shop -->
-      <div class="orbital-card-item" data-card-idx="4" onclick="scrollToSection('engines')">
+      <!-- 4. Shop (Short writing -> Starts Upper-Right) -->
+      <div class="orbital-card-item" data-card-idx="3" onclick="scrollToSection('engines')">
         <div class="card-avatar-wrap">
           <div class="card-img-thumb" style="background-image: url('assets/card_shop.jpg');"></div>
           <span class="card-beacon-dot"></span>
@@ -1028,15 +1017,27 @@
         </div>
       </div>
 
-      <!-- 6. SMS Campaign -->
-      <div class="orbital-card-item" data-card-idx="5" onclick="scrollToSection('how-it-works')">
+      <!-- 5. Voting (Short writing -> Starts Mid-Right) -->
+      <div class="orbital-card-item" data-card-idx="4" onclick="scrollToSection('how-it-works')">
         <div class="card-avatar-wrap">
-          <div class="card-img-thumb" style="background-image: url('assets/card_sms.jpg');"></div>
+          <div class="card-img-thumb" style="background-image: url('assets/card_voting.jpg');"></div>
           <span class="card-beacon-dot"></span>
         </div>
         <div class="card-info-box">
-          <span class="card-tag">📱 BROADCAST</span>
-          <h4 class="card-title">SMS Campaign</h4>
+          <span class="card-tag">🏆 CONTESTS</span>
+          <h4 class="card-title">Voting</h4>
+        </div>
+      </div>
+
+      <!-- 6. Events (Short writing -> Starts Lower-Right) -->
+      <div class="orbital-card-item" data-card-idx="5" onclick="scrollToSection('engines')">
+        <div class="card-avatar-wrap">
+          <div class="card-img-thumb" style="background-image: url('assets/card_events.jpg');"></div>
+          <span class="card-beacon-dot"></span>
+        </div>
+        <div class="card-info-box">
+          <span class="card-tag">🎟️ EXPERIENCES</span>
+          <h4 class="card-title">Events</h4>
         </div>
       </div>
     </div>
@@ -1515,10 +1516,29 @@
       isHorizSwipe = false;
     });
 
-    // 2. 6 FLOATING CARDS IN FRONT — Fluid Orbital Motion & Organic Levitation
+    // 2. 6 FLOATING CARDS IN FRONT — Fluid Orbital Motion & Scattered Spatial Constellation
     const cardElements = document.querySelectorAll('#orbital-cards-rotator .orbital-card-item');
     const totalCards = cardElements.length;
     let orbitAngle = 0;
+
+    // SCATTERED SPATIAL DISTRIBUTION CONFIGURATION:
+    // Long writing cards (0: SMS Campaign, 1: Fundraising, 2: Community) start on the LEFT.
+    // Short writing cards (3: Shop, 4: Voting, 5: Events) start on the RIGHT.
+    // Each has distinct vertical altitude (yOffset) and individual floating dynamics.
+    const cardScatterProfiles = [
+      // 0. SMS Campaign (Long -> Starts Upper-Left)
+      { startAngle: Math.PI * 0.86, yOffset: -58, rX: 0.98, rY: 0.52, speedY: 0.0011, ampY: 4.5, phase: 0.0 },
+      // 1. Fundraising (Long -> Starts Mid-Left)
+      { startAngle: Math.PI * 1.04, yOffset: -6,  rX: 0.92, rY: 0.46, speedY: 0.0009, ampY: 4.0, phase: 1.8 },
+      // 2. Community (Long -> Starts Lower-Left)
+      { startAngle: Math.PI * 1.22, yOffset: 52,  rX: 0.96, rY: 0.50, speedY: 0.0010, ampY: 4.2, phase: 3.5 },
+      // 3. Shop (Short -> Starts Upper-Right)
+      { startAngle: Math.PI * 0.14, yOffset: -54, rX: 0.88, rY: 0.50, speedY: 0.0011, ampY: 4.4, phase: 0.8 },
+      // 4. Voting (Short -> Starts Mid-Right)
+      { startAngle: 0.0,            yOffset: 2,   rX: 0.84, rY: 0.44, speedY: 0.0008, ampY: 3.8, phase: 2.6 },
+      // 5. Events (Short -> Starts Lower-Right)
+      { startAngle: -Math.PI * 0.16,yOffset: 54,  rX: 0.86, rY: 0.48, speedY: 0.0010, ampY: 4.2, phase: 4.4 }
+    ];
 
     // Collision Detection & Elastic Repulsive Bounce Physics State
     const cardPhysics = Array.from({ length: totalCards }, () => ({
@@ -1537,12 +1557,12 @@
       }
 
       // Slower, graceful card orbit speed
-      orbitAngle += 0.00055;
+      orbitAngle += 0.00045;
 
       // Render 3D Scene
       renderer.render(scene, camera);
 
-      // Animate All 6 Cards — PRECISE VIEWPORT CLAMPING & ZERO OVERLAP PHYSICS
+      // Animate All 6 Cards — SCATTERED DISTRIBUTION WITH ZERO OVERLAP PHYSICS
       const isMobile = width < 600;
       // Dimensions of foreground floating perimeter around globe
       const radiusPx = Math.min(width, height) * (isMobile ? 0.33 : 0.32);
@@ -1555,33 +1575,39 @@
       const depths = [];
 
       for (let i = 0; i < totalCards; i++) {
-        const anglePos = orbitAngle + (i * (Math.PI * 2 / totalCards));
+        const prof = cardScatterProfiles[i];
+        const anglePos = orbitAngle + prof.startAngle;
         const baseCos = Math.cos(anglePos);
         const baseSin = Math.sin(anglePos);
 
+        const curRx = cardOrbitRx * prof.rX;
+        const curRy = cardOrbitRy * prof.rY;
+
         // Calculate horizontal position:
         // On the right side (baseCos > 0), the text trails to the right of the avatar.
-        // We compress the rightward reach so trailing text NEVER exceeds phone borders!
-        let rawX = baseCos * cardOrbitRx;
+        // We compress rightward reach so trailing text NEVER exceeds phone borders!
+        let rawX = baseCos * curRx;
         if (baseCos > 0) {
-          rawX = rawX * (isMobile ? 0.44 : 0.74);
+          rawX = rawX * (isMobile ? 0.42 : 0.72);
         } else {
-          rawX = rawX * 0.80; // Keep left-side cards well within bounds
+          rawX = rawX * 0.80; // Keep left-side cards comfortably framed
         }
         
         // Slight horizontal center balancing
         const centerOffsetX = isMobile ? -6 : 0;
         rawX = rawX + centerOffsetX;
 
-        const rawY = baseSin * cardOrbitRy;
+        // Individual vertical altitude layer scattered across the globe
+        const yAltitude = isMobile ? (prof.yOffset * 0.82) : prof.yOffset;
+        const rawY = (baseSin * curRy) + yAltitude;
 
         // Apply smooth 3D tilt
         const rotX = rawX * Math.cos(orbitTilt) - rawY * Math.sin(orbitTilt);
         const rotY = rawX * Math.sin(orbitTilt) + rawY * Math.cos(orbitTilt);
 
-        // Slow, gentle weightless levitation waves
-        const floatBob = Math.sin(time * 0.0009 + i * 1.05) * 4.0;
-        const floatDrift = Math.cos(time * 0.0007 + i * 0.85) * 2.0;
+        // Organic weightless levitation waves per card
+        const floatBob = Math.sin(time * prof.speedY + prof.phase) * prof.ampY;
+        const floatDrift = Math.cos(time * 0.0007 + prof.phase) * 2.2;
 
         baseCoords.push({
           x: rotX + floatDrift,
@@ -1603,9 +1629,9 @@
       }
 
       // 3. Collision Detection & Pairwise Repulsive Bounce:
-      // Minimum safe separation box to guarantee ZERO image-writing or card overlap
-      const safeDistX = isMobile ? 128 : 162;
-      const safeDistY = isMobile ? 52 : 66;
+      // Minimum safe separation box adapted to larger icon lenses (ZERO overlap)
+      const safeDistX = isMobile ? 136 : 172;
+      const safeDistY = isMobile ? 58 : 74;
 
       for (let i = 0; i < totalCards; i++) {
         for (let j = i + 1; j < totalCards; j++) {
@@ -1643,7 +1669,7 @@
 
       // Hard viewport clamp limits:
       // Prevents rightward text from exceeding phone screen edge even under elastic impulse
-      const maxAllowedRightX = isMobile ? 38 : 148;
+      const maxAllowedRightX = isMobile ? 34 : 145;
       const maxAllowedLeftX = isMobile ? -112 : -195;
 
       // 4. Render cards with collision-free positions and animated depth transition
@@ -1676,9 +1702,9 @@
         const thumb = el.querySelector('.card-img-thumb');
         if (thumb) {
           const glowIntensity = Math.max(0, depth);
-          const glowSpread = Math.round(16 + glowIntensity * 14);
-          const glowAlpha = (0.45 + glowIntensity * 0.45).toFixed(2);
-          thumb.style.boxShadow = `0 0 ${glowSpread}px rgba(245, 158, 11, ${glowAlpha}), 0 8px 24px rgba(0, 0, 0, 0.95)`;
+          const glowSpread = Math.round(18 + glowIntensity * 16);
+          const glowAlpha = (0.50 + glowIntensity * 0.45).toFixed(2);
+          thumb.style.boxShadow = `0 0 ${glowSpread}px rgba(245, 158, 11, ${glowAlpha}), 0 8px 26px rgba(0, 0, 0, 0.95)`;
         }
 
         el.style.transform = `translate3d(${finalX}px, ${finalY}px, 0) scale(${scale})`;
