@@ -303,16 +303,18 @@
     pointer-events: auto;
     cursor: pointer;
     display: flex;
+    flex-direction: column;
     align-items: center;
-    gap: 12px;
+    justify-content: center;
+    gap: 6px;
     background: transparent !important;
     border: none !important;
     box-shadow: none !important;
     padding: 0 !important;
     top: 50%;
     left: 50%;
-    margin-top: -48px !important;
-    margin-left: -48px !important;
+    margin-top: -55px !important;
+    margin-left: -44px !important;
     will-change: transform, opacity;
     -webkit-tap-highlight-color: transparent;
     z-index: 30;
@@ -324,44 +326,53 @@
   .card-avatar-wrap {
     position: relative;
     flex-shrink: 0;
-    width: 96px;
-    height: 96px;
+    width: 88px;
+    height: 88px;
   }
   .card-img-thumb {
-    width: 96px;
-    height: 96px;
+    width: 88px;
+    height: 88px;
     border-radius: 50%;
     background-size: cover;
     background-position: center;
-    border: 3px solid rgba(245, 158, 11, 0.98);
-    box-shadow: 0 0 28px rgba(245, 158, 11, 0.65), 0 10px 30px rgba(0, 0, 0, 0.98);
-    filter: contrast(1.16) brightness(1.12) saturate(1.12);
+    border: 2.8px solid #F59E0B;
+    box-shadow: 0 0 24px rgba(245, 158, 11, 0.7), 0 8px 24px rgba(0, 0, 0, 0.95);
+    filter: contrast(1.12) brightness(1.08);
     transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
   }
   .card-beacon-dot {
     position: absolute;
     top: 3px;
     right: 3px;
-    width: 15px;
-    height: 15px;
+    width: 14px;
+    height: 14px;
     border-radius: 50%;
     background: #EF4444;
     border: 2px solid #FFFFFF;
-    box-shadow: 0 0 12px #EF4444;
+    box-shadow: 0 0 10px #EF4444;
   }
   .card-info-box {
     display: flex;
-    flex-direction: column;
+    align-items: center;
     justify-content: center;
-    min-width: 0;
-    text-align: left;
-    background: rgba(6, 9, 20, 0.88);
-    border: 1.5px solid rgba(245, 158, 11, 0.45);
-    border-radius: 12px;
-    padding: 7px 14px;
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.85);
+    text-align: center;
+    background: rgba(5, 7, 16, 0.94);
+    border: 1.5px solid rgba(245, 158, 11, 0.7);
+    border-radius: 999px;
+    padding: 4px 12px;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.92);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    white-space: nowrap;
+  }
+  .card-badge-pill {
+    font-family: var(--font-display);
+    font-size: 0.86rem;
+    font-weight: 800;
+    color: #FFFFFF;
+    letter-spacing: 0.02em;
+    text-shadow: 0 2px 6px rgba(0, 0, 0, 1);
+    white-space: nowrap;
   }
   .card-tag {
     font-family: var(--font-mono);
@@ -878,40 +889,43 @@
       overflow: visible !important;
     }
     .orbital-card-item {
-      gap: 8px !important;
-      margin-top: -39px !important;
-      margin-left: -39px !important;
+      gap: 5px !important;
+      margin-top: -46px !important;
+      margin-left: -36px !important;
       background: transparent !important;
       border: none !important;
       box-shadow: none !important;
     }
     .card-avatar-wrap {
-      width: 78px !important;
-      height: 78px !important;
+      width: 72px !important;
+      height: 72px !important;
     }
     .card-img-thumb {
-      width: 78px !important;
-      height: 78px !important;
-      border-width: 2.6px !important;
-      filter: contrast(1.18) brightness(1.14) saturate(1.15) !important;
-      box-shadow: 0 0 22px rgba(245, 158, 11, 0.65), 0 8px 24px rgba(0, 0, 0, 0.98) !important;
+      width: 72px !important;
+      height: 72px !important;
+      border-width: 2.4px !important;
+      filter: contrast(1.14) brightness(1.10) !important;
+      box-shadow: 0 0 20px rgba(245, 158, 11, 0.65), 0 6px 20px rgba(0, 0, 0, 0.95) !important;
     }
     .card-beacon-dot {
-      width: 12px !important;
-      height: 12px !important;
-      top: 2px !important;
-      right: 2px !important;
+      width: 11px !important;
+      height: 11px !important;
+      top: 1px !important;
+      right: 1px !important;
       border-width: 1.8px !important;
     }
     .card-info-box {
-      padding: 5px 9px !important;
-      border-radius: 10px !important;
+      padding: 3px 8px !important;
+      border-radius: 999px !important;
       border-width: 1.2px !important;
-      background: rgba(5, 7, 16, 0.92) !important;
-      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.95) !important;
+      background: rgba(5, 7, 16, 0.95) !important;
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.95) !important;
     }
-    .card-tag { font-size: 0.54rem !important; font-weight: 800 !important; color: #FBBF24 !important; }
-    .card-title { font-size: 0.88rem !important; font-weight: 800 !important; }
+    .card-badge-pill {
+      font-size: 0.74rem !important;
+      font-weight: 800 !important;
+      letter-spacing: 0.01em !important;
+    }
     
     .hero-pillars {
       grid-template-columns: 1fr 1fr;
@@ -982,77 +996,71 @@
       <canvas id="hero-webgl-canvas"></canvas>
     </div>
 
-    <!-- 6 Orbital 3D Photographic Cards — ALL IN FRONT & FLOATING -->
+    <!-- 6 Orbital 3D Photographic Cards — ALL IN FRONT & CIRCLING IN HARMONY -->
     <div class="orbital-system" id="orbital-cards-rotator">
-      <!-- 1. SMS Campaign (Long writing -> Starts Upper-Left) -->
+      <!-- 1. Voting -->
       <div class="orbital-card-item" data-card-idx="0" onclick="scrollToSection('how-it-works')">
         <div class="card-avatar-wrap">
-          <div class="card-img-thumb" style="background-image: url('assets/thumb_card_sms.jpg');"></div>
+          <div class="card-img-thumb" style="background-image: url('assets/lens_voting.jpg');"></div>
           <span class="card-beacon-dot"></span>
         </div>
         <div class="card-info-box">
-          <span class="card-tag">📱 SMS BROADCAST</span>
-          <h4 class="card-title">SMS Campaign</h4>
+          <span class="card-badge-pill">🏆 Voting</span>
         </div>
       </div>
 
-      <!-- 2. Fundraising (Long writing -> Starts Mid-Left) -->
+      <!-- 2. Events -->
       <div class="orbital-card-item" data-card-idx="1" onclick="scrollToSection('engines')">
         <div class="card-avatar-wrap">
-          <div class="card-img-thumb" style="background-image: url('assets/thumb_card_fundraising.jpg');"></div>
+          <div class="card-img-thumb" style="background-image: url('assets/lens_events.jpg');"></div>
           <span class="card-beacon-dot"></span>
         </div>
         <div class="card-info-box">
-          <span class="card-tag">❤️ DONATIONS</span>
-          <h4 class="card-title">Fundraising</h4>
+          <span class="card-badge-pill">🎟️ Events</span>
         </div>
       </div>
 
-      <!-- 3. Community (Long writing -> Starts Lower-Left) -->
+      <!-- 3. Fundraising -->
       <div class="orbital-card-item" data-card-idx="2" onclick="scrollToSection('engines')">
         <div class="card-avatar-wrap">
-          <div class="card-img-thumb" style="background-image: url('assets/thumb_card_community.jpg');"></div>
+          <div class="card-img-thumb" style="background-image: url('assets/lens_fundraising.jpg');"></div>
           <span class="card-beacon-dot"></span>
         </div>
         <div class="card-info-box">
-          <span class="card-tag">👥 VIP ACCESS</span>
-          <h4 class="card-title">Community</h4>
+          <span class="card-badge-pill">❤️ Fundraising</span>
         </div>
       </div>
 
-      <!-- 4. Shop (Short writing -> Starts Upper-Right) -->
+      <!-- 4. Community -->
       <div class="orbital-card-item" data-card-idx="3" onclick="scrollToSection('engines')">
         <div class="card-avatar-wrap">
-          <div class="card-img-thumb" style="background-image: url('assets/thumb_card_shop.jpg');"></div>
+          <div class="card-img-thumb" style="background-image: url('assets/lens_community.jpg');"></div>
           <span class="card-beacon-dot"></span>
         </div>
         <div class="card-info-box">
-          <span class="card-tag">🛍️ MERCH STORE</span>
-          <h4 class="card-title">Shop</h4>
+          <span class="card-badge-pill">👥 Community</span>
         </div>
       </div>
 
-      <!-- 5. Voting (Short writing -> Starts Mid-Right) -->
-      <div class="orbital-card-item" data-card-idx="4" onclick="scrollToSection('how-it-works')">
+      <!-- 5. Shop -->
+      <div class="orbital-card-item" data-card-idx="4" onclick="scrollToSection('engines')">
         <div class="card-avatar-wrap">
-          <div class="card-img-thumb" style="background-image: url('assets/thumb_card_voting.jpg');"></div>
+          <div class="card-img-thumb" style="background-image: url('assets/lens_shop.jpg');"></div>
           <span class="card-beacon-dot"></span>
         </div>
         <div class="card-info-box">
-          <span class="card-tag">🏆 CONTESTS</span>
-          <h4 class="card-title">Voting</h4>
+          <span class="card-badge-pill">🛍️ Shop</span>
         </div>
       </div>
 
-      <!-- 6. Events (Short writing -> Starts Lower-Right) -->
-      <div class="orbital-card-item" data-card-idx="5" onclick="scrollToSection('engines')">
+      <!-- 6. SMS Campaign -->
+      <div class="orbital-card-item" data-card-idx="5" onclick="scrollToSection('how-it-works')">
         <div class="card-avatar-wrap">
-          <div class="card-img-thumb" style="background-image: url('assets/thumb_card_events.jpg');"></div>
+          <div class="card-img-thumb" style="background-image: url('assets/lens_sms.jpg');"></div>
           <span class="card-beacon-dot"></span>
         </div>
         <div class="card-info-box">
-          <span class="card-tag">🎟️ QR TICKETS</span>
-          <h4 class="card-title">Events</h4>
+          <span class="card-badge-pill">📱 SMS Alerts</span>
         </div>
       </div>
     </div>
@@ -1531,28 +1539,10 @@
       isHorizSwipe = false;
     });
 
-    // 2. 6 FLOATING CARDS IN FRONT — WELL-DEFINED DEDICATED SPACES WITH ORGANIC LEVITATION
+    // 2. 6 FLOATING CARDS IN FRONT — Smooth Orbital Circling with Zero Overlap
     const cardElements = document.querySelectorAll('#orbital-cards-rotator .orbital-card-item');
     const totalCards = cardElements.length;
-
-    // 6 WELL-DEFINED DEDICATED ANCHOR AREAS AROUND THE GLOBE:
-    // Each card stays in its designated sector and floats weightlessly in place.
-    // Long writing cards (0, 1, 2) stay strictly on the LEFT, text flowing inward.
-    // Short writing cards (3, 4, 5) stay strictly on the RIGHT, text within screen border.
-    const cardZones = [
-      // 0. SMS Campaign (Upper-Left Zone)
-      { deskX: -168, deskY: -145, mobX: -92, mobY: -96, speedY: 0.0011, ampY: 4.8, speedX: 0.0008, ampX: 3.2, phase: 0.0 },
-      // 1. Fundraising (Mid-Left Equator Zone)
-      { deskX: -188, deskY: 0,    mobX: -102,mobY: 0,   speedY: 0.0009, ampY: 4.2, speedX: 0.0007, ampX: 2.8, phase: 1.8 },
-      // 2. Community (Lower-Left Zone)
-      { deskX: -168, deskY: 145,  mobX: -92, mobY: 96,  speedY: 0.0010, ampY: 4.5, speedX: 0.0009, ampX: 3.0, phase: 3.5 },
-      // 3. Shop (Upper-Right Zone)
-      { deskX: 72,   deskY: -145, mobX: 18,  mobY: -96, speedY: 0.0011, ampY: 4.6, speedX: 0.0008, ampX: 3.0, phase: 0.9 },
-      // 4. Voting (Mid-Right Equator Zone)
-      { deskX: 92,   deskY: 0,    mobX: 22,  mobY: 0,   speedY: 0.0008, ampY: 4.0, speedX: 0.0007, ampX: 2.6, phase: 2.7 },
-      // 5. Events (Lower-Right Zone)
-      { deskX: 72,   deskY: 145,  mobX: 18,  mobY: 96,  speedY: 0.0010, ampY: 4.4, speedX: 0.0008, ampX: 2.8, phase: 4.4 }
-    ];
+    let orbitAngle = 0;
 
     function animate(time) {
       requestAnimationFrame(animate);
@@ -1567,39 +1557,59 @@
         earthGroup.rotation.y += dynamicSpeed;
       }
 
+      // Smooth, majestic card circling speed
+      orbitAngle += 0.00045;
+
       // Render 3D Scene
       renderer.render(scene, camera);
 
-      // Render All 6 Cards in their Well-Defined Dedicated Areas with Floating Levitation
+      // Orbital Geometry: Cards circle around the globe evenly spaced by 60 deg (zero overlap)
       const isMobile = width < 600;
+      const radiusPx = Math.min(width, height) * (isMobile ? 0.35 : 0.34);
+      const cardOrbitRx = isMobile ? (radiusPx * 0.94) : (radiusPx * 1.15);
+      const cardOrbitRy = isMobile ? (radiusPx * 0.52) : (radiusPx * 0.64);
+      const orbitTilt = -0.12;
 
       cardElements.forEach((el, i) => {
-        const zone = cardZones[i];
-        const baseX = isMobile ? zone.mobX : zone.deskX;
-        const baseY = isMobile ? zone.mobY : zone.deskY;
+        // 60-degree perfect harmonic spacing around the ellipse (2 * PI / 6)
+        const anglePos = orbitAngle + (i * (Math.PI * 2 / totalCards));
+        const baseCos = Math.cos(anglePos);
+        const baseSin = Math.sin(anglePos);
 
-        // Weightless organic floating waves in its defined area
-        const floatY = Math.sin(time * zone.speedY + zone.phase) * (isMobile ? zone.ampY * 0.8 : zone.ampY);
-        const floatX = Math.cos(time * zone.speedX + zone.phase) * (isMobile ? zone.ampX * 0.8 : zone.ampX);
+        const rawX = baseCos * cardOrbitRx;
+        const rawY = baseSin * cardOrbitRy;
 
-        const finalX = baseX + floatX;
-        const finalY = baseY + floatY;
+        // Apply smooth 3D tilt
+        const rotX = rawX * Math.cos(orbitTilt) - rawY * Math.sin(orbitTilt);
+        const rotY = rawX * Math.sin(orbitTilt) + rawY * Math.cos(orbitTilt);
 
-        // Gentle breathing scale (1.00x to 1.03x)
-        const scale = 1.0 + Math.sin(time * 0.0013 + zone.phase) * 0.025;
+        // Organic levitation wave
+        const floatBob = Math.sin(time * 0.0011 + i * 1.05) * 3.5;
+        const floatDrift = Math.cos(time * 0.0008 + i * 0.85) * 2.0;
 
-        // Dynamic pulsing amber glow on lens
+        const finalX = rotX + floatDrift;
+        const finalY = rotY + floatBob;
+
+        // Depth perspective: cards in the foreground (baseSin > 0) are larger and brighter
+        const depth = baseSin; // -1 to +1
+        const scale = isMobile 
+          ? (0.88 + (depth + 1) * 0.09) 
+          : (0.90 + (depth + 1) * 0.10);
+        const opacity = 0.85 + (depth + 1) * 0.075; // 0.85 to 1.0
+        const zIdx = 30 + Math.round((depth + 1) * 5); // 30-40 (Always IN FRONT of canvas)
+
+        // Dynamic amber glow intensity based on depth
         const thumb = el.querySelector('.card-img-thumb');
         if (thumb) {
-          const glowPulse = 0.5 + Math.sin(time * 0.002 + zone.phase) * 0.3;
-          const glowSpread = Math.round((isMobile ? 18 : 24) + glowPulse * 10);
-          const glowAlpha = (0.50 + glowPulse * 0.35).toFixed(2);
-          thumb.style.boxShadow = `0 0 ${glowSpread}px rgba(245, 158, 11, ${glowAlpha}), 0 8px 26px rgba(0, 0, 0, 0.95)`;
+          const glowIntensity = Math.max(0, depth);
+          const glowSpread = Math.round((isMobile ? 18 : 24) + glowIntensity * 12);
+          const glowAlpha = (0.55 + glowIntensity * 0.35).toFixed(2);
+          thumb.style.boxShadow = `0 0 ${glowSpread}px rgba(245, 158, 11, ${glowAlpha}), 0 8px 24px rgba(0, 0, 0, 0.95)`;
         }
 
         el.style.transform = `translate3d(${finalX}px, ${finalY}px, 0) scale(${scale})`;
-        el.style.opacity = '1';
-        el.style.zIndex = '35';
+        el.style.opacity = opacity;
+        el.style.zIndex = zIdx;
       });
     }
 
