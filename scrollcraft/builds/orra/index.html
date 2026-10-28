@@ -1531,37 +1531,28 @@
       isHorizSwipe = false;
     });
 
-    // 2. 6 FLOATING CARDS IN FRONT — Fluid Orbital Motion & Scattered Spatial Constellation
+    // 2. 6 FLOATING CARDS IN FRONT — WELL-DEFINED DEDICATED SPACES WITH ORGANIC LEVITATION
     const cardElements = document.querySelectorAll('#orbital-cards-rotator .orbital-card-item');
     const totalCards = cardElements.length;
-    let orbitAngle = 0;
 
-    // SCATTERED SPATIAL DISTRIBUTION CONFIGURATION:
-    // Long writing cards (0: SMS Campaign, 1: Fundraising, 2: Community) start on the LEFT.
-    // Short writing cards (3: Shop, 4: Voting, 5: Events) start on the RIGHT.
-    // Each has distinct vertical altitude (yOffset) and individual floating dynamics.
-    const cardScatterProfiles = [
-      // 0. SMS Campaign (Long -> Starts Upper-Left)
-      { startAngle: Math.PI * 0.86, yOffset: -58, rX: 0.98, rY: 0.52, speedY: 0.0011, ampY: 4.5, phase: 0.0 },
-      // 1. Fundraising (Long -> Starts Mid-Left)
-      { startAngle: Math.PI * 1.04, yOffset: -6,  rX: 0.92, rY: 0.46, speedY: 0.0009, ampY: 4.0, phase: 1.8 },
-      // 2. Community (Long -> Starts Lower-Left)
-      { startAngle: Math.PI * 1.22, yOffset: 52,  rX: 0.96, rY: 0.50, speedY: 0.0010, ampY: 4.2, phase: 3.5 },
-      // 3. Shop (Short -> Starts Upper-Right)
-      { startAngle: Math.PI * 0.14, yOffset: -54, rX: 0.88, rY: 0.50, speedY: 0.0011, ampY: 4.4, phase: 0.8 },
-      // 4. Voting (Short -> Starts Mid-Right)
-      { startAngle: 0.0,            yOffset: 2,   rX: 0.84, rY: 0.44, speedY: 0.0008, ampY: 3.8, phase: 2.6 },
-      // 5. Events (Short -> Starts Lower-Right)
-      { startAngle: -Math.PI * 0.16,yOffset: 54,  rX: 0.86, rY: 0.48, speedY: 0.0010, ampY: 4.2, phase: 4.4 }
+    // 6 WELL-DEFINED DEDICATED ANCHOR AREAS AROUND THE GLOBE:
+    // Each card stays in its designated sector and floats weightlessly in place.
+    // Long writing cards (0, 1, 2) stay strictly on the LEFT, text flowing inward.
+    // Short writing cards (3, 4, 5) stay strictly on the RIGHT, text within screen border.
+    const cardZones = [
+      // 0. SMS Campaign (Upper-Left Zone)
+      { deskX: -168, deskY: -145, mobX: -92, mobY: -96, speedY: 0.0011, ampY: 4.8, speedX: 0.0008, ampX: 3.2, phase: 0.0 },
+      // 1. Fundraising (Mid-Left Equator Zone)
+      { deskX: -188, deskY: 0,    mobX: -102,mobY: 0,   speedY: 0.0009, ampY: 4.2, speedX: 0.0007, ampX: 2.8, phase: 1.8 },
+      // 2. Community (Lower-Left Zone)
+      { deskX: -168, deskY: 145,  mobX: -92, mobY: 96,  speedY: 0.0010, ampY: 4.5, speedX: 0.0009, ampX: 3.0, phase: 3.5 },
+      // 3. Shop (Upper-Right Zone)
+      { deskX: 72,   deskY: -145, mobX: 18,  mobY: -96, speedY: 0.0011, ampY: 4.6, speedX: 0.0008, ampX: 3.0, phase: 0.9 },
+      // 4. Voting (Mid-Right Equator Zone)
+      { deskX: 92,   deskY: 0,    mobX: 22,  mobY: 0,   speedY: 0.0008, ampY: 4.0, speedX: 0.0007, ampX: 2.6, phase: 2.7 },
+      // 5. Events (Lower-Right Zone)
+      { deskX: 72,   deskY: 145,  mobX: 18,  mobY: 96,  speedY: 0.0010, ampY: 4.4, speedX: 0.0008, ampX: 2.8, phase: 4.4 }
     ];
-
-    // Collision Detection & Elastic Repulsive Bounce Physics State
-    const cardPhysics = Array.from({ length: totalCards }, () => ({
-      vx: 0,
-      vy: 0,
-      bx: 0,
-      by: 0
-    }));
 
     function animate(time) {
       requestAnimationFrame(animate);
@@ -1576,160 +1567,39 @@
         earthGroup.rotation.y += dynamicSpeed;
       }
 
-      // Slower, graceful card orbit speed
-      orbitAngle += 0.00045;
-
       // Render 3D Scene
       renderer.render(scene, camera);
 
-      // Animate All 6 Cards — SCATTERED DISTRIBUTION WITH ZERO OVERLAP PHYSICS
+      // Render All 6 Cards in their Well-Defined Dedicated Areas with Floating Levitation
       const isMobile = width < 600;
-      // Dimensions of foreground floating perimeter around enlarged globe
-      const radiusPx = Math.min(width, height) * (isMobile ? 0.35 : 0.34);
-      const cardOrbitRx = isMobile ? (radiusPx * 0.92) : (radiusPx * 1.16);
-      const cardOrbitRy = isMobile ? (radiusPx * 0.50) : (radiusPx * 0.64);
-      const orbitTilt = -0.12;
 
-      // 1. Calculate base orbital target coordinates for all cards
-      const baseCoords = [];
-      const depths = [];
-
-      for (let i = 0; i < totalCards; i++) {
-        const prof = cardScatterProfiles[i];
-        const anglePos = orbitAngle + prof.startAngle;
-        const baseCos = Math.cos(anglePos);
-        const baseSin = Math.sin(anglePos);
-
-        const curRx = cardOrbitRx * prof.rX;
-        const curRy = cardOrbitRy * prof.rY;
-
-        // Calculate horizontal position:
-        // On the right side (baseCos > 0), the text trails to the right of the avatar.
-        // We compress rightward reach so trailing text NEVER exceeds phone borders!
-        let rawX = baseCos * curRx;
-        if (baseCos > 0) {
-          rawX = rawX * (isMobile ? 0.32 : 0.68);
-        } else {
-          rawX = rawX * 0.78; // Keep left-side cards comfortably framed
-        }
-        
-        // Slight horizontal center balancing
-        const centerOffsetX = isMobile ? -8 : 0;
-        rawX = rawX + centerOffsetX;
-
-        // Individual vertical altitude layer scattered across the globe
-        const yAltitude = isMobile ? (prof.yOffset * 0.82) : prof.yOffset;
-        const rawY = (baseSin * curRy) + yAltitude;
-
-        // Apply smooth 3D tilt
-        const rotX = rawX * Math.cos(orbitTilt) - rawY * Math.sin(orbitTilt);
-        const rotY = rawX * Math.sin(orbitTilt) + rawY * Math.cos(orbitTilt);
-
-        // Organic weightless levitation waves per card
-        const floatBob = Math.sin(time * prof.speedY + prof.phase) * prof.ampY;
-        const floatDrift = Math.cos(time * 0.0007 + prof.phase) * 2.2;
-
-        baseCoords.push({
-          x: rotX + floatDrift,
-          y: rotY + floatBob,
-          depth: baseSin
-        });
-        depths.push(baseSin);
-      }
-
-      // 2. Update elastic bounce offsets towards equilibrium with smooth damping
-      for (let i = 0; i < totalCards; i++) {
-        const p = cardPhysics[i];
-        p.vx *= 0.80; // Velocity damping
-        p.vy *= 0.80;
-        p.bx += p.vx; // Apply velocity
-        p.by += p.vy;
-        p.bx *= 0.86; // Spring return to orbital path
-        p.by *= 0.86;
-      }
-
-      // 3. Collision Detection & Pairwise Repulsive Bounce:
-      // Minimum safe separation box adapted to 96px/78px icon lenses (ZERO overlap)
-      const safeDistX = isMobile ? 148 : 188;
-      const safeDistY = isMobile ? 66 : 82;
-
-      for (let i = 0; i < totalCards; i++) {
-        for (let j = i + 1; j < totalCards; j++) {
-          const xi = baseCoords[i].x + cardPhysics[i].bx;
-          const yi = baseCoords[i].y + cardPhysics[i].by;
-          const xj = baseCoords[j].x + cardPhysics[j].bx;
-          const yj = baseCoords[j].y + cardPhysics[j].by;
-
-          const dx = xi - xj;
-          const dy = yi - yj;
-
-          const normDist = Math.sqrt((dx / safeDistX) ** 2 + (dy / safeDistY) ** 2);
-          if (normDist < 1.0 && normDist > 0.0001) {
-            // CONTACT DETECTED! Elastic bounce away from each other
-            const overlap = 1.0 - normDist;
-            const nx = (dx / safeDistX) / normDist;
-            const ny = (dy / safeDistY) / normDist;
-
-            // Elastic bounce impulse (velocity)
-            const pushMagnitude = overlap * 22.0;
-            cardPhysics[i].vx += nx * pushMagnitude;
-            cardPhysics[i].vy += ny * pushMagnitude;
-            cardPhysics[j].vx -= nx * pushMagnitude;
-            cardPhysics[j].vy -= ny * pushMagnitude;
-
-            // Direct separation nudge so cards NEVER overlap any writing
-            const separationFactor = overlap * 0.50;
-            cardPhysics[i].bx += nx * separationFactor * safeDistX;
-            cardPhysics[i].by += ny * separationFactor * safeDistY;
-            cardPhysics[j].bx -= nx * separationFactor * safeDistX;
-            cardPhysics[j].by -= ny * separationFactor * safeDistY;
-          }
-        }
-      }
-
-      // Hard viewport clamp limits:
-      // Prevents rightward text from exceeding phone screen edge even under elastic impulse
-      const maxAllowedRightX = isMobile ? 24 : 140;
-      const maxAllowedLeftX = isMobile ? -112 : -195;
-
-      // 4. Render cards with collision-free positions and animated depth transition
       cardElements.forEach((el, i) => {
-        const p = cardPhysics[i];
-        let finalX = baseCoords[i].x + p.bx;
-        let finalY = baseCoords[i].y + p.by;
+        const zone = cardZones[i];
+        const baseX = isMobile ? zone.mobX : zone.deskX;
+        const baseY = isMobile ? zone.mobY : zone.deskY;
 
-        // Strict clamp for mobile right edge to guarantee text is 100% visible
-        if (finalX > maxAllowedRightX) {
-          finalX = maxAllowedRightX;
-          p.bx = maxAllowedRightX - baseCoords[i].x;
-          p.vx = Math.min(0, p.vx);
-        }
-        if (finalX < maxAllowedLeftX) {
-          finalX = maxAllowedLeftX;
-          p.bx = maxAllowedLeftX - baseCoords[i].x;
-          p.vx = Math.max(0, p.vx);
-        }
-        const depth = depths[i];
+        // Weightless organic floating waves in its defined area
+        const floatY = Math.sin(time * zone.speedY + zone.phase) * (isMobile ? zone.ampY * 0.8 : zone.ampY);
+        const floatX = Math.cos(time * zone.speedX + zone.phase) * (isMobile ? zone.ampX * 0.8 : zone.ampX);
 
-        // Active front item is largest (1.10x), back items gently scaled down (0.86x)
-        const scale = isMobile 
-          ? (0.84 + (depth + 1) * 0.10) 
-          : (0.88 + (depth + 1) * 0.11);
-        const opacity = 0.82 + (depth + 1) * 0.09; // 0.82 to 1.0
-        const zIdx = 30 + Math.round((depth + 1) * 5); // 30-40 (Always IN FRONT of canvas)
+        const finalX = baseX + floatX;
+        const finalY = baseY + floatY;
 
-        // Dynamically elevate the avatar glow when in the front transition
+        // Gentle breathing scale (1.00x to 1.03x)
+        const scale = 1.0 + Math.sin(time * 0.0013 + zone.phase) * 0.025;
+
+        // Dynamic pulsing amber glow on lens
         const thumb = el.querySelector('.card-img-thumb');
         if (thumb) {
-          const glowIntensity = Math.max(0, depth);
-          const glowSpread = Math.round(18 + glowIntensity * 16);
-          const glowAlpha = (0.50 + glowIntensity * 0.45).toFixed(2);
+          const glowPulse = 0.5 + Math.sin(time * 0.002 + zone.phase) * 0.3;
+          const glowSpread = Math.round((isMobile ? 18 : 24) + glowPulse * 10);
+          const glowAlpha = (0.50 + glowPulse * 0.35).toFixed(2);
           thumb.style.boxShadow = `0 0 ${glowSpread}px rgba(245, 158, 11, ${glowAlpha}), 0 8px 26px rgba(0, 0, 0, 0.95)`;
         }
 
         el.style.transform = `translate3d(${finalX}px, ${finalY}px, 0) scale(${scale})`;
-        el.style.opacity = opacity;
-        el.style.zIndex = zIdx;
+        el.style.opacity = '1';
+        el.style.zIndex = '35';
       });
     }
 
