@@ -304,15 +304,15 @@
     cursor: pointer;
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 10px;
     background: transparent !important;
     border: none !important;
     box-shadow: none !important;
     padding: 0 !important;
     top: 50%;
     left: 50%;
-    margin-top: -24px !important;
-    margin-left: -65px !important;
+    margin-top: -29px !important;
+    margin-left: -70px !important;
     will-change: transform, opacity;
     -webkit-tap-highlight-color: transparent;
     z-index: 30;
@@ -326,21 +326,22 @@
     flex-shrink: 0;
   }
   .card-img-thumb {
-    width: 48px;
-    height: 48px;
+    width: 58px;
+    height: 58px;
     border-radius: 50%;
     background-size: cover;
     background-position: center;
-    border: 2px solid rgba(245, 158, 11, 0.85);
-    box-shadow: 0 0 16px rgba(245, 158, 11, 0.45), 0 8px 24px rgba(0, 0, 0, 0.9);
+    border: 2px solid rgba(245, 158, 11, 0.95);
+    box-shadow: 0 0 18px rgba(245, 158, 11, 0.5), 0 8px 24px rgba(0, 0, 0, 0.95);
+    filter: contrast(1.06) brightness(1.04);
     transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
   }
   .card-beacon-dot {
     position: absolute;
-    top: -1px;
-    right: -1px;
-    width: 9px;
-    height: 9px;
+    top: 0px;
+    right: 0px;
+    width: 10px;
+    height: 10px;
     border-radius: 50%;
     background: #EF4444;
     border: 1.5px solid #FFFFFF;
@@ -355,7 +356,7 @@
   }
   .card-tag {
     font-family: var(--font-mono);
-    font-size: 0.60rem;
+    font-size: 0.62rem;
     font-weight: 700;
     color: #F59E0B;
     letter-spacing: 0.08em;
@@ -366,7 +367,7 @@
   }
   .card-title {
     font-family: var(--font-display);
-    font-size: 0.94rem;
+    font-size: 0.96rem;
     font-weight: 800;
     color: #FFFFFF;
     margin: 0;
@@ -377,7 +378,7 @@
   .orbital-card-item:hover .card-img-thumb {
     transform: scale(1.15);
     border-color: #FDE68A;
-    box-shadow: 0 0 24px rgba(245, 158, 11, 0.85), 0 10px 28px rgba(0, 0, 0, 0.95);
+    box-shadow: 0 0 26px rgba(245, 158, 11, 0.9), 0 12px 30px rgba(0, 0, 0, 0.98);
   }
   .orbital-card-item:hover .card-title {
     color: #FDE68A;
@@ -867,24 +868,24 @@
       margin: 0.5rem auto 2rem auto;
     }
     .orbital-card-item {
-      gap: 6px !important;
-      margin-top: -20px !important;
-      margin-left: -52px !important;
+      gap: 7px !important;
+      margin-top: -23px !important;
+      margin-left: -58px !important;
       background: transparent !important;
       border: none !important;
       box-shadow: none !important;
     }
     .card-img-thumb {
-      width: 38px !important;
-      height: 38px !important;
-      border-width: 1.5px !important;
+      width: 46px !important;
+      height: 46px !important;
+      border-width: 1.8px !important;
     }
     .card-beacon-dot {
-      width: 7px !important;
-      height: 7px !important;
+      width: 8px !important;
+      height: 8px !important;
     }
-    .card-tag { font-size: 0.52rem !important; }
-    .card-title { font-size: 0.80rem !important; }
+    .card-tag { font-size: 0.54rem !important; }
+    .card-title { font-size: 0.84rem !important; }
     
     .hero-pillars {
       grid-template-columns: 1fr 1fr;
@@ -1509,10 +1510,18 @@
     const totalCards = cardElements.length;
     let orbitAngle = 0;
 
+    // Collision Detection & Elastic Repulsive Bounce Physics State
+    const cardPhysics = Array.from({ length: totalCards }, () => ({
+      vx: 0,
+      vy: 0,
+      bx: 0,
+      by: 0
+    }));
+
     function animate(time) {
       requestAnimationFrame(animate);
 
-      // Slower, majestic planetary rotation
+      // Slower, majestic planetary rotation (globe remains untouched)
       if (!isDragging) {
         earthGroup.rotation.y += 0.00065; // Calm, steady, luxury rotation
       }
@@ -1523,23 +1532,33 @@
       // Render 3D Scene
       renderer.render(scene, camera);
 
-      // Animate All 6 Cards — FITTING PERFECTLY IN SCREEN WITHOUT OVERLAPPING
+      // Animate All 6 Cards — MOVED TOWARDS THE RIGHT, WITH ELASTIC BOUNCE REPULSION
       const isMobile = width < 600;
       // Dimensions of foreground floating perimeter around globe
-      const radiusPx = Math.min(width, height) * (isMobile ? 0.36 : 0.33);
-      const cardOrbitRx = isMobile ? (radiusPx * 1.15) : (radiusPx * 1.42);
-      const cardOrbitRy = isMobile ? (radiusPx * 0.50) : (radiusPx * 0.68);
-      const orbitTilt = -0.15;
+      const radiusPx = Math.min(width, height) * (isMobile ? 0.35 : 0.32);
+      const cardOrbitRx = isMobile ? (radiusPx * 1.05) : (radiusPx * 1.28);
+      const cardOrbitRy = isMobile ? (radiusPx * 0.50) : (radiusPx * 0.66);
+      const orbitTilt = -0.14;
 
-      cardElements.forEach((el, i) => {
-        // Spatial orbital distribution around globe (spaced exactly 60 deg apart)
+      // Shift orbit towards the right to keep left-side cards comfortably centered
+      const shiftRight = isMobile ? 16 : 22;
+
+      // 1. Calculate base orbital target coordinates for all cards
+      const baseCoords = [];
+      const depths = [];
+
+      for (let i = 0; i < totalCards; i++) {
         const anglePos = orbitAngle + (i * (Math.PI * 2 / totalCards));
         const baseCos = Math.cos(anglePos);
         const baseSin = Math.sin(anglePos);
 
-        // Smooth asymmetric positioning: keeps right side comfortably inside screen
-        const rightPullFactor = isMobile ? 0.16 : 0.14;
-        const rawX = (baseCos * cardOrbitRx) - (cardOrbitRx * rightPullFactor * (1.0 + baseCos));
+        // Calculate horizontal position: cards on the left are softened so they don't go too far left
+        let rawX = baseCos * cardOrbitRx;
+        if (baseCos < 0) {
+          rawX = rawX * 0.82; // Tame leftward reach by 18%
+        }
+        rawX = rawX + shiftRight;
+
         const rawY = baseSin * cardOrbitRy;
 
         // Apply smooth 3D tilt
@@ -1550,9 +1569,71 @@
         const floatBob = Math.sin(time * 0.0009 + i * 1.05) * 4.5;
         const floatDrift = Math.cos(time * 0.0007 + i * 0.85) * 2.5;
 
-        // Animated Depth Transition (baseSin: -1 back, +1 front)
-        const depth = baseSin; // -1 to +1
-        // Smooth scale: active front item is largest (1.10x), back items gently scaled down (0.86x)
+        baseCoords.push({
+          x: rotX + floatDrift,
+          y: rotY + floatBob,
+          depth: baseSin
+        });
+        depths.push(baseSin);
+      }
+
+      // 2. Update elastic bounce offsets towards equilibrium with smooth damping
+      for (let i = 0; i < totalCards; i++) {
+        const p = cardPhysics[i];
+        p.vx *= 0.82; // Velocity damping
+        p.vy *= 0.82;
+        p.bx += p.vx; // Apply velocity
+        p.by += p.vy;
+        p.bx *= 0.88; // Spring return to orbital path
+        p.by *= 0.88;
+      }
+
+      // 3. Collision Detection & Pairwise Repulsive Bounce:
+      // Minimum safe separation box to guarantee NO text or avatar overlap
+      const safeDistX = isMobile ? 96 : 124;
+      const safeDistY = isMobile ? 44 : 54;
+
+      for (let i = 0; i < totalCards; i++) {
+        for (let j = i + 1; j < totalCards; j++) {
+          const xi = baseCoords[i].x + cardPhysics[i].bx;
+          const yi = baseCoords[i].y + cardPhysics[i].by;
+          const xj = baseCoords[j].x + cardPhysics[j].bx;
+          const yj = baseCoords[j].y + cardPhysics[j].by;
+
+          const dx = xi - xj;
+          const dy = yi - yj;
+
+          const normDist = Math.sqrt((dx / safeDistX) ** 2 + (dy / safeDistY) ** 2);
+          if (normDist < 1.0 && normDist > 0.0001) {
+            // CONTACT DETECTED! Elastic bounce away from each other
+            const overlap = 1.0 - normDist;
+            const nx = (dx / safeDistX) / normDist;
+            const ny = (dy / safeDistY) / normDist;
+
+            // Elastic bounce impulse
+            const pushMagnitude = overlap * 16.0;
+            cardPhysics[i].vx += nx * pushMagnitude;
+            cardPhysics[i].vy += ny * pushMagnitude;
+            cardPhysics[j].vx -= nx * pushMagnitude;
+            cardPhysics[j].vy -= ny * pushMagnitude;
+
+            // Direct separation nudge to immediately prevent any writing overlap
+            cardPhysics[i].bx += nx * overlap * safeDistX * 0.35;
+            cardPhysics[i].by += ny * overlap * safeDistY * 0.35;
+            cardPhysics[j].bx -= nx * overlap * safeDistX * 0.35;
+            cardPhysics[j].by -= ny * overlap * safeDistY * 0.35;
+          }
+        }
+      }
+
+      // 4. Render cards with collision-free positions and animated depth transition
+      cardElements.forEach((el, i) => {
+        const p = cardPhysics[i];
+        const finalX = baseCoords[i].x + p.bx;
+        const finalY = baseCoords[i].y + p.by;
+        const depth = depths[i];
+
+        // Active front item is largest (1.10x), back items gently scaled down (0.86x)
         const scale = isMobile 
           ? (0.84 + (depth + 1) * 0.10) 
           : (0.88 + (depth + 1) * 0.11);
@@ -1563,12 +1644,12 @@
         const thumb = el.querySelector('.card-img-thumb');
         if (thumb) {
           const glowIntensity = Math.max(0, depth);
-          const glowSpread = Math.round(14 + glowIntensity * 12);
-          const glowAlpha = (0.4 + glowIntensity * 0.4).toFixed(2);
-          thumb.style.boxShadow = `0 0 ${glowSpread}px rgba(245, 158, 11, ${glowAlpha}), 0 8px 24px rgba(0, 0, 0, 0.9)`;
+          const glowSpread = Math.round(16 + glowIntensity * 14);
+          const glowAlpha = (0.45 + glowIntensity * 0.45).toFixed(2);
+          thumb.style.boxShadow = `0 0 ${glowSpread}px rgba(245, 158, 11, ${glowAlpha}), 0 8px 24px rgba(0, 0, 0, 0.95)`;
         }
 
-        el.style.transform = `translate3d(${rotX + floatDrift}px, ${rotY + floatBob}px, 0) scale(${scale})`;
+        el.style.transform = `translate3d(${finalX}px, ${finalY}px, 0) scale(${scale})`;
         el.style.opacity = opacity;
         el.style.zIndex = zIdx;
       });
