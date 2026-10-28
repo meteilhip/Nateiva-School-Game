@@ -1011,7 +1011,11 @@
   @media (max-width: 768px) {
     .orra-nav-menu { display: none; }
     .orra-pill-badge { display: none; }
-    .orra-nav { padding: 0.75rem 1.25rem; }
+    .orra-nav { padding: 0.65rem 1rem; }
+    .orra-nav-right { gap: 0.5rem; }
+    .lang-btn { font-size: 0.68rem; padding: 0.28rem 0.6rem; }
+    .lang-pill-slider { width: 30px; }
+    .orra-brand-logo-img { height: 38px; }
     .orra-brand-logo-img { height: 42px; }
     .hero-title { font-size: clamp(2.1rem, 7.8vw, 3.2rem); }
     .hero-actions {
@@ -1141,6 +1145,95 @@
     .tx-title-row { font-size: 0.78rem; }
     .tx-meta-row { font-size: 0.62rem; }
   }
+
+  /* ========================================================
+     LUXURY BILINGUAL LANGUAGE SWITCHER (EN / FR) & TRANSITIONS
+     ======================================================== */
+  .lang-switch-toggle {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    background: rgba(10, 14, 28, 0.9);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border: 1.2px solid rgba(245, 158, 11, 0.45);
+    border-radius: 999px;
+    padding: 3px;
+    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    user-select: none;
+    -webkit-user-select: none;
+    z-index: 50;
+  }
+  .lang-btn {
+    position: relative;
+    z-index: 2;
+    background: transparent;
+    border: none;
+    outline: none;
+    color: #94A3B8;
+    font-family: var(--font-mono);
+    font-size: 0.74rem;
+    font-weight: 800;
+    letter-spacing: 0.06em;
+    padding: 0.32rem 0.72rem;
+    border-radius: 999px;
+    cursor: pointer;
+    transition: color 0.25s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+  }
+  .lang-btn.active {
+    color: #05070E;
+  }
+  .lang-pill-slider {
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    height: calc(100% - 6px);
+    width: 36px;
+    border-radius: 999px;
+    background: linear-gradient(135deg, #F59E0B 0%, #FBBF24 50%, #EF4444 100%);
+    box-shadow: 0 2px 10px rgba(245, 158, 11, 0.5), inset 0 1px 1px rgba(255, 255, 255, 0.6);
+    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    z-index: 1;
+    pointer-events: none;
+  }
+  body[data-current-lang="fr"] .lang-pill-slider {
+    transform: translateX(100%);
+  }
+  body[data-current-lang="en"] .lang-pill-slider {
+    transform: translateX(0);
+  }
+
+  /* Ultra-smooth micro-fade transition during language switch */
+  .i18n-anim {
+    transition: opacity 0.2s cubic-bezier(0.16, 1, 0.3, 1), transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    will-change: opacity, transform;
+  }
+  .i18n-fading {
+    opacity: 0.15 !important;
+    transform: translateY(-3px) !important;
+  }
+
+
+  /* ========================================================
+     APPLE-GRADE SMOOTH SCROLL REVEALS & 3D TRANSITIONS
+     ======================================================== */
+  .reveal-on-scroll {
+    opacity: 0;
+    transform: translateY(26px) scale(0.985);
+    transition: opacity 0.75s cubic-bezier(0.16, 1, 0.3, 1), transform 0.75s cubic-bezier(0.16, 1, 0.3, 1);
+    will-change: opacity, transform;
+  }
+  .reveal-on-scroll.is-revealed {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+  .engine-card.reveal-on-scroll {
+    transition-delay: calc(var(--card-index, 0) * 0.08s);
+  }
+
 </style>
 <script src="assets/three.min.js"></script>
 </head>
@@ -1154,29 +1247,34 @@
   </a>
 
   <ul class="orra-nav-menu">
-    <li><a href="#top" class="orra-nav-link active">Home</a></li>
-    <li><a href="#how-it-works" class="orra-nav-link">How It Works</a></li>
-    <li><a href="#engines" class="orra-nav-link">6 Engines</a></li>
-    <li><a href="#launch" class="orra-nav-link">Get Started</a></li>
+    <li><a href="#top" class="orra-nav-link active" data-i18n="nav.home">Home</a></li>
+    <li><a href="#how-it-works" class="orra-nav-link" data-i18n="nav.howItWorks">How It Works</a></li>
+    <li><a href="#engines" class="orra-nav-link" data-i18n="nav.engines">6 Engines</a></li>
+    <li><a href="#launch" class="orra-nav-link" data-i18n="nav.getStarted">Get Started</a></li>
   </ul>
 
   <div class="orra-nav-right">
-    <div class="orra-pill-badge">🌍 GLOBAL · CEMAC &amp; DIASPORA</div>
-    <a href="#launch" class="orra-btn-cta">Start Free →</a>
+    <div class="orra-pill-badge" data-i18n="nav.badge">🌍 GLOBAL · CEMAC &amp; DIASPORA</div>
+    <div class="lang-switch-toggle" id="langSwitch" role="group" aria-label="Language selector">
+      <button type="button" class="lang-btn active" data-lang="en">EN</button>
+      <button type="button" class="lang-btn" data-lang="fr">FR</button>
+      <span class="lang-pill-slider"></span>
+    </div>
+    <a href="#launch" class="orra-btn-cta"><span class="tx-live-pulse" style="background:#10B981;box-shadow:0 0 6px #10B981;"></span> <span data-i18n="nav.cta">Start Free →</span></a>
   </div>
 </header>
 
 <!-- ACT 1: HERO SECTION -->
 <section class="hero-container" id="top">
   <div class="hero-content">
-    <div class="hero-kicker">✨ A GLOBAL CREATOR PLATFORM</div>
-    <h1 class="hero-title">Create. Engage. Sell. <span>Grow.</span></h1>
-    <p class="hero-text">
+    <div class="hero-kicker" data-i18n="hero.kicker">✨ A GLOBAL CREATOR PLATFORM</div>
+    <h1 class="hero-title" data-i18n="hero.title">Create. Engage. Sell. <span>Grow.</span></h1>
+    <p class="hero-text" data-i18n="hero.text">
       The all-in-one creator engine powering voting contests, concert ticketing, diaspora fundraising, luxury merchandise, private communities, and automated SMS campaigns.
     </p>
     <div class="hero-actions">
-      <a href="#launch" class="orra-btn-cta">Get Started Free →</a>
-      <a href="#how-it-works" class="orra-btn-outline"><span>▶</span> How It Works</a>
+      <a href="#launch" class="btn-cinema-cta"><span data-i18n="hero.ctaPrimary">Get Started Free →</span></a>
+      <a href="#how-it-works" class="orra-btn-outline"><span data-i18n="hero.ctaSecondary">▶ How It Works</span></a>
     </div>
   </div>
 
@@ -1195,7 +1293,7 @@
           <span class="card-beacon-dot"></span>
         </div>
         <div class="card-info-box">
-          <span class="card-badge-pill">🏆 Voting</span>
+          <span class="card-badge-pill" data-i18n="orbital.voting">🏆 Voting</span>
         </div>
       </div>
 
@@ -1206,7 +1304,7 @@
           <span class="card-beacon-dot"></span>
         </div>
         <div class="card-info-box">
-          <span class="card-badge-pill">🎟️ Events</span>
+          <span class="card-badge-pill" data-i18n="orbital.events">🎟️ Events</span>
         </div>
       </div>
 
@@ -1217,7 +1315,7 @@
           <span class="card-beacon-dot"></span>
         </div>
         <div class="card-info-box">
-          <span class="card-badge-pill">❤️ Fundraising</span>
+          <span class="card-badge-pill" data-i18n="orbital.fundraising">❤️ Fundraising</span>
         </div>
       </div>
 
@@ -1228,7 +1326,7 @@
           <span class="card-beacon-dot"></span>
         </div>
         <div class="card-info-box">
-          <span class="card-badge-pill">👥 Community</span>
+          <span class="card-badge-pill" data-i18n="orbital.community">👥 Community</span>
         </div>
       </div>
 
@@ -1239,7 +1337,7 @@
           <span class="card-beacon-dot"></span>
         </div>
         <div class="card-info-box">
-          <span class="card-badge-pill">🛍️ Shop</span>
+          <span class="card-badge-pill" data-i18n="orbital.shop">🛍️ Shop</span>
         </div>
       </div>
 
@@ -1250,7 +1348,7 @@
           <span class="card-beacon-dot"></span>
         </div>
         <div class="card-info-box">
-          <span class="card-badge-pill">📱 SMS Marketing</span>
+          <span class="card-badge-pill" data-i18n="orbital.sms">📱 SMS Marketing</span>
         </div>
       </div>
     </div>
@@ -1261,29 +1359,29 @@
     <div class="pillar-item">
       <div class="pillar-icon">⚡</div>
       <div>
-        <p class="pillar-name">60+ Luxury Templates</p>
-        <p class="pillar-desc">Launch in under 3 minutes</p>
+        <p class="pillar-name" data-i18n="pillar.1.title">60+ Luxury Templates</p>
+        <p class="pillar-desc" data-i18n="pillar.1.desc">Launch in under 3 minutes</p>
       </div>
     </div>
     <div class="pillar-item">
       <div class="pillar-icon">💳</div>
       <div>
-        <p class="pillar-name">Unified Payment Rails</p>
-        <p class="pillar-desc">MTN MoMo, Orange, Stripe</p>
+        <p class="pillar-name" data-i18n="pillar.2.title">Unified Payment Rails</p>
+        <p class="pillar-desc" data-i18n="pillar.2.desc">MTN MoMo, Orange, Stripe</p>
       </div>
     </div>
     <div class="pillar-item">
       <div class="pillar-icon">🌍</div>
       <div>
-        <p class="pillar-name">Global Diaspora Corridor</p>
-        <p class="pillar-desc">FCFA, USD, EUR, CAD, GBP</p>
+        <p class="pillar-name" data-i18n="pillar.3.title">Global Diaspora Corridor</p>
+        <p class="pillar-desc" data-i18n="pillar.3.desc">FCFA, USD, EUR, CAD, GBP</p>
       </div>
     </div>
     <div class="pillar-item">
       <div class="pillar-icon">🔒</div>
       <div>
-        <p class="pillar-name">Fraud-Proof Ledger</p>
-        <p class="pillar-desc">Real-time instant settlements</p>
+        <p class="pillar-name" data-i18n="pillar.4.title">Fraud-Proof Ledger</p>
+        <p class="pillar-desc" data-i18n="pillar.4.desc">Real-time instant settlements</p>
       </div>
     </div>
   </div>
@@ -1292,9 +1390,9 @@
 <!-- SECTION 2: HOW IT WORKS — STEP-BY-STEP PROCESS FOR CREATORS -->
 <section class="section-steps" id="how-it-works">
   <div class="steps-header">
-    <span class="section-tag">✨ CREATOR BLUEPRINT · ZERO CODE REQUIRED</span>
-    <h2 class="section-title">Build Your Platform in 4 Simple Steps</h2>
-    <p class="section-subtitle">
+    <span class="section-tag" data-i18n="steps.tag">✨ CREATOR BLUEPRINT · ZERO CODE REQUIRED</span>
+    <h2 class="section-title" data-i18n="steps.title">Build Your Platform in 4 Simple Steps</h2>
+    <p class="section-subtitle" data-i18n="steps.subtitle">
       From custom domain setup to instant Mobile Money cashouts — deploy your complete brand ecosystem in under 3 minutes.
     </p>
   </div>
@@ -1304,15 +1402,15 @@
     <div class="step-row">
       <div class="step-media-col">
         <img src="assets/step1_cinema.jpg" alt="Sleek creator workstation showcasing luxury website builder" class="step-media-img" loading="lazy">
-        <span class="step-cinema-badge"><span class="live-dot"></span> 60s Setup</span>
+        <span class="step-cinema-badge"><span class="live-dot"></span> <span data-i18n="step1.badge">60s Setup</span></span>
       </div>
       <div class="step-content-col">
         <div class="step-badge-row">
           <span class="step-num-pill">01</span>
-          <span class="step-category-tag">IDENTITY &amp; BRAND</span>
+          <span class="step-category-tag" data-i18n="step1.category">IDENTITY &amp; BRAND</span>
         </div>
-        <h3 class="step-title">Launch Your Official Creator Site in 60s</h3>
-        <p class="step-desc">
+        <h3 class="step-title" data-i18n="step1.title">Launch Your Official Creator Site in 60s</h3>
+        <p class="step-desc" data-i18n="step1.desc">
           Choose a high-converting luxury theme. Connect your custom domain with automatic SSL encryption and launch your official home on the web without writing code.
         </p>
         <div class="step-highlights-row">
@@ -1322,7 +1420,7 @@
         </div>
         <div class="step-cta-row">
           <a href="#join" class="btn-cinema-cta">
-            <span>Build Your Site Now</span>
+            <span data-i18n="step1.cta">Build Your Site Now</span>
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
           </a>
         </div>
@@ -1338,23 +1436,23 @@
       <div class="step-content-col">
         <div class="step-badge-row">
           <span class="step-num-pill">02</span>
-          <span class="step-category-tag">MODULAR ACTIVITIES</span>
+          <span class="step-category-tag" data-i18n="step2.category">MODULAR ACTIVITIES</span>
         </div>
-        <h3 class="step-title">Activate Any Feature in One Single Tap</h3>
-        <p class="step-desc">
+        <h3 class="step-title" data-i18n="step2.title">Activate Any Feature in One Single Tap</h3>
+        <p class="step-desc" data-i18n="step2.desc">
           Monetize your audience however you want. Turn activities ON or OFF modularly: live pageant voting, concert tickets, diaspora crowdfunding, luxury merchandise, or fan memberships.
         </p>
         <div class="activities-selector-wrap">
-          <button class="activity-chip active" onclick="selectActivityModule('voting')"><span class="chip-dot"></span> 🏆 Voting</button>
-          <button class="activity-chip" onclick="selectActivityModule('events')"><span class="chip-dot"></span> 🎟️ Events</button>
-          <button class="activity-chip" onclick="selectActivityModule('fundraising')"><span class="chip-dot"></span> ❤️ Causes</button>
-          <button class="activity-chip" onclick="selectActivityModule('shop')"><span class="chip-dot"></span> 🛍️ Store</button>
-          <button class="activity-chip" onclick="selectActivityModule('community')"><span class="chip-dot"></span> 👥 VIP Club</button>
-          <button class="activity-chip" onclick="selectActivityModule('sms')"><span class="chip-dot"></span> 📱 SMS Marketing</button>
+          <button class="activity-chip active" onclick="selectActivityModule('voting')"><span class="chip-dot"></span> <span data-i18n="chip.voting">🏆 Voting</span></button>
+          <button class="activity-chip" onclick="selectActivityModule('events')"><span class="chip-dot"></span> <span data-i18n="chip.events">🎟️ Events</span></button>
+          <button class="activity-chip" onclick="selectActivityModule('fundraising')"><span class="chip-dot"></span> <span data-i18n="chip.fundraising">❤️ Causes</span></button>
+          <button class="activity-chip" onclick="selectActivityModule('shop')"><span class="chip-dot"></span> <span data-i18n="chip.shop">🛍️ Store</span></button>
+          <button class="activity-chip" onclick="selectActivityModule('community')"><span class="chip-dot"></span> <span data-i18n="chip.community">👥 VIP Club</span></button>
+          <button class="activity-chip" onclick="selectActivityModule('sms')"><span class="chip-dot"></span> <span data-i18n="chip.sms">📱 SMS Marketing</span></button>
         </div>
         <div class="step-cta-row">
           <a href="#engine" class="btn-cinema-cta">
-            <span>Explore Modular Engines</span>
+            <span data-i18n="step2.cta">Explore Modular Engines</span>
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
           </a>
         </div>
@@ -1365,15 +1463,15 @@
     <div class="step-row">
       <div class="step-media-col">
         <img src="assets/step3_cinema.jpg" alt="Luxury gold smartphone sending 3D SMS broadcast waves" class="step-media-img" loading="lazy">
-        <span class="step-cinema-badge"><span class="live-dot"></span> 98% Open Rate</span>
+        <span class="step-cinema-badge"><span class="live-dot"></span> <span data-i18n="step3.badge">98% Open Rate</span></span>
       </div>
       <div class="step-content-col">
         <div class="step-badge-row">
           <span class="step-num-pill">03</span>
-          <span class="step-category-tag">DIRECT ENGAGEMENT</span>
+          <span class="step-category-tag" data-i18n="step3.category">DIRECT ENGAGEMENT</span>
         </div>
-        <h3 class="step-title">Reach 100% of Fans via Direct SMS</h3>
-        <p class="step-desc">
+        <h3 class="step-title" data-i18n="step3.title">Reach 100% of Fans via Direct SMS</h3>
+        <p class="step-desc" data-i18n="step3.desc">
           Stop losing 90% of your fans to social algorithms. Broadcast contest updates, ticket drops, and exclusive links directly to their phone's SMS inbox with 98% guaranteed open rates.
         </p>
         <div class="step-highlights-row">
@@ -1383,7 +1481,7 @@
         </div>
         <div class="step-cta-row">
           <a href="#join" class="btn-cinema-cta">
-            <span>Launch SMS Broadcast</span>
+            <span data-i18n="step3.cta">Launch SMS Broadcast</span>
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
           </a>
         </div>
@@ -1394,15 +1492,15 @@
     <div class="step-row reverse">
       <div class="step-media-col">
         <img src="assets/step4_cinema.jpg" alt="Instant Mobile Money and card payout fintech scene" class="step-media-img" loading="lazy">
-        <span class="step-cinema-badge"><span class="live-dot"></span> 0.0s Settlement</span>
+        <span class="step-cinema-badge"><span class="live-dot"></span> <span data-i18n="step4.badge">0.0s Settlement</span></span>
       </div>
       <div class="step-content-col">
         <div class="step-badge-row">
           <span class="step-num-pill">04</span>
-          <span class="step-category-tag">REVENUE &amp; SETTLEMENT</span>
+          <span class="step-category-tag" data-i18n="step4.category">REVENUE &amp; SETTLEMENT</span>
         </div>
-        <h3 class="step-title">Instant Cashout in FCFA &amp; Global Cards</h3>
-        <p class="step-desc">
+        <h3 class="step-title" data-i18n="step4.title">Instant Cashout in FCFA &amp; Global Cards</h3>
+        <p class="step-desc" data-i18n="step4.desc">
           Collect revenue seamlessly from local fans via Mobile Money and international diaspora supporters via Stripe and cards. Settle your earnings instantly directly to your phone.
         </p>
         <div class="step-highlights-row">
@@ -1412,7 +1510,7 @@
         </div>
         <div class="step-cta-row">
           <a href="#join" class="btn-cinema-cta">
-            <span>Start Collecting Revenue</span>
+            <span data-i18n="step4.cta">Start Collecting Revenue</span>
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
           </a>
         </div>
@@ -1424,9 +1522,9 @@
 <!-- SECTION 3: 6 CREATOR ENGINES -->
 <section class="section-engines" id="engines">
   <div class="steps-header">
-    <span class="section-tag">SIX POWERFUL MODULES</span>
-    <h2 class="section-title">Everything Creators Need to Scale Globally</h2>
-    <p class="section-subtitle">Turn any creative passion, event, or community into a profitable digital ecosystem.</p>
+    <span class="section-tag" data-i18n="engines.tag">SIX POWERFUL MODULES</span>
+    <h2 class="section-title" data-i18n="engines.title">Everything Creators Need to Scale Globally</h2>
+    <p class="section-subtitle" data-i18n="engines.subtitle">Turn any creative passion, event, or community into a profitable digital ecosystem.</p>
   </div>
 
   <div class="engines-grid">
@@ -1434,10 +1532,10 @@
     <div class="engine-card">
       <div class="engine-thumb" style="background-image: url('assets/card_voting.jpg');"></div>
       <div class="engine-body">
-        <span class="engine-kicker">ENGINE 01</span>
-        <h3 class="engine-title">Voting &amp; Contests</h3>
-        <p class="engine-desc">Automated leaderboards, anti-fraud vote packages, multi-channel payment verification, and public countdowns.</p>
-        <a href="#launch" class="orra-btn-outline" style="width: 100%; justify-content: center;">Deploy Voting System →</a>
+        <span class="engine-kicker" data-i18n="engine.1.kicker">ENGINE 01</span>
+        <h3 class="engine-title" data-i18n="engine.1.title">Voting &amp; Contests</h3>
+        <p class="engine-desc" data-i18n="engine.1.desc">Automated leaderboards, anti-fraud vote packages, multi-channel payment verification, and public countdowns.</p>
+        <a href="#launch" class="orra-btn-outline" style="width: 100%; justify-content: center;"><span data-i18n="engine.1.cta">Deploy Voting System →</span></a>
       </div>
     </div>
 
@@ -1445,10 +1543,10 @@
     <div class="engine-card">
       <div class="engine-thumb" style="background-image: url('assets/card_events.jpg');"></div>
       <div class="engine-body">
-        <span class="engine-kicker">ENGINE 02</span>
-        <h3 class="engine-title">Events &amp; Ticketing</h3>
-        <p class="engine-desc">Generate secure digital QR tickets, manage VIP tables, scan check-ins at doors, and send reminder broadcasts.</p>
-        <a href="#launch" class="orra-btn-outline" style="width: 100%; justify-content: center;">Launch Event Tickets →</a>
+        <span class="engine-kicker" data-i18n="engine.2.kicker">ENGINE 02</span>
+        <h3 class="engine-title" data-i18n="engine.2.title">Events &amp; Ticketing</h3>
+        <p class="engine-desc" data-i18n="engine.2.desc">Generate secure digital QR tickets, manage VIP tables, scan check-ins at doors, and send reminder broadcasts.</p>
+        <a href="#launch" class="orra-btn-outline" style="width: 100%; justify-content: center;"><span data-i18n="engine.2.cta">Launch Event Tickets →</span></a>
       </div>
     </div>
 
@@ -1456,10 +1554,10 @@
     <div class="engine-card">
       <div class="engine-thumb" style="background-image: url('assets/card_fundraising.jpg');"></div>
       <div class="engine-body">
-        <span class="engine-kicker">ENGINE 03</span>
-        <h3 class="engine-title">Fundraising &amp; Causes</h3>
-        <p class="engine-desc">Crowdfund for non-profits, creative projects, or community initiatives with transparent goal meters and donor walls.</p>
-        <a href="#launch" class="orra-btn-outline" style="width: 100%; justify-content: center;">Start Fundraiser →</a>
+        <span class="engine-kicker" data-i18n="engine.3.kicker">ENGINE 03</span>
+        <h3 class="engine-title" data-i18n="engine.3.title">Fundraising &amp; Causes</h3>
+        <p class="engine-desc" data-i18n="engine.3.desc">Crowdfund for non-profits, creative projects, or community initiatives with transparent goal meters and donor walls.</p>
+        <a href="#launch" class="orra-btn-outline" style="width: 100%; justify-content: center;"><span data-i18n="engine.3.cta">Start Fundraiser →</span></a>
       </div>
     </div>
 
@@ -1467,10 +1565,10 @@
     <div class="engine-card">
       <div class="engine-thumb" style="background-image: url('assets/card_shop.jpg');"></div>
       <div class="engine-body">
-        <span class="engine-kicker">ENGINE 04</span>
-        <h3 class="engine-title">Shop &amp; Merchandise</h3>
-        <p class="engine-desc">Direct-to-consumer store for apparel, designer drops, physical items, and downloadable digital assets.</p>
-        <a href="#launch" class="orra-btn-outline" style="width: 100%; justify-content: center;">Open Creator Store →</a>
+        <span class="engine-kicker" data-i18n="engine.4.kicker">ENGINE 04</span>
+        <h3 class="engine-title" data-i18n="engine.4.title">Shop &amp; Merchandise</h3>
+        <p class="engine-desc" data-i18n="engine.4.desc">Direct-to-consumer store for apparel, designer drops, physical items, and downloadable digital assets.</p>
+        <a href="#launch" class="orra-btn-outline" style="width: 100%; justify-content: center;"><span data-i18n="engine.4.cta">Open Creator Store →</span></a>
       </div>
     </div>
 
@@ -1478,10 +1576,10 @@
     <div class="engine-card">
       <div class="engine-thumb" style="background-image: url('assets/card_community.jpg');"></div>
       <div class="engine-body">
-        <span class="engine-kicker">ENGINE 05</span>
-        <h3 class="engine-title">Community &amp; Hub</h3>
-        <p class="engine-desc">Build an engaged fan base with member directories, exclusive updates, paid subscriber tiers, and newsletters.</p>
-        <a href="#launch" class="orra-btn-outline" style="width: 100%; justify-content: center;">Build Community →</a>
+        <span class="engine-kicker" data-i18n="engine.5.kicker">ENGINE 05</span>
+        <h3 class="engine-title" data-i18n="engine.5.title">Community &amp; Hub</h3>
+        <p class="engine-desc" data-i18n="engine.5.desc">Build an engaged fan base with member directories, exclusive updates, paid subscriber tiers, and newsletters.</p>
+        <a href="#launch" class="orra-btn-outline" style="width: 100%; justify-content: center;"><span data-i18n="engine.5.cta">Build Community →</span></a>
       </div>
     </div>
 
@@ -1489,10 +1587,10 @@
     <div class="engine-card">
       <div class="engine-thumb" style="background-image: url('assets/card_sms.jpg');"></div>
       <div class="engine-body">
-        <span class="engine-kicker">ENGINE 06</span>
-        <h3 class="engine-title">SMS Campaign &amp; Broadcasts</h3>
-        <p class="engine-desc">Send targeted bulk SMS alerts directly to supporters' mobile phones with 98% open rates and zero spam filtering.</p>
-        <a href="#launch" class="orra-btn-outline" style="width: 100%; justify-content: center;">Run SMS Campaign →</a>
+        <span class="engine-kicker" data-i18n="engine.6.kicker">ENGINE 06</span>
+        <h3 class="engine-title" data-i18n="engine.6.title">SMS Campaign &amp; Broadcasts</h3>
+        <p class="engine-desc" data-i18n="engine.6.desc">Send targeted bulk SMS alerts directly to supporters' mobile phones with 98% open rates and zero spam filtering.</p>
+        <a href="#launch" class="orra-btn-outline" style="width: 100%; justify-content: center;"><span data-i18n="engine.6.cta">Run SMS Campaign →</span></a>
       </div>
     </div>
   </div>
@@ -1505,12 +1603,12 @@
       <img src="assets/orra_logo.png" alt="Orra by Nateiva" style="height: 48px; width: auto; object-fit: contain; filter: drop-shadow(0 2px 10px rgba(245, 158, 11, 0.5));">
       <span class="orra-brand-by" style="border: none; padding: 0; margin: 0; color: var(--orra-gold-light);">by Nateiva</span>
     </div>
-    <p style="margin: 0; color: var(--orra-text-muted); font-size: 0.9rem; max-width: 540px; line-height: 1.55;">
+    <p style="margin: 0; color: var(--orra-text-muted); font-size: 0.9rem; max-width: 540px; line-height: 1.55;" data-i18n="footer.desc">
       A Global Creator Platform. Unified Pageant Voting, QR Ticketing, Diaspora Fundraising, Luxury Merchandise, VIP Memberships &amp; Automated SMS Campaigns.
     </p>
   </div>
   <a href="#top" class="btn-cinema-cta" style="font-size: 1.05rem; padding: 1rem 2.2rem;">
-      <span>Launch Your Platform Now</span>
+      <span data-i18n="footer.cta">Launch Your Platform Now</span>
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
     </a>
 </footer>
@@ -1816,14 +1914,24 @@
   // LUXURY ANIMATED TRANSACTIONS ENGINE (SCROLL & CLICK)
   // ========================================================
   (function initTransactionEngine() {
-    const transactions = [
-      { icon: '💸', title: 'MTN MoMo Payout', amount: '+75,000 FCFA', meta: 'Settled to @AminaStudio · Instant', tag: 'CASHOUT' },
-      { icon: '🎟️', title: 'VIP Concert Ticket', amount: '25,000 FCFA', meta: 'Bought for Yaoundé Fest · Stripe', tag: 'TICKET' },
-      { icon: '🏆', title: 'Pageant Votes Cast', amount: '+120 Votes', meta: 'Miss Diaspora 2026 · Orange MoMo', tag: 'VOTING' },
-      { icon: '🛍️', title: 'Merch Order Shipped', amount: '+34,500 FCFA', meta: 'Obsidian Hoodie to Abidjan', tag: 'STORE' },
-      { icon: '📱', title: 'SMS Blast Broadcast', amount: '12,400 Fans', meta: '98% Delivered in 3.2s', tag: 'SMS' },
-      { icon: '💸', title: 'Orange Money Cashout', amount: '+120,000 FCFA', meta: 'Settled to @DoualaLive · 0.0s', tag: 'CASHOUT' }
-    ];
+    const txStreams = {
+      en: [
+        { icon: '💸', title: 'MTN MoMo Payout', amount: '+75,000 FCFA', meta: 'Settled to @AminaStudio · Instant' },
+        { icon: '🎟️', title: 'VIP Concert Ticket', amount: '25,000 FCFA', meta: 'Bought for Yaoundé Fest · Stripe' },
+        { icon: '🏆', title: 'Pageant Votes Cast', amount: '+120 Votes', meta: 'Miss Diaspora 2026 · Orange MoMo' },
+        { icon: '🛍️', title: 'Merch Order Shipped', amount: '+34,500 FCFA', meta: 'Obsidian Hoodie to Abidjan' },
+        { icon: '📱', title: 'SMS Blast Broadcast', amount: '12,400 Fans', meta: '98% Delivered in 3.2s' },
+        { icon: '💸', title: 'Orange Money Cashout', amount: '+120,000 FCFA', meta: 'Settled to @DoualaLive · 0.0s' }
+      ],
+      fr: [
+        { icon: '💸', title: 'Paiement MTN MoMo', amount: '+75 000 FCFA', meta: 'Reçu par @AminaStudio · Instantané' },
+        { icon: '🎟️', title: 'Billet Concert VIP', amount: '25 000 FCFA', meta: 'Acheté Festival Yaoundé · Stripe' },
+        { icon: '🏆', title: 'Votes Enregistrés', amount: '+120 Votes', meta: 'Miss Diaspora 2026 · Orange MoMo' },
+        { icon: '🛍️', title: 'Commande Expédiée', amount: '+34 500 FCFA', meta: 'Sweat Obsidian vers Abidjan' },
+        { icon: '📱', title: 'Campagne SMS Envoyée', amount: '12 400 Fans', meta: '98% Reçu en 3,2s' },
+        { icon: '💸', title: 'Retrait Orange Money', amount: '+120 000 FCFA', meta: 'Envoyé à @DoualaLive · 0.0s' }
+      ]
+    };
     let txIndex = 0;
     const toast = document.getElementById('floatingTxToast');
     if (!toast) return;
@@ -1846,8 +1954,10 @@
     }
 
     function nextTransaction() {
-      txIndex = (txIndex + 1) % transactions.length;
-      updateToast(transactions[txIndex]);
+      const list = txStreams[currentLang] || txStreams.en;
+      txIndex = (txIndex + 1) % list.length;
+      const list = txStreams[currentLang] || txStreams.en;
+      updateToast(list[txIndex % list.length]);
     }
 
     // Auto cycle every 5.5 seconds
@@ -1900,8 +2010,14 @@
         target.appendChild(ripple);
         setTimeout(() => ripple.remove(), 650);
 
-        // Transaction spark
-        const sparkMessages = [
+        // Bilingual Transaction Spark Messages
+        const sparkMessages = (typeof currentLang !== 'undefined' && currentLang === 'fr') ? [
+          '+50 000 FCFA Reçu ⚡',
+          'Retrait MoMo 0.0s 💸',
+          '98% Délivrabilité 📱',
+          '+100 Votes Confirmés 🏆',
+          'Paiement Instantané ✨'
+        ] : [
           '+50,000 FCFA Settle ⚡',
           'Instant MoMo Rail 💸',
           '98% Open Verified 📱',
@@ -1915,6 +2031,254 @@
       }
     });
   })();
+</script>
+
+
+<script>
+  // ========================================================
+  // BILINGUAL TRANSLATION ENGINE (ENGLISH & FRANÇAIS)
+  // Seamless client-side i18n with smooth micro-transitions
+  // ========================================================
+  const translations = {
+    en: {
+      'nav.home': 'Home',
+      'nav.howItWorks': 'How It Works',
+      'nav.engines': '6 Engines',
+      'nav.getStarted': 'Get Started',
+      'nav.badge': '🌍 GLOBAL · CEMAC & DIASPORA',
+      'nav.cta': 'Start Free →',
+      'hero.kicker': '✨ A GLOBAL CREATOR PLATFORM',
+      'hero.title': 'Create. Engage. Sell. <span>Grow.</span>',
+      'hero.text': 'The all-in-one creator engine powering voting contests, concert ticketing, diaspora fundraising, luxury merchandise, private communities, and automated SMS campaigns.',
+      'hero.ctaPrimary': 'Get Started Free →',
+      'hero.ctaSecondary': '▶ How It Works',
+      'pillar.1.title': '60+ Luxury Templates',
+      'pillar.1.desc': 'Launch in under 3 minutes',
+      'pillar.2.title': 'Unified Payment Rails',
+      'pillar.2.desc': 'MTN MoMo, Orange, Stripe',
+      'pillar.3.title': 'Global Diaspora Corridor',
+      'pillar.3.desc': 'FCFA, USD, EUR, CAD, GBP',
+      'pillar.4.title': 'Fraud-Proof Ledger',
+      'pillar.4.desc': 'Real-time instant settlements',
+      'orbital.voting': '🏆 Voting',
+      'orbital.events': '🎟️ Events',
+      'orbital.fundraising': '❤️ Fundraising',
+      'orbital.community': '👥 Community',
+      'orbital.shop': '🛍️ Shop',
+      'orbital.sms': '📱 SMS Marketing',
+      'steps.tag': '✨ CREATOR BLUEPRINT · ZERO CODE REQUIRED',
+      'steps.title': 'Build Your Platform in 4 Simple Steps',
+      'steps.subtitle': 'From custom domain setup to instant Mobile Money cashouts — deploy your complete brand ecosystem in under 3 minutes.',
+      'step1.badge': '60s Setup',
+      'step1.category': 'IDENTITY & BRAND',
+      'step1.title': 'Launch Your Official Creator Site in 60s',
+      'step1.desc': 'Choose a high-converting luxury theme. Connect your custom domain with automatic SSL encryption and launch your official home on the web without writing code.',
+      'step1.cta': 'Build Your Site Now',
+      'step2.category': 'MODULAR ACTIVITIES',
+      'step2.title': 'Activate Any Feature in One Single Tap',
+      'step2.desc': 'Monetize your audience however you want. Turn activities ON or OFF modularly: live pageant voting, concert tickets, diaspora crowdfunding, luxury merchandise, or fan memberships.',
+      'step2.cta': 'Explore Modular Engines',
+      'chip.voting': '🏆 Voting',
+      'chip.events': '🎟️ Events',
+      'chip.fundraising': '❤️ Causes',
+      'chip.shop': '🛍️ Store',
+      'chip.community': '👥 VIP Club',
+      'chip.sms': '📱 SMS Marketing',
+      'step3.badge': '98% Open Rate',
+      'step3.category': 'DIRECT ENGAGEMENT',
+      'step3.title': 'Reach 100% of Fans via Direct SMS',
+      'step3.desc': "Stop losing 90% of your fans to social algorithms. Broadcast contest updates, ticket drops, and exclusive links directly to their phone's SMS inbox with 98% guaranteed open rates.",
+      'step3.cta': 'Launch SMS Broadcast',
+      'step4.badge': '0.0s Settlement',
+      'step4.category': 'REVENUE & SETTLEMENT',
+      'step4.title': 'Instant Cashout in FCFA & Global Cards',
+      'step4.desc': 'Collect revenue seamlessly from local fans via Mobile Money and international diaspora supporters via Stripe and cards. Settle your earnings instantly directly to your phone.',
+      'step4.cta': 'Start Collecting Revenue',
+      'engines.tag': 'SIX POWERFUL MODULES',
+      'engines.title': 'Everything Creators Need to Scale Globally',
+      'engines.subtitle': 'Turn any creative passion, event, or community into a profitable digital ecosystem.',
+      'engine.1.kicker': 'ENGINE 01',
+      'engine.1.title': 'Voting & Contests',
+      'engine.1.desc': 'Automated leaderboards, anti-fraud vote packages, multi-channel payment verification, and public countdowns.',
+      'engine.1.cta': 'Deploy Voting System →',
+      'engine.2.kicker': 'ENGINE 02',
+      'engine.2.title': 'Events & Ticketing',
+      'engine.2.desc': 'Generate secure digital QR tickets, manage VIP tables, scan check-ins at doors, and send reminder broadcasts.',
+      'engine.2.cta': 'Launch Event Tickets →',
+      'engine.3.kicker': 'ENGINE 03',
+      'engine.3.title': 'Fundraising & Causes',
+      'engine.3.desc': 'Crowdfund for non-profits, creative projects, or community initiatives with transparent goal meters and donor walls.',
+      'engine.3.cta': 'Start Fundraiser →',
+      'engine.4.kicker': 'ENGINE 04',
+      'engine.4.title': 'Shop & Merchandise',
+      'engine.4.desc': 'Direct-to-consumer store for apparel, designer drops, physical items, and downloadable digital assets.',
+      'engine.4.cta': 'Open Creator Store →',
+      'engine.5.kicker': 'ENGINE 05',
+      'engine.5.title': 'Community & Hub',
+      'engine.5.desc': 'Build an engaged fan base with member directories, exclusive updates, paid subscriber tiers, and newsletters.',
+      'engine.5.cta': 'Build Community →',
+      'engine.6.kicker': 'ENGINE 06',
+      'engine.6.title': 'SMS Campaign & Broadcasts',
+      'engine.6.desc': 'Send targeted bulk SMS alerts directly to supporters mobile phones with 98% open rates and zero spam filtering.',
+      'engine.6.cta': 'Run SMS Campaign →',
+      'footer.desc': 'A Global Creator Platform. Unified Pageant Voting, QR Ticketing, Diaspora Fundraising, Luxury Merchandise, VIP Memberships & Automated SMS Campaigns.',
+      'footer.cta': 'Launch Your Platform Now'
+    },
+    fr: {
+      'nav.home': 'Accueil',
+      'nav.howItWorks': 'Comment ça marche',
+      'nav.engines': '6 Moteurs',
+      'nav.getStarted': 'Démarrer',
+      'nav.badge': '🌍 MONDIAL · CEMAC & DIASPORA',
+      'nav.cta': 'Commencer Gratuitement →',
+      'hero.kicker': '✨ UNE PLATEFORME MONDIALE POUR CRÉATEURS',
+      'hero.title': 'Créez. Engagez. Vendez. <span>Grandissez.</span>',
+      'hero.text': 'Le moteur tout-en-un des créateurs africains et de la diaspora : votes de concours, billetterie d\'événements, dons, boutique de luxe, club VIP et marketing SMS automatisé.',
+      'hero.ctaPrimary': 'Commencer Gratuitement →',
+      'hero.ctaSecondary': '▶ Découvrir Orra',
+      'pillar.1.title': '60+ Thèmes de Luxe',
+      'pillar.1.desc': 'Mise en ligne en moins de 3 minutes',
+      'pillar.2.title': 'Paiements Unifiés',
+      'pillar.2.desc': 'MTN MoMo, Orange Money, Stripe',
+      'pillar.3.title': 'Corridor Diaspora Mondial',
+      'pillar.3.desc': 'FCFA, USD, EUR, CAD, GBP',
+      'pillar.4.title': 'Registre Anti-Fraude',
+      'pillar.4.desc': 'Règlements instantanés et sécurisés',
+      'orbital.voting': '🏆 Votes',
+      'orbital.events': '🎟️ Billetterie',
+      'orbital.fundraising': '❤️ Dons',
+      'orbital.community': '👥 Club VIP',
+      'orbital.shop': '🛍️ Boutique',
+      'orbital.sms': '📱 Marketing SMS',
+      'steps.tag': '✨ GUIDE CRÉATEUR · AUCUN CODE REQUIS',
+      'steps.title': 'Bâtissez Votre Plateforme en 4 Étapes Simples',
+      'steps.subtitle': 'De votre domaine personnalisé aux retraits Mobile Money instantanés — déployez votre marque complète en moins de 3 minutes.',
+      'step1.badge': 'Prêt en 60s',
+      'step1.category': 'IDENTITÉ & MARQUE',
+      'step1.title': 'Lancez Votre Site Officiel en 60s',
+      'step1.desc': 'Choisissez un thème luxueux à haute conversion. Associez votre nom de domaine avec SSL automatique et publiez sans écrire une seule ligne de code.',
+      'step1.cta': 'Créer Mon Site Maintenant',
+      'step2.category': 'MODULES D\'ACTIVITÉ',
+      'step2.title': 'Activez N\'importe Quel Module en 1 Clic',
+      'step2.desc': 'Monétisez votre audience librement : votes de concours, billets de concert, dons de la diaspora, boutique officielle ou abonnements VIP.',
+      'step2.cta': 'Explorer les Modules',
+      'chip.voting': '🏆 Votes',
+      'chip.events': '🎟️ Billets',
+      'chip.fundraising': '❤️ Dons',
+      'chip.shop': '🛍️ Boutique',
+      'chip.community': '👥 Club VIP',
+      'chip.sms': '📱 Marketing SMS',
+      'step3.badge': '98% d\'Ouverture',
+      'step3.category': 'ENGAGEMENT DIRECT',
+      'step3.title': 'Touchez 100% de Vos Fans par SMS Direct',
+      'step3.desc': 'Échappez aux algorithmes sociaux. Envoyez alertes de votes, lancements de billets et exclusivités directement sur leur téléphone avec 98% d\'ouverture.',
+      'step3.cta': 'Lancer une Campagne SMS',
+      'step4.badge': 'Retrait 0.0s',
+      'step4.category': 'REVENUS & RETRAITS',
+      'step4.title': 'Retraits Instantanés en FCFA & Cartes Mondiales',
+      'step4.desc': 'Encaissez facilement auprès de vos fans locaux via Mobile Money et de la diaspora via Stripe et cartes bancaires. Recevez vos gains directement sur votre téléphone.',
+      'step4.cta': 'Commencer à Encaisser',
+      'engines.tag': 'SIX MOTEURS PUISSANTS',
+      'engines.title': 'Tous les Outils des Créateurs pour Rayonner',
+      'engines.subtitle': 'Transformez toute passion créative, événement ou communauté en un écosystème rentable.',
+      'engine.1.kicker': 'MOTEUR 01',
+      'engine.1.title': 'Votes & Concours',
+      'engine.1.desc': 'Classements en direct, packs de votes sécurisés, vérification multi-opérateurs et compteurs publics.',
+      'engine.1.cta': 'Déployer les Votes →',
+      'engine.2.kicker': 'MOTEUR 02',
+      'engine.2.title': 'Événements & Billetterie',
+      'engine.2.desc': 'Billets QR codes infalsifiables, gestion de tables VIP, scan portes sur mobile et rappels par SMS.',
+      'engine.2.cta': 'Lancer la Billetterie →',
+      'engine.3.kicker': 'MOTEUR 03',
+      'engine.3.title': 'Dons & Causes Solidaires',
+      'engine.3.desc': 'Financement participatif pour vos projets et causes avec jauges en direct et mur des donateurs.',
+      'engine.3.cta': 'Créer une Campagne →',
+      'engine.4.kicker': 'MOTEUR 04',
+      'engine.4.title': 'Boutique & Merchandising',
+      'engine.4.desc': 'Boutique directe pour vos vêtements, créations exclusives, produits physiques et fichiers numériques.',
+      'engine.4.cta': 'Ouvrir Ma Boutique →',
+      'engine.5.kicker': 'MOTEUR 05',
+      'engine.5.title': 'Communauté & Club VIP',
+      'engine.5.desc': 'Fédérez vos fans avec annuaire de membres, coulisses exclusifs, abonnements payants et newsletter.',
+      'engine.5.cta': 'Créer Mon Club VIP →',
+      'engine.6.kicker': 'MOTEUR 06',
+      'engine.6.title': 'Campagnes & Alertes SMS',
+      'engine.6.desc': 'Envoyez des SMS groupés ciblés sur le mobile de vos fans avec 98% de taux d\'ouverture garanti.',
+      'engine.6.cta': 'Lancer une Campagne SMS →',
+      'footer.desc': 'Plateforme Mondiale de Créateurs. Votes de Concours Unifiés, Billetterie QR, Dons Diaspora, Boutique de Luxe, Abonnements VIP & Marketing SMS Automatisé.',
+      'footer.cta': 'Lancer Ma Plateforme Maintenant'
+    }
+  };
+
+  let currentLang = 'en';
+
+  // Apply language with smooth micro-fade
+  function setLanguage(lang, smooth = true) {
+    if (!translations[lang]) return;
+    currentLang = lang;
+    document.body.setAttribute('data-current-lang', lang);
+
+    // Update switcher buttons
+    document.querySelectorAll('.lang-btn').forEach(btn => {
+      btn.classList.toggle('active', btn.getAttribute('data-lang') === lang);
+    });
+
+    const elements = document.querySelectorAll('[data-i18n]');
+    if (smooth) {
+      elements.forEach(el => el.classList.add('i18n-fading'));
+      setTimeout(() => {
+        elements.forEach(el => {
+          const key = el.getAttribute('data-i18n');
+          if (translations[lang][key]) {
+            el.innerHTML = translations[lang][key];
+          }
+          el.classList.remove('i18n-fading');
+        });
+      }, 160);
+    } else {
+      elements.forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        if (translations[lang][key]) {
+          el.innerHTML = translations[lang][key];
+        }
+      });
+    }
+
+    try {
+      localStorage.setItem('orra_lang', lang);
+    } catch(e) {}
+  }
+
+  // Bind language switch buttons
+  document.addEventListener('DOMContentLoaded', () => {
+    // Add transition helper class
+    document.querySelectorAll('[data-i18n]').forEach(el => el.classList.add('i18n-anim'));
+
+    const langToggle = document.getElementById('langSwitch');
+    if (langToggle) {
+      langToggle.querySelectorAll('.lang-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const targetLang = btn.getAttribute('data-lang');
+          if (targetLang && targetLang !== currentLang) {
+            setLanguage(targetLang, true);
+          }
+        });
+      });
+    }
+
+    // Check stored or browser preference
+    let saved = 'en';
+    try {
+      saved = localStorage.getItem('orra_lang');
+    } catch(e) {}
+
+    if (!saved && navigator.language && navigator.language.startsWith('fr')) {
+      saved = 'fr';
+    }
+    if (saved === 'fr') {
+      setLanguage('fr', false);
+    }
+  });
 </script>
 
 </body>
