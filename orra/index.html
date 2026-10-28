@@ -1660,70 +1660,71 @@
       // Render 3D Scene
       renderer.render(scene, camera);
 
-      // SCATTERED 3D CONSTELLATION: Multi-altitude, multi-radius, multi-inclination orbits
+      // ========================================================
+      // SCATTER ASSETS ON EMPTY OCEANIC & HALO REGIONS OF THE GLOBE
+      // Leaves Africa completely open and centered with zero obstruction!
+      // ========================================================
       const isMobile = width < 600;
-      const baseRadius = Math.min(width, height) * (isMobile ? 0.34 : 0.33);
+      // Responsive stage scale factor relative to 360px mobile base
+      const stageScale = Math.min(width, height) / (isMobile ? 360 : 380);
 
-      // 6 distinct scattered profiles: distributed across Upper, Middle, and Lower latitudes and depths
-      const scatterConfigs = [
-        // 0. Voting: Upper North-East altitude, inner orbit
-        { phase: 0.0,            yAlt: isMobile ? -54 : -72, rX: 0.95, rY: 0.48, tilt: -0.16, bobSpeed: 0.0011, bobAmp: 3.5, driftAmp: 2.2 },
-        // 1. Events: Lower South-East altitude, outer halo
-        { phase: Math.PI * 0.35, yAlt: isMobile ? 56 : 74,  rX: 1.08, rY: 0.54, tilt: 0.12,  bobSpeed: 0.0009, bobAmp: 4.0, driftAmp: 2.5 },
-        // 2. Fundraising: Mid Western Equator altitude, inner orbit
-        { phase: Math.PI * 0.72, yAlt: isMobile ? -8 : -10,  rX: 0.90, rY: 0.44, tilt: -0.06, bobSpeed: 0.0010, bobAmp: 3.8, driftAmp: 2.0 },
-        // 3. Community: Lower South-West altitude, mid orbit
-        { phase: Math.PI * 1.08, yAlt: isMobile ? 50 : 68,   rX: 1.02, rY: 0.50, tilt: -0.14, bobSpeed: 0.0012, bobAmp: 3.6, driftAmp: 2.4 },
-        // 4. Shop: Upper North-West altitude, outer halo
-        { phase: Math.PI * 1.44, yAlt: isMobile ? -50 : -66, rX: 1.10, rY: 0.52, tilt: 0.15,  bobSpeed: 0.0010, bobAmp: 4.2, driftAmp: 2.6 },
-        // 5. SMS Marketing: Mid Eastern Equator altitude, inner orbit
-        { phase: Math.PI * 1.78, yAlt: isMobile ? 6 : 8,     rX: 0.92, rY: 0.46, tilt: 0.08,  bobSpeed: 0.0008, bobAmp: 3.5, driftAmp: 2.1 }
+      // 6 Defined Empty Area Stations (Vast Atlantic & Indian Oceans):
+      // Card 0: 🏆 Voting        -> Upper North-East (Arabian Sea / Halo)
+      // Card 1: 🎟️ Events        -> Lower South-East (South Indian Ocean, SE of Madagascar)
+      // Card 2: ❤️ Fundraising   -> Mid-West (Equatorial Atlantic Ocean, west of Africa)
+      // Card 3: 👥 Community     -> Lower South-West (South Atlantic Ocean, SW of Cape)
+      // Card 4: 🛍️ Shop          -> Upper North-West (North Atlantic Ocean, NW of Africa)
+      // Card 5: 📱 SMS Marketing -> Mid-East (Equatorial Indian Ocean, east of Kenya)
+      const emptyAreaStations = [
+        // 0. Voting (Upper East)
+        { x:  126, y: -100, wy: 0.0012, wx: 0.0009, py: 0.0, px: 1.2, ay: 6.0, ax: 4.5, baseScale: 0.94 },
+        // 1. Events (Lower East)
+        { x:  122, y:  104, wy: 0.0011, wx: 0.0014, py: 1.5, px: 2.5, ay: 6.5, ax: 5.0, baseScale: 0.93 },
+        // 2. Fundraising (Mid West)
+        { x: -140, y:    6, wy: 0.0014, wx: 0.0010, py: 3.1, px: 0.8, ay: 5.5, ax: 4.0, baseScale: 0.96 },
+        // 3. Community (Lower West)
+        { x: -120, y:  104, wy: 0.0009, wx: 0.0012, py: 4.2, px: 3.7, ay: 7.0, ax: 5.5, baseScale: 0.93 },
+        // 4. Shop (Upper West)
+        { x: -126, y: -100, wy: 0.0012, wx: 0.0015, py: 5.0, px: 1.9, ay: 6.0, ax: 4.5, baseScale: 0.94 },
+        // 5. SMS Marketing (Mid East)
+        { x:  140, y:    6, wy: 0.0015, wx: 0.0011, py: 2.1, px: 4.5, ay: 5.0, ax: 4.0, baseScale: 0.96 }
       ];
 
+      // Subtle celestial constellation sway (gentle out-of-phase oscillation)
+      const celestialSway = Math.sin(time * 0.0005) * 0.055; // ~3.1 degrees
+      const cosSway = Math.cos(celestialSway);
+      const sinSway = Math.sin(celestialSway);
+
       cardElements.forEach((el, i) => {
-        const sc = scatterConfigs[i];
-        const anglePos = orbitAngle + sc.phase;
-        const baseCos = Math.cos(anglePos);
-        const baseSin = Math.sin(anglePos);
+        const st = emptyAreaStations[i];
+        
+        // Organic out-of-phase levitation bob and drift
+        const dx = Math.cos(time * st.wx + st.px) * st.ax;
+        const dy = Math.sin(time * st.wy + st.py) * st.ay;
 
-        const curRx = baseRadius * sc.rX;
-        const curRy = baseRadius * sc.rY;
+        // Base station scaled to viewport size
+        const rawX = (st.x + dx) * stageScale;
+        const rawY = (st.y + dy) * stageScale;
 
-        const rawX = baseCos * curRx;
-        // Combine orbital Y with individual vertical altitude band
-        const rawY = (baseSin * curRy) + sc.yAlt;
+        // Apply smooth celestial constellation sway
+        const rotX = rawX * cosSway - rawY * sinSway;
+        const rotY = rawX * sinSway + rawY * cosSway;
 
-        // Apply card-specific 3D orbital tilt
-        const rotX = rawX * Math.cos(sc.tilt) - rawY * Math.sin(sc.tilt);
-        const rotY = rawX * Math.sin(sc.tilt) + rawY * Math.cos(sc.tilt);
+        // Subtle breathing depth pulse
+        const breathPulse = Math.sin(time * (st.wy * 1.2) + st.py) * 0.04;
+        const finalScale = (st.baseScale + breathPulse) * (isMobile ? 0.96 : 1.0);
 
-        // Organic levitation wave
-        const floatBob = Math.sin(time * sc.bobSpeed + i * 1.1) * sc.bobAmp;
-        const floatDrift = Math.cos(time * 0.0007 + i * 0.9) * sc.driftAmp;
-
-        const finalX = rotX + floatDrift;
-        const finalY = rotY + floatBob;
-
-        // Depth perspective: foreground cards (baseSin > 0) are slightly larger and brighter
-        const depth = baseSin; // -1 to +1
-        const scale = isMobile 
-          ? (0.86 + (depth + 1) * 0.10) 
-          : (0.88 + (depth + 1) * 0.11);
-        const opacity = 0.85 + (depth + 1) * 0.075; // 0.85 to 1.0
-        const zIdx = 30 + Math.round((depth + 1) * 5); // 30-40 (Always IN FRONT of canvas)
-
-        // Dynamic amber glow intensity based on depth
+        // Dynamic amber aura glow based on breathing pulse
         const thumb = el.querySelector('.card-img-thumb');
         if (thumb) {
-          const glowIntensity = Math.max(0, depth);
-          const glowSpread = Math.round((isMobile ? 18 : 24) + glowIntensity * 12);
-          const glowAlpha = (0.55 + glowIntensity * 0.35).toFixed(2);
+          const glowAlpha = (0.60 + breathPulse * 3.5).toFixed(2);
+          const glowSpread = Math.round((isMobile ? 18 : 24) + breathPulse * 40);
           thumb.style.boxShadow = `0 0 ${glowSpread}px rgba(245, 158, 11, ${glowAlpha}), 0 8px 24px rgba(0, 0, 0, 0.95)`;
         }
 
-        el.style.transform = `translate3d(${finalX}px, ${finalY}px, 0) scale(${scale})`;
-        el.style.opacity = opacity;
-        el.style.zIndex = zIdx;
+        el.style.transform = `translate3d(${rotX.toFixed(1)}px, ${rotY.toFixed(1)}px, 0) scale(${finalScale.toFixed(3)})`;
+        el.style.opacity = 0.95;
+        el.style.zIndex = 35;
       });
     }
 
