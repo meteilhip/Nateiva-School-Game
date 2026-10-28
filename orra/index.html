@@ -1060,7 +1060,7 @@
           <span class="card-beacon-dot"></span>
         </div>
         <div class="card-info-box">
-          <span class="card-badge-pill">📱 SMS Alerts</span>
+          <span class="card-badge-pill">📱 SMS Marketing</span>
         </div>
       </div>
     </div>
@@ -1436,10 +1436,10 @@
     }
 
     const scene = new THREE.Scene();
-    // Dynamic camera distance: globe enlarged and commanding the stage
+    // Refined camera distance: perfectly sized globe with generous breathing room
     const isMobileInit = width < 600;
     const camera = new THREE.PerspectiveCamera(40, width / height, 0.1, 1000);
-    camera.position.z = isMobileInit ? 5.4 : 6.9;
+    camera.position.z = isMobileInit ? 5.7 : 7.2;
 
     const renderer = new THREE.WebGLRenderer({
       canvas: canvas,
@@ -1465,8 +1465,8 @@
     earthTexture.generateMipmaps = true;
     earthTexture.minFilter = THREE.LinearMipmapLinearFilter;
 
-    // Enlarged 3D Sphere Mesh (photorealistic Earth, bold and prominent presence)
-    const sphereGeo = new THREE.SphereGeometry(1.85, 64, 64);
+    // Refined 3D Sphere Mesh (balanced size showcasing Africa and generous orbital space)
+    const sphereGeo = new THREE.SphereGeometry(1.66, 64, 64);
     const sphereMat = new THREE.MeshBasicMaterial({
       map: earthTexture
     });
@@ -1478,7 +1478,7 @@
       width = parent.clientWidth || 340;
       height = parent.clientHeight || 340;
       const isMobile = width < 600;
-      camera.position.z = isMobile ? 5.4 : 6.9;
+      camera.position.z = isMobile ? 5.7 : 7.2;
       camera.aspect = width / height;
       camera.updateProjectionMatrix();
       renderer.setSize(width, height);
@@ -1563,38 +1563,55 @@
       // Render 3D Scene
       renderer.render(scene, camera);
 
-      // Orbital Geometry: Cards circle around the globe evenly spaced by 60 deg (zero overlap)
+      // SCATTERED 3D CONSTELLATION: Multi-altitude, multi-radius, multi-inclination orbits
       const isMobile = width < 600;
-      const radiusPx = Math.min(width, height) * (isMobile ? 0.35 : 0.34);
-      const cardOrbitRx = isMobile ? (radiusPx * 0.94) : (radiusPx * 1.15);
-      const cardOrbitRy = isMobile ? (radiusPx * 0.52) : (radiusPx * 0.64);
-      const orbitTilt = -0.12;
+      const baseRadius = Math.min(width, height) * (isMobile ? 0.34 : 0.33);
+
+      // 6 distinct scattered profiles: distributed across Upper, Middle, and Lower latitudes and depths
+      const scatterConfigs = [
+        // 0. Voting: Upper North-East altitude, inner orbit
+        { phase: 0.0,            yAlt: isMobile ? -54 : -72, rX: 0.95, rY: 0.48, tilt: -0.16, bobSpeed: 0.0011, bobAmp: 3.5, driftAmp: 2.2 },
+        // 1. Events: Lower South-East altitude, outer halo
+        { phase: Math.PI * 0.35, yAlt: isMobile ? 56 : 74,  rX: 1.08, rY: 0.54, tilt: 0.12,  bobSpeed: 0.0009, bobAmp: 4.0, driftAmp: 2.5 },
+        // 2. Fundraising: Mid Western Equator altitude, inner orbit
+        { phase: Math.PI * 0.72, yAlt: isMobile ? -8 : -10,  rX: 0.90, rY: 0.44, tilt: -0.06, bobSpeed: 0.0010, bobAmp: 3.8, driftAmp: 2.0 },
+        // 3. Community: Lower South-West altitude, mid orbit
+        { phase: Math.PI * 1.08, yAlt: isMobile ? 50 : 68,   rX: 1.02, rY: 0.50, tilt: -0.14, bobSpeed: 0.0012, bobAmp: 3.6, driftAmp: 2.4 },
+        // 4. Shop: Upper North-West altitude, outer halo
+        { phase: Math.PI * 1.44, yAlt: isMobile ? -50 : -66, rX: 1.10, rY: 0.52, tilt: 0.15,  bobSpeed: 0.0010, bobAmp: 4.2, driftAmp: 2.6 },
+        // 5. SMS Marketing: Mid Eastern Equator altitude, inner orbit
+        { phase: Math.PI * 1.78, yAlt: isMobile ? 6 : 8,     rX: 0.92, rY: 0.46, tilt: 0.08,  bobSpeed: 0.0008, bobAmp: 3.5, driftAmp: 2.1 }
+      ];
 
       cardElements.forEach((el, i) => {
-        // 60-degree perfect harmonic spacing around the ellipse (2 * PI / 6)
-        const anglePos = orbitAngle + (i * (Math.PI * 2 / totalCards));
+        const sc = scatterConfigs[i];
+        const anglePos = orbitAngle + sc.phase;
         const baseCos = Math.cos(anglePos);
         const baseSin = Math.sin(anglePos);
 
-        const rawX = baseCos * cardOrbitRx;
-        const rawY = baseSin * cardOrbitRy;
+        const curRx = baseRadius * sc.rX;
+        const curRy = baseRadius * sc.rY;
 
-        // Apply smooth 3D tilt
-        const rotX = rawX * Math.cos(orbitTilt) - rawY * Math.sin(orbitTilt);
-        const rotY = rawX * Math.sin(orbitTilt) + rawY * Math.cos(orbitTilt);
+        const rawX = baseCos * curRx;
+        // Combine orbital Y with individual vertical altitude band
+        const rawY = (baseSin * curRy) + sc.yAlt;
+
+        // Apply card-specific 3D orbital tilt
+        const rotX = rawX * Math.cos(sc.tilt) - rawY * Math.sin(sc.tilt);
+        const rotY = rawX * Math.sin(sc.tilt) + rawY * Math.cos(sc.tilt);
 
         // Organic levitation wave
-        const floatBob = Math.sin(time * 0.0011 + i * 1.05) * 3.5;
-        const floatDrift = Math.cos(time * 0.0008 + i * 0.85) * 2.0;
+        const floatBob = Math.sin(time * sc.bobSpeed + i * 1.1) * sc.bobAmp;
+        const floatDrift = Math.cos(time * 0.0007 + i * 0.9) * sc.driftAmp;
 
         const finalX = rotX + floatDrift;
         const finalY = rotY + floatBob;
 
-        // Depth perspective: cards in the foreground (baseSin > 0) are larger and brighter
+        // Depth perspective: foreground cards (baseSin > 0) are slightly larger and brighter
         const depth = baseSin; // -1 to +1
         const scale = isMobile 
-          ? (0.88 + (depth + 1) * 0.09) 
-          : (0.90 + (depth + 1) * 0.10);
+          ? (0.86 + (depth + 1) * 0.10) 
+          : (0.88 + (depth + 1) * 0.11);
         const opacity = 0.85 + (depth + 1) * 0.075; // 0.85 to 1.0
         const zIdx = 30 + Math.round((depth + 1) * 5); // 30-40 (Always IN FRONT of canvas)
 
