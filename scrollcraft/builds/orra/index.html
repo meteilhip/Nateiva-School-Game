@@ -304,15 +304,15 @@
     cursor: pointer;
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 12px;
     background: transparent !important;
     border: none !important;
     box-shadow: none !important;
     padding: 0 !important;
     top: 50%;
     left: 50%;
-    margin-top: -29px !important;
-    margin-left: -70px !important;
+    margin-top: -34px !important;
+    margin-left: -34px !important;
     will-change: transform, opacity;
     -webkit-tap-highlight-color: transparent;
     z-index: 30;
@@ -324,24 +324,26 @@
   .card-avatar-wrap {
     position: relative;
     flex-shrink: 0;
+    width: 68px;
+    height: 68px;
   }
   .card-img-thumb {
-    width: 58px;
-    height: 58px;
+    width: 68px;
+    height: 68px;
     border-radius: 50%;
     background-size: cover;
     background-position: center;
-    border: 2px solid rgba(245, 158, 11, 0.95);
-    box-shadow: 0 0 18px rgba(245, 158, 11, 0.5), 0 8px 24px rgba(0, 0, 0, 0.95);
-    filter: contrast(1.06) brightness(1.04);
+    border: 2.5px solid rgba(245, 158, 11, 0.95);
+    box-shadow: 0 0 20px rgba(245, 158, 11, 0.55), 0 8px 25px rgba(0, 0, 0, 0.95);
+    filter: contrast(1.08) brightness(1.06);
     transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
   }
   .card-beacon-dot {
     position: absolute;
-    top: 0px;
-    right: 0px;
-    width: 10px;
-    height: 10px;
+    top: 1px;
+    right: 1px;
+    width: 12px;
+    height: 12px;
     border-radius: 50%;
     background: #EF4444;
     border: 1.5px solid #FFFFFF;
@@ -864,28 +866,36 @@
     .hero-visual-stage {
       width: 100%;
       max-width: 360px;
-      height: 340px;
+      height: 350px;
       margin: 0.5rem auto 2rem auto;
+      overflow: visible !important;
     }
     .orbital-card-item {
-      gap: 7px !important;
-      margin-top: -23px !important;
-      margin-left: -58px !important;
+      gap: 8px !important;
+      margin-top: -27px !important;
+      margin-left: -27px !important;
       background: transparent !important;
       border: none !important;
       box-shadow: none !important;
     }
+    .card-avatar-wrap {
+      width: 54px !important;
+      height: 54px !important;
+    }
     .card-img-thumb {
-      width: 46px !important;
-      height: 46px !important;
-      border-width: 1.8px !important;
+      width: 54px !important;
+      height: 54px !important;
+      border-width: 2.2px !important;
+      filter: contrast(1.1) brightness(1.08) !important;
     }
     .card-beacon-dot {
-      width: 8px !important;
-      height: 8px !important;
+      width: 9px !important;
+      height: 9px !important;
+      top: 0px !important;
+      right: 0px !important;
     }
-    .card-tag { font-size: 0.54rem !important; }
-    .card-title { font-size: 0.84rem !important; }
+    .card-tag { font-size: 0.52rem !important; }
+    .card-title { font-size: 0.86rem !important; }
     
     .hero-pillars {
       grid-template-columns: 1fr 1fr;
@@ -1532,16 +1542,13 @@
       // Render 3D Scene
       renderer.render(scene, camera);
 
-      // Animate All 6 Cards — MOVED TOWARDS THE RIGHT, WITH ELASTIC BOUNCE REPULSION
+      // Animate All 6 Cards — PRECISE VIEWPORT CLAMPING & ZERO OVERLAP PHYSICS
       const isMobile = width < 600;
       // Dimensions of foreground floating perimeter around globe
-      const radiusPx = Math.min(width, height) * (isMobile ? 0.35 : 0.32);
-      const cardOrbitRx = isMobile ? (radiusPx * 1.05) : (radiusPx * 1.28);
-      const cardOrbitRy = isMobile ? (radiusPx * 0.50) : (radiusPx * 0.66);
-      const orbitTilt = -0.14;
-
-      // Shift orbit towards the right to keep left-side cards comfortably centered
-      const shiftRight = isMobile ? 16 : 22;
+      const radiusPx = Math.min(width, height) * (isMobile ? 0.33 : 0.32);
+      const cardOrbitRx = isMobile ? (radiusPx * 0.90) : (radiusPx * 1.15);
+      const cardOrbitRy = isMobile ? (radiusPx * 0.48) : (radiusPx * 0.62);
+      const orbitTilt = -0.12;
 
       // 1. Calculate base orbital target coordinates for all cards
       const baseCoords = [];
@@ -1552,12 +1559,19 @@
         const baseCos = Math.cos(anglePos);
         const baseSin = Math.sin(anglePos);
 
-        // Calculate horizontal position: cards on the left are softened so they don't go too far left
+        // Calculate horizontal position:
+        // On the right side (baseCos > 0), the text trails to the right of the avatar.
+        // We compress the rightward reach so trailing text NEVER exceeds phone borders!
         let rawX = baseCos * cardOrbitRx;
-        if (baseCos < 0) {
-          rawX = rawX * 0.82; // Tame leftward reach by 18%
+        if (baseCos > 0) {
+          rawX = rawX * (isMobile ? 0.44 : 0.74);
+        } else {
+          rawX = rawX * 0.80; // Keep left-side cards well within bounds
         }
-        rawX = rawX + shiftRight;
+        
+        // Slight horizontal center balancing
+        const centerOffsetX = isMobile ? -6 : 0;
+        rawX = rawX + centerOffsetX;
 
         const rawY = baseSin * cardOrbitRy;
 
@@ -1566,8 +1580,8 @@
         const rotY = rawX * Math.sin(orbitTilt) + rawY * Math.cos(orbitTilt);
 
         // Slow, gentle weightless levitation waves
-        const floatBob = Math.sin(time * 0.0009 + i * 1.05) * 4.5;
-        const floatDrift = Math.cos(time * 0.0007 + i * 0.85) * 2.5;
+        const floatBob = Math.sin(time * 0.0009 + i * 1.05) * 4.0;
+        const floatDrift = Math.cos(time * 0.0007 + i * 0.85) * 2.0;
 
         baseCoords.push({
           x: rotX + floatDrift,
@@ -1580,18 +1594,18 @@
       // 2. Update elastic bounce offsets towards equilibrium with smooth damping
       for (let i = 0; i < totalCards; i++) {
         const p = cardPhysics[i];
-        p.vx *= 0.82; // Velocity damping
-        p.vy *= 0.82;
+        p.vx *= 0.80; // Velocity damping
+        p.vy *= 0.80;
         p.bx += p.vx; // Apply velocity
         p.by += p.vy;
-        p.bx *= 0.88; // Spring return to orbital path
-        p.by *= 0.88;
+        p.bx *= 0.86; // Spring return to orbital path
+        p.by *= 0.86;
       }
 
       // 3. Collision Detection & Pairwise Repulsive Bounce:
-      // Minimum safe separation box to guarantee NO text or avatar overlap
-      const safeDistX = isMobile ? 96 : 124;
-      const safeDistY = isMobile ? 44 : 54;
+      // Minimum safe separation box to guarantee ZERO image-writing or card overlap
+      const safeDistX = isMobile ? 128 : 162;
+      const safeDistY = isMobile ? 52 : 66;
 
       for (let i = 0; i < totalCards; i++) {
         for (let j = i + 1; j < totalCards; j++) {
@@ -1610,27 +1624,45 @@
             const nx = (dx / safeDistX) / normDist;
             const ny = (dy / safeDistY) / normDist;
 
-            // Elastic bounce impulse
-            const pushMagnitude = overlap * 16.0;
+            // Elastic bounce impulse (velocity)
+            const pushMagnitude = overlap * 22.0;
             cardPhysics[i].vx += nx * pushMagnitude;
             cardPhysics[i].vy += ny * pushMagnitude;
             cardPhysics[j].vx -= nx * pushMagnitude;
             cardPhysics[j].vy -= ny * pushMagnitude;
 
-            // Direct separation nudge to immediately prevent any writing overlap
-            cardPhysics[i].bx += nx * overlap * safeDistX * 0.35;
-            cardPhysics[i].by += ny * overlap * safeDistY * 0.35;
-            cardPhysics[j].bx -= nx * overlap * safeDistX * 0.35;
-            cardPhysics[j].by -= ny * overlap * safeDistY * 0.35;
+            // Direct separation nudge so cards NEVER overlap any writing
+            const separationFactor = overlap * 0.50;
+            cardPhysics[i].bx += nx * separationFactor * safeDistX;
+            cardPhysics[i].by += ny * separationFactor * safeDistY;
+            cardPhysics[j].bx -= nx * separationFactor * safeDistX;
+            cardPhysics[j].by -= ny * separationFactor * safeDistY;
           }
         }
       }
 
+      // Hard viewport clamp limits:
+      // Prevents rightward text from exceeding phone screen edge even under elastic impulse
+      const maxAllowedRightX = isMobile ? 38 : 148;
+      const maxAllowedLeftX = isMobile ? -112 : -195;
+
       // 4. Render cards with collision-free positions and animated depth transition
       cardElements.forEach((el, i) => {
         const p = cardPhysics[i];
-        const finalX = baseCoords[i].x + p.bx;
-        const finalY = baseCoords[i].y + p.by;
+        let finalX = baseCoords[i].x + p.bx;
+        let finalY = baseCoords[i].y + p.by;
+
+        // Strict clamp for mobile right edge to guarantee text is 100% visible
+        if (finalX > maxAllowedRightX) {
+          finalX = maxAllowedRightX;
+          p.bx = maxAllowedRightX - baseCoords[i].x;
+          p.vx = Math.min(0, p.vx);
+        }
+        if (finalX < maxAllowedLeftX) {
+          finalX = maxAllowedLeftX;
+          p.bx = maxAllowedLeftX - baseCoords[i].x;
+          p.vx = Math.max(0, p.vx);
+        }
         const depth = depths[i];
 
         // Active front item is largest (1.10x), back items gently scaled down (0.86x)
