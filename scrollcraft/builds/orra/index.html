@@ -1428,10 +1428,10 @@
     }
 
     const scene = new THREE.Scene();
-    // Dynamic camera distance: on mobile screens, bring camera closer (z = 5.8) so the realistic Earth is large, bold, and prominent!
+    // Dynamic camera distance: globe enlarged and commanding the stage
     const isMobileInit = width < 600;
     const camera = new THREE.PerspectiveCamera(40, width / height, 0.1, 1000);
-    camera.position.z = isMobileInit ? 5.8 : 7.3;
+    camera.position.z = isMobileInit ? 5.4 : 6.9;
 
     const renderer = new THREE.WebGLRenderer({
       canvas: canvas,
@@ -1457,8 +1457,8 @@
     earthTexture.generateMipmaps = true;
     earthTexture.minFilter = THREE.LinearMipmapLinearFilter;
 
-    // Perfectly sized 3D Sphere Mesh (photorealistic Earth, zero yellow rim lines)
-    const sphereGeo = new THREE.SphereGeometry(1.68, 64, 64);
+    // Enlarged 3D Sphere Mesh (photorealistic Earth, bold and prominent presence)
+    const sphereGeo = new THREE.SphereGeometry(1.85, 64, 64);
     const sphereMat = new THREE.MeshBasicMaterial({
       map: earthTexture
     });
@@ -1470,7 +1470,7 @@
       width = parent.clientWidth || 340;
       height = parent.clientHeight || 340;
       const isMobile = width < 600;
-      camera.position.z = isMobile ? 5.8 : 7.3;
+      camera.position.z = isMobile ? 5.4 : 6.9;
       camera.aspect = width / height;
       camera.updateProjectionMatrix();
       renderer.setSize(width, height);
@@ -1566,9 +1566,14 @@
     function animate(time) {
       requestAnimationFrame(animate);
 
-      // Slower, majestic planetary rotation (globe remains untouched)
+      // Dynamic planetary rotation: moves faster across the oceans, slows down smoothly when on Africa!
       if (!isDragging) {
-        earthGroup.rotation.y += 0.00065; // Calm, steady, luxury rotation
+        // Alignment with Africa facing front (initial centered rotation is -1.90 rad)
+        const africaFacing = Math.cos(earthGroup.rotation.y - (-1.90)); 
+        // africaFacing = +1.0 when Africa is centered in front, -1.0 when on opposite side
+        const accelFactor = (1.0 - africaFacing) * 0.5; // 0.0 on Africa, 1.0 on opposite side
+        const dynamicSpeed = 0.00065 + accelFactor * 0.00165; // 0.00065 (calm glide on Africa) up to 0.00230 (brisk spin across oceans)
+        earthGroup.rotation.y += dynamicSpeed;
       }
 
       // Slower, graceful card orbit speed
@@ -1579,10 +1584,10 @@
 
       // Animate All 6 Cards — SCATTERED DISTRIBUTION WITH ZERO OVERLAP PHYSICS
       const isMobile = width < 600;
-      // Dimensions of foreground floating perimeter around globe
-      const radiusPx = Math.min(width, height) * (isMobile ? 0.33 : 0.32);
-      const cardOrbitRx = isMobile ? (radiusPx * 0.90) : (radiusPx * 1.15);
-      const cardOrbitRy = isMobile ? (radiusPx * 0.48) : (radiusPx * 0.62);
+      // Dimensions of foreground floating perimeter around enlarged globe
+      const radiusPx = Math.min(width, height) * (isMobile ? 0.35 : 0.34);
+      const cardOrbitRx = isMobile ? (radiusPx * 0.92) : (radiusPx * 1.16);
+      const cardOrbitRy = isMobile ? (radiusPx * 0.50) : (radiusPx * 0.64);
       const orbitTilt = -0.12;
 
       // 1. Calculate base orbital target coordinates for all cards
