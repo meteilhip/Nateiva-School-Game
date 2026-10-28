@@ -304,9 +304,9 @@
     width: clamp(210px, 18vw, 248px);
     height: 84px;
     border-radius: 14px;
-    background: rgba(14, 19, 34, 0.94);
-    border: 1.5px solid rgba(245, 158, 11, 0.65);
-    box-shadow: 0 14px 34px rgba(0, 0, 0, 0.9), 0 0 18px rgba(245, 158, 11, 0.22);
+    background: rgba(10, 14, 26, 0.90);
+    border: none !important;
+    box-shadow: 0 16px 36px rgba(0, 0, 0, 0.92), 0 2px 10px rgba(0, 0, 0, 0.6);
     overflow: hidden;
     cursor: pointer;
     display: flex;
@@ -320,13 +320,12 @@
     will-change: transform, opacity;
     -webkit-tap-highlight-color: transparent;
     z-index: 30;
-    transition: border-color 0.25s ease, box-shadow 0.25s ease;
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
   }
   .orbital-card-item:hover {
-    border-color: #FDE68A;
-    box-shadow: 0 18px 44px rgba(0, 0, 0, 0.98), 0 0 28px rgba(245, 158, 11, 0.7);
+    box-shadow: 0 22px 48px rgba(0, 0, 0, 0.98), 0 0 22px rgba(245, 158, 11, 0.35);
     transform: scale(1.06) !important;
   }
   .card-img-thumb {
@@ -335,9 +334,9 @@
     border-radius: 10px;
     background-size: cover;
     background-position: center;
-    border: 1.5px solid rgba(245, 158, 11, 0.45);
+    border: none !important;
     flex-shrink: 0;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.6);
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.65);
   }
   .card-info-box {
     display: flex;
@@ -796,9 +795,9 @@
       top: auto;
       right: auto;
       transform: none;
-      width: min(340px, 92vw);
-      height: min(340px, 92vw);
-      margin: 0 auto 3rem auto;
+      width: min(440px, 94vw);
+      height: 380px;
+      margin: 0 auto 2.5rem auto;
     }
     
     .hero-pillars {
@@ -850,22 +849,26 @@
     .hero-title { font-size: 2.15rem; }
     .hero-text { font-size: 0.95rem; }
     .hero-visual-stage {
-      width: min(310px, 92vw);
-      height: min(310px, 92vw);
-      margin: 0 auto 2.2rem auto;
+      width: 100%;
+      max-width: 360px;
+      height: 340px;
+      margin: 0.5rem auto 2rem auto;
     }
     .orbital-card-item {
-      width: 172px !important;
+      width: 168px !important;
       height: 64px !important;
       margin-top: -32px !important;
-      margin-left: -86px !important;
+      margin-left: -84px !important;
       padding: 5px !important;
       gap: 7px !important;
+      border: none !important;
       border-radius: 10px !important;
+      box-shadow: 0 12px 28px rgba(0, 0, 0, 0.92) !important;
     }
     .card-img-thumb {
       width: 54px !important;
       height: 54px !important;
+      border: none !important;
       border-radius: 8px !important;
     }
     .card-tag { font-size: 0.54rem !important; }
@@ -1379,9 +1382,10 @@
     }
 
     const scene = new THREE.Scene();
-    // Camera positioned at z = 7.5 for an elegantly sized globe with breathing room around it
+    // Dynamic camera distance: on mobile screens, bring camera closer (z = 5.8) so the realistic Earth is large, bold, and prominent!
+    const isMobileInit = width < 600;
     const camera = new THREE.PerspectiveCamera(40, width / height, 0.1, 1000);
-    camera.position.z = 7.5;
+    camera.position.z = isMobileInit ? 5.8 : 7.3;
 
     const renderer = new THREE.WebGLRenderer({
       canvas: canvas,
@@ -1390,7 +1394,7 @@
       powerPreference: 'high-performance'
     });
     renderer.setSize(width, height);
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2.5));
     renderer.setClearColor(0x000000, 0); // Pure clean black space behind globe
 
     // Earth Sphere Group
@@ -1399,7 +1403,7 @@
     earthGroup.rotation.y = -1.90; // Dead-center on Africa (18 deg East longitude) - first thing seen on the globe!
     scene.add(earthGroup);
 
-    // Load High-Def African Country Borders Texture
+    // Load Photorealistic Earth Texture (lush green rainforests, golden savannas, deep blue oceans, clean space)
     const textureLoader = new THREE.TextureLoader();
     const earthTexture = textureLoader.load('assets/earth_africa_borders.jpg', function() {
       renderer.render(scene, camera);
@@ -1407,7 +1411,7 @@
     earthTexture.generateMipmaps = true;
     earthTexture.minFilter = THREE.LinearMipmapLinearFilter;
 
-    // Perfectly sized 3D Sphere Mesh (radius = 1.68, fits page and hero section beautifully with 50% breathing room for cards)
+    // Perfectly sized 3D Sphere Mesh (photorealistic Earth, zero yellow rim lines)
     const sphereGeo = new THREE.SphereGeometry(1.68, 64, 64);
     const sphereMat = new THREE.MeshBasicMaterial({
       map: earthTexture
@@ -1415,26 +1419,16 @@
     const earthMesh = new THREE.Mesh(sphereGeo, sphereMat);
     earthGroup.add(earthMesh);
 
-    // Glowing Golden Atmosphere Rim Ring
-    const rimGeo = new THREE.RingGeometry(1.68, 1.76, 64);
-    const rimMat = new THREE.MeshBasicMaterial({
-      color: 0xF59E0B,
-      side: THREE.DoubleSide,
-      transparent: true,
-      opacity: 0.85
-    });
-    const rimMesh = new THREE.Mesh(rimGeo, rimMat);
-    rimMesh.position.z = 0.02;
-    scene.add(rimMesh);
-
     // Resize Handler
     function onResize() {
       width = parent.clientWidth || 340;
       height = parent.clientHeight || 340;
+      const isMobile = width < 600;
+      camera.position.z = isMobile ? 5.8 : 7.3;
       camera.aspect = width / height;
       camera.updateProjectionMatrix();
       renderer.setSize(width, height);
-      renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2.5));
     }
     window.addEventListener('resize', onResize);
 
@@ -1511,34 +1505,40 @@
       renderer.render(scene, camera);
 
       // Animate All 6 Cards — ALWAYS IN FRONT OF THE GLOBE
-      const isMobile = width < 480;
-      // Dimensions of foreground floating perimeter around smaller globe
-      const radiusPx = Math.min(width, height) * 0.32;
-      const cardOrbitRx = isMobile ? (radiusPx * 1.35) : (radiusPx * 1.72);
-      const cardOrbitRy = isMobile ? (radiusPx * 0.65) : (radiusPx * 0.90);
+      const isMobile = width < 600;
+      // Dimensions of foreground floating perimeter around globe
+      const radiusPx = Math.min(width, height) * (isMobile ? 0.38 : 0.33);
+      const cardOrbitRx = isMobile ? (radiusPx * 1.25) : (radiusPx * 1.65);
+      const cardOrbitRy = isMobile ? (radiusPx * 0.58) : (radiusPx * 0.85);
       const orbitTilt = -0.16;
 
       cardElements.forEach((el, i) => {
         // Spatial orbital distribution around globe
         const anglePos = orbitAngle + (i * (Math.PI * 2 / totalCards));
-        const rawX = Math.cos(anglePos) * cardOrbitRx;
-        const rawY = Math.sin(anglePos) * cardOrbitRy;
+        const baseCos = Math.cos(anglePos);
+        const baseSin = Math.sin(anglePos);
+
+        // Bring cards that come from the right side inward towards the left!
+        // Smooth continuous asymmetric pull: compresses right outward reach and flows leftward
+        const rightPullFactor = isMobile ? 0.24 : 0.20;
+        const rawX = (baseCos * cardOrbitRx) - (cardOrbitRx * rightPullFactor * (1.0 + baseCos));
+        const rawY = baseSin * cardOrbitRy;
 
         // Apply smooth 3D tilt
         const rotX = rawX * Math.cos(orbitTilt) - rawY * Math.sin(orbitTilt);
         const rotY = rawX * Math.sin(orbitTilt) + rawY * Math.cos(orbitTilt);
 
         // Slow, gentle weightless levitation waves
-        const floatBob = Math.sin(time * 0.0009 + i * 1.05) * 6.5;
-        const floatDrift = Math.cos(time * 0.0007 + i * 0.85) * 3.5;
+        const floatBob = Math.sin(time * 0.0009 + i * 1.05) * 5.5;
+        const floatDrift = Math.cos(time * 0.0007 + i * 0.85) * 3.0;
 
         // Gentle perspective pitch/yaw for realistic 3D floating look
-        const yawTilt = Math.sin(anglePos) * -8;
-        const pitchTilt = Math.cos(anglePos) * 2.5;
+        const yawTilt = baseSin * -7;
+        const pitchTilt = baseCos * 2.0;
 
         // Depth perspective scale: stays prominent and in front at all times!
-        const depth = Math.sin(anglePos); // -1 to +1
-        const scale = isMobile ? (0.86 + (depth + 1) * 0.07) : (0.94 + (depth + 1) * 0.06);
+        const depth = baseSin; // -1 to +1
+        const scale = isMobile ? (0.88 + (depth + 1) * 0.06) : (0.94 + (depth + 1) * 0.06);
         const opacity = 0.95 + (depth + 1) * 0.025; // Always high opacity (0.95 - 1.0)
         const zIdx = 30 + Math.round((depth + 1) * 5); // 30-40 (Always IN FRONT of canvas at 5)
 
