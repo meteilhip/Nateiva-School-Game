@@ -166,20 +166,22 @@
   /* ACT 1: 3D HERO STAGE */
   .hero-container {
     min-height: 100vh;
+    min-height: 100svh;
     position: relative;
-    padding-top: 5rem;
+    padding-top: 4.8rem;
+    padding-bottom: 5.5rem;
     display: flex;
     align-items: center;
     overflow: hidden;
-    background: radial-gradient(circle at 75% 50%, rgba(245, 158, 11, 0.16) 0%, rgba(239, 68, 68, 0.12) 35%, #05070E 75%);
+    background: radial-gradient(circle at 74% 48%, rgba(245, 158, 11, 0.18) 0%, rgba(239, 68, 68, 0.12) 36%, #05070E 72%);
   }
   .hero-canvas-wrap {
     position: absolute;
     top: 50%;
-    right: -2%;
+    right: 3%;
     transform: translateY(-50%);
-    width: clamp(420px, 58vw, 840px);
-    height: clamp(420px, 58vw, 840px);
+    width: clamp(340px, 45vw, 640px);
+    height: clamp(340px, 45vw, 640px);
     z-index: 2;
     pointer-events: none;
   }
@@ -192,48 +194,52 @@
   }
   #hero-webgl-canvas:active { cursor: grabbing; }
 
-  /* 6 Orbiting 3D Glass Cards */
+  /* 6 Continuously Orbiting 3D Glass Cards around the Africa Globe */
   .orbital-system {
     position: absolute;
     top: 50%;
-    right: -2%;
+    right: 3%;
     transform: translateY(-50%);
-    width: clamp(420px, 58vw, 840px);
-    height: clamp(420px, 58vw, 840px);
+    width: clamp(340px, 45vw, 640px);
+    height: clamp(340px, 45vw, 640px);
     z-index: 5;
     pointer-events: none;
   }
   .orbital-card-item {
     position: absolute;
     pointer-events: auto;
-    width: 250px;
-    height: 110px;
-    border-radius: 16px;
+    width: clamp(165px, 15.5vw, 215px);
+    height: 82px;
+    border-radius: 14px;
     background-size: cover;
     background-position: center right;
-    border: 1.5px solid rgba(245, 158, 11, 0.6);
-    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.7), 0 0 25px rgba(239, 68, 68, 0.35);
+    border: 1.5px solid rgba(245, 158, 11, 0.65);
+    box-shadow: 0 10px 28px rgba(0, 0, 0, 0.8), 0 0 18px rgba(239, 68, 68, 0.35);
     overflow: hidden;
     cursor: pointer;
-    transition: transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1), border-color 0.2s ease, box-shadow 0.2s ease;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
     backdrop-filter: blur(12px);
+    top: 50%;
+    left: 50%;
+    margin-top: -41px;
+    margin-left: -100px;
+    will-change: transform;
   }
   .orbital-card-item::before {
     content: '';
     position: absolute;
     inset: 0;
-    background: linear-gradient(90deg, rgba(5, 7, 14, 0.94) 0%, rgba(5, 7, 14, 0.75) 55%, rgba(5, 7, 14, 0.15) 100%);
+    background: linear-gradient(90deg, rgba(5, 7, 14, 0.94) 0%, rgba(5, 7, 14, 0.78) 58%, rgba(5, 7, 14, 0.2) 100%);
     z-index: 1;
   }
   .orbital-card-item:hover {
-    transform: scale(1.06) translateY(-4px) !important;
     border-color: #FDE68A;
-    box-shadow: 0 20px 45px rgba(0, 0, 0, 0.85), 0 0 35px rgba(245, 158, 11, 0.6);
+    box-shadow: 0 16px 36px rgba(0, 0, 0, 0.9), 0 0 28px rgba(245, 158, 11, 0.65);
   }
   .card-content {
     position: relative;
     z-index: 2;
-    padding: 0.9rem 1.1rem;
+    padding: 0.65rem 0.85rem;
     height: 100%;
     display: flex;
     flex-direction: column;
@@ -241,50 +247,36 @@
   }
   .card-tag {
     font-family: var(--font-mono);
-    font-size: 0.7rem;
+    font-size: 0.64rem;
     text-transform: uppercase;
     color: var(--orra-gold);
     letter-spacing: 0.06em;
     display: flex;
     align-items: center;
-    gap: 0.35rem;
-    margin-bottom: 0.2rem;
+    gap: 0.3rem;
+    margin-bottom: 0.15rem;
   }
   .card-title {
     font-family: var(--font-display);
-    font-size: 1.12rem;
+    font-size: 0.98rem;
     font-weight: 700;
     color: #FFF;
     margin: 0;
     line-height: 1.15;
   }
   .card-desc {
-    font-size: 0.75rem;
+    font-size: 0.68rem;
     color: #CBD5E1;
-    margin: 0.2rem 0 0 0;
+    margin: 0.15rem 0 0 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
-  /* Coordinates for the 6 Cards around the 3D Africa Globe */
-  .pos-voting      { top: 4%;  left: 6%;  animation: floatA 6s ease-in-out infinite; }
-  .pos-events      { top: 5%;  right: 6%; animation: floatB 6.5s ease-in-out infinite 0.5s; }
-  .pos-fundraising { top: 41%; left: -6%; animation: floatA 7s ease-in-out infinite 1s; }
-  .pos-community   { top: 42%; right: -3%; animation: floatB 6.2s ease-in-out infinite 1.5s; }
-  .pos-shop        { bottom: 6%; left: 4%; animation: floatA 6.8s ease-in-out infinite 2s; }
-  .pos-sms         { bottom: 6%; right: 4%; animation: floatB 5.8s ease-in-out infinite 2.5s; }
-
-  @keyframes floatA {
-    0%, 100% { transform: translateY(0px) rotate(0deg); }
-    50% { transform: translateY(-9px) rotate(1deg); }
-  }
-  @keyframes floatB {
-    0%, 100% { transform: translateY(0px) rotate(0deg); }
-    50% { transform: translateY(-11px) rotate(-1deg); }
-  }
-
-  /* Left Hero Content */
+  /* Left Hero Content - Constrained to prevent any overlap */
   .hero-content {
-    max-width: 640px;
-    padding: 0 3.5rem;
+    max-width: min(580px, 48vw);
+    padding: 0 0 0 3.5rem;
     z-index: 10;
     position: relative;
   }
@@ -292,24 +284,24 @@
     display: inline-flex;
     align-items: center;
     gap: 0.5rem;
-    padding: 0.4rem 0.9rem;
+    padding: 0.35rem 0.85rem;
     border-radius: 999px;
     background: rgba(245, 158, 11, 0.12);
     border: 1px solid rgba(245, 158, 11, 0.35);
     font-family: var(--font-mono);
-    font-size: 0.8rem;
+    font-size: 0.76rem;
     color: var(--orra-gold-light);
     letter-spacing: 0.08em;
     text-transform: uppercase;
-    margin-bottom: 1.5rem;
+    margin-bottom: 1.25rem;
   }
   .hero-title {
     font-family: var(--font-display);
-    font-size: clamp(3rem, 5.2vw, 5rem);
+    font-size: clamp(2.4rem, 4.4vw, 4.4rem);
     font-weight: 800;
     line-height: 1.02;
     letter-spacing: -0.03em;
-    margin: 0 0 1.25rem 0;
+    margin: 0 0 1.15rem 0;
   }
   .hero-title span {
     background: linear-gradient(135deg, #F59E0B 0%, #EF4444 100%);
@@ -317,32 +309,33 @@
     -webkit-text-fill-color: transparent;
   }
   .hero-text {
-    font-size: 1.15rem;
+    font-size: 1.02rem;
     color: var(--orra-text-muted);
-    line-height: 1.65;
-    margin-bottom: 2rem;
-    max-width: 520px;
+    line-height: 1.6;
+    margin-bottom: 1.85rem;
+    max-width: 480px;
   }
   .hero-actions {
     display: flex;
     align-items: center;
-    gap: 1.25rem;
-    margin-bottom: 3.5rem;
+    gap: 1.15rem;
+    margin-bottom: 1rem;
   }
 
-  /* Hero Trust Pillars Strip */
+  /* Hero Trust Pillars Strip - Elevated & strictly docked */
   .hero-pillars {
     position: absolute;
     bottom: 0;
     left: 0;
     width: 100%;
     z-index: 20;
-    padding: 1.25rem 3.5rem;
-    background: linear-gradient(180deg, rgba(5, 7, 14, 0) 0%, rgba(5, 7, 14, 0.92) 100%);
-    border-top: 1px solid rgba(245, 158, 11, 0.18);
+    padding: 0.85rem 3.5rem;
+    background: linear-gradient(180deg, rgba(5, 7, 14, 0.65) 0%, rgba(5, 7, 14, 0.98) 100%);
+    border-top: 1px solid rgba(245, 158, 11, 0.22);
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    gap: 1.5rem;
+    gap: 1.25rem;
+    backdrop-filter: blur(14px);
   }
   .pillar-item {
     display: flex;
@@ -658,9 +651,9 @@
   </div>
 
   <!-- 6 Orbital 3D Photographic Cards -->
-  <div class="orbital-system">
+  <div class="orbital-system" id="orbital-cards-rotator">
     <!-- 1. Voting -->
-    <div class="orbital-card-item pos-voting" style="background-image: url('assets/card_voting.jpg');" onclick="switchDeck('storefront')">
+    <div class="orbital-card-item" data-card-idx="0" style="background-image: url('assets/card_voting.jpg');" onclick="switchDeck('storefront')">
       <div class="card-content">
         <div class="card-tag">🏆 COMPETITION</div>
         <h4 class="card-title">Voting</h4>
@@ -669,7 +662,7 @@
     </div>
 
     <!-- 2. Events -->
-    <div class="orbital-card-item pos-events" style="background-image: url('assets/card_events.jpg');" onclick="switchDeck('organizer')">
+    <div class="orbital-card-item" data-card-idx="1" style="background-image: url('assets/card_events.jpg');" onclick="switchDeck('organizer')">
       <div class="card-content">
         <div class="card-tag">📅 EXPERIENCES</div>
         <h4 class="card-title">Events</h4>
@@ -678,7 +671,7 @@
     </div>
 
     <!-- 3. Fundraising -->
-    <div class="orbital-card-item pos-fundraising" style="background-image: url('assets/card_fundraising.jpg');" onclick="switchDeck('admin')">
+    <div class="orbital-card-item" data-card-idx="2" style="background-image: url('assets/card_fundraising.jpg');" onclick="switchDeck('admin')">
       <div class="card-content">
         <div class="card-tag">💛 IMPACT</div>
         <h4 class="card-title">Fundraising</h4>
@@ -687,7 +680,7 @@
     </div>
 
     <!-- 4. Community -->
-    <div class="orbital-card-item pos-community" style="background-image: url('assets/card_community.jpg');" onclick="switchDeck('organizer')">
+    <div class="orbital-card-item" data-card-idx="3" style="background-image: url('assets/card_community.jpg');" onclick="switchDeck('organizer')">
       <div class="card-content">
         <div class="card-tag">👥 MEMBERSHIPS</div>
         <h4 class="card-title">Community</h4>
@@ -696,7 +689,7 @@
     </div>
 
     <!-- 5. Shop -->
-    <div class="orbital-card-item pos-shop" style="background-image: url('assets/card_shop.jpg');" onclick="switchDeck('storefront')">
+    <div class="orbital-card-item" data-card-idx="4" style="background-image: url('assets/card_shop.jpg');" onclick="switchDeck('storefront')">
       <div class="card-content">
         <div class="card-tag">🛍️ MERCHANDISE</div>
         <h4 class="card-title">Shop</h4>
@@ -705,7 +698,7 @@
     </div>
 
     <!-- 6. SMS Campaign -->
-    <div class="orbital-card-item pos-sms" style="background-image: url('assets/card_sms.jpg');" onclick="switchDeck('organizer')">
+    <div class="orbital-card-item" data-card-idx="5" style="background-image: url('assets/card_sms.jpg');" onclick="switchDeck('organizer')">
       <div class="card-content">
         <div class="card-tag">💬 BROADCAST</div>
         <h4 class="card-title">SMS Campaign</h4>
@@ -972,13 +965,15 @@
 
 <!-- 3D GLOBE & INTERACTIVE SCRIPT -->
 <script>
-  // 1. 3D WebGL Canvas Globe Engine
+  // 1. 3D WebGL Canvas Globe Engine & Orbital Card Rotator
   (function initGlobe() {
     const canvas = document.getElementById('hero-webgl-canvas');
     if (!canvas) return;
     const ctx = canvas.getContext('2d');
     const img = new Image();
     img.src = 'assets/globe_africa.jpg';
+
+    const cardElements = document.querySelectorAll('#orbital-cards-rotator .orbital-card-item');
 
     let width, height;
     function resize() {
@@ -1015,10 +1010,10 @@
       ctx.clearRect(0, 0, width, height);
       const cx = width / 2;
       const cy = height / 2;
-      const radius = Math.min(width, height) * 0.38;
+      const radius = Math.min(width, height) * 0.34;
 
       // Outer Solar Gold / Ember Red Atmosphere Corona
-      const corona = ctx.createRadialGradient(cx, cy, radius * 0.7, cx, cy, radius * 1.35);
+      const corona = ctx.createRadialGradient(cx, cy, radius * 0.65, cx, cy, radius * 1.35);
       corona.addColorStop(0, 'rgba(245, 158, 11, 0.45)');
       corona.addColorStop(0.45, 'rgba(239, 68, 68, 0.28)');
       corona.addColorStop(0.8, 'rgba(245, 158, 11, 0.08)');
@@ -1061,9 +1056,9 @@
 
       // Sweeping 3D Orbital Rings
       const rings = [
-        { rx: radius * 1.45, ry: radius * 0.45, rot: -0.35, color: 'rgba(245, 158, 11, 0.7)' },
-        { rx: radius * 1.55, ry: radius * 0.52, rot: 0.32,  color: 'rgba(239, 68, 68, 0.65)' },
-        { rx: radius * 1.35, ry: radius * 0.38, rot: -0.15, color: 'rgba(253, 230, 138, 0.5)' }
+        { rx: radius * 1.48, ry: radius * 0.46, rot: -0.32, color: 'rgba(245, 158, 11, 0.65)' },
+        { rx: radius * 1.58, ry: radius * 0.52, rot: 0.30,  color: 'rgba(239, 68, 68, 0.6)' },
+        { rx: radius * 1.38, ry: radius * 0.38, rot: -0.12, color: 'rgba(253, 230, 138, 0.45)' }
       ];
 
       rings.forEach((ring, idx) => {
@@ -1087,6 +1082,32 @@
         ctx.shadowBlur = 10;
         ctx.fill();
         ctx.restore();
+      });
+
+      // Synchronize 6 Floating Cards rotating along the 3D orbital plane around the Globe
+      const cardOrbitRx = radius * 1.38;
+      const cardOrbitRy = radius * 0.46;
+      const orbitTilt = -0.32;
+      const totalCards = cardElements.length;
+
+      cardElements.forEach((el, i) => {
+        const cardAngle = angle * 0.65 + (i * (Math.PI * 2 / totalCards));
+        // Elliptical coordinates
+        const rawX = Math.cos(cardAngle) * cardOrbitRx;
+        const rawY = Math.sin(cardAngle) * cardOrbitRy;
+        // Apply tilt rotation
+        const rotX = rawX * Math.cos(orbitTilt) - rawY * Math.sin(orbitTilt);
+        const rotY = rawX * Math.sin(orbitTilt) + rawY * Math.cos(orbitTilt);
+
+        // Depth perspective scale and z-index based on sin/cos
+        const depth = Math.sin(cardAngle); // -1 (back) to +1 (front)
+        const scale = 0.82 + (depth + 1) * 0.12; // 0.82 to 1.06
+        const opacity = 0.65 + (depth + 1) * 0.18; // 0.65 to 1.0
+        const zIdx = Math.round((depth + 1) * 10);
+
+        el.style.transform = `translate3d(${rotX}px, ${rotY}px, 0) scale(${scale})`;
+        el.style.opacity = opacity;
+        el.style.zIndex = zIdx;
       });
 
       requestAnimationFrame(render);
