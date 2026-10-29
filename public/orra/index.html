@@ -463,19 +463,30 @@
     display: flex;
     align-items: center;
     gap: 0.9rem;
+    transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .pillar-item:hover {
+    transform: translateY(-2px);
   }
   .pillar-icon {
     width: 42px;
     height: 42px;
     border-radius: 10px;
-    background: rgba(245, 158, 11, 0.12);
-    border: 1.5px solid rgba(245, 158, 11, 0.35);
+    background: linear-gradient(135deg, rgba(245, 158, 11, 0.14) 0%, rgba(239, 68, 68, 0.08) 100%);
+    border: 1.5px solid rgba(245, 158, 11, 0.38);
     display: flex;
     align-items: center;
     justify-content: center;
     color: var(--orra-gold);
     font-size: 1.2rem;
     flex-shrink: 0;
+    transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s ease, box-shadow 0.35s ease, background 0.3s ease;
+  }
+  .pillar-item:hover .pillar-icon {
+    transform: scale(1.1);
+    border-color: #F59E0B;
+    background: linear-gradient(135deg, rgba(245, 158, 11, 0.28) 0%, rgba(239, 68, 68, 0.18) 100%);
+    box-shadow: 0 0 18px rgba(245, 158, 11, 0.5);
   }
   .pillar-name {
     font-weight: 700;
@@ -542,14 +553,38 @@
     grid-template-columns: 1.15fr 1fr;
     gap: 3.5rem;
     align-items: center;
-    background: var(--orra-surface);
-    border: 1.5px solid var(--orra-border);
+    background: linear-gradient(180deg, rgba(14, 19, 34, 0.92) 0%, rgba(5, 7, 15, 0.98) 100%);
+    border: 1.5px solid rgba(245, 158, 11, 0.32);
     border-radius: 28px;
     padding: 2.2rem;
     position: relative;
     overflow: hidden;
-    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.75), inset 0 1px 0 rgba(255, 255, 255, 0.08);
-    transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.35s ease, box-shadow 0.35s ease;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.85), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.35s ease, box-shadow 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .step-row::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 10%;
+    right: 10%;
+    height: 1.5px;
+    background: linear-gradient(90deg, transparent, #F59E0B 40%, #EF4444 70%, transparent);
+    opacity: 0.55;
+    transition: opacity 0.4s ease, left 0.4s ease, right 0.4s ease;
+    z-index: 2;
+  }
+  .step-row:hover {
+    transform: translateY(-4px);
+    border-color: rgba(245, 158, 11, 0.75);
+    box-shadow: 0 28px 65px rgba(0, 0, 0, 0.95), 0 0 35px rgba(245, 158, 11, 0.28), 0 0 18px rgba(239, 68, 68, 0.16);
+  }
+  .step-row:hover::before {
+    opacity: 1;
+    left: 0;
+    right: 0;
   }
   .step-row:hover {
     transform: translateY(-4px);
