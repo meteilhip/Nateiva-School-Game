@@ -768,83 +768,6 @@
     box-shadow: 0 4px 14px rgba(245, 158, 11, 0.35);
   }
 
-  /* ========================================================
-     ANIMATED REAL-TIME TRANSACTION TICKER HUD (EVERY SCROLL)
-     ======================================================== */
-  .floating-tx-toast {
-    position: fixed;
-    bottom: 1.5rem;
-    left: 1.5rem;
-    z-index: 999;
-    display: flex;
-    align-items: center;
-    gap: 0.85rem;
-    padding: 0.65rem 1.25rem 0.65rem 0.75rem;
-    border-radius: 999px;
-    background: rgba(5, 7, 15, 0.88);
-    backdrop-filter: blur(18px);
-    -webkit-backdrop-filter: blur(18px);
-    border: 1.5px solid rgba(245, 158, 11, 0.55);
-    box-shadow: 0 14px 40px rgba(0, 0, 0, 0.85), 0 0 25px rgba(245, 158, 11, 0.25);
-    color: #FFFFFF;
-    font-family: var(--font-display);
-    font-size: 0.84rem;
-    cursor: pointer;
-    transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.35s ease, border-color 0.25s ease;
-    user-select: none;
-    -webkit-user-select: none;
-  }
-  .floating-tx-toast:hover {
-    transform: translateY(-3px) scale(1.03);
-    border-color: rgba(245, 158, 11, 0.9);
-    box-shadow: 0 18px 48px rgba(0, 0, 0, 0.95), 0 0 35px rgba(245, 158, 11, 0.45);
-  }
-  .tx-icon-bubble {
-    width: 34px;
-    height: 34px;
-    border-radius: 50%;
-    background: linear-gradient(135deg, #F59E0B 0%, #EF4444 100%);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1rem;
-    flex-shrink: 0;
-    box-shadow: 0 0 12px rgba(245, 158, 11, 0.6);
-  }
-  .tx-content-wrap {
-    display: flex;
-    flex-direction: column;
-    line-height: 1.25;
-  }
-  .tx-title-row {
-    display: flex;
-    align-items: center;
-    gap: 0.45rem;
-    font-weight: 800;
-    font-size: 0.85rem;
-    color: #FFFFFF;
-  }
-  .tx-title-row .tx-amount {
-    color: #10B981;
-    font-weight: 800;
-    font-family: var(--font-mono);
-  }
-  .tx-meta-row {
-    font-family: var(--font-mono);
-    font-size: 0.68rem;
-    color: var(--orra-gold-light);
-    display: flex;
-    align-items: center;
-    gap: 0.4rem;
-  }
-  .tx-live-pulse {
-    width: 6px;
-    height: 6px;
-    border-radius: 50%;
-    background: #10B981;
-    box-shadow: 0 0 6px #10B981;
-    animation: liveDotPulse 1.8s infinite ease-in-out;
-  }
 
   /* Click Transaction Ripple & Particles */
   .gold-click-ripple {
@@ -1134,16 +1057,6 @@
       padding: 0.82rem 1.2rem;
       font-size: 0.9rem;
     }
-    .floating-tx-toast {
-      bottom: 0.85rem;
-      left: 0.75rem;
-      right: 0.75rem;
-      padding: 0.52rem 0.9rem 0.52rem 0.65rem;
-      justify-content: space-between;
-    }
-    .tx-icon-bubble { width: 28px; height: 28px; font-size: 0.85rem; }
-    .tx-title-row { font-size: 0.78rem; }
-    .tx-meta-row { font-size: 0.62rem; }
   }
 
   /* ========================================================
@@ -1963,98 +1876,12 @@
   }
 </script>
 
-  <!-- Real-Time Luxury Animated Transaction Ticker HUD -->
-  <div class="floating-tx-toast" id="floatingTxToast" title="Click to view live transactions">
-    <div class="tx-icon-bubble">💸</div>
-    <div class="tx-content-wrap">
-      <div class="tx-title-row">
-        <span class="tx-title-text">MTN MoMo Payout</span>
-        <span class="tx-amount">+75,000 FCFA</span>
-      </div>
-      <div class="tx-meta-row">
-        <span class="tx-live-pulse"></span>
-        <span class="tx-meta-text">Settled to @AminaStudio · 2s ago</span>
-      </div>
-    </div>
-  </div>
-
-
 <script>
   // ========================================================
   // LUXURY ANIMATED TRANSACTIONS ENGINE (SCROLL & CLICK)
   // ========================================================
   (function initTransactionEngine() {
-    const txStreams = {
-      en: [
-        { icon: '💸', title: 'MTN MoMo Payout', amount: '+75,000 FCFA', meta: 'Settled to @AminaStudio · Instant' },
-        { icon: '🎟️', title: 'VIP Concert Ticket', amount: '25,000 FCFA', meta: 'Bought for Yaoundé Fest · Stripe' },
-        { icon: '🏆', title: 'Pageant Votes Cast', amount: '+120 Votes', meta: 'Miss Diaspora 2026 · Orange MoMo' },
-        { icon: '🛍️', title: 'Merch Order Shipped', amount: '+34,500 FCFA', meta: 'Obsidian Hoodie to Abidjan' },
-        { icon: '📱', title: 'SMS Blast Broadcast', amount: '12,400 Fans', meta: '98% Delivered in 3.2s' },
-        { icon: '💸', title: 'Orange Money Cashout', amount: '+120,000 FCFA', meta: 'Settled to @DoualaLive · 0.0s' }
-      ],
-      fr: [
-        { icon: '💸', title: 'Paiement MTN MoMo', amount: '+75 000 FCFA', meta: 'Reçu par @AminaStudio · Instantané' },
-        { icon: '🎟️', title: 'Billet Concert VIP', amount: '25 000 FCFA', meta: 'Acheté Festival Yaoundé · Stripe' },
-        { icon: '🏆', title: 'Votes Enregistrés', amount: '+120 Votes', meta: 'Miss Diaspora 2026 · Orange MoMo' },
-        { icon: '🛍️', title: 'Commande Expédiée', amount: '+34 500 FCFA', meta: 'Sweat Obsidian vers Abidjan' },
-        { icon: '📱', title: 'Campagne SMS Envoyée', amount: '12 400 Fans', meta: '98% Reçu en 3,2s' },
-        { icon: '💸', title: 'Retrait Orange Money', amount: '+120 000 FCFA', meta: 'Envoyé à @DoualaLive · 0.0s' }
-      ]
-    };
-    let txIndex = 0;
-    const toast = document.getElementById('floatingTxToast');
-    if (!toast) return;
-
-    function updateToast(tx) {
-      toast.style.opacity = '0';
-      toast.style.transform = 'translateY(10px) scale(0.96)';
-      setTimeout(() => {
-        const iconEl = toast.querySelector('.tx-icon-bubble');
-        const titleEl = toast.querySelector('.tx-title-text');
-        const amountEl = toast.querySelector('.tx-amount');
-        const metaEl = toast.querySelector('.tx-meta-text');
-        if (iconEl) iconEl.textContent = tx.icon;
-        if (titleEl) titleEl.textContent = tx.title;
-        if (amountEl) amountEl.textContent = tx.amount;
-        if (metaEl) metaEl.textContent = tx.meta;
-        toast.style.opacity = '1';
-        toast.style.transform = 'translateY(0) scale(1)';
-      }, 200);
-    }
-
-    function nextTransaction() {
-      const list = txStreams[currentLang] || txStreams.en;
-      txIndex = (txIndex + 1) % list.length;
-      const list = txStreams[currentLang] || txStreams.en;
-      updateToast(list[txIndex % list.length]);
-    }
-
-    // Auto cycle every 5.5 seconds
-    let txInterval = setInterval(nextTransaction, 5500);
-
-    // React to Scroll: animate transaction update dynamically
-    let lastScrollPos = window.scrollY;
-    let scrollThrottle = false;
-    window.addEventListener('scroll', () => {
-      if (scrollThrottle) return;
-      const diff = Math.abs(window.scrollY - lastScrollPos);
-      if (diff > 280) {
-        lastScrollPos = window.scrollY;
-        scrollThrottle = true;
-        nextTransaction();
-        setTimeout(() => { scrollThrottle = false; }, 700);
-      }
-    }, { passive: true });
-
-    // Tap toast to cycle immediately + spark
-    toast.addEventListener('click', (e) => {
-      clearInterval(txInterval);
-      nextTransaction();
-      txInterval = setInterval(nextTransaction, 5500);
-      spawnSpark(e.clientX, e.clientY, '⚡ Instant Settlement');
-    });
-
+  (function initTransactionEngine() {
     // Global Click Transaction Sparks & Golden Ripples
     function spawnSpark(x, y, text) {
       const spark = document.createElement('div');
