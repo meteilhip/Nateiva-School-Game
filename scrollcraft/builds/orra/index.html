@@ -269,6 +269,23 @@
     margin-bottom: 1.95rem;
     max-width: 500px;
   }
+  
+  .hero-supporting-note {
+    display: flex;
+    align-items: center;
+    gap: 0.45rem;
+    font-family: var(--font-mono);
+    font-size: 0.82rem;
+    color: rgba(255, 255, 255, 0.62);
+    letter-spacing: 0.01em;
+    margin-top: 0.45rem;
+  }
+  .hero-note-dot {
+    color: #10B981;
+    font-weight: 800;
+    font-size: 0.88rem;
+  }
+
   .hero-actions {
     display: flex;
     align-items: center;
@@ -903,7 +920,8 @@
       padding: 0 1.5rem 2.5rem 1.5rem;
     }
     .hero-text { margin: 0 auto 1.5rem auto; }
-    .hero-actions { justify-content: center; }
+        .hero-actions { justify-content: center; }
+    .hero-supporting-note { justify-content: center; margin: 0.25rem auto 0 auto; }
     
     .hero-visual-stage {
       position: relative;
@@ -1251,13 +1269,17 @@
 <section class="hero-container" id="top">
   <div class="hero-content">
     <div class="hero-kicker" data-i18n="hero.kicker">✨ A GLOBAL CREATOR PLATFORM</div>
-    <h1 class="hero-title" data-i18n="hero.title">Create. Engage. Sell. <span>Grow.</span></h1>
+    <h1 class="hero-title" data-i18n="hero.title">Turn your audience into your <span>next big launch.</span></h1>
     <p class="hero-text" data-i18n="hero.text">
-      The all-in-one creator engine powering voting contests, concert ticketing, diaspora fundraising, luxury merchandise, private communities, and automated SMS campaigns.
+      Run voting contests, sell tickets and merch, raise funds, and bring your community together—all in one place.
     </p>
     <div class="hero-actions">
-      <a href="#launch" class="btn-cinema-cta"><span data-i18n="hero.ctaPrimary">Get Started Free →</span></a>
-      <a href="#how-it-works" class="orra-btn-outline"><span data-i18n="hero.ctaSecondary">▶ How It Works</span></a>
+      <a href="#launch" class="btn-cinema-cta"><span data-i18n="hero.ctaPrimary">Launch Your First Campaign →</span></a>
+      <a href="#how-it-works" class="orra-btn-outline"><span data-i18n="hero.ctaSecondary">See Orra in Action ▷</span></a>
+    </div>
+    <div class="hero-supporting-note">
+      <span class="hero-note-dot">✓</span>
+      <span data-i18n="hero.supporting">Free to start. No credit card required.</span>
     </div>
   </div>
 
@@ -1945,10 +1967,11 @@
       'nav.badge': '🌍 GLOBAL · CEMAC & DIASPORA',
       'nav.cta': 'Start Free →',
       'hero.kicker': '✨ A GLOBAL CREATOR PLATFORM',
-      'hero.title': 'Create. Engage. Sell. <span>Grow.</span>',
-      'hero.text': 'The all-in-one creator engine powering voting contests, concert ticketing, diaspora fundraising, luxury merchandise, private communities, and automated SMS campaigns.',
-      'hero.ctaPrimary': 'Get Started Free →',
-      'hero.ctaSecondary': '▶ How It Works',
+      'hero.title': 'Turn your audience into your <span>next big launch.</span>',
+      'hero.text': 'Run voting contests, sell tickets and merch, raise funds, and bring your community together—all in one place.',
+      'hero.ctaPrimary': 'Launch Your First Campaign →',
+      'hero.ctaSecondary': 'See Orra in Action ▷',
+      'hero.supporting': 'Free to start. No credit card required.',
       'pillar.1.title': '60+ Luxury Templates',
       'pillar.1.desc': 'Launch in under 3 minutes',
       'pillar.2.title': 'Unified Payment Rails',
@@ -2029,10 +2052,11 @@
       'nav.badge': '🌍 MONDIAL · CEMAC & DIASPORA',
       'nav.cta': 'Commencer Gratuitement →',
       'hero.kicker': '✨ UNE PLATEFORME MONDIALE POUR CRÉATEURS',
-      'hero.title': 'Créez. Engagez. Vendez. <span>Grandissez.</span>',
-      'hero.text': 'Le moteur tout-en-un des créateurs africains et de la diaspora : votes de concours, billetterie d\'événements, dons, boutique de luxe, club VIP et marketing SMS automatisé.',
-      'hero.ctaPrimary': 'Commencer Gratuitement →',
-      'hero.ctaSecondary': '▶ Découvrir Orra',
+      'hero.title': 'Transformez votre audience en votre <span>prochain grand succès.</span>',
+      'hero.text': 'Organisez des concours de vote, vendez billets et merch, levez des fonds et rassemblez votre communauté — le tout au même endroit.',
+      'hero.ctaPrimary': 'Lancer Votre Première Campagne →',
+      'hero.ctaSecondary': 'Voir Orra en Action ▷',
+      'hero.supporting': 'Gratuit pour commencer. Sans carte bancaire requise.',
       'pillar.1.title': '60+ Thèmes de Luxe',
       'pillar.1.desc': 'Mise en ligne en moins de 3 minutes',
       'pillar.2.title': 'Paiements Unifiés',
@@ -2103,7 +2127,7 @@
       'engine.6.desc': 'Envoyez des SMS groupés ciblés sur le mobile de vos fans avec 98% de taux d\'ouverture garanti.',
       'engine.6.cta': 'Lancer une Campagne SMS →',
       'footer.desc': 'Plateforme Mondiale de Créateurs. Votes de Concours Unifiés, Billetterie QR, Dons Diaspora, Boutique de Luxe, Abonnements VIP & Marketing SMS Automatisé.',
-      'footer.cta': 'Lancer Ma Plateforme Maintenant'
+      'footer.cta': 'Lancer Ma Première Campagne →'
     }
   };
 
