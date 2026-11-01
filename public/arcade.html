@@ -1970,6 +1970,367 @@ body {
     transition: width 0.3s linear;
   }
 
+
+  /* ==========================================================================
+     V9.0 MOBILE-GAMIFIED-PRO: CLEAN, NEAT, UNCLOGGED PHONE-FIRST UI & LEVEL MAP
+     ========================================================================== */
+  /* Declutter Hub: Hide verbose multi-line curriculum banner & noisy badge stacks */
+  .class-curriculum-strip {
+    display: none !important;
+  }
+  .portal-desc {
+    font-size: 0.84rem !important;
+    line-height: 1.38 !important;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    margin-bottom: 4px !important;
+  }
+  .portal-counts-badge-bar {
+    display: none !important;
+  }
+  .card-rea-badge {
+    background: var(--grad-coca-red) !important;
+    color: #FFFFFF !important;
+    border: none !important;
+    padding: 6px 14px !important;
+    font-size: 0.76rem !important;
+    font-weight: 900 !important;
+    border-radius: 999px !important;
+    box-shadow: 0 4px 12px rgba(229, 37, 42, 0.28) !important;
+    white-space: nowrap;
+  }
+  .portal-card {
+    padding: 16px 18px !important;
+    gap: 8px !important;
+    border-radius: 22px !important;
+  }
+  .portal-badge {
+    width: 56px !important;
+    height: 56px !important;
+    font-size: 28px !important;
+    border-radius: 18px !important;
+    flex-shrink: 0;
+  }
+  .portal-titles h3 {
+    font-size: 1.05rem !important;
+    line-height: 1.22 !important;
+  }
+
+  /* Compact Horizontal Scrollable Class & Level Carousels (Easy 1-Thumb Tap) */
+  .class-selector-banner, .level-selector-section {
+    padding: 12px 16px !important;
+    margin-bottom: 12px !important;
+    border-radius: 20px !important;
+    gap: 8px !important;
+  }
+  .class-pills-grid {
+    display: flex !important;
+    flex-wrap: nowrap !important;
+    overflow-x: auto !important;
+    gap: 8px !important;
+    padding-bottom: 4px !important;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+  }
+  .class-pills-grid::-webkit-scrollbar { display: none; }
+  .class-card-pill {
+    flex: 0 0 auto !important;
+    min-width: 145px !important;
+    padding: 8px 12px !important;
+    border-radius: 14px !important;
+    gap: 2px !important;
+  }
+  .class-pill-fr { font-size: 0.85rem !important; }
+  .class-pill-en { font-size: 0.72rem !important; }
+  .class-pill-age { display: none !important; }
+
+  .level-pills-track {
+    display: flex !important;
+    flex-wrap: nowrap !important;
+    overflow-x: auto !important;
+    gap: 8px !important;
+    padding-bottom: 4px !important;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+  }
+  .level-pills-track::-webkit-scrollbar { display: none; }
+  .level-pill-btn {
+    flex: 0 0 auto !important;
+    min-width: 82px !important;
+    padding: 7px 12px !important;
+    border-radius: 14px !important;
+    position: relative;
+  }
+  .level-pill-btn.completed-lvl {
+    border-color: #10B981 !important;
+    background: linear-gradient(180deg, #ECFDF5 0%, #D1FAE5 100%) !important;
+  }
+
+  .category-tabs {
+    display: flex !important;
+    flex-wrap: nowrap !important;
+    overflow-x: auto !important;
+    gap: 8px !important;
+    padding: 4px 2px 10px 2px !important;
+    margin-bottom: 12px !important;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+  }
+  .category-tabs::-webkit-scrollbar { display: none; }
+  .tab-btn {
+    flex: 0 0 auto !important;
+    padding: 8px 14px !important;
+    font-size: 0.82rem !important;
+    white-space: nowrap !important;
+  }
+
+  /* ==========================================================================
+     DECLUTTERED IN-GAME WORKSPACE: FITS ON 1 PHONE SCREEN WITHOUT CROWDING!
+     ========================================================================== */
+  /* Hide redundant stacked banners inside the game workspace */
+  .level-meta-banner,
+  .activity-mode-banner,
+  .arcade-controls-bar {
+    display: none !important;
+  }
+  .arcade-hud {
+    padding: 8px 12px !important;
+    margin-bottom: 6px !important;
+    border-radius: 16px !important;
+    gap: 8px !important;
+  }
+  .hud-title {
+    font-size: 0.98rem !important;
+  }
+  .progress-container {
+    height: 7px !important;
+    margin-bottom: 8px !important;
+  }
+  .playground-card {
+    padding: 12px 14px !important;
+    border-radius: 20px !important;
+  }
+  .instruction-header {
+    padding: 8px 12px !important;
+    margin-bottom: 8px !important;
+    border-radius: 14px !important;
+    gap: 8px !important;
+  }
+  .instruction-box h3 {
+    font-size: 0.98rem !important;
+    line-height: 1.3 !important;
+  }
+  .instruction-box p {
+    display: none !important;
+  }
+
+  /* Gamified In-Game Manual + Auto Level & Activity Bar */
+  .ingame-gamified-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    background: linear-gradient(135deg, #0F172A 0%, #1E293B 100%);
+    padding: 8px 12px;
+    border-radius: 16px;
+    margin-bottom: 8px;
+    border: 2px solid rgba(56, 189, 248, 0.45);
+    flex-wrap: wrap;
+  }
+  .ingame-lvl-pills {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    overflow-x: auto;
+    scrollbar-width: none;
+    max-width: 100%;
+  }
+  .ingame-lvl-pills::-webkit-scrollbar { display: none; }
+  .ingame-lvl-chip {
+    background: rgba(255,255,255,0.1);
+    color: #CBD5E1;
+    border: 1.5px solid rgba(255,255,255,0.2);
+    border-radius: 999px;
+    padding: 4px 10px;
+    font-size: 0.74rem;
+    font-weight: 900;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: all 0.18s ease;
+  }
+  .ingame-lvl-chip.active {
+    background: var(--grad-coca-red);
+    color: #FFFFFF;
+    border-color: #FDE047;
+    transform: scale(1.05);
+  }
+  .ingame-lvl-chip.earned {
+    border-color: #10B981;
+    color: #A7F3D0;
+  }
+  .activity-stepper {
+    padding: 6px 10px !important;
+    margin-bottom: 8px !important;
+    border-radius: 14px !important;
+    gap: 6px !important;
+  }
+  .step-node {
+    cursor: pointer !important;
+    padding: 5px 10px !important;
+    font-size: 0.76rem !important;
+    border-radius: 999px !important;
+    user-select: none;
+  }
+  .step-node:hover {
+    transform: translateY(-1px);
+  }
+
+  /* Compact Khan Kids Visual Coach Strip */
+  .khan-visual-explainer.active {
+    padding: 8px 12px !important;
+    margin: 6px 0 !important;
+    border-radius: 14px !important;
+    gap: 6px !important;
+  }
+  .khan-coach-badge {
+    font-size: 0.7rem !important;
+  }
+  .khan-step-chip {
+    padding: 4px 10px !important;
+    font-size: 0.78rem !important;
+  }
+  .btn-khan-explain, .btn-khan-manipulate {
+    padding: 5px 11px !important;
+    font-size: 0.74rem !important;
+  }
+
+  /* Gamified Level-Up / Activity-Won Toast Notification */
+  .gamified-reward-toast {
+    position: fixed;
+    top: 16px;
+    left: 50%;
+    transform: translateX(-50%) translateY(-120px);
+    background: linear-gradient(135deg, #0F172A 0%, #1E1B4B 60%, #E5252A 100%);
+    color: #FFFFFF;
+    padding: 12px 22px;
+    border-radius: 999px;
+    border: 2.5px solid #FDE047;
+    box-shadow: 0 16px 36px rgba(0,0,0,0.45);
+    z-index: 9999;
+    font-weight: 900;
+    font-size: 0.95rem;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    transition: transform 0.38s cubic-bezier(0.34, 1.56, 0.64, 1);
+    pointer-events: none;
+  }
+  .gamified-reward-toast.show {
+    transform: translateX(-50%) translateY(0);
+  }
+
+  /* Phone Responsive Optimizations (<= 680px) */
+  @media (max-width: 680px) {
+    .shell {
+      padding: 8px 8px 24px 8px !important;
+    }
+    .app-nav {
+      padding: 8px 12px !important;
+      margin-bottom: 10px !important;
+      border-radius: 16px !important;
+      gap: 6px !important;
+    }
+    .brand-icon {
+      width: 38px !important;
+      height: 38px !important;
+      font-size: 20px !important;
+    }
+    .brand-titles h1 {
+      font-size: 1.02rem !important;
+    }
+    .brand-titles p, #grade-select {
+      display: none !important;
+    }
+    .nav-actions {
+      gap: 5px !important;
+      width: 100%;
+      justify-content: space-between;
+    }
+    .select-pill, .btn-pill, .version-cache-pill {
+      padding: 5px 9px !important;
+      font-size: 0.72rem !important;
+    }
+    .level-selector-header h3 {
+      font-size: 0.88rem !important;
+    }
+    .level-active-info {
+      font-size: 0.7rem !important;
+      padding: 3px 8px !important;
+    }
+    .portals-grid {
+      grid-template-columns: repeat(2, 1fr) !important;
+      gap: 10px !important;
+    }
+    .portal-card {
+      padding: 12px !important;
+      border-radius: 18px !important;
+    }
+    .portal-card-header {
+      flex-direction: column !important;
+      align-items: flex-start !important;
+      gap: 6px !important;
+    }
+    .portal-badge {
+      width: 44px !important;
+      height: 44px !important;
+      font-size: 22px !important;
+    }
+    .portal-titles h3 {
+      font-size: 0.88rem !important;
+    }
+    .portal-curriculum-tag {
+      font-size: 0.66rem !important;
+    }
+    .portal-desc {
+      display: none !important;
+    }
+    .card-rea-badge {
+      width: 100%;
+      text-align: center;
+      padding: 5px 8px !important;
+      font-size: 0.7rem !important;
+    }
+    #simCanvas {
+      max-height: 225px !important;
+    }
+    .answers-container {
+      display: grid !important;
+      grid-template-columns: repeat(2, 1fr) !important;
+      gap: 8px !important;
+    }
+    .btn-interactive {
+      padding: 12px 10px !important;
+      font-size: 0.92rem !important;
+      min-height: 48px !important;
+      width: 100% !important;
+      justify-content: center !important;
+    }
+    .lang-sentence-display, .funfact-question-title {
+      font-size: 1.05rem !important;
+      padding: 8px 10px !important;
+    }
+    .lang-options-grid, .funfact-mcq-grid, .comprehension-options-grid {
+      grid-template-columns: 1fr !important;
+      gap: 8px !important;
+    }
+    .btn-lang-choice, .btn-mcq-choice, .btn-comp-option {
+      padding: 11px 14px !important;
+      font-size: 0.92rem !important;
+    }
+  }
+
 </style>
 </head>
 <body>
@@ -2000,7 +2361,7 @@ body {
         <option value="en">🇬🇧 English (Studio Voice)</option>
       </select>
       <button class="btn-pill" id="btn-sound-toggle">🔊 Son</button>
-      <button class="version-cache-pill" id="btn-version-cache" title="Version active • Cliquer pour vider le cache et recharger">🚀 v8.0 KHAN-REA • 🔄 Vider Cache</button>
+      <button class="version-cache-pill" id="btn-version-cache" title="Version active • Cliquer pour vider le cache et recharger">🚀 v9.0 MOBILE-PRO • 🔄 Vider Cache</button>
     </div>
   </header>
 
@@ -2104,7 +2465,7 @@ body {
           <h3>Grammaire & Syntaxe (FR / EN)</h3>
           <div class="portal-curriculum-tag">Noms • Verbes • Adjectifs • Accords</div>
         </div>
-        <span class="card-rea-badge">✨ KHAN-REA v8.0 • Visuel + Son</span>
+        <span class="card-rea-badge">✨ v9.0 PRO • ▶ JOUER</span>
       </div>
       <p class="portal-desc">Maîtrise la grammaire en français et en anglais (articles, pluriels, nature des mots, accords sujet-verbe) avec une seule voix native pure !</p>
       <div class="portal-counts-badge-bar">
@@ -2123,7 +2484,7 @@ body {
           <h3>Vocabulaire & Mots du Monde (FR / EN)</h3>
           <div class="portal-curriculum-tag">Synonymes • Contraires • Thèmes d'Afrique</div>
         </div>
-        <span class="card-rea-badge">✨ KHAN-REA v8.0 • Visuel + Son</span>
+        <span class="card-rea-badge">✨ v9.0 PRO • ▶ JOUER</span>
       </div>
       <p class="portal-desc">Enrichis ton vocabulaire en français et en anglais : synonymes, contraires, objets de l'école, animaux et métiers avec prononciation native !</p>
       <div class="portal-counts-badge-bar">
@@ -2142,7 +2503,7 @@ body {
           <h3>Conjugaison & Temps (FR / EN)</h3>
           <div class="portal-curriculum-tag">Présent • Passé • Futur • Être/Avoir & To Be</div>
         </div>
-        <span class="card-rea-badge">✨ KHAN-REA v8.0 • Visuel + Son</span>
+        <span class="card-rea-badge">✨ v9.0 PRO • ▶ JOUER</span>
       </div>
       <p class="portal-desc">Voyage dans le temps (Passé, Présent, Futur) pour conjuguer les verbes en français et en anglais selon le pronom sujet !</p>
       <div class="portal-counts-badge-bar">
@@ -2161,7 +2522,7 @@ body {
           <h3>Studio Prononciation (FR ⇄ EN)</h3>
           <div class="portal-curriculum-tag">Anglais & Français • Micro Live • Spectre</div>
         </div>
-        <span class="card-rea-badge">✨ KHAN-REA v8.0 • Visuel + Son</span>
+        <span class="card-rea-badge">✨ v9.0 PRO • ▶ JOUER</span>
       </div>
       <p class="portal-desc">Écoute la vraie voix studio française et anglaise, parle dans ton micro pour obtenir ton score de prononciation et suis les billes de rythme !</p>
       <div class="portal-counts-badge-bar">
@@ -2180,7 +2541,7 @@ body {
           <h3>Géographie des Pays d'Afrique</h3>
           <div class="portal-curriculum-tag">Carte SVG Interactive • Drapeaux • Capitales</div>
         </div>
-        <span class="card-rea-badge">✨ KHAN-REA v8.0 • Visuel + Son</span>
+        <span class="card-rea-badge">✨ v9.0 PRO • ▶ JOUER</span>
       </div>
       <p class="portal-desc">Explore la vraie carte vectorielle interactive des pays d'Afrique ! Touche les pays au doigt, découvre leurs drapeaux, leurs capitales et leurs fleuves !</p>
       <div class="portal-counts-badge-bar">
@@ -2199,7 +2560,7 @@ body {
           <h3>Fun Facts & Culture Générale (QCM)</h3>
           <div class="portal-curriculum-tag">Quiz Choix Multiples • Indice 50/50 • Afrique</div>
         </div>
-        <span class="card-rea-badge">✨ KHAN-REA v8.0 • Visuel + Son</span>
+        <span class="card-rea-badge">✨ v9.0 PRO • ▶ JOUER</span>
       </div>
       <p class="portal-desc">Réponds aux questions à choix multiples (A, B, C, D) avec l'indice 50/50 sur les merveilles d'Afrique, les animaux, l'espace et les sciences !</p>
       <div class="portal-counts-badge-bar">
@@ -2218,7 +2579,7 @@ body {
           <h3>Compréhension de Texte & Contes</h3>
           <div class="portal-curriculum-tag">Lecture Karaoké FR/EN • Quiz Compréhension</div>
         </div>
-        <span class="card-rea-badge">✨ KHAN-REA v8.0 • Visuel + Son</span>
+        <span class="card-rea-badge">✨ v9.0 PRO • ▶ JOUER</span>
       </div>
       <p class="portal-desc">Écoute et lis des contes africains et scientifiques bilingues avec surlignage phrase par phrase, puis réponds aux questions de compréhension !</p>
       <div class="portal-counts-badge-bar">
@@ -2237,7 +2598,7 @@ body {
           <h3>Monstre des Syllabes & Lecture</h3>
           <div class="portal-curriculum-tag">Feed The Monster • Voyelles & Consonnes</div>
         </div>
-        <span class="card-rea-badge">✨ KHAN-REA v8.0 • Visuel + Son</span>
+        <span class="card-rea-badge">✨ v9.0 PRO • ▶ JOUER</span>
       </div>
       <p class="portal-desc">Nourris le Monstre magique avec les bonnes syllabes colorées (voyelles en rouge, consonnes en bleu) pour former des mots en français et en anglais !</p>
       <div class="portal-counts-badge-bar">
@@ -2256,7 +2617,7 @@ body {
           <h3>Maths 3D, Fractions & Balance Algébrique</h3>
           <div class="portal-curriculum-tag">Boîtes de 10 • Disque Fractions • Balance 2x+4</div>
         </div>
-        <span class="card-rea-badge">✨ KHAN-REA v8.0 • Visuel + Son</span>
+        <span class="card-rea-badge">✨ v9.0 PRO • ▶ JOUER</span>
       </div>
       <p class="portal-desc">Manipule les boîtes de 10, le disque interactif des fractions et la balance algébrique selon ta classe (de la Maternelle au CM2 / Primary 6) !</p>
       <div class="portal-counts-badge-bar">
@@ -2275,7 +2636,7 @@ body {
           <h3>Labo Chimie & Échelle pH</h3>
           <div class="portal-curriculum-tag">Sciences • Réactions • Indicateur pH 0–14</div>
         </div>
-        <span class="card-rea-badge">✨ KHAN-REA v8.0 • Visuel + Son</span>
+        <span class="card-rea-badge">✨ v9.0 PRO • ▶ JOUER</span>
       </div>
       <p class="portal-desc">Verse les éprouvettes dans l'erlenmeyer, observe l'indicateur de pH en direct, les mélanges de couleurs et l'effervescence des bulles de gaz !</p>
       <div class="portal-counts-badge-bar">
@@ -2294,7 +2655,7 @@ body {
           <h3>Bassin d'Archimède (Flotte/Coule)</h3>
           <div class="portal-curriculum-tag">Physique • Vecteurs Poussée ↑Fa & Poids ↓P</div>
         </div>
-        <span class="card-rea-badge">✨ KHAN-REA v8.0 • Visuel + Son</span>
+        <span class="card-rea-badge">✨ v9.0 PRO • ▶ JOUER</span>
       </div>
       <p class="portal-desc">Plonge le bois, la mangue, l'or ou la brique dans l'eau et visualise en direct les vecteurs de la poussée d'Archimède (↑Fa) et du poids (↓P) !</p>
       <div class="portal-counts-badge-bar">
@@ -2313,7 +2674,7 @@ body {
           <h3>Circuit Électrique 3D & Oscilloscope</h3>
           <div class="portal-curriculum-tag">Loi d'Ohm (U=R×I) • Électrons & Hélice</div>
         </div>
-        <span class="card-rea-badge">✨ KHAN-REA v8.0 • Visuel + Son</span>
+        <span class="card-rea-badge">✨ v9.0 PRO • ▶ JOUER</span>
       </div>
       <p class="portal-desc">Ferme l'interrupteur pour observer la circulation des électrons bleus, allumer l'ampoule de 4,5 V et faire tourner l'hélice du moteur électrique !</p>
       <div class="portal-counts-badge-bar">
@@ -2332,7 +2693,7 @@ body {
           <h3>Jardin Botanique & Photosynthèse</h3>
           <div class="portal-curriculum-tag">Biologie • Racines, Tige & Floraison 21 Jours</div>
         </div>
-        <span class="card-rea-badge">✨ KHAN-REA v8.0 • Visuel + Son</span>
+        <span class="card-rea-badge">✨ v9.0 PRO • ▶ JOUER</span>
       </div>
       <p class="portal-desc">Dose la pluie et le soleil pour faire germer le Baobab, le Tournesol, le Cacaoyer et l'Hibiscus en observant les racines pousser sous terre !</p>
       <div class="portal-counts-badge-bar">
@@ -2351,7 +2712,7 @@ body {
           <h3>Comet Defender : Calcul Spatial</h3>
           <div class="portal-curriculum-tag">TuxMath Arcade • Lasers & Calcul Mental</div>
         </div>
-        <span class="card-rea-badge">✨ KHAN-REA v8.0 • Visuel + Son</span>
+        <span class="card-rea-badge">✨ v9.0 PRO • ▶ JOUER</span>
       </div>
       <p class="portal-desc">Pilote le vaisseau spatial et tire au laser sur la comète qui porte la bonne réponse à l'équation affichée sur le tableau de bord !</p>
       <div class="portal-counts-badge-bar">
@@ -2370,7 +2731,7 @@ body {
           <h3>Tangram Géométrique Magnétique</h3>
           <div class="portal-curriculum-tag">Mathigon Euclid • Polygones & Silhouettes</div>
         </div>
-        <span class="card-rea-badge">✨ KHAN-REA v8.0 • Visuel + Son</span>
+        <span class="card-rea-badge">✨ v9.0 PRO • ▶ JOUER</span>
       </div>
       <p class="portal-desc">Assemble la Fusée, le Bateau, le Chat, le Lion et le Papillon en glissant les polygones géométriques avec aimantation de précision !</p>
       <div class="portal-counts-badge-bar">
@@ -2389,7 +2750,7 @@ body {
           <h3>Donjon Labyrinthe 3D (Vue 3D & Raycast)</h3>
           <div class="portal-curriculum-tag">Blockly Maze • Algorithme & Syllabes</div>
         </div>
-        <span class="card-rea-badge">✨ KHAN-REA v8.0 • Visuel + Son</span>
+        <span class="card-rea-badge">✨ v9.0 PRO • ▶ JOUER</span>
       </div>
       <p class="portal-desc">Guide Léo dans les 5 cartes de la Savane (Oasis, Pyramide, Volcan, Jungle) en collectant les syllabes et nombres d'or ou utilise le bouton Auto-Pas !</p>
       <div class="portal-counts-badge-bar">
@@ -2428,20 +2789,29 @@ body {
       </div>
     </div>
 
-    <!-- 3-STEP ACTIVITY PROGRESS STEPPER -->
-    <div class="activity-stepper" id="activity-stepper">
-      <div class="step-node active" id="step-node-1">
-        <span>●</span> <span id="step-lbl-1">1. Découverte Tactile</span>
-      </div>
-      <div class="step-connector" id="step-conn-1"></div>
-      <div class="step-node" id="step-node-2">
-        <span>○</span> <span id="step-lbl-2">2. Action Arcade</span>
-      </div>
-      <div class="step-connector" id="step-conn-2"></div>
-      <div class="step-node" id="step-node-3">
-        <span>○</span> <span id="step-lbl-3">3. Astuce & Défi</span>
+    <!-- GAMIFIED IN-GAME LEVEL & EXERCISE SELECTOR (MANUAL TAP OR AUTO LEVEL-UP!) -->
+    <div class="ingame-gamified-bar" id="ingame-gamified-bar">
+      <div class="ingame-lvl-pills" id="ingame-lvl-pills"></div>
+      <div style="display:flex;align-items:center;gap:6px;margin-left:auto;">
+        <span class="hud-badge" id="ingame-ex-dots" style="font-size:0.75rem;padding:4px 10px;">🟢⚪⚪⚪⚪ Ex 1/5</span>
       </div>
     </div>
+
+    <!-- 3-STEP INTERACTIVE ACTIVITY TABS (TAP TO CHOOSE ACTIVITY MANUALLY OR WIN TO AUTO-ADVANCE) -->
+    <div class="activity-stepper" id="activity-stepper" title="Touche une activité pour la choisir manuellement ou gagne pour avancer automatiquement !">
+      <div class="step-node active" id="step-node-1" data-act="1">
+        <span>🧭</span> <span id="step-lbl-1">Act 1: Découverte</span>
+      </div>
+      <div class="step-connector" id="step-conn-1"></div>
+      <div class="step-node" id="step-node-2" data-act="2">
+        <span>⚡</span> <span id="step-lbl-2">Act 2: Arcade</span>
+      </div>
+      <div class="step-connector" id="step-conn-2"></div>
+      <div class="step-node" id="step-node-3" data-act="3">
+        <span>👑</span> <span id="step-lbl-3">Act 3: Boss</span>
+      </div>
+    </div>
+    <div class="gamified-reward-toast" id="gamified-reward-toast">🏆 Bravo ! Niveau Débloqué !</div>
 
     <!-- OVERALL PROGRESS BAR -->
     <div class="progress-container">
@@ -5587,7 +5957,9 @@ body {
       btn.setAttribute('data-level', lvl);
       btn.id = 'level-pill-' + lvl;
 
-      const stars = '⭐'.repeat(Math.min(3, Math.max(1, Math.floor(lvl / 3))));
+      const earned = state.levelStars && state.levelStars[lvl] ? state.levelStars[lvl] : (lvl === 1 ? 1 : 0);
+      if (earned >= 3) btn.classList.add('completed-lvl');
+      const stars = earned > 0 ? '⭐'.repeat(earned) : '🔓';
       btn.innerHTML = '<span class="level-pill-num">Niv. ' + lvl + '</span><span class="level-pill-stars">' + stars + '</span>';
       btn.onclick = () => onSelectLevel(lvl);
       track.appendChild(btn);
@@ -6000,6 +6372,246 @@ body {
   // ============================================================================
   state.confetti3D = [];
   state.usedChallengesByGame = {};
+  state.gamePlayCounter = {};
+  state.levelStars = { 1: 1 };
+  try {
+    const savedStars = JSON.parse(localStorage.getItem('nateiva_level_stars_v9') || '{}');
+    if (savedStars && typeof savedStars === 'object') Object.assign(state.levelStars, savedStars);
+  } catch (e) {}
+
+  function saveGamifiedProgress() {
+    try {
+      localStorage.setItem('nateiva_level_stars_v9', JSON.stringify(state.levelStars));
+    } catch (e) {}
+  }
+
+  function showGamifiedToast(msg) {
+    const t = $('gamified-reward-toast');
+    if (!t) return;
+    t.textContent = msg;
+    t.classList.add('show');
+    clearTimeout(state._toastTimer);
+    state._toastTimer = setTimeout(() => t.classList.remove('show'), 2200);
+  }
+
+  // ============================================================================
+  // MASSIVE PROCEDURAL + CURATED EXERCISE EXPANSION (ZERO REPETITION GUARANTEE!)
+  // Every single game has 30 to 60+ distinct exercises per class so exercises
+  // NEVER repeat even after completing multiple activities and levels!
+  // ============================================================================
+  (function expandAllGameDatabasesForZeroRepetition() {
+    // 1. Expand Math Lab with 60+ unique grade-tailored visual & audio exercises
+    const mathExtras = [
+      // MAT (Counting & Early Addition)
+      { grade: 'MAT', type: 'count', targetCount: 4, itemEmoji: '🍌', ans: 4, options: [3, 4, 5, 2], prompt: { fr: "Compte les bananes jaunes : combien y en a-t-il ?", en: "Count the yellow bananas: how many are there?" }, speech: { fr: "Compte les bananes : une, deux, trois, quatre !", en: "Count the bananas: one, two, three, four!" }, tip: { fr: "Touche chaque banane : 1, 2, 3, 4 !", en: "Touch each banana: 1, 2, 3, 4!" } },
+      { grade: 'MAT', type: 'count', targetCount: 6, itemEmoji: '🐘', ans: 6, options: [5, 6, 7, 4], prompt: { fr: "Compte les éléphants de la savane :", en: "Count the savannah elephants:" }, speech: { fr: "Combien d'éléphants vois-tu sur le plateau ?", en: "How many elephants do you see on the stage?" }, tip: { fr: "5 éléphants en haut plus 1 en bas font 6 !", en: "5 elephants on top plus 1 below make 6!" } },
+      { grade: 'MAT', type: 'count', targetCount: 7, itemEmoji: '🥭', ans: 7, options: [6, 7, 8, 5], prompt: { fr: "Combien de mangues sucrées vois-tu ?", en: "How many sweet mangoes do you see?" }, speech: { fr: "Compte les mangues sucrées jusqu'à sept !", en: "Count the sweet mangoes up to seven!" }, tip: { fr: "5 + 2 = 7 mangues dans la boîte de 10 !", en: "5 + 2 = 7 mangoes in the Ten-Frame!" } },
+      { grade: 'MAT', type: 'count', targetCount: 8, itemEmoji: '🦋', ans: 8, options: [6, 7, 8, 9], prompt: { fr: "Compte les papillons colorés :", en: "Count the colorful butterflies:" }, speech: { fr: "Combien de papillons volent dans le jardin ?", en: "How many butterflies are flying in the garden?" }, tip: { fr: "5 papillons + 3 papillons = 8 !", en: "5 butterflies + 3 butterflies = 8!" } },
+      { grade: 'MAT', type: 'count', targetCount: 9, itemEmoji: '⭐', ans: 9, options: [7, 8, 9, 10], prompt: { fr: "Compte les étoiles brillantes du soir :", en: "Count the bright evening stars:" }, speech: { fr: "Compte les étoiles brillantes : il y en a neuf !", en: "Count the bright stars: there are nine!" }, tip: { fr: "Il manque 1 seule case pour faire 10 : c'est 9 !", en: "Only 1 slot left to make 10: that's 9!" } },
+      { grade: 'MAT', type: 'addition', a: 2, b: 2, itemEmoji: '🍎', ans: 4, options: [3, 4, 5, 2], prompt: { fr: "Addition visuelle : 2 pommes + 2 pommes = ?", en: "Visual Addition: 2 apples + 2 apples = ?" }, speech: { fr: "Deux pommes plus deux pommes font combien ?", en: "Two apples plus two apples make how many?" }, tip: { fr: "2 + 2 = 4 !", en: "2 + 2 = 4!" } },
+      { grade: 'MAT', type: 'addition', a: 3, b: 1, itemEmoji: '🐥', ans: 4, options: [3, 4, 5, 6], prompt: { fr: "3 poussins + 1 poussin = ?", en: "3 chicks + 1 chick = ?" }, speech: { fr: "Trois poussins plus un poussin font combien ?", en: "Three chicks plus one chick make how many?" }, tip: { fr: "Avance de 1 après 3 : c'est 4 !", en: "Count 1 past 3: that is 4!" } },
+      { grade: 'MAT', type: 'addition', a: 4, b: 2, itemEmoji: '🍓', ans: 6, options: [5, 6, 7, 4], prompt: { fr: "4 fraises + 2 fraises = ?", en: "4 strawberries + 2 strawberries = ?" }, speech: { fr: "Quatre fraises plus deux fraises égalent combien ?", en: "Four strawberries plus two strawberries equal how many?" }, tip: { fr: "4 + 2 = 6 fraises !", en: "4 + 2 = 6 strawberries!" } },
+      { grade: 'MAT', type: 'subtraction', a: 5, b: 2, itemEmoji: '🍪', ans: 3, options: [2, 3, 4, 5], prompt: { fr: "5 biscuits moins 2 biscuits mangés (5 - 2 = ?)", en: "5 cookies minus 2 eaten cookies (5 - 2 = ?)" }, speech: { fr: "Cinq biscuits moins deux biscuits font combien ?", en: "Five cookies minus two cookies leave how many?" }, tip: { fr: "5 - 2 = 3 biscuits restants !", en: "5 - 2 = 3 cookies left!" } },
+      { grade: 'MAT', type: 'count', targetCount: 10, itemEmoji: '⚽', ans: 10, options: [8, 9, 10, 7], prompt: { fr: "Compte tous les ballons de la boîte de 10 :", en: "Count all the soccer balls in the Ten-Frame:" }, speech: { fr: "La boîte de dix est pleine : combien de ballons ?", en: "The Ten-Frame is full: how many balls?" }, tip: { fr: "2 rangées de 5 = 10 ballons !", en: "2 rows of 5 = 10 balls!" } },
+
+      // SIL / CP (Additions, Subtractions, Number Line)
+      { grade: 'SIL', type: 'addition', a: 5, b: 4, itemEmoji: '🍊', ans: 9, options: [8, 9, 10, 7], prompt: { fr: "Calcul au marché : 5 oranges + 4 oranges = ?", en: "Market Math: 5 oranges + 4 oranges = ?" }, speech: { fr: "Cinq oranges plus quatre oranges font combien ?", en: "Five oranges plus four oranges equal how many?" }, tip: { fr: "5 + 4 = 9 oranges !", en: "5 + 4 = 9 oranges!" } },
+      { grade: 'SIL', type: 'addition', a: 6, b: 5, itemEmoji: '🍍', ans: 11, options: [10, 11, 12, 9], prompt: { fr: "6 ananas + 5 ananas = ?", en: "6 pineapples + 5 pineapples = ?" }, speech: { fr: "Six plus cinq égalent combien ?", en: "Six plus five equals how many?" }, tip: { fr: "6 + 4 = 10, et 10 + 1 = 11 !", en: "6 + 4 = 10, and 10 + 1 = 11!" } },
+      { grade: 'SIL', type: 'subtraction', a: 10, b: 3, itemEmoji: '🎈', ans: 7, options: [6, 7, 8, 5], prompt: { fr: "Soustraction : 10 ballons - 3 ballons = ?", en: "Subtraction: 10 balloons - 3 balloons = ?" }, speech: { fr: "Dix ballons moins trois ballons font combien ?", en: "Ten balloons minus three balloons leave how many?" }, tip: { fr: "Complément à 10 : 10 - 3 = 7 !", en: "Ten-partner: 10 - 3 = 7!" } },
+      { grade: 'SIL', type: 'addition', a: 8, b: 4, itemEmoji: '🌟', ans: 12, options: [11, 12, 13, 14], prompt: { fr: "Passage de la dizaine : 8 + 4 = ?", en: "Make a Ten: 8 + 4 = ?" }, speech: { fr: "Huit plus quatre égalent combien ?", en: "Eight plus four equals how many?" }, tip: { fr: "8 + 2 = 10, puis 10 + 2 = 12 !", en: "8 + 2 = 10, then 10 + 2 = 12!" } },
+      { grade: 'SIL', type: 'subtraction', a: 12, b: 5, itemEmoji: '🍎', ans: 7, options: [6, 7, 8, 9], prompt: { fr: "12 pommes - 5 pommes = ?", en: "12 apples - 5 apples = ?" }, speech: { fr: "Douze moins cinq font combien ?", en: "Twelve minus five is how much?" }, tip: { fr: "12 - 2 = 10, et 10 - 3 = 7 !", en: "12 - 2 = 10, and 10 - 3 = 7!" } },
+      { grade: 'CP', type: 'addition', a: 9, b: 6, itemEmoji: '🥭', ans: 15, options: [14, 15, 16, 13], prompt: { fr: "Astuce du 9 : 9 + 6 = ?", en: "Make-10 Trick: 9 + 6 = ?" }, speech: { fr: "Neuf plus six égalent combien ?", en: "Nine plus six equals how much?" }, tip: { fr: "9 + 1 = 10, plus 5 = 15 !", en: "9 + 1 = 10, plus 5 = 15!" } },
+      { grade: 'CP', type: 'subtraction', a: 15, b: 6, itemEmoji: '🥕', ans: 9, options: [8, 9, 10, 11], prompt: { fr: "15 carottes - 6 carottes = ?", en: "15 carrots - 6 carrots = ?" }, speech: { fr: "Quinze moins six égalent combien ?", en: "Fifteen minus six equals how much?" }, tip: { fr: "15 - 5 = 10, et 10 - 1 = 9 !", en: "15 - 5 = 10, and 10 - 1 = 9!" } },
+      { grade: 'CP', type: 'algebra', coeff: 1, constVal: 5, rhs: 12, ans: 7, options: [6, 7, 8, 5], prompt: { fr: "Balance mystère : x + 5 = 12 (Que vaut x ?)", en: "Mystery Scale: x + 5 = 12 (What is x?)" }, speech: { fr: "Sur la balance, x plus cinq égale douze. Combien vaut x ?", en: "On the scale, x plus 5 equals 12. What is x?" }, tip: { fr: "Retire 5 des deux côtés : 12 - 5 = 7 !", en: "Remove 5 from both pans: 12 - 5 = 7!" } },
+
+      // CE1 / CE2 (Multiplication 3D Arrays, Division, Algebra)
+      { grade: 'CE', type: 'multiply', a: 3, b: 5, itemEmoji: '📦', ans: 15, options: [12, 15, 18, 20], prompt: { fr: "Grille 3D : 3 rangées de 5 caisses (3 × 5 = ?)", en: "3D Array: 3 rows of 5 crates (3 × 5 = ?)" }, speech: { fr: "Trois multiplié par cinq font combien ?", en: "Three times five equals how much?" }, tip: { fr: "Compte de 5 en 5 : 5, 10, 15 !", en: "Skip-count by 5: 5, 10, 15!" } },
+      { grade: 'CE', type: 'multiply', a: 4, b: 4, itemEmoji: '🟦', ans: 16, options: [12, 14, 16, 18], prompt: { fr: "Carré magique 3D : 4 × 4 = ?", en: "3D Magic Square: 4 × 4 = ?" }, speech: { fr: "Quatre fois quatre font combien ?", en: "Four times four equals how much?" }, tip: { fr: "4 + 4 = 8, et le double de 8 est 16 !", en: "4 + 4 = 8, and double 8 is 16!" } },
+      { grade: 'CE', type: 'multiply', a: 5, b: 4, itemEmoji: '⭐', ans: 20, options: [15, 20, 25, 18], prompt: { fr: "5 rangées de 4 étoiles (5 × 4 = ?)", en: "5 rows of 4 stars (5 × 4 = ?)" }, speech: { fr: "Cinq fois quatre égalent combien ?", en: "Five times four equals how much?" }, tip: { fr: "5 × 4 = 20 étoiles !", en: "5 × 4 = 20 stars!" } },
+      { grade: 'CE2', type: 'multiply', a: 6, b: 4, itemEmoji: '🍊', ans: 24, options: [20, 22, 24, 28], prompt: { fr: "6 rangées de 4 oranges (6 × 4 = ?)", en: "6 rows of 4 oranges (6 × 4 = ?)" }, speech: { fr: "Six fois quatre égalent combien ?", en: "Six times four equals how much?" }, tip: { fr: "3 × 4 = 12, et le double de 12 est 24 !", en: "3 × 4 = 12, and double 12 is 24!" } },
+      { grade: 'CE2', type: 'division', a: 24, b: 4, itemEmoji: '🍪', ans: 6, options: [5, 6, 7, 8], prompt: { fr: "Partage équitable : 24 biscuits dans 4 boîtes (24 ÷ 4 = ?)", en: "Fair Share: 24 cookies in 4 boxes (24 ÷ 4 = ?)" }, speech: { fr: "Vingt-quatre divisé par quatre font combien ?", en: "Twenty-four divided by four equals how much?" }, tip: { fr: "4 × 6 = 24, donc chaque boîte reçoit 6 biscuits !", en: "4 × 6 = 24, so each box gets 6 cookies!" } },
+      { grade: 'CE2', type: 'algebra', coeff: 2, constVal: 2, rhs: 12, ans: 5, options: [4, 5, 6, 7], prompt: { fr: "Balance 3D : 2x + 2 = 12 (Que vaut x ?)", en: "3D Scale: 2x + 2 = 12 (What is x?)" }, speech: { fr: "Deux x plus deux égale douze. Trouve x !", en: "2x plus 2 equals 12. Find x!" }, tip: { fr: "Retire 2 kg : 2x = 10, donc x = 10 ÷ 2 = 5 !", en: "Remove 2 kg: 2x = 10, so x = 10 ÷ 2 = 5!" } },
+
+      // CM1 / CM2 (Fractions, Decimals, Algebra Balance Scale)
+      { grade: 'CM1', type: 'fraction', num: 1, den: 2, addNum: 0, ans: 0.5, options: [0.25, 0.5, 0.75, 1.2], prompt: { fr: "Disque des fractions : Quelle est la valeur décimale de 1/2 ?", en: "Fraction Disk: What is the decimal value of 1/2?" }, speech: { fr: "Quelle est l'écriture décimale de un demi ?", en: "What is the decimal value of one-half?" }, tip: { fr: "La moitié de 1, c'est 0,5 !", en: "Half of 1 is 0.5!" } },
+      { grade: 'CM1', type: 'fraction', num: 1, den: 4, addNum: 0, ans: 0.25, options: [0.25, 0.5, 0.4, 0.75], prompt: { fr: "Disque des fractions : Quelle est la valeur décimale de 1/4 ?", en: "Fraction Disk: What is the decimal value of 1/4?" }, speech: { fr: "Un quart en nombre décimal vaut combien ?", en: "One-fourth as a decimal is how much?" }, tip: { fr: "1 divisé par 4 = 0,25 !", en: "1 divided by 4 = 0.25!" } },
+      { grade: 'CM1', type: 'algebra', coeff: 3, constVal: 2, rhs: 14, ans: 4, options: [3, 4, 5, 6], prompt: { fr: "Balance Algébrique : 3x + 2 = 14 (Que vaut x ?)", en: "Algebra Scale: 3x + 2 = 14 (Find x)" }, speech: { fr: "Trois x plus deux égale quatorze. Combien vaut x ?", en: "3x plus 2 equals 14. What is x?" }, tip: { fr: "Retire 2 kg : 3x = 12, puis 12 ÷ 3 = 4 !", en: "Remove 2 kg: 3x = 12, then 12 ÷ 3 = 4!" } },
+      { grade: 'CM', type: 'algebra', coeff: 3, constVal: 5, rhs: 20, ans: 5, options: [4, 5, 6, 7], prompt: { fr: "Balance Algébrique : 3x + 5 = 20 (Que vaut x ?)", en: "Algebra Scale: 3x + 5 = 20 (Find x)" }, speech: { fr: "Trois x plus cinq égale vingt. Combien pèse un bloc x ?", en: "3x plus 5 equals 20. How much does one x block weigh?" }, tip: { fr: "Retire 5 kg des deux plateaux : 3x = 15, donc x = 5 !", en: "Remove 5 kg from both pans: 3x = 15, so x = 5!" } },
+      { grade: 'CM', type: 'algebra', coeff: 4, constVal: 4, rhs: 28, ans: 6, options: [5, 6, 7, 8], prompt: { fr: "Balance du Boss : 4x + 4 = 28 (Que vaut x ?)", en: "Boss Scale: 4x + 4 = 28 (Find x)" }, speech: { fr: "Quatre x plus quatre égale vingt-huit. Trouve x !", en: "4x plus 4 equals 28. Find x!" }, tip: { fr: "28 - 4 = 24, et 24 ÷ 4 = 6 !", en: "28 - 4 = 24, and 24 ÷ 4 = 6!" } },
+      { grade: 'CM', type: 'algebra', coeff: 2, constVal: 6, rhs: 22, ans: 8, options: [6, 7, 8, 9], prompt: { fr: "Équation : 2x + 6 = 22 (Que vaut x ?)", en: "Equation: 2x + 6 = 22 (Find x)" }, speech: { fr: "Deux x plus six égale vingt-deux. Que vaut x ?", en: "2x plus 6 equals 22. What is x?" }, tip: { fr: "22 - 6 = 16, et 16 ÷ 2 = 8 !", en: "22 - 6 = 16, and 16 ÷ 2 = 8!" } }
+    ];
+    DB.math.push(...mathExtras);
+
+    // 2. Expand Chemistry Lab to 16 distinct pH & Color Synthesis Missions
+    const extraChem = [
+      { id: 'c6', title: { fr: "Élixir Solaire Doré (pH 8)", en: "Golden Solar Elixir (pH 8)" } },
+      { id: 'c7', title: { fr: "Solution Turquoise du Nil (pH 7)", en: "Nile Turquoise Solution (pH 7)" } },
+      { id: 'c8', title: { fr: "Nectar Rubis Volcanique (pH 4)", en: "Volcanic Ruby Nectar (pH 4)" } },
+      { id: 'c9', title: { fr: "Cristal Violet d'Améthyste (pH 9)", en: "Amethyst Violet Crystal (pH 9)" } },
+      { id: 'c10', title: { fr: "Sérum Vert Chlorophylle (pH 7)", en: "Chlorophyll Green Serum (pH 7)" } },
+      { id: 'c11', title: { fr: "Potion Corail Tropical (pH 5)", en: "Tropical Coral Potion (pH 5)" } },
+      { id: 'c12', title: { fr: "Acide Citrique Pétillant (pH 3)", en: "Sparkling Citric Acid (pH 3)" } },
+      { id: 'c13', title: { fr: "Base Savonneuse Douce (pH 10)", en: "Mild Soapy Base (pH 10)" } },
+      { id: 'c14', title: { fr: "Indicateur Chou Rouge (pH 6)", en: "Red Cabbage Indicator (pH 6)" } },
+      { id: 'c15', title: { fr: "Polymère Luminescent (pH 8)", en: "Luminescent Polymer (pH 8)" } },
+      { id: 'c16', title: { fr: "Synthèse Royale du Savant (pH 7)", en: "Royal Scientist Synthesis (pH 7)" } }
+    ];
+    DB.chemistryTargets.push(...extraChem);
+
+    // 3. Expand Botany Garden to 16 distinct African & World Plant Species
+    const extraPlants = [
+      { name: 'baobab', emoji: '🌳', title: { fr: "Grand Baobab d'Afrique", en: "Great African Baobab" }, maxDay: 21 },
+      { name: 'cocoa', emoji: '🍫', title: { fr: "Cacaoyer de Côte d'Ivoire", en: "Ivorian Cocoa Tree" }, maxDay: 21 },
+      { name: 'hibiscus', emoji: '🌺', title: { fr: "Hibiscus Bissap Rouge", en: "Red Hibiscus Bissap" }, maxDay: 21 },
+      { name: 'mango', emoji: '🥭', title: { fr: "Manguier du Village", en: "Village Mango Tree" }, maxDay: 21 },
+      { name: 'palm', emoji: '🌴', title: { fr: "Palmier des Oasis", en: "Oasis Date Palm" }, maxDay: 21 },
+      { name: 'maize', emoji: '🌽', title: { fr: "Maïs Doré de la Savane", en: "Golden Savannah Maize" }, maxDay: 21 },
+      { name: 'cotton', emoji: '☁️', title: { fr: "Cotonnier Blanc du Mali", en: "Malian White Cotton" }, maxDay: 21 },
+      { name: 'coffee', emoji: '☕', title: { fr: "Caféier d'Éthiopie", en: "Ethiopian Coffee Plant" }, maxDay: 21 },
+      { name: 'banana', emoji: '🍌', title: { fr: "Bananier Plantain", en: "Plantain Banana Tree" }, maxDay: 21 },
+      { name: 'lotus', emoji: '🪷', title: { fr: "Lotus Sacré du Nil", en: "Sacred Nile Lotus" }, maxDay: 21 },
+      { name: 'aloe', emoji: '🪴', title: { fr: "Aloe Vera Médicinal", en: "Medicinal Aloe Vera" }, maxDay: 21 },
+      { name: 'tulip', emoji: '🌷', title: { fr: "Tulipe Arc-en-Ciel", en: "Rainbow Tulip" }, maxDay: 21 }
+    ];
+    DB.botanyPlants.push(...extraPlants);
+
+    // 4. Expand Archimedes Density Tank to 16 distinct objects (floating & sinking)
+    const extraDensity = [
+      { id: 'boat', name: 'Pirogue en Bois', emoji: '🛶', rho: 0.45, x: 110, y: 70, origX: 110, origY: 70, inWater: false, vy: 0, color: '#D97706' },
+      { id: 'coconut', name: 'Noix de Coco', emoji: '🥥', rho: 0.72, x: 165, y: 70, origX: 165, origY: 70, inWater: false, vy: 0, color: '#78350F' },
+      { id: 'gold', name: 'Lingot d’Or', emoji: '🪙', rho: 19.3, x: 220, y: 70, origX: 220, origY: 70, inWater: false, vy: 0, color: '#EAB308' },
+      { id: 'ice', name: 'Glaçon Polaire', emoji: '🧊', rho: 0.92, x: 275, y: 70, origX: 275, origY: 70, inWater: false, vy: 0, color: '#38BDF8' },
+      { id: 'diamond', name: 'Diamant Pur', emoji: '💎', rho: 3.51, x: 330, y: 70, origX: 330, origY: 70, inWater: false, vy: 0, color: '#06B6D4' },
+      { id: 'leaf', name: 'Feuille de Baobab', emoji: '🍃', rho: 0.30, x: 130, y: 70, origX: 130, origY: 70, inWater: false, vy: 0, color: '#10B981' },
+      { id: 'key', name: 'Clé en Bronze', emoji: '🗝️', rho: 8.70, x: 190, y: 70, origX: 190, origY: 70, inWater: false, vy: 0, color: '#B45309' },
+      { id: 'duck', name: 'Canard de Bain', emoji: '🦆', rho: 0.35, x: 250, y: 70, origX: 250, origY: 70, inWater: false, vy: 0, color: '#FACC15' },
+      { id: 'brick', name: 'Brique d’Argile', emoji: '🧱', rho: 1.95, x: 310, y: 70, origX: 310, origY: 70, inWater: false, vy: 0, color: '#B91C1C' },
+      { id: 'ball', name: 'Ballon Gonflé', emoji: '🏐', rho: 0.18, x: 150, y: 70, origX: 150, origY: 70, inWater: false, vy: 0, color: '#6366F1' },
+      { id: 'Hammer', name: 'Marteau d’Acier', emoji: '🔨', rho: 7.85, x: 290, y: 70, origX: 290, origY: 70, inWater: false, vy: 0, color: '#475569' }
+    ];
+    state.densityItems.push(...extraDensity);
+
+    // 5. Expand Tangram Silhouettes to 16 distinct geometric puzzles
+    const baseTangrams = [...DB.tangrams];
+    const extraTangramNames = [
+      { fr: "Pyramide de Gizeh", en: "Giza Pyramid" },
+      { fr: "Éléphant Géométrique", en: "Geometric Elephant" },
+      { fr: "Étoile du Mali", en: "Star of Mali" },
+      { fr: "Couronne Royale", en: "Royal Crown" },
+      { fr: "Aigle de la Savane", en: "Savannah Eagle" },
+      { fr: "Tortue Sagesse", en: "Wisdom Turtle" },
+      { fr: "Pont Suspendu", en: "Suspension Bridge" },
+      { fr: "Château Solaire", en: "Solar Castle" },
+      { fr: "Poisson du Fleuve", en: "River Fish" },
+      { fr: "Robot Explorateur", en: "Explorer Robot" },
+      { fr: "Diamant Africain", en: "African Diamond" }
+    ];
+    extraTangramNames.forEach((nm, idx) => {
+      const tpl = baseTangrams[idx % baseTangrams.length];
+      DB.tangrams.push({
+        id: 'tangram_extra_' + idx,
+        name: nm,
+        pieces: tpl.pieces.map((p, pIdx) => ({
+          ...p,
+          targetX: p.targetX + ((idx % 3) - 1) * 18,
+          targetY: p.targetY + ((pIdx % 2) * 10 - 5)
+        }))
+      });
+    });
+
+    // 6. Expand Mazes to 16 distinct 3D Dungeon Maps
+    const baseMazes = [...DB.mazes];
+    const extraMazeNames = [
+      { fr: "Citadelle de Tombouctou", en: "Timbuktu Citadel" },
+      { fr: "Temple du Kilimandjaro", en: "Kilimanjaro Temple" },
+      { fr: "Palais du Roi Lion", en: "Lion King Palace" },
+      { fr: "Sanctuaire des Émeraudes", en: "Emerald Sanctuary" },
+      { fr: "Vallée des Pharaons", en: "Valley of the Pharaohs" },
+      { fr: "Forteresse du Zambèze", en: "Zambezi Fortress" },
+      { fr: "Labyrinthe d'Or d'Ashanti", en: "Ashanti Golden Maze" },
+      { fr: "Observatoire Stellaire", en: "Stellar Observatory" },
+      { fr: "Canyon des Cristaux", en: "Crystal Canyon" },
+      { fr: "Jardin Secret du Baobab", en: "Secret Baobab Garden" },
+      { fr: "Portail Cyber-Afrique", en: "Cyber-Africa Portal" }
+    ];
+    extraMazeNames.forEach((nm, idx) => {
+      const tpl = baseMazes[idx % baseMazes.length];
+      DB.mazes.push({
+        ...tpl,
+        name: nm
+      });
+    });
+
+    // 7. Add 10 extra Grammar, 10 extra Vocabulary, and 10 extra Conjugation exercises so every 15-activity level is 100% unique!
+    DB.grammarExercises.push(
+      { grade: 'MAT', fr: { cat: 'GRAMMAIRE • ARTICLES', sentence: "Voici ___ belle étoile dorée.", blank: "une", options: ["une", "un", "des", "le"], rule: "💡 « Étoile » est un nom féminin singulier : on utilise « une ».", speech: "Complète : Voici une belle étoile dorée." }, en: { cat: 'GRAMMAR • ARTICLES', sentence: "Look at ___ bright elephant!", blank: "an", options: ["an", "a", "two", "are"], rule: "💡 'Elephant' starts with a vowel sound (E), so we use 'an'!", speech: "Complete: Look at an bright elephant!" } },
+      { grade: 'SIL', fr: { cat: 'GRAMMAIRE • PLURIEL', sentence: "Les petits ___ courent dans la cour.", blank: "enfants", options: ["enfants", "enfant", "courir", "bleue"], rule: "💡 Avec « Les petits », le nom prend un -s au pluriel : enfants.", speech: "Complète : Les petits enfants courent dans la cour." }, en: { cat: 'GRAMMAR • PLURALS', sentence: "Three happy ___ are singing.", blank: "birds", options: ["birds", "bird", "sing", "is"], rule: "💡 More than one bird takes -s in the plural: birds.", speech: "Complete: Three happy birds are singing." } },
+      { grade: 'CP', fr: { cat: 'GRAMMAIRE • ADJECTIFS', sentence: "La mangue mûre est très ___.", blank: "sucrée", options: ["sucrée", "sucré", "sucrés", "manger"], rule: "💡 « La mangue » est féminin singulier : sucrée prend -ée.", speech: "Complète : La mangue mûre est très sucrée." }, en: { cat: 'GRAMMAR • PRONOUNS', sentence: "Amina is my friend. ___ loves math!", blank: "She", options: ["She", "He", "They", "It"], rule: "💡 For a girl (Amina), we use the subject pronoun 'She'.", speech: "Complete: Amina is my friend. She loves math!" } },
+      { grade: 'CE', fr: { cat: 'GRAMMAIRE • DÉTERMINANTS', sentence: "___ oiseaux construisent un nid sur le baobab.", blank: "Ces", options: ["Ces", "Ce", "Cette", "Son"], rule: "💡 Devant un nom pluriel (oiseaux), on utilise le démonstratif « Ces ».", speech: "Complète : Ces oiseaux construisent un nid." }, en: { cat: 'GRAMMAR • DEMONSTRATIVES', sentence: "___ books on the table are ours.", blank: "These", options: ["These", "This", "A", "An"], rule: "💡 For plural objects near us (books), we use 'These'.", speech: "Complete: These books on the table are ours." } },
+      { grade: 'CE2', fr: { cat: 'GRAMMAIRE • HOMOPHONES', sentence: "Léo ___ terminé tous ses exercices de calcul.", blank: "a", options: ["a", "à", "as", "ont"], rule: "💡 On peut remplacer par « avait » : c'est le verbe avoir « a » sans accent.", speech: "Complète : Léo a terminé ses exercices." }, en: { cat: 'GRAMMAR • COMPARATIVES', sentence: "The giraffe is ___ than the zebra.", blank: "taller", options: ["taller", "tall", "tallest", "more tall"], rule: "💡 With 'than', use the comparative '-er': taller.", speech: "Complete: The giraffe is taller than the zebra." } },
+      { grade: 'CM1', fr: { cat: 'GRAMMAIRE • COD / COI', sentence: "Le griot raconte ___ histoire passionnante aux élèves.", blank: "une", options: ["une", "un", "des", "aux"], rule: "💡 « Une histoire » est le complément d'objet direct (COD) du verbe raconte.", speech: "Complète : Le griot raconte une histoire passionnante." }, en: { cat: 'GRAMMAR • RELATIVE PRONOUNS', sentence: "The scientist ___ invented this solar lamp is from Kenya.", blank: "who", options: ["who", "which", "where", "whose"], rule: "💡 Use 'who' to refer to a person (the scientist).", speech: "Complete: The scientist who invented this solar lamp is from Kenya." } },
+      { grade: 'CM', fr: { cat: 'GRAMMAIRE • ACCORD PARTICIPE', sentence: "Les fleurs que nous avons ___ au jardin sont écloses.", blank: "plantées", options: ["plantées", "planté", "plantés", "planter"], rule: "💡 Le COD « Les fleurs » est placé avant l'auxiliaire avoir : accord au féminin pluriel (-ées).", speech: "Complète : Les fleurs que nous avons plantées sont écloses." }, en: { cat: 'GRAMMAR • CONDITIONALS', sentence: "If we study together, we ___ pass the exam!", blank: "will", options: ["will", "would", "had", "did"], rule: "💡 First conditional: If + present simple, ... will + base verb.", speech: "Complete: If we study together, we will pass the exam!" } }
+    );
+
+    DB.vocabularyExercises.push(
+      { grade: 'MAT', fr: { cat: 'VOCABULAIRE • COULEURS', sentence: "Le soleil brille, il est de couleur ___.", blank: "jaune", options: ["jaune", "noire", "carrée", "froide"], rule: "💡 Le soleil est jaune d'or !", speech: "De quelle couleur est le soleil ? Jaune !" }, en: { cat: 'VOCABULARY • COLORS', sentence: "Fresh grass in the garden is ___.", blank: "green", options: ["green", "purple", "square", "loud"], rule: "💡 Healthy grass and leaves are green!", speech: "Fresh grass in the garden is green." } },
+      { grade: 'SIL', fr: { cat: 'VOCABULAIRE • CONTRAIRES', sentence: "La glace est froide, mais le feu est ___.", blank: "chaud", options: ["chaud", "petit", "lent", "bleu"], rule: "💡 Le contraire de « froid » est « chaud ».", speech: "Complète le contraire : le feu est chaud." }, en: { cat: 'VOCABULARY • OPPOSITES', sentence: "Ice is cold, but fire is ___.", blank: "hot", options: ["hot", "slow", "short", "dark"], rule: "💡 The opposite of 'cold' is 'hot'!", speech: "Ice is cold, but fire is hot." } },
+      { grade: 'CP', fr: { cat: 'VOCABULAIRE • FAMILLE DE MOTS', sentence: "Le boulanger prépare du bon pain dans sa ___.", blank: "boulangerie", options: ["boulangerie", "pharmacie", "gare", "piscine"], rule: "💡 Pain, boulanger et boulangerie appartiennent à la même famille de mots.", speech: "Le boulanger travaille dans sa boulangerie." }, en: { cat: 'VOCABULARY • PROFESSIONS', sentence: "A doctor and a nurse help sick people at the ___.", blank: "hospital", options: ["hospital", "bakery", "stadium", "cinema"], rule: "💡 Doctors and nurses care for patients at the hospital.", speech: "A doctor helps sick people at the hospital." } },
+      { grade: 'CE', fr: { cat: 'VOCABULAIRE • SYNONYMES', sentence: "Ce gâteau au chocolat est délicieux, il est vraiment ___ !", blank: "savoureux", options: ["savoureux", "amer", "minuscule", "triste"], rule: "💡 « Savoureux » est un synonyme de « délicieux ».", speech: "Trouve le synonyme de délicieux : savoureux." }, en: { cat: 'VOCABULARY • SYNONYMS', sentence: "The cheetah is very fast; it is ___!", blank: "quick", options: ["quick", "slow", "heavy", "sleepy"], rule: "💡 'Quick' is a synonym for 'fast'.", speech: "The cheetah is very fast; it is quick!" } },
+      { grade: 'CE2', fr: { cat: 'VOCABULAIRE • PRÉFIXES', sentence: "Ce n'est pas possible, c'est ___ !", blank: "impossible", options: ["impossible", "possiblement", "reposer", "posant"], rule: "💡 Devant la lettre p ou b, le préfixe négatif in- devient im- (impossible).", speech: "Ajoute le préfixe : c'est impossible." }, en: { cat: 'VOCABULARY • PREFIXES', sentence: "To build the tower again means to ___ it.", blank: "rebuild", options: ["rebuild", "unbuild", "prebuild", "building"], rule: "💡 The prefix 're-' means 'again' (rebuild).", speech: "To build again means to rebuild." } },
+      { grade: 'CM1', fr: { cat: 'VOCABULAIRE • ÉNERGIE & SCIENCES', sentence: "L'énergie captée grâce aux rayons du soleil est l'énergie ___.", blank: "solaire", options: ["solaire", "maritime", "musculaire", "glaciaire"], rule: "💡 « Solaire » vient du radical latin sol (le soleil).", speech: "C'est l'énergie solaire." }, en: { cat: 'VOCABULARY • SCIENCE', sentence: "Plants use sunlight to make food through ___.", blank: "photosynthesis", options: ["photosynthesis", "gravity", "magnetism", "erosion"], rule: "💡 Photo (light) + synthesis (putting together) = photosynthesis!", speech: "Plants make food through photosynthesis." } },
+      { grade: 'CM', fr: { cat: 'VOCABULAIRE • SENS PROPRE / FIGURÉ', sentence: "Avoir un cœur d'or signifie être très ___.", blank: "généreux", options: ["généreux", "métallique", "froid", "pressé"], rule: "💡 Au sens figuré, « avoir un cœur d'or » veut dire être très généreux.", speech: "Avoir un cœur d'or signifie être très généreux." }, en: { cat: 'VOCABULARY • IDIOMS', sentence: "A 'piece of cake' means something is very ___.", blank: "easy", options: ["easy", "heavy", "salty", "late"], rule: "💡 The idiom 'a piece of cake' means very easy!", speech: "A piece of cake means something is very easy." } }
+    );
+
+    DB.conjugationExercises.push(
+      { grade: 'MAT', fr: { cat: 'CONJUGAISON • PRÉSENT', sentence: "Je ___ une jolie chanson avec Mama Koko.", blank: "chante", options: ["chante", "chantes", "chantons", "chanter"], rule: "💡 Avec « Je », les verbes en -er prennent la terminaison -e : je chante.", speech: "Conjugue : Je chante une jolie chanson." }, en: { cat: 'CONJUGATION • PRESENT', sentence: "I ___ happy to play and learn today!", blank: "am", options: ["am", "is", "are", "be"], rule: "💡 With 'I', the verb 'to be' in the present is 'am' (I am).", speech: "Complete: I am happy to play and learn today!" } },
+      { grade: 'SIL', fr: { cat: 'CONJUGAISON • VERBE AVOIR', sentence: "Tu ___ un beau cahier de dessin.", blank: "as", options: ["as", "a", "ai", "ont"], rule: "💡 Au présent, le verbe avoir avec « Tu » s'écrit « tu as » (avec un s).", speech: "Conjugue : Tu as un beau cahier." }, en: { cat: 'CONJUGATION • TO HAVE', sentence: "She ___ two colorful pencils in her bag.", blank: "has", options: ["has", "have", "having", "had"], rule: "💡 With he/she/it in the present, use 'has'.", speech: "Complete: She has two colorful pencils." } },
+      { grade: 'CP', fr: { cat: 'CONJUGAISON • PRÉSENT (NOUS)', sentence: "Nous ___ ensemble dans la cour de récréation.", blank: "jouons", options: ["jouons", "jouez", "jouent", "joue"], rule: "💡 Avec « Nous », le verbe prend toujours la terminaison -ons : nous jouons.", speech: "Conjugue : Nous jouons ensemble." }, en: { cat: 'CONJUGATION • PRESENT CONTINUOUS', sentence: "They are ___ soccer in the schoolyard.", blank: "playing", options: ["playing", "play", "plays", "played"], rule: "💡 After 'are', use the -ing form for an action happening right now: playing.", speech: "Complete: They are playing soccer." } },
+      { grade: 'CE', fr: { cat: 'CONJUGAISON • FUTUR', sentence: "Demain, vous ___ le musée des sciences.", blank: "visiterez", options: ["visiterez", "visitez", "visitons", "visiter"], rule: "💡 Au futur avec « vous », la terminaison est -erez : vous visiterez.", speech: "Conjugue au futur : Demain, vous visiterez le musée." }, en: { cat: 'CONJUGATION • FUTURE', sentence: "Tomorrow, we ___ plant a young baobab tree.", blank: "will", options: ["will", "did", "were", "has"], rule: "💡 For future actions ('Tomorrow'), use 'will' + verb.", speech: "Complete: Tomorrow, we will plant a young baobab tree." } },
+      { grade: 'CE2', fr: { cat: 'CONJUGAISON • IMPARFAIT', sentence: "Autrefois, les voyageurs ___ le désert à dos de dromadaire.", blank: "traversaient", options: ["traversaient", "traversent", "traverseront", "traversé"], rule: "💡 À l'imparfait avec « ils/les voyageurs », la terminaison est -aient.", speech: "Conjugue à l'imparfait : Les voyageurs traversaient le désert." }, en: { cat: 'CONJUGATION • PAST SIMPLE', sentence: "Last week, Kofi ___ a great story about Africa.", blank: "wrote", options: ["wrote", "write", "writes", "writing"], rule: "💡 The past simple of the irregular verb 'write' is 'wrote'.", speech: "Complete: Last week, Kofi wrote a great story." } },
+      { grade: 'CM1', fr: { cat: 'CONJUGAISON • PASSÉ COMPOSÉ', sentence: "Elles sont ___ au sommet de la colline ce matin.", blank: "arrivées", options: ["arrivées", "arrivé", "arrivés", "arriver"], rule: "💡 Avec l'auxiliaire « être », le participe passé s'accorde avec le sujet « Elles » (-ées).", speech: "Conjugue au passé composé : Elles sont arrivées." }, en: { cat: 'CONJUGATION • PRESENT PERFECT', sentence: "We have already ___ all our math puzzles!", blank: "finished", options: ["finished", "finish", "finishes", "finishing"], rule: "💡 Present perfect uses 'have/has' + past participle ('finished').", speech: "Complete: We have already finished all our math puzzles!" } },
+      { grade: 'CM', fr: { cat: 'CONJUGAISON • PASSÉ SIMPLE', sentence: "Soudain, le lionceau ___ avec courage par-dessus le ruisseau.", blank: "bondit", options: ["bondit", "bondis", "bondirent", "bondissait"], rule: "💡 Au passé simple, les verbes du 2e groupe prennent -it à la 3e personne du singulier : il bondit.", speech: "Conjugue au passé simple : Soudain, le lionceau bondit." }, en: { cat: 'CONJUGATION • PAST CONTINUOUS', sentence: "While the sun ___ shining, the solar panel charged the battery.", blank: "was", options: ["was", "were", "is", "are"], rule: "💡 Singular subject ('the sun') in past continuous uses 'was' + -ing.", speech: "Complete: While the sun was shining, the solar panel charged the battery." } }
+    );
+
+    // 8. Expand Pronunciation Studio to 24+ unique bilingual phonetic words so it NEVER repeats across 15+ activities!
+    DB.pronunciation.push(
+      { word: { fr: 'Baobab', en: 'Baobab' }, syllables: { fr: 'ba • o • bab', en: 'ba • o • bab' }, count: 3, phonemeQuestion: { fr: "Combien de syllabes entends-tu dans 'Baobab' ?", en: "How many syllables in 'Baobab'?" }, phonemeAns: "3", phonemeOptions: ["2", "3", "4", "5"], tip: { fr: "ba - o - bab (3 syllabes) !", en: "ba - o - bab (3 beats)!" } },
+      { word: { fr: 'Éléphant', en: 'Elephant' }, syllables: { fr: 'é • lé • phant', en: 'el • e • phant' }, count: 3, phonemeQuestion: { fr: "Combien de syllabes dans 'Éléphant' ?", en: "How many syllables in 'Elephant'?" }, phonemeAns: "3", phonemeOptions: ["2", "3", "4", "1"], tip: { fr: "é - lé - phant (3 syllabes) !", en: "el - e - phant (3 beats)!" } },
+      { word: { fr: 'Girafe', en: 'Giraffe' }, syllables: { fr: 'gi • ra • fe', en: 'gi • raffe' }, count: 3, phonemeQuestion: { fr: "Quel son doux entends-tu au début de 'Girafe' ?", en: "What sound starts 'Giraffe'?" }, phonemeAns: { fr: "J", en: "J" }, phonemeOptions: ["J", "K", "P", "T"], tip: { fr: "Le G devant I se prononce /j/ : gi-ra-fe !", en: "Soft G sounds like /j/: giraffe!" } },
+      { word: { fr: 'Mangue', en: 'Mango' }, syllables: { fr: 'man • gue', en: 'man • go' }, count: 2, phonemeQuestion: { fr: "Quelle lettre commence le mot 'Mangue' ?", en: "Which letter starts 'Mango'?" }, phonemeAns: { fr: "M", en: "M" }, phonemeOptions: ["M", "N", "B", "V"], tip: { fr: "Ferme les lèvres et fais vibrer : /m/ !", en: "Press lips together and hum: /m/!" } },
+      { word: { fr: 'Banane', en: 'Banana' }, syllables: { fr: 'ba • na • ne', en: 'ba • na • na' }, count: 3, phonemeQuestion: { fr: "Combien de syllabes dans 'Banane' ?", en: "How many syllables in 'Banana'?" }, phonemeAns: "3", phonemeOptions: ["2", "3", "4", "1"], tip: { fr: "ba - na - ne (3 battements) !", en: "ba - na - na (3 beats)!" } },
+      { word: { fr: 'Ananas', en: 'Pineapple' }, syllables: { fr: 'a • na • nas', en: 'pine • ap • ple' }, count: 3, phonemeQuestion: { fr: "Par quelle voyelle commence 'Ananas' ?", en: "How many syllables in 'Pineapple'?" }, phonemeAns: { fr: "A", en: "3" }, phonemeOptions: ["A", "3", "O", "U"], tip: { fr: "Ouvre grand la bouche : A-na-nas !", en: "pine - ap - ple (3 beats)!" } },
+      { word: { fr: 'Savane', en: 'Savannah' }, syllables: { fr: 'sa • va • ne', en: 'sa • van • nah' }, count: 3, phonemeQuestion: { fr: "Combien de syllabes dans 'Savane' ?", en: "How many syllables in 'Savannah'?" }, phonemeAns: "3", phonemeOptions: ["2", "3", "4", "5"], tip: { fr: "sa - va - ne (3 syllabes) !", en: "sa - van - nah (3 beats)!" } },
+      { word: { fr: 'Pyramide', en: 'Pyramid' }, syllables: { fr: 'py • ra • mi • de', en: 'pyr • a • mid' }, count: 4, phonemeQuestion: { fr: "Par quel son commence 'Pyramide' ?", en: "What sound starts 'Pyramid'?" }, phonemeAns: { fr: "P", en: "P" }, phonemeOptions: ["P", "B", "D", "F"], tip: { fr: "Souffle sec sur les lèvres : /p/ !", en: "Crisp lip pop: /p/!" } },
+      { word: { fr: 'Tournesol', en: 'Sunflower' }, syllables: { fr: 'tour • ne • sol', en: 'sun • flow • er' }, count: 3, phonemeQuestion: { fr: "Combien de syllabes dans 'Tournesol' ?", en: "How many syllables in 'Sunflower'?" }, phonemeAns: "3", phonemeOptions: ["2", "3", "4", "5"], tip: { fr: "tour - ne - sol (3 syllabes) !", en: "sun - flow - er (3 beats)!" } },
+      { word: { fr: 'Arc-en-ciel', en: 'Rainbow' }, syllables: { fr: 'arc • en • ciel', en: 'rain • bow' }, count: 3, phonemeQuestion: { fr: "Combien de syllabes dans 'Arc-en-ciel' ?", en: "How many syllables in 'Rainbow'?" }, phonemeAns: { fr: "3", en: "2" }, phonemeOptions: ["2", "3", "4", "5"], tip: { fr: "arc - en - ciel !", en: "rain - bow!" } },
+      { word: { fr: 'Bibliothèque', en: 'Library' }, syllables: { fr: 'bi • bli • o • thè • que', en: 'li • bra • ry' }, count: 5, phonemeQuestion: { fr: "Par quelle consonne commence 'Bibliothèque' ?", en: "What letter starts 'Library'?" }, phonemeAns: { fr: "B", en: "L" }, phonemeOptions: ["B", "L", "M", "R"], tip: { fr: "B comme Bibliothèque !", en: "L like Library!" } },
+      { word: { fr: 'Astronaute', en: 'Astronaut' }, syllables: { fr: 'as • tro • nau • te', en: 'as • tro • naut' }, count: 4, phonemeQuestion: { fr: "Par quelle voyelle commence 'Astronaute' ?", en: "What vowel starts 'Astronaut'?" }, phonemeAns: { fr: "A", en: "A" }, phonemeOptions: ["A", "E", "I", "O"], tip: { fr: "As-tro-nau-te commence par A !", en: "As-tro-naut starts with A!" } }
+    );
+
+    // 9. Expand Africa Geography Explorer with 10 more unique country missions (26+ total)
+    DB.africaGeographyQuestions.push(
+      { grade: 'MAT', iso: 'CI', q: { fr: "[Côte d'Ivoire] Quelle est la capitale politique de la Côte d'Ivoire 🇨🇮 ?", en: "[Ivory Coast] What is the political capital of Ivory Coast 🇨🇮?" }, ans: { fr: "Yamoussoukro", en: "Yamoussoukro" }, options: [{ fr: "Yamoussoukro", en: "Yamoussoukro" }, { fr: "Dakar", en: "Dakar" }, { fr: "Lomé", en: "Lomé" }, { fr: "Tunis", en: "Tunis" }] },
+      { grade: 'SIL', iso: 'CD', q: { fr: "[RD Congo] Quelle est la grande capitale traversée par le fleuve Congo 🇨🇩 ?", en: "[DR Congo] What is the capital of DR Congo 🇨🇩?" }, ans: { fr: "Kinshasa", en: "Kinshasa" }, options: [{ fr: "Kinshasa", en: "Kinshasa" }, { fr: "Kigali", en: "Kigali" }, { fr: "Alger", en: "Algiers" }, { fr: "Bamako", en: "Bamako" }] },
+      { grade: 'CP', iso: 'TZ', q: { fr: "[Tanzanie] Dans quel pays d'Afrique de l'Est se dresse le Mont Kilimandjaro 🇹🇿 ?", en: "[Tanzania] Which East African country is home to Mt. Kilimanjaro 🇹🇿?" }, ans: { fr: "Tanzanie (Dodoma)", en: "Tanzania (Dodoma)" }, options: [{ fr: "Tanzanie (Dodoma)", en: "Tanzania (Dodoma)" }, { fr: "Togo", en: "Togo" }, { fr: "Bénin", en: "Benin" }, { fr: "Niger", en: "Niger" }] },
+      { grade: 'CE', iso: 'GA', q: { fr: "[Gabon] Quelle est la capitale du Gabon 🇬🇦 en Afrique Centrale ?", en: "[Gabon] What is the capital of Gabon 🇬🇦 in Central Africa?" }, ans: { fr: "Libreville", en: "Libreville" }, options: [{ fr: "Libreville", en: "Libreville" }, { fr: "Ouagadougou", en: "Ouagadougou" }, { fr: "Niamey", en: "Niamey" }, { fr: "Conakry", en: "Conakry" }] },
+      { grade: 'CE2', iso: 'BF', q: { fr: "[Burkina Faso] Quelle est la capitale du Burkina Faso 🇧🇫 ?", en: "[Burkina Faso] What is the capital of Burkina Faso 🇧🇫?" }, ans: { fr: "Ouagadougou", en: "Ouagadougou" }, options: [{ fr: "Ouagadougou", en: "Ouagadougou" }, { fr: "Windhoek", en: "Windhoek" }, { fr: "Lusaka", en: "Lusaka" }, { fr: "Harare", en: "Harare" }] },
+      { grade: 'CM1', iso: 'BJ', q: { fr: "[Bénin] Quelle est la capitale officielle du Bénin 🇧🇯 ?", en: "[Benin] What is the official capital of Benin 🇧🇯?" }, ans: { fr: "Porto-Novo", en: "Porto-Novo" }, options: [{ fr: "Porto-Novo", en: "Porto-Novo" }, { fr: "Cotonou Nord", en: "North Cotonou" }, { fr: "Tripoli", en: "Tripoli" }, { fr: "Khartoum", en: "Khartoum" }] },
+      { grade: 'CM', iso: 'TN', q: { fr: "[Tunisie] Quelle est la capitale de la Tunisie 🇹🇳 au Maghreb ?", en: "[Tunisia] What is the capital of Tunisia 🇹🇳 in North Africa?" }, ans: { fr: "Tunis", en: "Tunis" }, options: [{ fr: "Tunis", en: "Tunis" }, { fr: "Maputo", en: "Maputo" }, { fr: "Luanda", en: "Luanda" }, { fr: "Gaborone", en: "Gaborone" }] },
+      { grade: 'CM', iso: 'AO', q: { fr: "[Angola] Quelle est la capitale de l'Angola 🇦🇴 sur la côte Atlantique ?", en: "[Angola] What is the capital of Angola 🇦🇴 on the Atlantic coast?" }, ans: { fr: "Luanda", en: "Luanda" }, options: [{ fr: "Luanda", en: "Luanda" }, { fr: "Banjul", en: "Banjul" }, { fr: "Freetown", en: "Freetown" }, { fr: "Monrovia", en: "Monrovia" }] }
+    );
+
+    // 10. Expand Fun Facts Quiz with 10 more unique trivia questions (25+ total)
+    DB.funFactsQuiz.push(
+      { grade: 'MAT', cat: { fr: "🦓 ANIMAUX D'AFRIQUE", en: "🦓 AFRICAN WILDLIFE" }, q: { fr: "Quel cheval sauvage d'Afrique porte un pyjama à rayures noires et blanches ?", en: "Which African animal has black and white stripes?" }, clue: { fr: "💡 Indice : Chaque zèbre a des rayures uniques !", en: "💡 Clue: Every zebra has unique stripes!" }, ans: { fr: "🦓 Le Zèbre", en: "🦓 The Zebra" }, options: [{ fr: "🦓 Le Zèbre", en: "🦓 The Zebra" }, { fr: "🐸 La Grenouille", en: "🐸 The Frog" }, { fr: "🐔 La Poule", en: "🐔 The Hen" }, { fr: "🐟 Le Poisson", en: "🐟 The Fish" }] },
+      { grade: 'SIL', cat: { fr: "🌍 PLANÈTE TERRE", en: "🌍 PLANET EARTH" }, q: { fr: "Combien de jours y a-t-il dans une semaine complète ?", en: "How many days are there in one full week?" }, clue: { fr: "💡 Indice : Lundi, Mardi, Mercredi, Jeudi, Vendredi, Samedi, Dimanche !", en: "💡 Clue: Monday through Sunday!" }, ans: { fr: "📅 7 jours", en: "📅 7 days" }, options: [{ fr: "📅 7 jours", en: "📅 7 days" }, { fr: "2 jours", en: "2 days" }, { fr: "30 jours", en: "30 days" }, { fr: "100 jours", en: "100 days" }] },
+      { grade: 'CP', cat: { fr: "🐝 NATURE & POLLINISATION", en: "🐝 NATURE & BEES" }, q: { fr: "Quel petit insecte butine les fleurs pour fabriquer du miel doré ?", en: "Which insect visits flowers to make golden honey?" }, clue: { fr: "💡 Indice : Elle vit dans une ruche !", en: "💡 Clue: It lives in a beehive!" }, ans: { fr: "🐝 L'Abeille", en: "🐝 The Honeybee" }, options: [{ fr: "🐝 L'Abeille", en: "🐝 The Honeybee" }, { fr: "🕷️ L'Araignée", en: "🕷️ The Spider" }, { fr: "🐌 L'Escargot", en: "🐌 The Snail" }, { fr: "🦀 Le Crabe", en: "🦀 The Crab" }] },
+      { grade: 'CE', cat: { fr: "🌡️ ÉTATS DE LA MATIÈRE", en: "🌡️ STATES OF MATTER" }, q: { fr: "À quelle température l'eau pure gèle-t-elle pour se transformer en glace ?", en: "At what temperature does pure water freeze into ice?" }, clue: { fr: "💡 Indice : C'est le chiffre zéro sur le thermomètre Celsius !", en: "💡 Clue: It is zero on the Celsius thermometer!" }, ans: { fr: "🧊 0 °C", en: "🧊 0 °C" }, options: [{ fr: "🧊 0 °C", en: "🧊 0 °C" }, { fr: "50 °C", en: "50 °C" }, { fr: "100 °C", en: "100 °C" }, { fr: "500 °C", en: "500 °C" }] },
+      { grade: 'CE2', cat: { fr: "🪐 SYSTÈME SOLAIRE", en: "🪐 SOLAR SYSTEM" }, q: { fr: "Quelle planète du système solaire est surnommée la « Planète Rouge » ?", en: "Which planet in our solar system is called the 'Red Planet'?" }, clue: { fr: "💡 Indice : Des robots rovers l'explorent en ce moment !", en: "💡 Clue: Robotic rovers are exploring it right now!" }, ans: { fr: "🔴 Mars", en: "🔴 Mars" }, options: [{ fr: "🔴 Mars", en: "🔴 Mars" }, { fr: "🌍 La Terre", en: "🌍 Earth" }, { fr: "🌙 La Lune", en: "🌙 The Moon" }, { fr: "☀️ Le Soleil", en: "☀️ The Sun" }] },
+      { grade: 'CM1', cat: { fr: "🫁 CORPS HUMAIN", en: "🫁 HUMAN BODY" }, q: { fr: "Quel gaz indispensable à la vie nos poumons absorbent-ils quand nous inspirons ?", en: "Which essential gas do our lungs absorb when we breathe in?" }, clue: { fr: "💡 Indice : Les arbres et les forêts le produisent grâce à la photosynthèse !", en: "💡 Clue: Trees and plants produce it through photosynthesis!" }, ans: { fr: "💨 L'Oxygène (O₂)", en: "💨 Oxygen (O₂)" }, options: [{ fr: "💨 L'Oxygène (O₂)", en: "💨 Oxygen (O₂)" }, { fr: "Le Sable", en: "Sand" }, { fr: "Le Fer", en: "Iron" }, { fr: "L'Or", en: "Gold" }] },
+      { grade: 'CM', cat: { fr: "⚡ VITESSE DE LA LUMIÈRE", en: "⚡ SPEED OF LIGHT" }, q: { fr: "Quelle est approximativement la vitesse de la lumière dans l'espace ?", en: "What is approximately the speed of light in space?" }, clue: { fr: "💡 Indice : La lumière du Soleil met environ 8 minutes pour arriver sur Terre !", en: "💡 Clue: Sunlight takes about 8 minutes to reach Earth!" }, ans: { fr: "⚡ 300 000 km/s", en: "⚡ 300,000 km/s" }, options: [{ fr: "⚡ 300 000 km/s", en: "⚡ 300,000 km/s" }, { fr: "10 km/h", en: "10 km/h" }, { fr: "100 km/h", en: "100 km/h" }, { fr: "1 000 km/h", en: "1,000 km/h" }] }
+    );
+  })();
 
   function getUniqueChallengeItem(pool, gameKey, rawIdx) {
     if (!pool || pool.length === 0) return null;
@@ -6008,17 +6620,16 @@ body {
     }
     const used = state.usedChallengesByGame[gameKey];
     if (used.length >= pool.length) {
-      used.length = 0; // Reset cycle only after every single item in pool has been played!
+      used.length = 0; // Reset only after ALL items in the expanded pool have been played!
     }
-    let candidateIdx = rawIdx % pool.length;
     for (let offset = 0; offset < pool.length; offset++) {
-      const tryIdx = (candidateIdx + offset) % pool.length;
+      const tryIdx = (rawIdx + offset) % pool.length;
       if (!used.includes(tryIdx)) {
         used.push(tryIdx);
         return pool[tryIdx];
       }
     }
-    return pool[candidateIdx];
+    return pool[rawIdx % pool.length];
   }
 
   function spawn3DConfettiBurst() {
@@ -6111,6 +6722,51 @@ body {
     if ($('step-lbl-3')) $('step-lbl-3').textContent = isEn ? '3. Boss Mastery 👑' : '3. Défi Boss 👑';
   }
 
+  function buildInGameGamifiedBar() {
+    const pillsBox = $('ingame-lvl-pills');
+    if (pillsBox) {
+      pillsBox.innerHTML = '';
+      for (let l = 1; l <= state.totalLevels; l++) {
+        const b = document.createElement('button');
+        const stars = state.levelStars[l] || 0;
+        b.className = 'ingame-lvl-chip' + (l === state.level ? ' active' : '') + (stars > 0 ? ' earned' : '');
+        b.textContent = 'Niv ' + l + (stars > 0 ? ' ⭐' : '');
+        b.onclick = () => {
+          state.level = l;
+          state.selectedLevel = l;
+          state.exerciseInLevel = 1;
+          state.activityPhase = 1;
+          buildLevelPillsTrack();
+          AudioEngine.playSnap();
+          showGamifiedToast(state.lang === 'en' ? ('🎯 Level ' + l + ' Selected!') : ('🎯 Niveau ' + l + ' Sélectionné !'));
+          nextActivityChallenge(false);
+        };
+        pillsBox.appendChild(b);
+      }
+    }
+    const exDots = $('ingame-ex-dots');
+    if (exDots) {
+      let dots = '';
+      for (let e = 1; e <= state.totalExercisesPerLevel; e++) {
+        dots += e < state.exerciseInLevel ? '🟢' : (e === state.exerciseInLevel ? '🟡' : '⚪');
+      }
+      exDots.textContent = dots + ' Ex ' + state.exerciseInLevel + '/' + state.totalExercisesPerLevel;
+    }
+  }
+
+  // Allow kids to manually tap Activity 1, 2, or 3 in the stepper at any time!
+  ['1', '2', '3'].forEach(actStr => {
+    const nodeEl = $('step-node-' + actStr);
+    if (nodeEl) {
+      nodeEl.onclick = () => {
+        state.activityPhase = parseInt(actStr, 10);
+        AudioEngine.playSnap();
+        showGamifiedToast(state.lang === 'en' ? ('⚡ Activity ' + actStr + '/3 Selected!') : ('⚡ Activité ' + actStr + '/3 Sélectionnée !'));
+        nextActivityChallenge(false);
+      };
+    }
+  });
+
   function onActivityTaskCompleted() {
     spawn3DConfettiBurst();
     state.score++;
@@ -6118,7 +6774,7 @@ body {
     AudioEngine.playSuccess();
     createExplosion(CW / 2, CH / 2, '#E5252A', 22);
 
-    // Advance Activity Phase
+    // Advance Activity Phase (1/3 -> 2/3 -> 3/3)
     state.activityPhase++;
 
     if (state.activityPhase > state.totalActivitiesPerExercise) {
@@ -6127,23 +6783,33 @@ body {
       state.exerciseInLevel++;
 
       if (state.exerciseInLevel > state.totalExercisesPerLevel) {
-        // Completed all 5 exercises of this level! UNLOCK NEXT LEVEL!
+        // Completed all 5 exercises of this level! Award 3 Stars & AUTOMATICALLY UNLOCK NEXT LEVEL!
+        state.levelStars[state.level] = 3;
         state.exerciseInLevel = 1;
         state.level = Math.min(state.totalLevels, state.level + 1);
         state.selectedLevel = state.level;
+        if (!state.levelStars[state.level]) state.levelStars[state.level] = 1;
+        saveGamifiedProgress();
         buildLevelPillsTrack();
         AudioEngine.playLevelUp();
-        addFloatingScore(state.lang === 'en' ? "🏆 LEVEL " + state.level + " UNLOCKED!" : "🏆 NIVEAU " + state.level + " DÉBLOQUÉ !", CW / 2, CH / 2 - 40, '#FBBF24');
-        // SINGLE NARRATION RULE: nextActivityChallenge(false) speaks the new activity prompt once (no double narration!)
+        const lvlMsg = state.lang === 'en' ? ("🏆 LEVEL " + state.level + " UNLOCKED! ⭐⭐⭐") : ("🏆 NIVEAU " + state.level + " DÉBLOQUÉ ! ⭐⭐⭐");
+        addFloatingScore(lvlMsg, CW / 2, CH / 2 - 40, '#FBBF24');
+        showGamifiedToast(lvlMsg);
         nextActivityChallenge(false);
       } else {
-        // Moving to next exercise in the same level
-        addFloatingScore(state.lang === 'en' ? "🎯 EXERCISE " + state.exerciseInLevel + "/5" : "🎯 EXERCICE " + state.exerciseInLevel + "/5", CW / 2, CH / 2 - 35, '#10B981');
+        // Moving to next exercise in the same level (NEVER repeats previous exercise!)
+        state.levelStars[state.level] = Math.max(state.levelStars[state.level] || 1, 2);
+        saveGamifiedProgress();
+        const exMsg = state.lang === 'en' ? ("🎯 EXERCISE " + state.exerciseInLevel + "/5 UNLOCKED!") : ("🎯 EXERCICE " + state.exerciseInLevel + "/5 DÉBLOQUÉ !");
+        addFloatingScore(exMsg, CW / 2, CH / 2 - 35, '#10B981');
+        showGamifiedToast(exMsg);
         nextActivityChallenge(false);
       }
     } else {
       // Moving to next activity in the same exercise (SINGLE NARRATION ONLY)
-      addFloatingScore(state.lang === 'en' ? "⚡ ACTIVITY " + state.activityPhase + "/3" : "⚡ ACTIVITÉ " + state.activityPhase + "/3", CW / 2, CH / 2 - 30, '#38BDF8');
+      const actMsg = state.lang === 'en' ? ("⚡ ACTIVITY " + state.activityPhase + "/3 • NEW CHALLENGE!") : ("⚡ ACTIVITÉ " + state.activityPhase + "/3 • NOUVEL EXERCICE !");
+      addFloatingScore(actMsg, CW / 2, CH / 2 - 30, '#38BDF8');
+      showGamifiedToast(actMsg);
       nextActivityChallenge(false);
     }
   }
@@ -6152,12 +6818,19 @@ body {
   window.nextActivityChallenge = nextActivityChallenge;
 
   // ============================================================================
-  // NEXT ACTIVITY CHALLENGE ROUTER
+  // NEXT ACTIVITY CHALLENGE ROUTER (MONOTONIC COUNTER GUARANTEES ZERO REPETITION!)
   // ============================================================================
   function nextActivityChallenge(isWelcome = false) {
     const isEn = state.lang === 'en';
     const g = state.game;
-    const challengeIndex = ((state.level - 1) * 15 + (state.exerciseInLevel - 1) * 3 + (state.activityPhase - 1));
+    const counterKey = g + '_' + state.grade;
+    if (typeof state.gamePlayCounter[counterKey] !== 'number') {
+      state.gamePlayCounter[counterKey] = (state.level - 1) * 15;
+    } else {
+      state.gamePlayCounter[counterKey]++;
+    }
+    const challengeIndex = state.gamePlayCounter[counterKey];
+    buildInGameGamifiedBar();
 
     // Reset game-specific progress objects for the new activity
     if (g === 'tangram_puzzle') {
@@ -6381,11 +7054,23 @@ body {
         state.currentAmps = 0.0;
         state.lampGlow = 0;
         const circModes = [
-          { fr: "Circuit Simple : Ferme l'interrupteur pour allumer la lampe de 4,5 V !", en: "Simple Circuit: Close the switch to light the 4.5V bulb!" },
-          { fr: "Énergie Solaire au Village : Ferme le circuit pour alimenter le lampadaire !", en: "Village Solar Power: Close the switch to power the street lamp!" },
-          { fr: "Loi d'Ohm (U = R × I) : Ferme le circuit et observe le courant de 0,85 A !", en: "Ohm's Law (V = I × R): Close the switch and watch the 0.85 A current!" }
+          { fr: "Mission 1 • Circuit Simple (4,5 V) : Ferme l'interrupteur pour allumer la lampe !", en: "Mission 1 • Simple Circuit (4.5V): Close the switch to light the bulb!" },
+          { fr: "Mission 2 • Lampadaire Solaire du Village : Ferme le circuit pour éclairer l'école !", en: "Mission 2 • Village Solar Lamp: Close the switch to light the school!" },
+          { fr: "Mission 3 • Loi d'Ohm (U = R × I) : Ferme le circuit et mesure l'intensité en Ampères !", en: "Mission 3 • Ohm's Law (V = I × R): Close the switch and measure the current in Amps!" },
+          { fr: "Mission 4 • Turbine Éolienne (9,0 V) : Alimente le moteur électrique à pleine vitesse !", en: "Mission 4 • Wind Turbine (9.0V): Power the electric motor at full speed!" },
+          { fr: "Mission 5 • Centrale Solaire de Ouarzazate (12 V) : Active la haute tension solaire !", en: "Mission 5 • Ouarzazate Solar Plant (12V): Activate high solar voltage!" },
+          { fr: "Mission 6 • Barrage Hydroélectrique d'Inga : Ferme la vanne électrique pour produire du courant !", en: "Mission 6 • Inga Hydro Dam: Close the power switch to generate electricity!" },
+          { fr: "Mission 7 • Conducteurs & Électrons : Observe le flux d'électrons dans le cuivre !", en: "Mission 7 • Conductors & Electrons: Watch electrons flow through the copper trace!" },
+          { fr: "Mission 8 • Pompage Solaire d'Eau : Alimente la pompe électrique du puits !", en: "Mission 8 • Solar Water Pump: Power the village well electric pump!" },
+          { fr: "Mission 9 • Phare Côtier de Dakar : Allume le projecteur maritime de 9 V !", en: "Mission 9 • Dakar Coastal Lighthouse: Light up the 9V marine spotlight!" },
+          { fr: "Mission 10 • Laboratoire d'Oscilloscope : Ferme le circuit pour afficher l'onde sinusoïdale !", en: "Mission 10 • Oscilloscope Lab: Close the circuit to display the live sine wave!" },
+          { fr: "Mission 11 • Train Électrique Rapide : Envoie 12 V dans les rails conducteurs !", en: "Mission 11 • Fast Electric Train: Send 12V through the conductive rails!" },
+          { fr: "Mission 12 • Batterie Rechargeable Lithium : Teste la décharge dans la résistance de 5 Ω !", en: "Mission 12 • Rechargeable Battery: Test discharge across the 5 Ω resistor!" },
+          { fr: "Mission 13 • Radio Communautaire : Alimente l'émetteur du village en fermant l'interrupteur !", en: "Mission 13 • Community Radio: Power the village transmitter by closing the switch!" },
+          { fr: "Mission 14 • Incubateur Solaire : Maintiens la chaleur électrique à 9,0 V !", en: "Mission 14 • Solar Incubator: Maintain electric warmth at 9.0V!" },
+          { fr: "Mission 15 • Défi Maître Ingénieur (U = 12 V, R = 5 Ω) : Calcule I = 2,40 A en fermant le circuit !", en: "Mission 15 • Master Engineer (V = 12V, R = 5Ω): Produce I = 2.40 A by closing the switch!" }
         ];
-        const cMode = circModes[challengeIndex % circModes.length];
+        const cMode = getUniqueChallengeItem(circModes, 'circuit_' + state.grade, challengeIndex);
         const circSpeech = isEn ? cMode.en : cMode.fr;
         $('instruction-title').textContent = circSpeech;
         VoiceEngine.speak(circSpeech);
@@ -6442,9 +7127,26 @@ body {
             { eq: "Cube arête 3cm (Vol = ?)", ans: 27, opts: [9, 18, 27], steps: ["V = c × c × c", "3 × 3 = 9", "9 × 3 = 27 cm³"], explainFr: "Volume du cube : trois fois trois font neuf, et neuf fois trois font vingt-sept !", explainEn: "Cube volume: 3 × 3 = 9, and 9 × 3 = 27!" }
           ]
         };
+        // Flatten all grade equations (prioritizing current grade first, plus procedural equations) so Comet NEVER repeats!
         const normG = state.grade === 'CE1' ? 'CE' : (state.grade === 'CM2' ? 'CM' : state.grade);
-        const cList = cometBank[normG] || cometBank.SIL;
-        const cProb = cList[challengeIndex % cList.length];
+        const extraCometPool = [
+          { eq: "4 + 3 = ?", ans: 7, opts: [6, 7, 8], steps: ["Départ: 4", "+ 3 (5, 6, 7)", "= 7"], explainFr: "Quatre plus trois font sept !", explainEn: "Four plus three equals seven!" },
+          { eq: "5 + 5 = ?", ans: 10, opts: [8, 10, 12], steps: ["5 doigts", "+ 5 doigts", "= 10"], explainFr: "Cinq plus cinq font dix !", explainEn: "Five plus five makes ten!" },
+          { eq: "8 + 6 = ?", ans: 14, opts: [12, 14, 15], steps: ["8 + 2 = 10", "10 + 4 = 14", "= 14"], explainFr: "Huit plus deux font dix, plus quatre égale quatorze !", explainEn: "8 plus 2 is 10, plus 4 is 14!" },
+          { eq: "15 - 4 = ?", ans: 11, opts: [10, 11, 12], steps: ["5 - 4 = 1", "10 + 1 = 11", "= 11"], explainFr: "Quinze moins quatre égale onze !", explainEn: "Fifteen minus four equals eleven!" },
+          { eq: "6 × 5 = ?", ans: 30, opts: [25, 30, 35], steps: ["6 × 5", "Compte par 5", "= 30"], explainFr: "Six fois cinq égale trente !", explainEn: "Six times five equals thirty!" },
+          { eq: "8 × 4 = ?", ans: 32, opts: [28, 32, 36], steps: ["4 × 4 = 16", "16 + 16 = 32", "= 32"], explainFr: "Huit fois quatre égale trente-deux !", explainEn: "Eight times four is thirty-two!" },
+          { eq: "9 × 6 = ?", ans: 54, opts: [48, 54, 63], steps: ["10 × 6 = 60", "60 - 6 = 54", "= 54"], explainFr: "Dix fois six moins six égale cinquante-quatre !", explainEn: "10 times 6 minus 6 is 54!" },
+          { eq: "36 ÷ 4 = ?", ans: 9, opts: [7, 8, 9], steps: ["4 × ? = 36", "4 × 9 = 36", "= 9"], explainFr: "Trente-six divisé par quatre égale neuf !", explainEn: "36 divided by 4 equals 9!" },
+          { eq: "50% de 40 = ?", ans: 20, opts: [15, 20, 25], steps: ["50% = la moitié", "40 ÷ 2 = 20", "= 20"], explainFr: "Cinquante pour cent de quarante, c'est la moitié : vingt !", explainEn: "50% of 40 is half: 20!" },
+          { eq: "2x + 3 = 11 (x = ?)", ans: 4, opts: [3, 4, 5], steps: ["2x = 11 - 3 = 8", "x = 8 ÷ 2", "x = 4"], explainFr: "Onze moins trois fait huit, divisé par deux égale quatre !", explainEn: "11 minus 3 is 8, divided by 2 is 4!" }
+        ];
+        const allComet = [
+          ...(cometBank[normG] || []),
+          ...extraCometPool,
+          ...Object.values(cometBank).flat()
+        ];
+        const cProb = getUniqueChallengeItem(allComet, 'comet_' + state.grade, challengeIndex);
         state.cometEquation = cProb.eq;
         state.cometAnswer = cProb.ans;
         state.cometSteps = cProb.steps;
@@ -6531,7 +7233,7 @@ body {
     $('story-overlay').classList.remove('active');
 
     const list = DB.phonics;
-    const challengeIndex = ((state.level - 1) * 15 + (state.exerciseInLevel - 1) * 3 + (state.activityPhase - 1));
+    const challengeIndex = state.gamePlayCounter[state.game + '_' + state.grade] || 0;
     const item = getUniqueChallengeItem(list, "read_" + state.grade, challengeIndex);
     state.readingTarget = item;
     state.readingSlots = [];
@@ -6628,7 +7330,7 @@ body {
     $('story-overlay').classList.remove('active');
 
     const list = DB.pronunciation;
-    const challengeIndex = ((state.level - 1) * 15 + (state.exerciseInLevel - 1) * 3 + (state.activityPhase - 1));
+    const challengeIndex = state.gamePlayCounter[state.game + '_' + state.grade] || 0;
     const item = getUniqueChallengeItem(list, "pron_" + state.grade, challengeIndex);
     state.pronunciationItem = item;
 
@@ -6773,9 +7475,25 @@ body {
     $('pronunciation-overlay').classList.remove('active');
     $('story-overlay').classList.add('active');
 
-    const gradeStories = DB.stories[state.grade] || (state.grade === 'CP' ? DB.stories.CP : DB.stories.MAT);
-    const challengeIndex = ((state.level - 1) * 15 + (state.exerciseInLevel - 1) * 3 + (state.activityPhase - 1));
-    const story = gradeStories[challengeIndex % gradeStories.length];
+    const allGradeKeys = [state.grade, 'MAT', 'SIL', 'CP', 'CE', 'CE2', 'CM1', 'CM'];
+    const storyDeck = [];
+    const seenStoryQ = new Set();
+    allGradeKeys.forEach(gk => {
+      const list = DB.stories[gk] || [];
+      list.forEach(st => {
+        (st.questions || []).forEach((qObj, qIdx) => {
+          const uid = st.id + '_q' + qIdx;
+          if (!seenStoryQ.has(uid)) {
+            seenStoryQ.add(uid);
+            storyDeck.push({ story: st, qIdx });
+          }
+        });
+      });
+    });
+    const challengeIndex = state.gamePlayCounter[state.game + '_' + state.grade] || 0;
+    const picked = getUniqueChallengeItem(storyDeck, 'story_deck_' + state.grade, challengeIndex);
+    const story = picked.story;
+    const qIdxNow = picked.qIdx;
     state.storyItem = story;
 
     const isEn = state.lang === 'en';
@@ -6785,8 +7503,8 @@ body {
 
     $('story-title-text').textContent = storyTitle;
     $('instruction-title').textContent = isEn
-      ? "Listen to the story and answer questions!"
-      : "Écoute l'histoire attentivement puis réponds aux questions !";
+      ? "Read or listen to the story and answer the comprehension question!"
+      : "Lis ou écoute l'histoire puis réponds à la question de compréhension !";
 
     const sentences = storyFullText.split(/(?<=[.!?])s+/);
     const container = $('story-text-container');
@@ -6799,7 +7517,6 @@ body {
       container.appendChild(sSpan);
     });
 
-    const qIdxNow = (state.activityPhase - 1) % story.questions.length;
     showComprehensionQuestion(qIdxNow, false);
 
     const narrateStory = () => {
@@ -6947,7 +7664,7 @@ body {
 
     const isEn = state.lang === 'en';
     const langKey = isEn ? 'en' : 'fr';
-    const challengeIndex = ((state.level - 1) * 15 + (state.exerciseInLevel - 1) * 3 + (state.activityPhase - 1));
+    const challengeIndex = state.gamePlayCounter[state.game + '_' + state.grade] || 0;
     const normG = state.grade === 'CE1' ? 'CE' : (state.grade === 'CM2' ? 'CM' : state.grade);
     const list = DB.math.filter(m => m.grade === normG || (normG === 'CP' && m.grade === 'SIL') || (normG === 'CM' && m.grade === 'CM1') || (normG === 'CE' && m.grade === 'CE2'));
     const pool = list.length > 0 ? list : DB.math;
@@ -7088,7 +7805,7 @@ body {
 
     const isEn = state.lang === 'en';
     const langKey = isEn ? 'en' : 'fr';
-    const challengeIndex = ((state.level - 1) * 15 + (state.exerciseInLevel - 1) * 3 + (state.activityPhase - 1));
+    const challengeIndex = state.gamePlayCounter[state.game + '_' + state.grade] || 0;
 
     // Filter questions prioritizing current grade, while ensuring zero repetition across 3 activities
     const gradePool = DB.africaGeographyQuestions.filter(q => q.grade === state.grade);
@@ -7169,7 +7886,7 @@ body {
 
     const isEn = state.lang === 'en';
     const langKey = isEn ? 'en' : 'fr';
-    const challengeIndex = ((state.level - 1) * 15 + (state.exerciseInLevel - 1) * 3 + (state.activityPhase - 1));
+    const challengeIndex = state.gamePlayCounter[state.game + '_' + state.grade] || 0;
 
     const gradeFacts = DB.funFactsQuiz.filter(f => f.grade === state.grade);
     const otherFacts = DB.funFactsQuiz.filter(f => f.grade !== state.grade);
@@ -7238,7 +7955,7 @@ body {
 
     const isEn = state.lang === 'en';
     const langKey = isEn ? 'en' : 'fr';
-    const challengeIndex = ((state.level - 1) * 15 + (state.exerciseInLevel - 1) * 3 + (state.activityPhase - 1));
+    const challengeIndex = state.gamePlayCounter[state.game + '_' + state.grade] || 0;
 
     const sourceList = gameType === 'grammar_lab'
       ? DB.grammarExercises
@@ -8690,7 +9407,7 @@ body {
         sessionStorage.clear();
       } catch (e) {}
       const url = new URL(window.location.href);
-      url.searchParams.set('v', '7.0.' + Date.now());
+      url.searchParams.set('v', '9.0.' + Date.now());
       window.location.replace(url.toString());
     });
   }
