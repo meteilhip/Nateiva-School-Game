@@ -1,0 +1,26 @@
+name: nateiva-school-game
+
+services:
+  web:
+    image: nginx:1.29-alpine
+    container_name: nateiva-school-game-web
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:${GAME_PORT:-8091}:80"
+    volumes:
+      - ../../public:/usr/share/nginx/html:ro
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf:ro
+    networks:
+      - nateiva-school-game-private
+    healthcheck:
+      test: ["CMD-SHELL", "wget -q -O /dev/null http://127.0.0.1/arcade.html || exit 1"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+    security_opt:
+      - no-new-privileges:true
+
+networks:
+  nateiva-school-game-private:
+    name: nateiva-school-game-private
+    driver: bridge

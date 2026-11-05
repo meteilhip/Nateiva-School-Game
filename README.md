@@ -8,6 +8,7 @@
 - **GitHub Repository:** [https://github.com/meteilhip/Nateiva-School-Game](https://github.com/meteilhip/Nateiva-School-Game)
 - **Vercel Project:** [https://vercel.com/nateiva-s-projects/nateiva-school-game](https://vercel.com/nateiva-s-projects/nateiva-school-game)
 - **Live Production App:** [https://nateiva-school-game.vercel.app](https://nateiva-school-game.vercel.app)
+- **OVH VPS target:** [https://vps-6964d2a4.vps.ovh.us/school-game/](https://vps-6964d2a4.vps.ovh.us/school-game/) (GitHub Actions deployment is gated until the repository's OVH secrets are configured)
 
 ## ✨ Key Modules & Features
 - **📖 Lecture & Syllabes (Reading & Phonics):** Interactive syllable decomposition and word building.

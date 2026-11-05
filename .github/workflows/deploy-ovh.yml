@@ -1,0 +1,91 @@
+name: Deploy Nateiva School Game to OVH
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: nateiva-school-game-ovh-production
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    if: ${{ vars.OVH_DEPLOY_ENABLED == 'true' }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out the GitHub revision
+        uses: actions/checkout@v4
+
+      - name: Prepare the dedicated SSH identity
+        env:
+          OVH_SSH_PRIVATE_KEY: ${{ secrets.OVH_SSH_PRIVATE_KEY }}
+          OVH_SSH_KNOWN_HOSTS: ${{ secrets.OVH_SSH_KNOWN_HOSTS }}
+        run: |
+          set -euo pipefail
+          test -n "$OVH_SSH_PRIVATE_KEY" || { echo "Missing OVH_SSH_PRIVATE_KEY repository secret" >&2; exit 1; }
+          test -n "$OVH_SSH_KNOWN_HOSTS" || { echo "Missing OVH_SSH_KNOWN_HOSTS repository secret" >&2; exit 1; }
+          install -m 700 -d "$RUNNER_TEMP/nateiva-school-game-ssh"
+          printf '%s\n' "$OVH_SSH_PRIVATE_KEY" > "$RUNNER_TEMP/nateiva-school-game-ssh/id_ed25519"
+          printf '%s\n' "$OVH_SSH_KNOWN_HOSTS" > "$RUNNER_TEMP/nateiva-school-game-ssh/known_hosts"
+          chmod 600 "$RUNNER_TEMP/nateiva-school-game-ssh/id_ed25519" "$RUNNER_TEMP/nateiva-school-game-ssh/known_hosts"
+
+      - name: Upload the GitHub revision to the isolated game directory
+        env:
+          OVH_SSH_HOST: ${{ secrets.OVH_SSH_HOST }}
+          OVH_SSH_USER: ${{ secrets.OVH_SSH_USER }}
+        run: |
+          set -euo pipefail
+          test -n "$OVH_SSH_HOST" || { echo "Missing OVH_SSH_HOST repository secret" >&2; exit 1; }
+          test -n "$OVH_SSH_USER" || { echo "Missing OVH_SSH_USER repository secret" >&2; exit 1; }
+          SSH_KEY="$RUNNER_TEMP/nateiva-school-game-ssh/id_ed25519"
+          KNOWN_HOSTS="$RUNNER_TEMP/nateiva-school-game-ssh/known_hosts"
+          SSH_TARGET="$OVH_SSH_USER@$OVH_SSH_HOST"
+          SSH_OPTS="-i $SSH_KEY -o IdentitiesOnly=yes -o UserKnownHostsFile=$KNOWN_HOSTS -o StrictHostKeyChecking=yes"
+          ssh $SSH_OPTS "$SSH_TARGET" 'install -d /opt/nateiva-school-game/public /opt/nateiva-school-game/ops/ovh-school-game'
+          export RSYNC_RSH="ssh $SSH_OPTS"
+          rsync -az --delete ./public/ "$SSH_TARGET:/opt/nateiva-school-game/public/"
+          rsync -az --delete --exclude='.env.production' ./ops/ovh-school-game/ "$SSH_TARGET:/opt/nateiva-school-game/ops/ovh-school-game/"
+
+      - name: Start the isolated game service and install its Caddy route
+        env:
+          OVH_SSH_HOST: ${{ secrets.OVH_SSH_HOST }}
+          OVH_SSH_USER: ${{ secrets.OVH_SSH_USER }}
+        run: |
+          set -euo pipefail
+          SSH_KEY="$RUNNER_TEMP/nateiva-school-game-ssh/id_ed25519"
+          KNOWN_HOSTS="$RUNNER_TEMP/nateiva-school-game-ssh/known_hosts"
+          ssh -i "$SSH_KEY" -o IdentitiesOnly=yes -o UserKnownHostsFile="$KNOWN_HOSTS" -o StrictHostKeyChecking=yes "$OVH_SSH_USER@$OVH_SSH_HOST" 'bash -se' <<'REMOTE'
+          set -euo pipefail
+          APP_ROOT=/opt/nateiva-school-game
+          OPS_DIR="$APP_ROOT/ops/ovh-school-game"
+          ENV_FILE="$OPS_DIR/.env.production"
+          if [ ! -f "$ENV_FILE" ]; then
+            printf 'APP_ENV=production\nGAME_PORT=8091\n' > "$ENV_FILE"
+            chmod 600 "$ENV_FILE"
+          fi
+          cd "$OPS_DIR"
+          docker compose --project-name nateiva-school-game --env-file .env.production -f compose.yaml pull
+          docker compose --project-name nateiva-school-game --env-file .env.production -f compose.yaml up -d
+          docker compose --project-name nateiva-school-game --env-file .env.production -f compose.yaml ps
+
+          CADDY_ROUTE=/etc/caddy/nateiva-school-game.caddy
+          CADDYFILE=/etc/caddy/Caddyfile
+          sudo install -m 0644 "$OPS_DIR/nateiva-school-game.caddy" "$CADDY_ROUTE"
+          if ! sudo grep -Fqx '    import /etc/caddy/nateiva-school-game.caddy' "$CADDYFILE"; then
+            sudo cp -a "$CADDYFILE" "$CADDYFILE.nateiva-school-game.bak"
+            sudo sed -i '/^    reverse_proxy 127\.0\.0\.1:5101$/i\    import /etc/caddy/nateiva-school-game.caddy' "$CADDYFILE"
+          fi
+          if ! sudo caddy validate --config "$CADDYFILE"; then
+            if [ -f "$CADDYFILE.nateiva-school-game.bak" ]; then
+              sudo cp "$CADDYFILE.nateiva-school-game.bak" "$CADDYFILE"
+            fi
+            exit 1
+          fi
+          sudo systemctl reload caddy
+          curl --fail --silent --show-error http://127.0.0.1:8091/arcade.html >/dev/null
+          curl --fail --silent --show-error https://vps-6964d2a4.vps.ovh.us/school-game/arcade.html >/dev/null
+          REMOTE

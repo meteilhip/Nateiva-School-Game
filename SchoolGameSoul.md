@@ -20,7 +20,7 @@
 ---
 
 ## 2. Canonical Repository & Deployment Pipeline (Non-Negotiable)
-All code changes, features, and assets in **Nateiva School Game** MUST be pushed and deployed exclusively to:
+All code changes, features, and assets in **Nateiva School Game** MUST be committed to GitHub `main`. The same revision is deployed to Vercel and mirrored to the isolated Nateiva School Game environment on the OVH VPS:
 
 1. **GitHub Repository (`origin`):**
    - **URL:** [https://github.com/meteilhip/Nateiva-School-Game](https://github.com/meteilhip/Nateiva-School-Game)
@@ -34,6 +34,17 @@ All code changes, features, and assets in **Nateiva School Game** MUST be pushed
    - **Vercel Scope / Team:** `nateiva-s-projects` (`team_xu7HitbK8IJQQ7zXqCoKnwsN`)
    - **Vercel Project ID:** `prj_VCAJzG3xRnpNQPNKIF2zKigTrQqe` (`nateiva-school-game`)
    - **Deploy Command:** `vercel --prod --yes`
+
+3. **OVH VPS Application Environment:**
+   - **VPS:** `vps-6964d2a4.vps.ovh.us` (`15.204.82.200`)
+   - **Deployment user:** `ubuntu`
+   - **Project root:** `/opt/nateiva-school-game`
+   - **Compose project/network/container prefix:** `nateiva-school-game`
+   - **Public route:** `https://vps-6964d2a4.vps.ovh.us/school-game/`
+   - **Private upstream:** `127.0.0.1:8091` behind the existing Caddy service
+   - **GitHub workflow:** `.github/workflows/deploy-ovh.yml`; it remains gated by repository variable `OVH_DEPLOY_ENABLED=true` until the repository secrets `OVH_SSH_HOST`, `OVH_SSH_USER`, `OVH_SSH_PRIVATE_KEY`, and `OVH_SSH_KNOWN_HOSTS` are configured.
+   - **Isolation:** keep the site files, Compose project, container, network, and environment file under `/opt/nateiva-school-game`; never reuse another app's container names, network, volume, or `.env.production` file. The Caddy path handler is the only shared edge-proxy entry.
+   - **No public container port:** the web container binds to loopback only; Caddy owns public ports 80 and 443.
 
 ---
 

@@ -1,22 +1,23 @@
 {
   "short_name": "EduKids",
   "name": "Nateiva EduKids — Jeux Éducatifs Cameroun",
-  "description": "Plateforme de jeux éducatifs animés 4-12 ans pour le Cameroun et la zone CEMAC. 100% hors-ligne.",
+  "description": "Plateforme de jeux éducatifs animés 2-12 ans pour le Cameroun et la zone CEMAC. 100% hors-ligne.",
   "icons": [
     {
-      "src": "/icons/icon-192.png",
+      "src": "./icons/icon-192.png",
       "type": "image/png",
       "sizes": "192x192",
       "purpose": "any maskable"
     },
     {
-      "src": "/icons/icon-512.png",
+      "src": "./icons/icon-512.png",
       "type": "image/png",
       "sizes": "512x512",
       "purpose": "any maskable"
     }
   ],
-  "start_url": "/",
+  "start_url": "./",
+  "scope": "./",
   "background_color": "#F8F5EC",
   "theme_color": "#D92F3A",
   "display": "standalone",

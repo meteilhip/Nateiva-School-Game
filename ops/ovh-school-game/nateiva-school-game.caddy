@@ -1,0 +1,6 @@
+@nateiva_school_game_root path /school-game
+redir @nateiva_school_game_root /school-game/ 308
+
+handle_path /school-game/* {
+	reverse_proxy 127.0.0.1:8091
+}

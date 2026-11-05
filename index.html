@@ -2334,28 +2334,28 @@ body {
 /* NATEIVA FIELD GUIDE — premium illustrated world */
 @font-face {
   font-family: 'Nunito';
-  src: url('/assets/fonts/nunito-regular.ttf') format('truetype');
+  src: url('./assets/fonts/nunito-regular.ttf') format('truetype');
   font-style: normal;
   font-weight: 400 600;
   font-display: swap;
 }
 @font-face {
   font-family: 'Nunito';
-  src: url('/assets/fonts/nunito-bold.ttf') format('truetype');
+  src: url('./assets/fonts/nunito-bold.ttf') format('truetype');
   font-style: normal;
   font-weight: 700 900;
   font-display: swap;
 }
 @font-face {
   font-family: 'Fredoka';
-  src: url('/assets/fonts/fredoka-regular.ttf') format('truetype');
+  src: url('./assets/fonts/fredoka-regular.ttf') format('truetype');
   font-style: normal;
   font-weight: 400 600;
   font-display: swap;
 }
 @font-face {
   font-family: 'Fredoka';
-  src: url('/assets/fonts/fredoka-bold.ttf') format('truetype');
+  src: url('./assets/fonts/fredoka-bold.ttf') format('truetype');
   font-style: normal;
   font-weight: 700;
   font-display: swap;
@@ -2488,7 +2488,7 @@ button, select { font: inherit; }
   inset: 0 0 auto;
   height: 142px;
   background-color: #F2EBDD;
-  background-image: url('/assets/images/nateiva-game-atlas.png');
+  background-image: url('./assets/images/nateiva-game-atlas.png');
   background-size: 300% 200%;
   background-position: 0 0;
   background-repeat: no-repeat;
@@ -2531,7 +2531,7 @@ button, select { font: inherit; }
 .mode-phase-kicker { color: var(--phase-color); }
 .mode-mascot-icon {
   width: 56px; height: 56px; flex: 0 0 56px; font-size: 0;
-  border-radius: 14px; background: url('/assets/images/nateiva-game-atlas.png') 50% 0 / 300% 200% no-repeat;
+  border-radius: 14px; background: url('./assets/images/nateiva-game-atlas.png') 50% 0 / 300% 200% no-repeat;
   border: 1px solid rgba(29,69,55,.12); box-shadow: 0 5px 14px rgba(23,59,50,.14);
 }
 .arcade-workspace[data-phase="2"] .mode-mascot-icon { background-position: 0 0; }
@@ -2574,7 +2574,7 @@ button, select { font: inherit; }
 @keyframes blockDrop { from { opacity: 0; transform: translateY(-18px) scale(.9); } to { opacity: 1; transform: translateY(0) scale(1); } }
 #activity-stepper .step-node > span:first-child {
   width: 39px; height: 39px; flex: 0 0 39px; font-size: 0;
-  border-radius: 11px; background: url('/assets/images/nateiva-game-atlas.png') 50% 0 / 300% 200% no-repeat;
+  border-radius: 11px; background: url('./assets/images/nateiva-game-atlas.png') 50% 0 / 300% 200% no-repeat;
   border: 1px solid rgba(29,69,55,.14);
 }
 #step-node-1 > span:first-child { background-position: 50% 0 !important; }
@@ -2629,7 +2629,7 @@ button, select { font: inherit; }
         <option value="en">🇬🇧 English (Studio Voice)</option>
       </select>
       <button class="btn-pill" id="btn-sound-toggle">🔊 Son</button>
-      <button class="version-cache-pill" id="btn-version-cache" title="Nateiva version 1.1.0 • Clear cache and reload">🚀 Nateiva v1.1.0 • 🔄 Recharger</button>
+      <button class="version-cache-pill" id="btn-version-cache" title="Nateiva version 1.1.1 • Clear cache and reload">🚀 Nateiva v1.1.1 • 🔄 Recharger</button>
     </div>
   </header>
 
@@ -2712,7 +2712,7 @@ button, select { font: inherit; }
       <p>Explore, joue et découvre — Explore, play and discover.</p>
       <button class="hero-start" id="hero-start" type="button">Explorer / Explore</button>
     </div>
-    <img class="adventure-hero-art" id="adventure-hero-art" src="/assets/images/nateiva-adventure-world.png" alt="Léo le lion et Kiki le singe découvrent la savane au lever du soleil" width="1670" height="932" fetchpriority="high">
+    <img class="adventure-hero-art" id="adventure-hero-art" src="./assets/images/nateiva-adventure-world.png" alt="Léo le lion et Kiki le singe découvrent la savane au lever du soleil" width="1670" height="932" fetchpriority="high">
   </section>
 
   <!-- CATEGORY FILTER TABS -->
@@ -6101,11 +6101,11 @@ button, select { font: inherit; }
       const myId = this.currentUtteranceId;
       const lang = state.lang === 'en' ? 'en' : 'fr';
       const cacheFile = this.getAudioCacheFilename(lang, text);
-      // Try static pre-generated studio neural MP3 first (works on Vercel & file:// & localhost), then dynamic /tts
+      // Try static pre-generated studio MP3 first, then a dynamic TTS endpoint relative to the current app path.
       const urls = [
         "public/audio_cache/" + cacheFile,
         "audio_cache/" + cacheFile,
-        "/tts?lang=" + lang + "&q=" + encodeURIComponent(text.trim())
+        "./tts?lang=" + lang + "&q=" + encodeURIComponent(text.trim())
       ];
       let urlIdx = 0;
 

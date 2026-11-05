@@ -1,8 +1,9 @@
 // public/sw.js - Nateiva EduKids Offline Service Worker
-const CACHE_NAME = 'nateiva-edukids-v1-1-0';
+const CACHE_NAME = 'nateiva-edukids-v1-1-1';
+const APP_ROOT = new URL('./', self.location.href).href;
 const PRECACHE_URLS = [
-  '/',
-  '/manifest.json'
+  APP_ROOT,
+  new URL('manifest.json', APP_ROOT).href
 ];
 
 self.addEventListener('install', (event) => {
@@ -61,7 +62,7 @@ self.addEventListener('fetch', (event) => {
       }).catch(() => {
         // Offline fallback for navigation
         if (request.mode === 'navigate') {
-          return caches.match('/');
+          return caches.match(APP_ROOT);
         }
       });
     })
