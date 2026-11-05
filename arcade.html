@@ -2,8 +2,8 @@
 <html lang="fr">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
-<meta name="theme-color" content="#E5252A">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#D92F3A">
 <title>Nateiva School Game • Arcade Éducative & Simulations Flottantes</title>
 <style>
 /* ==========================================================================
@@ -2331,6 +2331,274 @@ body {
     }
   }
 
+/* NATEIVA FIELD GUIDE — premium illustrated world */
+@font-face {
+  font-family: 'Nunito';
+  src: url('/assets/fonts/nunito-regular.ttf') format('truetype');
+  font-style: normal;
+  font-weight: 400 600;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Nunito';
+  src: url('/assets/fonts/nunito-bold.ttf') format('truetype');
+  font-style: normal;
+  font-weight: 700 900;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Fredoka';
+  src: url('/assets/fonts/fredoka-regular.ttf') format('truetype');
+  font-style: normal;
+  font-weight: 400 600;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Fredoka';
+  src: url('/assets/fonts/fredoka-bold.ttf') format('truetype');
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+}
+:root {
+  --nateiva-red: #D92F3A;
+  --nateiva-red-dark: #A9222D;
+  --nateiva-red-light: #FCE8E5;
+  --nateiva-black: #173B32;
+  --nateiva-black-soft: #31584B;
+  --nateiva-grey-dark: #496257;
+  --nateiva-grey-med: #80948A;
+  --nateiva-grey-light: #E5EAE2;
+  --nateiva-grey-bg: #F8F5EC;
+  --nateiva-white: #FFFEFA;
+  --coca-red: #D92F3A;
+  --coca-red-bright: #EF5156;
+  --coca-red-dark: #A9222D;
+  --coca-red-soft: #FCE8E5;
+  --coca-red-glow: rgba(217, 47, 58, 0.2);
+  --border-card: 1px solid rgba(29, 69, 55, 0.15);
+  --border-subtle: 1px solid rgba(29, 69, 55, 0.12);
+  --border-grey: 1px solid rgba(29, 69, 55, 0.15);
+  --border-glow: 1px solid var(--nateiva-red);
+  --shadow-apple: 0 18px 42px -22px rgba(28, 60, 47, 0.24), 0 3px 10px rgba(28, 60, 47, 0.05);
+  --shadow-hover: 0 22px 44px -20px rgba(28, 60, 47, 0.34), 0 8px 18px rgba(28, 60, 47, 0.09);
+  --shadow-pill: 0 3px 10px rgba(28, 60, 47, 0.06);
+  --shadow-coca-button: 0 9px 20px -9px rgba(169, 34, 45, 0.58), inset 0 1px 0 rgba(255,255,255,.35);
+}
+html { background: #F8F5EC; scroll-behavior: smooth; }
+body {
+  background: radial-gradient(ellipse at 88% 4%, #E8F1E4 0, transparent 32%), #F8F5EC;
+  color: var(--nateiva-black);
+  font-family: 'Nunito', 'Trebuchet MS', sans-serif;
+  padding: clamp(12px, 2.3vw, 30px);
+}
+button, select { font: inherit; }
+.shell { max-width: 1320px; gap: clamp(14px, 2vw, 22px); }
+.app-nav, .class-selector-banner, .level-selector-section, .playground-card {
+  background: rgba(255, 254, 250, .97);
+  border: 1px solid rgba(29, 69, 55, .14);
+  box-shadow: var(--shadow-apple);
+}
+.app-nav { border-radius: 22px; padding: 12px 18px; }
+.brand-icon { background: #173B32; border: 1px solid rgba(255,255,255,.18); }
+.brand-titles h1, .portal-titles h3, .level-selector-header h3,
+.instruction-box h3, .mode-phase-headline, .story-title-text, .funfact-question-title {
+  font-family: 'Fredoka', 'Nunito', sans-serif;
+}
+.brand-titles p, .portal-desc, .level-active-info, .count-pill { color: #496257; }
+.select-pill, .btn-pill, .tab-btn, .class-card-pill, .level-pill {
+  border-color: rgba(29, 69, 55, .17);
+  color: #173B32;
+}
+.class-selector-banner, .level-selector-section { border-radius: 22px; }
+.level-badge-pill, .meta-pill { background: #F1E7D3; color: #564126; border-color: #E4D1AF; }
+.level-pill.active, .tab-btn.active { background: #173B32; border-color: #173B32; color: #FFFDF5; }
+.adventure-hero {
+  min-height: clamp(250px, 29vw, 365px);
+  display: grid;
+  grid-template-columns: minmax(260px, .88fr) minmax(0, 1.12fr);
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  border-radius: 28px;
+  color: #FFF9E9;
+  background: #174539;
+  box-shadow: 0 24px 54px -28px rgba(23, 59, 50, .55);
+}
+.adventure-hero::before {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  background: linear-gradient(90deg, #173B32 0%, #173B32 34%, rgba(23,59,50,.92) 47%, rgba(23,59,50,.08) 77%);
+}
+.adventure-hero-copy {
+  z-index: 1;
+  align-self: center;
+  padding: clamp(24px, 4vw, 54px);
+  max-width: 550px;
+}
+.adventure-hero h2 {
+  max-width: 10ch;
+  font: 600 clamp(2rem, 4.4vw, 4rem)/.98 'Fredoka', 'Nunito', sans-serif;
+  letter-spacing: -.025em;
+  color: #FFF9E9;
+}
+.adventure-hero p {
+  max-width: 35ch;
+  margin-top: 15px;
+  color: #E7F1E6;
+  font-size: clamp(.98rem, 1.2vw, 1.1rem);
+  line-height: 1.48;
+  font-weight: 700;
+}
+.adventure-hero-art {
+  width: 100%; height: 100%; min-height: 250px;
+  object-fit: cover; object-position: 48% center;
+  position: absolute; inset: 0 0 0 auto; z-index: -2;
+  animation: fieldDrift 14s ease-in-out infinite alternate;
+}
+@keyframes fieldDrift { from { transform: scale(1.02) translateX(-.35%); } to { transform: scale(1.08) translateX(.45%); } }
+.hero-start {
+  min-height: 52px; margin-top: 22px;
+  padding: 0 23px; border: 1px solid rgba(255,255,255,.24);
+  border-radius: 16px; background: linear-gradient(135deg, #EF5156, #C92533);
+  color: #fff; font-weight: 900; font-size: 1rem; cursor: pointer;
+  box-shadow: 0 10px 22px -10px rgba(0,0,0,.65);
+  transition: transform .24s cubic-bezier(.2,.8,.2,1), box-shadow .24s ease;
+}
+.hero-start:hover { transform: translateY(-3px); box-shadow: 0 16px 26px -12px rgba(0,0,0,.65); }
+.category-tabs { padding: 2px 0 5px; scrollbar-color: #A9B9A8 transparent; }
+.tab-btn { background: #FFFDF7; border-radius: 13px; box-shadow: none; }
+.portals-grid { grid-template-columns: repeat(auto-fit, minmax(min(100%, 255px), 1fr)); gap: 17px; }
+.portal-card {
+  min-height: 334px;
+  padding: 157px 19px 18px;
+  gap: 11px;
+  border: 1px solid rgba(29,69,55,.15);
+  border-radius: 21px;
+  background: #FFFEFA;
+  box-shadow: 0 12px 28px -20px rgba(28,60,47,.36);
+  animation: none;
+  transition: transform .24s cubic-bezier(.2,.8,.2,1), box-shadow .24s ease, border-color .24s ease;
+}
+.portal-card::before {
+  content: '';
+  position: absolute;
+  inset: 0 0 auto;
+  height: 142px;
+  background-color: #F2EBDD;
+  background-image: url('/assets/images/nateiva-game-atlas.png');
+  background-size: 300% 200%;
+  background-position: 0 0;
+  background-repeat: no-repeat;
+}
+.portal-card[data-cat="read"]::before, .portal-card[data-cat="story"]::before,
+.portal-card[data-cat="grammar"]::before, .portal-card[data-cat="vocab"]::before { background-position: 50% 0; }
+.portal-card[data-cat="sci"]::before { background-position: 100% 0; }
+.portal-card[data-cat="geo"]::before, .portal-card[data-cat="quiz"]::before { background-position: 0 100%; }
+.portal-card[data-cat="voice"]::before { background-position: 50% 100%; }
+.portal-card[data-cat="puzzle"]::before { background-position: 100% 100%; }
+.portal-card[data-cat="arcade"]::before { background-position: 0 0; }
+.portal-card::after { content: ''; position: absolute; inset: 131px 0 auto; height: 28px; background: linear-gradient(180deg, transparent, #FFFEFA); pointer-events:none; }
+.portal-card > * { position: relative; z-index: 1; }
+.portal-card .card-top-glow { display: none; }
+.portal-card .portal-card-header { align-items: flex-start; }
+.portal-card .portal-badge { display: none; }
+.portal-card .card-rea-badge { display: none; }
+.portal-titles h3 { font-size: 1.32rem; line-height: 1.08; color: #173B32; }
+.portal-curriculum-tag { color: #8E5E22; font-size: .74rem; line-height: 1.3; }
+.portal-desc { display: block; font-size: .88rem; line-height: 1.42; font-weight: 650; }
+.portal-counts-badge-bar { border-top: 1px solid rgba(29,69,55,.13); margin-top: auto; padding-top: 11px; gap: 6px; }
+.count-pill { border-width: 1px; border-color: rgba(29,69,55,.14); background: #F5F2E9; font-size: .7rem; padding: 5px 9px; }
+.count-pill.black { color: #FFFDF5; background: #173B32; border-color: #173B32; }
+.portal-card:hover, .portal-card:focus-visible {
+  animation: none; transform: translateY(-5px);
+  box-shadow: 0 22px 40px -22px rgba(23,59,50,.42);
+  border-color: #D92F3A;
+}
+.portal-card:focus-visible, button:focus-visible, select:focus-visible, [role="button"]:focus-visible {
+  outline: 3px solid #D92F3A; outline-offset: 3px;
+}
+.arcade-workspace { --phase-color: #315F4D; }
+.arcade-workspace[data-phase="2"] { --phase-color: #A84B31; }
+.arcade-workspace[data-phase="3"] { --phase-color: #8E6B2D; }
+.arcade-hud { background: #173B32; border: 1px solid rgba(255,255,255,.12); }
+.level-meta-banner, .ingame-gamified-bar { background: #FFFDF7; border-color: rgba(29,69,55,.15); }
+.activity-mode-banner { background: #EAF1E5; color: #173B32; border: 1px solid rgba(29,69,55,.12); }
+.activity-mode-banner.mode-phase-2 { background: #FCE9D9; color: #693B24; }
+.activity-mode-banner.mode-phase-3 { background: #F2E8CE; color: #594423; }
+.mode-phase-kicker { color: var(--phase-color); }
+.mode-mascot-icon {
+  width: 56px; height: 56px; flex: 0 0 56px; font-size: 0;
+  border-radius: 14px; background: url('/assets/images/nateiva-game-atlas.png') 50% 0 / 300% 200% no-repeat;
+  border: 1px solid rgba(29,69,55,.12); box-shadow: 0 5px 14px rgba(23,59,50,.14);
+}
+.arcade-workspace[data-phase="2"] .mode-mascot-icon { background-position: 0 0; }
+.arcade-workspace[data-phase="3"] .mode-mascot-icon { background-position: 0 100%; }
+.mode-xp-pill { background: #FFFDF7; color: var(--phase-color); border: 1px solid rgba(29,69,55,.12); }
+.playground-card { border-radius: 24px; padding: clamp(12px, 2vw, 22px); }
+.instruction-header { gap: 12px; }
+.instruction-box { background: #F8F5EC; border-color: rgba(29,69,55,.13); }
+.instruction-box h3 { color: #173B32; }
+.btn-audio-speak, .btn-action { border-radius: 14px; }
+.answers-container { gap: 10px; }
+.btn-interactive, .btn-comp-option, .btn-mcq-choice, .btn-lang-choice {
+  min-height: 54px; border-radius: 15px; border-color: rgba(29,69,55,.16);
+  background: #FFFEFA; color: #173B32;
+  box-shadow: 0 5px 12px -8px rgba(23,59,50,.3);
+  transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease;
+}
+.btn-interactive:hover, .btn-comp-option:hover, .btn-mcq-choice:hover, .btn-lang-choice:hover {
+  transform: translateY(-2px); box-shadow: 0 10px 20px -13px rgba(23,59,50,.55); border-color: #D92F3A;
+}
+.answers-container[data-phase="2"]:not(.matrix-mode) .btn-interactive { animation: blockDrop .58s cubic-bezier(.2,.85,.28,1) both; }
+.answers-container[data-phase="3"]:not(.matrix-mode) .btn-interactive { background: #F2E8CE; border-color: #D8B976; }
+.answers-container.matrix-mode {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(108px, 1fr)); gap: 10px;
+  padding: 15px; border-radius: 18px; border: 1px solid rgba(242,210,145,.45);
+  background-color: #173B32;
+  background-image: linear-gradient(rgba(255,248,224,.12) 1px, transparent 1px), linear-gradient(90deg, rgba(255,248,224,.12) 1px, transparent 1px);
+  background-size: 34px 34px;
+}
+.answers-container.matrix-mode .btn-interactive {
+  min-height: 78px; padding: 13px; justify-content: center; text-align: center;
+  background: #F3D99C; border: 2px solid #FFF4D4; color: #173B32;
+  border-radius: 12px; font: 700 1.1rem/1.1 'Fredoka', 'Nunito', sans-serif;
+  animation: blockDrop .62s cubic-bezier(.2,.85,.28,1) both;
+}
+.answers-container.matrix-mode .btn-interactive:nth-child(2) { animation-delay: .08s; }
+.answers-container.matrix-mode .btn-interactive:nth-child(3) { animation-delay: .16s; }
+.answers-container.matrix-mode .btn-interactive:nth-child(4) { animation-delay: .24s; }
+.answers-container.mastery-mode .btn-interactive { background: #F2E8CE; border-color: #D8B976; font: 700 1.05rem/1.1 'Fredoka', 'Nunito', sans-serif; }
+@keyframes blockDrop { from { opacity: 0; transform: translateY(-18px) scale(.9); } to { opacity: 1; transform: translateY(0) scale(1); } }
+#activity-stepper .step-node > span:first-child {
+  width: 39px; height: 39px; flex: 0 0 39px; font-size: 0;
+  border-radius: 11px; background: url('/assets/images/nateiva-game-atlas.png') 50% 0 / 300% 200% no-repeat;
+  border: 1px solid rgba(29,69,55,.14);
+}
+#step-node-1 > span:first-child { background-position: 50% 0 !important; }
+#step-node-2 > span:first-child { background-position: 0 0 !important; }
+#step-node-3 > span:first-child { background-position: 0 100% !important; }
+.lang-quest-stage[data-phase="2"] .btn-lang-choice { animation: blockDrop .6s cubic-bezier(.2,.85,.28,1) both; }
+.lang-quest-stage[data-phase="3"] .btn-lang-choice { background: #F2E8CE; border-color: #D8B976; }
+.reading-stage, .pronunciation-stage, .story-stage, .geography-stage, .funfacts-stage, .lang-quest-stage {
+  border-radius: 22px; border-color: rgba(29,69,55,.14); background-color: #FFFEFA;
+}
+.tutor-panel, .khan-visual-explainer { border-color: rgba(29,69,55,.14); background: #F8F5EC; }
+.footer-credits { color: #65786D; }
+::selection { background: #F4C974; color: #173B32; }
+@media (max-width: 760px) {
+  .adventure-hero { min-height: 320px; grid-template-columns: 1fr; align-items: end; }
+  .adventure-hero::before { background: linear-gradient(0deg, rgba(23,59,50,.96) 0%, rgba(23,59,50,.84) 42%, rgba(23,59,50,.06) 100%); }
+  .adventure-hero-art { object-position: 43% center; }
+  .adventure-hero-copy { padding: 28px 22px; }
+  .adventure-hero h2 { max-width: 12ch; font-size: clamp(2rem, 9vw, 3rem); }
+  .portal-card { min-height: 320px; padding-top: 150px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
+}
 </style>
 </head>
 <body>
@@ -2361,7 +2629,7 @@ body {
         <option value="en">🇬🇧 English (Studio Voice)</option>
       </select>
       <button class="btn-pill" id="btn-sound-toggle">🔊 Son</button>
-      <button class="version-cache-pill" id="btn-version-cache" title="Version active • Cliquer pour vider le cache et recharger">🚀 v9.0 MOBILE-PRO • 🔄 Vider Cache</button>
+      <button class="version-cache-pill" id="btn-version-cache" title="Nateiva version 1.1.0 • Clear cache and reload">🚀 Nateiva v1.1.0 • 🔄 Recharger</button>
     </div>
   </header>
 
@@ -2436,6 +2704,15 @@ body {
     <div class="level-pills-track" id="level-pills-track">
       <!-- Generated via JS for 10 Levels -->
     </div>
+  </section>
+
+  <section class="adventure-hero" id="adventure-hero" aria-label="Nateiva School Game adventure">
+    <div class="adventure-hero-copy">
+      <h2>Le grand jeu commence ici</h2>
+      <p>Explore, joue et découvre — Explore, play and discover.</p>
+      <button class="hero-start" id="hero-start" type="button">Explorer / Explore</button>
+    </div>
+    <img class="adventure-hero-art" id="adventure-hero-art" src="/assets/images/nateiva-adventure-world.png" alt="Léo le lion et Kiki le singe découvrent la savane au lever du soleil" width="1670" height="932" fetchpriority="high">
   </section>
 
   <!-- CATEGORY FILTER TABS -->
@@ -2799,15 +3076,15 @@ body {
 
     <!-- 3-STEP INTERACTIVE ACTIVITY TABS (TAP TO CHOOSE ACTIVITY MANUALLY OR WIN TO AUTO-ADVANCE) -->
     <div class="activity-stepper" id="activity-stepper" title="Touche une activité pour la choisir manuellement ou gagne pour avancer automatiquement !">
-      <div class="step-node active" id="step-node-1" data-act="1">
+      <div class="step-node active" id="step-node-1" data-act="1" role="button" tabindex="0" aria-label="Activité 1 : découverte">
         <span>🧭</span> <span id="step-lbl-1">Act 1: Découverte</span>
       </div>
       <div class="step-connector" id="step-conn-1"></div>
-      <div class="step-node" id="step-node-2" data-act="2">
+      <div class="step-node" id="step-node-2" data-act="2" role="button" tabindex="0" aria-label="Activité 2 : arcade">
         <span>⚡</span> <span id="step-lbl-2">Act 2: Arcade</span>
       </div>
       <div class="step-connector" id="step-conn-2"></div>
-      <div class="step-node" id="step-node-3" data-act="3">
+      <div class="step-node" id="step-node-3" data-act="3" role="button" tabindex="0" aria-label="Activité 3 : maîtrise">
         <span>👑</span> <span id="step-lbl-3">Act 3: Boss</span>
       </div>
     </div>
@@ -2824,7 +3101,7 @@ body {
       <!-- V7.0 DYNAMIC 3-MODE CINEMATIC BANNER (CHANGES EVERY ACTIVITY 1/3 -> 2/3 -> 3/3) -->
       <div class="activity-mode-banner mode-phase-1" id="activity-mode-banner">
         <div class="mode-banner-left">
-          <span class="mode-mascot-icon" id="mode-mascot-icon">🦁</span>
+          <span class="mode-mascot-icon" id="mode-mascot-icon" aria-hidden="true"></span>
           <div class="mode-title-stack">
             <span class="mode-phase-kicker" id="mode-phase-kicker">ACTIVITÉ 1 SUR 3 • MODE EXPLORATION 3D</span>
             <span class="mode-phase-headline" id="mode-phase-headline">Découverte Interactive & Manipulation Directe</span>
@@ -2965,7 +3242,7 @@ body {
       <!-- V8.0 KHAN ACADEMY KIDS × PERSEUS VISUAL & SOUND STEP-BY-STEP EXPLAINER BAR -->
       <div class="khan-visual-explainer" id="khan-visual-explainer">
         <div class="khan-explainer-top">
-          <span class="khan-coach-badge" id="khan-coach-badge">🐻 KHAN KIDS STUDIO • EXPLICATION VISUELLE & SONORE PAS-À-PAS</span>
+          <span class="khan-coach-badge" id="khan-coach-badge">STUDIO NATEIVA • GUIDE VISUEL & AUDIO</span>
           <div class="khan-actions-row">
             <button class="btn-khan-explain" id="btn-khan-step-audio">🔊🎬 Voir & Écouter l'Explication Pas-à-Pas</button>
             <button class="btn-khan-manipulate" id="btn-khan-manipulate" style="display:none;">⚖️ Manipuler & Simplifier sur l'Écran 3D</button>
@@ -6664,12 +6941,16 @@ body {
     const g = state.game;
 
     banner.className = 'activity-mode-banner mode-phase-' + phase;
+    const workspace = $('arcade-workspace');
+    if (workspace) workspace.dataset.phase = String(phase);
+    const answerStage = $('answers-container');
+    if (answerStage) answerStage.dataset.phase = String(phase);
 
     const modeConfigs = {
       1: {
         icon: '🧭',
-        kickerFr: 'ACTIVITÉ 1 SUR 3 • MODE 1 : DÉCOUVERTE INTERACTIVE 3D',
-        kickerEn: 'ACTIVITY 1 OF 3 • MODE 1: 3D INTERACTIVE DISCOVERY',
+        kickerFr: 'ACTIVITÉ 1 SUR 3 • EXPLORER',
+        kickerEn: 'ACTIVITY 1 OF 3 • EXPLORE',
         headFr: g === 'maze_quest' ? 'Vue Isométrique 3D du Temple aux Flambeaux'
               : g === 'math_lab' ? 'Atelier Cubes 3D & Manipulation Tactile'
               : g === 'circuit' ? 'Montage Série 3D (4,5 V) & Flux d’Électrons'
@@ -6682,30 +6963,30 @@ body {
       },
       2: {
         icon: '⚡',
-        kickerFr: 'ACTIVITÉ 2 SUR 3 • MODE 2 : DÉFI ARCADE RAPIDE',
-        kickerEn: 'ACTIVITY 2 OF 3 • MODE 2: SPEED ARCADE CHALLENGE',
+        kickerFr: 'ACTIVITÉ 2 SUR 3 • JOUER',
+        kickerEn: 'ACTIVITY 2 OF 3 • PLAY',
         headFr: g === 'maze_quest' ? 'Vue Immersive 3D Raycast (Couloir 1re Personne + Radar)'
               : g === 'math_lab' ? 'Cylindre 3D des Fractions & Tube Décimal'
               : g === 'circuit' ? 'Réseau Solaire 3D (9,0 V) & Turbine Éolienne'
-              : 'Duel Éclair Chronométré • Cartes Dynamiques (x1.5 XP)',
+              : 'Duel éclair • Défis visuels (XP bonus)',
         headEn: g === 'maze_quest' ? 'First-Person 3D Raycast Corridor View + Radar'
               : g === 'math_lab' ? '3D Extruded Fraction Cylinder & Decimal Tube'
               : g === 'circuit' ? '3D Solar Grid (9.0V) & Wind Turbine'
-              : 'Timed Speed Arcade Duel • Dynamic Cards (1.5x XP)',
+              : 'Quick arcade round • Visual challenges (bonus XP)',
         xp: '🔥 +75 XP • Mode 2/3'
       },
       3: {
         icon: '👑',
-        kickerFr: 'ACTIVITÉ 3 SUR 3 • MODE 3 : DÉFI DU BOSS & MAÎTRISE',
-        kickerEn: 'ACTIVITY 3 OF 3 • MODE 3: MASTER BOSS CHALLENGE',
+        kickerFr: 'ACTIVITÉ 3 SUR 3 • MAÎTRISER',
+        kickerEn: 'ACTIVITY 3 OF 3 • MASTER',
         headFr: g === 'maze_quest' ? 'Citadelle Cyber-3D du Boss & Cristaux Turbo'
               : g === 'math_lab' ? 'Balance Algébrique 3D Holographique (Équilibre du Boss)'
               : g === 'circuit' ? 'Super-Labo Haute Tension (12 V) & Oscilloscope Loi d’Ohm'
-              : 'Grand Défi du Griot • Double Multiplicateur XP !',
+              : 'Grande quête • Défi de maîtrise',
         headEn: g === 'maze_quest' ? '3D Cyber-Citadel Boss Maze & Turbo Crystals'
               : g === 'math_lab' ? '3D Holographic Algebraic Balance Scale (Boss Round)'
               : g === 'circuit' ? '12V High-Voltage Super-Lab & Live Ohm’s Law Oscilloscope'
-              : 'Grand Master Boss Round • 2x XP Multiplier!',
+              : 'Grand quest • Mastery challenge',
         xp: '👑 +100 XP • BOSS 3/3'
       }
     };
@@ -6717,9 +6998,23 @@ body {
     if ($('mode-xp-pill')) $('mode-xp-pill').textContent = cfg.xp;
 
     // Also update the 3-step stepper labels so the student sees the 3 distinct modes!
-    if ($('step-lbl-1')) $('step-lbl-1').textContent = isEn ? '1. 3D Discovery' : '1. Découverte 3D';
-    if ($('step-lbl-2')) $('step-lbl-2').textContent = isEn ? '2. Speed Arcade' : '2. Duel Arcade';
-    if ($('step-lbl-3')) $('step-lbl-3').textContent = isEn ? '3. Boss Mastery 👑' : '3. Défi Boss 👑';
+    if ($('step-lbl-1')) $('step-lbl-1').textContent = isEn ? 'Explore' : 'Explorer';
+    if ($('step-lbl-2')) $('step-lbl-2').textContent = isEn ? 'Play' : 'Jouer';
+    if ($('step-lbl-3')) $('step-lbl-3').textContent = isEn ? 'Master' : 'Maîtriser';
+    const mascot = $('mode-mascot-icon');
+    if (mascot) {
+      mascot.textContent = '';
+      mascot.setAttribute('role', 'img');
+      mascot.setAttribute('aria-label', phase === 1 ? 'Illustration: reading discovery' : phase === 2 ? 'Illustration: math block game' : 'Illustration: Africa discovery');
+      mascot.removeAttribute('aria-hidden');
+    }
+    const activityLabels = isEn
+      ? ['Activity 1: Explore', 'Activity 2: Play', 'Activity 3: Master']
+      : ['Activité 1 : Explorer', 'Activité 2 : Jouer', 'Activité 3 : Maîtriser'];
+    activityLabels.forEach((label, index) => {
+      const node = $('step-node-' + (index + 1));
+      if (node) node.setAttribute('aria-label', label);
+    });
   }
 
   function buildInGameGamifiedBar() {
@@ -6821,6 +7116,8 @@ body {
   // NEXT ACTIVITY CHALLENGE ROUTER (MONOTONIC COUNTER GUARANTEES ZERO REPETITION!)
   // ============================================================================
   function nextActivityChallenge(isWelcome = false) {
+    const answerStage = $('answers-container');
+    if (answerStage) answerStage.classList.remove('matrix-mode', 'mastery-mode');
     const isEn = state.lang === 'en';
     const g = state.game;
     const counterKey = g + '_' + state.grade;
@@ -7704,8 +8001,8 @@ body {
     if (khanBox) {
       khanBox.classList.add('active');
       $('khan-coach-badge').textContent = isEn
-        ? '🐻 KHAN KIDS × PERSEUS STUDIO • INTERACTIVE VISUAL & SOUND EXPLANATION'
-        : '🐻 STUDIO KHAN KIDS × PERSEUS • EXPLICATION VISUELLE & SONORE INTERACTIVE';
+        ? 'NATEIVA DISCOVERY STUDIO • VISUAL & AUDIO GUIDE'
+        : 'STUDIO NATEIVA • GUIDE VISUEL & AUDIO';
       const steps = buildKhanMathSteps(item, isEn);
       const track = $('khan-steps-track');
       track.innerHTML = '';
@@ -7769,6 +8066,8 @@ body {
     }
 
     const answersBox = $('answers-container');
+    answersBox.classList.toggle('matrix-mode', state.activityPhase === 2);
+    answersBox.classList.toggle('mastery-mode', state.activityPhase === 3);
     answersBox.innerHTML = '';
     item.options.forEach(opt => {
       const btn = document.createElement('button');
@@ -8095,6 +8394,7 @@ body {
     state.lives = 3;
 
     $('portals-grid').style.display = 'none';
+    if ($('adventure-hero')) $('adventure-hero').style.display = 'none';
     if ($('class-selector-banner')) $('class-selector-banner').style.display = 'none';
     $('level-selector-section').style.display = 'none';
     $('category-tabs').style.display = 'none';
@@ -8127,6 +8427,7 @@ body {
     VoiceEngine.stop();
     $('arcade-workspace').classList.remove('active');
     $('portals-grid').style.display = 'grid';
+    if ($('adventure-hero')) $('adventure-hero').style.display = '';
     if ($('class-selector-banner')) $('class-selector-banner').style.display = 'flex';
     $('level-selector-section').style.display = 'flex';
     $('category-tabs').style.display = 'flex';
@@ -9350,6 +9651,16 @@ body {
     });
   });
 
+  if ($('hero-start')) $('hero-start').addEventListener('click', () => launchGame('maze_quest'));
+  document.querySelectorAll('.step-node[data-act]').forEach(node => {
+    node.addEventListener('keydown', event => {
+      if (event.key === 'Enter' || event.key === ' ') {
+        event.preventDefault();
+        node.click();
+      }
+    });
+  });
+
   // Top Home Buttons
   if ($('btn-back-hub')) $('btn-back-hub').addEventListener('click', returnToHub);
   if ($('btn-back-hub-top')) $('btn-back-hub-top').addEventListener('click', returnToHub);
@@ -9390,6 +9701,10 @@ body {
   $('lang-select').addEventListener('change', e => {
     state.lang = e.target.value;
     VoiceEngine.stop();
+    const heroArt = $('adventure-hero-art');
+    if (heroArt) heroArt.alt = state.lang === 'en'
+      ? 'Leo the lion and Kiki the monkey explore the savanna at sunrise'
+      : 'Léo le lion et Kiki le singe découvrent la savane au lever du soleil';
   });
 
   if ($('btn-version-cache')) {

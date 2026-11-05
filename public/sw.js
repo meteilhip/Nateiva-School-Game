@@ -1,5 +1,5 @@
 // public/sw.js - Nateiva EduKids Offline Service Worker
-const CACHE_NAME = 'nateiva-edukids-v1';
+const CACHE_NAME = 'nateiva-edukids-v1-1-0';
 const PRECACHE_URLS = [
   '/',
   '/manifest.json'
