@@ -2599,6 +2599,77 @@ button, select { font: inherit; }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
 }
+
+/* A separate illustrated adventure card and mastery track for every game. */
+.portal-card { min-height: 376px; padding-top: 208px; }
+.portal-card::before { height: 194px; background-size: 300% 200%; }
+.portal-card::after { inset-block-start: 178px; height: 34px; }
+.portal-card .portal-card-header { min-height: 52px; }
+.game-card-playline {
+  display: flex; align-items: center; gap: 8px; min-height: 34px;
+  color: #31584B; font: 800 .84rem/1.2 'Nunito', sans-serif;
+}
+.game-card-playline .playline-icon {
+  display: grid; place-items: center; width: 29px; height: 29px; flex: 0 0 29px;
+  border-radius: 10px; color: #7C4C1D; background: #F5E8CB; font-size: 16px;
+}
+.game-card-track {
+  position: absolute; z-index: 3; inset: 12px 12px auto auto;
+  display: flex; align-items: center; gap: 7px; min-height: 31px; padding: 4px 10px;
+  color: #fffdf5; background: linear-gradient(90deg, #31584B var(--track-progress, 0%), rgba(23,59,50,.94) var(--track-progress, 0%)); border: 1px solid rgba(255,255,255,.52);
+  border-radius: 11px; box-shadow: 0 5px 13px rgba(17,38,32,.25);
+  font: 900 .72rem/1 'Nunito', sans-serif; letter-spacing: .02em;
+}
+.game-card-track::before { content: '✦'; color: #F3D99C; font-size: 13px; }
+.portal-card[data-game="maze_quest"]::before,
+.portal-card[data-game="math_lab"]::before,
+.portal-card[data-game="comet"]::before,
+.portal-card[data-game="tangram_puzzle"]::before { animation: cardArtFloat 10s ease-in-out infinite alternate; }
+.portal-card[data-game="reading_lab"]::before,
+.portal-card[data-game="story_lab"]::before,
+.portal-card[data-game="vocabulary_lab"]::before,
+.portal-card[data-game="grammar_lab"]::before,
+.portal-card[data-game="conjugation_lab"]::before { animation: cardArtFloat 12s ease-in-out -4s infinite alternate; }
+.portal-card[data-game="chemistry"]::before,
+.portal-card[data-game="botany"]::before,
+.portal-card[data-game="density"]::before,
+.portal-card[data-game="circuit"]::before { animation: cardArtFloat 11s ease-in-out -2s infinite alternate; }
+@keyframes cardArtFloat { from { background-position-y: 1%; } to { background-position-y: 6%; } }
+.portal-card:focus-visible { outline: 3px solid #D92F3A; outline-offset: 4px; }
+.portal-card .portal-desc { max-width: 44ch; }
+@media (max-width: 760px) {
+  body { padding: max(10px, env(safe-area-inset-top)) 12px max(16px, env(safe-area-inset-bottom)); }
+  .portals-grid { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; gap: 12px !important; }
+  .portal-card {
+    min-width: 0; min-height: 292px !important; padding: 165px 12px 13px !important;
+    gap: 8px !important; border-radius: 18px !important;
+  }
+  .portal-card::before { height: 154px !important; }
+  .portal-card::after { inset-block-start: 139px !important; height: 27px !important; }
+  .portal-card .portal-card-header { display: block; min-height: 0; }
+  .portal-card .portal-titles h3 { font-size: clamp(.92rem, 4vw, 1.1rem) !important; line-height: 1.08; }
+  .portal-card .portal-curriculum-tag { display: none; }
+  .portal-card .portal-desc, .portal-card .portal-counts-badge-bar { display: none !important; }
+  .game-card-playline { min-height: 30px; gap: 6px; font-size: .74rem; line-height: 1.12; }
+  .game-card-playline .playline-icon { width: 26px; height: 26px; flex-basis: 26px; }
+  .game-card-track { inset: 9px 9px auto auto; min-height: 28px; padding: 4px 8px; font-size: .67rem; }
+  #level-selector-section { display: none !important; }
+  .class-selector-banner { margin-bottom: 0; }
+  .adventure-hero { min-height: 300px; }
+  .app-nav { align-items: flex-start; }
+  .nav-actions { gap: 7px; }
+  .version-cache-pill { display: none; }
+  .select-pill, .btn-pill { min-height: 44px; }
+  .btn-action, .btn-audio-speak, .btn-home-top, .dpad-btn, .btn-interactive, .btn-mcq-choice, .btn-comp-option { min-height: 48px; }
+}
+@media (max-width: 360px) {
+  .portal-card { min-height: 276px !important; padding-inline: 10px !important; }
+  .game-card-playline { font-size: .69rem; }
+}
+.level-selector-section { display: none !important; }
+@media (prefers-reduced-motion: reduce) {
+  .portal-card::before { animation: none !important; }
+}
 </style>
 </head>
 <body>
@@ -2629,7 +2700,7 @@ button, select { font: inherit; }
         <option value="en">🇬🇧 English (Studio Voice)</option>
       </select>
       <button class="btn-pill" id="btn-sound-toggle">🔊 Son</button>
-      <button class="version-cache-pill" id="btn-version-cache" title="Nateiva version 1.1.1 • Clear cache and reload">🚀 Nateiva v1.1.1 • 🔄 Recharger</button>
+      <button class="version-cache-pill" id="btn-version-cache" title="Nateiva version 1.2.0 • Clear cache and reload">🚀 Nateiva v1.2.0 • 🔄 Recharger</button>
     </div>
   </header>
 
@@ -6656,6 +6727,76 @@ button, select { font: inherit; }
     if (savedStars && typeof savedStars === 'object') Object.assign(state.levelStars, savedStars);
   } catch (e) {}
 
+  // Each game type keeps its own mastery path, by class. Progress survives a refresh.
+  const GAME_TRACKS_STORAGE_KEY = 'nateiva_game_tracks_v2';
+  state.learningTracks = {};
+  try {
+    const savedTracks = JSON.parse(localStorage.getItem(GAME_TRACKS_STORAGE_KEY) || '{}');
+    if (savedTracks && typeof savedTracks === 'object') state.learningTracks = savedTracks;
+  } catch (e) {}
+
+  const GAME_CARD_ACTIONS = {
+    maze_quest: { icon: '🧭', fr: 'Trace le chemin', en: 'Find the path' },
+    tangram_puzzle: { icon: '🧩', fr: 'Fais glisser les formes', en: 'Fit the shapes' },
+    math_lab: { icon: '🧱', fr: 'Construis la réponse', en: 'Build the answer' },
+    reading_lab: { icon: '🔤', fr: 'Relie son et image', en: 'Match sound & picture' },
+    pronunciation_lab: { icon: '🎤', fr: 'Écoute et répète', en: 'Listen & speak' },
+    story_lab: { icon: '🔎', fr: 'Cherche dans l’histoire', en: 'Discover the story' },
+    chemistry: { icon: '🧪', fr: 'Mélange et observe', en: 'Mix & discover' },
+    botany: { icon: '🌱', fr: 'Fais grandir', en: 'Grow a garden' },
+    density: { icon: '🌊', fr: 'Plonge et découvre', en: 'Drop & discover' },
+    circuit: { icon: '⚡', fr: 'Allume le circuit', en: 'Power the circuit' },
+    comet: { icon: '🚀', fr: 'Protège la fusée', en: 'Defend the rocket' },
+    africa_geography: { icon: '🗺️', fr: 'Explore le continent', en: 'Explore the continent' },
+    fun_facts_quiz: { icon: '🦜', fr: 'Repère la bonne image', en: 'Spot the answer' },
+    grammar_lab: { icon: '🪄', fr: 'Assemble la phrase', en: 'Build the sentence' },
+    vocabulary_lab: { icon: '🧺', fr: 'Ramasse les mots', en: 'Collect the words' },
+    conjugation_lab: { icon: '⏳', fr: 'Voyage dans le temps', en: 'Travel through time' }
+  };
+
+  function getGameTrack(gameKey = state.game, gradeCode = state.grade) {
+    const key = gradeCode + ':' + gameKey;
+    if (!state.learningTracks[key] || typeof state.learningTracks[key] !== 'object') {
+      state.learningTracks[key] = { level: 1, progress: 0, totalWins: 0, stars: { 1: 1 } };
+    }
+    const track = state.learningTracks[key];
+    track.level = Math.max(1, Math.min(state.totalLevels, Number(track.level) || 1));
+    track.progress = Math.max(0, Math.min(14, Number(track.progress) || 0));
+    track.totalWins = Math.max(0, Number(track.totalWins) || 0);
+    if (!track.stars || typeof track.stars !== 'object') track.stars = { 1: 1 };
+    return track;
+  }
+
+  function saveGameTracks() {
+    try { localStorage.setItem(GAME_TRACKS_STORAGE_KEY, JSON.stringify(state.learningTracks)); } catch (e) {}
+    saveGamifiedProgress();
+  }
+
+  function renderGameCardProgress() {
+    document.querySelectorAll('.portal-card[data-game]').forEach(card => {
+      const gameKey = card.getAttribute('data-game');
+      const track = getGameTrack(gameKey, state.grade);
+      let badge = card.querySelector('.game-card-track');
+      if (!badge) {
+        badge = document.createElement('span');
+        badge.className = 'game-card-track';
+        badge.setAttribute('aria-hidden', 'true');
+        card.appendChild(badge);
+      }
+      badge.textContent = (state.lang === 'en' ? 'LV ' : 'NIV ') + String(track.level).padStart(2, '0') + ' · ' + track.progress + '/15';
+      badge.style.setProperty('--track-progress', Math.round((track.progress / 15) * 100) + '%');
+      card.setAttribute('aria-label', (card.querySelector('h3')?.textContent || gameKey) + ' · ' + (state.lang === 'en' ? 'Level ' : 'Niveau ') + track.level + ' · ' + track.progress + '/15');
+      let playline = card.querySelector('.game-card-playline');
+      if (!playline) {
+        playline = document.createElement('span');
+        playline.className = 'game-card-playline';
+        card.querySelector('.portal-card-header')?.after(playline);
+      }
+      const action = GAME_CARD_ACTIONS[gameKey] || { icon: '✨', fr: 'Explore et découvre', en: 'Explore & discover' };
+      playline.innerHTML = '<span class="playline-icon" aria-hidden="true">' + action.icon + '</span><span>' + (state.lang === 'en' ? action.en : action.fr) + '</span>';
+    });
+  }
+
   function saveGamifiedProgress() {
     try {
       localStorage.setItem('nateiva_level_stars_v9', JSON.stringify(state.levelStars));
@@ -7019,18 +7160,26 @@ button, select { font: inherit; }
 
   function buildInGameGamifiedBar() {
     const pillsBox = $('ingame-lvl-pills');
+    const gameTrack = getGameTrack();
+    state.levelStars = gameTrack.stars;
     if (pillsBox) {
       pillsBox.innerHTML = '';
       for (let l = 1; l <= state.totalLevels; l++) {
         const b = document.createElement('button');
-        const stars = state.levelStars[l] || 0;
+        const stars = gameTrack.stars[l] || 0;
         b.className = 'ingame-lvl-chip' + (l === state.level ? ' active' : '') + (stars > 0 ? ' earned' : '');
         b.textContent = 'Niv ' + l + (stars > 0 ? ' ⭐' : '');
+        b.disabled = l > gameTrack.level;
         b.onclick = () => {
           state.level = l;
           state.selectedLevel = l;
+          gameTrack.level = l;
+          gameTrack.progress = 0;
+          state.levelStars = gameTrack.stars;
           state.exerciseInLevel = 1;
           state.activityPhase = 1;
+          saveGameTracks();
+          renderGameCardProgress();
           buildLevelPillsTrack();
           AudioEngine.playSnap();
           showGamifiedToast(state.lang === 'en' ? ('🎯 Level ' + l + ' Selected!') : ('🎯 Niveau ' + l + ' Sélectionné !'));
@@ -7066,6 +7215,9 @@ button, select { font: inherit; }
     spawn3DConfettiBurst();
     state.score++;
     state.combo++;
+    const gameTrack = getGameTrack();
+    gameTrack.totalWins = (gameTrack.totalWins || 0) + 1;
+    gameTrack.progress = Math.min(14, (gameTrack.progress || 0) + 1);
     AudioEngine.playSuccess();
     createExplosion(CW / 2, CH / 2, '#E5252A', 22);
 
@@ -7079,12 +7231,17 @@ button, select { font: inherit; }
 
       if (state.exerciseInLevel > state.totalExercisesPerLevel) {
         // Completed all 5 exercises of this level! Award 3 Stars & AUTOMATICALLY UNLOCK NEXT LEVEL!
-        state.levelStars[state.level] = 3;
+        const completedLevel = state.level;
+        gameTrack.stars[completedLevel] = 3;
+        gameTrack.level = Math.min(state.totalLevels, completedLevel + 1);
+        gameTrack.progress = 0;
         state.exerciseInLevel = 1;
-        state.level = Math.min(state.totalLevels, state.level + 1);
+        state.level = gameTrack.level;
         state.selectedLevel = state.level;
-        if (!state.levelStars[state.level]) state.levelStars[state.level] = 1;
-        saveGamifiedProgress();
+        state.levelStars = gameTrack.stars;
+        if (!gameTrack.stars[state.level]) gameTrack.stars[state.level] = 1;
+        saveGameTracks();
+        renderGameCardProgress();
         buildLevelPillsTrack();
         AudioEngine.playLevelUp();
         const lvlMsg = state.lang === 'en' ? ("🏆 LEVEL " + state.level + " UNLOCKED! ⭐⭐⭐") : ("🏆 NIVEAU " + state.level + " DÉBLOQUÉ ! ⭐⭐⭐");
@@ -7093,8 +7250,9 @@ button, select { font: inherit; }
         nextActivityChallenge(false);
       } else {
         // Moving to next exercise in the same level (NEVER repeats previous exercise!)
-        state.levelStars[state.level] = Math.max(state.levelStars[state.level] || 1, 2);
-        saveGamifiedProgress();
+        gameTrack.stars[state.level] = Math.max(gameTrack.stars[state.level] || 1, 2);
+        saveGameTracks();
+        renderGameCardProgress();
         const exMsg = state.lang === 'en' ? ("🎯 EXERCISE " + state.exerciseInLevel + "/5 UNLOCKED!") : ("🎯 EXERCICE " + state.exerciseInLevel + "/5 DÉBLOQUÉ !");
         addFloatingScore(exMsg, CW / 2, CH / 2 - 35, '#10B981');
         showGamifiedToast(exMsg);
@@ -7105,6 +7263,8 @@ button, select { font: inherit; }
       const actMsg = state.lang === 'en' ? ("⚡ ACTIVITY " + state.activityPhase + "/3 • NEW CHALLENGE!") : ("⚡ ACTIVITÉ " + state.activityPhase + "/3 • NOUVEL EXERCICE !");
       addFloatingScore(actMsg, CW / 2, CH / 2 - 30, '#38BDF8');
       showGamifiedToast(actMsg);
+      saveGameTracks();
+      renderGameCardProgress();
       nextActivityChallenge(false);
     }
   }
@@ -7122,7 +7282,7 @@ button, select { font: inherit; }
     const g = state.game;
     const counterKey = g + '_' + state.grade;
     if (typeof state.gamePlayCounter[counterKey] !== 'number') {
-      state.gamePlayCounter[counterKey] = (state.level - 1) * 15;
+      state.gamePlayCounter[counterKey] = getGameTrack(g, state.grade).totalWins || 0;
     } else {
       state.gamePlayCounter[counterKey]++;
     }
@@ -8364,6 +8524,7 @@ button, select { font: inherit; }
     document.querySelectorAll('.class-card-pill').forEach(btn => {
       btn.classList.toggle('active', btn.getAttribute('data-grade') === gradeCode);
     });
+    renderGameCardProgress();
 
     const meta = CLASS_CURRICULUM_META[gradeCode] || CLASS_CURRICULUM_META.MAT;
     const isEn = state.lang === 'en';
@@ -8389,6 +8550,10 @@ button, select { font: inherit; }
   // ============================================================================
   function launchGame(gameKey) {
     state.game = gameKey;
+    const gameTrack = getGameTrack(gameKey, state.grade);
+    state.level = gameTrack.level;
+    state.selectedLevel = gameTrack.level;
+    state.levelStars = gameTrack.stars;
     state.exerciseInLevel = 1;
     state.activityPhase = 1;
     state.lives = 3;
@@ -9697,10 +9862,12 @@ button, select { font: inherit; }
 
   // Initialize default class badge display without speaking on boot
   selectGradeClass(state.grade, false);
+  renderGameCardProgress();
 
   $('lang-select').addEventListener('change', e => {
     state.lang = e.target.value;
     VoiceEngine.stop();
+    renderGameCardProgress();
     const heroArt = $('adventure-hero-art');
     if (heroArt) heroArt.alt = state.lang === 'en'
       ? 'Leo the lion and Kiki the monkey explore the savanna at sunrise'

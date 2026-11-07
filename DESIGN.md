@@ -32,6 +32,8 @@ The home screen opens with Léo and Kiki in a Cameroonian savanna scene. Childre
 - Audio replay remains available beside task instructions. Preschool content stays audio-first.
 - Correct answers use motion, visual progress, and sound; incorrect answers invite another try.
 - Honor reduced-motion preferences and keep focus states visible.
+- The mobile library is a two-column illustrated shelf with one short action phrase per adventure and a per-game level/progress marker.
+- Every game owns its level track for each class; completing a level advances only that game and persists its progress.
 
 ## Game Art
 

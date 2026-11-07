@@ -2,6 +2,15 @@
 
 # Changelog
 
+## 1.2.0 — 2026-11-05
+
+- Rebuilt the mobile game library as illustrated, animated adventure cards with short, action-led prompts.
+- Added an independent level, mastery meter, and saved progress path for each game type and class.
+- Automatically unlock the next level within the game a child completes; other subjects keep their own level.
+- Expanded touch targets and removed the shared level picker that implied one level applied to every game.
+- Updated the five-game design research notes with the patterns adapted for Nateiva.
+- Synced the four HTML arcade entrypoints and aligned the app version with the release.
+
 ## 1.1.1 — 2026-11-05
 
 - Add a GitHub Actions deployment path for the Nateiva School Game OVH mirror.
