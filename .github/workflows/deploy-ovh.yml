@@ -45,7 +45,7 @@ jobs:
           KNOWN_HOSTS="$RUNNER_TEMP/nateiva-school-game-ssh/known_hosts"
           SSH_TARGET="$OVH_SSH_USER@$OVH_SSH_HOST"
           SSH_OPTS="-i $SSH_KEY -o IdentitiesOnly=yes -o UserKnownHostsFile=$KNOWN_HOSTS -o StrictHostKeyChecking=yes"
-          ssh $SSH_OPTS "$SSH_TARGET" 'install -d /opt/nateiva-school-game/public /opt/nateiva-school-game/ops/ovh-school-game'
+          ssh $SSH_OPTS "$SSH_TARGET" 'sudo install -d -o ubuntu -g ubuntu /opt/nateiva-school-game/public /opt/nateiva-school-game/ops/ovh-school-game'
           export RSYNC_RSH="ssh $SSH_OPTS"
           rsync -az --delete ./public/ "$SSH_TARGET:/opt/nateiva-school-game/public/"
           rsync -az --delete --exclude='.env.production' ./ops/ovh-school-game/ "$SSH_TARGET:/opt/nateiva-school-game/ops/ovh-school-game/"

@@ -2,6 +2,10 @@
 
 # Changelog
 
+## 1.2.1 — 2026-11-06
+
+- Fix first-time OVH setup by creating the isolated Nateiva deployment directories with the deployment user's ownership.
+
 ## 1.2.0 — 2026-11-05
 
 - Rebuilt the mobile game library as illustrated, animated adventure cards with short, action-led prompts.
