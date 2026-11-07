@@ -68,9 +68,9 @@ jobs:
             chmod 600 "$ENV_FILE"
           fi
           cd "$OPS_DIR"
-          docker compose --project-name nateiva-school-game --env-file .env.production -f compose.yaml pull
-          docker compose --project-name nateiva-school-game --env-file .env.production -f compose.yaml up -d
-          docker compose --project-name nateiva-school-game --env-file .env.production -f compose.yaml ps
+          sudo docker compose --project-name nateiva-school-game --env-file .env.production -f compose.yaml pull
+          sudo docker compose --project-name nateiva-school-game --env-file .env.production -f compose.yaml up -d
+          sudo docker compose --project-name nateiva-school-game --env-file .env.production -f compose.yaml ps
 
           CADDY_ROUTE=/etc/caddy/nateiva-school-game.caddy
           CADDYFILE=/etc/caddy/Caddyfile

@@ -2,6 +2,10 @@
 
 # Changelog
 
+## 1.2.2 — 2026-11-06
+
+- Run the isolated OVH Compose project through sudo on VPS hosts where the deployment user does not have Docker socket access.
+
 ## 1.2.1 — 2026-11-06
 
 - Fix first-time OVH setup by creating the isolated Nateiva deployment directories with the deployment user's ownership.
