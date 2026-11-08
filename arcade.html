@@ -2757,6 +2757,8 @@ button, select { font: inherit; }
 .portal-card[data-game="comet"]::before { background-image: url('./assets/images/game-covers/comet.webp'); }
 .portal-card[data-game="tangram_puzzle"]::before { background-image: url('./assets/images/game-covers/tangram_puzzle.webp'); }
 .portal-card[data-game="maze_quest"]::before { background-image: url('./assets/images/game-covers/maze_quest.webp'); }
+.portal-card[data-game="math_tetris"]::before { background-image: url('./assets/images/game-covers/math_tetris.webp'); }
+.portal-card[data-game="safari_racer"]::before { background-image: url('./assets/images/game-covers/safari_racer.webp'); }
 .portal-card > * { position: relative; z-index: 1; }
 .portal-card .card-top-glow, .portal-card .portal-badge, .portal-card .card-rea-badge,
 .portal-card .portal-curriculum-tag, .portal-card .portal-desc,
@@ -2871,6 +2873,139 @@ button, select { font: inherit; }
 @media (max-width:760px) { .play-world-hero { min-height:112px; border-radius:19px; } .arcade-workspace { gap:11px; } .arcade-hud { padding:11px 12px; border-radius:19px; } .playground-card { padding:12px !important; border-radius:20px !important; } .instruction-box { padding:11px 12px; } }
 @media (prefers-reduced-motion: reduce) { .play-world-hero::before { animation:none; } }
 </style>
+<style>
+/* Three language games, three separate ways to play. */
+.lang-quest-stage[data-game="vocabulary_lab"] .lang-hero-banner,
+.lang-quest-stage[data-game="grammar_lab"] .lang-hero-banner,
+.lang-quest-stage[data-game="conjugation_lab"] .lang-hero-banner {
+  color: #173B32;
+  border: 1px solid rgba(23,59,50,.16);
+  box-shadow: 0 16px 30px -20px rgba(23,59,50,.42);
+}
+.lang-quest-stage[data-game="vocabulary_lab"] .lang-hero-banner { background: linear-gradient(135deg,#F8EFD8,#E8F4E8 62%,#F4E7CF); }
+.lang-quest-stage[data-game="grammar_lab"] .lang-hero-banner { background: linear-gradient(135deg,#F8E8CC,#FFFDF6 58%,#E8F2EA); }
+.lang-quest-stage[data-game="conjugation_lab"] .lang-hero-banner { background: linear-gradient(135deg,#DCEBF0,#F7F2E2 56%,#E9E4F6); }
+.lang-quest-stage[data-game="vocabulary_lab"] .lang-sentence-display,
+.lang-quest-stage[data-game="grammar_lab"] .lang-sentence-display,
+.lang-quest-stage[data-game="conjugation_lab"] .lang-sentence-display { color:#173B32; background:rgba(255,255,255,.58); }
+.lang-quest-stage[data-game="vocabulary_lab"] .lang-rule-tip,
+.lang-quest-stage[data-game="grammar_lab"] .lang-rule-tip,
+.lang-quest-stage[data-game="conjugation_lab"] .lang-rule-tip { color:#31584B; background:rgba(255,255,255,.7); border-color:rgba(23,59,50,.18); }
+.lang-quest-stage[data-game="vocabulary_lab"] .lang-mode-badge,
+.lang-quest-stage[data-game="grammar_lab"] .lang-mode-badge,
+.lang-quest-stage[data-game="conjugation_lab"] .lang-mode-badge { color:#173B32; }
+.picture-match-board { display:grid; grid-template-columns:1fr 1fr; gap:clamp(10px,2vw,18px); align-items:stretch; }
+.picture-match-lane { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:clamp(8px,1.5vw,14px); padding:clamp(8px,1.6vw,14px); border-radius:20px; background:#F8F5EC; }
+.picture-match-card,.picture-match-word { min-width:0; min-height:clamp(76px,11vw,118px); padding:10px; border:1px solid rgba(23,59,50,.15); border-radius:16px; color:#173B32; background:#FFFEFA; box-shadow:0 10px 22px -18px rgba(23,59,50,.6); cursor:pointer; transition:transform .22s cubic-bezier(.2,.8,.2,1),border-color .2s,background .2s,box-shadow .2s; }
+.picture-match-card { position:relative; display:grid; place-items:center; }
+.picture-match-illustration { font-size:clamp(2rem,5vw,3.4rem); filter:drop-shadow(0 6px 4px rgba(23,59,50,.14)); transition:transform .3s cubic-bezier(.2,.8,.2,1); }
+.picture-match-hint { position:absolute; right:8px; bottom:5px; font-size:.78rem; }
+.picture-match-word { font:800 clamp(.9rem,2vw,1.12rem)/1.2 'Nunito',sans-serif; }
+.picture-match-card:hover,.picture-match-word:hover { transform:translateY(-3px) rotateX(4deg); border-color:#D92F3A; }
+.picture-match-card.is-selected { background:#FFF1D2; border-color:#D79520; box-shadow:0 12px 22px -14px rgba(177,112,22,.5); }
+.picture-match-card.is-selected .picture-match-illustration { transform:translateY(-4px) scale(1.12) rotate(-5deg); }
+.picture-match-card.is-matched,.picture-match-word.is-matched { background:#E5F1E4; border-color:#52896B; opacity:.72; }
+.picture-match-word.is-miss { animation:pictureMatchWiggle .32s ease-in-out; border-color:#D92F3A; }
+@keyframes pictureMatchWiggle { 25%{transform:translateX(-5px)} 75%{transform:translateX(5px)} }
+.sentence-train-deck { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:12px; perspective:900px; }
+.sentence-car { min-height:96px; padding:10px 8px; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:7px; border:1px solid rgba(23,59,50,.16); border-radius:14px; background:linear-gradient(155deg,#FFFDF7,#F2E7D1); color:#173B32; font:800 1rem/1.2 'Nunito',sans-serif; box-shadow:0 13px 18px -15px rgba(23,59,50,.55); cursor:grab; transform:perspective(700px) rotateX(5deg); transition:transform .22s,box-shadow .22s; }
+.sentence-car:hover,.sentence-car:focus-visible { transform:perspective(700px) rotateX(0) translateY(-4px); box-shadow:0 16px 22px -15px rgba(23,59,50,.58); }
+.sentence-car-window { width:38px;height:30px;display:grid;place-items:center;border:1px solid rgba(23,59,50,.15);border-radius:9px;background:#DCEBF0;font-size:1.25rem; }
+.grammar-drop-slot { cursor:copy; border-style:dashed !important; background:#F3D99C !important; color:#173B32 !important; }
+.grammar-drop-slot.is-correct { background:#4D8B64 !important; color:#fff !important; animation:carriageSnap .45s cubic-bezier(.2,.8,.2,1); }
+.train-departure .sentence-car { animation:trainRide .85s cubic-bezier(.2,.8,.2,1) both; }
+.train-departure .sentence-car:nth-child(2) { animation-delay:.06s; }
+.train-departure .sentence-car:nth-child(3) { animation-delay:.12s; }
+@keyframes carriageSnap { 50%{transform:scale(1.16) rotate(-4deg)} }
+@keyframes trainRide { to{transform:perspective(700px) translateX(130vw) rotateY(-8deg);opacity:.15} }
+.time-portal-game { display:flex; flex-direction:column; gap:16px; }
+.time-portal-track { position:relative; display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:clamp(8px,2vw,18px); padding:12px 4px; }
+.time-portal-track::before { content:''; position:absolute; z-index:0; left:12%;right:12%;top:50%;height:4px;border-radius:4px;background:linear-gradient(90deg,#D98F63,#EAC86D,#779CB1); }
+.time-portal { position:relative; z-index:1; display:flex; align-items:center; justify-content:center; gap:9px; min-height:clamp(72px,10vw,104px); padding:10px; border:1px solid rgba(23,59,50,.16); border-radius:18px; background:#FFFEFA; color:#173B32; font:900 .9rem/1.1 'Nunito',sans-serif; box-shadow:0 12px 22px -18px rgba(23,59,50,.55); cursor:pointer; transition:transform .22s,background .2s,box-shadow .2s; }
+.time-portal:hover,.time-portal.is-active { transform:translateY(-4px) scale(1.02); background:#F3E9D0; box-shadow:0 15px 24px -16px rgba(23,59,50,.48); }
+.time-portal-orb { width:46px;height:46px;display:grid;place-items:center;border-radius:50%;background:linear-gradient(145deg,#FFF,#E7E0CC);font-size:1.55rem;box-shadow:0 6px 12px -8px rgba(23,59,50,.55); }
+.time-verb-deck { display:flex; flex-wrap:wrap; justify-content:center; gap:10px; min-height:54px; }
+.time-verb-token { display:flex; align-items:center; gap:8px; min-height:54px; padding:8px 14px; border:1px solid rgba(23,59,50,.16); border-radius:14px; background:#FFFEFA; color:#173B32; font:800 1rem/1.1 'Nunito',sans-serif; box-shadow:0 10px 18px -16px rgba(23,59,50,.6); cursor:pointer; transition:transform .2s,box-shadow .2s; }
+.time-verb-token:hover { transform:translateY(-3px) rotate(-1deg); box-shadow:0 13px 20px -14px rgba(23,59,50,.5); }
+.time-verb-token.verb-flight { animation:verbOrbit .48s ease-in both; }
+@keyframes verbOrbit { to{transform:translateY(-46px) scale(.76);opacity:.1} }
+.new-game-stage { width:min(100%,1040px); margin:0 auto; padding:clamp(12px,2.5vw,24px); border:1px solid rgba(23,59,50,.14); border-radius:24px; background:linear-gradient(155deg,#FFFDF7,#F4EBD6); box-shadow:0 18px 38px -24px rgba(23,59,50,.5); }
+.new-game-intro { display:flex; align-items:center; gap:14px; margin-bottom:16px; padding:12px 14px; border-radius:17px; background:rgba(255,255,255,.72); }
+.new-game-mascot { width:52px;height:52px;display:grid;place-items:center;flex:none;border-radius:16px;background:#F3D99C;font-size:30px;box-shadow:0 9px 18px -12px rgba(23,59,50,.55); }
+.new-game-intro h2 { margin:0;color:#173B32;font:900 clamp(1.15rem,3vw,1.6rem)/1.1 'Fredoka','Nunito',sans-serif; }
+.new-game-intro p { margin:4px 0 0;color:#31584B;font:700 .96rem/1.3 'Nunito',sans-serif; }
+.new-game-audio { width:48px;height:48px;flex:none;margin-left:auto;border:1px solid rgba(23,59,50,.14);border-radius:15px;background:#FFFEFA;font-size:22px;cursor:pointer; }
+.tetris-world { display:grid;grid-template-columns:minmax(130px,.82fr) minmax(210px,1fr) minmax(130px,.82fr);align-items:center;gap:clamp(8px,2vw,22px);min-height:400px;padding:clamp(10px,2vw,20px);border-radius:20px;background:radial-gradient(ellipse at 50% 10%,#4A8A82 0%,#1E4C49 48%,#153B39 100%);perspective:1000px; }
+.tetris-side-quest { display:flex;flex-direction:column;align-items:center;gap:12px;color:#FFFDF5;text-align:center; }
+.tetris-side-quest img { width:min(100%,190px);aspect-ratio:1;object-fit:cover;border:1px solid rgba(255,255,255,.48);border-radius:18px;box-shadow:0 18px 30px -20px rgba(0,0,0,.75); }
+.tetris-side-quest strong { display:block;font:900 1.15rem/1.2 'Fredoka','Nunito',sans-serif; }
+.tetris-side-quest span { display:block;margin-top:5px;color:#F7E6AF;font:800 .92rem/1.3 'Nunito',sans-serif; }
+.tetris-board-wrap { display:flex;min-width:0;width:100%;justify-content:center;perspective:900px; }
+.tetris-board { width:100%;max-width:320px;min-width:0;box-sizing:border-box;display:grid;grid-template-columns:repeat(10,minmax(0,1fr));gap:3px;padding:8px;border:1px solid rgba(255,255,255,.28);border-radius:13px;background:rgba(8,31,31,.72);box-shadow:0 18px 34px -18px rgba(0,0,0,.68);transform:rotateX(5deg); }
+.tetris-cell { aspect-ratio:1;display:grid;place-items:center;border-radius:4px;background:rgba(255,255,255,.045);color:#163A36;font:900 .52rem/1 'Nunito',sans-serif;box-shadow:inset 0 1px 2px rgba(255,255,255,.08); }
+.tetris-cell.filled { background:linear-gradient(145deg,color-mix(in srgb,var(--block-color) 82%,white),var(--block-color) 64%,color-mix(in srgb,var(--block-color) 70%,#153B39));box-shadow:inset 2px 2px 3px rgba(255,255,255,.52),inset -2px -3px 4px rgba(0,0,0,.22),0 4px 7px -5px #000; }
+.tetris-controls { display:grid;grid-template-columns:repeat(2,minmax(58px,74px));justify-content:center;gap:10px; }
+.tetris-controls button { min-height:60px;border:1px solid rgba(255,255,255,.42);border-radius:17px;background:linear-gradient(145deg,#FFF7DE,#D8B969);color:#173B32;font:900 1.5rem/1 'Nunito',sans-serif;box-shadow:0 10px 18px -12px rgba(0,0,0,.65);touch-action:manipulation; }
+.tetris-controls button:active { transform:translateY(2px) scale(.97); }
+.racer-world { overflow:hidden;padding:12px;border-radius:20px;background:#DDEDE2; }
+.race-question-card { display:flex;align-items:center;justify-content:center;gap:12px;min-height:60px;margin-bottom:10px;padding:10px 14px;border-radius:15px;background:#FFFEFA;color:#173B32;box-shadow:0 10px 20px -16px rgba(23,59,50,.54); }
+.race-question-card strong { font:900 clamp(1.3rem,3.6vw,2rem)/1.1 'Fredoka','Nunito',sans-serif; }
+.race-question-card span { color:#31584B;font:800 .9rem/1.2 'Nunito',sans-serif; }
+.race-scene { position:relative;height:clamp(280px,48vw,430px);overflow:hidden;isolation:isolate;border-radius:16px;background:#84C5A1; }
+.race-skyline { position:absolute;inset:0 0 45%;background:linear-gradient(#7BC9E4 0%,#C2E6CC 65%,#84C5A1 100%); }
+.race-skyline::before,.race-skyline::after { content:'';position:absolute;bottom:0;width:38%;height:44%;background:#47795D;clip-path:polygon(50% 0,100% 100%,0 100%);opacity:.45; }
+.race-skyline::before { left:0; }.race-skyline::after { right:0;transform:scaleX(-1); }
+.race-road { position:absolute;left:5%;right:5%;top:30%;bottom:-12%;background:linear-gradient(90deg,#65746A,#303E39 16%,#343F38 84%,#68746A);clip-path:polygon(44% 0,56% 0,100% 100%,0 100%);transform:perspective(360px) rotateX(7deg); }
+.race-road::before,.race-road::after { content:'';position:absolute;top:0;bottom:0;width:3px;background:repeating-linear-gradient(to bottom,#F7E6AF 0 20px,transparent 20px 39px);animation:roadFlow .5s linear infinite; }
+.race-road::before { left:33%; }.race-road::after { right:33%; }
+@keyframes roadFlow { to{background-position-y:39px} }
+.race-driver { position:absolute;z-index:2;left:50%;bottom:4%;width:clamp(92px,20vw,170px);height:clamp(92px,20vw,170px);object-fit:cover;object-position:50% 65%;border-radius:22px;filter:drop-shadow(0 14px 12px rgba(16,43,30,.4));transform:translateX(-50%);transition:left .36s cubic-bezier(.2,.8,.2,1),transform .36s; }
+.race-driver.racing { transform:translateX(-50%) translateY(-12px) scale(1.04); }
+.race-gates { position:absolute;z-index:3;inset:34% 7% 18%;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));align-items:center;gap:clamp(7px,2vw,20px); }
+.race-gate { min-height:clamp(62px,10vw,90px);border:2px solid rgba(255,255,255,.78);border-radius:18px;background:linear-gradient(145deg,#FFF7DF,#EBCB78);color:#173B32;font:900 clamp(1.3rem,4vw,2.1rem)/1 'Fredoka','Nunito',sans-serif;box-shadow:0 14px 22px -13px rgba(26,53,39,.55);cursor:pointer;transform:perspective(600px) rotateX(-4deg);transition:transform .2s,background .2s;touch-action:manipulation; }
+.race-gate:hover,.race-gate:focus-visible { transform:perspective(600px) rotateX(0) translateY(-5px);background:#FFFDF7; }
+.race-gate.is-correct { background:#9DCB91;border-color:#FFF;animation:gateFlash .45s ease-out; }
+@keyframes gateFlash { 50%{transform:scale(1.15) rotate(-3deg)} }
+.race-touch-hint { margin-top:10px;text-align:center;color:#31584B;font:800 .9rem/1.3 'Nunito',sans-serif; }
+@media(max-width:720px) {
+  .tetris-world { grid-template-columns:minmax(0,1fr) minmax(0,1.2fr);min-height:auto; }
+  .tetris-side-quest { grid-column:1;grid-row:1/3; }
+  .tetris-side-quest img { width:min(100%,140px); }
+  .tetris-controls { grid-column:2;grid-row:2;grid-template-columns:repeat(4,minmax(48px,1fr)); }
+  .tetris-controls button { min-height:54px; }
+}
+@media(max-width:480px) {
+  .new-game-stage { border-radius:18px;padding:9px; }
+  .new-game-intro { gap:9px;padding:9px; }
+  .new-game-mascot { width:43px;height:43px;font-size:25px; }
+  .new-game-audio { width:42px;height:42px; }
+  .tetris-world { grid-template-columns:minmax(0,1fr);gap:10px;padding:9px; }
+  .tetris-side-quest { grid-column:1;grid-row:auto;flex-direction:row;text-align:left; }
+  .tetris-side-quest img { width:62px; }
+  .tetris-side-quest strong { min-width:0;font-size:1rem;overflow-wrap:anywhere; }
+  .tetris-side-quest span { font-size:.82rem; }
+  .tetris-board { width:100%;max-width:280px; }
+  .tetris-controls { grid-column:1;grid-row:auto;width:100%; }
+  .race-gates { inset-inline:4%;gap:5px; }
+  .race-gate { border-radius:12px;min-height:58px; }
+  .race-question-card { flex-wrap:wrap;gap:6px; }
+}
+@media(max-width:620px) {
+  .picture-match-board { grid-template-columns:1fr; }
+  .picture-match-lane { grid-template-columns:repeat(4,minmax(0,1fr)); }
+  .picture-match-card,.picture-match-word { min-height:70px; padding:7px 3px; border-radius:12px; }
+  .picture-match-illustration { font-size:2rem; }
+  .picture-match-word { font-size:.84rem; overflow-wrap:anywhere; }
+  .sentence-train-deck { grid-template-columns:repeat(2,minmax(0,1fr)); }
+  .sentence-car { min-height:76px; }
+  .time-portal { flex-direction:column; min-height:82px; gap:4px; font-size:.78rem; }
+  .time-portal-orb { width:40px;height:40px; }
+}
+@media(prefers-reduced-motion:reduce) {
+  .picture-match-card,.picture-match-word,.sentence-car,.time-portal,.time-verb-token { transition:none; }
+  .train-departure .sentence-car,.time-verb-token.verb-flight { animation:none; }
+}
+</style>
 </head>
 <body>
 <div id="root" style="display:none;"></div>
@@ -2878,7 +3013,7 @@ button, select { font: inherit; }
 <main class="shell">
   <!-- TOP HEADER -->
   <header class="app-nav">
-    <button class="version-cache-pill" id="btn-version-cache" title="Nateiva School Game version 1.3.0. Select to refresh the latest release.">NATEIVA · v1.3.0</button>
+    <button class="version-cache-pill" id="btn-version-cache" title="Nateiva School Game version 1.4.0. Select to refresh the latest release.">NATEIVA · v1.4.0</button>
     <div class="brand-box">
       <div class="brand-icon">🦁</div>
       <div class="brand-titles">
@@ -3173,6 +3308,34 @@ button, select { font: inherit; }
         <span class="count-pill black">⚡ 3 Activités / Exercice</span>
         <span class="count-pill">🏆 10 Niveaux</span>
       </div>
+    </button>
+
+    <button class="portal-card" data-cat="math" data-game="math_tetris">
+      <div class="card-top-glow"></div>
+      <div class="portal-card-header">
+        <div class="portal-badge">🧱</div>
+        <div class="portal-titles">
+          <h3>Math Tetris</h3>
+          <div class="portal-curriculum-tag">Blocs • Formes • Calcul progressif</div>
+        </div>
+        <span class="card-rea-badge">▶ JOUER</span>
+      </div>
+      <p class="portal-desc">Fais tourner et glisser les blocs colorés pour remplir des rangées. Observe, compte et gagne des étoiles à chaque ligne !</p>
+      <div class="portal-counts-badge-bar"><span class="count-pill highlight">🧩 Puzzle spatial</span><span class="count-pill black">🎮 Touches simples</span><span class="count-pill">🏆 Progression adaptée</span></div>
+    </button>
+
+    <button class="portal-card" data-cat="math" data-game="safari_racer">
+      <div class="card-top-glow"></div>
+      <div class="portal-card-header">
+        <div class="portal-badge">🏎️</div>
+        <div class="portal-titles">
+          <h3>Safari Math Racer</h3>
+          <div class="portal-curriculum-tag">Safari • Nombres • Virages tactiles</div>
+        </div>
+        <span class="card-rea-badge">▶ JOUER</span>
+      </div>
+      <p class="portal-desc">Fonce sur les pistes du Cameroun, choisis la bonne porte-réponse et aide Léo et Kiki à rejoindre le prochain village !</p>
+      <div class="portal-counts-badge-bar"><span class="count-pill highlight">🌍 Aventure africaine</span><span class="count-pill black">🏁 Course à trois voies</span><span class="count-pill">🏆 Calcul adapté</span></div>
     </button>
 
     <!-- 7. Chemistry Real Simulation (PhET pH Scale) -->
@@ -3508,6 +3671,28 @@ button, select { font: inherit; }
           </div>
           <div class="lang-options-grid" id="lang-quest-options"></div>
         </div>
+      </div>
+
+      <div class="module-overlay" id="new-arcade-overlay">
+        <section class="new-game-stage" id="new-game-stage">
+          <div class="new-game-intro"><span class="new-game-mascot" aria-hidden="true">🦁</span><div><h2 id="new-game-heading"></h2><p id="new-game-prompt"></p></div><button type="button" id="new-game-replay" class="new-game-audio" aria-label="Écouter la consigne">🔊</button></div>
+          <div class="tetris-world" id="math-tetris-panel" hidden>
+            <div class="tetris-side-quest"><img src="./assets/images/game-covers/math_tetris.webp" alt=""/><div><strong id="tetris-goal"></strong><span id="tetris-lines"></span></div></div>
+            <div class="tetris-board-wrap"><div class="tetris-board" id="tetris-board" role="grid" aria-label="Number block puzzle"></div></div>
+            <div class="tetris-controls" aria-label="Tetris controls">
+              <button type="button" data-tetris="left" aria-label="Move left">◀</button><button type="button" data-tetris="rotate" aria-label="Rotate">↻</button><button type="button" data-tetris="right" aria-label="Move right">▶</button><button type="button" data-tetris="drop" aria-label="Drop block">⬇</button>
+            </div>
+          </div>
+          <div class="racer-world" id="safari-racer-panel" hidden>
+            <div class="race-question-card"><span id="race-picture-hint" aria-hidden="true"></span><strong id="race-equation"></strong><span id="race-gate-hint"></span></div>
+            <div class="race-scene" id="race-scene">
+              <div class="race-skyline" aria-hidden="true"></div><div class="race-road" aria-hidden="true"><i></i><i></i></div>
+              <img class="race-driver" id="race-driver" src="./assets/images/game-covers/safari_racer.webp" alt=""/>
+              <div class="race-gates" id="race-gates"></div>
+            </div>
+            <div class="race-touch-hint" id="race-touch-hint"></div>
+          </div>
+        </section>
       </div>
 
       
@@ -6952,7 +7137,9 @@ button, select { font: inherit; }
     fun_facts_quiz: { icon: '🦜', fr: 'Repère la bonne image', en: 'Spot the answer' },
     grammar_lab: { icon: '🪄', fr: 'Assemble la phrase', en: 'Build the sentence' },
     vocabulary_lab: { icon: '🧺', fr: 'Ramasse les mots', en: 'Collect the words' },
-    conjugation_lab: { icon: '⏳', fr: 'Voyage dans le temps', en: 'Travel through time' }
+    conjugation_lab: { icon: '⏳', fr: 'Choisis le bon moment', en: 'Choose the right moment' },
+    math_tetris: { icon: '🧱', fr: 'Tourne et place les blocs', en: 'Turn and place blocks' },
+    safari_racer: { icon: '🏎️', fr: 'Choisis la bonne voie', en: 'Choose the right lane' }
   };
   const GAME_CARD_TITLES = {
     grammar_lab: { fr: 'Magie des phrases', en: 'Sentence Magic' },
@@ -6970,7 +7157,9 @@ button, select { font: inherit; }
     botany: { fr: 'Jardin vivant', en: 'Grow a Garden' },
     comet: { fr: 'Défense cosmique', en: 'Comet Defender' },
     tangram_puzzle: { fr: 'Animaux en formes', en: 'Shape Safari' },
-    maze_quest: { fr: 'Safari labyrinthe', en: 'Savanna Maze' }
+    maze_quest: { fr: 'Safari labyrinthe', en: 'Savanna Maze' },
+    math_tetris: { fr: 'Tetris des nombres', en: 'Number Tetris' },
+    safari_racer: { fr: 'Course math safari', en: 'Safari Math Racer' }
   };
 
   function getGameTrack(gameKey = state.game, gradeCode = state.grade) {
@@ -7498,8 +7687,9 @@ button, select { font: inherit; }
   // NEXT ACTIVITY CHALLENGE ROUTER (MONOTONIC COUNTER GUARANTEES ZERO REPETITION!)
   // ============================================================================
   function nextActivityChallenge(isWelcome = false) {
+    if (state.nateivaGameTimer) { window.clearInterval(state.nateivaGameTimer); state.nateivaGameTimer = null; }
     const answerStage = $('answers-container');
-    if (answerStage) answerStage.classList.remove('matrix-mode', 'mastery-mode');
+    if (answerStage) { answerStage.classList.remove('matrix-mode', 'mastery-mode'); answerStage.style.display = ''; }
     const isEn = state.lang === 'en';
     const g = state.game;
     const counterKey = g + '_' + state.grade;
@@ -7584,6 +7774,7 @@ button, select { font: inherit; }
     if ($('geography-overlay')) $('geography-overlay').classList.remove('active');
     if ($('funfacts-overlay')) $('funfacts-overlay').classList.remove('active');
     if ($('lang-quest-overlay')) $('lang-quest-overlay').classList.remove('active');
+    if ($('new-arcade-overlay')) $('new-arcade-overlay').classList.remove('active');
     if ($('khan-visual-explainer')) $('khan-visual-explainer').classList.remove('active');
 
     // Route to module
@@ -7601,6 +7792,8 @@ button, select { font: inherit; }
       setupFunFactsQuizActivity();
     } else if (g === 'grammar_lab' || g === 'vocabulary_lab' || g === 'conjugation_lab') {
       setupLanguageQuestActivity(g);
+    } else if (g === 'math_tetris' || g === 'safari_racer') {
+      setupNewArcadeGame(g);
     } else {
       $('canvas-wrapper').style.display = 'block';
       $('reading-overlay').classList.remove('active');
@@ -8650,12 +8843,183 @@ button, select { font: inherit; }
     state.currentLangQuestItem = data;
 
     const lStage = document.querySelector('.lang-quest-stage');
-    if (lStage) lStage.setAttribute('data-phase', String(state.activityPhase));
-    const phasePrefix = state.activityPhase === 1 ? '🧭 MODE 1/3 (DÉCOUVERTE) • ' : (state.activityPhase === 2 ? '⚡ MODE 2/3 (ARCADE) • ' : '👑 MODE 3/3 (BOSS) • ');
-    $('lang-quest-badge').textContent = phasePrefix + data.cat + (isEn ? ' • 🇬🇧 ENGLISH VOICE' : ' • 🇫🇷 VOIX FRANÇAISE');
-    $('lang-quest-sentence').innerHTML = data.sentence.replace('___', '<span class="lang-blank-slot" id="lang-active-blank">?</span>');
+    if (lStage) {
+      lStage.setAttribute('data-phase', String(state.activityPhase));
+      lStage.setAttribute('data-game', gameType);
+    }
+    const phasePrefix = state.activityPhase === 1 ? '🧭 DISCOVERY • ' : (state.activityPhase === 2 ? '⚡ ARCADE • ' : '👑 MASTERY • ');
+    $('lang-quest-badge').textContent = phasePrefix + data.cat + (isEn ? ' • 🇬🇧' : ' • 🇫🇷');
     $('lang-quest-rule').textContent = data.rule;
+    $('instruction-title').removeAttribute('aria-label');
     $('instruction-title').textContent = data.speech;
+    const optContainer = $('lang-quest-options');
+    optContainer.className = 'lang-options-grid';
+    optContainer.innerHTML = '';
+
+    if (gameType === 'vocabulary_lab') {
+      $('lang-quest-sentence').textContent = isEn ? 'Find every picture’s matching word.' : 'Associe chaque image à son mot.';
+      $('lang-quest-rule').textContent = isEn ? 'Tap a picture, then its word. Listen to each match.' : 'Touche une image, puis son mot. Écoute chaque paire.';
+      optContainer.classList.add('picture-match-board');
+      const items = data.options.map((label, id) => {
+        const icon = (label.match(/\p{Extended_Pictographic}/gu) || [])[0] || ['🌻', '🦜', '🥭', '⭐'][id % 4];
+        const word = label.replace(/\p{Extended_Pictographic}/gu, '').replace(/[\uFE0E\uFE0F]/g, '').trim() || label;
+        return { id, icon, word, label };
+      });
+      const pictureLane = document.createElement('div');
+      pictureLane.className = 'picture-match-lane picture-match-images';
+      pictureLane.setAttribute('aria-label', isEn ? 'Pictures' : 'Images');
+      const wordLane = document.createElement('div');
+      wordLane.className = 'picture-match-lane picture-match-words';
+      wordLane.setAttribute('aria-label', isEn ? 'Words' : 'Mots');
+      const matched = new Set();
+      let selectedPicture = null;
+      const pictureButtons = new Map();
+      const wordButtons = new Map();
+      const selectPicture = item => {
+        if (matched.has(item.id)) return;
+        selectedPicture = item;
+        pictureButtons.forEach(button => button.classList.toggle('is-selected', Number(button.dataset.pair) === item.id));
+        VoiceEngine.speak(item.word);
+      };
+      const selectWord = item => {
+        if (!selectedPicture || matched.has(item.id)) return;
+        if (selectedPicture.id === item.id) {
+          matched.add(item.id);
+          pictureButtons.get(item.id).classList.add('is-matched');
+          wordButtons.get(item.id).classList.add('is-matched');
+          AudioEngine.playLevelUp();
+          VoiceEngine.speak(item.word);
+          selectedPicture = null;
+          pictureButtons.forEach(button => button.classList.remove('is-selected'));
+          if (matched.size === items.length) window.setTimeout(() => onActivityTaskCompleted(), 650);
+        } else {
+          AudioEngine.playWrong();
+          wordButtons.get(item.id).classList.add('is-miss');
+          window.setTimeout(() => wordButtons.get(item.id)?.classList.remove('is-miss'), 420);
+        }
+      };
+      items.forEach(item => {
+        const picture = document.createElement('button');
+        picture.type = 'button';
+        picture.className = 'picture-match-card';
+        picture.dataset.pair = String(item.id);
+        picture.setAttribute('aria-label', item.icon);
+        picture.innerHTML = '<span class="picture-match-illustration" aria-hidden="true">' + item.icon + '</span><span class="picture-match-hint">🔊</span>';
+        picture.addEventListener('click', () => selectPicture(item));
+        pictureButtons.set(item.id, picture);
+        pictureLane.appendChild(picture);
+        const word = document.createElement('button');
+        word.type = 'button';
+        word.className = 'picture-match-word';
+        word.dataset.pair = String(item.id);
+        word.textContent = item.word;
+        word.addEventListener('click', () => selectWord(item));
+        wordButtons.set(item.id, word);
+        wordLane.appendChild(word);
+      });
+      optContainer.append(pictureLane, wordLane);
+      VoiceEngine.speak(data.speech);
+      return;
+    }
+
+    if (gameType === 'grammar_lab') {
+      $('lang-quest-sentence').innerHTML = data.sentence.replace('___', '<span class="lang-blank-slot grammar-drop-slot" id="lang-active-blank" tabindex="0" aria-label="' + (isEn ? 'Drop the word here' : 'Dépose le mot ici') + '">?</span>');
+      $('lang-quest-rule').textContent = isEn ? 'Build the sentence train: place the missing word in the open carriage.' : 'Construis le train-phrase : place le mot manquant dans le wagon vide.';
+      optContainer.classList.add('sentence-train-deck');
+      const slot = $('lang-active-blank');
+      const placeWord = choice => {
+        if (!slot || slot.dataset.locked === 'true') return;
+        if (choice === data.blank) {
+          slot.textContent = choice;
+          slot.dataset.locked = 'true';
+          slot.classList.add('is-correct');
+          document.querySelector('.lang-quest-stage')?.classList.add('train-departure');
+          AudioEngine.playLevelUp();
+          window.setTimeout(() => onActivityTaskCompleted(), 500);
+        } else {
+          AudioEngine.playWrong();
+          VoiceEngine.speak(isEn ? 'Try another word for this sentence.' : 'Essaie un autre mot pour compléter la phrase.');
+        }
+      };
+      if (slot) {
+        slot.addEventListener('dragover', event => event.preventDefault());
+        slot.addEventListener('drop', event => { event.preventDefault(); placeWord(event.dataTransfer?.getData('text/plain') || ''); });
+        slot.addEventListener('keydown', event => { if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); const focused = optContainer.querySelector('.sentence-car:focus'); if (focused) placeWord(focused.dataset.answer || ''); } });
+      }
+      data.options.forEach((choice, idx) => {
+        const car = document.createElement('button');
+        car.type = 'button';
+        car.className = 'sentence-car';
+        car.dataset.answer = choice;
+        car.draggable = true;
+        car.innerHTML = '<span class="sentence-car-window" aria-hidden="true">' + ['🚂', '🪟', '🌈', '⭐'][idx % 4] + '</span><span>' + choice + '</span>';
+        car.addEventListener('click', () => placeWord(choice));
+        car.addEventListener('dragstart', event => event.dataTransfer?.setData('text/plain', choice));
+        optContainer.appendChild(car);
+      });
+      VoiceEngine.speak(data.speech);
+      return;
+    }
+
+    if (gameType === 'conjugation_lab') {
+      $('lang-quest-sentence').innerHTML = data.sentence.replace('___', '<span class="lang-blank-slot" id="lang-active-blank">?</span>');
+      const sourceText = (data.sentence + ' ' + data.speech).toLowerCase();
+      const timeKey = /\b(hier|yesterday|ago|last|was|were|a terminé|a joué|ont fini)\b/.test(sourceText) ? 'past'
+        : (/\b(demain|tomorrow|will|shall|bientôt|next)\b/.test(sourceText) ? 'future' : 'now');
+      const times = [
+        { id: 'past', icon: '🌅', fr: 'AVANT', en: 'BEFORE' },
+        { id: 'now', icon: '☀️', fr: 'MAINTENANT', en: 'NOW' },
+        { id: 'future', icon: '🌙', fr: 'APRÈS', en: 'AFTER' }
+      ];
+      $('lang-quest-rule').textContent = isEn ? 'Pick the time portal, then send the right action through it.' : 'Choisis la porte du temps, puis envoie la bonne action.';
+      optContainer.classList.add('time-portal-game');
+      const timeline = document.createElement('div');
+      timeline.className = 'time-portal-track';
+      const verbDeck = document.createElement('div');
+      verbDeck.className = 'time-verb-deck';
+      let chosenTime = null;
+      const revealVerbs = () => {
+        verbDeck.innerHTML = '';
+        data.options.forEach((choice, idx) => {
+          const button = document.createElement('button');
+          button.type = 'button';
+          button.className = 'time-verb-token';
+          button.innerHTML = '<span aria-hidden="true">' + ['🦁', '🐒', '🐘', '🦜'][idx % 4] + '</span><span>' + choice + '</span>';
+          button.addEventListener('click', () => {
+            if (choice === data.blank && chosenTime === timeKey) {
+              const slot = $('lang-active-blank');
+              if (slot) { slot.textContent = choice; slot.classList.add('is-correct'); }
+              button.classList.add('verb-flight');
+              AudioEngine.playLevelUp();
+              window.setTimeout(() => onActivityTaskCompleted(), 500);
+            } else {
+              AudioEngine.playWrong();
+              VoiceEngine.speak(isEn ? 'That action does not fit this moment. Try again.' : 'Cette action ne correspond pas à ce moment. Réessaie.');
+            }
+          });
+          verbDeck.appendChild(button);
+        });
+      };
+      times.forEach(time => {
+        const portal = document.createElement('button');
+        portal.type = 'button';
+        portal.className = 'time-portal';
+        portal.innerHTML = '<span class="time-portal-orb" aria-hidden="true">' + time.icon + '</span><span>' + (isEn ? time.en : time.fr) + '</span>';
+        portal.addEventListener('click', () => {
+          if (time.id !== timeKey) { AudioEngine.playWrong(); return; }
+          chosenTime = time.id;
+          timeline.querySelectorAll('.time-portal').forEach(node => node.classList.toggle('is-active', node === portal));
+          AudioEngine.playSnap();
+          revealVerbs();
+        });
+        timeline.appendChild(portal);
+      });
+      optContainer.append(timeline, verbDeck);
+      VoiceEngine.speak(data.speech);
+      return;
+    }
+
+    $('lang-quest-sentence').innerHTML = data.sentence.replace('___', '<span class="lang-blank-slot" id="lang-active-blank">?</span>');
 
     if ($('btn-switch-lang-section')) {
       $('btn-switch-lang-section').textContent = isEn
@@ -8668,8 +9032,6 @@ button, select { font: inherit; }
       };
     }
 
-    const optContainer = $('lang-quest-options');
-    optContainer.innerHTML = '';
     data.options.forEach((choice, idx) => {
       const btn = document.createElement('button');
       btn.className = 'btn-lang-choice';
@@ -8696,6 +9058,222 @@ button, select { font: inherit; }
 
     // Speak ONLY in the active single native voice (French OR English)
     VoiceEngine.speak(data.speech);
+  }
+
+  // Two new touch-first games: an original Number Tetris variant and a lane-based Safari Racer.
+  const TETRIS_COLS = 10;
+  const TETRIS_ROWS = 14;
+  const TETRIS_PIECES = [
+    { color: '#53C8B3', cells: [[1,0],[1,1],[1,2],[1,3]] },
+    { color: '#E59A51', cells: [[0,0],[0,1],[1,0],[1,1]] },
+    { color: '#E97570', cells: [[0,0],[1,0],[1,1],[1,2]] },
+    { color: '#8C8DE8', cells: [[0,2],[1,0],[1,1],[1,2]] },
+    { color: '#EAC968', cells: [[0,1],[0,2],[1,0],[1,1]] },
+    { color: '#70A9D9', cells: [[0,1],[0,2],[1,0],[1,1]] },
+    { color: '#9FC66D', cells: [[0,1],[1,0],[1,1],[1,2]] }
+  ];
+
+  function tetrisPiece() {
+    const def = TETRIS_PIECES[Math.floor(Math.random() * TETRIS_PIECES.length)];
+    return { cells: def.cells.map(cell => cell.slice()), color: def.color, x: 3, y: 0 };
+  }
+
+  function tetrisCollides(piece, x = piece.x, y = piece.y, cells = piece.cells) {
+    return cells.some(([cx, cy]) => {
+      const bx = x + cx, by = y + cy;
+      return bx < 0 || bx >= TETRIS_COLS || by >= TETRIS_ROWS || (by >= 0 && state.numberTetris.board[by][bx]);
+    });
+  }
+
+  function renderTetrisBoard() {
+    const grid = $('tetris-board');
+    if (!grid || !state.numberTetris) return;
+    const merged = state.numberTetris.board.map(row => row.slice());
+    state.numberTetris.piece.cells.forEach(([cx, cy]) => {
+      const x = state.numberTetris.piece.x + cx, y = state.numberTetris.piece.y + cy;
+      if (y >= 0 && y < TETRIS_ROWS && x >= 0 && x < TETRIS_COLS) merged[y][x] = state.numberTetris.piece.color;
+    });
+    const nodes = grid.children.length === TETRIS_ROWS * TETRIS_COLS ? Array.from(grid.children) : null;
+    if (!nodes) {
+      grid.innerHTML = '';
+      const frag = document.createDocumentFragment();
+      for (let i = 0; i < TETRIS_ROWS * TETRIS_COLS; i++) { const cell = document.createElement('div'); cell.className = 'tetris-cell'; cell.setAttribute('role','gridcell'); frag.appendChild(cell); }
+      grid.appendChild(frag);
+    }
+    Array.from(grid.children).forEach((cell, index) => {
+      const color = merged[Math.floor(index / TETRIS_COLS)][index % TETRIS_COLS];
+      cell.classList.toggle('filled', Boolean(color));
+      if (color) {
+        cell.style.setProperty('--block-color', color);
+        cell.textContent = (state.grade === 'MAT' || state.grade === 'SIL') ? '•' : '1';
+      } else { cell.style.removeProperty('--block-color'); cell.textContent = ''; }
+    });
+  }
+
+  function lockTetrisPiece() {
+    const game = state.numberTetris;
+    if (!game) return;
+    game.piece.cells.forEach(([cx, cy]) => {
+      const x = game.piece.x + cx, y = game.piece.y + cy;
+      if (y >= 0 && y < TETRIS_ROWS && x >= 0 && x < TETRIS_COLS) game.board[y][x] = game.piece.color;
+    });
+    const remaining = game.board.filter(row => row.some(cell => !cell));
+    const cleared = TETRIS_ROWS - remaining.length;
+    if (cleared) {
+      for (let i = 0; i < cleared; i++) remaining.unshift(Array(TETRIS_COLS).fill(null));
+      game.board = remaining;
+      game.lines += cleared;
+      $('tetris-lines').textContent = (state.lang === 'en' ? 'Rows: ' : 'Lignes : ') + game.lines + ' / ' + game.goal;
+      state.score += cleared * 10;
+      $('hud-score-val').textContent = state.score * 20;
+      AudioEngine.playSuccess();
+      createExplosion(400, 190, '#F3D99C', 16 + cleared * 8);
+      if (!game.awarded && game.lines >= game.goal) {
+        game.awarded = true;
+        AudioEngine.playLevelUp();
+        window.setTimeout(() => onActivityTaskCompleted(), 420);
+        return;
+      }
+    }
+    game.piece = tetrisPiece();
+    if (tetrisCollides(game.piece)) {
+      game.board.splice(0, 3, ...Array.from({length:3}, () => Array(TETRIS_COLS).fill(null)));
+      game.piece = tetrisPiece();
+      VoiceEngine.speak(state.lang === 'en' ? 'Keep building. Your blocks are ready again!' : 'Continue à construire. Tes blocs sont prêts !');
+    }
+    renderTetrisBoard();
+  }
+
+  function controlTetris(action) {
+    const game = state.numberTetris;
+    if (!game || game.awarded) return;
+    const piece = game.piece;
+    if (action === 'left' && !tetrisCollides(piece, piece.x - 1)) piece.x--;
+    else if (action === 'right' && !tetrisCollides(piece, piece.x + 1)) piece.x++;
+    else if (action === 'rotate') {
+      const maxX = Math.max(...piece.cells.map(([x]) => x));
+      const maxY = Math.max(...piece.cells.map(([,y]) => y));
+      const rotated = piece.cells.map(([x,y]) => [maxY - y, x]);
+      if (!tetrisCollides(piece, piece.x, piece.y, rotated)) piece.cells = rotated;
+      else if (!tetrisCollides(piece, piece.x - 1, piece.y, rotated)) { piece.x--; piece.cells = rotated; }
+      else if (!tetrisCollides(piece, piece.x + 1, piece.y, rotated)) { piece.x++; piece.cells = rotated; }
+      else return;
+      AudioEngine.playSnap();
+    } else if (action === 'drop') {
+      while (!tetrisCollides(piece, piece.x, piece.y + 1)) piece.y++;
+      lockTetrisPiece();
+      return;
+    }
+    renderTetrisBoard();
+  }
+
+  function buildRaceMath(challengeIndex) {
+    const grade = state.grade;
+    const step = challengeIndex + state.level;
+    let a = 2 + (step % 8), b = 1 + ((step * 3) % 8), symbol = '+', answer;
+    if (grade === 'MAT') { a = 1 + (step % 3); b = 1 + ((step + 1) % 3); }
+    else if (grade === 'SIL' || grade === 'CP') { a = 2 + (step % 8); b = 1 + ((step * 3) % 8); }
+    else if (grade === 'CE') { a = 2 + (step % 7); b = 2 + ((step * 2) % 6); symbol = '×'; }
+    else if (grade === 'CE2') { a = 3 + (step % 7); b = 2 + ((step * 3) % 8); symbol = '×'; }
+    else if (grade === 'CM1') { a = 12 + (step % 19); b = 4 + (step % 8); symbol = '−'; if (b > a) [a,b] = [b,a]; }
+    else { a = 20 + (step % 46); b = 10 + ((step * 2) % 34); symbol = '−'; if (b > a) [a,b] = [b,a]; }
+    answer = symbol === '+' ? a + b : (symbol === '×' ? a * b : a - b);
+    const options = [answer, answer + 1 + (step % 2), Math.max(0, answer - 1 - (step % 3))];
+    if (new Set(options).size !== 3) options[2] = answer + 3;
+    const shift = step % 3;
+    const lanes = options.slice(shift).concat(options.slice(0,shift));
+    const lang = state.lang === 'en';
+    const hint = grade === 'MAT' ? (Array(a).fill('🥭').join('') + ' + ' + Array(b).fill('🥭').join('')) : '';
+    return { a, b, symbol, answer, lanes, hint, prompt: lang ? (a + ' ' + symbol + ' ' + b + ' = ?') : (a + ' ' + symbol + ' ' + b + ' = ?') };
+  }
+
+  function setupNewArcadeGame(gameKey) {
+    const overlay = $('new-arcade-overlay');
+    if (!overlay) return;
+    overlay.classList.add('active');
+    $('canvas-wrapper').style.display = 'none';
+    $('answers-container').style.display = 'none';
+    $('maze-dpad-container').classList.remove('active');
+    $('new-game-stage').dataset.game = gameKey;
+    const isEn = state.lang === 'en';
+    $('instruction-title').textContent = gameKey === 'math_tetris' ? '🧱' : '🏎️';
+    $('instruction-title').setAttribute('aria-label', gameKey === 'math_tetris' ? (isEn ? 'Number Tetris' : 'Tetris des nombres') : (isEn ? 'Safari Math Racer' : 'Course math safari'));
+    const panelTetris = $('math-tetris-panel');
+    const panelRacer = $('safari-racer-panel');
+    panelTetris.hidden = gameKey !== 'math_tetris';
+    panelRacer.hidden = gameKey !== 'safari_racer';
+    $('new-game-heading').textContent = gameKey === 'math_tetris' ? (isEn ? 'Number Tetris' : 'Tetris des nombres') : (isEn ? 'Safari Math Racer' : 'Course math safari');
+    $('new-game-prompt').textContent = gameKey === 'math_tetris'
+      ? (isEn ? 'Move, turn and drop the cubes. Clear rows to earn stars.' : 'Déplace, tourne et pose les cubes. Complète les lignes pour gagner des étoiles.')
+      : (isEn ? 'Tap the lane with the right answer to speed through the savannah.' : 'Touche la voie avec la bonne réponse pour foncer dans la savane.');
+    $('new-game-replay').onclick = () => VoiceEngine.speak($('new-game-prompt').textContent);
+    if (gameKey === 'math_tetris') {
+      const goal = 1;
+      state.numberTetris = { board: Array.from({length:TETRIS_ROWS}, () => Array(TETRIS_COLS).fill(null)), piece: tetrisPiece(), lines: 0, goal, awarded: false };
+      $('tetris-goal').textContent = isEn ? 'Ten cubes make a full row' : 'Dix cubes remplissent une ligne';
+      $('tetris-lines').textContent = (isEn ? 'Rows: ' : 'Lignes : ') + '0 / ' + goal;
+      renderTetrisBoard();
+      document.querySelectorAll('[data-tetris]').forEach(button => { button.onclick = () => controlTetris(button.dataset.tetris); });
+      if (state.nateivaGameTimer) window.clearInterval(state.nateivaGameTimer);
+      if (!window.__NATEIVA_TETRIS_KEYS_BOUND__) {
+        document.addEventListener('keydown', event => {
+          if (!document.getElementById('new-arcade-overlay')?.classList.contains('active') || state.game !== 'math_tetris') return;
+          const command = { ArrowLeft: 'left', ArrowRight: 'right', ArrowDown: 'drop', ArrowUp: 'rotate', ' ': 'drop' }[event.key];
+          if (command) { event.preventDefault(); controlTetris(command); }
+        });
+        window.__NATEIVA_TETRIS_KEYS_BOUND__ = true;
+      }
+      const baseSpeed = state.grade === 'MAT' ? 980 : (state.grade === 'SIL' || state.grade === 'CP' ? 820 : 650);
+      state.nateivaGameTimer = window.setInterval(() => {
+        const piece = state.numberTetris?.piece;
+        if (!piece || state.numberTetris.awarded) return;
+        if (!tetrisCollides(piece, piece.x, piece.y + 1)) { piece.y++; renderTetrisBoard(); } else lockTetrisPiece();
+      }, Math.max(300, baseSpeed - (state.level - 1) * 35));
+      VoiceEngine.speak($('new-game-prompt').textContent);
+      return;
+    }
+    if (state.nateivaGameTimer) window.clearInterval(state.nateivaGameTimer);
+    const challengeIndex = state.gamePlayCounter[state.game + '_' + state.grade] || 0;
+    const challenge = buildRaceMath(challengeIndex);
+    state.safariRace = challenge;
+    $('race-equation').textContent = challenge.prompt;
+    $('race-picture-hint').textContent = challenge.hint;
+    $('race-gate-hint').textContent = isEn ? 'Pick the correct gate!' : 'Choisis la bonne porte !';
+    $('race-touch-hint').textContent = isEn ? 'Use a finger, or the left/right arrow keys.' : 'Utilise ton doigt ou les flèches gauche/droite.';
+    const gates = $('race-gates');
+    gates.innerHTML = '';
+    challenge.lanes.forEach((value, lane) => {
+      const gate = document.createElement('button');
+      gate.type = 'button';
+      gate.className = 'race-gate';
+      gate.textContent = String(value);
+      gate.tabIndex = 0;
+      gate.setAttribute('aria-label', (isEn ? 'Answer ' : 'Réponse ') + value);
+      gate.addEventListener('keydown', event => {
+        if (event.key !== 'ArrowLeft' && event.key !== 'ArrowRight') return;
+        event.preventDefault();
+        const nextIndex = Math.max(0, Math.min(gates.children.length - 1, lane + (event.key === 'ArrowRight' ? 1 : -1)));
+        gates.children[nextIndex]?.focus();
+      });
+      gate.addEventListener('click', () => {
+        if (state.safariRace?.awarded) return;
+        if (value === challenge.answer) {
+          state.safariRace.awarded = true;
+          gate.classList.add('is-correct');
+          $('race-driver').classList.add('racing');
+          $('race-driver').style.left = ['17%','50%','83%'][lane];
+          AudioEngine.playLevelUp();
+          window.setTimeout(() => onActivityTaskCompleted(), 650);
+        } else {
+          gate.animate([{transform:'translateX(0)'},{transform:'translateX(-5px)'},{transform:'translateX(5px)'},{transform:'translateX(0)'}],{duration:260});
+          AudioEngine.playWrong();
+        }
+      });
+      gates.appendChild(gate);
+    });
+    $('race-driver').classList.remove('racing');
+    $('race-driver').style.left = '50%';
+    VoiceEngine.speak(isEn ? ('Choose the answer to ' + challenge.a + ' ' + (challenge.symbol === '×' ? 'times' : challenge.symbol === '−' ? 'minus' : 'plus') + ' ' + challenge.b) : ('Choisis la réponse à ' + challenge.a + ' ' + (challenge.symbol === '×' ? 'fois' : challenge.symbol === '−' ? 'moins' : 'plus') + ' ' + challenge.b));
   }
 
   // ============================================================================
@@ -8807,14 +9385,21 @@ button, select { font: inherit; }
       fun_facts_quiz: isEn ? "🧠 Fun Facts & General Knowledge" : "🧠 Fun Facts & Culture Générale (QCM)",
       grammar_lab: isEn ? "✍️ Grammar & Syntax Lab (EN)" : "✍️ Grammaire & Syntaxe (FR)",
       vocabulary_lab: isEn ? "🗂️ Vocabulary Explorer (EN)" : "🗂️ Vocabulaire & Mots (FR)",
-      conjugation_lab: isEn ? "⏳ Verb Conjugation Time Machine (EN)" : "⏳ Conjugaison & Temps (FR)"
+      conjugation_lab: isEn ? "⏳ Verb Conjugation Time Machine (EN)" : "⏳ Conjugaison & Temps (FR)",
+      math_tetris: isEn ? "🧱 Number Tetris" : "🧱 Tetris des nombres",
+      safari_racer: isEn ? "🏎️ Safari Math Racer" : "🏎️ Course math safari"
     };
     $('hud-game-name').textContent = titleMap[gameKey] || "🎮 Quête Éducative";
     nextActivityChallenge(true);
+    if (gameKey === 'math_tetris' || gameKey === 'safari_racer') {
+      const workspace = $('arcade-workspace');
+      window.requestAnimationFrame(() => workspace.scrollIntoView({ behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block: 'start' }));
+    }
   }
 
   function returnToHub() {
     VoiceEngine.stop();
+    if (state.nateivaGameTimer) { window.clearInterval(state.nateivaGameTimer); state.nateivaGameTimer = null; }
     $('arcade-workspace').classList.remove('active');
     $('portals-grid').style.display = 'grid';
     if ($('adventure-hero')) $('adventure-hero').style.display = '';

@@ -1,6 +1,14 @@
 # Changelog
 
-# Changelog
+## 1.4.0 — 2026-11-08
+
+- Replaced the shared language quiz interaction with three distinct touch-first activities: vocabulary picture matching, grammar sentence-train building, and conjugation time portals.
+- Added Number Tetris with rotate/move/drop controls, a ten-cube row objective, voice guidance, and class-adjusted fall speed.
+- Added Safari Math Racer with an animated perspective road, three large answer gates, bilingual spoken prompts, and grade-adjusted equations.
+- Added original 3D clay-style Tetris and safari-racing illustrations; included generation prompts alongside the shipped images.
+- Refined the phone play view so the Tetris board stays inside its scene, the goal copy wraps cleanly, and launching the new games opens at the play area.
+- Kept progress tracks independent by game and class, and kept automatic progression on every completed challenge.
+- Rebuilt the version badge as NATEIVA · v1.4.0 in the upper-left header.
 
 ## 1.3.0 — 2026-11-07
 
