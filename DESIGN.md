@@ -39,6 +39,8 @@ The home screen opens with Léo and Kiki in a Cameroonian savanna scene. Childre
 
 - `assets/images/nateiva-adventure-world.png`: home adventure scene.
 - `assets/images/nateiva-game-atlas.png`: six original subject vignettes for library and activity state cues.
+- `assets/images/game-covers/`: sixteen original, individually cropped and optimized clay-animation cover illustrations, one per game portal. The library keeps illustration, game name, action prompt, and level in separate rows so text never sits over the artwork.
+- Each play screen reuses its own game illustration as a gently animated scene header; canvas activities and their own mechanics stay distinct underneath.
 - Equivalent files under `public/assets/images/` are served by the web arcade.
 
 ## Research Inputs

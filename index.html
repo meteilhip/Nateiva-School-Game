@@ -2670,6 +2670,206 @@ button, select { font: inherit; }
 @media (prefers-reduced-motion: reduce) {
   .portal-card::before { animation: none !important; }
 }
+
+/* 1.3 illustrated game shelf: art and labels have separate, stable rows. */
+.app-nav {
+  position: relative;
+  padding-top: 42px !important;
+}
+.version-cache-pill {
+  position: absolute;
+  inset: 8px auto auto 12px;
+  z-index: 5;
+  display: inline-flex !important;
+  min-height: 26px;
+  padding: 4px 10px;
+  border: 1px solid rgba(255,255,255,.62);
+  border-radius: 999px;
+  background: linear-gradient(120deg, #173B32, #31584B);
+  color: #FFFDF5;
+  box-shadow: 0 4px 12px rgba(23,59,50,.22);
+  font-size: .72rem;
+  line-height: 1;
+  letter-spacing: .02em;
+  cursor: pointer;
+}
+.version-cache-pill:hover { transform: translateY(-1px); background: #D92F3A; }
+
+.portals-grid {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 16px;
+  align-items: stretch;
+}
+.portal-card {
+  display: grid !important;
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-rows: auto auto auto;
+  align-content: start;
+  gap: 0 !important;
+  min-width: 0;
+  min-height: 0 !important;
+  padding: 11px !important;
+  overflow: hidden;
+  border: 1px solid rgba(29,69,55,.16);
+  border-radius: 21px !important;
+  background: #FFFEFA;
+  box-shadow: 0 10px 24px -16px rgba(23,59,50,.5), 0 2px 8px rgba(23,59,50,.06);
+  animation: none !important;
+}
+.portal-card:hover, .portal-card:focus-visible {
+  transform: translateY(-4px);
+  border-color: #D92F3A;
+  box-shadow: 0 18px 32px -17px rgba(23,59,50,.52), 0 0 0 2px rgba(217,47,58,.12);
+}
+.portal-card::before {
+  position: relative !important;
+  inset: auto !important;
+  z-index: 0;
+  display: block;
+  grid-column: 1;
+  grid-row: 1;
+  width: 100%;
+  height: auto !important;
+  aspect-ratio: 1 / 1;
+  border-radius: 15px;
+  background-image: none;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  box-shadow: inset 0 0 0 1px rgba(17,24,39,.08);
+  animation: coverBreathe 9s ease-in-out infinite alternate;
+  content: '';
+}
+.portal-card::after { display: none !important; }
+.portal-card[data-game="grammar_lab"]::before { background-image: url('./assets/images/game-covers/grammar_lab.webp'); }
+.portal-card[data-game="vocabulary_lab"]::before { background-image: url('./assets/images/game-covers/vocabulary_lab.webp'); }
+.portal-card[data-game="conjugation_lab"]::before { background-image: url('./assets/images/game-covers/conjugation_lab.webp'); }
+.portal-card[data-game="pronunciation_lab"]::before { background-image: url('./assets/images/game-covers/pronunciation_lab.webp'); }
+.portal-card[data-game="africa_geography"]::before { background-image: url('./assets/images/game-covers/africa_geography.webp'); }
+.portal-card[data-game="fun_facts_quiz"]::before { background-image: url('./assets/images/game-covers/fun_facts_quiz.webp'); }
+.portal-card[data-game="story_lab"]::before { background-image: url('./assets/images/game-covers/story_lab.webp'); }
+.portal-card[data-game="reading_lab"]::before { background-image: url('./assets/images/game-covers/reading_lab.webp'); }
+.portal-card[data-game="math_lab"]::before { background-image: url('./assets/images/game-covers/math_lab.webp'); }
+.portal-card[data-game="chemistry"]::before { background-image: url('./assets/images/game-covers/chemistry.webp'); }
+.portal-card[data-game="density"]::before { background-image: url('./assets/images/game-covers/density.webp'); }
+.portal-card[data-game="circuit"]::before { background-image: url('./assets/images/game-covers/circuit.webp'); }
+.portal-card[data-game="botany"]::before { background-image: url('./assets/images/game-covers/botany.webp'); }
+.portal-card[data-game="comet"]::before { background-image: url('./assets/images/game-covers/comet.webp'); }
+.portal-card[data-game="tangram_puzzle"]::before { background-image: url('./assets/images/game-covers/tangram_puzzle.webp'); }
+.portal-card[data-game="maze_quest"]::before { background-image: url('./assets/images/game-covers/maze_quest.webp'); }
+.portal-card > * { position: relative; z-index: 1; }
+.portal-card .card-top-glow, .portal-card .portal-badge, .portal-card .card-rea-badge,
+.portal-card .portal-curriculum-tag, .portal-card .portal-desc,
+.portal-card .portal-counts-badge-bar { display: none !important; }
+.portal-card .portal-card-header {
+  grid-column: 1;
+  grid-row: 2;
+  display: block !important;
+  min-height: 0 !important;
+  padding: 12px 3px 0;
+}
+.portal-card .portal-titles { min-width: 0; }
+.portal-card .portal-titles h3 {
+  display: -webkit-box;
+  min-height: 2.25em;
+  overflow: hidden;
+  color: #173B32;
+  font-size: clamp(.95rem, 1.15vw, 1.1rem) !important;
+  font-weight: 900;
+  line-height: 1.12 !important;
+  text-overflow: ellipsis;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+.game-card-playline {
+  grid-column: 1;
+  grid-row: 3;
+  display: flex;
+  min-height: 34px;
+  align-items: center;
+  gap: 7px;
+  padding: 3px 3px 1px;
+  color: #496257;
+  font-size: .78rem;
+  font-weight: 850;
+  line-height: 1.15;
+}
+.game-card-playline .playline-icon {
+  display: inline-grid;
+  width: 26px;
+  height: 26px;
+  flex: 0 0 26px;
+  place-items: center;
+  border-radius: 9px;
+  background: #F1E7D3;
+  font-size: 16px;
+}
+.game-card-track {
+  inset: 17px 17px auto auto !important;
+  z-index: 3 !important;
+  min-height: 26px !important;
+  padding: 5px 8px !important;
+  border: 1px solid rgba(255,255,255,.6) !important;
+  border-radius: 999px !important;
+  background: rgba(23,59,50,.9) !important;
+  color: #FFFDF5 !important;
+  box-shadow: 0 3px 9px rgba(0,0,0,.18) !important;
+  font-size: .65rem !important;
+}
+@keyframes coverBreathe { from { transform: scale(1); } to { transform: scale(1.035); } }
+@media (max-width: 980px) {
+  .portals-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+@media (max-width: 760px) {
+  .app-nav { padding-top: 42px !important; }
+  .version-cache-pill { display: inline-flex !important; }
+  .portals-grid { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; gap: 12px !important; }
+  .portal-card {
+    min-height: 0 !important;
+    padding: 9px !important;
+    border-radius: 18px !important;
+  }
+  .portal-card::before { height: auto !important; aspect-ratio: 1 / 1; border-radius: 13px; }
+  .portal-card .portal-card-header { display: block !important; padding: 10px 2px 0; }
+  .portal-card .portal-titles h3 { min-height: 2.25em; font-size: clamp(.9rem, 3.8vw, 1.05rem) !important; line-height: 1.12 !important; }
+  .game-card-playline { min-height: 30px; padding: 2px 2px 0; font-size: .72rem; }
+  .game-card-playline .playline-icon { width: 24px; height: 24px; flex-basis: 24px; }
+  .game-card-track { inset: 14px 14px auto auto !important; min-height: 24px !important; font-size: .61rem !important; }
+}
+@media (max-width: 360px) {
+  body { padding-inline: 9px !important; }
+  .portals-grid { gap: 9px !important; }
+  .portal-card { padding: 7px !important; }
+  .portal-card .portal-titles h3 { font-size: .88rem !important; }
+  .game-card-playline { font-size: .68rem; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .portal-card::before { animation: none !important; }
+  .portal-card, .portal-card:hover { transition: none !important; transform: none !important; }
+}
+</style>
+<style>
+.play-world-hero {
+  position: relative; min-height: clamp(108px, 18vw, 176px); overflow: hidden; isolation: isolate;
+  border: 3px solid rgba(255,255,255,.94); border-radius: 24px; background: #173B32;
+  box-shadow: 0 18px 36px -22px rgba(23,59,50,.54);
+}
+.play-world-hero::before, .play-world-hero::after { content: ''; position: absolute; inset: 0; }
+.play-world-hero::before {
+  z-index: -2; background-image: var(--world-art, none); background-position: center 44%; background-size: cover;
+  transform: scale(1.02); animation: playWorldDrift 14s ease-in-out infinite alternate;
+}
+.play-world-hero::after { z-index: -1; background: linear-gradient(90deg, rgba(23,59,50,.34), rgba(23,59,50,.02) 60%, rgba(23,59,50,.08)); }
+@keyframes playWorldDrift { from { transform: scale(1.02) translateX(-.4%); } to { transform: scale(1.08) translateX(.4%); } }
+.arcade-hud { border: 1px solid rgba(255,255,255,.66); border-radius: 22px; background: linear-gradient(115deg, #173B32, #31584B); box-shadow: 0 12px 28px -18px rgba(23,59,50,.64); }
+.hud-title { font-family: 'Fredoka','Nunito',sans-serif; font-size: clamp(1rem,2vw,1.28rem); }
+.hud-badge, .combo-multiplier { border: 1px solid rgba(255,255,255,.28); border-radius: 14px; }
+.level-meta-banner, .ingame-gamified-bar, .activity-stepper { border: 1px solid rgba(29,69,55,.15); border-radius: 20px; background: #FFFEFA; box-shadow: 0 9px 22px -18px rgba(23,59,50,.55); }
+.playground-card { border: 1px solid rgba(29,69,55,.16); border-radius: 24px; background:#FFFEFA; }
+.instruction-box { padding: 14px 16px; border-radius: 18px; background: #F8F5EC; }
+.canvas-wrapper { overflow: hidden; border: 3px solid #FFFEFA; border-radius: 22px; box-shadow: 0 12px 28px -18px rgba(23,59,50,.5); }
+@media (max-width:760px) { .play-world-hero { min-height:112px; border-radius:19px; } .arcade-workspace { gap:11px; } .arcade-hud { padding:11px 12px; border-radius:19px; } .playground-card { padding:12px !important; border-radius:20px !important; } .instruction-box { padding:11px 12px; } }
+@media (prefers-reduced-motion: reduce) { .play-world-hero::before { animation:none; } }
 </style>
 </head>
 <body>
@@ -2678,6 +2878,7 @@ button, select { font: inherit; }
 <main class="shell">
   <!-- TOP HEADER -->
   <header class="app-nav">
+    <button class="version-cache-pill" id="btn-version-cache" title="Nateiva School Game version 1.3.0. Select to refresh the latest release.">NATEIVA · v1.3.0</button>
     <div class="brand-box">
       <div class="brand-icon">🦁</div>
       <div class="brand-titles">
@@ -2700,7 +2901,6 @@ button, select { font: inherit; }
         <option value="en">🇬🇧 English (Studio Voice)</option>
       </select>
       <button class="btn-pill" id="btn-sound-toggle">🔊 Son</button>
-      <button class="version-cache-pill" id="btn-version-cache" title="Nateiva version 1.2.2 • Clear cache and reload">🚀 Nateiva v1.2.2 • 🔄 Recharger</button>
     </div>
   </header>
 
@@ -3111,6 +3311,7 @@ button, select { font: inherit; }
 
   <!-- ARCADE & SIMULATION WORKSPACE -->
   <section class="arcade-workspace" id="arcade-workspace">
+    <div class="play-world-hero" id="game-world-hero" aria-hidden="true"></div>
     <!-- HUD -->
     <div class="arcade-hud">
       <div class="hud-left">
@@ -6753,6 +6954,24 @@ button, select { font: inherit; }
     vocabulary_lab: { icon: '🧺', fr: 'Ramasse les mots', en: 'Collect the words' },
     conjugation_lab: { icon: '⏳', fr: 'Voyage dans le temps', en: 'Travel through time' }
   };
+  const GAME_CARD_TITLES = {
+    grammar_lab: { fr: 'Magie des phrases', en: 'Sentence Magic' },
+    vocabulary_lab: { fr: 'Marché des images', en: 'Picture Market' },
+    conjugation_lab: { fr: 'Train des verbes', en: 'Verb Time Train' },
+    pronunciation_lab: { fr: 'Sons en voyage', en: 'Sound Safari' },
+    africa_geography: { fr: 'Carte d’Afrique', en: 'Africa Explorer' },
+    fun_facts_quiz: { fr: 'Quiz des merveilles', en: 'Wonder Quiz' },
+    story_lab: { fr: 'Contes du baobab', en: 'Baobab Tales' },
+    reading_lab: { fr: 'Sons & syllabes', en: 'Sounds & Syllables' },
+    math_lab: { fr: 'Blocs de calcul', en: 'Number Builders' },
+    chemistry: { fr: 'Labo des potions', en: 'Potion Lab' },
+    density: { fr: 'Flotte ou coule ?', en: 'Float or Sink?' },
+    circuit: { fr: 'Circuit lumineux', en: 'Light the Circuit' },
+    botany: { fr: 'Jardin vivant', en: 'Grow a Garden' },
+    comet: { fr: 'Défense cosmique', en: 'Comet Defender' },
+    tangram_puzzle: { fr: 'Animaux en formes', en: 'Shape Safari' },
+    maze_quest: { fr: 'Safari labyrinthe', en: 'Savanna Maze' }
+  };
 
   function getGameTrack(gameKey = state.game, gradeCode = state.grade) {
     const key = gradeCode + ':' + gameKey;
@@ -6776,6 +6995,9 @@ button, select { font: inherit; }
     document.querySelectorAll('.portal-card[data-game]').forEach(card => {
       const gameKey = card.getAttribute('data-game');
       const track = getGameTrack(gameKey, state.grade);
+      const heading = card.querySelector('.portal-titles h3');
+      const title = GAME_CARD_TITLES[gameKey]?.[state.lang === 'en' ? 'en' : 'fr'];
+      if (heading && title) heading.textContent = title;
       let badge = card.querySelector('.game-card-track');
       if (!badge) {
         badge = document.createElement('span');
@@ -6785,7 +7007,7 @@ button, select { font: inherit; }
       }
       badge.textContent = (state.lang === 'en' ? 'LV ' : 'NIV ') + String(track.level).padStart(2, '0') + ' · ' + track.progress + '/15';
       badge.style.setProperty('--track-progress', Math.round((track.progress / 15) * 100) + '%');
-      card.setAttribute('aria-label', (card.querySelector('h3')?.textContent || gameKey) + ' · ' + (state.lang === 'en' ? 'Level ' : 'Niveau ') + track.level + ' · ' + track.progress + '/15');
+      card.setAttribute('aria-label', (title || heading?.textContent || gameKey) + ' · ' + (state.lang === 'en' ? 'Level ' : 'Niveau ') + track.level + ' · ' + track.progress + '/15');
       let playline = card.querySelector('.game-card-playline');
       if (!playline) {
         playline = document.createElement('span');
@@ -8563,6 +8785,9 @@ button, select { font: inherit; }
     if ($('class-selector-banner')) $('class-selector-banner').style.display = 'none';
     $('level-selector-section').style.display = 'none';
     $('category-tabs').style.display = 'none';
+    $('arcade-workspace').dataset.game = gameKey;
+    const worldArt = $('game-world-hero');
+    if (worldArt && /^[a-z0-9_]+$/.test(gameKey)) worldArt.style.setProperty('--world-art', 'url("./assets/images/game-covers/' + gameKey + '.webp")');
     $('arcade-workspace').classList.add('active');
 
     const isEn = state.lang === 'en';

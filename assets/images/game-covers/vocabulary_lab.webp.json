@@ -1,0 +1,19 @@
+{
+  "format": "WebP quality 88, method 6",
+  "source": "original generated asset",
+  "tool": "OpenAI image_gen",
+  "output": "exec-01cf1108-43a7-4196-a86d-22681b11febc.png",
+  "optimizedFrom": "nateiva-game-covers-v2.png",
+  "prompt": "Create a polished 4 by 4 contact sheet of sixteen DISTINCT premium 3D clay-animation cartoon game-cover illustrations for a bilingual African kids learning arcade, square 2048x2048. Exact regular 4-column x 4-row grid, uniform cells, each cell independent full-bleed vignette with thin warm ivory gutters, no text, no letters, no numbers, no UI, no logos, no borders beyond gutters. One coherent hand-sculpted stop-motion storybook world with tactile clay, expressive small animal heroes Léo lion cub and Kiki bird recurring subtly, lush Cameroon / African savanna settings, luminous cinematic lighting, rich elegant jewel tones with Nateiva red accents, child-safe, inclusive, exquisite detail, crisp focal object with clean composition for mobile crop. TOP ROW left to right: 1 magical grammar bridge with floating puzzle-shaped sentence tokens and lion cub; 2 colorful fruit-market basket with animal helpers sorting picture objects; 3 whimsical time-travel train surrounded by day/night sky; 4 friendly toucan singing into a starry microphone with visible musical sound waves. SECOND ROW: 5 aerial illustrated map-shaped African savanna expedition with baobabs and river; 6 curious chameleon detective finding a glowing fossil/treasure; 7 cozy firefly-lit African folktale camp under giant baobab; 8 adorable hungry letter creature reaching for a colorful picture tile (no letters). THIRD ROW: 9 tactile number tower of colorful wooden blocks and tiny builders; 10 jewel-toned potion lab with bubbling flasks and friendly goggles-wearing cub; 11 bright clear-water harbor with wooden objects floating and stone sinking, expressive water creatures; 12 playful circuit hut workbench with large battery, wire, switch, glowing bulb and smiling cub (no written symbols). BOTTOM ROW: 13 lush seed garden time-lapse scene with growing baobab seedling, rain cloud and sunlight; 14 brave animal pilot in a rounded rocket weaving through harmless colorful comets; 15 vivid geometric tangram pieces forming a lion silhouette on patterned rug; 16 winding storybook savanna road maze with a tiny red jeep, baobab trees and a destination oasis. Ensure every cell is visually distinct and reads instantly, no repeated scene, no scary characters, no text.",
+  "asset": "vocabulary_lab",
+  "cropIndex": {
+    "column": 2,
+    "row": 1
+  },
+  "cropPixels": [
+    319,
+    5,
+    622,
+    309
+  ]
+}

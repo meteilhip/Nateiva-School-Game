@@ -16,5 +16,16 @@ Five reference products were reviewed for their interaction patterns. These are 
 - The web arcade keeps French and English voice support, grade selection, progression, and the existing curriculum content.
 - We use the references for interaction principles only; no characters, screens, or brand assets are copied.
 - The mobile library leads with illustrated covers and one short action prompt per game; long descriptions are secondary.
+- Each of the sixteen existing portals now has its own original cover illustration. On phones, artwork, title, short action, and progress each have a separate zone.
 - Each game type stores level, exercise progress, and wins separately for every class, so maths advancement never advances phonics or science.
 - Every game keeps its own verb and core mechanic: trace, build, match, listen, mix, grow, drop, power, defend, explore, spot, collect, or travel.
+
+## Open-source REA source studies
+
+REA's JavaScript application analyzer was run over the source trees for:
+
+- [Tica Math](https://github.com/Carton/tica-math), a Phaser/TypeScript arithmetic adventure. Use per-skill difficulty and game-flow states as reference patterns.
+- [Moonbeam](https://github.com/bitpshr/moonbeam), a phonics game for early readers. Use its short progressive sound/letter loop, mascot feedback, and audio cues as reference patterns.
+- [Current Viewer](https://github.com/vbario/Current-Viewer), a browser electronics workbench. Use the separation between circuit components, connections, and live feedback as a science-simulation reference.
+
+These projects were inspected for implementation patterns; Nateiva's source, art, curriculum, and characters remain original.

@@ -2,6 +2,14 @@
 
 # Changelog
 
+## 1.3.0 — 2026-11-07
+
+- Added sixteen original cartoon cover illustrations, one for each game in the library.
+- Rebuilt the mobile game shelf as image-led cards with separate title, short action, and per-game level rows to prevent text/art overlap.
+- Added a distinct animated story scene to every game's play screen and refreshed its touch-first activity frame.
+- Moved the visible release badge to the upper-left header and updated it to v1.3.0.
+- Preserved the bilingual curriculum and independent progression for each game and class.
+
 ## 1.2.2 — 2026-11-06
 
 - Run the isolated OVH Compose project through sudo on VPS hosts where the deployment user does not have Docker socket access.
