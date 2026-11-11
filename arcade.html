@@ -2,8 +2,8 @@
 <html lang="fr">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="theme-color" content="#D92F3A">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+<meta name="theme-color" content="#E5252A">
 <title>Nateiva School Game • Arcade Éducative & Simulations Flottantes</title>
 <style>
 /* ==========================================================================
@@ -2331,680 +2331,362 @@ body {
     }
   }
 
-/* NATEIVA FIELD GUIDE — premium illustrated world */
-@font-face {
-  font-family: 'Nunito';
-  src: url('./assets/fonts/nunito-regular.ttf') format('truetype');
-  font-style: normal;
-  font-weight: 400 600;
-  font-display: swap;
-}
-@font-face {
-  font-family: 'Nunito';
-  src: url('./assets/fonts/nunito-bold.ttf') format('truetype');
-  font-style: normal;
-  font-weight: 700 900;
-  font-display: swap;
-}
-@font-face {
-  font-family: 'Fredoka';
-  src: url('./assets/fonts/fredoka-regular.ttf') format('truetype');
-  font-style: normal;
-  font-weight: 400 600;
-  font-display: swap;
-}
-@font-face {
-  font-family: 'Fredoka';
-  src: url('./assets/fonts/fredoka-bold.ttf') format('truetype');
-  font-style: normal;
-  font-weight: 700;
-  font-display: swap;
-}
-:root {
-  --nateiva-red: #D92F3A;
-  --nateiva-red-dark: #A9222D;
-  --nateiva-red-light: #FCE8E5;
-  --nateiva-black: #173B32;
-  --nateiva-black-soft: #31584B;
-  --nateiva-grey-dark: #496257;
-  --nateiva-grey-med: #80948A;
-  --nateiva-grey-light: #E5EAE2;
-  --nateiva-grey-bg: #F8F5EC;
-  --nateiva-white: #FFFEFA;
-  --coca-red: #D92F3A;
-  --coca-red-bright: #EF5156;
-  --coca-red-dark: #A9222D;
-  --coca-red-soft: #FCE8E5;
-  --coca-red-glow: rgba(217, 47, 58, 0.2);
-  --border-card: 1px solid rgba(29, 69, 55, 0.15);
-  --border-subtle: 1px solid rgba(29, 69, 55, 0.12);
-  --border-grey: 1px solid rgba(29, 69, 55, 0.15);
-  --border-glow: 1px solid var(--nateiva-red);
-  --shadow-apple: 0 18px 42px -22px rgba(28, 60, 47, 0.24), 0 3px 10px rgba(28, 60, 47, 0.05);
-  --shadow-hover: 0 22px 44px -20px rgba(28, 60, 47, 0.34), 0 8px 18px rgba(28, 60, 47, 0.09);
-  --shadow-pill: 0 3px 10px rgba(28, 60, 47, 0.06);
-  --shadow-coca-button: 0 9px 20px -9px rgba(169, 34, 45, 0.58), inset 0 1px 0 rgba(255,255,255,.35);
-}
-html { background: #F8F5EC; scroll-behavior: smooth; }
-body {
-  background: radial-gradient(ellipse at 88% 4%, #E8F1E4 0, transparent 32%), #F8F5EC;
-  color: var(--nateiva-black);
-  font-family: 'Nunito', 'Trebuchet MS', sans-serif;
-  padding: clamp(12px, 2.3vw, 30px);
-}
-button, select { font: inherit; }
-.shell { max-width: 1320px; gap: clamp(14px, 2vw, 22px); }
-.app-nav, .class-selector-banner, .level-selector-section, .playground-card {
-  background: rgba(255, 254, 250, .97);
-  border: 1px solid rgba(29, 69, 55, .14);
-  box-shadow: var(--shadow-apple);
-}
-.app-nav { border-radius: 22px; padding: 12px 18px; }
-.brand-icon { background: #173B32; border: 1px solid rgba(255,255,255,.18); }
-.brand-titles h1, .portal-titles h3, .level-selector-header h3,
-.instruction-box h3, .mode-phase-headline, .story-title-text, .funfact-question-title {
-  font-family: 'Fredoka', 'Nunito', sans-serif;
-}
-.brand-titles p, .portal-desc, .level-active-info, .count-pill { color: #496257; }
-.select-pill, .btn-pill, .tab-btn, .class-card-pill, .level-pill {
-  border-color: rgba(29, 69, 55, .17);
-  color: #173B32;
-}
-.class-selector-banner, .level-selector-section { border-radius: 22px; }
-.level-badge-pill, .meta-pill { background: #F1E7D3; color: #564126; border-color: #E4D1AF; }
-.level-pill.active, .tab-btn.active { background: #173B32; border-color: #173B32; color: #FFFDF5; }
-.adventure-hero {
-  min-height: clamp(250px, 29vw, 365px);
-  display: grid;
-  grid-template-columns: minmax(260px, .88fr) minmax(0, 1.12fr);
-  position: relative;
-  overflow: hidden;
-  isolation: isolate;
-  border-radius: 28px;
-  color: #FFF9E9;
-  background: #174539;
-  box-shadow: 0 24px 54px -28px rgba(23, 59, 50, .55);
-}
-.adventure-hero::before {
-  content: '';
-  position: absolute;
-  z-index: -1;
-  inset: 0;
-  background: linear-gradient(90deg, #173B32 0%, #173B32 34%, rgba(23,59,50,.92) 47%, rgba(23,59,50,.08) 77%);
-}
-.adventure-hero-copy {
-  z-index: 1;
-  align-self: center;
-  padding: clamp(24px, 4vw, 54px);
-  max-width: 550px;
-}
-.adventure-hero h2 {
-  max-width: 10ch;
-  font: 600 clamp(2rem, 4.4vw, 4rem)/.98 'Fredoka', 'Nunito', sans-serif;
-  letter-spacing: -.025em;
-  color: #FFF9E9;
-}
-.adventure-hero p {
-  max-width: 35ch;
-  margin-top: 15px;
-  color: #E7F1E6;
-  font-size: clamp(.98rem, 1.2vw, 1.1rem);
-  line-height: 1.48;
-  font-weight: 700;
-}
-.adventure-hero-art {
-  width: 100%; height: 100%; min-height: 250px;
-  object-fit: cover; object-position: 48% center;
-  position: absolute; inset: 0 0 0 auto; z-index: -2;
-  animation: fieldDrift 14s ease-in-out infinite alternate;
-}
-@keyframes fieldDrift { from { transform: scale(1.02) translateX(-.35%); } to { transform: scale(1.08) translateX(.45%); } }
-.hero-start {
-  min-height: 52px; margin-top: 22px;
-  padding: 0 23px; border: 1px solid rgba(255,255,255,.24);
-  border-radius: 16px; background: linear-gradient(135deg, #EF5156, #C92533);
-  color: #fff; font-weight: 900; font-size: 1rem; cursor: pointer;
-  box-shadow: 0 10px 22px -10px rgba(0,0,0,.65);
-  transition: transform .24s cubic-bezier(.2,.8,.2,1), box-shadow .24s ease;
-}
-.hero-start:hover { transform: translateY(-3px); box-shadow: 0 16px 26px -12px rgba(0,0,0,.65); }
-.category-tabs { padding: 2px 0 5px; scrollbar-color: #A9B9A8 transparent; }
-.tab-btn { background: #FFFDF7; border-radius: 13px; box-shadow: none; }
-.portals-grid { grid-template-columns: repeat(auto-fit, minmax(min(100%, 255px), 1fr)); gap: 17px; }
-.portal-card {
-  min-height: 334px;
-  padding: 157px 19px 18px;
-  gap: 11px;
-  border: 1px solid rgba(29,69,55,.15);
-  border-radius: 21px;
-  background: #FFFEFA;
-  box-shadow: 0 12px 28px -20px rgba(28,60,47,.36);
-  animation: none;
-  transition: transform .24s cubic-bezier(.2,.8,.2,1), box-shadow .24s ease, border-color .24s ease;
-}
-.portal-card::before {
-  content: '';
-  position: absolute;
-  inset: 0 0 auto;
-  height: 142px;
-  background-color: #F2EBDD;
-  background-image: url('./assets/images/nateiva-game-atlas.png');
-  background-size: 300% 200%;
-  background-position: 0 0;
-  background-repeat: no-repeat;
-}
-.portal-card[data-cat="read"]::before, .portal-card[data-cat="story"]::before,
-.portal-card[data-cat="grammar"]::before, .portal-card[data-cat="vocab"]::before { background-position: 50% 0; }
-.portal-card[data-cat="sci"]::before { background-position: 100% 0; }
-.portal-card[data-cat="geo"]::before, .portal-card[data-cat="quiz"]::before { background-position: 0 100%; }
-.portal-card[data-cat="voice"]::before { background-position: 50% 100%; }
-.portal-card[data-cat="puzzle"]::before { background-position: 100% 100%; }
-.portal-card[data-cat="arcade"]::before { background-position: 0 0; }
-.portal-card::after { content: ''; position: absolute; inset: 131px 0 auto; height: 28px; background: linear-gradient(180deg, transparent, #FFFEFA); pointer-events:none; }
-.portal-card > * { position: relative; z-index: 1; }
-.portal-card .card-top-glow { display: none; }
-.portal-card .portal-card-header { align-items: flex-start; }
-.portal-card .portal-badge { display: none; }
-.portal-card .card-rea-badge { display: none; }
-.portal-titles h3 { font-size: 1.32rem; line-height: 1.08; color: #173B32; }
-.portal-curriculum-tag { color: #8E5E22; font-size: .74rem; line-height: 1.3; }
-.portal-desc { display: block; font-size: .88rem; line-height: 1.42; font-weight: 650; }
-.portal-counts-badge-bar { border-top: 1px solid rgba(29,69,55,.13); margin-top: auto; padding-top: 11px; gap: 6px; }
-.count-pill { border-width: 1px; border-color: rgba(29,69,55,.14); background: #F5F2E9; font-size: .7rem; padding: 5px 9px; }
-.count-pill.black { color: #FFFDF5; background: #173B32; border-color: #173B32; }
-.portal-card:hover, .portal-card:focus-visible {
-  animation: none; transform: translateY(-5px);
-  box-shadow: 0 22px 40px -22px rgba(23,59,50,.42);
-  border-color: #D92F3A;
-}
-.portal-card:focus-visible, button:focus-visible, select:focus-visible, [role="button"]:focus-visible {
-  outline: 3px solid #D92F3A; outline-offset: 3px;
-}
-.arcade-workspace { --phase-color: #315F4D; }
-.arcade-workspace[data-phase="2"] { --phase-color: #A84B31; }
-.arcade-workspace[data-phase="3"] { --phase-color: #8E6B2D; }
-.arcade-hud { background: #173B32; border: 1px solid rgba(255,255,255,.12); }
-.level-meta-banner, .ingame-gamified-bar { background: #FFFDF7; border-color: rgba(29,69,55,.15); }
-.activity-mode-banner { background: #EAF1E5; color: #173B32; border: 1px solid rgba(29,69,55,.12); }
-.activity-mode-banner.mode-phase-2 { background: #FCE9D9; color: #693B24; }
-.activity-mode-banner.mode-phase-3 { background: #F2E8CE; color: #594423; }
-.mode-phase-kicker { color: var(--phase-color); }
-.mode-mascot-icon {
-  width: 56px; height: 56px; flex: 0 0 56px; font-size: 0;
-  border-radius: 14px; background: url('./assets/images/nateiva-game-atlas.png') 50% 0 / 300% 200% no-repeat;
-  border: 1px solid rgba(29,69,55,.12); box-shadow: 0 5px 14px rgba(23,59,50,.14);
-}
-.arcade-workspace[data-phase="2"] .mode-mascot-icon { background-position: 0 0; }
-.arcade-workspace[data-phase="3"] .mode-mascot-icon { background-position: 0 100%; }
-.mode-xp-pill { background: #FFFDF7; color: var(--phase-color); border: 1px solid rgba(29,69,55,.12); }
-.playground-card { border-radius: 24px; padding: clamp(12px, 2vw, 22px); }
-.instruction-header { gap: 12px; }
-.instruction-box { background: #F8F5EC; border-color: rgba(29,69,55,.13); }
-.instruction-box h3 { color: #173B32; }
-.btn-audio-speak, .btn-action { border-radius: 14px; }
-.answers-container { gap: 10px; }
-.btn-interactive, .btn-comp-option, .btn-mcq-choice, .btn-lang-choice {
-  min-height: 54px; border-radius: 15px; border-color: rgba(29,69,55,.16);
-  background: #FFFEFA; color: #173B32;
-  box-shadow: 0 5px 12px -8px rgba(23,59,50,.3);
-  transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease;
-}
-.btn-interactive:hover, .btn-comp-option:hover, .btn-mcq-choice:hover, .btn-lang-choice:hover {
-  transform: translateY(-2px); box-shadow: 0 10px 20px -13px rgba(23,59,50,.55); border-color: #D92F3A;
-}
-.answers-container[data-phase="2"]:not(.matrix-mode) .btn-interactive { animation: blockDrop .58s cubic-bezier(.2,.85,.28,1) both; }
-.answers-container[data-phase="3"]:not(.matrix-mode) .btn-interactive { background: #F2E8CE; border-color: #D8B976; }
-.answers-container.matrix-mode {
-  display: grid; grid-template-columns: repeat(auto-fit, minmax(108px, 1fr)); gap: 10px;
-  padding: 15px; border-radius: 18px; border: 1px solid rgba(242,210,145,.45);
-  background-color: #173B32;
-  background-image: linear-gradient(rgba(255,248,224,.12) 1px, transparent 1px), linear-gradient(90deg, rgba(255,248,224,.12) 1px, transparent 1px);
-  background-size: 34px 34px;
-}
-.answers-container.matrix-mode .btn-interactive {
-  min-height: 78px; padding: 13px; justify-content: center; text-align: center;
-  background: #F3D99C; border: 2px solid #FFF4D4; color: #173B32;
-  border-radius: 12px; font: 700 1.1rem/1.1 'Fredoka', 'Nunito', sans-serif;
-  animation: blockDrop .62s cubic-bezier(.2,.85,.28,1) both;
-}
-.answers-container.matrix-mode .btn-interactive:nth-child(2) { animation-delay: .08s; }
-.answers-container.matrix-mode .btn-interactive:nth-child(3) { animation-delay: .16s; }
-.answers-container.matrix-mode .btn-interactive:nth-child(4) { animation-delay: .24s; }
-.answers-container.mastery-mode .btn-interactive { background: #F2E8CE; border-color: #D8B976; font: 700 1.05rem/1.1 'Fredoka', 'Nunito', sans-serif; }
-@keyframes blockDrop { from { opacity: 0; transform: translateY(-18px) scale(.9); } to { opacity: 1; transform: translateY(0) scale(1); } }
-#activity-stepper .step-node > span:first-child {
-  width: 39px; height: 39px; flex: 0 0 39px; font-size: 0;
-  border-radius: 11px; background: url('./assets/images/nateiva-game-atlas.png') 50% 0 / 300% 200% no-repeat;
-  border: 1px solid rgba(29,69,55,.14);
-}
-#step-node-1 > span:first-child { background-position: 50% 0 !important; }
-#step-node-2 > span:first-child { background-position: 0 0 !important; }
-#step-node-3 > span:first-child { background-position: 0 100% !important; }
-.lang-quest-stage[data-phase="2"] .btn-lang-choice { animation: blockDrop .6s cubic-bezier(.2,.85,.28,1) both; }
-.lang-quest-stage[data-phase="3"] .btn-lang-choice { background: #F2E8CE; border-color: #D8B976; }
-.reading-stage, .pronunciation-stage, .story-stage, .geography-stage, .funfacts-stage, .lang-quest-stage {
-  border-radius: 22px; border-color: rgba(29,69,55,.14); background-color: #FFFEFA;
-}
-.tutor-panel, .khan-visual-explainer { border-color: rgba(29,69,55,.14); background: #F8F5EC; }
-.footer-credits { color: #65786D; }
-::selection { background: #F4C974; color: #173B32; }
-@media (max-width: 760px) {
-  .adventure-hero { min-height: 320px; grid-template-columns: 1fr; align-items: end; }
-  .adventure-hero::before { background: linear-gradient(0deg, rgba(23,59,50,.96) 0%, rgba(23,59,50,.84) 42%, rgba(23,59,50,.06) 100%); }
-  .adventure-hero-art { object-position: 43% center; }
-  .adventure-hero-copy { padding: 28px 22px; }
-  .adventure-hero h2 { max-width: 12ch; font-size: clamp(2rem, 9vw, 3rem); }
-  .portal-card { min-height: 320px; padding-top: 150px; }
-}
-@media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
-}
 
-/* A separate illustrated adventure card and mastery track for every game. */
-.portal-card { min-height: 376px; padding-top: 208px; }
-.portal-card::before { height: 194px; background-size: 300% 200%; }
-.portal-card::after { inset-block-start: 178px; height: 34px; }
-.portal-card .portal-card-header { min-height: 52px; }
-.game-card-playline {
-  display: flex; align-items: center; gap: 8px; min-height: 34px;
-  color: #31584B; font: 800 .84rem/1.2 'Nunito', sans-serif;
-}
-.game-card-playline .playline-icon {
-  display: grid; place-items: center; width: 29px; height: 29px; flex: 0 0 29px;
-  border-radius: 10px; color: #7C4C1D; background: #F5E8CB; font-size: 16px;
-}
-.game-card-track {
-  position: absolute; z-index: 3; inset: 12px 12px auto auto;
-  display: flex; align-items: center; gap: 7px; min-height: 31px; padding: 4px 10px;
-  color: #fffdf5; background: linear-gradient(90deg, #31584B var(--track-progress, 0%), rgba(23,59,50,.94) var(--track-progress, 0%)); border: 1px solid rgba(255,255,255,.52);
-  border-radius: 11px; box-shadow: 0 5px 13px rgba(17,38,32,.25);
-  font: 900 .72rem/1 'Nunito', sans-serif; letter-spacing: .02em;
-}
-.game-card-track::before { content: '✦'; color: #F3D99C; font-size: 13px; }
-.portal-card[data-game="maze_quest"]::before,
-.portal-card[data-game="math_lab"]::before,
-.portal-card[data-game="comet"]::before,
-.portal-card[data-game="tangram_puzzle"]::before { animation: cardArtFloat 10s ease-in-out infinite alternate; }
-.portal-card[data-game="reading_lab"]::before,
-.portal-card[data-game="story_lab"]::before,
-.portal-card[data-game="vocabulary_lab"]::before,
-.portal-card[data-game="grammar_lab"]::before,
-.portal-card[data-game="conjugation_lab"]::before { animation: cardArtFloat 12s ease-in-out -4s infinite alternate; }
-.portal-card[data-game="chemistry"]::before,
-.portal-card[data-game="botany"]::before,
-.portal-card[data-game="density"]::before,
-.portal-card[data-game="circuit"]::before { animation: cardArtFloat 11s ease-in-out -2s infinite alternate; }
-@keyframes cardArtFloat { from { background-position-y: 1%; } to { background-position-y: 6%; } }
-.portal-card:focus-visible { outline: 3px solid #D92F3A; outline-offset: 4px; }
-.portal-card .portal-desc { max-width: 44ch; }
-@media (max-width: 760px) {
-  body { padding: max(10px, env(safe-area-inset-top)) 12px max(16px, env(safe-area-inset-bottom)); }
-  .portals-grid { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; gap: 12px !important; }
-  .portal-card {
-    min-width: 0; min-height: 292px !important; padding: 165px 12px 13px !important;
-    gap: 8px !important; border-radius: 18px !important;
+  /* ============================================================================
+   * V10.0 RHEA RE-ENGINEERED TOP KIDS EDUCATIONAL GAME ENGINE STYLES
+   * Modeled on Khan Academy Kids + Duolingo ABC/Math + PhET + Prodigy Quest Map
+   * ============================================================================ */
+  .ingame-lvl-chip.chest-node {
+    background: linear-gradient(135deg, #1E1B4B 0%, #312E81 100%);
+    border-color: #F59E0B;
   }
-  .portal-card::before { height: 154px !important; }
-  .portal-card::after { inset-block-start: 139px !important; height: 27px !important; }
-  .portal-card .portal-card-header { display: block; min-height: 0; }
-  .portal-card .portal-titles h3 { font-size: clamp(.92rem, 4vw, 1.1rem) !important; line-height: 1.08; }
-  .portal-card .portal-curriculum-tag { display: none; }
-  .portal-card .portal-desc, .portal-card .portal-counts-badge-bar { display: none !important; }
-  .game-card-playline { min-height: 30px; gap: 6px; font-size: .74rem; line-height: 1.12; }
-  .game-card-playline .playline-icon { width: 26px; height: 26px; flex-basis: 26px; }
-  .game-card-track { inset: 9px 9px auto auto; min-height: 28px; padding: 4px 8px; font-size: .67rem; }
-  #level-selector-section { display: none !important; }
-  .class-selector-banner { margin-bottom: 0; }
-  .adventure-hero { min-height: 300px; }
-  .app-nav { align-items: flex-start; }
-  .nav-actions { gap: 7px; }
-  .version-cache-pill { display: none; }
-  .select-pill, .btn-pill { min-height: 44px; }
-  .btn-action, .btn-audio-speak, .btn-home-top, .dpad-btn, .btn-interactive, .btn-mcq-choice, .btn-comp-option { min-height: 48px; }
-}
-@media (max-width: 360px) {
-  .portal-card { min-height: 276px !important; padding-inline: 10px !important; }
-  .game-card-playline { font-size: .69rem; }
-}
-.level-selector-section { display: none !important; }
-@media (prefers-reduced-motion: reduce) {
-  .portal-card::before { animation: none !important; }
-}
+  .rhea-phase-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 4px 10px;
+    border-radius: 999px;
+    font-size: 0.74rem;
+    font-weight: 900;
+    background: rgba(56, 189, 248, 0.18);
+    color: #E0F2FE;
+    border: 1.5px solid rgba(56, 189, 248, 0.5);
+  }
+  .khan-visual-explainer.active {
+    display: flex !important;
+    flex-direction: column;
+    background: linear-gradient(135deg, #0F172A 0%, #1E293B 100%) !important;
+    border: 2px solid rgba(56, 189, 248, 0.55) !important;
+    box-shadow: 0 8px 20px rgba(15, 23, 42, 0.22) !important;
+  }
 
-/* 1.3 illustrated game shelf: art and labels have separate, stable rows. */
-.app-nav {
-  position: relative;
-  padding-top: 42px !important;
-}
-.version-cache-pill {
-  position: absolute;
-  inset: 8px auto auto 12px;
-  z-index: 5;
-  display: inline-flex !important;
-  min-height: 26px;
-  padding: 4px 10px;
-  border: 1px solid rgba(255,255,255,.62);
-  border-radius: 999px;
-  background: linear-gradient(120deg, #173B32, #31584B);
-  color: #FFFDF5;
-  box-shadow: 0 4px 12px rgba(23,59,50,.22);
-  font-size: .72rem;
-  line-height: 1;
-  letter-spacing: .02em;
-  cursor: pointer;
-}
-.version-cache-pill:hover { transform: translateY(-1px); background: #D92F3A; }
 
-.portals-grid {
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 16px;
-  align-items: stretch;
-}
-.portal-card {
-  display: grid !important;
-  grid-template-columns: minmax(0, 1fr);
-  grid-template-rows: auto auto auto;
-  align-content: start;
-  gap: 0 !important;
-  min-width: 0;
-  min-height: 0 !important;
-  padding: 11px !important;
-  overflow: hidden;
-  border: 1px solid rgba(29,69,55,.16);
-  border-radius: 21px !important;
-  background: #FFFEFA;
-  box-shadow: 0 10px 24px -16px rgba(23,59,50,.5), 0 2px 8px rgba(23,59,50,.06);
-  animation: none !important;
-}
-.portal-card:hover, .portal-card:focus-visible {
-  transform: translateY(-4px);
-  border-color: #D92F3A;
-  box-shadow: 0 18px 32px -17px rgba(23,59,50,.52), 0 0 0 2px rgba(217,47,58,.12);
-}
-.portal-card::before {
-  position: relative !important;
-  inset: auto !important;
-  z-index: 0;
-  display: block;
-  grid-column: 1;
-  grid-row: 1;
-  width: 100%;
-  height: auto !important;
-  aspect-ratio: 1 / 1;
-  border-radius: 15px;
-  background-image: none;
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  box-shadow: inset 0 0 0 1px rgba(17,24,39,.08);
-  animation: coverBreathe 9s ease-in-out infinite alternate;
-  content: '';
-}
-.portal-card::after { display: none !important; }
-.portal-card[data-game="grammar_lab"]::before { background-image: url('./assets/images/game-covers/grammar_lab.webp'); }
-.portal-card[data-game="vocabulary_lab"]::before { background-image: url('./assets/images/game-covers/vocabulary_lab.webp'); }
-.portal-card[data-game="conjugation_lab"]::before { background-image: url('./assets/images/game-covers/conjugation_lab.webp'); }
-.portal-card[data-game="pronunciation_lab"]::before { background-image: url('./assets/images/game-covers/pronunciation_lab.webp'); }
-.portal-card[data-game="africa_geography"]::before { background-image: url('./assets/images/game-covers/africa_geography.webp'); }
-.portal-card[data-game="fun_facts_quiz"]::before { background-image: url('./assets/images/game-covers/fun_facts_quiz.webp'); }
-.portal-card[data-game="story_lab"]::before { background-image: url('./assets/images/game-covers/story_lab.webp'); }
-.portal-card[data-game="reading_lab"]::before { background-image: url('./assets/images/game-covers/reading_lab.webp'); }
-.portal-card[data-game="math_lab"]::before { background-image: url('./assets/images/game-covers/math_lab.webp'); }
-.portal-card[data-game="chemistry"]::before { background-image: url('./assets/images/game-covers/chemistry.webp'); }
-.portal-card[data-game="density"]::before { background-image: url('./assets/images/game-covers/density.webp'); }
-.portal-card[data-game="circuit"]::before { background-image: url('./assets/images/game-covers/circuit.webp'); }
-.portal-card[data-game="botany"]::before { background-image: url('./assets/images/game-covers/botany.webp'); }
-.portal-card[data-game="comet"]::before { background-image: url('./assets/images/game-covers/comet.webp'); }
-.portal-card[data-game="tangram_puzzle"]::before { background-image: url('./assets/images/game-covers/tangram_puzzle.webp'); }
-.portal-card[data-game="maze_quest"]::before { background-image: url('./assets/images/game-covers/maze_quest.webp'); }
-.portal-card[data-game="math_tetris"]::before { background-image: url('./assets/images/game-covers/math_tetris.webp'); }
-.portal-card[data-game="safari_racer"]::before { background-image: url('./assets/images/game-covers/safari_racer.webp'); }
-.portal-card > * { position: relative; z-index: 1; }
-.portal-card .card-top-glow, .portal-card .portal-badge, .portal-card .card-rea-badge,
-.portal-card .portal-curriculum-tag, .portal-card .portal-desc,
-.portal-card .portal-counts-badge-bar { display: none !important; }
-.portal-card .portal-card-header {
-  grid-column: 1;
-  grid-row: 2;
-  display: block !important;
-  min-height: 0 !important;
-  padding: 12px 3px 0;
-}
-.portal-card .portal-titles { min-width: 0; }
-.portal-card .portal-titles h3 {
-  display: -webkit-box;
-  min-height: 2.25em;
-  overflow: hidden;
-  color: #173B32;
-  font-size: clamp(.95rem, 1.15vw, 1.1rem) !important;
-  font-weight: 900;
-  line-height: 1.12 !important;
-  text-overflow: ellipsis;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 2;
-}
-.game-card-playline {
-  grid-column: 1;
-  grid-row: 3;
-  display: flex;
-  min-height: 34px;
-  align-items: center;
-  gap: 7px;
-  padding: 3px 3px 1px;
-  color: #496257;
-  font-size: .78rem;
-  font-weight: 850;
-  line-height: 1.15;
-}
-.game-card-playline .playline-icon {
-  display: inline-grid;
-  width: 26px;
-  height: 26px;
-  flex: 0 0 26px;
-  place-items: center;
-  border-radius: 9px;
-  background: #F1E7D3;
-  font-size: 16px;
-}
-.game-card-track {
-  inset: 17px 17px auto auto !important;
-  z-index: 3 !important;
-  min-height: 26px !important;
-  padding: 5px 8px !important;
-  border: 1px solid rgba(255,255,255,.6) !important;
-  border-radius: 999px !important;
-  background: rgba(23,59,50,.9) !important;
-  color: #FFFDF5 !important;
-  box-shadow: 0 3px 9px rgba(0,0,0,.18) !important;
-  font-size: .65rem !important;
-}
-@keyframes coverBreathe { from { transform: scale(1); } to { transform: scale(1.035); } }
-@media (max-width: 980px) {
-  .portals-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
-}
-@media (max-width: 760px) {
-  .app-nav { padding-top: 42px !important; }
-  .version-cache-pill { display: inline-flex !important; }
-  .portals-grid { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; gap: 12px !important; }
-  .portal-card {
-    min-height: 0 !important;
-    padding: 9px !important;
+  /* ============================================================================
+   * V11.0 RHEA AUDIO-FIRST ICON-DRIVEN UI & CLASS-TO-CLASS JOURNEY LADDER
+   * Designed for Pre-Readers & Young Learners (Zero Text Clutter + 100% Audio)
+   * ============================================================================ */
+  /* Hide wordy text paragraphs, technical subtitles & verbose coach chips */
+  .portal-desc,
+  .portal-curriculum-tag,
+  .portal-counts-badge-bar,
+  .class-curriculum-strip,
+  .level-meta-banner,
+  .activity-mode-banner,
+  .arcade-controls-bar,
+  #curriculum-cue,
+  .khan-steps-track,
+  .khan-coach-badge {
+    display: none !important;
+  }
+
+  /* Make Khan Visual Explainer a sleek 2-button Audio + Visual Helper Bar */
+  .khan-visual-explainer.active {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding: 8px 12px !important;
+    margin: 6px 0 !important;
+    background: linear-gradient(135deg, #0F172A 0%, #1E293B 100%) !important;
+    border: 2px solid #38BDF8 !important;
     border-radius: 18px !important;
   }
-  .portal-card::before { height: auto !important; aspect-ratio: 1 / 1; border-radius: 13px; }
-  .portal-card .portal-card-header { display: block !important; padding: 10px 2px 0; }
-  .portal-card .portal-titles h3 { min-height: 2.25em; font-size: clamp(.9rem, 3.8vw, 1.05rem) !important; line-height: 1.12 !important; }
-  .game-card-playline { min-height: 30px; padding: 2px 2px 0; font-size: .72rem; }
-  .game-card-playline .playline-icon { width: 24px; height: 24px; flex-basis: 24px; }
-  .game-card-track { inset: 14px 14px auto auto !important; min-height: 24px !important; font-size: .61rem !important; }
-}
-@media (max-width: 360px) {
-  body { padding-inline: 9px !important; }
-  .portals-grid { gap: 9px !important; }
-  .portal-card { padding: 7px !important; }
-  .portal-card .portal-titles h3 { font-size: .88rem !important; }
-  .game-card-playline { font-size: .68rem; }
-}
-@media (prefers-reduced-motion: reduce) {
-  .portal-card::before { animation: none !important; }
-  .portal-card, .portal-card:hover { transition: none !important; transform: none !important; }
-}
-</style>
-<style>
-.play-world-hero {
-  position: relative; min-height: clamp(108px, 18vw, 176px); overflow: hidden; isolation: isolate;
-  border: 3px solid rgba(255,255,255,.94); border-radius: 24px; background: #173B32;
-  box-shadow: 0 18px 36px -22px rgba(23,59,50,.54);
-}
-.play-world-hero::before, .play-world-hero::after { content: ''; position: absolute; inset: 0; }
-.play-world-hero::before {
-  z-index: -2; background-image: var(--world-art, none); background-position: center 44%; background-size: cover;
-  transform: scale(1.02); animation: playWorldDrift 14s ease-in-out infinite alternate;
-}
-.play-world-hero::after { z-index: -1; background: linear-gradient(90deg, rgba(23,59,50,.34), rgba(23,59,50,.02) 60%, rgba(23,59,50,.08)); }
-@keyframes playWorldDrift { from { transform: scale(1.02) translateX(-.4%); } to { transform: scale(1.08) translateX(.4%); } }
-.arcade-hud { border: 1px solid rgba(255,255,255,.66); border-radius: 22px; background: linear-gradient(115deg, #173B32, #31584B); box-shadow: 0 12px 28px -18px rgba(23,59,50,.64); }
-.hud-title { font-family: 'Fredoka','Nunito',sans-serif; font-size: clamp(1rem,2vw,1.28rem); }
-.hud-badge, .combo-multiplier { border: 1px solid rgba(255,255,255,.28); border-radius: 14px; }
-.level-meta-banner, .ingame-gamified-bar, .activity-stepper { border: 1px solid rgba(29,69,55,.15); border-radius: 20px; background: #FFFEFA; box-shadow: 0 9px 22px -18px rgba(23,59,50,.55); }
-.playground-card { border: 1px solid rgba(29,69,55,.16); border-radius: 24px; background:#FFFEFA; }
-.instruction-box { padding: 14px 16px; border-radius: 18px; background: #F8F5EC; }
-.canvas-wrapper { overflow: hidden; border: 3px solid #FFFEFA; border-radius: 22px; box-shadow: 0 12px 28px -18px rgba(23,59,50,.5); }
-@media (max-width:760px) { .play-world-hero { min-height:112px; border-radius:19px; } .arcade-workspace { gap:11px; } .arcade-hud { padding:11px 12px; border-radius:19px; } .playground-card { padding:12px !important; border-radius:20px !important; } .instruction-box { padding:11px 12px; } }
-@media (prefers-reduced-motion: reduce) { .play-world-hero::before { animation:none; } }
-</style>
-<style>
-/* Three language games, three separate ways to play. */
-.lang-quest-stage[data-game="vocabulary_lab"] .lang-hero-banner,
-.lang-quest-stage[data-game="grammar_lab"] .lang-hero-banner,
-.lang-quest-stage[data-game="conjugation_lab"] .lang-hero-banner {
-  color: #173B32;
-  border: 1px solid rgba(23,59,50,.16);
-  box-shadow: 0 16px 30px -20px rgba(23,59,50,.42);
-}
-.lang-quest-stage[data-game="vocabulary_lab"] .lang-hero-banner { background: linear-gradient(135deg,#F8EFD8,#E8F4E8 62%,#F4E7CF); }
-.lang-quest-stage[data-game="grammar_lab"] .lang-hero-banner { background: linear-gradient(135deg,#F8E8CC,#FFFDF6 58%,#E8F2EA); }
-.lang-quest-stage[data-game="conjugation_lab"] .lang-hero-banner { background: linear-gradient(135deg,#DCEBF0,#F7F2E2 56%,#E9E4F6); }
-.lang-quest-stage[data-game="vocabulary_lab"] .lang-sentence-display,
-.lang-quest-stage[data-game="grammar_lab"] .lang-sentence-display,
-.lang-quest-stage[data-game="conjugation_lab"] .lang-sentence-display { color:#173B32; background:rgba(255,255,255,.58); }
-.lang-quest-stage[data-game="vocabulary_lab"] .lang-rule-tip,
-.lang-quest-stage[data-game="grammar_lab"] .lang-rule-tip,
-.lang-quest-stage[data-game="conjugation_lab"] .lang-rule-tip { color:#31584B; background:rgba(255,255,255,.7); border-color:rgba(23,59,50,.18); }
-.lang-quest-stage[data-game="vocabulary_lab"] .lang-mode-badge,
-.lang-quest-stage[data-game="grammar_lab"] .lang-mode-badge,
-.lang-quest-stage[data-game="conjugation_lab"] .lang-mode-badge { color:#173B32; }
-.picture-match-board { display:grid; grid-template-columns:1fr 1fr; gap:clamp(10px,2vw,18px); align-items:stretch; }
-.picture-match-lane { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:clamp(8px,1.5vw,14px); padding:clamp(8px,1.6vw,14px); border-radius:20px; background:#F8F5EC; }
-.picture-match-card,.picture-match-word { min-width:0; min-height:clamp(76px,11vw,118px); padding:10px; border:1px solid rgba(23,59,50,.15); border-radius:16px; color:#173B32; background:#FFFEFA; box-shadow:0 10px 22px -18px rgba(23,59,50,.6); cursor:pointer; transition:transform .22s cubic-bezier(.2,.8,.2,1),border-color .2s,background .2s,box-shadow .2s; }
-.picture-match-card { position:relative; display:grid; place-items:center; }
-.picture-match-illustration { font-size:clamp(2rem,5vw,3.4rem); filter:drop-shadow(0 6px 4px rgba(23,59,50,.14)); transition:transform .3s cubic-bezier(.2,.8,.2,1); }
-.picture-match-hint { position:absolute; right:8px; bottom:5px; font-size:.78rem; }
-.picture-match-word { font:800 clamp(.9rem,2vw,1.12rem)/1.2 'Nunito',sans-serif; }
-.picture-match-card:hover,.picture-match-word:hover { transform:translateY(-3px) rotateX(4deg); border-color:#D92F3A; }
-.picture-match-card.is-selected { background:#FFF1D2; border-color:#D79520; box-shadow:0 12px 22px -14px rgba(177,112,22,.5); }
-.picture-match-card.is-selected .picture-match-illustration { transform:translateY(-4px) scale(1.12) rotate(-5deg); }
-.picture-match-card.is-matched,.picture-match-word.is-matched { background:#E5F1E4; border-color:#52896B; opacity:.72; }
-.picture-match-word.is-miss { animation:pictureMatchWiggle .32s ease-in-out; border-color:#D92F3A; }
-@keyframes pictureMatchWiggle { 25%{transform:translateX(-5px)} 75%{transform:translateX(5px)} }
-.sentence-train-deck { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:12px; perspective:900px; }
-.sentence-car { min-height:96px; padding:10px 8px; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:7px; border:1px solid rgba(23,59,50,.16); border-radius:14px; background:linear-gradient(155deg,#FFFDF7,#F2E7D1); color:#173B32; font:800 1rem/1.2 'Nunito',sans-serif; box-shadow:0 13px 18px -15px rgba(23,59,50,.55); cursor:grab; transform:perspective(700px) rotateX(5deg); transition:transform .22s,box-shadow .22s; }
-.sentence-car:hover,.sentence-car:focus-visible { transform:perspective(700px) rotateX(0) translateY(-4px); box-shadow:0 16px 22px -15px rgba(23,59,50,.58); }
-.sentence-car-window { width:38px;height:30px;display:grid;place-items:center;border:1px solid rgba(23,59,50,.15);border-radius:9px;background:#DCEBF0;font-size:1.25rem; }
-.grammar-drop-slot { cursor:copy; border-style:dashed !important; background:#F3D99C !important; color:#173B32 !important; }
-.grammar-drop-slot.is-correct { background:#4D8B64 !important; color:#fff !important; animation:carriageSnap .45s cubic-bezier(.2,.8,.2,1); }
-.train-departure .sentence-car { animation:trainRide .85s cubic-bezier(.2,.8,.2,1) both; }
-.train-departure .sentence-car:nth-child(2) { animation-delay:.06s; }
-.train-departure .sentence-car:nth-child(3) { animation-delay:.12s; }
-@keyframes carriageSnap { 50%{transform:scale(1.16) rotate(-4deg)} }
-@keyframes trainRide { to{transform:perspective(700px) translateX(130vw) rotateY(-8deg);opacity:.15} }
-.time-portal-game { display:flex; flex-direction:column; gap:16px; }
-.time-portal-track { position:relative; display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:clamp(8px,2vw,18px); padding:12px 4px; }
-.time-portal-track::before { content:''; position:absolute; z-index:0; left:12%;right:12%;top:50%;height:4px;border-radius:4px;background:linear-gradient(90deg,#D98F63,#EAC86D,#779CB1); }
-.time-portal { position:relative; z-index:1; display:flex; align-items:center; justify-content:center; gap:9px; min-height:clamp(72px,10vw,104px); padding:10px; border:1px solid rgba(23,59,50,.16); border-radius:18px; background:#FFFEFA; color:#173B32; font:900 .9rem/1.1 'Nunito',sans-serif; box-shadow:0 12px 22px -18px rgba(23,59,50,.55); cursor:pointer; transition:transform .22s,background .2s,box-shadow .2s; }
-.time-portal:hover,.time-portal.is-active { transform:translateY(-4px) scale(1.02); background:#F3E9D0; box-shadow:0 15px 24px -16px rgba(23,59,50,.48); }
-.time-portal-orb { width:46px;height:46px;display:grid;place-items:center;border-radius:50%;background:linear-gradient(145deg,#FFF,#E7E0CC);font-size:1.55rem;box-shadow:0 6px 12px -8px rgba(23,59,50,.55); }
-.time-verb-deck { display:flex; flex-wrap:wrap; justify-content:center; gap:10px; min-height:54px; }
-.time-verb-token { display:flex; align-items:center; gap:8px; min-height:54px; padding:8px 14px; border:1px solid rgba(23,59,50,.16); border-radius:14px; background:#FFFEFA; color:#173B32; font:800 1rem/1.1 'Nunito',sans-serif; box-shadow:0 10px 18px -16px rgba(23,59,50,.6); cursor:pointer; transition:transform .2s,box-shadow .2s; }
-.time-verb-token:hover { transform:translateY(-3px) rotate(-1deg); box-shadow:0 13px 20px -14px rgba(23,59,50,.5); }
-.time-verb-token.verb-flight { animation:verbOrbit .48s ease-in both; }
-@keyframes verbOrbit { to{transform:translateY(-46px) scale(.76);opacity:.1} }
-.new-game-stage { width:min(100%,1040px); margin:0 auto; padding:clamp(12px,2.5vw,24px); border:1px solid rgba(23,59,50,.14); border-radius:24px; background:linear-gradient(155deg,#FFFDF7,#F4EBD6); box-shadow:0 18px 38px -24px rgba(23,59,50,.5); }
-.new-game-intro { display:flex; align-items:center; gap:14px; margin-bottom:16px; padding:12px 14px; border-radius:17px; background:rgba(255,255,255,.72); }
-.new-game-mascot { width:52px;height:52px;display:grid;place-items:center;flex:none;border-radius:16px;background:#F3D99C;font-size:30px;box-shadow:0 9px 18px -12px rgba(23,59,50,.55); }
-.new-game-intro h2 { margin:0;color:#173B32;font:900 clamp(1.15rem,3vw,1.6rem)/1.1 'Fredoka','Nunito',sans-serif; }
-.new-game-intro p { margin:4px 0 0;color:#31584B;font:700 .96rem/1.3 'Nunito',sans-serif; }
-.new-game-audio { width:48px;height:48px;flex:none;margin-left:auto;border:1px solid rgba(23,59,50,.14);border-radius:15px;background:#FFFEFA;font-size:22px;cursor:pointer; }
-.tetris-world { display:grid;grid-template-columns:minmax(130px,.82fr) minmax(210px,1fr) minmax(130px,.82fr);align-items:center;gap:clamp(8px,2vw,22px);min-height:400px;padding:clamp(10px,2vw,20px);border-radius:20px;background:radial-gradient(ellipse at 50% 10%,#4A8A82 0%,#1E4C49 48%,#153B39 100%);perspective:1000px; }
-.tetris-side-quest { display:flex;flex-direction:column;align-items:center;gap:12px;color:#FFFDF5;text-align:center; }
-.tetris-side-quest img { width:min(100%,190px);aspect-ratio:1;object-fit:cover;border:1px solid rgba(255,255,255,.48);border-radius:18px;box-shadow:0 18px 30px -20px rgba(0,0,0,.75); }
-.tetris-side-quest strong { display:block;font:900 1.15rem/1.2 'Fredoka','Nunito',sans-serif; }
-.tetris-side-quest span { display:block;margin-top:5px;color:#F7E6AF;font:800 .92rem/1.3 'Nunito',sans-serif; }
-.tetris-board-wrap { display:flex;min-width:0;width:100%;justify-content:center;perspective:900px; }
-.tetris-board { width:100%;max-width:320px;min-width:0;box-sizing:border-box;display:grid;grid-template-columns:repeat(10,minmax(0,1fr));gap:3px;padding:8px;border:1px solid rgba(255,255,255,.28);border-radius:13px;background:rgba(8,31,31,.72);box-shadow:0 18px 34px -18px rgba(0,0,0,.68);transform:rotateX(5deg); }
-.tetris-cell { aspect-ratio:1;display:grid;place-items:center;border-radius:4px;background:rgba(255,255,255,.045);color:#163A36;font:900 .52rem/1 'Nunito',sans-serif;box-shadow:inset 0 1px 2px rgba(255,255,255,.08); }
-.tetris-cell.filled { background:linear-gradient(145deg,color-mix(in srgb,var(--block-color) 82%,white),var(--block-color) 64%,color-mix(in srgb,var(--block-color) 70%,#153B39));box-shadow:inset 2px 2px 3px rgba(255,255,255,.52),inset -2px -3px 4px rgba(0,0,0,.22),0 4px 7px -5px #000; }
-.tetris-controls { display:grid;grid-template-columns:repeat(2,minmax(58px,74px));justify-content:center;gap:10px; }
-.tetris-controls button { min-height:60px;border:1px solid rgba(255,255,255,.42);border-radius:17px;background:linear-gradient(145deg,#FFF7DE,#D8B969);color:#173B32;font:900 1.5rem/1 'Nunito',sans-serif;box-shadow:0 10px 18px -12px rgba(0,0,0,.65);touch-action:manipulation; }
-.tetris-controls button:active { transform:translateY(2px) scale(.97); }
-.racer-world { overflow:hidden;padding:12px;border-radius:20px;background:#DDEDE2; }
-.race-question-card { display:flex;align-items:center;justify-content:center;gap:12px;min-height:60px;margin-bottom:10px;padding:10px 14px;border-radius:15px;background:#FFFEFA;color:#173B32;box-shadow:0 10px 20px -16px rgba(23,59,50,.54); }
-.race-question-card strong { font:900 clamp(1.3rem,3.6vw,2rem)/1.1 'Fredoka','Nunito',sans-serif; }
-.race-question-card span { color:#31584B;font:800 .9rem/1.2 'Nunito',sans-serif; }
-.race-scene { position:relative;height:clamp(280px,48vw,430px);overflow:hidden;isolation:isolate;border-radius:16px;background:#84C5A1; }
-.race-skyline { position:absolute;inset:0 0 45%;background:linear-gradient(#7BC9E4 0%,#C2E6CC 65%,#84C5A1 100%); }
-.race-skyline::before,.race-skyline::after { content:'';position:absolute;bottom:0;width:38%;height:44%;background:#47795D;clip-path:polygon(50% 0,100% 100%,0 100%);opacity:.45; }
-.race-skyline::before { left:0; }.race-skyline::after { right:0;transform:scaleX(-1); }
-.race-road { position:absolute;left:5%;right:5%;top:30%;bottom:-12%;background:linear-gradient(90deg,#65746A,#303E39 16%,#343F38 84%,#68746A);clip-path:polygon(44% 0,56% 0,100% 100%,0 100%);transform:perspective(360px) rotateX(7deg); }
-.race-road::before,.race-road::after { content:'';position:absolute;top:0;bottom:0;width:3px;background:repeating-linear-gradient(to bottom,#F7E6AF 0 20px,transparent 20px 39px);animation:roadFlow .5s linear infinite; }
-.race-road::before { left:33%; }.race-road::after { right:33%; }
-@keyframes roadFlow { to{background-position-y:39px} }
-.race-driver { position:absolute;z-index:2;left:50%;bottom:4%;width:clamp(92px,20vw,170px);height:clamp(92px,20vw,170px);object-fit:cover;object-position:50% 65%;border-radius:22px;filter:drop-shadow(0 14px 12px rgba(16,43,30,.4));transform:translateX(-50%);transition:left .36s cubic-bezier(.2,.8,.2,1),transform .36s; }
-.race-driver.racing { transform:translateX(-50%) translateY(-12px) scale(1.04); }
-.race-gates { position:absolute;z-index:3;inset:34% 7% 18%;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));align-items:center;gap:clamp(7px,2vw,20px); }
-.race-gate { min-height:clamp(62px,10vw,90px);border:2px solid rgba(255,255,255,.78);border-radius:18px;background:linear-gradient(145deg,#FFF7DF,#EBCB78);color:#173B32;font:900 clamp(1.3rem,4vw,2.1rem)/1 'Fredoka','Nunito',sans-serif;box-shadow:0 14px 22px -13px rgba(26,53,39,.55);cursor:pointer;transform:perspective(600px) rotateX(-4deg);transition:transform .2s,background .2s;touch-action:manipulation; }
-.race-gate:hover,.race-gate:focus-visible { transform:perspective(600px) rotateX(0) translateY(-5px);background:#FFFDF7; }
-.race-gate.is-correct { background:#9DCB91;border-color:#FFF;animation:gateFlash .45s ease-out; }
-@keyframes gateFlash { 50%{transform:scale(1.15) rotate(-3deg)} }
-.race-touch-hint { margin-top:10px;text-align:center;color:#31584B;font:800 .9rem/1.3 'Nunito',sans-serif; }
-@media(max-width:720px) {
-  .tetris-world { grid-template-columns:minmax(0,1fr) minmax(0,1.2fr);min-height:auto; }
-  .tetris-side-quest { grid-column:1;grid-row:1/3; }
-  .tetris-side-quest img { width:min(100%,140px); }
-  .tetris-controls { grid-column:2;grid-row:2;grid-template-columns:repeat(4,minmax(48px,1fr)); }
-  .tetris-controls button { min-height:54px; }
-}
-@media(max-width:480px) {
-  .new-game-stage { border-radius:18px;padding:9px; }
-  .new-game-intro { gap:9px;padding:9px; }
-  .new-game-mascot { width:43px;height:43px;font-size:25px; }
-  .new-game-audio { width:42px;height:42px; }
-  .tetris-world { grid-template-columns:minmax(0,1fr);gap:10px;padding:9px; }
-  .tetris-side-quest { grid-column:1;grid-row:auto;flex-direction:row;text-align:left; }
-  .tetris-side-quest img { width:62px; }
-  .tetris-side-quest strong { min-width:0;font-size:1rem;overflow-wrap:anywhere; }
-  .tetris-side-quest span { font-size:.82rem; }
-  .tetris-board { width:100%;max-width:280px; }
-  .tetris-controls { grid-column:1;grid-row:auto;width:100%; }
-  .race-gates { inset-inline:4%;gap:5px; }
-  .race-gate { border-radius:12px;min-height:58px; }
-  .race-question-card { flex-wrap:wrap;gap:6px; }
-}
-@media(max-width:620px) {
-  .picture-match-board { grid-template-columns:1fr; }
-  .picture-match-lane { grid-template-columns:repeat(4,minmax(0,1fr)); }
-  .picture-match-card,.picture-match-word { min-height:70px; padding:7px 3px; border-radius:12px; }
-  .picture-match-illustration { font-size:2rem; }
-  .picture-match-word { font-size:.84rem; overflow-wrap:anywhere; }
-  .sentence-train-deck { grid-template-columns:repeat(2,minmax(0,1fr)); }
-  .sentence-car { min-height:76px; }
-  .time-portal { flex-direction:column; min-height:82px; gap:4px; font-size:.78rem; }
-  .time-portal-orb { width:40px;height:40px; }
-}
-@media(prefers-reduced-motion:reduce) {
-  .picture-match-card,.picture-match-word,.sentence-car,.time-portal,.time-verb-token { transition:none; }
-  .train-departure .sentence-car,.time-verb-token.verb-flight { animation:none; }
-}
+  .khan-explainer-top {
+    width: 100%;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 10px !important;
+  }
+  .khan-actions-row {
+    width: 100%;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 10px !important;
+    flex-wrap: wrap;
+  }
+  .btn-khan-explain, .btn-khan-manipulate {
+    flex: 1 1 auto;
+    min-height: 46px !important;
+    font-size: 0.92rem !important;
+    font-weight: 900 !important;
+    border-radius: 14px !important;
+    padding: 8px 14px !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 8px !important;
+  }
+
+  /* Giant Picture-Book Portal Cards on Hub */
+  .portal-card {
+    padding: 16px 14px !important;
+    border-radius: 26px !important;
+    align-items: center !important;
+    text-align: center !important;
+    justify-content: space-between !important;
+    gap: 10px !important;
+    position: relative;
+  }
+  .portal-card-header {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 8px !important;
+    width: 100% !important;
+  }
+  .portal-badge {
+    width: 74px !important;
+    height: 74px !important;
+    font-size: 42px !important;
+    border-radius: 24px !important;
+    box-shadow: 0 10px 24px rgba(229, 37, 42, 0.22) !important;
+    margin: 0 auto !important;
+  }
+  .portal-titles h3 {
+    font-size: 1.02rem !important;
+    font-weight: 900 !important;
+    text-align: center !important;
+    line-height: 1.2 !important;
+    margin: 0 !important;
+  }
+  .card-rea-badge {
+    width: 100% !important;
+    justify-content: center !important;
+    text-align: center !important;
+    padding: 9px 12px !important;
+    font-size: 0.88rem !important;
+    border-radius: 16px !important;
+    background: linear-gradient(135deg, #10B981 0%, #059669 100%) !important;
+    box-shadow: 0 6px 16px rgba(16, 185, 129, 0.32) !important;
+  }
+  .card-audio-preview-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border: 2px solid rgba(17,24,39,0.18);
+    background: #FEF08A;
+    color: #111827;
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.12);
+    z-index: 4;
+    transition: transform 0.18s ease;
+  }
+  .card-audio-preview-btn:hover {
+    transform: scale(1.14);
+    background: #FDE047;
+  }
+
+  /* ============================================================================
+   * OVERALL PROGRESSION & CLASS-TO-CLASS JOURNEY LADDER (UP & DOWN ANYWHERE!)
+   * ============================================================================ */
+  .journey-world-banner {
+    background: linear-gradient(135deg, #0F172A 0%, #1E1B4B 55%, #312E81 100%);
+    border: 2.5px solid #38BDF8;
+    border-radius: 24px;
+    padding: 12px 14px;
+    margin-bottom: 12px;
+    color: #FFFFFF;
+    box-shadow: 0 12px 30px rgba(15, 23, 42, 0.28);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .journey-top-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  .journey-avatar-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(255, 255, 255, 0.12);
+    border: 2px solid #FDE047;
+    padding: 5px 12px;
+    border-radius: 999px;
+    font-weight: 900;
+    font-size: 0.88rem;
+    color: #FEF08A;
+    cursor: pointer;
+  }
+  .journey-updown-controls {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .btn-journey-move {
+    background: linear-gradient(135deg, #F59E0B 0%, #D97706 100%);
+    color: #FFFFFF;
+    border: 2px solid #FEF08A;
+    border-radius: 999px;
+    padding: 6px 12px;
+    font-size: 0.8rem;
+    font-weight: 900;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    box-shadow: 0 4px 12px rgba(245, 158, 11, 0.35);
+    transition: transform 0.15s ease;
+  }
+  .btn-journey-move.up {
+    background: linear-gradient(135deg, #10B981 0%, #059669 100%);
+    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.35);
+  }
+  .btn-journey-move:active {
+    transform: scale(0.95);
+  }
+
+  /* 7-Class Stepping Stones Track with Animated Walking Lion */
+  .journey-classes-track {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 6px;
+    overflow-x: auto;
+    padding: 6px 4px;
+    scrollbar-width: none;
+    position: relative;
+  }
+  .journey-classes-track::-webkit-scrollbar { display: none; }
+  .journey-stone {
+    flex: 1 0 auto;
+    min-width: 72px;
+    background: rgba(255, 255, 255, 0.1);
+    border: 2px solid rgba(255, 255, 255, 0.25);
+    border-radius: 16px;
+    padding: 6px 8px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+    cursor: pointer;
+    color: #E2E8F0;
+    transition: all 0.22s cubic-bezier(0.34, 1.56, 0.64, 1);
+    position: relative;
+  }
+  .journey-stone.passed {
+    background: rgba(16, 185, 129, 0.22);
+    border-color: #10B981;
+    color: #A7F3D0;
+  }
+  .journey-stone.active {
+    background: linear-gradient(135deg, #FF2A32 0%, #E5252A 100%);
+    border-color: #FDE047;
+    color: #FFFFFF;
+    transform: translateY(-3px) scale(1.06);
+    box-shadow: 0 8px 20px rgba(229, 37, 42, 0.45);
+  }
+  .journey-stone-icon {
+    font-size: 1.45rem;
+    line-height: 1;
+  }
+  .journey-stone-code {
+    font-size: 0.76rem;
+    font-weight: 900;
+  }
+  .journey-stone-sub {
+    font-size: 0.62rem;
+    opacity: 0.9;
+    font-weight: 800;
+  }
+  .journey-overall-bar-wrap {
+    width: 100%;
+    height: 14px;
+    background: rgba(255, 255, 255, 0.14);
+    border-radius: 999px;
+    border: 1.5px solid rgba(255, 255, 255, 0.3);
+    overflow: hidden;
+    position: relative;
+  }
+  .journey-overall-bar-fill {
+    height: 100%;
+    width: 10%;
+    background: linear-gradient(90deg, #10B981 0%, #FBBF24 50%, #FF2A32 100%);
+    border-radius: 999px;
+    transition: width 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+
+  /* Visual + Audio Answer Buttons with Giant Icons */
+  .btn-interactive, .btn-lang-choice, .btn-mcq-choice, .btn-comp-option {
+    font-size: 1.05rem !important;
+    font-weight: 900 !important;
+    min-height: 54px !important;
+    border-radius: 18px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    gap: 10px !important;
+    padding: 10px 14px !important;
+  }
+  .choice-speaker-chip {
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    background: rgba(229, 37, 42, 0.12);
+    border: 1.5px solid rgba(229, 37, 42, 0.35);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 17px;
+    flex-shrink: 0;
+    cursor: pointer;
+  }
+  .choice-speaker-chip:hover {
+    background: #FDE047;
+    transform: scale(1.12);
+  }
+
+
+  /* V12.0 Universal Cartoon Arcade Stage Sizing */
+  .canvas-wrapper {
+    display: block !important;
+    margin-bottom: 8px !important;
+    border-radius: 20px !important;
+    overflow: hidden !important;
+    border: 3px solid #38BDF8 !important;
+    box-shadow: 0 10px 24px rgba(15, 23, 42, 0.22) !important;
+  }
+  #simCanvas {
+    display: block !important;
+    width: 100% !important;
+    max-height: 230px !important;
+    cursor: pointer !important;
+  }
+  /* Compact overlay cards below the live Cartoon Arcade Canvas so there is zero scrolling clutter */
+  .story-text-container {
+    padding: 10px 14px !important;
+    font-size: 0.96rem !important;
+    line-height: 1.45 !important;
+    max-height: 110px !important;
+    overflow-y: auto !important;
+  }
+  .funfact-didyouknow-box, .lang-rule-tip {
+    display: none !important;
+  }
+  .funfact-hero-card, .lang-hero-banner {
+    padding: 10px 14px !important;
+    border-radius: 16px !important;
+  }
+  .word-phonetic-banner {
+    padding: 10px 16px !important;
+  }
+  .word-phonetic-banner h2 {
+    font-size: 1.55rem !important;
+  }
+
 </style>
 </head>
 <body>
@@ -3013,7 +2695,6 @@ button, select { font: inherit; }
 <main class="shell">
   <!-- TOP HEADER -->
   <header class="app-nav">
-    <button class="version-cache-pill" id="btn-version-cache" title="Nateiva School Game version 1.4.0. Select to refresh the latest release.">NATEIVA · v1.4.0</button>
     <div class="brand-box">
       <div class="brand-icon">🦁</div>
       <div class="brand-titles">
@@ -3036,11 +2717,40 @@ button, select { font: inherit; }
         <option value="en">🇬🇧 English (Studio Voice)</option>
       </select>
       <button class="btn-pill" id="btn-sound-toggle">🔊 Son</button>
+      <button class="version-cache-pill" id="btn-version-cache" title="Version active • Cliquer pour vider le cache et recharger">🚀 v12.0 CARTOON-ARCADE • 🔄 Vider Cache</button>
     </div>
   </header>
 
+  
+  <!-- V11.0 INTERACTIVE OVERALL JOURNEY MAP (MOVE UP OR DOWN ACROSS ALL CLASSES & LEVELS ANYTIME!) -->
+  <section class="journey-world-banner" id="journey-world-banner">
+    <div class="journey-top-row">
+      <div class="journey-avatar-pill" id="journey-avatar-pill" title="Touche pour écouter ta progression !">
+        <span style="font-size:1.35rem;" id="journey-avatar-emoji">🦁</span>
+        <span id="journey-status-text"> Voyage : Maternelle • Niv 1 (1%)</span>
+        <span>🔊</span>
+      </div>
+      <div class="journey-updown-controls">
+        <button class="btn-journey-move down" id="btn-journey-down" title="Descendre d'un niveau ou d'une classe">⬇️ Reculer</button>
+        <button class="btn-journey-move up" id="btn-journey-up" title="Monter d'un niveau ou passer à la classe supérieure">⬆️ Avancer</button>
+      </div>
+    </div>
+    <div class="journey-classes-track" id="journey-classes-track">
+      <button class="journey-stone active" data-jgrade="MAT"><span class="journey-stone-icon">🐣</span><span class="journey-stone-code">MAT</span><span class="journey-stone-sub">KG</span></button>
+      <button class="journey-stone" data-jgrade="SIL"><span class="journey-stone-icon">🌱</span><span class="journey-stone-code">SIL</span><span class="journey-stone-sub">Gr.1</span></button>
+      <button class="journey-stone" data-jgrade="CP"><span class="journey-stone-icon">🌿</span><span class="journey-stone-code">CP</span><span class="journey-stone-sub">Gr.2</span></button>
+      <button class="journey-stone" data-jgrade="CE"><span class="journey-stone-icon">🌴</span><span class="journey-stone-code">CE1</span><span class="journey-stone-sub">Gr.3</span></button>
+      <button class="journey-stone" data-jgrade="CE2"><span class="journey-stone-icon">🌍</span><span class="journey-stone-code">CE2</span><span class="journey-stone-sub">Gr.4</span></button>
+      <button class="journey-stone" data-jgrade="CM1"><span class="journey-stone-icon">🦅</span><span class="journey-stone-code">CM1</span><span class="journey-stone-sub">Gr.5</span></button>
+      <button class="journey-stone" data-jgrade="CM"><span class="journey-stone-icon">🎓</span><span class="journey-stone-code">CM2</span><span class="journey-stone-sub">Gr.6</span></button>
+    </div>
+    <div class="journey-overall-bar-wrap" title="Progression Globale de la Maternelle au CM2">
+      <div class="journey-overall-bar-fill" id="journey-overall-bar-fill"></div>
+    </div>
+  </section>
+
   <!-- STEP 1: BILINGUAL CLASS SELECTOR (FRENCH + ENGLISH SIDE-BY-SIDE FOR ALL AFRICAN SCHOOLS) -->
-  <section class="class-selector-banner" id="class-selector-banner">
+  <section class="class-selector-banner" id="class-selector-banner" style="display:none;">
     <div class="level-selector-header">
       <div class="level-title-wrap">
         <span class="level-badge-pill">🎓 ÉTAPE 1 • CLASS / CLASSE</span>
@@ -3112,15 +2822,6 @@ button, select { font: inherit; }
     </div>
   </section>
 
-  <section class="adventure-hero" id="adventure-hero" aria-label="Nateiva School Game adventure">
-    <div class="adventure-hero-copy">
-      <h2>Le grand jeu commence ici</h2>
-      <p>Explore, joue et découvre — Explore, play and discover.</p>
-      <button class="hero-start" id="hero-start" type="button">Explorer / Explore</button>
-    </div>
-    <img class="adventure-hero-art" id="adventure-hero-art" src="./assets/images/nateiva-adventure-world.png" alt="Léo le lion et Kiki le singe découvrent la savane au lever du soleil" width="1670" height="932" fetchpriority="high">
-  </section>
-
   <!-- CATEGORY FILTER TABS -->
   <nav class="category-tabs" id="category-tabs">
     <button class="tab-btn active" data-filter="all">🌟 Tous les Défis</button>
@@ -3148,7 +2849,7 @@ button, select { font: inherit; }
           <h3>Grammaire & Syntaxe (FR / EN)</h3>
           <div class="portal-curriculum-tag">Noms • Verbes • Adjectifs • Accords</div>
         </div>
-        <span class="card-rea-badge">✨ v10.0 RHEA-PRO • ▶ JOUER</span>
+        <span class="card-rea-badge">✨ v12.0 CARTOON-ARCADE • ▶ JOUER</span>
       </div>
       <p class="portal-desc">Maîtrise la grammaire en français et en anglais (articles, pluriels, nature des mots, accords sujet-verbe) avec une seule voix native pure !</p>
       <div class="portal-counts-badge-bar">
@@ -3167,7 +2868,7 @@ button, select { font: inherit; }
           <h3>Vocabulaire & Mots du Monde (FR / EN)</h3>
           <div class="portal-curriculum-tag">Synonymes • Contraires • Thèmes d'Afrique</div>
         </div>
-        <span class="card-rea-badge">✨ v10.0 RHEA-PRO • ▶ JOUER</span>
+        <span class="card-rea-badge">✨ v12.0 CARTOON-ARCADE • ▶ JOUER</span>
       </div>
       <p class="portal-desc">Enrichis ton vocabulaire en français et en anglais : synonymes, contraires, objets de l'école, animaux et métiers avec prononciation native !</p>
       <div class="portal-counts-badge-bar">
@@ -3186,7 +2887,7 @@ button, select { font: inherit; }
           <h3>Conjugaison & Temps (FR / EN)</h3>
           <div class="portal-curriculum-tag">Présent • Passé • Futur • Être/Avoir & To Be</div>
         </div>
-        <span class="card-rea-badge">✨ v10.0 RHEA-PRO • ▶ JOUER</span>
+        <span class="card-rea-badge">✨ v12.0 CARTOON-ARCADE • ▶ JOUER</span>
       </div>
       <p class="portal-desc">Voyage dans le temps (Passé, Présent, Futur) pour conjuguer les verbes en français et en anglais selon le pronom sujet !</p>
       <div class="portal-counts-badge-bar">
@@ -3205,7 +2906,7 @@ button, select { font: inherit; }
           <h3>Studio Prononciation (FR ⇄ EN)</h3>
           <div class="portal-curriculum-tag">Anglais & Français • Micro Live • Spectre</div>
         </div>
-        <span class="card-rea-badge">✨ v10.0 RHEA-PRO • ▶ JOUER</span>
+        <span class="card-rea-badge">✨ v12.0 CARTOON-ARCADE • ▶ JOUER</span>
       </div>
       <p class="portal-desc">Écoute la vraie voix studio française et anglaise, parle dans ton micro pour obtenir ton score de prononciation et suis les billes de rythme !</p>
       <div class="portal-counts-badge-bar">
@@ -3224,7 +2925,7 @@ button, select { font: inherit; }
           <h3>Géographie des Pays d'Afrique</h3>
           <div class="portal-curriculum-tag">Carte SVG Interactive • Drapeaux • Capitales</div>
         </div>
-        <span class="card-rea-badge">✨ v10.0 RHEA-PRO • ▶ JOUER</span>
+        <span class="card-rea-badge">✨ v12.0 CARTOON-ARCADE • ▶ JOUER</span>
       </div>
       <p class="portal-desc">Explore la vraie carte vectorielle interactive des pays d'Afrique ! Touche les pays au doigt, découvre leurs drapeaux, leurs capitales et leurs fleuves !</p>
       <div class="portal-counts-badge-bar">
@@ -3243,7 +2944,7 @@ button, select { font: inherit; }
           <h3>Fun Facts & Culture Générale (QCM)</h3>
           <div class="portal-curriculum-tag">Quiz Choix Multiples • Indice 50/50 • Afrique</div>
         </div>
-        <span class="card-rea-badge">✨ v10.0 RHEA-PRO • ▶ JOUER</span>
+        <span class="card-rea-badge">✨ v12.0 CARTOON-ARCADE • ▶ JOUER</span>
       </div>
       <p class="portal-desc">Réponds aux questions à choix multiples (A, B, C, D) avec l'indice 50/50 sur les merveilles d'Afrique, les animaux, l'espace et les sciences !</p>
       <div class="portal-counts-badge-bar">
@@ -3262,7 +2963,7 @@ button, select { font: inherit; }
           <h3>Compréhension de Texte & Contes</h3>
           <div class="portal-curriculum-tag">Lecture Karaoké FR/EN • Quiz Compréhension</div>
         </div>
-        <span class="card-rea-badge">✨ v10.0 RHEA-PRO • ▶ JOUER</span>
+        <span class="card-rea-badge">✨ v12.0 CARTOON-ARCADE • ▶ JOUER</span>
       </div>
       <p class="portal-desc">Écoute et lis des contes africains et scientifiques bilingues avec surlignage phrase par phrase, puis réponds aux questions de compréhension !</p>
       <div class="portal-counts-badge-bar">
@@ -3281,7 +2982,7 @@ button, select { font: inherit; }
           <h3>Monstre des Syllabes & Lecture</h3>
           <div class="portal-curriculum-tag">Feed The Monster • Voyelles & Consonnes</div>
         </div>
-        <span class="card-rea-badge">✨ v10.0 RHEA-PRO • ▶ JOUER</span>
+        <span class="card-rea-badge">✨ v12.0 CARTOON-ARCADE • ▶ JOUER</span>
       </div>
       <p class="portal-desc">Nourris le Monstre magique avec les bonnes syllabes colorées (voyelles en rouge, consonnes en bleu) pour former des mots en français et en anglais !</p>
       <div class="portal-counts-badge-bar">
@@ -3300,7 +3001,7 @@ button, select { font: inherit; }
           <h3>Maths 3D, Fractions & Balance Algébrique</h3>
           <div class="portal-curriculum-tag">Boîtes de 10 • Disque Fractions • Balance 2x+4</div>
         </div>
-        <span class="card-rea-badge">✨ v10.0 RHEA-PRO • ▶ JOUER</span>
+        <span class="card-rea-badge">✨ v12.0 CARTOON-ARCADE • ▶ JOUER</span>
       </div>
       <p class="portal-desc">Manipule les boîtes de 10, le disque interactif des fractions et la balance algébrique selon ta classe (de la Maternelle au CM2 / Primary 6) !</p>
       <div class="portal-counts-badge-bar">
@@ -3308,34 +3009,6 @@ button, select { font: inherit; }
         <span class="count-pill black">⚡ 3 Activités / Exercice</span>
         <span class="count-pill">🏆 10 Niveaux</span>
       </div>
-    </button>
-
-    <button class="portal-card" data-cat="math" data-game="math_tetris">
-      <div class="card-top-glow"></div>
-      <div class="portal-card-header">
-        <div class="portal-badge">🧱</div>
-        <div class="portal-titles">
-          <h3>Math Tetris</h3>
-          <div class="portal-curriculum-tag">Blocs • Formes • Calcul progressif</div>
-        </div>
-        <span class="card-rea-badge">▶ JOUER</span>
-      </div>
-      <p class="portal-desc">Fais tourner et glisser les blocs colorés pour remplir des rangées. Observe, compte et gagne des étoiles à chaque ligne !</p>
-      <div class="portal-counts-badge-bar"><span class="count-pill highlight">🧩 Puzzle spatial</span><span class="count-pill black">🎮 Touches simples</span><span class="count-pill">🏆 Progression adaptée</span></div>
-    </button>
-
-    <button class="portal-card" data-cat="math" data-game="safari_racer">
-      <div class="card-top-glow"></div>
-      <div class="portal-card-header">
-        <div class="portal-badge">🏎️</div>
-        <div class="portal-titles">
-          <h3>Safari Math Racer</h3>
-          <div class="portal-curriculum-tag">Safari • Nombres • Virages tactiles</div>
-        </div>
-        <span class="card-rea-badge">▶ JOUER</span>
-      </div>
-      <p class="portal-desc">Fonce sur les pistes du Cameroun, choisis la bonne porte-réponse et aide Léo et Kiki à rejoindre le prochain village !</p>
-      <div class="portal-counts-badge-bar"><span class="count-pill highlight">🌍 Aventure africaine</span><span class="count-pill black">🏁 Course à trois voies</span><span class="count-pill">🏆 Calcul adapté</span></div>
     </button>
 
     <!-- 7. Chemistry Real Simulation (PhET pH Scale) -->
@@ -3347,7 +3020,7 @@ button, select { font: inherit; }
           <h3>Labo Chimie & Échelle pH</h3>
           <div class="portal-curriculum-tag">Sciences • Réactions • Indicateur pH 0–14</div>
         </div>
-        <span class="card-rea-badge">✨ v10.0 RHEA-PRO • ▶ JOUER</span>
+        <span class="card-rea-badge">✨ v12.0 CARTOON-ARCADE • ▶ JOUER</span>
       </div>
       <p class="portal-desc">Verse les éprouvettes dans l'erlenmeyer, observe l'indicateur de pH en direct, les mélanges de couleurs et l'effervescence des bulles de gaz !</p>
       <div class="portal-counts-badge-bar">
@@ -3366,7 +3039,7 @@ button, select { font: inherit; }
           <h3>Bassin d'Archimède (Flotte/Coule)</h3>
           <div class="portal-curriculum-tag">Physique • Vecteurs Poussée ↑Fa & Poids ↓P</div>
         </div>
-        <span class="card-rea-badge">✨ v10.0 RHEA-PRO • ▶ JOUER</span>
+        <span class="card-rea-badge">✨ v12.0 CARTOON-ARCADE • ▶ JOUER</span>
       </div>
       <p class="portal-desc">Plonge le bois, la mangue, l'or ou la brique dans l'eau et visualise en direct les vecteurs de la poussée d'Archimède (↑Fa) et du poids (↓P) !</p>
       <div class="portal-counts-badge-bar">
@@ -3385,7 +3058,7 @@ button, select { font: inherit; }
           <h3>Circuit Électrique 3D & Oscilloscope</h3>
           <div class="portal-curriculum-tag">Loi d'Ohm (U=R×I) • Électrons & Hélice</div>
         </div>
-        <span class="card-rea-badge">✨ v10.0 RHEA-PRO • ▶ JOUER</span>
+        <span class="card-rea-badge">✨ v12.0 CARTOON-ARCADE • ▶ JOUER</span>
       </div>
       <p class="portal-desc">Ferme l'interrupteur pour observer la circulation des électrons bleus, allumer l'ampoule de 4,5 V et faire tourner l'hélice du moteur électrique !</p>
       <div class="portal-counts-badge-bar">
@@ -3404,7 +3077,7 @@ button, select { font: inherit; }
           <h3>Jardin Botanique & Photosynthèse</h3>
           <div class="portal-curriculum-tag">Biologie • Racines, Tige & Floraison 21 Jours</div>
         </div>
-        <span class="card-rea-badge">✨ v10.0 RHEA-PRO • ▶ JOUER</span>
+        <span class="card-rea-badge">✨ v12.0 CARTOON-ARCADE • ▶ JOUER</span>
       </div>
       <p class="portal-desc">Dose la pluie et le soleil pour faire germer le Baobab, le Tournesol, le Cacaoyer et l'Hibiscus en observant les racines pousser sous terre !</p>
       <div class="portal-counts-badge-bar">
@@ -3423,7 +3096,7 @@ button, select { font: inherit; }
           <h3>Comet Defender : Calcul Spatial</h3>
           <div class="portal-curriculum-tag">TuxMath Arcade • Lasers & Calcul Mental</div>
         </div>
-        <span class="card-rea-badge">✨ v10.0 RHEA-PRO • ▶ JOUER</span>
+        <span class="card-rea-badge">✨ v12.0 CARTOON-ARCADE • ▶ JOUER</span>
       </div>
       <p class="portal-desc">Pilote le vaisseau spatial et tire au laser sur la comète qui porte la bonne réponse à l'équation affichée sur le tableau de bord !</p>
       <div class="portal-counts-badge-bar">
@@ -3442,7 +3115,7 @@ button, select { font: inherit; }
           <h3>Tangram Géométrique Magnétique</h3>
           <div class="portal-curriculum-tag">Mathigon Euclid • Polygones & Silhouettes</div>
         </div>
-        <span class="card-rea-badge">✨ v10.0 RHEA-PRO • ▶ JOUER</span>
+        <span class="card-rea-badge">✨ v12.0 CARTOON-ARCADE • ▶ JOUER</span>
       </div>
       <p class="portal-desc">Assemble la Fusée, le Bateau, le Chat, le Lion et le Papillon en glissant les polygones géométriques avec aimantation de précision !</p>
       <div class="portal-counts-badge-bar">
@@ -3461,7 +3134,7 @@ button, select { font: inherit; }
           <h3>Donjon Labyrinthe 3D (Vue 3D & Raycast)</h3>
           <div class="portal-curriculum-tag">Blockly Maze • Algorithme & Syllabes</div>
         </div>
-        <span class="card-rea-badge">✨ v10.0 RHEA-PRO • ▶ JOUER</span>
+        <span class="card-rea-badge">✨ v12.0 CARTOON-ARCADE • ▶ JOUER</span>
       </div>
       <p class="portal-desc">Guide Léo dans les 5 cartes de la Savane (Oasis, Pyramide, Volcan, Jungle) en collectant les syllabes et nombres d'or ou utilise le bouton Auto-Pas !</p>
       <div class="portal-counts-badge-bar">
@@ -3474,7 +3147,6 @@ button, select { font: inherit; }
 
   <!-- ARCADE & SIMULATION WORKSPACE -->
   <section class="arcade-workspace" id="arcade-workspace">
-    <div class="play-world-hero" id="game-world-hero" aria-hidden="true"></div>
     <!-- HUD -->
     <div class="arcade-hud">
       <div class="hud-left">
@@ -3503,24 +3175,29 @@ button, select { font: inherit; }
 
     <!-- GAMIFIED IN-GAME LEVEL & EXERCISE SELECTOR (MANUAL TAP OR AUTO LEVEL-UP!) -->
     <div class="ingame-gamified-bar" id="ingame-gamified-bar">
+      <div style="display:flex;align-items:center;gap:4px;">
+        <button class="ingame-lvl-chip" id="btn-ingame-journey-down" title="Niveau / Classe précédente">⬇️</button>
+        <span class="ingame-lvl-chip active" id="ingame-class-pill" style="background:#312E81;border-color:#38BDF8;">🐣 MAT</span>
+        <button class="ingame-lvl-chip" id="btn-ingame-journey-up" title="Niveau / Classe suivante">⬆️</button>
+      </div>
       <div class="ingame-lvl-pills" id="ingame-lvl-pills"></div>
       <div style="display:flex;align-items:center;gap:6px;margin-left:auto;">
-        <span class="hud-badge" id="ingame-ex-dots" style="font-size:0.75rem;padding:4px 10px;">🟢⚪⚪⚪⚪ Ex 1/5</span>
+        <span class="hud-badge" id="ingame-ex-dots" style="font-size:0.75rem;padding:4px 10px;">🟢⚪⚪⚪⚪ 1/5</span>
       </div>
     </div>
 
     <!-- 3-STEP INTERACTIVE ACTIVITY TABS (TAP TO CHOOSE ACTIVITY MANUALLY OR WIN TO AUTO-ADVANCE) -->
     <div class="activity-stepper" id="activity-stepper" title="Touche une activité pour la choisir manuellement ou gagne pour avancer automatiquement !">
-      <div class="step-node active" id="step-node-1" data-act="1" role="button" tabindex="0" aria-label="Activité 1 : découverte">
-        <span>🧭</span> <span id="step-lbl-1">Act 1: Découverte</span>
+      <div class="step-node active" id="step-node-1" data-act="1">
+        <span>🧭</span> <span id="step-lbl-1">1 🌟</span>
       </div>
       <div class="step-connector" id="step-conn-1"></div>
-      <div class="step-node" id="step-node-2" data-act="2" role="button" tabindex="0" aria-label="Activité 2 : arcade">
-        <span>⚡</span> <span id="step-lbl-2">Act 2: Arcade</span>
+      <div class="step-node" id="step-node-2" data-act="2">
+        <span>⚡</span> <span id="step-lbl-2">2 ⚡</span>
       </div>
       <div class="step-connector" id="step-conn-2"></div>
-      <div class="step-node" id="step-node-3" data-act="3" role="button" tabindex="0" aria-label="Activité 3 : maîtrise">
-        <span>👑</span> <span id="step-lbl-3">Act 3: Boss</span>
+      <div class="step-node" id="step-node-3" data-act="3">
+        <span>👑</span> <span id="step-lbl-3">3 👑</span>
       </div>
     </div>
     <div class="gamified-reward-toast" id="gamified-reward-toast">🏆 Bravo ! Niveau Débloqué !</div>
@@ -3536,7 +3213,7 @@ button, select { font: inherit; }
       <!-- V7.0 DYNAMIC 3-MODE CINEMATIC BANNER (CHANGES EVERY ACTIVITY 1/3 -> 2/3 -> 3/3) -->
       <div class="activity-mode-banner mode-phase-1" id="activity-mode-banner">
         <div class="mode-banner-left">
-          <span class="mode-mascot-icon" id="mode-mascot-icon" aria-hidden="true"></span>
+          <span class="mode-mascot-icon" id="mode-mascot-icon">🦁</span>
           <div class="mode-title-stack">
             <span class="mode-phase-kicker" id="mode-phase-kicker">ACTIVITÉ 1 SUR 3 • MODE EXPLORATION 3D</span>
             <span class="mode-phase-headline" id="mode-phase-headline">Découverte Interactive & Manipulation Directe</span>
@@ -3673,33 +3350,11 @@ button, select { font: inherit; }
         </div>
       </div>
 
-      <div class="module-overlay" id="new-arcade-overlay">
-        <section class="new-game-stage" id="new-game-stage">
-          <div class="new-game-intro"><span class="new-game-mascot" aria-hidden="true">🦁</span><div><h2 id="new-game-heading"></h2><p id="new-game-prompt"></p></div><button type="button" id="new-game-replay" class="new-game-audio" aria-label="Écouter la consigne">🔊</button></div>
-          <div class="tetris-world" id="math-tetris-panel" hidden>
-            <div class="tetris-side-quest"><img src="./assets/images/game-covers/math_tetris.webp" alt=""/><div><strong id="tetris-goal"></strong><span id="tetris-lines"></span></div></div>
-            <div class="tetris-board-wrap"><div class="tetris-board" id="tetris-board" role="grid" aria-label="Number block puzzle"></div></div>
-            <div class="tetris-controls" aria-label="Tetris controls">
-              <button type="button" data-tetris="left" aria-label="Move left">◀</button><button type="button" data-tetris="rotate" aria-label="Rotate">↻</button><button type="button" data-tetris="right" aria-label="Move right">▶</button><button type="button" data-tetris="drop" aria-label="Drop block">⬇</button>
-            </div>
-          </div>
-          <div class="racer-world" id="safari-racer-panel" hidden>
-            <div class="race-question-card"><span id="race-picture-hint" aria-hidden="true"></span><strong id="race-equation"></strong><span id="race-gate-hint"></span></div>
-            <div class="race-scene" id="race-scene">
-              <div class="race-skyline" aria-hidden="true"></div><div class="race-road" aria-hidden="true"><i></i><i></i></div>
-              <img class="race-driver" id="race-driver" src="./assets/images/game-covers/safari_racer.webp" alt=""/>
-              <div class="race-gates" id="race-gates"></div>
-            </div>
-            <div class="race-touch-hint" id="race-touch-hint"></div>
-          </div>
-        </section>
-      </div>
-
       
       <!-- V8.0 KHAN ACADEMY KIDS × PERSEUS VISUAL & SOUND STEP-BY-STEP EXPLAINER BAR -->
       <div class="khan-visual-explainer" id="khan-visual-explainer">
         <div class="khan-explainer-top">
-          <span class="khan-coach-badge" id="khan-coach-badge">STUDIO NATEIVA • GUIDE VISUEL & AUDIO</span>
+          <span class="khan-coach-badge" id="khan-coach-badge">🐻 KHAN KIDS STUDIO • EXPLICATION VISUELLE & SONORE PAS-À-PAS</span>
           <div class="khan-actions-row">
             <button class="btn-khan-explain" id="btn-khan-step-audio">🔊🎬 Voir & Écouter l'Explication Pas-à-Pas</button>
             <button class="btn-khan-manipulate" id="btn-khan-manipulate" style="display:none;">⚖️ Manipuler & Simplifier sur l'Écran 3D</button>
@@ -6558,11 +6213,11 @@ button, select { font: inherit; }
       const myId = this.currentUtteranceId;
       const lang = state.lang === 'en' ? 'en' : 'fr';
       const cacheFile = this.getAudioCacheFilename(lang, text);
-      // Try static pre-generated studio MP3 first, then a dynamic TTS endpoint relative to the current app path.
+      // Try static pre-generated studio neural MP3 first (works on Vercel & file:// & localhost), then dynamic /tts
       const urls = [
         "public/audio_cache/" + cacheFile,
         "audio_cache/" + cacheFile,
-        "./tts?lang=" + lang + "&q=" + encodeURIComponent(text.trim())
+        "/tts?lang=" + lang + "&q=" + encodeURIComponent(text.trim())
       ];
       let urlIdx = 0;
 
@@ -6703,6 +6358,7 @@ button, select { font: inherit; }
   function onSelectLevel(chosenLvl) {
     state.level = chosenLvl;
     state.selectedLevel = chosenLvl;
+    if (typeof updateJourneyUI === "function") updateJourneyUI();
     AudioEngine.playSnap();
 
     // Update level pills active styling
@@ -6757,6 +6413,28 @@ button, select { font: inherit; }
   function onPointerDown(e) {
     const p = getCanvasCoords(e);
     const g = state.game;
+
+    // V12.0 UNIVERSAL CARTOON ARCADE BUBBLE HIT DETECTION (Tap any moving cartoon character/bubble on canvas!)
+    if (['grammar_lab', 'vocabulary_lab', 'conjugation_lab', 'reading_lab', 'pronunciation_lab', 'story_lab', 'africa_geography', 'fun_facts_quiz'].includes(g) && state.cartoonTargets && state.cartoonTargets.length > 0) {
+      for (let i = 0; i < state.cartoonTargets.length; i++) {
+        const ct = state.cartoonTargets[i];
+        if (Math.hypot(p.x - ct.x, p.y - ct.y) <= ct.r + 16) {
+          ct.popScale = 1.35;
+          createExplosion(ct.x, ct.y, ct.correct ? '#10B981' : '#EF4444', 18);
+          if (typeof ct.onSelect === 'function') {
+            ct.onSelect();
+          }
+          return;
+        }
+      }
+      // If kid tapped the Cartoon Hero Mascot on the left, replay the spoken prompt!
+      if (p.x < 130 && p.y > 160) {
+        AudioEngine.playSnap();
+        VoiceEngine.speak($('instruction-title') ? $('instruction-title').textContent : '');
+        return;
+      }
+    }
+
 
     if (g === 'tangram_puzzle') {
       state.tangram.pieces.forEach(piece => {
@@ -7113,101 +6791,6 @@ button, select { font: inherit; }
     if (savedStars && typeof savedStars === 'object') Object.assign(state.levelStars, savedStars);
   } catch (e) {}
 
-  // Each game type keeps its own mastery path, by class. Progress survives a refresh.
-  const GAME_TRACKS_STORAGE_KEY = 'nateiva_game_tracks_v2';
-  state.learningTracks = {};
-  try {
-    const savedTracks = JSON.parse(localStorage.getItem(GAME_TRACKS_STORAGE_KEY) || '{}');
-    if (savedTracks && typeof savedTracks === 'object') state.learningTracks = savedTracks;
-  } catch (e) {}
-
-  const GAME_CARD_ACTIONS = {
-    maze_quest: { icon: '🧭', fr: 'Trace le chemin', en: 'Find the path' },
-    tangram_puzzle: { icon: '🧩', fr: 'Fais glisser les formes', en: 'Fit the shapes' },
-    math_lab: { icon: '🧱', fr: 'Construis la réponse', en: 'Build the answer' },
-    reading_lab: { icon: '🔤', fr: 'Relie son et image', en: 'Match sound & picture' },
-    pronunciation_lab: { icon: '🎤', fr: 'Écoute et répète', en: 'Listen & speak' },
-    story_lab: { icon: '🔎', fr: 'Cherche dans l’histoire', en: 'Discover the story' },
-    chemistry: { icon: '🧪', fr: 'Mélange et observe', en: 'Mix & discover' },
-    botany: { icon: '🌱', fr: 'Fais grandir', en: 'Grow a garden' },
-    density: { icon: '🌊', fr: 'Plonge et découvre', en: 'Drop & discover' },
-    circuit: { icon: '⚡', fr: 'Allume le circuit', en: 'Power the circuit' },
-    comet: { icon: '🚀', fr: 'Protège la fusée', en: 'Defend the rocket' },
-    africa_geography: { icon: '🗺️', fr: 'Explore le continent', en: 'Explore the continent' },
-    fun_facts_quiz: { icon: '🦜', fr: 'Repère la bonne image', en: 'Spot the answer' },
-    grammar_lab: { icon: '🪄', fr: 'Assemble la phrase', en: 'Build the sentence' },
-    vocabulary_lab: { icon: '🧺', fr: 'Ramasse les mots', en: 'Collect the words' },
-    conjugation_lab: { icon: '⏳', fr: 'Choisis le bon moment', en: 'Choose the right moment' },
-    math_tetris: { icon: '🧱', fr: 'Tourne et place les blocs', en: 'Turn and place blocks' },
-    safari_racer: { icon: '🏎️', fr: 'Choisis la bonne voie', en: 'Choose the right lane' }
-  };
-  const GAME_CARD_TITLES = {
-    grammar_lab: { fr: 'Magie des phrases', en: 'Sentence Magic' },
-    vocabulary_lab: { fr: 'Marché des images', en: 'Picture Market' },
-    conjugation_lab: { fr: 'Train des verbes', en: 'Verb Time Train' },
-    pronunciation_lab: { fr: 'Sons en voyage', en: 'Sound Safari' },
-    africa_geography: { fr: 'Carte d’Afrique', en: 'Africa Explorer' },
-    fun_facts_quiz: { fr: 'Quiz des merveilles', en: 'Wonder Quiz' },
-    story_lab: { fr: 'Contes du baobab', en: 'Baobab Tales' },
-    reading_lab: { fr: 'Sons & syllabes', en: 'Sounds & Syllables' },
-    math_lab: { fr: 'Blocs de calcul', en: 'Number Builders' },
-    chemistry: { fr: 'Labo des potions', en: 'Potion Lab' },
-    density: { fr: 'Flotte ou coule ?', en: 'Float or Sink?' },
-    circuit: { fr: 'Circuit lumineux', en: 'Light the Circuit' },
-    botany: { fr: 'Jardin vivant', en: 'Grow a Garden' },
-    comet: { fr: 'Défense cosmique', en: 'Comet Defender' },
-    tangram_puzzle: { fr: 'Animaux en formes', en: 'Shape Safari' },
-    maze_quest: { fr: 'Safari labyrinthe', en: 'Savanna Maze' },
-    math_tetris: { fr: 'Tetris des nombres', en: 'Number Tetris' },
-    safari_racer: { fr: 'Course math safari', en: 'Safari Math Racer' }
-  };
-
-  function getGameTrack(gameKey = state.game, gradeCode = state.grade) {
-    const key = gradeCode + ':' + gameKey;
-    if (!state.learningTracks[key] || typeof state.learningTracks[key] !== 'object') {
-      state.learningTracks[key] = { level: 1, progress: 0, totalWins: 0, stars: { 1: 1 } };
-    }
-    const track = state.learningTracks[key];
-    track.level = Math.max(1, Math.min(state.totalLevels, Number(track.level) || 1));
-    track.progress = Math.max(0, Math.min(14, Number(track.progress) || 0));
-    track.totalWins = Math.max(0, Number(track.totalWins) || 0);
-    if (!track.stars || typeof track.stars !== 'object') track.stars = { 1: 1 };
-    return track;
-  }
-
-  function saveGameTracks() {
-    try { localStorage.setItem(GAME_TRACKS_STORAGE_KEY, JSON.stringify(state.learningTracks)); } catch (e) {}
-    saveGamifiedProgress();
-  }
-
-  function renderGameCardProgress() {
-    document.querySelectorAll('.portal-card[data-game]').forEach(card => {
-      const gameKey = card.getAttribute('data-game');
-      const track = getGameTrack(gameKey, state.grade);
-      const heading = card.querySelector('.portal-titles h3');
-      const title = GAME_CARD_TITLES[gameKey]?.[state.lang === 'en' ? 'en' : 'fr'];
-      if (heading && title) heading.textContent = title;
-      let badge = card.querySelector('.game-card-track');
-      if (!badge) {
-        badge = document.createElement('span');
-        badge.className = 'game-card-track';
-        badge.setAttribute('aria-hidden', 'true');
-        card.appendChild(badge);
-      }
-      badge.textContent = (state.lang === 'en' ? 'LV ' : 'NIV ') + String(track.level).padStart(2, '0') + ' · ' + track.progress + '/15';
-      badge.style.setProperty('--track-progress', Math.round((track.progress / 15) * 100) + '%');
-      card.setAttribute('aria-label', (title || heading?.textContent || gameKey) + ' · ' + (state.lang === 'en' ? 'Level ' : 'Niveau ') + track.level + ' · ' + track.progress + '/15');
-      let playline = card.querySelector('.game-card-playline');
-      if (!playline) {
-        playline = document.createElement('span');
-        playline.className = 'game-card-playline';
-        card.querySelector('.portal-card-header')?.after(playline);
-      }
-      const action = GAME_CARD_ACTIONS[gameKey] || { icon: '✨', fr: 'Explore et découvre', en: 'Explore & discover' };
-      playline.innerHTML = '<span class="playline-icon" aria-hidden="true">' + action.icon + '</span><span>' + (state.lang === 'en' ? action.en : action.fr) + '</span>';
-    });
-  }
-
   function saveGamifiedProgress() {
     try {
       localStorage.setItem('nateiva_level_stars_v9', JSON.stringify(state.levelStars));
@@ -7493,16 +7076,12 @@ button, select { font: inherit; }
     const g = state.game;
 
     banner.className = 'activity-mode-banner mode-phase-' + phase;
-    const workspace = $('arcade-workspace');
-    if (workspace) workspace.dataset.phase = String(phase);
-    const answerStage = $('answers-container');
-    if (answerStage) answerStage.dataset.phase = String(phase);
 
     const modeConfigs = {
       1: {
         icon: '🧭',
-        kickerFr: 'ACTIVITÉ 1 SUR 3 • EXPLORER',
-        kickerEn: 'ACTIVITY 1 OF 3 • EXPLORE',
+        kickerFr: 'ACTIVITÉ 1 SUR 3 • MODE 1 : DÉCOUVERTE INTERACTIVE 3D',
+        kickerEn: 'ACTIVITY 1 OF 3 • MODE 1: 3D INTERACTIVE DISCOVERY',
         headFr: g === 'maze_quest' ? 'Vue Isométrique 3D du Temple aux Flambeaux'
               : g === 'math_lab' ? 'Atelier Cubes 3D & Manipulation Tactile'
               : g === 'circuit' ? 'Montage Série 3D (4,5 V) & Flux d’Électrons'
@@ -7515,30 +7094,30 @@ button, select { font: inherit; }
       },
       2: {
         icon: '⚡',
-        kickerFr: 'ACTIVITÉ 2 SUR 3 • JOUER',
-        kickerEn: 'ACTIVITY 2 OF 3 • PLAY',
+        kickerFr: 'ACTIVITÉ 2 SUR 3 • MODE 2 : DÉFI ARCADE RAPIDE',
+        kickerEn: 'ACTIVITY 2 OF 3 • MODE 2: SPEED ARCADE CHALLENGE',
         headFr: g === 'maze_quest' ? 'Vue Immersive 3D Raycast (Couloir 1re Personne + Radar)'
               : g === 'math_lab' ? 'Cylindre 3D des Fractions & Tube Décimal'
               : g === 'circuit' ? 'Réseau Solaire 3D (9,0 V) & Turbine Éolienne'
-              : 'Duel éclair • Défis visuels (XP bonus)',
+              : 'Duel Éclair Chronométré • Cartes Dynamiques (x1.5 XP)',
         headEn: g === 'maze_quest' ? 'First-Person 3D Raycast Corridor View + Radar'
               : g === 'math_lab' ? '3D Extruded Fraction Cylinder & Decimal Tube'
               : g === 'circuit' ? '3D Solar Grid (9.0V) & Wind Turbine'
-              : 'Quick arcade round • Visual challenges (bonus XP)',
+              : 'Timed Speed Arcade Duel • Dynamic Cards (1.5x XP)',
         xp: '🔥 +75 XP • Mode 2/3'
       },
       3: {
         icon: '👑',
-        kickerFr: 'ACTIVITÉ 3 SUR 3 • MAÎTRISER',
-        kickerEn: 'ACTIVITY 3 OF 3 • MASTER',
+        kickerFr: 'ACTIVITÉ 3 SUR 3 • MODE 3 : DÉFI DU BOSS & MAÎTRISE',
+        kickerEn: 'ACTIVITY 3 OF 3 • MODE 3: MASTER BOSS CHALLENGE',
         headFr: g === 'maze_quest' ? 'Citadelle Cyber-3D du Boss & Cristaux Turbo'
               : g === 'math_lab' ? 'Balance Algébrique 3D Holographique (Équilibre du Boss)'
               : g === 'circuit' ? 'Super-Labo Haute Tension (12 V) & Oscilloscope Loi d’Ohm'
-              : 'Grande quête • Défi de maîtrise',
+              : 'Grand Défi du Griot • Double Multiplicateur XP !',
         headEn: g === 'maze_quest' ? '3D Cyber-Citadel Boss Maze & Turbo Crystals'
               : g === 'math_lab' ? '3D Holographic Algebraic Balance Scale (Boss Round)'
               : g === 'circuit' ? '12V High-Voltage Super-Lab & Live Ohm’s Law Oscilloscope'
-              : 'Grand quest • Mastery challenge',
+              : 'Grand Master Boss Round • 2x XP Multiplier!',
         xp: '👑 +100 XP • BOSS 3/3'
       }
     };
@@ -7550,23 +7129,9 @@ button, select { font: inherit; }
     if ($('mode-xp-pill')) $('mode-xp-pill').textContent = cfg.xp;
 
     // Also update the 3-step stepper labels so the student sees the 3 distinct modes!
-    if ($('step-lbl-1')) $('step-lbl-1').textContent = isEn ? 'Explore' : 'Explorer';
-    if ($('step-lbl-2')) $('step-lbl-2').textContent = isEn ? 'Play' : 'Jouer';
-    if ($('step-lbl-3')) $('step-lbl-3').textContent = isEn ? 'Master' : 'Maîtriser';
-    const mascot = $('mode-mascot-icon');
-    if (mascot) {
-      mascot.textContent = '';
-      mascot.setAttribute('role', 'img');
-      mascot.setAttribute('aria-label', phase === 1 ? 'Illustration: reading discovery' : phase === 2 ? 'Illustration: math block game' : 'Illustration: Africa discovery');
-      mascot.removeAttribute('aria-hidden');
-    }
-    const activityLabels = isEn
-      ? ['Activity 1: Explore', 'Activity 2: Play', 'Activity 3: Master']
-      : ['Activité 1 : Explorer', 'Activité 2 : Jouer', 'Activité 3 : Maîtriser'];
-    activityLabels.forEach((label, index) => {
-      const node = $('step-node-' + (index + 1));
-      if (node) node.setAttribute('aria-label', label);
-    });
+    if ($('step-lbl-1')) $('step-lbl-1').textContent = isEn ? '1. 3D Discovery' : '1. Découverte 3D';
+    if ($('step-lbl-2')) $('step-lbl-2').textContent = isEn ? '2. Speed Arcade' : '2. Duel Arcade';
+    if ($('step-lbl-3')) $('step-lbl-3').textContent = isEn ? '3. Boss Mastery 👑' : '3. Défi Boss 👑';
   }
 
   
@@ -7613,26 +7178,18 @@ button, select { font: inherit; }
 
   function buildInGameGamifiedBar() {
     const pillsBox = $('ingame-lvl-pills');
-    const gameTrack = getGameTrack();
-    state.levelStars = gameTrack.stars;
     if (pillsBox) {
       pillsBox.innerHTML = '';
       for (let l = 1; l <= state.totalLevels; l++) {
         const b = document.createElement('button');
-        const stars = gameTrack.stars[l] || 0;
+        const stars = state.levelStars[l] || 0;
         b.className = 'ingame-lvl-chip' + (l === state.level ? ' active' : '') + (stars > 0 ? ' earned' : '');
         b.textContent = 'Niv ' + l + (stars > 0 ? ' ⭐' : '');
-        b.disabled = l > gameTrack.level;
         b.onclick = () => {
           state.level = l;
           state.selectedLevel = l;
-          gameTrack.level = l;
-          gameTrack.progress = 0;
-          state.levelStars = gameTrack.stars;
           state.exerciseInLevel = 1;
           state.activityPhase = 1;
-          saveGameTracks();
-          renderGameCardProgress();
           buildLevelPillsTrack();
           AudioEngine.playSnap();
           showGamifiedToast(state.lang === 'en' ? ('🎯 Level ' + l + ' Selected!') : ('🎯 Niveau ' + l + ' Sélectionné !'));
@@ -7647,7 +7204,8 @@ button, select { font: inherit; }
       for (let e = 1; e <= state.totalExercisesPerLevel; e++) {
         dots += e < state.exerciseInLevel ? '🟢' : (e === state.exerciseInLevel ? '🟡' : '⚪');
       }
-      exDots.textContent = dots + ' Ex ' + state.exerciseInLevel + '/' + state.totalExercisesPerLevel;
+      exDots.textContent = dots + ' ' + state.exerciseInLevel + '/' + state.totalExercisesPerLevel;
+    if (typeof updateJourneyUI === 'function') updateJourneyUI();
     }
   }
 
@@ -7668,9 +7226,6 @@ button, select { font: inherit; }
     spawn3DConfettiBurst();
     state.score++;
     state.combo++;
-    const gameTrack = getGameTrack();
-    gameTrack.totalWins = (gameTrack.totalWins || 0) + 1;
-    gameTrack.progress = Math.min(14, (gameTrack.progress || 0) + 1);
     AudioEngine.playSuccess();
     createExplosion(CW / 2, CH / 2, '#E5252A', 22);
 
@@ -7683,29 +7238,38 @@ button, select { font: inherit; }
       state.exerciseInLevel++;
 
       if (state.exerciseInLevel > state.totalExercisesPerLevel) {
-        // Completed all 5 exercises of this level! Award 3 Stars & AUTOMATICALLY UNLOCK NEXT LEVEL!
-        const completedLevel = state.level;
-        gameTrack.stars[completedLevel] = 3;
-        gameTrack.level = Math.min(state.totalLevels, completedLevel + 1);
-        gameTrack.progress = 0;
+        // Completed all 5 exercises of this level! Award 3 Stars & AUTOMATICALLY ADVANCE LEVEL OR GRADUATE TO NEXT CLASS!
+        state.levelStars[state.level] = 3;
         state.exerciseInLevel = 1;
-        state.level = gameTrack.level;
-        state.selectedLevel = state.level;
-        state.levelStars = gameTrack.stars;
-        if (!gameTrack.stars[state.level]) gameTrack.stars[state.level] = 1;
-        saveGameTracks();
-        renderGameCardProgress();
+        if (state.level >= state.totalLevels) {
+          const curClassIdx = GRADE_LADDER.indexOf(state.grade);
+          if (curClassIdx >= 0 && curClassIdx < GRADE_LADDER.length - 1) {
+            const nextGrade = GRADE_LADDER[curClassIdx + 1];
+            state.grade = nextGrade;
+            state.level = 1;
+            state.selectedLevel = 1;
+            selectGradeClass(nextGrade, false);
+          }
+        } else {
+          state.level = state.level + 1;
+          state.selectedLevel = state.level;
+        }
+        if (!state.levelStars[state.level]) state.levelStars[state.level] = 1;
+        saveGamifiedProgress();
         buildLevelPillsTrack();
+        updateJourneyUI();
         AudioEngine.playLevelUp();
-        const lvlMsg = state.lang === 'en' ? ("🏆 LEVEL " + state.level + " UNLOCKED! ⭐⭐⭐") : ("🏆 NIVEAU " + state.level + " DÉBLOQUÉ ! ⭐⭐⭐");
+        const gInfo = GRADE_SHORT_LABELS[state.grade] || GRADE_SHORT_LABELS.MAT;
+        const lvlMsg = state.lang === 'en'
+          ? ("🏆 " + gInfo.icon + " " + gInfo.en + " • LEVEL " + state.level + " UNLOCKED! ⭐⭐⭐")
+          : ("🏆 " + gInfo.icon + " " + gInfo.fr + " • NIVEAU " + state.level + " DÉBLOQUÉ ! ⭐⭐⭐");
         addFloatingScore(lvlMsg, CW / 2, CH / 2 - 40, '#FBBF24');
         showGamifiedToast(lvlMsg);
         nextActivityChallenge(false);
       } else {
         // Moving to next exercise in the same level (NEVER repeats previous exercise!)
-        gameTrack.stars[state.level] = Math.max(gameTrack.stars[state.level] || 1, 2);
-        saveGameTracks();
-        renderGameCardProgress();
+        state.levelStars[state.level] = Math.max(state.levelStars[state.level] || 1, 2);
+        saveGamifiedProgress();
         const exMsg = state.lang === 'en' ? ("🎯 EXERCISE " + state.exerciseInLevel + "/5 UNLOCKED!") : ("🎯 EXERCICE " + state.exerciseInLevel + "/5 DÉBLOQUÉ !");
         addFloatingScore(exMsg, CW / 2, CH / 2 - 35, '#10B981');
         showGamifiedToast(exMsg);
@@ -7716,8 +7280,6 @@ button, select { font: inherit; }
       const actMsg = state.lang === 'en' ? ("⚡ ACTIVITY " + state.activityPhase + "/3 • NEW CHALLENGE!") : ("⚡ ACTIVITÉ " + state.activityPhase + "/3 • NOUVEL EXERCICE !");
       addFloatingScore(actMsg, CW / 2, CH / 2 - 30, '#38BDF8');
       showGamifiedToast(actMsg);
-      saveGameTracks();
-      renderGameCardProgress();
       nextActivityChallenge(false);
     }
   }
@@ -7729,14 +7291,11 @@ button, select { font: inherit; }
   // NEXT ACTIVITY CHALLENGE ROUTER (MONOTONIC COUNTER GUARANTEES ZERO REPETITION!)
   // ============================================================================
   function nextActivityChallenge(isWelcome = false) {
-    if (state.nateivaGameTimer) { window.clearInterval(state.nateivaGameTimer); state.nateivaGameTimer = null; }
-    const answerStage = $('answers-container');
-    if (answerStage) { answerStage.classList.remove('matrix-mode', 'mastery-mode'); answerStage.style.display = ''; }
     const isEn = state.lang === 'en';
     const g = state.game;
     const counterKey = g + '_' + state.grade;
     if (typeof state.gamePlayCounter[counterKey] !== 'number') {
-      state.gamePlayCounter[counterKey] = getGameTrack(g, state.grade).totalWins || 0;
+      state.gamePlayCounter[counterKey] = (state.level - 1) * 15;
     } else {
       state.gamePlayCounter[counterKey]++;
     }
@@ -7816,7 +7375,6 @@ button, select { font: inherit; }
     if ($('geography-overlay')) $('geography-overlay').classList.remove('active');
     if ($('funfacts-overlay')) $('funfacts-overlay').classList.remove('active');
     if ($('lang-quest-overlay')) $('lang-quest-overlay').classList.remove('active');
-    if ($('new-arcade-overlay')) $('new-arcade-overlay').classList.remove('active');
     if ($('khan-visual-explainer')) $('khan-visual-explainer').classList.remove('active');
 
     // Route to module
@@ -7834,8 +7392,6 @@ button, select { font: inherit; }
       setupFunFactsQuizActivity();
     } else if (g === 'grammar_lab' || g === 'vocabulary_lab' || g === 'conjugation_lab') {
       setupLanguageQuestActivity(g);
-    } else if (g === 'math_tetris' || g === 'safari_racer') {
-      setupNewArcadeGame(g);
     } else {
       $('canvas-wrapper').style.display = 'block';
       $('reading-overlay').classList.remove('active');
@@ -8219,7 +7775,7 @@ button, select { font: inherit; }
   // READING & SYLLABLES LAB
   // ============================================================================
   function setupReadingLabActivity() {
-    $('canvas-wrapper').style.display = 'none';
+    $('canvas-wrapper').style.display = 'block';
     $('maze-dpad-container').classList.remove('active');
     $('reading-overlay').classList.add('active');
     $('pronunciation-overlay').classList.remove('active');
@@ -8252,6 +7808,20 @@ button, select { font: inherit; }
       ? "Touch the syllables to build the word: " + targetWord + "!"
       : "Touche les syllabes pour former le mot : " + targetWord + " !";
     VoiceEngine.speak(speechText);
+
+    setTimeout(() => {
+      const bankBtns = Array.from(document.querySelectorAll('#reading-bank-row .syllable-tile'));
+      spawnCartoonArcadeTargets(
+        item.emoji + ' ' + targetWord + ' (' + targetSyllables.join(' • ') + ')',
+        item.emoji || '🦖',
+        bankBtns.map((bEl) => ({
+          label: bEl.textContent,
+          icon: item.emoji || '🔤',
+          correct: true,
+          onSelect: () => { if (!bEl.disabled) bEl.click(); }
+        }))
+      );
+    }, 10);
 
     const slotsRow = $('reading-slots-row');
     slotsRow.innerHTML = '';
@@ -8330,7 +7900,7 @@ button, select { font: inherit; }
   // PRONUNCIATION STUDIO
   // ============================================================================
   function setupPronunciationActivity() {
-    $('canvas-wrapper').style.display = 'none';
+    $('canvas-wrapper').style.display = 'block';
     $('maze-dpad-container').classList.remove('active');
     $('reading-overlay').classList.remove('active');
     $('pronunciation-overlay').classList.add('active');
@@ -8367,10 +7937,11 @@ button, select { font: inherit; }
       ? "Listen carefully to the word: " + wordText + ". " + item.phonemeQuestion.en
       : "Écoute bien le mot : " + wordText + ". " + item.phonemeQuestion.fr;
     VoiceEngine.speak(speakPrompt);
+    const wordHeroEmoji = resolveCartoonIcon(wordFr + ' ' + wordEn);
 
     // SINGLE NATIVE VOICE RULE: Only 1 native voice speaks for the active language section (French OR English)
     const activeSylls = item.syllables[langKey];
-    $('pronounce-word-title').textContent = (isEn ? '🇬🇧 ' : '🇫🇷 ') + wordText;
+    $('pronounce-word-title').textContent = wordHeroEmoji + ' ' + (isEn ? '🇬🇧 ' : '🇫🇷 ') + wordText;
     $('pronounce-syllables-text').textContent = activeSylls + (isEn ? '  (FR: ' + wordFr + ')' : '  (EN: ' + wordEn + ')');
     $('btn-listen-normal').innerHTML = isEn ? ('🇬🇧 Native Voice (' + wordEn + ')') : ('🇫🇷 Voix Native (' + wordFr + ')');
     $('btn-listen-slow').innerHTML = isEn ? ('🐢 Slow Studio (' + activeSylls + ')') : ('🐢 Voix Lente (' + activeSylls + ')');
@@ -8459,6 +8030,20 @@ button, select { font: inherit; }
       answersBox.appendChild(btn);
     });
 
+    spawnCartoonArcadeTargets(
+      wordHeroEmoji + ' ' + wordText + ' (' + activeSylls + ')',
+      wordHeroEmoji,
+      item.phonemeOptions.map((opt, idx) => ({
+        label: String(opt),
+        icon: wordHeroEmoji,
+        correct: String(opt).toLowerCase() === String(correctAns).toLowerCase(),
+        onSelect: () => {
+          const allBtns = answersBox.querySelectorAll('.btn-interactive');
+          if (allBtns[idx]) allBtns[idx].click();
+        }
+      }))
+    );
+
     activateRheaUniversalCoach(
       isEn ? '🗣️ RHEA PHONETICS & ARTICULATION STUDIO (1 NATIVE VOICE)' : '🗣️ STUDIO PHONÉTIQUE & ARTICULATION RHEA (1 SEULE VOIX NATIVE)',
       [
@@ -8491,7 +8076,7 @@ button, select { font: inherit; }
   // STORY & COMPREHENSION LAB
   // ============================================================================
   function setupStoryComprehensionActivity() {
-    $('canvas-wrapper').style.display = 'none';
+    $('canvas-wrapper').style.display = 'block';
     $('maze-dpad-container').classList.remove('active');
     $('reading-overlay').classList.remove('active');
     $('pronunciation-overlay').classList.remove('active');
@@ -8604,7 +8189,14 @@ button, select { font: inherit; }
     qData.options.forEach(opt => {
       const btn = document.createElement('button');
       btn.className = 'btn-comp-option';
-      btn.innerHTML = '<span>' + opt[langKey] + '</span> <span>🔊</span>';
+      btn.innerHTML = '<span>' + decorateVisualAssetText(opt[langKey]) + '</span> <span class="choice-speaker-chip" title="Écouter">🔊</span>';
+      const spk = btn.querySelector('.choice-speaker-chip');
+      if (spk) {
+        spk.onclick = (ev) => {
+          ev.stopPropagation();
+          VoiceEngine.speak(String(opt[langKey]));
+        };
+      }
       btn.onclick = () => {
         if (opt.correct) {
           AudioEngine.playLevelUp();
@@ -8616,6 +8208,21 @@ button, select { font: inherit; }
       };
       optionsGrid.appendChild(btn);
     });
+
+    const storyHeroIcon = resolveCartoonIcon(story.title.fr + ' ' + qText);
+    spawnCartoonArcadeTargets(
+      storyHeroIcon + ' ' + qText,
+      storyHeroIcon,
+      qData.options.map((opt, idx) => ({
+        label: opt[langKey],
+        icon: resolveCartoonIcon(opt[langKey]),
+        correct: Boolean(opt.correct),
+        onSelect: () => {
+          const allBtns = optionsGrid.querySelectorAll('.btn-comp-option');
+          if (allBtns[idx]) allBtns[idx].click();
+        }
+      }))
+    );
   }
 
   // ============================================================================
@@ -8744,8 +8351,8 @@ button, select { font: inherit; }
     if (khanBox) {
       khanBox.classList.add('active');
       $('khan-coach-badge').textContent = isEn
-        ? 'NATEIVA DISCOVERY STUDIO • VISUAL & AUDIO GUIDE'
-        : 'STUDIO NATEIVA • GUIDE VISUEL & AUDIO';
+        ? '🐻 KHAN KIDS × PERSEUS STUDIO • INTERACTIVE VISUAL & SOUND EXPLANATION'
+        : '🐻 STUDIO KHAN KIDS × PERSEUS • EXPLICATION VISUELLE & SONORE INTERACTIVE';
       const steps = buildKhanMathSteps(item, isEn);
       const track = $('khan-steps-track');
       track.innerHTML = '';
@@ -8809,13 +8416,18 @@ button, select { font: inherit; }
     }
 
     const answersBox = $('answers-container');
-    answersBox.classList.toggle('matrix-mode', state.activityPhase === 2);
-    answersBox.classList.toggle('mastery-mode', state.activityPhase === 3);
     answersBox.innerHTML = '';
     item.options.forEach(opt => {
       const btn = document.createElement('button');
       btn.className = 'btn-interactive';
-      btn.textContent = '✨ ' + String(opt);
+      btn.innerHTML = '<span>' + decorateVisualAssetText(opt) + '</span> <span class="choice-speaker-chip" title="Écouter">🔊</span>';
+      const spk = btn.querySelector('.choice-speaker-chip');
+      if (spk) {
+        spk.onclick = (ev) => {
+          ev.stopPropagation();
+          VoiceEngine.speak(String(opt));
+        };
+      }
       btn.onclick = () => {
         if (opt === item.ans) {
           AudioEngine.playLevelUp();
@@ -8836,7 +8448,7 @@ button, select { font: inherit; }
   // AFRICA GEOGRAPHY EXPLORER (SETERRA × SVG-MAPS ENGINE)
   // ============================================================================
   function setupAfricaGeographyActivity() {
-    $('canvas-wrapper').style.display = 'none';
+    $('canvas-wrapper').style.display = 'block';
     $('maze-dpad-container').classList.remove('active');
     $('reading-overlay').classList.remove('active');
     $('pronunciation-overlay').classList.remove('active');
@@ -8897,7 +8509,14 @@ button, select { font: inherit; }
     qItem.options.forEach(opt => {
       const btn = document.createElement('button');
       btn.className = 'btn-comp-option';
-      btn.innerHTML = '<span>' + opt[langKey] + '</span> <span>🌍</span>';
+      btn.innerHTML = '<span>🌍 ' + opt[langKey] + '</span> <span class="choice-speaker-chip" title="Écouter">🔊</span>';
+      const spk = btn.querySelector('.choice-speaker-chip');
+      if (spk) {
+        spk.onclick = (ev) => {
+          ev.stopPropagation();
+          VoiceEngine.speak(String(opt[langKey]));
+        };
+      }
       btn.onclick = () => {
         if (opt[langKey] === qItem.ans[langKey]) {
           AudioEngine.playLevelUp();
@@ -8909,6 +8528,20 @@ button, select { font: inherit; }
       };
       optGrid.appendChild(btn);
     });
+
+    spawnCartoonArcadeTargets(
+      (countryMeta.flag || '🌍') + ' ' + countryMeta.fr + ' / ' + countryMeta.en,
+      countryMeta.flag || '🌍',
+      qItem.options.map((opt, idx) => ({
+        label: opt[langKey],
+        icon: countryMeta.flag || '🌍',
+        correct: opt[langKey] === qItem.ans[langKey],
+        onSelect: () => {
+          const allBtns = optGrid.querySelectorAll('.btn-comp-option');
+          if (allBtns[idx]) allBtns[idx].click();
+        }
+      }))
+    );
 
     activateRheaUniversalCoach(
       isEn ? '🌍 RHEA AFRICA ATLAS (SETERRA × SVG-MAPS ENGINE)' : '🌍 ATLAS INTERACTIF D’AFRIQUE RHEA (SETERRA × SVG-MAPS)',
@@ -8937,7 +8570,7 @@ button, select { font: inherit; }
   // FUN FACTS & GENERAL KNOWLEDGE MCQ GAME SHOW ENGINE
   // ============================================================================
   function setupFunFactsQuizActivity() {
-    $('canvas-wrapper').style.display = 'none';
+    $('canvas-wrapper').style.display = 'block';
     $('maze-dpad-container').classList.remove('active');
     $('reading-overlay').classList.remove('active');
     $('pronunciation-overlay').classList.remove('active');
@@ -8985,7 +8618,14 @@ button, select { font: inherit; }
       btn.className = 'btn-mcq-choice';
       btn.setAttribute('data-correct', opt[langKey] === item.ans[langKey] ? 'true' : 'false');
       const letter = ['A', 'B', 'C', 'D'][idx] || '•';
-      btn.innerHTML = '<span><b>' + letter + '.</b> ' + opt[langKey] + '</span> <span>🔊</span>';
+      btn.innerHTML = '<span>' + decorateVisualAssetText(opt[langKey]) + '</span> <span class="choice-speaker-chip" title="Écouter">🔊</span>';
+      const spk = btn.querySelector('.choice-speaker-chip');
+      if (spk) {
+        spk.onclick = (ev) => {
+          ev.stopPropagation();
+          VoiceEngine.speak(String(opt[langKey]));
+        };
+      }
       btn.onclick = () => {
         if (opt[langKey] === item.ans[langKey]) {
           AudioEngine.playLevelUp();
@@ -8997,6 +8637,21 @@ button, select { font: inherit; }
       };
       grid.appendChild(btn);
     });
+
+    const factHeroEmoji = resolveCartoonIcon(item.q.fr + ' ' + item.ans.fr);
+    spawnCartoonArcadeTargets(
+      factHeroEmoji + ' ' + item.q[langKey],
+      factHeroEmoji,
+      item.options.map((opt, idx) => ({
+        label: opt[langKey],
+        icon: resolveCartoonIcon(opt[langKey]),
+        correct: opt[langKey] === item.ans[langKey],
+        onSelect: () => {
+          const allBtns = grid.querySelectorAll('.btn-mcq-choice');
+          if (allBtns[idx]) allBtns[idx].click();
+        }
+      }))
+    );
 
     activateRheaUniversalCoach(
       isEn ? '🧠 RHEA ENCYCLOPEDIA COACH (KAHOOT! × TRIVIA STUDIO)' : '🧠 COACH ENCYCLOPÉDIQUE RHEA (KAHOOT! × CULTURE GÉNÉRALE)',
@@ -9020,7 +8675,7 @@ button, select { font: inherit; }
   // GRAMMAR, VOCABULARY & CONJUGATION ENGINE (BOTH FRENCH & ENGLISH SECTIONS)
   // ============================================================================
   function setupLanguageQuestActivity(gameType) {
-    $('canvas-wrapper').style.display = 'none';
+    $('canvas-wrapper').style.display = 'block';
     $('maze-dpad-container').classList.remove('active');
     $('reading-overlay').classList.remove('active');
     $('pronunciation-overlay').classList.remove('active');
@@ -9046,183 +8701,12 @@ button, select { font: inherit; }
     state.currentLangQuestItem = data;
 
     const lStage = document.querySelector('.lang-quest-stage');
-    if (lStage) {
-      lStage.setAttribute('data-phase', String(state.activityPhase));
-      lStage.setAttribute('data-game', gameType);
-    }
-    const phasePrefix = state.activityPhase === 1 ? '🧭 DISCOVERY • ' : (state.activityPhase === 2 ? '⚡ ARCADE • ' : '👑 MASTERY • ');
-    $('lang-quest-badge').textContent = phasePrefix + data.cat + (isEn ? ' • 🇬🇧' : ' • 🇫🇷');
-    $('lang-quest-rule').textContent = data.rule;
-    $('instruction-title').removeAttribute('aria-label');
-    $('instruction-title').textContent = data.speech;
-    const optContainer = $('lang-quest-options');
-    optContainer.className = 'lang-options-grid';
-    optContainer.innerHTML = '';
-
-    if (gameType === 'vocabulary_lab') {
-      $('lang-quest-sentence').textContent = isEn ? 'Find every picture’s matching word.' : 'Associe chaque image à son mot.';
-      $('lang-quest-rule').textContent = isEn ? 'Tap a picture, then its word. Listen to each match.' : 'Touche une image, puis son mot. Écoute chaque paire.';
-      optContainer.classList.add('picture-match-board');
-      const items = data.options.map((label, id) => {
-        const icon = (label.match(/\p{Extended_Pictographic}/gu) || [])[0] || ['🌻', '🦜', '🥭', '⭐'][id % 4];
-        const word = label.replace(/\p{Extended_Pictographic}/gu, '').replace(/[\uFE0E\uFE0F]/g, '').trim() || label;
-        return { id, icon, word, label };
-      });
-      const pictureLane = document.createElement('div');
-      pictureLane.className = 'picture-match-lane picture-match-images';
-      pictureLane.setAttribute('aria-label', isEn ? 'Pictures' : 'Images');
-      const wordLane = document.createElement('div');
-      wordLane.className = 'picture-match-lane picture-match-words';
-      wordLane.setAttribute('aria-label', isEn ? 'Words' : 'Mots');
-      const matched = new Set();
-      let selectedPicture = null;
-      const pictureButtons = new Map();
-      const wordButtons = new Map();
-      const selectPicture = item => {
-        if (matched.has(item.id)) return;
-        selectedPicture = item;
-        pictureButtons.forEach(button => button.classList.toggle('is-selected', Number(button.dataset.pair) === item.id));
-        VoiceEngine.speak(item.word);
-      };
-      const selectWord = item => {
-        if (!selectedPicture || matched.has(item.id)) return;
-        if (selectedPicture.id === item.id) {
-          matched.add(item.id);
-          pictureButtons.get(item.id).classList.add('is-matched');
-          wordButtons.get(item.id).classList.add('is-matched');
-          AudioEngine.playLevelUp();
-          VoiceEngine.speak(item.word);
-          selectedPicture = null;
-          pictureButtons.forEach(button => button.classList.remove('is-selected'));
-          if (matched.size === items.length) window.setTimeout(() => onActivityTaskCompleted(), 650);
-        } else {
-          AudioEngine.playWrong();
-          wordButtons.get(item.id).classList.add('is-miss');
-          window.setTimeout(() => wordButtons.get(item.id)?.classList.remove('is-miss'), 420);
-        }
-      };
-      items.forEach(item => {
-        const picture = document.createElement('button');
-        picture.type = 'button';
-        picture.className = 'picture-match-card';
-        picture.dataset.pair = String(item.id);
-        picture.setAttribute('aria-label', item.icon);
-        picture.innerHTML = '<span class="picture-match-illustration" aria-hidden="true">' + item.icon + '</span><span class="picture-match-hint">🔊</span>';
-        picture.addEventListener('click', () => selectPicture(item));
-        pictureButtons.set(item.id, picture);
-        pictureLane.appendChild(picture);
-        const word = document.createElement('button');
-        word.type = 'button';
-        word.className = 'picture-match-word';
-        word.dataset.pair = String(item.id);
-        word.textContent = item.word;
-        word.addEventListener('click', () => selectWord(item));
-        wordButtons.set(item.id, word);
-        wordLane.appendChild(word);
-      });
-      optContainer.append(pictureLane, wordLane);
-      VoiceEngine.speak(data.speech);
-      return;
-    }
-
-    if (gameType === 'grammar_lab') {
-      $('lang-quest-sentence').innerHTML = data.sentence.replace('___', '<span class="lang-blank-slot grammar-drop-slot" id="lang-active-blank" tabindex="0" aria-label="' + (isEn ? 'Drop the word here' : 'Dépose le mot ici') + '">?</span>');
-      $('lang-quest-rule').textContent = isEn ? 'Build the sentence train: place the missing word in the open carriage.' : 'Construis le train-phrase : place le mot manquant dans le wagon vide.';
-      optContainer.classList.add('sentence-train-deck');
-      const slot = $('lang-active-blank');
-      const placeWord = choice => {
-        if (!slot || slot.dataset.locked === 'true') return;
-        if (choice === data.blank) {
-          slot.textContent = choice;
-          slot.dataset.locked = 'true';
-          slot.classList.add('is-correct');
-          document.querySelector('.lang-quest-stage')?.classList.add('train-departure');
-          AudioEngine.playLevelUp();
-          window.setTimeout(() => onActivityTaskCompleted(), 500);
-        } else {
-          AudioEngine.playWrong();
-          VoiceEngine.speak(isEn ? 'Try another word for this sentence.' : 'Essaie un autre mot pour compléter la phrase.');
-        }
-      };
-      if (slot) {
-        slot.addEventListener('dragover', event => event.preventDefault());
-        slot.addEventListener('drop', event => { event.preventDefault(); placeWord(event.dataTransfer?.getData('text/plain') || ''); });
-        slot.addEventListener('keydown', event => { if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); const focused = optContainer.querySelector('.sentence-car:focus'); if (focused) placeWord(focused.dataset.answer || ''); } });
-      }
-      data.options.forEach((choice, idx) => {
-        const car = document.createElement('button');
-        car.type = 'button';
-        car.className = 'sentence-car';
-        car.dataset.answer = choice;
-        car.draggable = true;
-        car.innerHTML = '<span class="sentence-car-window" aria-hidden="true">' + ['🚂', '🪟', '🌈', '⭐'][idx % 4] + '</span><span>' + choice + '</span>';
-        car.addEventListener('click', () => placeWord(choice));
-        car.addEventListener('dragstart', event => event.dataTransfer?.setData('text/plain', choice));
-        optContainer.appendChild(car);
-      });
-      VoiceEngine.speak(data.speech);
-      return;
-    }
-
-    if (gameType === 'conjugation_lab') {
-      $('lang-quest-sentence').innerHTML = data.sentence.replace('___', '<span class="lang-blank-slot" id="lang-active-blank">?</span>');
-      const sourceText = (data.sentence + ' ' + data.speech).toLowerCase();
-      const timeKey = /\b(hier|yesterday|ago|last|was|were|a terminé|a joué|ont fini)\b/.test(sourceText) ? 'past'
-        : (/\b(demain|tomorrow|will|shall|bientôt|next)\b/.test(sourceText) ? 'future' : 'now');
-      const times = [
-        { id: 'past', icon: '🌅', fr: 'AVANT', en: 'BEFORE' },
-        { id: 'now', icon: '☀️', fr: 'MAINTENANT', en: 'NOW' },
-        { id: 'future', icon: '🌙', fr: 'APRÈS', en: 'AFTER' }
-      ];
-      $('lang-quest-rule').textContent = isEn ? 'Pick the time portal, then send the right action through it.' : 'Choisis la porte du temps, puis envoie la bonne action.';
-      optContainer.classList.add('time-portal-game');
-      const timeline = document.createElement('div');
-      timeline.className = 'time-portal-track';
-      const verbDeck = document.createElement('div');
-      verbDeck.className = 'time-verb-deck';
-      let chosenTime = null;
-      const revealVerbs = () => {
-        verbDeck.innerHTML = '';
-        data.options.forEach((choice, idx) => {
-          const button = document.createElement('button');
-          button.type = 'button';
-          button.className = 'time-verb-token';
-          button.innerHTML = '<span aria-hidden="true">' + ['🦁', '🐒', '🐘', '🦜'][idx % 4] + '</span><span>' + choice + '</span>';
-          button.addEventListener('click', () => {
-            if (choice === data.blank && chosenTime === timeKey) {
-              const slot = $('lang-active-blank');
-              if (slot) { slot.textContent = choice; slot.classList.add('is-correct'); }
-              button.classList.add('verb-flight');
-              AudioEngine.playLevelUp();
-              window.setTimeout(() => onActivityTaskCompleted(), 500);
-            } else {
-              AudioEngine.playWrong();
-              VoiceEngine.speak(isEn ? 'That action does not fit this moment. Try again.' : 'Cette action ne correspond pas à ce moment. Réessaie.');
-            }
-          });
-          verbDeck.appendChild(button);
-        });
-      };
-      times.forEach(time => {
-        const portal = document.createElement('button');
-        portal.type = 'button';
-        portal.className = 'time-portal';
-        portal.innerHTML = '<span class="time-portal-orb" aria-hidden="true">' + time.icon + '</span><span>' + (isEn ? time.en : time.fr) + '</span>';
-        portal.addEventListener('click', () => {
-          if (time.id !== timeKey) { AudioEngine.playWrong(); return; }
-          chosenTime = time.id;
-          timeline.querySelectorAll('.time-portal').forEach(node => node.classList.toggle('is-active', node === portal));
-          AudioEngine.playSnap();
-          revealVerbs();
-        });
-        timeline.appendChild(portal);
-      });
-      optContainer.append(timeline, verbDeck);
-      VoiceEngine.speak(data.speech);
-      return;
-    }
-
+    if (lStage) lStage.setAttribute('data-phase', String(state.activityPhase));
+    const phasePrefix = state.activityPhase === 1 ? '🧭 MODE 1/3 (DÉCOUVERTE) • ' : (state.activityPhase === 2 ? '⚡ MODE 2/3 (ARCADE) • ' : '👑 MODE 3/3 (BOSS) • ');
+    $('lang-quest-badge').textContent = phasePrefix + data.cat + (isEn ? ' • 🇬🇧 ENGLISH VOICE' : ' • 🇫🇷 VOIX FRANÇAISE');
     $('lang-quest-sentence').innerHTML = data.sentence.replace('___', '<span class="lang-blank-slot" id="lang-active-blank">?</span>');
+    $('lang-quest-rule').textContent = data.rule;
+    $('instruction-title').textContent = data.speech;
 
     if ($('btn-switch-lang-section')) {
       $('btn-switch-lang-section').textContent = isEn
@@ -9235,11 +8719,20 @@ button, select { font: inherit; }
       };
     }
 
+    const optContainer = $('lang-quest-options');
+    optContainer.innerHTML = '';
     data.options.forEach((choice, idx) => {
       const btn = document.createElement('button');
       btn.className = 'btn-lang-choice';
       const letter = ['A', 'B', 'C', 'D'][idx] || '•';
-      btn.innerHTML = '<span><b>' + letter + '.</b> ' + choice + '</span> <span>🔊</span>';
+      btn.innerHTML = '<span>' + decorateVisualAssetText(choice) + '</span> <span class="choice-speaker-chip" title="Écouter">🔊</span>';
+      const spk = btn.querySelector('.choice-speaker-chip');
+      if (spk) {
+        spk.onclick = (ev) => {
+          ev.stopPropagation();
+          VoiceEngine.speak(String(choice));
+        };
+      }
       btn.onclick = () => {
         if (choice === data.blank) {
           const slot = $('lang-active-blank');
@@ -9279,225 +8772,232 @@ button, select { font: inherit; }
       }
     );
 
+    // Spawn synchronized moving cartoon targets on the 60fps Arcade Canvas!
+    const sentenceHeroIcon = resolveCartoonIcon(data.sentence + ' ' + data.blank);
+    spawnCartoonArcadeTargets(
+      sentenceHeroIcon + ' ' + data.sentence.replace('___', ' [ ? ] '),
+      sentenceHeroIcon,
+      data.options.map((choice, idx) => ({
+        label: choice,
+        icon: resolveCartoonIcon(choice + ' ' + data.sentence),
+        correct: choice === data.blank,
+        onSelect: () => {
+          const allBtns = optContainer.querySelectorAll('.btn-lang-choice');
+          if (allBtns[idx]) allBtns[idx].click();
+        }
+      }))
+    );
+
     // Speak ONLY in the active single native voice (French OR English)
     VoiceEngine.speak(data.speech);
   }
 
-  // Two new touch-first games: an original Number Tetris variant and a lane-based Safari Racer.
-  const TETRIS_COLS = 10;
-  const TETRIS_ROWS = 14;
-  const TETRIS_PIECES = [
-    { color: '#53C8B3', cells: [[1,0],[1,1],[1,2],[1,3]] },
-    { color: '#E59A51', cells: [[0,0],[0,1],[1,0],[1,1]] },
-    { color: '#E97570', cells: [[0,0],[1,0],[1,1],[1,2]] },
-    { color: '#8C8DE8', cells: [[0,2],[1,0],[1,1],[1,2]] },
-    { color: '#EAC968', cells: [[0,1],[0,2],[1,0],[1,1]] },
-    { color: '#70A9D9', cells: [[0,1],[0,2],[1,0],[1,1]] },
-    { color: '#9FC66D', cells: [[0,1],[1,0],[1,1],[1,2]] }
-  ];
+  
+  // ============================================================================
+  // V11.0 RHEA VISUAL ASSET MAPPER & CLASS-TO-CLASS JOURNEY ENGINE
+  // ============================================================================
+  
+  state.cartoonTargets = [];
 
-  function tetrisPiece() {
-    const def = TETRIS_PIECES[Math.floor(Math.random() * TETRIS_PIECES.length)];
-    return { cells: def.cells.map(cell => cell.slice()), color: def.color, x: 3, y: 0 };
-  }
-
-  function tetrisCollides(piece, x = piece.x, y = piece.y, cells = piece.cells) {
-    return cells.some(([cx, cy]) => {
-      const bx = x + cx, by = y + cy;
-      return bx < 0 || bx >= TETRIS_COLS || by >= TETRIS_ROWS || (by >= 0 && state.numberTetris.board[by][bx]);
+  function spawnCartoonArcadeTargets(titlePrompt, heroEmoji, optionsList) {
+    state.cartoonStageTitle = titlePrompt || '';
+    state.cartoonHeroEmoji = heroEmoji || '🦁';
+    const count = (optionsList || []).length;
+    const colors = ['#FF2A32', '#10B981', '#F59E0B', '#6366F1', '#EC4899', '#06B6D4'];
+    state.cartoonTargets = (optionsList || []).map((opt, idx) => {
+      const spanW = (CW - 180) / Math.max(1, count);
+      const baseX = 110 + idx * spanW + spanW * 0.35;
+      const baseY = 148 + (idx % 2) * 52;
+      return {
+        id: 'ct_' + idx,
+        label: String(opt.label || ''),
+        icon: opt.icon || resolveCartoonIcon(opt.label || heroEmoji),
+        correct: Boolean(opt.correct),
+        onSelect: opt.onSelect,
+        baseX,
+        baseY,
+        x: baseX,
+        y: baseY,
+        vx: (idx % 2 === 0 ? 1 : -1) * (0.65 + (idx * 0.15)),
+        vy: (idx % 2 === 0 ? -1 : 1) * 0.45,
+        phase: idx * 1.35,
+        r: count > 4 ? 38 : 46,
+        color: colors[idx % colors.length],
+        popScale: 1
+      };
     });
   }
 
-  function renderTetrisBoard() {
-    const grid = $('tetris-board');
-    if (!grid || !state.numberTetris) return;
-    const merged = state.numberTetris.board.map(row => row.slice());
-    state.numberTetris.piece.cells.forEach(([cx, cy]) => {
-      const x = state.numberTetris.piece.x + cx, y = state.numberTetris.piece.y + cy;
-      if (y >= 0 && y < TETRIS_ROWS && x >= 0 && x < TETRIS_COLS) merged[y][x] = state.numberTetris.piece.color;
-    });
-    const nodes = grid.children.length === TETRIS_ROWS * TETRIS_COLS ? Array.from(grid.children) : null;
-    if (!nodes) {
-      grid.innerHTML = '';
-      const frag = document.createDocumentFragment();
-      for (let i = 0; i < TETRIS_ROWS * TETRIS_COLS; i++) { const cell = document.createElement('div'); cell.className = 'tetris-cell'; cell.setAttribute('role','gridcell'); frag.appendChild(cell); }
-      grid.appendChild(frag);
+  const GRADE_LADDER = ['MAT', 'SIL', 'CP', 'CE', 'CE2', 'CM1', 'CM'];
+  const GRADE_SHORT_LABELS = {
+    MAT: { icon: '🐣', fr: 'Maternelle', en: 'Nursery/KG' },
+    SIL: { icon: '🌱', fr: 'SIL / CI', en: 'Grade 1' },
+    CP:  { icon: '🌿', fr: 'CP', en: 'Grade 2' },
+    CE:  { icon: '🌴', fr: 'CE1', en: 'Grade 3' },
+    CE2: { icon: '🌍', fr: 'CE2', en: 'Grade 4' },
+    CM1: { icon: '🦅', fr: 'CM1', en: 'Grade 5' },
+    CM:  { icon: '🎓', fr: 'CM2', en: 'Grade 6' }
+  };
+
+  
+  function resolveCartoonIcon(rawText) {
+    const str = String(rawText || '').trim();
+    const existingMatch = str.match(/[🌀-🫿☀-➿]/u);
+    if (existingMatch) return existingMatch[0];
+    const low = str.toLowerCase();
+    const dict = [
+      [/(lion|lionceau|leo|léo)/i, '🦁'],
+      [/(singe|monkey|kiki)/i, '🐒'],
+      [/(éléphant|elephant)/i, '🐘'],
+      [/(girafe|giraffe)/i, '🦒'],
+      [/(zèbre|zebra)/i, '🦓'],
+      [/(oiseau|oiseaux|bird|birds|aigle|eagle)/i, '🐦'],
+      [/(poussin|poule|chick|hen)/i, '🐥'],
+      [/(grenouille|frog)/i, '🐸'],
+      [/(poisson|fish|requin|shark|baleine)/i, '🐟'],
+      [/(abeille|bee|miel|honey)/i, '🐝'],
+      [/(papillon|butterfly)/i, '🦋'],
+      [/(tortue|turtle)/i, '🐢'],
+      [/(chameau|dromadaire|camel|désert|sahara)/i, '🐪'],
+      [/(cheval|horse)/i, '🐎'],
+      [/(chat|cat)/i, '🐱'],
+      [/(chien|dog)/i, '🐶'],
+      [/(canard|duck)/i, '🦆'],
+      [/(pomme|apple)/i, '🍎'],
+      [/(banane|banana)/i, '🍌'],
+      [/(mangue|mango|sucrée|sweet)/i, '🥭'],
+      [/(orange)/i, '🍊'],
+      [/(fraise|strawberry)/i, '🍓'],
+      [/(ananas|pineapple)/i, '🍍'],
+      [/(carotte|carrot)/i, '🥕'],
+      [/(coco|coconut)/i, '🥥'],
+      [/(maïs|maize|corn)/i, '🌽'],
+      [/(cacao|chocolat|chocolate|gâteau|cake|easy|piece of cake)/i, '🍫'],
+      [/(pain|boulanger|boulangerie|bakery|biscuit|cookie)/i, '🥐'],
+      [/(arbre|baobab|tree|forêt|forest|bois|wood)/i, '🌳'],
+      [/(palmier|palm|oasis)/i, '🌴'],
+      [/(fleur|flower|hibiscus|tulipe|lotus|plantées|jardin|garden)/i, '🌺'],
+      [/(soleil|sun|solaire|solar|jaune|yellow|jour|day)/i, '☀️'],
+      [/(étoile|star|nuit|night|astronaute|astronaut|espace|space)/i, '⭐'],
+      [/(planète|mars|terre|earth|lune|moon)/i, '🪐'],
+      [/(arc-en-ciel|rainbow)/i, '🌈'],
+      [/(eau|water|pluie|rain|fleuve|nil|congo|rivière|river|mer|ocean)/i, '🌊'],
+      [/(feu|fire|chaud|hot|volcan)/i, '🔥'],
+      [/(glace|ice|froid|cold|0 °c|neige)/i, '🧊'],
+      [/(électricité|circuit|ampoule|lampe|lamp|lumière|light|300 000|300,000)/i, '⚡'],
+      [/(oxygène|oxygen|poumon|air|vent|wind)/i, '💨'],
+      [/(école|school|élève|enfant|children|kids|ami|friend|amina|kofi)/i, '🏫'],
+      [/(livre|book|histoire|story|bibliothèque|library|wrote|write|raconte)/i, '📖'],
+      [/(hôpital|hospital|docteur|doctor|infirmier|nurse)/i, '🏥'],
+      [/(musée|museum|visiterez|pyramide|pyramid)/i, '🏛️'],
+      [/(chante|sing|chanson|song|tambour|djembé|musique)/i, '🎵'],
+      [/(joue|jouons|play|playing|ballon|soccer|sport)/i, '⚽'],
+      [/(rapide|fast|quick|bondit|jump|cours|courent|run|taller|tall)/i, '🏃'],
+      [/(coeur|généreux|kind|happy|heureux|joie)/i, '❤️'],
+      [/(bateau|pirogue|boat|ship)/i, '⛵'],
+      [/(fusée|rocket)/i, '🚀'],
+      [/(or|gold|diamant|diamond|trésor)/i, '💎'],
+      [/(7 jours|7 days|semaine|week|demain|tomorrow|hier|passé|futur)/i, '📅'],
+      [/^d+/, '🔢']
+    ];
+    for (const [rx, emo] of dict) {
+      if (rx.test(low)) return emo;
     }
-    Array.from(grid.children).forEach((cell, index) => {
-      const color = merged[Math.floor(index / TETRIS_COLS)][index % TETRIS_COLS];
-      cell.classList.toggle('filled', Boolean(color));
-      if (color) {
-        cell.style.setProperty('--block-color', color);
-        cell.textContent = (state.grade === 'MAT' || state.grade === 'SIL') ? '•' : '1';
-      } else { cell.style.removeProperty('--block-color'); cell.textContent = ''; }
-    });
+    return '🌟';
   }
 
-  function lockTetrisPiece() {
-    const game = state.numberTetris;
-    if (!game) return;
-    game.piece.cells.forEach(([cx, cy]) => {
-      const x = game.piece.x + cx, y = game.piece.y + cy;
-      if (y >= 0 && y < TETRIS_ROWS && x >= 0 && x < TETRIS_COLS) game.board[y][x] = game.piece.color;
-    });
-    const remaining = game.board.filter(row => row.some(cell => !cell));
-    const cleared = TETRIS_ROWS - remaining.length;
-    if (cleared) {
-      for (let i = 0; i < cleared; i++) remaining.unshift(Array(TETRIS_COLS).fill(null));
-      game.board = remaining;
-      game.lines += cleared;
-      $('tetris-lines').textContent = (state.lang === 'en' ? 'Rows: ' : 'Lignes : ') + game.lines + ' / ' + game.goal;
-      state.score += cleared * 10;
-      $('hud-score-val').textContent = state.score * 20;
-      AudioEngine.playSuccess();
-      createExplosion(400, 190, '#F3D99C', 16 + cleared * 8);
-      if (!game.awarded && game.lines >= game.goal) {
-        game.awarded = true;
-        AudioEngine.playLevelUp();
-        window.setTimeout(() => onActivityTaskCompleted(), 420);
-        return;
-      }
-    }
-    game.piece = tetrisPiece();
-    if (tetrisCollides(game.piece)) {
-      game.board.splice(0, 3, ...Array.from({length:3}, () => Array(TETRIS_COLS).fill(null)));
-      game.piece = tetrisPiece();
-      VoiceEngine.speak(state.lang === 'en' ? 'Keep building. Your blocks are ready again!' : 'Continue à construire. Tes blocs sont prêts !');
-    }
-    renderTetrisBoard();
+  function decorateVisualAssetText(rawText) {
+    const str = String(rawText || '').trim();
+    if (/[🌀-🫿☀-➿]/u.test(str)) return str;
+    return resolveCartoonIcon(str) + ' ' + str;
   }
 
-  function controlTetris(action) {
-    const game = state.numberTetris;
-    if (!game || game.awarded) return;
-    const piece = game.piece;
-    if (action === 'left' && !tetrisCollides(piece, piece.x - 1)) piece.x--;
-    else if (action === 'right' && !tetrisCollides(piece, piece.x + 1)) piece.x++;
-    else if (action === 'rotate') {
-      const maxX = Math.max(...piece.cells.map(([x]) => x));
-      const maxY = Math.max(...piece.cells.map(([,y]) => y));
-      const rotated = piece.cells.map(([x,y]) => [maxY - y, x]);
-      if (!tetrisCollides(piece, piece.x, piece.y, rotated)) piece.cells = rotated;
-      else if (!tetrisCollides(piece, piece.x - 1, piece.y, rotated)) { piece.x--; piece.cells = rotated; }
-      else if (!tetrisCollides(piece, piece.x + 1, piece.y, rotated)) { piece.x++; piece.cells = rotated; }
-      else return;
-      AudioEngine.playSnap();
-    } else if (action === 'drop') {
-      while (!tetrisCollides(piece, piece.x, piece.y + 1)) piece.y++;
-      lockTetrisPiece();
-      return;
-    }
-    renderTetrisBoard();
-  }
 
-  function buildRaceMath(challengeIndex) {
-    const grade = state.grade;
-    const step = challengeIndex + state.level;
-    let a = 2 + (step % 8), b = 1 + ((step * 3) % 8), symbol = '+', answer;
-    if (grade === 'MAT') { a = 1 + (step % 3); b = 1 + ((step + 1) % 3); }
-    else if (grade === 'SIL' || grade === 'CP') { a = 2 + (step % 8); b = 1 + ((step * 3) % 8); }
-    else if (grade === 'CE') { a = 2 + (step % 7); b = 2 + ((step * 2) % 6); symbol = '×'; }
-    else if (grade === 'CE2') { a = 3 + (step % 7); b = 2 + ((step * 3) % 8); symbol = '×'; }
-    else if (grade === 'CM1') { a = 12 + (step % 19); b = 4 + (step % 8); symbol = '−'; if (b > a) [a,b] = [b,a]; }
-    else { a = 20 + (step % 46); b = 10 + ((step * 2) % 34); symbol = '−'; if (b > a) [a,b] = [b,a]; }
-    answer = symbol === '+' ? a + b : (symbol === '×' ? a * b : a - b);
-    const options = [answer, answer + 1 + (step % 2), Math.max(0, answer - 1 - (step % 3))];
-    if (new Set(options).size !== 3) options[2] = answer + 3;
-    const shift = step % 3;
-    const lanes = options.slice(shift).concat(options.slice(0,shift));
-    const lang = state.lang === 'en';
-    const hint = grade === 'MAT' ? (Array(a).fill('🥭').join('') + ' + ' + Array(b).fill('🥭').join('')) : '';
-    return { a, b, symbol, answer, lanes, hint, prompt: lang ? (a + ' ' + symbol + ' ' + b + ' = ?') : (a + ' ' + symbol + ' ' + b + ' = ?') };
-  }
+  function updateJourneyUI() {
+    const classIdx = Math.max(0, GRADE_LADDER.indexOf(state.grade));
+    const totalSteps = GRADE_LADDER.length * state.totalLevels; // 70 milestones
+    const currentGlobalStep = classIdx * state.totalLevels + state.level;
+    const pct = Math.min(100, Math.max(2, Math.round((currentGlobalStep / totalSteps) * 100)));
 
-  function setupNewArcadeGame(gameKey) {
-    const overlay = $('new-arcade-overlay');
-    if (!overlay) return;
-    overlay.classList.add('active');
-    $('canvas-wrapper').style.display = 'none';
-    $('answers-container').style.display = 'none';
-    $('maze-dpad-container').classList.remove('active');
-    $('new-game-stage').dataset.game = gameKey;
+    const gInfo = GRADE_SHORT_LABELS[state.grade] || GRADE_SHORT_LABELS.MAT;
     const isEn = state.lang === 'en';
-    $('instruction-title').textContent = gameKey === 'math_tetris' ? '🧱' : '🏎️';
-    $('instruction-title').setAttribute('aria-label', gameKey === 'math_tetris' ? (isEn ? 'Number Tetris' : 'Tetris des nombres') : (isEn ? 'Safari Math Racer' : 'Course math safari'));
-    const panelTetris = $('math-tetris-panel');
-    const panelRacer = $('safari-racer-panel');
-    panelTetris.hidden = gameKey !== 'math_tetris';
-    panelRacer.hidden = gameKey !== 'safari_racer';
-    $('new-game-heading').textContent = gameKey === 'math_tetris' ? (isEn ? 'Number Tetris' : 'Tetris des nombres') : (isEn ? 'Safari Math Racer' : 'Course math safari');
-    $('new-game-prompt').textContent = gameKey === 'math_tetris'
-      ? (isEn ? 'Move, turn and drop the cubes. Clear rows to earn stars.' : 'Déplace, tourne et pose les cubes. Complète les lignes pour gagner des étoiles.')
-      : (isEn ? 'Tap the lane with the right answer to speed through the savannah.' : 'Touche la voie avec la bonne réponse pour foncer dans la savane.');
-    $('new-game-replay').onclick = () => VoiceEngine.speak($('new-game-prompt').textContent);
-    if (gameKey === 'math_tetris') {
-      const goal = 1;
-      state.numberTetris = { board: Array.from({length:TETRIS_ROWS}, () => Array(TETRIS_COLS).fill(null)), piece: tetrisPiece(), lines: 0, goal, awarded: false };
-      $('tetris-goal').textContent = isEn ? 'Ten cubes make a full row' : 'Dix cubes remplissent une ligne';
-      $('tetris-lines').textContent = (isEn ? 'Rows: ' : 'Lignes : ') + '0 / ' + goal;
-      renderTetrisBoard();
-      document.querySelectorAll('[data-tetris]').forEach(button => { button.onclick = () => controlTetris(button.dataset.tetris); });
-      if (state.nateivaGameTimer) window.clearInterval(state.nateivaGameTimer);
-      if (!window.__NATEIVA_TETRIS_KEYS_BOUND__) {
-        document.addEventListener('keydown', event => {
-          if (!document.getElementById('new-arcade-overlay')?.classList.contains('active') || state.game !== 'math_tetris') return;
-          const command = { ArrowLeft: 'left', ArrowRight: 'right', ArrowDown: 'drop', ArrowUp: 'rotate', ' ': 'drop' }[event.key];
-          if (command) { event.preventDefault(); controlTetris(command); }
-        });
-        window.__NATEIVA_TETRIS_KEYS_BOUND__ = true;
-      }
-      const baseSpeed = state.grade === 'MAT' ? 980 : (state.grade === 'SIL' || state.grade === 'CP' ? 820 : 650);
-      state.nateivaGameTimer = window.setInterval(() => {
-        const piece = state.numberTetris?.piece;
-        if (!piece || state.numberTetris.awarded) return;
-        if (!tetrisCollides(piece, piece.x, piece.y + 1)) { piece.y++; renderTetrisBoard(); } else lockTetrisPiece();
-      }, Math.max(300, baseSpeed - (state.level - 1) * 35));
-      VoiceEngine.speak($('new-game-prompt').textContent);
-      return;
+    const labelName = isEn ? gInfo.en : gInfo.fr;
+
+    if ($('journey-avatar-emoji')) $('journey-avatar-emoji').textContent = gInfo.icon;
+    if ($('journey-status-text')) {
+      $('journey-status-text').textContent = isEn
+        ? (labelName + ' • Lvl ' + state.level + '/10 (' + pct + '%)')
+        : (labelName + ' • Niv ' + state.level + '/10 (' + pct + '%)');
     }
-    if (state.nateivaGameTimer) window.clearInterval(state.nateivaGameTimer);
-    const challengeIndex = state.gamePlayCounter[state.game + '_' + state.grade] || 0;
-    const challenge = buildRaceMath(challengeIndex);
-    state.safariRace = challenge;
-    $('race-equation').textContent = challenge.prompt;
-    $('race-picture-hint').textContent = challenge.hint;
-    $('race-gate-hint').textContent = isEn ? 'Pick the correct gate!' : 'Choisis la bonne porte !';
-    $('race-touch-hint').textContent = isEn ? 'Use a finger, or the left/right arrow keys.' : 'Utilise ton doigt ou les flèches gauche/droite.';
-    const gates = $('race-gates');
-    gates.innerHTML = '';
-    challenge.lanes.forEach((value, lane) => {
-      const gate = document.createElement('button');
-      gate.type = 'button';
-      gate.className = 'race-gate';
-      gate.textContent = String(value);
-      gate.tabIndex = 0;
-      gate.setAttribute('aria-label', (isEn ? 'Answer ' : 'Réponse ') + value);
-      gate.addEventListener('keydown', event => {
-        if (event.key !== 'ArrowLeft' && event.key !== 'ArrowRight') return;
-        event.preventDefault();
-        const nextIndex = Math.max(0, Math.min(gates.children.length - 1, lane + (event.key === 'ArrowRight' ? 1 : -1)));
-        gates.children[nextIndex]?.focus();
-      });
-      gate.addEventListener('click', () => {
-        if (state.safariRace?.awarded) return;
-        if (value === challenge.answer) {
-          state.safariRace.awarded = true;
-          gate.classList.add('is-correct');
-          $('race-driver').classList.add('racing');
-          $('race-driver').style.left = ['17%','50%','83%'][lane];
-          AudioEngine.playLevelUp();
-          window.setTimeout(() => onActivityTaskCompleted(), 650);
-        } else {
-          gate.animate([{transform:'translateX(0)'},{transform:'translateX(-5px)'},{transform:'translateX(5px)'},{transform:'translateX(0)'}],{duration:260});
-          AudioEngine.playWrong();
-        }
-      });
-      gates.appendChild(gate);
+    if ($('journey-overall-bar-fill')) {
+      $('journey-overall-bar-fill').style.width = pct + '%';
+    }
+    if ($('ingame-class-pill')) {
+      $('ingame-class-pill').textContent = gInfo.icon + ' ' + labelName + ' • Niv ' + state.level;
+    }
+
+    document.querySelectorAll('.journey-stone').forEach((btn, idx) => {
+      const code = btn.getAttribute('data-jgrade');
+      btn.classList.toggle('active', code === state.grade);
+      btn.classList.toggle('passed', idx < classIdx);
     });
-    $('race-driver').classList.remove('racing');
-    $('race-driver').style.left = '50%';
-    VoiceEngine.speak(isEn ? ('Choose the answer to ' + challenge.a + ' ' + (challenge.symbol === '×' ? 'times' : challenge.symbol === '−' ? 'minus' : 'plus') + ' ' + challenge.b) : ('Choisis la réponse à ' + challenge.a + ' ' + (challenge.symbol === '×' ? 'fois' : challenge.symbol === '−' ? 'moins' : 'plus') + ' ' + challenge.b));
   }
+
+  function stepJourneyProgression(delta) {
+    let classIdx = Math.max(0, GRADE_LADDER.indexOf(state.grade));
+    let newLvl = state.level + delta;
+    let classChanged = false;
+
+    if (newLvl > state.totalLevels) {
+      if (classIdx < GRADE_LADDER.length - 1) {
+        classIdx++;
+        newLvl = 1;
+        classChanged = true;
+      } else {
+        newLvl = state.totalLevels;
+      }
+    } else if (newLvl < 1) {
+      if (classIdx > 0) {
+        classIdx--;
+        newLvl = state.totalLevels;
+        classChanged = true;
+      } else {
+        newLvl = 1;
+      }
+    }
+
+    const newGrade = GRADE_LADDER[classIdx];
+    state.grade = newGrade;
+    state.level = newLvl;
+    state.selectedLevel = newLvl;
+    state.exerciseInLevel = 1;
+    state.activityPhase = 1;
+    if (!state.levelStars[newLvl]) state.levelStars[newLvl] = 1;
+    saveGamifiedProgress();
+
+    selectGradeClass(newGrade, false);
+    buildLevelPillsTrack();
+    updateJourneyUI();
+    AudioEngine.playLevelUp();
+
+    const gInfo = GRADE_SHORT_LABELS[newGrade] || GRADE_SHORT_LABELS.MAT;
+    const isEn = state.lang === 'en';
+    const msg = classChanged
+      ? (isEn
+          ? ('🎓 Welcome to ' + gInfo.en + ' • Level ' + newLvl + '!')
+          : ('🎓 Passage en ' + gInfo.fr + ' • Niveau ' + newLvl + ' !'))
+      : (isEn
+          ? ('🚀 ' + gInfo.en + ' • Level ' + newLvl + '!')
+          : ('🚀 ' + gInfo.fr + ' • Niveau ' + newLvl + ' !'));
+
+    showGamifiedToast(msg);
+    VoiceEngine.speak(msg);
+
+    if ($('arcade-workspace') && $('arcade-workspace').classList.contains('active')) {
+      nextActivityChallenge(false);
+    }
+  }
+  window.__NATEIVA_STEP_JOURNEY__ = stepJourneyProgression;
 
   // ============================================================================
   // BILINGUAL CLASS MATRIX CONTROLLER (UPDATES CURRICULUM & CARDS BY CLASS)
@@ -9547,7 +9047,6 @@ button, select { font: inherit; }
     document.querySelectorAll('.class-card-pill').forEach(btn => {
       btn.classList.toggle('active', btn.getAttribute('data-grade') === gradeCode);
     });
-    renderGameCardProgress();
 
     const meta = CLASS_CURRICULUM_META[gradeCode] || CLASS_CURRICULUM_META.MAT;
     const isEn = state.lang === 'en';
@@ -9566,6 +9065,11 @@ button, select { font: inherit; }
       VoiceEngine.speak(isEn ? ("Class selected: " + meta.badge) : ("Classe sélectionnée : " + meta.badge));
     }
   }
+  const _origSelectGradeClass = selectGradeClass;
+  selectGradeClass = function(gradeCode, speakAnnouncement = true) {
+    _origSelectGradeClass(gradeCode, speakAnnouncement);
+    if (typeof updateJourneyUI === 'function') updateJourneyUI();
+  };
   window.__NATEIVA_SELECT_CLASS__ = selectGradeClass;
 
   // ============================================================================
@@ -9573,22 +9077,15 @@ button, select { font: inherit; }
   // ============================================================================
   function launchGame(gameKey) {
     state.game = gameKey;
-    const gameTrack = getGameTrack(gameKey, state.grade);
-    state.level = gameTrack.level;
-    state.selectedLevel = gameTrack.level;
-    state.levelStars = gameTrack.stars;
     state.exerciseInLevel = 1;
     state.activityPhase = 1;
     state.lives = 3;
 
     $('portals-grid').style.display = 'none';
-    if ($('adventure-hero')) $('adventure-hero').style.display = 'none';
     if ($('class-selector-banner')) $('class-selector-banner').style.display = 'none';
+    if ($('journey-world-banner')) $('journey-world-banner').style.display = 'none';
     $('level-selector-section').style.display = 'none';
     $('category-tabs').style.display = 'none';
-    $('arcade-workspace').dataset.game = gameKey;
-    const worldArt = $('game-world-hero');
-    if (worldArt && /^[a-z0-9_]+$/.test(gameKey)) worldArt.style.setProperty('--world-art', 'url("./assets/images/game-covers/' + gameKey + '.webp")');
     $('arcade-workspace').classList.add('active');
 
     const isEn = state.lang === 'en';
@@ -9608,25 +9105,18 @@ button, select { font: inherit; }
       fun_facts_quiz: isEn ? "🧠 Fun Facts & General Knowledge" : "🧠 Fun Facts & Culture Générale (QCM)",
       grammar_lab: isEn ? "✍️ Grammar & Syntax Lab (EN)" : "✍️ Grammaire & Syntaxe (FR)",
       vocabulary_lab: isEn ? "🗂️ Vocabulary Explorer (EN)" : "🗂️ Vocabulaire & Mots (FR)",
-      conjugation_lab: isEn ? "⏳ Verb Conjugation Time Machine (EN)" : "⏳ Conjugaison & Temps (FR)",
-      math_tetris: isEn ? "🧱 Number Tetris" : "🧱 Tetris des nombres",
-      safari_racer: isEn ? "🏎️ Safari Math Racer" : "🏎️ Course math safari"
+      conjugation_lab: isEn ? "⏳ Verb Conjugation Time Machine (EN)" : "⏳ Conjugaison & Temps (FR)"
     };
     $('hud-game-name').textContent = titleMap[gameKey] || "🎮 Quête Éducative";
     nextActivityChallenge(true);
-    if (gameKey === 'math_tetris' || gameKey === 'safari_racer') {
-      const workspace = $('arcade-workspace');
-      window.requestAnimationFrame(() => workspace.scrollIntoView({ behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block: 'start' }));
-    }
   }
 
   function returnToHub() {
     VoiceEngine.stop();
-    if (state.nateivaGameTimer) { window.clearInterval(state.nateivaGameTimer); state.nateivaGameTimer = null; }
     $('arcade-workspace').classList.remove('active');
     $('portals-grid').style.display = 'grid';
-    if ($('adventure-hero')) $('adventure-hero').style.display = '';
-    if ($('class-selector-banner')) $('class-selector-banner').style.display = 'flex';
+    if ($('journey-world-banner')) $('journey-world-banner').style.display = 'flex';
+    updateJourneyUI();
     $('level-selector-section').style.display = 'flex';
     $('category-tabs').style.display = 'flex';
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -10785,6 +10275,172 @@ button, select { font: inherit; }
       }
     }
 
+
+    // 9. V12.0 UNIVERSAL 60FPS CARTOON ARCADE STAGE FOR ALL LANGUAGE, READING, VOICE, STORY, GEOGRAPHY & QUIZ GAMES!
+    else if (['grammar_lab', 'vocabulary_lab', 'conjugation_lab', 'reading_lab', 'pronunciation_lab', 'story_lab', 'africa_geography', 'fun_facts_quiz'].includes(g)) {
+      const tNow = Date.now() / 1000;
+
+      // Vibrant Cartoon Sky, Moving Clouds, Rolling Savannah Hills & Sunbeams
+      const skyGrad = ctx.createLinearGradient(0, 0, 0, CH);
+      skyGrad.addColorStop(0, '#0284C7');
+      skyGrad.addColorStop(0.58, '#38BDF8');
+      skyGrad.addColorStop(1, '#BAE6FD');
+      ctx.fillStyle = skyGrad;
+      ctx.fillRect(0, 0, CW, CH);
+
+      // Animated Rotating Cartoon Sun in Top-Right
+      ctx.save();
+      ctx.translate(CW - 68, 62);
+      ctx.rotate(tNow * 0.45);
+      ctx.fillStyle = 'rgba(253, 224, 71, 0.35)';
+      for (let r = 0; r < 8; r++) {
+        ctx.rotate(Math.PI / 4);
+        ctx.beginPath();
+        ctx.roundRect(-6, -42, 12, 84, 6);
+        ctx.fill();
+      }
+      ctx.fillStyle = '#FACC15';
+      ctx.beginPath();
+      ctx.arc(0, 0, 26, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.strokeStyle = '#FEF08A';
+      ctx.lineWidth = 3;
+      ctx.stroke();
+      ctx.restore();
+
+      // Drifting Fluffy Cartoon Clouds
+      for (let c = 0; c < 4; c++) {
+        const cx = ((c * 220 + tNow * (18 + c * 4)) % (CW + 120)) - 60;
+        const cy = 48 + (c % 2) * 28;
+        ctx.fillStyle = 'rgba(255, 255, 255, 0.82)';
+        ctx.beginPath();
+        ctx.arc(cx, cy, 18, 0, Math.PI * 2);
+        ctx.arc(cx + 16, cy - 6, 22, 0, Math.PI * 2);
+        ctx.arc(cx + 34, cy, 17, 0, Math.PI * 2);
+        ctx.fill();
+      }
+
+      // Rolling Green Cartoon Hills at Bottom
+      const hillGrad = ctx.createLinearGradient(0, CH - 95, 0, CH);
+      hillGrad.addColorStop(0, '#22C55E');
+      hillGrad.addColorStop(1, '#15803D');
+      ctx.fillStyle = hillGrad;
+      ctx.beginPath();
+      ctx.moveTo(0, CH);
+      ctx.lineTo(0, CH - 68);
+      ctx.quadraticCurveTo(CW * 0.28, CH - 105, CW * 0.55, CH - 64);
+      ctx.quadraticCurveTo(CW * 0.8, CH - 35, CW, CH - 78);
+      ctx.lineTo(CW, CH);
+      ctx.closePath();
+      ctx.fill();
+
+      // Top Cartoon Banner Showing Current Visual + Voice Prompt
+      ctx.save();
+      ctx.fillStyle = 'rgba(15, 23, 42, 0.88)';
+      ctx.beginPath();
+      ctx.roundRect(18, 10, CW - 115, 42, 14);
+      ctx.fill();
+      ctx.strokeStyle = '#FDE047';
+      ctx.lineWidth = 2.5;
+      ctx.stroke();
+      ctx.fillStyle = '#FFFFFF';
+      ctx.font = 'bold 16px sans-serif';
+      const bannerTxt = String(state.cartoonStageTitle || ($('instruction-title') ? $('instruction-title').textContent : '')).slice(0, 68);
+      ctx.fillText(bannerTxt, 32, 36);
+      ctx.restore();
+
+      // Animated Bouncing Cartoon Hero Mascot on Left Stage (Speaks with Sound Waves when VoiceEngine is active!)
+      const isSpeakingNow = Boolean(VoiceEngine.audio || (window.speechSynthesis && window.speechSynthesis.speaking));
+      const heroBounceY = Math.sin(tNow * 5.5) * 7;
+      const hx = 68, hy = CH - 78 + heroBounceY;
+
+      ctx.save();
+      ctx.translate(hx, hy);
+      if (isSpeakingNow) {
+        // Pulsing Cartoon Speech Halo Rings
+        for (let ring = 1; ring <= 2; ring++) {
+          const rad = 36 + ring * 12 + ((tNow * 30) % 14);
+          ctx.strokeStyle = 'rgba(253, 224, 71, 0.75)';
+          ctx.lineWidth = 2.5;
+          ctx.beginPath();
+          ctx.arc(0, -10, rad, 0, Math.PI * 2);
+          ctx.stroke();
+        }
+      }
+      // Mascot Pedestal & Body Circle
+      ctx.fillStyle = '#E5252A';
+      ctx.beginPath();
+      ctx.arc(0, -10, 34, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.strokeStyle = '#FFFFFF';
+      ctx.lineWidth = 3.5;
+      ctx.stroke();
+      ctx.font = '38px sans-serif';
+      const heroEmo = state.cartoonHeroEmoji || '🦁';
+      ctx.fillText(heroEmo, -20, 4);
+      ctx.fillStyle = '#FEF08A';
+      ctx.font = 'bold 11px sans-serif';
+      ctx.fillText('🔊 TAP ME', -26, 38);
+      ctx.restore();
+
+      // Floating, Moving, Bouncing Cartoon Answer Bubbles / Characters!
+      (state.cartoonTargets || []).forEach((ct, idx) => {
+        // Continuous smooth arcade motion around base position
+        ct.x = ct.baseX + Math.sin(tNow * 1.9 + ct.phase) * 24;
+        ct.y = ct.baseY + Math.cos(tNow * 2.4 + ct.phase) * 18;
+        if (ct.popScale > 1) ct.popScale = Math.max(1, ct.popScale - 0.04);
+
+        ctx.save();
+        ctx.translate(ct.x, ct.y);
+        ctx.scale(ct.popScale, ct.popScale);
+
+        // Cartoon 3D Bubble Shadow
+        ctx.fillStyle = 'rgba(15, 23, 42, 0.32)';
+        ctx.beginPath();
+        ctx.arc(4, 8, ct.r, 0, Math.PI * 2);
+        ctx.fill();
+
+        // Glossy Cartoon Bubble Body
+        const bGrad = ctx.createRadialGradient(-ct.r * 0.3, -ct.r * 0.3, 6, 0, 0, ct.r);
+        bGrad.addColorStop(0, '#FFFFFF');
+        bGrad.addColorStop(0.25, ct.color);
+        bGrad.addColorStop(1, '#0F172A');
+        ctx.fillStyle = bGrad;
+        ctx.beginPath();
+        ctx.arc(0, 0, ct.r, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.strokeStyle = '#FEF08A';
+        ctx.lineWidth = 3;
+        ctx.stroke();
+
+        // Cartoon Specular Shine Dot
+        ctx.fillStyle = 'rgba(255, 255, 255, 0.65)';
+        ctx.beginPath();
+        ctx.ellipse(-ct.r * 0.35, -ct.r * 0.38, ct.r * 0.22, ct.r * 0.12, -0.5, 0, Math.PI * 2);
+        ctx.fill();
+
+        // Big Cartoon Icon Inside Bubble
+        ctx.font = '30px sans-serif';
+        ctx.fillText(ct.icon, -16, -4);
+
+        // Crisp Cartoon Label Pill Under Icon
+        const shortLbl = String(ct.label).replace(/^[🌀-🫿☀-➿]s*/u, '').slice(0, 16);
+        ctx.font = 'bold 13px sans-serif';
+        const tw = ctx.measureText(shortLbl).width;
+        ctx.fillStyle = 'rgba(15, 23, 42, 0.88)';
+        ctx.beginPath();
+        ctx.roundRect(-tw / 2 - 8, 8, tw + 16, 22, 9);
+        ctx.fill();
+        ctx.strokeStyle = '#FFFFFF';
+        ctx.lineWidth = 1.5;
+        ctx.stroke();
+
+        ctx.fillStyle = '#FEF08A';
+        ctx.fillText(shortLbl, -tw / 2, 24);
+        ctx.restore();
+      });
+    }
+
         // Render Particles
     state.particles.forEach((p, idx) => {
       p.x += p.vx;
@@ -10849,16 +10505,6 @@ button, select { font: inherit; }
     });
   });
 
-  if ($('hero-start')) $('hero-start').addEventListener('click', () => launchGame('maze_quest'));
-  document.querySelectorAll('.step-node[data-act]').forEach(node => {
-    node.addEventListener('keydown', event => {
-      if (event.key === 'Enter' || event.key === ' ') {
-        event.preventDefault();
-        node.click();
-      }
-    });
-  });
-
   // Top Home Buttons
   if ($('btn-back-hub')) $('btn-back-hub').addEventListener('click', returnToHub);
   if ($('btn-back-hub-top')) $('btn-back-hub-top').addEventListener('click', returnToHub);
@@ -10895,16 +10541,10 @@ button, select { font: inherit; }
 
   // Initialize default class badge display without speaking on boot
   selectGradeClass(state.grade, false);
-  renderGameCardProgress();
 
   $('lang-select').addEventListener('change', e => {
     state.lang = e.target.value;
     VoiceEngine.stop();
-    renderGameCardProgress();
-    const heroArt = $('adventure-hero-art');
-    if (heroArt) heroArt.alt = state.lang === 'en'
-      ? 'Leo the lion and Kiki the monkey explore the savanna at sunrise'
-      : 'Léo le lion et Kiki le singe découvrent la savane au lever du soleil';
   });
 
   if ($('btn-version-cache')) {
@@ -10949,6 +10589,56 @@ button, select { font: inherit; }
 
   // Initialize Level Pills Track
   buildLevelPillsTrack();
+
+  
+  // V11.0 Journey Stepping Stones & Up/Down Progression Listeners
+  document.querySelectorAll('.journey-stone').forEach(stone => {
+    stone.addEventListener('click', () => {
+      const gCode = stone.getAttribute('data-jgrade');
+      selectGradeClass(gCode, true);
+      updateJourneyUI();
+    });
+  });
+
+  if ($('btn-journey-up')) {
+    $('btn-journey-up').addEventListener('click', () => stepJourneyProgression(1));
+  }
+  if ($('btn-journey-down')) {
+    $('btn-journey-down').addEventListener('click', () => stepJourneyProgression(-1));
+  }
+  if ($('btn-ingame-journey-up')) {
+    $('btn-ingame-journey-up').addEventListener('click', () => stepJourneyProgression(1));
+  }
+  if ($('btn-ingame-journey-down')) {
+    $('btn-ingame-journey-down').addEventListener('click', () => stepJourneyProgression(-1));
+  }
+  if ($('journey-avatar-pill')) {
+    $('journey-avatar-pill').addEventListener('click', () => {
+      const txt = $('journey-status-text') ? $('journey-status-text').textContent : '';
+      VoiceEngine.speak(txt);
+    });
+  }
+
+  // Add 1-Tap Audio Preview Speaker Button on Every Portal Card for Pre-Readers!
+  document.querySelectorAll('.portal-card').forEach(card => {
+    const titleEl = card.querySelector('h3');
+    const playBadge = card.querySelector('.card-rea-badge');
+    if (playBadge) {
+      playBadge.textContent = '▶️ JOUER / PLAY';
+    }
+    const spkBtn = document.createElement('span');
+    spkBtn.className = 'card-audio-preview-btn';
+    spkBtn.textContent = '🔊';
+    spkBtn.title = 'Écouter le nom du jeu';
+    spkBtn.addEventListener('click', (ev) => {
+      ev.stopPropagation();
+      AudioEngine.playSnap();
+      if (titleEl) VoiceEngine.speak(titleEl.textContent);
+    });
+    card.appendChild(spkBtn);
+  });
+
+  updateJourneyUI();
 
   // Auto-start Render Loop
   requestAnimationFrame(renderLoop);
