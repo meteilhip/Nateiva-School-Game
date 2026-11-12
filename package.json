@@ -1,7 +1,7 @@
 {
   "name": "nateiva-school-game",
   "main": "expo-router/entry",
-  "version": "1.5.0",
+  "version": "1.6.0",
   "dependencies": {
     "@expo/metro-runtime": "^57.0.16",
     "@expo/ui": "~57.0.19",

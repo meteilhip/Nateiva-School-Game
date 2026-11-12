@@ -2687,6 +2687,209 @@ body {
     font-size: 1.55rem !important;
   }
 
+
+  /* ============================================================================
+   * V13.0 PURE CARTOON ARCADE UI: ZERO WORKSHEET TEXT OVERLAYS IN-GAME!
+   * When a kid enters any game, ALL they see is:
+   * 1) Compact Icon Top Bar (🏠, ⬇️ Class • Niv ⬆️, 🔊 Big Speaker, ⭐)
+   * 2) Large Full-Stage 60fps Animated Cartoon Arcade Canvas (#simCanvas)
+   * 3) 4 Giant Visual Picture + Audio Arcade Buttons (#answers-container)
+   * ============================================================================ */
+  .arcade-hud {
+    padding: 6px 12px !important;
+    margin-bottom: 6px !important;
+    border-radius: 18px !important;
+  }
+  #hud-exercise-badge,
+  #hud-combo-badge,
+  .activity-stepper,
+  .khan-visual-explainer,
+  .khan-visual-explainer.active,
+  .tutor-panel,
+  #reading-overlay,
+  #reading-overlay.active,
+  #story-overlay,
+  #story-overlay.active,
+  #funfacts-overlay,
+  #funfacts-overlay.active,
+  #lang-quest-overlay,
+  #lang-quest-overlay.active {
+    display: none !important;
+  }
+
+  /* For Pronunciation Studio: hide text headers, keep ONLY the Big Microphone & Voice Switch bar! */
+  #pronunciation-overlay.active {
+    display: block !important;
+    padding: 4px 0 !important;
+    margin: 4px 0 !important;
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+  }
+  #pronunciation-dots-row,
+  .word-phonetic-banner {
+    display: none !important;
+  }
+  .mic-studio-bar {
+    margin: 4px 0 !important;
+    padding: 6px 10px !important;
+  }
+
+  /* For Africa Geography: keep the Interactive Vector Map of Africa right next to the Cartoon Stage, hide text paragraphs */
+  #geography-overlay.active {
+    display: block !important;
+    padding: 6px !important;
+    margin-bottom: 6px !important;
+  }
+  #africa-map-caption,
+  #geo-region-tag,
+  #geo-capital-sub,
+  #geo-question-prompt {
+    display: none !important;
+  }
+  .geography-stage {
+    gap: 10px !important;
+  }
+  .africa-svg-map {
+    max-height: 190px !important;
+  }
+
+  /* Make the Instruction Header a single-line Cartoon Audio Bar with a Giant Speaker Button */
+  .instruction-header {
+    padding: 6px 12px !important;
+    margin-bottom: 6px !important;
+    border-radius: 18px !important;
+    background: linear-gradient(135deg, #0F172A 0%, #1E1B4B 100%) !important;
+    border: 2px solid #FDE047 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    gap: 10px !important;
+  }
+  .instruction-box h3 {
+    font-size: 0.98rem !important;
+    color: #FEF08A !important;
+    margin: 0 !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    max-width: 62vw !important;
+  }
+  .btn-audio-speak {
+    background: linear-gradient(135deg, #FACC15 0%, #F59E0B 100%) !important;
+    color: #111827 !important;
+    font-weight: 900 !important;
+    font-size: 1rem !important;
+    padding: 8px 18px !important;
+    border-radius: 999px !important;
+    border: 2px solid #FFFFFF !important;
+    box-shadow: 0 4px 14px rgba(250, 204, 21, 0.45) !important;
+    flex-shrink: 0 !important;
+  }
+
+  /* Enlarge the 60fps Cartoon Arcade Canvas so it dominates the screen like a real arcade game! */
+  .playground-card {
+    padding: 10px !important;
+    border-radius: 24px !important;
+    background: #0F172A !important;
+    border: 3px solid #38BDF8 !important;
+  }
+  .canvas-wrapper {
+    margin-bottom: 10px !important;
+    border-radius: 22px !important;
+    border: 3px solid #FDE047 !important;
+    background: #090D16 !important;
+  }
+  #simCanvas {
+    width: 100% !important;
+    height: auto !important;
+    aspect-ratio: 800 / 380 !important;
+    max-height: 360px !important;
+    min-height: 0 !important;
+    display: block !important;
+  }
+  .arcade-hud {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    padding: 6px 10px !important;
+    margin-bottom: 4px !important;
+    gap: 6px !important;
+  }
+  .hud-left {
+    display: flex !important;
+    align-items: center !important;
+    gap: 6px !important;
+  }
+  .hud-title {
+    font-size: 0.9rem !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    max-width: 155px !important;
+  }
+  #btn-back-hub-top-right,
+  #hud-lives-badge,
+  .progress-container {
+    display: none !important;
+  }
+  .ingame-gamified-bar {
+    padding: 5px 8px !important;
+    margin-bottom: 4px !important;
+    border-radius: 14px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    gap: 6px !important;
+  }
+  #ingame-lvl-pills {
+    display: flex !important;
+    overflow-x: auto !important;
+    flex-wrap: nowrap !important;
+    max-width: 145px !important;
+    gap: 4px !important;
+    scrollbar-width: none !important;
+  }
+  #ingame-lvl-pills::-webkit-scrollbar { display: none !important; }
+  .instruction-header {
+    padding: 5px 10px !important;
+    margin-bottom: 6px !important;
+  }
+  .instruction-box {
+    display: none !important;
+  }
+  #btn-replay-speech {
+    width: 100% !important;
+    justify-content: center !important;
+    padding: 7px 14px !important;
+    font-size: 0.95rem !important;
+  }
+
+  /* 4 Giant Picture + Audio Arcade Buttons below the Canvas */
+  .answers-container {
+    display: grid !important;
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 10px !important;
+    margin-top: 4px !important;
+  }
+  .btn-interactive {
+    min-height: 58px !important;
+    font-size: 1.12rem !important;
+    font-weight: 900 !important;
+    border-radius: 20px !important;
+    background: linear-gradient(135deg, #1E293B 0%, #0F172A 100%) !important;
+    color: #FFFFFF !important;
+    border: 2.5px solid #38BDF8 !important;
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.28) !important;
+    padding: 10px 16px !important;
+  }
+  .btn-interactive:hover, .btn-interactive:active {
+    background: linear-gradient(135deg, #E5252A 0%, #B91C1C 100%) !important;
+    border-color: #FDE047 !important;
+    transform: translateY(-2px) scale(1.02) !important;
+  }
+
 </style>
 </head>
 <body>
@@ -2717,7 +2920,7 @@ body {
         <option value="en">🇬🇧 English (Studio Voice)</option>
       </select>
       <button class="btn-pill" id="btn-sound-toggle">🔊 Son</button>
-      <button class="version-cache-pill" id="btn-version-cache" title="Version active • Cliquer pour vider le cache et recharger">🚀 v12.0 CARTOON-ARCADE • 🔄 Vider Cache</button>
+      <button class="version-cache-pill" id="btn-version-cache" title="Version active • Cliquer pour vider le cache et recharger">🚀 v13.0 PURE-CARTOON-ARCADE • 🔄 Vider Cache</button>
     </div>
   </header>
 
@@ -2849,7 +3052,7 @@ body {
           <h3>Grammaire & Syntaxe (FR / EN)</h3>
           <div class="portal-curriculum-tag">Noms • Verbes • Adjectifs • Accords</div>
         </div>
-        <span class="card-rea-badge">✨ v12.0 CARTOON-ARCADE • ▶ JOUER</span>
+        <span class="card-rea-badge">✨ v13.0 PURE-CARTOON-ARCADE • ▶ JOUER</span>
       </div>
       <p class="portal-desc">Maîtrise la grammaire en français et en anglais (articles, pluriels, nature des mots, accords sujet-verbe) avec une seule voix native pure !</p>
       <div class="portal-counts-badge-bar">
@@ -2868,7 +3071,7 @@ body {
           <h3>Vocabulaire & Mots du Monde (FR / EN)</h3>
           <div class="portal-curriculum-tag">Synonymes • Contraires • Thèmes d'Afrique</div>
         </div>
-        <span class="card-rea-badge">✨ v12.0 CARTOON-ARCADE • ▶ JOUER</span>
+        <span class="card-rea-badge">✨ v13.0 PURE-CARTOON-ARCADE • ▶ JOUER</span>
       </div>
       <p class="portal-desc">Enrichis ton vocabulaire en français et en anglais : synonymes, contraires, objets de l'école, animaux et métiers avec prononciation native !</p>
       <div class="portal-counts-badge-bar">
@@ -2887,7 +3090,7 @@ body {
           <h3>Conjugaison & Temps (FR / EN)</h3>
           <div class="portal-curriculum-tag">Présent • Passé • Futur • Être/Avoir & To Be</div>
         </div>
-        <span class="card-rea-badge">✨ v12.0 CARTOON-ARCADE • ▶ JOUER</span>
+        <span class="card-rea-badge">✨ v13.0 PURE-CARTOON-ARCADE • ▶ JOUER</span>
       </div>
       <p class="portal-desc">Voyage dans le temps (Passé, Présent, Futur) pour conjuguer les verbes en français et en anglais selon le pronom sujet !</p>
       <div class="portal-counts-badge-bar">
@@ -2906,7 +3109,7 @@ body {
           <h3>Studio Prononciation (FR ⇄ EN)</h3>
           <div class="portal-curriculum-tag">Anglais & Français • Micro Live • Spectre</div>
         </div>
-        <span class="card-rea-badge">✨ v12.0 CARTOON-ARCADE • ▶ JOUER</span>
+        <span class="card-rea-badge">✨ v13.0 PURE-CARTOON-ARCADE • ▶ JOUER</span>
       </div>
       <p class="portal-desc">Écoute la vraie voix studio française et anglaise, parle dans ton micro pour obtenir ton score de prononciation et suis les billes de rythme !</p>
       <div class="portal-counts-badge-bar">
@@ -2925,7 +3128,7 @@ body {
           <h3>Géographie des Pays d'Afrique</h3>
           <div class="portal-curriculum-tag">Carte SVG Interactive • Drapeaux • Capitales</div>
         </div>
-        <span class="card-rea-badge">✨ v12.0 CARTOON-ARCADE • ▶ JOUER</span>
+        <span class="card-rea-badge">✨ v13.0 PURE-CARTOON-ARCADE • ▶ JOUER</span>
       </div>
       <p class="portal-desc">Explore la vraie carte vectorielle interactive des pays d'Afrique ! Touche les pays au doigt, découvre leurs drapeaux, leurs capitales et leurs fleuves !</p>
       <div class="portal-counts-badge-bar">
@@ -2944,7 +3147,7 @@ body {
           <h3>Fun Facts & Culture Générale (QCM)</h3>
           <div class="portal-curriculum-tag">Quiz Choix Multiples • Indice 50/50 • Afrique</div>
         </div>
-        <span class="card-rea-badge">✨ v12.0 CARTOON-ARCADE • ▶ JOUER</span>
+        <span class="card-rea-badge">✨ v13.0 PURE-CARTOON-ARCADE • ▶ JOUER</span>
       </div>
       <p class="portal-desc">Réponds aux questions à choix multiples (A, B, C, D) avec l'indice 50/50 sur les merveilles d'Afrique, les animaux, l'espace et les sciences !</p>
       <div class="portal-counts-badge-bar">
@@ -2963,7 +3166,7 @@ body {
           <h3>Compréhension de Texte & Contes</h3>
           <div class="portal-curriculum-tag">Lecture Karaoké FR/EN • Quiz Compréhension</div>
         </div>
-        <span class="card-rea-badge">✨ v12.0 CARTOON-ARCADE • ▶ JOUER</span>
+        <span class="card-rea-badge">✨ v13.0 PURE-CARTOON-ARCADE • ▶ JOUER</span>
       </div>
       <p class="portal-desc">Écoute et lis des contes africains et scientifiques bilingues avec surlignage phrase par phrase, puis réponds aux questions de compréhension !</p>
       <div class="portal-counts-badge-bar">
@@ -2982,7 +3185,7 @@ body {
           <h3>Monstre des Syllabes & Lecture</h3>
           <div class="portal-curriculum-tag">Feed The Monster • Voyelles & Consonnes</div>
         </div>
-        <span class="card-rea-badge">✨ v12.0 CARTOON-ARCADE • ▶ JOUER</span>
+        <span class="card-rea-badge">✨ v13.0 PURE-CARTOON-ARCADE • ▶ JOUER</span>
       </div>
       <p class="portal-desc">Nourris le Monstre magique avec les bonnes syllabes colorées (voyelles en rouge, consonnes en bleu) pour former des mots en français et en anglais !</p>
       <div class="portal-counts-badge-bar">
@@ -3001,7 +3204,7 @@ body {
           <h3>Maths 3D, Fractions & Balance Algébrique</h3>
           <div class="portal-curriculum-tag">Boîtes de 10 • Disque Fractions • Balance 2x+4</div>
         </div>
-        <span class="card-rea-badge">✨ v12.0 CARTOON-ARCADE • ▶ JOUER</span>
+        <span class="card-rea-badge">✨ v13.0 PURE-CARTOON-ARCADE • ▶ JOUER</span>
       </div>
       <p class="portal-desc">Manipule les boîtes de 10, le disque interactif des fractions et la balance algébrique selon ta classe (de la Maternelle au CM2 / Primary 6) !</p>
       <div class="portal-counts-badge-bar">
@@ -3020,7 +3223,7 @@ body {
           <h3>Labo Chimie & Échelle pH</h3>
           <div class="portal-curriculum-tag">Sciences • Réactions • Indicateur pH 0–14</div>
         </div>
-        <span class="card-rea-badge">✨ v12.0 CARTOON-ARCADE • ▶ JOUER</span>
+        <span class="card-rea-badge">✨ v13.0 PURE-CARTOON-ARCADE • ▶ JOUER</span>
       </div>
       <p class="portal-desc">Verse les éprouvettes dans l'erlenmeyer, observe l'indicateur de pH en direct, les mélanges de couleurs et l'effervescence des bulles de gaz !</p>
       <div class="portal-counts-badge-bar">
@@ -3039,7 +3242,7 @@ body {
           <h3>Bassin d'Archimède (Flotte/Coule)</h3>
           <div class="portal-curriculum-tag">Physique • Vecteurs Poussée ↑Fa & Poids ↓P</div>
         </div>
-        <span class="card-rea-badge">✨ v12.0 CARTOON-ARCADE • ▶ JOUER</span>
+        <span class="card-rea-badge">✨ v13.0 PURE-CARTOON-ARCADE • ▶ JOUER</span>
       </div>
       <p class="portal-desc">Plonge le bois, la mangue, l'or ou la brique dans l'eau et visualise en direct les vecteurs de la poussée d'Archimède (↑Fa) et du poids (↓P) !</p>
       <div class="portal-counts-badge-bar">
@@ -3058,7 +3261,7 @@ body {
           <h3>Circuit Électrique 3D & Oscilloscope</h3>
           <div class="portal-curriculum-tag">Loi d'Ohm (U=R×I) • Électrons & Hélice</div>
         </div>
-        <span class="card-rea-badge">✨ v12.0 CARTOON-ARCADE • ▶ JOUER</span>
+        <span class="card-rea-badge">✨ v13.0 PURE-CARTOON-ARCADE • ▶ JOUER</span>
       </div>
       <p class="portal-desc">Ferme l'interrupteur pour observer la circulation des électrons bleus, allumer l'ampoule de 4,5 V et faire tourner l'hélice du moteur électrique !</p>
       <div class="portal-counts-badge-bar">
@@ -3077,7 +3280,7 @@ body {
           <h3>Jardin Botanique & Photosynthèse</h3>
           <div class="portal-curriculum-tag">Biologie • Racines, Tige & Floraison 21 Jours</div>
         </div>
-        <span class="card-rea-badge">✨ v12.0 CARTOON-ARCADE • ▶ JOUER</span>
+        <span class="card-rea-badge">✨ v13.0 PURE-CARTOON-ARCADE • ▶ JOUER</span>
       </div>
       <p class="portal-desc">Dose la pluie et le soleil pour faire germer le Baobab, le Tournesol, le Cacaoyer et l'Hibiscus en observant les racines pousser sous terre !</p>
       <div class="portal-counts-badge-bar">
@@ -3096,7 +3299,7 @@ body {
           <h3>Comet Defender : Calcul Spatial</h3>
           <div class="portal-curriculum-tag">TuxMath Arcade • Lasers & Calcul Mental</div>
         </div>
-        <span class="card-rea-badge">✨ v12.0 CARTOON-ARCADE • ▶ JOUER</span>
+        <span class="card-rea-badge">✨ v13.0 PURE-CARTOON-ARCADE • ▶ JOUER</span>
       </div>
       <p class="portal-desc">Pilote le vaisseau spatial et tire au laser sur la comète qui porte la bonne réponse à l'équation affichée sur le tableau de bord !</p>
       <div class="portal-counts-badge-bar">
@@ -3115,7 +3318,7 @@ body {
           <h3>Tangram Géométrique Magnétique</h3>
           <div class="portal-curriculum-tag">Mathigon Euclid • Polygones & Silhouettes</div>
         </div>
-        <span class="card-rea-badge">✨ v12.0 CARTOON-ARCADE • ▶ JOUER</span>
+        <span class="card-rea-badge">✨ v13.0 PURE-CARTOON-ARCADE • ▶ JOUER</span>
       </div>
       <p class="portal-desc">Assemble la Fusée, le Bateau, le Chat, le Lion et le Papillon en glissant les polygones géométriques avec aimantation de précision !</p>
       <div class="portal-counts-badge-bar">
@@ -3134,7 +3337,7 @@ body {
           <h3>Donjon Labyrinthe 3D (Vue 3D & Raycast)</h3>
           <div class="portal-curriculum-tag">Blockly Maze • Algorithme & Syllabes</div>
         </div>
-        <span class="card-rea-badge">✨ v12.0 CARTOON-ARCADE • ▶ JOUER</span>
+        <span class="card-rea-badge">✨ v13.0 PURE-CARTOON-ARCADE • ▶ JOUER</span>
       </div>
       <p class="portal-desc">Guide Léo dans les 5 cartes de la Savane (Oasis, Pyramide, Volcan, Jungle) en collectant les syllabes et nombres d'or ou utilise le bouton Auto-Pas !</p>
       <div class="portal-counts-badge-bar">
@@ -6316,7 +6519,7 @@ body {
 
   // Particles & Floating Scores
   function addFloatingScore(text, x, y, color = '#E5252A') {
-    state.floatingScores.push({ text, x, y, alpha: 1.0, vy: -1.5, color });
+    state.floatingScores = [{ text, x, y, alpha: 1.0, vy: -1.8, color }];
   }
 
   function createExplosion(x, y, color = '#E5252A', count = 14) {
@@ -6437,11 +6640,37 @@ body {
 
 
     if (g === 'tangram_puzzle') {
+      let foundDrag = null;
       state.tangram.pieces.forEach(piece => {
-        if (!piece.snapped && Math.hypot(p.x - piece.x, p.y - piece.y) < 45) {
-          state.dragged = piece;
+        if (!piece.snapped && Math.hypot(p.x - piece.x, p.y - piece.y) < 52) {
+          foundDrag = piece;
         }
       });
+      if (foundDrag) {
+        // 1-Tap arcade magnetic fly-in OR drag!
+        foundDrag.x = foundDrag.targetX;
+        foundDrag.y = foundDrag.targetY;
+        foundDrag.snapped = true;
+        AudioEngine.playSnap();
+        createExplosion(foundDrag.targetX, foundDrag.targetY, '#10B981', 16);
+        if (state.tangram.pieces.every(pc => pc.snapped)) {
+          AudioEngine.playLevelUp();
+          onActivityTaskCompleted();
+        }
+      } else {
+        const nextUnsnapped = state.tangram.pieces.find(pc => !pc.snapped);
+        if (nextUnsnapped && p.y < 290) {
+          nextUnsnapped.x = nextUnsnapped.targetX;
+          nextUnsnapped.y = nextUnsnapped.targetY;
+          nextUnsnapped.snapped = true;
+          AudioEngine.playSnap();
+          createExplosion(nextUnsnapped.targetX, nextUnsnapped.targetY, '#10B981', 16);
+          if (state.tangram.pieces.every(pc => pc.snapped)) {
+            AudioEngine.playLevelUp();
+            onActivityTaskCompleted();
+          }
+        }
+      }
     } else if (g === 'maze_quest') {
       // Direct touch on maze: move toward touched cell
       const targetCol = Math.floor(p.x / state.maze.cellW);
@@ -6484,6 +6713,17 @@ body {
       state.lasers.push({ x: state.ship.x + 8, y: state.ship.y - 22, vy: -15, color: '#FF2A32' });
       AudioEngine.playZap();
     } else if (g === 'math_lab') {
+      if (state.cartoonTargets && state.cartoonTargets.length > 0) {
+        for (let i = 0; i < state.cartoonTargets.length; i++) {
+          const ct = state.cartoonTargets[i];
+          if (Math.hypot(p.x - ct.x, p.y - ct.y) <= ct.r + 14) {
+            ct.popScale = 1.35;
+            createExplosion(ct.x, ct.y, ct.correct ? '#10B981' : '#EF4444', 18);
+            if (typeof ct.onSelect === 'function') ct.onSelect();
+            return;
+          }
+        }
+      }
       const mItem = state.currentMathItem || {};
       if (mItem.type === 'algebra') {
         state.mathAlgebraSimplified = !state.mathAlgebraSimplified;
@@ -6695,6 +6935,7 @@ body {
       }, 950);
     } else {
       state.circuitClosed = false;
+        state.cartoonHeroEmoji = '⚡';
       state.currentAmps = 0.0;
       state.lampGlow = 0;
     }
@@ -6856,17 +7097,17 @@ body {
 
     // 2. Expand Chemistry Lab to 16 distinct pH & Color Synthesis Missions
     const extraChem = [
-      { id: 'c6', title: { fr: "Élixir Solaire Doré (pH 8)", en: "Golden Solar Elixir (pH 8)" } },
-      { id: 'c7', title: { fr: "Solution Turquoise du Nil (pH 7)", en: "Nile Turquoise Solution (pH 7)" } },
-      { id: 'c8', title: { fr: "Nectar Rubis Volcanique (pH 4)", en: "Volcanic Ruby Nectar (pH 4)" } },
-      { id: 'c9', title: { fr: "Cristal Violet d'Améthyste (pH 9)", en: "Amethyst Violet Crystal (pH 9)" } },
-      { id: 'c10', title: { fr: "Sérum Vert Chlorophylle (pH 7)", en: "Chlorophyll Green Serum (pH 7)" } },
-      { id: 'c11', title: { fr: "Potion Corail Tropical (pH 5)", en: "Tropical Coral Potion (pH 5)" } },
-      { id: 'c12', title: { fr: "Acide Citrique Pétillant (pH 3)", en: "Sparkling Citric Acid (pH 3)" } },
-      { id: 'c13', title: { fr: "Base Savonneuse Douce (pH 10)", en: "Mild Soapy Base (pH 10)" } },
-      { id: 'c14', title: { fr: "Indicateur Chou Rouge (pH 6)", en: "Red Cabbage Indicator (pH 6)" } },
-      { id: 'c15', title: { fr: "Polymère Luminescent (pH 8)", en: "Luminescent Polymer (pH 8)" } },
-      { id: 'c16', title: { fr: "Synthèse Royale du Savant (pH 7)", en: "Royal Scientist Synthesis (pH 7)" } }
+      { id: 'c6', name: 'gold', color: '#F59E0B', recipe: 'red+yellow', emoji: '☀️', title: { fr: "☀️ Élixir Solaire Doré (Rouge + Jaune)", en: "☀️ Golden Solar Elixir (Red + Yellow)" } },
+      { id: 'c7', name: 'turquoise', color: '#06B6D4', recipe: 'blue+yellow', emoji: '🌊', title: { fr: "🌊 Solution Turquoise du Nil (Bleu + Jaune)", en: "🌊 Nile Turquoise Solution (Blue + Yellow)" } },
+      { id: 'c8', name: 'ruby', color: '#EF4444', recipe: 'red+yellow', emoji: '🌋', title: { fr: "🌋 Nectar Rubis Volcanique (Rouge + Jaune)", en: "🌋 Volcanic Ruby Nectar (Red + Yellow)" } },
+      { id: 'c9', name: 'amethyst', color: '#8B5CF6', recipe: 'red+blue', emoji: '🔮', title: { fr: "🔮 Cristal Violet d'Améthyste (Rouge + Bleu)", en: "🔮 Amethyst Violet Crystal (Red + Blue)" } },
+      { id: 'c10', name: 'emerald', color: '#10B981', recipe: 'blue+yellow', emoji: '🌿', title: { fr: "🌿 Sérum Vert Chlorophylle (Bleu + Jaune)", en: "🌿 Chlorophyll Green Serum (Blue + Yellow)" } },
+      { id: 'c11', name: 'coral', color: '#F97316', recipe: 'red+yellow', emoji: '🪸', title: { fr: "🪸 Potion Corail Tropical (Rouge + Jaune)", en: "🪸 Tropical Coral Potion (Red + Yellow)" } },
+      { id: 'c12', name: 'citric', color: '#EAB308', recipe: 'red+yellow', emoji: '🍋', title: { fr: "🍋 Acide Citrique Pétillant (Rouge + Jaune)", en: "🍋 Sparkling Citric Acid (Red + Yellow)" } },
+      { id: 'c13', name: 'soapy', color: '#38BDF8', recipe: 'blue+yellow', emoji: '🫧', title: { fr: "🫧 Base Savonneuse Douce (Bleu + Jaune)", en: "🫧 Mild Soapy Base (Blue + Yellow)" } },
+      { id: 'c14', name: 'cabbage', color: '#A855F7', recipe: 'red+blue', emoji: '🧪', title: { fr: "🧪 Indicateur Violet (Rouge + Bleu)", en: "🧪 Purple Indicator (Red + Blue)" } },
+      { id: 'c15', name: 'glow', color: '#22C55E', recipe: 'blue+yellow', emoji: '✨', title: { fr: "✨ Polymère Vert Luminescent (Bleu + Jaune)", en: "✨ Green Luminescent Polymer (Blue + Yellow)" } },
+      { id: 'c16', name: 'royal', color: '#EC4899', recipe: 'red+blue', emoji: '👑', title: { fr: "👑 Synthèse Royale Pourpre (Rouge + Bleu)", en: "👑 Royal Magenta Synthesis (Red + Blue)" } }
     ];
     DB.chemistryTargets.push(...extraChem);
 
@@ -6906,17 +7147,17 @@ body {
     // 5. Expand Tangram Silhouettes to 16 distinct geometric puzzles
     const baseTangrams = [...DB.tangrams];
     const extraTangramNames = [
-      { fr: "Pyramide de Gizeh", en: "Giza Pyramid" },
-      { fr: "Éléphant Géométrique", en: "Geometric Elephant" },
-      { fr: "Étoile du Mali", en: "Star of Mali" },
-      { fr: "Couronne Royale", en: "Royal Crown" },
-      { fr: "Aigle de la Savane", en: "Savannah Eagle" },
-      { fr: "Tortue Sagesse", en: "Wisdom Turtle" },
-      { fr: "Pont Suspendu", en: "Suspension Bridge" },
-      { fr: "Château Solaire", en: "Solar Castle" },
-      { fr: "Poisson du Fleuve", en: "River Fish" },
-      { fr: "Robot Explorateur", en: "Explorer Robot" },
-      { fr: "Diamant Africain", en: "African Diamond" }
+      { fr: "🔺 Pyramide de Gizeh", en: "🔺 Giza Pyramid", emoji: "🔺" },
+      { fr: "🐘 Éléphant Géométrique", en: "🐘 Geometric Elephant", emoji: "🐘" },
+      { fr: "⭐ Étoile du Mali", en: "⭐ Star of Mali", emoji: "⭐" },
+      { fr: "👑 Couronne Royale", en: "👑 Royal Crown", emoji: "👑" },
+      { fr: "🦅 Aigle de la Savane", en: "🦅 Savannah Eagle", emoji: "🦅" },
+      { fr: "🐢 Tortue Sagesse", en: "🐢 Wisdom Turtle", emoji: "🐢" },
+      { fr: "🌉 Pont Suspendu", en: "🌉 Suspension Bridge", emoji: "🌉" },
+      { fr: "🏰 Château Solaire", en: "🏰 Solar Castle", emoji: "🏰" },
+      { fr: "🐟 Poisson du Fleuve", en: "🐟 River Fish", emoji: "🐟" },
+      { fr: "🤖 Robot Explorateur", en: "🤖 Explorer Robot", emoji: "🤖" },
+      { fr: "💎 Diamant Africain", en: "💎 African Diamond", emoji: "💎" }
     ];
     extraTangramNames.forEach((nm, idx) => {
       const tpl = baseTangrams[idx % baseTangrams.length];
@@ -7400,6 +7641,7 @@ body {
 
       if (g === 'maze_quest') {
         const mzName = state.maze.name ? (isEn ? state.maze.name.en : state.maze.name.fr) : "";
+        state.cartoonHeroEmoji = resolveCartoonIcon(mzName) || "🦁";
         const mazeSpeech = isEn ? "Savannah Mission (" + mzName + "): Guide Leo to collect the syllables and reach the portal!" : "Mission Savane (" + mzName + ") : Guide Léo pour ramasser les syllabes d'or jusqu'au portail !";
         $('instruction-title').textContent = mazeSpeech;
         VoiceEngine.speak(mazeSpeech);
@@ -7445,9 +7687,36 @@ body {
         );
       } else if (g === 'tangram_puzzle') {
         const tgName = state.tangram.name ? (isEn ? state.tangram.name.en : state.tangram.name.fr) : "";
-        const tangramSpeech = isEn ? "Assemble " + tgName + "! Drag pieces onto the silhouette." : "Assemble " + tgName + " ! Glisse les pièces pour compléter la silhouette.";
+        const tgEmoji = resolveCartoonIcon(tgName);
+        state.cartoonHeroEmoji = tgEmoji;
+        const tangramSpeech = isEn ? "Assemble " + tgName + "! Tap or drag the pieces!" : "Assemble " + tgName + " ! Touche ou glisse les pièces !";
         $('instruction-title').textContent = tangramSpeech;
         VoiceEngine.speak(tangramSpeech);
+        const ansBoxTg = $('answers-container');
+        if (ansBoxTg) {
+          ansBoxTg.innerHTML = '';
+          const snapPieceFn = () => {
+            const nextP = state.tangram.pieces.find(pc => !pc.snapped);
+            if (nextP) {
+              nextP.x = nextP.targetX;
+              nextP.y = nextP.targetY;
+              nextP.snapped = true;
+              AudioEngine.playSnap();
+              createExplosion(nextP.targetX, nextP.targetY, '#10B981', 16);
+              if (state.tangram.pieces.every(pc => pc.snapped)) {
+                AudioEngine.playLevelUp();
+                onActivityTaskCompleted();
+              }
+            }
+          };
+          state.tangram.pieces.forEach((pc, idx) => {
+            const btnP = document.createElement('button');
+            btnP.className = 'btn-interactive';
+            btnP.innerHTML = '<span>🧩 ' + tgEmoji + ' ' + pc.name + '</span> <span class="choice-speaker-chip">🔊</span>';
+            btnP.onclick = snapPieceFn;
+            ansBoxTg.appendChild(btnP);
+          });
+        }
         activateRheaUniversalCoach(
           isEn ? '🧩 RHEA GEOMETRY & TANGRAM COACH (MATHIGON POLYPAD 3D)' : '🧩 COACH GÉOMÉTRIE & TANGRAM RHEA (MATHIGON POLYPAD 3D)',
           [
@@ -7475,6 +7744,7 @@ body {
       } else if (g === 'chemistry') {
         const chemTarget = DB.chemistryTargets[challengeIndex % DB.chemistryTargets.length];
         state.chemTarget = chemTarget;
+        state.cartoonHeroEmoji = chemTarget.emoji || '🧪';
         state.flask.fluidHeight = 34;
         state.flask.fluidColor = '#38BDF8';
         state.flask.bubbles = [];
@@ -7508,6 +7778,7 @@ body {
       } else if (g === 'botany') {
         const botTarget = DB.botanyPlants[challengeIndex % DB.botanyPlants.length];
         state.botanyTarget = botTarget;
+        state.cartoonHeroEmoji = botTarget.emoji || '🌻';
         state.simDay = 1;
         state.stemHeight = 0;
         state.leafSpread = 0;
@@ -7544,6 +7815,7 @@ body {
         state.densityItems.forEach(item => { item.x = item.origX; item.y = item.origY; item.inWater = false; item.vy = 0; });
         const targetItem = state.densityItems[challengeIndex % state.densityItems.length];
         state.densityTarget = targetItem;
+        state.cartoonHeroEmoji = targetItem.emoji || '🌊';
         const denSpeech = isEn
           ? "Archimedes Tank: Drag " + targetItem.emoji + " (" + targetItem.name + ") into the water! Does it float or sink?"
           : "Bassin d'Archimède : Glisse " + targetItem.emoji + " (" + targetItem.name + ") dans l'eau ! Flotte-t-il ou coule-t-il ?";
@@ -7697,6 +7969,7 @@ body {
         ];
         const cProb = getUniqueChallengeItem(allComet, 'comet_' + state.grade, challengeIndex);
         state.cometEquation = cProb.eq;
+        state.cartoonHeroEmoji = '🚀';
         state.cometAnswer = cProb.ans;
         state.cometSteps = cProb.steps;
         state.cometExplain = isEn ? cProb.explainEn : cProb.explainFr;
@@ -7809,19 +8082,7 @@ body {
       : "Touche les syllabes pour former le mot : " + targetWord + " !";
     VoiceEngine.speak(speechText);
 
-    setTimeout(() => {
-      const bankBtns = Array.from(document.querySelectorAll('#reading-bank-row .syllable-tile'));
-      spawnCartoonArcadeTargets(
-        item.emoji + ' ' + targetWord + ' (' + targetSyllables.join(' • ') + ')',
-        item.emoji || '🦖',
-        bankBtns.map((bEl) => ({
-          label: bEl.textContent,
-          icon: item.emoji || '🔤',
-          correct: true,
-          onSelect: () => { if (!bEl.disabled) bEl.click(); }
-        }))
-      );
-    }, 10);
+
 
     const slotsRow = $('reading-slots-row');
     slotsRow.innerHTML = '';
@@ -7854,6 +8115,38 @@ body {
       };
       bankRow.appendChild(btn);
     });
+    const ansBoxRead = $('answers-container');
+    if (ansBoxRead) {
+      ansBoxRead.innerHTML = '';
+      Array.from(bankRow.querySelectorAll('.syllable-tile')).forEach((bEl) => {
+        const bigBtn = document.createElement('button');
+        bigBtn.className = 'btn-interactive';
+        bigBtn.innerHTML = '<span style="font-size:1.5rem;">' + (item.emoji || '🦖') + ' ' + bEl.textContent + '</span> <span class="choice-speaker-chip">🔊</span>';
+        const spk = bigBtn.querySelector('.choice-speaker-chip');
+        if (spk) spk.onclick = (ev) => { ev.stopPropagation(); VoiceEngine.speak(bEl.textContent); };
+        bigBtn.onclick = () => {
+          if (!bEl.disabled) {
+            bEl.click();
+            bigBtn.style.opacity = '0.35';
+            bigBtn.disabled = true;
+          }
+        };
+        ansBoxRead.appendChild(bigBtn);
+      });
+    }
+    const bankBtnsSync = Array.from(bankRow.querySelectorAll('.syllable-tile'));
+    state.cartoonHeroEmoji = item.emoji || '🦖';
+    spawnCartoonArcadeTargets(
+      item.emoji + ' ' + targetWord + ' (' + targetSyllables.join(' • ') + ')',
+      item.emoji || '🦖',
+      bankBtnsSync.map((bEl) => ({
+        label: bEl.textContent,
+        icon: item.emoji || '🦖',
+        correct: true,
+        onSelect: () => { if (!bEl.disabled) bEl.click(); }
+      })),
+      item.emoji + ' ' + targetWord
+    );
 
     activateRheaUniversalCoach(
       isEn ? '🦖 RHEA PHONICS ENGINE (FEED THE MONSTER × DUOLINGO ABC)' : '🦖 MOTEUR SYLLABIQUE RHEA (FEED THE MONSTER × DUOLINGO ABC)',
@@ -8184,6 +8477,8 @@ body {
     $('btn-comp-q-audio').onclick = () => VoiceEngine.speak(qText);
     if (shouldSpeak) VoiceEngine.speak(qText);
 
+    const storyHeroPre = resolveCartoonIcon(story.title.fr + " " + qText);
+    state.cartoonHeroEmoji = (storyHeroPre && storyHeroPre !== "🌟") ? storyHeroPre : "📖";
     const optionsGrid = $('comp-options-grid');
     optionsGrid.innerHTML = '';
     qData.options.forEach(opt => {
@@ -8209,6 +8504,22 @@ body {
       optionsGrid.appendChild(btn);
     });
 
+    const ansBoxStory = $('answers-container');
+    if (ansBoxStory) {
+      ansBoxStory.innerHTML = '';
+      qData.options.forEach((opt, idx) => {
+        const bigBtn = document.createElement('button');
+        bigBtn.className = 'btn-interactive';
+        bigBtn.innerHTML = '<span>' + decorateVisualAssetText(opt[langKey]) + '</span> <span class="choice-speaker-chip">🔊</span>';
+        const spk = bigBtn.querySelector('.choice-speaker-chip');
+        if (spk) spk.onclick = (ev) => { ev.stopPropagation(); VoiceEngine.speak(String(opt[langKey])); };
+        bigBtn.onclick = () => {
+          const allBtns = optionsGrid.querySelectorAll('.btn-comp-option');
+          if (allBtns[idx]) allBtns[idx].click();
+        };
+        ansBoxStory.appendChild(bigBtn);
+      });
+    }
     const storyHeroIcon = resolveCartoonIcon(story.title.fr + ' ' + qText);
     spawnCartoonArcadeTargets(
       storyHeroIcon + ' ' + qText,
@@ -8324,13 +8635,28 @@ body {
     $('instruction-title').textContent = item.prompt[langKey];
     VoiceEngine.speak(item.speech[langKey]);
 
-    // Build interactive touchable tokens on canvas (Ten-Frame / Array layout)
+    // Guarantee 100% Voice <-> Visual Emoji Match for Math Lab
+    if (!item.itemEmoji || item.itemEmoji === '🍎') {
+      const detectedMathEmo = resolveCartoonIcon(item.prompt.fr + ' ' + item.speech.fr);
+      if (detectedMathEmo && detectedMathEmo !== '🌟' && detectedMathEmo !== '🔢') {
+        item.itemEmoji = detectedMathEmo;
+      } else if (!item.itemEmoji) {
+        item.itemEmoji = '🍎';
+      }
+    }
+    state.cartoonHeroEmoji = item.itemEmoji;
+    state.cartoonSceneSprites = [item.itemEmoji];
+
+    // Build interactive touchable tokens on canvas (Ten-Frame / Array / Division Boxes layout)
     state.mathItemsOnStage = [];
-    const totalTokens = item.type === 'addition' ? ((item.a || 3) + (item.b || 2))
-                      : item.type === 'subtraction' ? (item.a || 6)
+    const totalTokens = item.type === 'addition' ? Math.min(20, (item.a || 3) + (item.b || 2))
+                      : item.type === 'subtraction' ? Math.min(20, item.a || 6)
                       : item.type === 'multiply' ? Math.min(24, (item.a || 3) * (item.b || 4))
-                      : (item.targetCount || item.a || 4);
-    const cols = item.type === 'multiply' ? (item.b || 4) : 5;
+                      : item.type === 'division' ? Math.min(24, item.a || 12)
+                      : Math.min(20, item.targetCount || item.a || 4);
+    const cols = item.type === 'multiply' ? Math.min(8, item.b || 4)
+               : item.type === 'division' ? Math.min(8, Math.ceil(totalTokens / (item.b || 4)))
+               : 5;
     for (let i = 0; i < Math.min(24, totalTokens); i++) {
       const col = i % cols;
       const row = Math.floor(i / cols);
@@ -8341,8 +8667,8 @@ body {
         isSecondGroup: item.type === 'addition' && i >= (item.a || 0),
         isSubtracted: item.type === 'subtraction' && i >= ((item.a || 0) - (item.b || 0)),
         counted: false,
-        x: 115 + col * (cols > 5 ? 54 : 74),
-        y: 125 + row * (totalTokens > 10 ? 52 : 74)
+        x: 95 + col * (cols > 5 ? 48 : 66),
+        y: 112 + row * (totalTokens > 10 ? 48 : 66)
       });
     }
 
@@ -8442,6 +8768,21 @@ body {
       };
       answersBox.appendChild(btn);
     });
+
+    // Also spawn clickable floating arcade answer targets on the right side of the Math Canvas!
+    spawnCartoonArcadeTargets(
+      (item.itemEmoji || '🧮') + ' ' + item.prompt[langKey],
+      item.itemEmoji || '🧮',
+      item.options.map((opt, idx) => ({
+        label: String(opt),
+        icon: item.itemEmoji || '🔢',
+        correct: opt === item.ans,
+        onSelect: () => {
+          const allBtns = answersBox.querySelectorAll('.btn-interactive');
+          if (allBtns[idx]) allBtns[idx].click();
+        }
+      }))
+    );
   }
 
   // ============================================================================
@@ -8611,6 +8952,8 @@ body {
       };
     }
 
+    const factHeroPre = resolveCartoonIcon(item.q.fr + " " + item.ans.fr);
+    state.cartoonHeroEmoji = (factHeroPre && factHeroPre !== "🌟") ? factHeroPre : "🌍";
     const grid = $('funfact-mcq-grid');
     grid.innerHTML = '';
     item.options.forEach((opt, idx) => {
@@ -8638,6 +8981,22 @@ body {
       grid.appendChild(btn);
     });
 
+    const ansBoxFact = $('answers-container');
+    if (ansBoxFact) {
+      ansBoxFact.innerHTML = '';
+      item.options.forEach((opt, idx) => {
+        const bigBtn = document.createElement('button');
+        bigBtn.className = 'btn-interactive';
+        bigBtn.innerHTML = '<span>' + decorateVisualAssetText(opt[langKey]) + '</span> <span class="choice-speaker-chip">🔊</span>';
+        const spk = bigBtn.querySelector('.choice-speaker-chip');
+        if (spk) spk.onclick = (ev) => { ev.stopPropagation(); VoiceEngine.speak(String(opt[langKey])); };
+        bigBtn.onclick = () => {
+          const allBtns = grid.querySelectorAll('.btn-mcq-choice');
+          if (allBtns[idx]) allBtns[idx].click();
+        };
+        ansBoxFact.appendChild(bigBtn);
+      });
+    }
     const factHeroEmoji = resolveCartoonIcon(item.q.fr + ' ' + item.ans.fr);
     spawnCartoonArcadeTargets(
       factHeroEmoji + ' ' + item.q[langKey],
@@ -8719,6 +9078,8 @@ body {
       };
     }
 
+    const sentenceHeroPre = resolveCartoonIcon(data.sentence + " " + data.blank);
+    state.cartoonHeroEmoji = (sentenceHeroPre && sentenceHeroPre !== "🌟" && sentenceHeroPre !== "🔤") ? sentenceHeroPre : "🦁";
     const optContainer = $('lang-quest-options');
     optContainer.innerHTML = '';
     data.options.forEach((choice, idx) => {
@@ -8772,6 +9133,22 @@ body {
       }
     );
 
+    const ansBoxLang = $('answers-container');
+    if (ansBoxLang) {
+      ansBoxLang.innerHTML = '';
+      data.options.forEach((choice, idx) => {
+        const bigBtn = document.createElement('button');
+        bigBtn.className = 'btn-interactive';
+        bigBtn.innerHTML = '<span>' + decorateVisualAssetText(choice) + '</span> <span class="choice-speaker-chip">🔊</span>';
+        const spk = bigBtn.querySelector('.choice-speaker-chip');
+        if (spk) spk.onclick = (ev) => { ev.stopPropagation(); VoiceEngine.speak(String(choice)); };
+        bigBtn.onclick = () => {
+          const allBtns = optContainer.querySelectorAll('.btn-lang-choice');
+          if (allBtns[idx]) allBtns[idx].click();
+        };
+        ansBoxLang.appendChild(bigBtn);
+      });
+    }
     // Spawn synchronized moving cartoon targets on the 60fps Arcade Canvas!
     const sentenceHeroIcon = resolveCartoonIcon(data.sentence + ' ' + data.blank);
     spawnCartoonArcadeTargets(
@@ -8799,29 +9176,36 @@ body {
   
   state.cartoonTargets = [];
 
-  function spawnCartoonArcadeTargets(titlePrompt, heroEmoji, optionsList) {
+  function spawnCartoonArcadeTargets(titlePrompt, heroEmoji, optionsList, extraSceneText) {
     state.cartoonStageTitle = titlePrompt || '';
-    state.cartoonHeroEmoji = heroEmoji || '🦁';
+    const correctOpt = (optionsList || []).find(o => o.correct);
+    const correctLabel = correctOpt ? correctOpt.label : '';
+    const sprites = extractSceneSprites(titlePrompt + ' ' + (extraSceneText || ''), correctLabel);
+    state.cartoonSceneSprites = sprites;
+    state.cartoonHeroEmoji = (sprites[0] && sprites[0] !== '🌟') ? sprites[0] : (heroEmoji || '🦁');
+
     const count = (optionsList || []).length;
     const colors = ['#FF2A32', '#10B981', '#F59E0B', '#6366F1', '#EC4899', '#06B6D4'];
     state.cartoonTargets = (optionsList || []).map((opt, idx) => {
-      const spanW = (CW - 180) / Math.max(1, count);
-      const baseX = 110 + idx * spanW + spanW * 0.35;
-      const baseY = 148 + (idx % 2) * 52;
+      const spanW = (CW - 185) / Math.max(1, count);
+      const baseX = 155 + idx * spanW + spanW * 0.42;
+      const baseY = 185 + (idx % 2) * 58;
+      const rawLbl = String(opt.label || '').trim();
+      const optIcon = (opt.icon && opt.icon !== '🌟') ? opt.icon : resolveCartoonIcon(rawLbl + ' ' + titlePrompt);
       return {
         id: 'ct_' + idx,
-        label: String(opt.label || ''),
-        icon: opt.icon || resolveCartoonIcon(opt.label || heroEmoji),
+        label: rawLbl,
+        icon: optIcon === '🌟' ? state.cartoonHeroEmoji : optIcon,
         correct: Boolean(opt.correct),
         onSelect: opt.onSelect,
         baseX,
         baseY,
         x: baseX,
         y: baseY,
-        vx: (idx % 2 === 0 ? 1 : -1) * (0.65 + (idx * 0.15)),
-        vy: (idx % 2 === 0 ? -1 : 1) * 0.45,
-        phase: idx * 1.35,
-        r: count > 4 ? 38 : 46,
+        vx: (idx % 2 === 0 ? 1 : -1) * (0.75 + (idx * 0.15)),
+        vy: (idx % 2 === 0 ? -1 : 1) * 0.5,
+        phase: idx * 1.4,
+        r: count > 4 ? 40 : 48,
         color: colors[idx % colors.length],
         popScale: 1
       };
@@ -8842,76 +9226,153 @@ body {
   
   function resolveCartoonIcon(rawText) {
     const str = String(rawText || '').trim();
-    const existingMatch = str.match(/[🌀-🫿☀-➿]/u);
+    const existingMatch = str.match(/(?:[🇦-🇿]{2}|[🌀-🫿☀-➿])/u);
     if (existingMatch) return existingMatch[0];
     const low = str.toLowerCase();
     const dict = [
-      [/(lion|lionceau|leo|léo)/i, '🦁'],
-      [/(singe|monkey|kiki)/i, '🐒'],
-      [/(éléphant|elephant)/i, '🐘'],
-      [/(girafe|giraffe)/i, '🦒'],
-      [/(zèbre|zebra)/i, '🦓'],
-      [/(oiseau|oiseaux|bird|birds|aigle|eagle)/i, '🐦'],
-      [/(poussin|poule|chick|hen)/i, '🐥'],
-      [/(grenouille|frog)/i, '🐸'],
-      [/(poisson|fish|requin|shark|baleine)/i, '🐟'],
-      [/(abeille|bee|miel|honey)/i, '🐝'],
-      [/(papillon|butterfly)/i, '🦋'],
-      [/(tortue|turtle)/i, '🐢'],
-      [/(chameau|dromadaire|camel|désert|sahara)/i, '🐪'],
-      [/(cheval|horse)/i, '🐎'],
-      [/(chat|cat)/i, '🐱'],
-      [/(chien|dog)/i, '🐶'],
+      // Animals & Characters
+      [/(lion|lionceau|lions|leo|léo|rugit|roar)/i, '🦁'],
+      [/(singe|singes|monkey|kiki)/i, '🐒'],
+      [/(éléphant|éléphants|elephant|elephants|trompe|trunk)/i, '🐘'],
+      [/(girafe|girafes|giraffe|giraffes|cou|neck)/i, '🦒'],
+      [/(zèbre|zèbres|zebra|zebras|rayures|stripes)/i, '🦓'],
+      [/(guépard|cheetah)/i, '🐆'],
+      [/(crocodile|croco)/i, '🐊'],
+      [/(hippopotame|hippopotamus|hippo)/i, '🦛'],
+      [/(oiseau|oiseaux|bird|birds|vole|volent|fly|nid)/i, '🐦'],
+      [/(aigle|eagle)/i, '🦅'],
+      [/(poussin|poussins|poule|coq|chick|chicks|hen|rooster)/i, '🐥'],
+      [/(grenouille|treefrog|frog)/i, '🐸'],
+      [/(poisson|poissons|fish|goldfish|dauphin|dolphin|nage|swim)/i, '🐟'],
+      [/(abeille|abeilles|bee|honeybee|miel|honey|ruche)/i, '🐝'],
+      [/(papillon|papillons|butterfly|butterflies|chenille)/i, '🦋'],
+      [/(coccinelle|ladybug)/i, '🐞'],
+      [/(tortue|tortoise|turtle)/i, '🐢'],
+      [/(dromadaire|chameau|camel|caravane)/i, '🐪'],
+      [/(cheval|chevaux|horse)/i, '🐎'],
+      [/(chat|chaton|cat|kitten|miaou|miaule)/i, '🐱'],
+      [/(chien|chiens|dog|aboie)/i, '🐶'],
       [/(canard|duck)/i, '🦆'],
-      [/(pomme|apple)/i, '🍎'],
-      [/(banane|banana)/i, '🍌'],
-      [/(mangue|mango|sucrée|sweet)/i, '🥭'],
-      [/(orange)/i, '🍊'],
-      [/(fraise|strawberry)/i, '🍓'],
-      [/(ananas|pineapple)/i, '🍍'],
-      [/(carotte|carrot)/i, '🥕'],
-      [/(coco|coconut)/i, '🥥'],
+      [/(lapin|rabbit)/i, '🐰'],
+      [/(mouton|sheep|laine)/i, '🐑'],
+      [/(dinosaure|dino|dinosaur)/i, '🦖'],
+      [/(panda)/i, '🐼'],
+      [/(araignée|spider)/i, '🕷️'],
+      [/(escargot|snail)/i, '🐌'],
+      [/(crabe|crab)/i, '🦀'],
+      [/(fourmi|ant)/i, '🐜'],
+
+      // Fruits, Food & Market
+      [/(mangue|mangues|manguier|mango|mangoes|sucrée|sucré)/i, '🥭'],
+      [/(banane|bananes|bananier|banana|bananas|plantain)/i, '🍌'],
+      [/(pomme|pommes|pommier|apple|apples)/i, '🍎'],
+      [/(orange|oranges)/i, '🍊'],
+      [/(fraise|fraises|fraisier|strawberry|strawberries)/i, '🍓'],
+      [/(ananas|pineapple|pineapples)/i, '🍍'],
+      [/(carotte|carottes|carrot|carrots|légume)/i, '🥕'],
+      [/(coco|coconuts|coconut)/i, '🥥'],
       [/(maïs|maize|corn)/i, '🌽'],
-      [/(cacao|chocolat|chocolate|gâteau|cake|easy|piece of cake)/i, '🍫'],
-      [/(pain|boulanger|boulangerie|bakery|biscuit|cookie)/i, '🥐'],
-      [/(arbre|baobab|tree|forêt|forest|bois|wood)/i, '🌳'],
+      [/(cacao|cacaoyer|chocolat|chocolate|cabosse)/i, '🍫'],
+      [/(gâteau|gâteaux|cupcake|cupcakes|cake|savoureux|délicieux|easy)/i, '🧁'],
+      [/(biscuit|biscuits|cookie|cookies)/i, '🍪'],
+      [/(pain|boulanger|boulangerie|bakery|bread)/i, '🥐'],
+      [/(pizza|fraction|fractions|quart|demi|cinquième)/i, '🍕'],
+      [/(lait|laitier|milk)/i, '🥛'],
+      [/(café|caféier|coffee|thé|tea)/i, '☕'],
+      [/(citron|citrique|lemon)/i, '🍋'],
+
+      // Nature, Plants & Geography
+      [/(baobab|arbre|arbres|tree|trees|forêt|forest|banyan|bois|wood|maathai)/i, '🌳'],
       [/(palmier|palm|oasis)/i, '🌴'],
-      [/(fleur|flower|hibiscus|tulipe|lotus|plantées|jardin|garden)/i, '🌺'],
-      [/(soleil|sun|solaire|solar|jaune|yellow|jour|day)/i, '☀️'],
-      [/(étoile|star|nuit|night|astronaute|astronaut|espace|space)/i, '⭐'],
-      [/(planète|mars|terre|earth|lune|moon)/i, '🪐'],
+      [/(fleur|fleurs|fleurissent|flower|flowers|hibiscus|bissap|tulipe|tulip|lotus|rose|rosier|plantées)/i, '🌺'],
+      [/(graine|germer|plant|plants|photosynthèse|photosynthesis|herbe|grass|green|vert)/i, '🌱'],
+      [/(soleil|solaire|sun|sunshine|sunlight|jaune|yellow|jour|midi|warm|sunny)/i, '☀️'],
+      [/(étoile|étoiles|star|stars|nuit|soir|night|evening)/i, '⭐'],
+      [/(lune|moon)/i, '🌙'],
+      [/(planète|mars|saturne|terre|earth|système solaire)/i, '🪐'],
       [/(arc-en-ciel|rainbow)/i, '🌈'],
-      [/(eau|water|pluie|rain|fleuve|nil|congo|rivière|river|mer|ocean)/i, '🌊'],
-      [/(feu|fire|chaud|hot|volcan)/i, '🔥'],
-      [/(glace|ice|froid|cold|0 °c|neige)/i, '🧊'],
-      [/(électricité|circuit|ampoule|lampe|lamp|lumière|light|300 000|300,000)/i, '⚡'],
-      [/(oxygène|oxygen|poumon|air|vent|wind)/i, '💨'],
-      [/(école|school|élève|enfant|children|kids|ami|friend|amina|kofi)/i, '🏫'],
-      [/(livre|book|histoire|story|bibliothèque|library|wrote|write|raconte)/i, '📖'],
-      [/(hôpital|hospital|docteur|doctor|infirmier|nurse)/i, '🏥'],
-      [/(musée|museum|visiterez|pyramide|pyramid)/i, '🏛️'],
-      [/(chante|sing|chanson|song|tambour|djembé|musique)/i, '🎵'],
-      [/(joue|jouons|play|playing|ballon|soccer|sport)/i, '⚽'],
-      [/(rapide|fast|quick|bondit|jump|cours|courent|run|taller|tall)/i, '🏃'],
-      [/(coeur|généreux|kind|happy|heureux|joie)/i, '❤️'],
-      [/(bateau|pirogue|boat|ship)/i, '⛵'],
-      [/(fusée|rocket)/i, '🚀'],
-      [/(or|gold|diamant|diamond|trésor)/i, '💎'],
-      [/(7 jours|7 days|semaine|week|demain|tomorrow|hier|passé|futur)/i, '📅'],
+      [/(pluie|pleut|rain|raining|nuage|cloud|clouds|arrose)/i, '🌧️'],
+      [/(eau|water|potable|fleuve|nil|congo|zambèze|lac|victoria|mer|sea|océan|cascade|chutes)/i, '🌊'],
+      [/(feu|fire|chaud|hot|volcan|volcano|flamme)/i, '🔥'],
+      [/(glace|glaçon|ice|froid|cold|gèle|neige|snow|0 °c)/i, '🧊'],
+      [/(désert|sahara|sable|arid|dunes)/i, '🏜️'],
+      [/(mont|montagne|kilimandjaro|kilimanjaro|colline|sommet)/i, '🏔️'],
+      [/(afrique|africa|continent|écosystème|pays|country|monde)/i, '🌍'],
+
+      // Science, Objects, School & Actions
+      [/(électricité|électrique|circuit|ampoule|lampe|lamp|lumière|light|éteindre|allumer|volt|volts|ohm|300 000|300,000)/i, '⚡'],
+      [/(chimie|chemistry|éprouvette|flacon|potion|élixir|sérum|acide|ph)/i, '🧪'],
+      [/(microscope|science|scientifique|scientist|biologie|biology|expérience)/i, '🔬'],
+      [/(thermomètre|température|temperature)/i, '🌡️'],
+      [/(oxygène|oxygen|poumons|lungs|air|vent|wind|souffle)/i, '💨'],
+      [/(balance|algèbre|équation|poids|kg|kilos|coffre|sac|boîte|box|scale)/i, '⚖️'],
+      [/(caisse|caisses|crate|crates|paquet)/i, '📦'],
+      [/(cube|cubes|volume|carré|rectangle|périmètre|aire|géométrie|tangram|puzzle)/i, '🧊'],
+      [/(pièce|pièces|monnaie|coin|coins|euro|euros|dollar|argent|or|gold|lingot)/i, '🪙'],
+      [/(diamant|diamants|diamond|trésor|cristal)/i, '💎'],
+      [/(billet|billets|train|rail|gare|ticket|tickets)/i, '🚅'],
+      [/(voiture|voitures|car|cars|racecar|course|vite|rapide|quick|fast)/i, '🚗'],
+      [/(bateau|voilier|pirogue|boat|sailboat|navire)/i, '⛵'],
+      [/(fusée|rocket|astronaute|astronaut|espace|space|comète|laser)/i, '🚀'],
+      [/(avion|plane|aéroport|arrivées)/i, '✈️'],
+      [/(robot|android|ordinateur|computer)/i, '🤖'],
+      [/(tambour|tambours|djembé|djembe|tam-tam|drum|drums|boum)/i, '🥁'],
+      [/(chante|chanter|chanson|sing|singing|song|musique|music)/i, '🎵'],
+      [/(ballon|ballons|football|soccer|joue|jouons|play|playing|played|sport|corde)/i, '⚽'],
+      [/(école|school|classe|élève|élèves|pupil|enfant|enfants|children|kids|ami|friend|amina|kofi|moussa|awa)/i, '🏫'],
+      [/(livre|livres|book|books|histoire|histoires|story|stories|conte|griot|bibliothèque|library|lisez|read|reading|wrote|write|hampâté)/i, '📖'],
+      [/(cahier|crayon|pencil|board|tableau|dessin|écrit)/i, '✏️'],
+      [/(hôpital|hospital|médecin|docteur|doctor|infirmier|nurse|soigne|prescrit)/i, '🏥'],
+      [/(musée|museum|capitale|capital|pyramide|pyramid|palais|château|citadelle|pont|bâtir)/i, '🏛️'],
+      [/(oeil|yeux|eyes|see|regarde|regardes|observer|télescope|transparent)/i, '👀'],
+      [/(main|mains|doigt|doigts|sens|senses|tape|clap|touch|touche)/i, '🖐️'],
+      [/(coeur|généreux|heureux|happy|joie|fiers|kind|bravo)/i, '❤️'],
+      [/(semaine|jours|days|demain|tomorrow|hier|yesterday|temps|heure|calendrier)/i, '📅'],
       [/^d+/, '🔢']
     ];
     for (const [rx, emo] of dict) {
       if (rx.test(low)) return emo;
     }
+    // Check phoneme single letters
+    if (/^[a-z]{1,2}$/i.test(str)) return '🔤';
     return '🌟';
   }
 
-  function decorateVisualAssetText(rawText) {
-    const str = String(rawText || '').trim();
-    if (/[🌀-🫿☀-➿]/u.test(str)) return str;
-    return resolveCartoonIcon(str) + ' ' + str;
+  // Extract 1 to 3 matching cartoon scene sprites from any spoken sentence + answer so the canvas scene 100% matches the voice!
+  function extractSceneSprites(textA, textB) {
+    const combined = String(textA || '') + ' ' + String(textB || '');
+    const found = [];
+    const addUnique = (em) => {
+      if (em && em !== '🌟' && em !== '🔢' && !found.includes(em)) found.push(em);
+    };
+    // First check explicit emojis (keeping 2-char regional indicator flags together!)
+    const explicit = combined.match(/(?:[🇦-🇿]{2}|[🌀-🫿☀-➿])/gu) || [];
+    explicit.forEach(addUnique);
+
+    // Split words (length >= 3 first so 'im'/'un'/'le' don't trigger generic letter icon!)
+    const words = combined.split(/[^a-zA-ZÀ-ÿ0-9'-]+/).filter(Boolean);
+    for (const w of words) {
+      if (w.length >= 3) {
+        const icon = resolveCartoonIcon(w);
+        if (icon && icon !== '🔤') addUnique(icon);
+      }
+      if (found.length >= 3) break;
+    }
+    if (found.length === 0) {
+      found.push(resolveCartoonIcon(textB || textA));
+    }
+    return found.slice(0, 3);
   }
 
+  function decorateVisualAssetText(rawText, fallbackHero) {
+    const str = String(rawText || '').trim();
+    if (/(?:[🇦-🇿]{2}|[🌀-🫿☀-➿])/u.test(str)) return str;
+    let ico = resolveCartoonIcon(str);
+    if (!ico || ico === '🌟' || ico === '🔢' || ico === '🔤') {
+      ico = (fallbackHero && fallbackHero !== '🌟') ? fallbackHero : (state.cartoonHeroEmoji || ico || '🌟');
+    }
+    return ico + ' ' + str;
+  }
 
   function updateJourneyUI() {
     const classIdx = Math.max(0, GRADE_LADDER.indexOf(state.grade));
@@ -9082,11 +9543,14 @@ body {
     state.lives = 3;
 
     $('portals-grid').style.display = 'none';
+    const appNav = document.querySelector('.app-nav');
+    if (appNav) appNav.style.display = 'none';
     if ($('class-selector-banner')) $('class-selector-banner').style.display = 'none';
     if ($('journey-world-banner')) $('journey-world-banner').style.display = 'none';
     $('level-selector-section').style.display = 'none';
-    $('category-tabs').style.display = 'none';
+    $('category-tabs').style.setProperty('display', 'none', 'important');
     $('arcade-workspace').classList.add('active');
+    window.scrollTo({ top: 0, behavior: 'instant' });
 
     const isEn = state.lang === 'en';
     const titleMap = {
@@ -9113,12 +9577,14 @@ body {
 
   function returnToHub() {
     VoiceEngine.stop();
+    const appNav = document.querySelector('.app-nav');
+    if (appNav) appNav.style.display = 'flex';
     $('arcade-workspace').classList.remove('active');
     $('portals-grid').style.display = 'grid';
     if ($('journey-world-banner')) $('journey-world-banner').style.display = 'flex';
     updateJourneyUI();
     $('level-selector-section').style.display = 'flex';
-    $('category-tabs').style.display = 'flex';
+    $('category-tabs').style.setProperty('display', 'flex', 'important');
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
@@ -9391,11 +9857,17 @@ body {
       });
       ctx.restore();
 
-      // Puzzle Title Banner
-      ctx.fillStyle = '#FFFFFF';
-      ctx.font = 'bold 16px sans-serif';
+      // Animated Cartoon Character Preview in Silhouette Center + Title Banner
       const tgTitle = state.tangram.name ? (state.lang === 'en' ? state.tangram.name.en : state.tangram.name.fr) : "Tangram";
-      ctx.fillText(tgTitle, 20, 35);
+      const tgHeroEmo = resolveCartoonIcon(tgTitle);
+      ctx.save();
+      ctx.font = '64px sans-serif';
+      ctx.globalAlpha = state.tangram.pieces.every(p => p.snapped) ? 1.0 : 0.42;
+      ctx.fillText(tgHeroEmo, 398, 205 + Math.sin(Date.now() / 300) * 6);
+      ctx.restore();
+      ctx.fillStyle = '#FEF08A';
+      ctx.font = 'bold 20px sans-serif';
+      ctx.fillText(tgHeroEmo + ' ' + tgTitle, 24, 38);
 
       // Shelf Bar
       ctx.fillStyle = '#374151';
@@ -10269,10 +10741,39 @@ body {
             ctx.stroke();
           }
           const frogX = nlX0 + targetN * stepW;
-          ctx.font = '20px sans-serif';
-          ctx.fillText('🐸', frogX - 10, nlY - 12 + Math.sin(tNow * 6) * 3);
+          ctx.font = '24px sans-serif';
+          ctx.fillText('🐸', frogX - 12, nlY - 12 + Math.sin(tNow * 6) * 4);
         }
       }
+
+      // Draw Floating Cartoon Answer Targets on Right Side of Math Lab Stage!
+      (state.cartoonTargets || []).forEach((ct, idx) => {
+        const rx = 560 + (idx % 2) * 115 + Math.sin(tNow * 2.2 + idx) * 10;
+        const ry = 115 + Math.floor(idx / 2) * 105 + Math.cos(tNow * 2.5 + idx) * 8;
+        ct.x = rx;
+        ct.y = ry;
+        ct.r = 38;
+        ctx.save();
+        ctx.translate(rx, ry);
+        const bGrad = ctx.createRadialGradient(-10, -10, 4, 0, 0, 38);
+        bGrad.addColorStop(0, '#FFFFFF');
+        bGrad.addColorStop(0.3, ct.color);
+        bGrad.addColorStop(1, '#0F172A');
+        ctx.fillStyle = bGrad;
+        ctx.beginPath();
+        ctx.arc(0, 0, 38, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.strokeStyle = '#FEF08A';
+        ctx.lineWidth = 3;
+        ctx.stroke();
+        ctx.font = '22px sans-serif';
+        ctx.fillText(mItem.itemEmoji || '🍎', -12, -6);
+        ctx.fillStyle = '#FEF08A';
+        ctx.font = 'bold 18px sans-serif';
+        const lbl = String(ct.label);
+        ctx.fillText(lbl, -ctx.measureText(lbl).width / 2, 20);
+        ctx.restore();
+      });
     }
 
 
@@ -10347,6 +10848,29 @@ body {
       ctx.font = 'bold 16px sans-serif';
       const bannerTxt = String(state.cartoonStageTitle || ($('instruction-title') ? $('instruction-title').textContent : '')).slice(0, 68);
       ctx.fillText(bannerTxt, 32, 36);
+      ctx.restore();
+
+      // CENTER ANIMATED CARTOON SCENE STAGE (100% Synced with Spoken Voice Noun/Action!)
+      const sceneSprites = (state.cartoonSceneSprites && state.cartoonSceneSprites.length > 0)
+        ? state.cartoonSceneSprites
+        : [state.cartoonHeroEmoji || '🦁'];
+      ctx.save();
+      // Glowing Cartoon Cloud Stage Platform at Top-Center (y = 88)
+      ctx.fillStyle = 'rgba(255, 255, 255, 0.92)';
+      ctx.beginPath();
+      ctx.roundRect(CW / 2 - 145, 58, 290, 64, 32);
+      ctx.fill();
+      ctx.strokeStyle = '#F59E0B';
+      ctx.lineWidth = 3.5;
+      ctx.stroke();
+
+      sceneSprites.forEach((spEmo, sIdx) => {
+        const tot = sceneSprites.length;
+        const sx = (CW / 2) + (sIdx - (tot - 1) / 2) * 78 + Math.sin(tNow * 3.2 + sIdx) * 8;
+        const sy = 102 + Math.cos(tNow * 4.5 + sIdx) * 6;
+        ctx.font = '44px sans-serif';
+        ctx.fillText(spEmo, sx - 22, sy);
+      });
       ctx.restore();
 
       // Animated Bouncing Cartoon Hero Mascot on Left Stage (Speaks with Sound Waves when VoiceEngine is active!)
@@ -10562,7 +11086,7 @@ body {
         sessionStorage.clear();
       } catch (e) {}
       const url = new URL(window.location.href);
-      url.searchParams.set('v', '10.0.' + Date.now());
+      url.searchParams.set('v', '13.0.' + Date.now());
       window.location.replace(url.toString());
     });
   }
