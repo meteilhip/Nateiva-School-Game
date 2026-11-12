@@ -2703,8 +2703,6 @@ body {
   #hud-exercise-badge,
   #hud-combo-badge,
   .activity-stepper,
-  .khan-visual-explainer,
-  .khan-visual-explainer.active,
   .tutor-panel,
   #reading-overlay,
   #reading-overlay.active,
@@ -2890,6 +2888,78 @@ body {
     transform: translateY(-2px) scale(1.02) !important;
   }
 
+
+  /* V14.0 INTERACTIVE EXAM SIMULATION, TRICK & WORKED EXAMPLE GEAR BAR */
+  .khan-visual-explainer {
+    display: none !important;
+  }
+  .khan-visual-explainer.active {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 6px !important;
+    padding: 8px 12px !important;
+    margin: 4px 0 8px 0 !important;
+    border-radius: 16px !important;
+    background: linear-gradient(135deg, #1E1B4B 0%, #0F172A 100%) !important;
+    border: 2px solid #FACC15 !important;
+    box-shadow: 0 6px 16px rgba(250, 204, 21, 0.22) !important;
+  }
+  .khan-explainer-top {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    flex-wrap: wrap !important;
+    gap: 6px !important;
+  }
+  .khan-coach-badge {
+    font-size: 0.78rem !important;
+    font-weight: 900 !important;
+    color: #FDE047 !important;
+    letter-spacing: 0.03em !important;
+  }
+  .khan-actions-row {
+    display: flex !important;
+    align-items: center !important;
+    gap: 6px !important;
+    flex-wrap: wrap !important;
+  }
+  .btn-khan-explain, .btn-khan-manipulate {
+    font-size: 0.78rem !important;
+    font-weight: 900 !important;
+    padding: 5px 11px !important;
+    border-radius: 999px !important;
+    cursor: pointer !important;
+    border: 1.5px solid #FFFFFF !important;
+  }
+  .btn-khan-explain {
+    background: linear-gradient(135deg, #FACC15 0%, #F59E0B 100%) !important;
+    color: #0F172A !important;
+  }
+  .btn-khan-manipulate {
+    background: linear-gradient(135deg, #10B981 0%, #059669 100%) !important;
+    color: #FFFFFF !important;
+  }
+  .khan-steps-track {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    gap: 6px !important;
+  }
+  .khan-step-chip {
+    font-size: 0.8rem !important;
+    font-weight: 800 !important;
+    padding: 4px 10px !important;
+    border-radius: 10px !important;
+    background: rgba(56, 189, 248, 0.16) !important;
+    border: 1.5px solid rgba(56, 189, 248, 0.45) !important;
+    color: #F8FAFC !important;
+  }
+  .khan-step-chip.highlighted {
+    background: rgba(16, 185, 129, 0.32) !important;
+    border-color: #FDE047 !important;
+    color: #FEF08A !important;
+    transform: scale(1.03);
+  }
+
 </style>
 </head>
 <body>
@@ -2920,7 +2990,7 @@ body {
         <option value="en">🇬🇧 English (Studio Voice)</option>
       </select>
       <button class="btn-pill" id="btn-sound-toggle">🔊 Son</button>
-      <button class="version-cache-pill" id="btn-version-cache" title="Version active • Cliquer pour vider le cache et recharger">🚀 v13.0 PURE-CARTOON-ARCADE • 🔄 Vider Cache</button>
+      <button class="version-cache-pill" id="btn-version-cache" title="Version active • Cliquer pour vider le cache et recharger">🚀 v14.0 EXAM-SIM & VOICE-SYNC • 🔄 Vider Cache</button>
     </div>
   </header>
 
@@ -3052,7 +3122,7 @@ body {
           <h3>Grammaire & Syntaxe (FR / EN)</h3>
           <div class="portal-curriculum-tag">Noms • Verbes • Adjectifs • Accords</div>
         </div>
-        <span class="card-rea-badge">✨ v13.0 PURE-CARTOON-ARCADE • ▶ JOUER</span>
+        <span class="card-rea-badge">✨ v14.0 EXAM-SIM & VOICE-SYNC • ▶ JOUER</span>
       </div>
       <p class="portal-desc">Maîtrise la grammaire en français et en anglais (articles, pluriels, nature des mots, accords sujet-verbe) avec une seule voix native pure !</p>
       <div class="portal-counts-badge-bar">
@@ -3071,7 +3141,7 @@ body {
           <h3>Vocabulaire & Mots du Monde (FR / EN)</h3>
           <div class="portal-curriculum-tag">Synonymes • Contraires • Thèmes d'Afrique</div>
         </div>
-        <span class="card-rea-badge">✨ v13.0 PURE-CARTOON-ARCADE • ▶ JOUER</span>
+        <span class="card-rea-badge">✨ v14.0 EXAM-SIM & VOICE-SYNC • ▶ JOUER</span>
       </div>
       <p class="portal-desc">Enrichis ton vocabulaire en français et en anglais : synonymes, contraires, objets de l'école, animaux et métiers avec prononciation native !</p>
       <div class="portal-counts-badge-bar">
@@ -3090,7 +3160,7 @@ body {
           <h3>Conjugaison & Temps (FR / EN)</h3>
           <div class="portal-curriculum-tag">Présent • Passé • Futur • Être/Avoir & To Be</div>
         </div>
-        <span class="card-rea-badge">✨ v13.0 PURE-CARTOON-ARCADE • ▶ JOUER</span>
+        <span class="card-rea-badge">✨ v14.0 EXAM-SIM & VOICE-SYNC • ▶ JOUER</span>
       </div>
       <p class="portal-desc">Voyage dans le temps (Passé, Présent, Futur) pour conjuguer les verbes en français et en anglais selon le pronom sujet !</p>
       <div class="portal-counts-badge-bar">
@@ -3109,7 +3179,7 @@ body {
           <h3>Studio Prononciation (FR ⇄ EN)</h3>
           <div class="portal-curriculum-tag">Anglais & Français • Micro Live • Spectre</div>
         </div>
-        <span class="card-rea-badge">✨ v13.0 PURE-CARTOON-ARCADE • ▶ JOUER</span>
+        <span class="card-rea-badge">✨ v14.0 EXAM-SIM & VOICE-SYNC • ▶ JOUER</span>
       </div>
       <p class="portal-desc">Écoute la vraie voix studio française et anglaise, parle dans ton micro pour obtenir ton score de prononciation et suis les billes de rythme !</p>
       <div class="portal-counts-badge-bar">
@@ -3128,7 +3198,7 @@ body {
           <h3>Géographie des Pays d'Afrique</h3>
           <div class="portal-curriculum-tag">Carte SVG Interactive • Drapeaux • Capitales</div>
         </div>
-        <span class="card-rea-badge">✨ v13.0 PURE-CARTOON-ARCADE • ▶ JOUER</span>
+        <span class="card-rea-badge">✨ v14.0 EXAM-SIM & VOICE-SYNC • ▶ JOUER</span>
       </div>
       <p class="portal-desc">Explore la vraie carte vectorielle interactive des pays d'Afrique ! Touche les pays au doigt, découvre leurs drapeaux, leurs capitales et leurs fleuves !</p>
       <div class="portal-counts-badge-bar">
@@ -3147,7 +3217,7 @@ body {
           <h3>Fun Facts & Culture Générale (QCM)</h3>
           <div class="portal-curriculum-tag">Quiz Choix Multiples • Indice 50/50 • Afrique</div>
         </div>
-        <span class="card-rea-badge">✨ v13.0 PURE-CARTOON-ARCADE • ▶ JOUER</span>
+        <span class="card-rea-badge">✨ v14.0 EXAM-SIM & VOICE-SYNC • ▶ JOUER</span>
       </div>
       <p class="portal-desc">Réponds aux questions à choix multiples (A, B, C, D) avec l'indice 50/50 sur les merveilles d'Afrique, les animaux, l'espace et les sciences !</p>
       <div class="portal-counts-badge-bar">
@@ -3166,7 +3236,7 @@ body {
           <h3>Compréhension de Texte & Contes</h3>
           <div class="portal-curriculum-tag">Lecture Karaoké FR/EN • Quiz Compréhension</div>
         </div>
-        <span class="card-rea-badge">✨ v13.0 PURE-CARTOON-ARCADE • ▶ JOUER</span>
+        <span class="card-rea-badge">✨ v14.0 EXAM-SIM & VOICE-SYNC • ▶ JOUER</span>
       </div>
       <p class="portal-desc">Écoute et lis des contes africains et scientifiques bilingues avec surlignage phrase par phrase, puis réponds aux questions de compréhension !</p>
       <div class="portal-counts-badge-bar">
@@ -3185,7 +3255,7 @@ body {
           <h3>Monstre des Syllabes & Lecture</h3>
           <div class="portal-curriculum-tag">Feed The Monster • Voyelles & Consonnes</div>
         </div>
-        <span class="card-rea-badge">✨ v13.0 PURE-CARTOON-ARCADE • ▶ JOUER</span>
+        <span class="card-rea-badge">✨ v14.0 EXAM-SIM & VOICE-SYNC • ▶ JOUER</span>
       </div>
       <p class="portal-desc">Nourris le Monstre magique avec les bonnes syllabes colorées (voyelles en rouge, consonnes en bleu) pour former des mots en français et en anglais !</p>
       <div class="portal-counts-badge-bar">
@@ -3204,7 +3274,7 @@ body {
           <h3>Maths 3D, Fractions & Balance Algébrique</h3>
           <div class="portal-curriculum-tag">Boîtes de 10 • Disque Fractions • Balance 2x+4</div>
         </div>
-        <span class="card-rea-badge">✨ v13.0 PURE-CARTOON-ARCADE • ▶ JOUER</span>
+        <span class="card-rea-badge">✨ v14.0 EXAM-SIM & VOICE-SYNC • ▶ JOUER</span>
       </div>
       <p class="portal-desc">Manipule les boîtes de 10, le disque interactif des fractions et la balance algébrique selon ta classe (de la Maternelle au CM2 / Primary 6) !</p>
       <div class="portal-counts-badge-bar">
@@ -3223,7 +3293,7 @@ body {
           <h3>Labo Chimie & Échelle pH</h3>
           <div class="portal-curriculum-tag">Sciences • Réactions • Indicateur pH 0–14</div>
         </div>
-        <span class="card-rea-badge">✨ v13.0 PURE-CARTOON-ARCADE • ▶ JOUER</span>
+        <span class="card-rea-badge">✨ v14.0 EXAM-SIM & VOICE-SYNC • ▶ JOUER</span>
       </div>
       <p class="portal-desc">Verse les éprouvettes dans l'erlenmeyer, observe l'indicateur de pH en direct, les mélanges de couleurs et l'effervescence des bulles de gaz !</p>
       <div class="portal-counts-badge-bar">
@@ -3242,7 +3312,7 @@ body {
           <h3>Bassin d'Archimède (Flotte/Coule)</h3>
           <div class="portal-curriculum-tag">Physique • Vecteurs Poussée ↑Fa & Poids ↓P</div>
         </div>
-        <span class="card-rea-badge">✨ v13.0 PURE-CARTOON-ARCADE • ▶ JOUER</span>
+        <span class="card-rea-badge">✨ v14.0 EXAM-SIM & VOICE-SYNC • ▶ JOUER</span>
       </div>
       <p class="portal-desc">Plonge le bois, la mangue, l'or ou la brique dans l'eau et visualise en direct les vecteurs de la poussée d'Archimède (↑Fa) et du poids (↓P) !</p>
       <div class="portal-counts-badge-bar">
@@ -3261,7 +3331,7 @@ body {
           <h3>Circuit Électrique 3D & Oscilloscope</h3>
           <div class="portal-curriculum-tag">Loi d'Ohm (U=R×I) • Électrons & Hélice</div>
         </div>
-        <span class="card-rea-badge">✨ v13.0 PURE-CARTOON-ARCADE • ▶ JOUER</span>
+        <span class="card-rea-badge">✨ v14.0 EXAM-SIM & VOICE-SYNC • ▶ JOUER</span>
       </div>
       <p class="portal-desc">Ferme l'interrupteur pour observer la circulation des électrons bleus, allumer l'ampoule de 4,5 V et faire tourner l'hélice du moteur électrique !</p>
       <div class="portal-counts-badge-bar">
@@ -3280,7 +3350,7 @@ body {
           <h3>Jardin Botanique & Photosynthèse</h3>
           <div class="portal-curriculum-tag">Biologie • Racines, Tige & Floraison 21 Jours</div>
         </div>
-        <span class="card-rea-badge">✨ v13.0 PURE-CARTOON-ARCADE • ▶ JOUER</span>
+        <span class="card-rea-badge">✨ v14.0 EXAM-SIM & VOICE-SYNC • ▶ JOUER</span>
       </div>
       <p class="portal-desc">Dose la pluie et le soleil pour faire germer le Baobab, le Tournesol, le Cacaoyer et l'Hibiscus en observant les racines pousser sous terre !</p>
       <div class="portal-counts-badge-bar">
@@ -3299,7 +3369,7 @@ body {
           <h3>Comet Defender : Calcul Spatial</h3>
           <div class="portal-curriculum-tag">TuxMath Arcade • Lasers & Calcul Mental</div>
         </div>
-        <span class="card-rea-badge">✨ v13.0 PURE-CARTOON-ARCADE • ▶ JOUER</span>
+        <span class="card-rea-badge">✨ v14.0 EXAM-SIM & VOICE-SYNC • ▶ JOUER</span>
       </div>
       <p class="portal-desc">Pilote le vaisseau spatial et tire au laser sur la comète qui porte la bonne réponse à l'équation affichée sur le tableau de bord !</p>
       <div class="portal-counts-badge-bar">
@@ -3318,7 +3388,7 @@ body {
           <h3>Tangram Géométrique Magnétique</h3>
           <div class="portal-curriculum-tag">Mathigon Euclid • Polygones & Silhouettes</div>
         </div>
-        <span class="card-rea-badge">✨ v13.0 PURE-CARTOON-ARCADE • ▶ JOUER</span>
+        <span class="card-rea-badge">✨ v14.0 EXAM-SIM & VOICE-SYNC • ▶ JOUER</span>
       </div>
       <p class="portal-desc">Assemble la Fusée, le Bateau, le Chat, le Lion et le Papillon en glissant les polygones géométriques avec aimantation de précision !</p>
       <div class="portal-counts-badge-bar">
@@ -3337,7 +3407,7 @@ body {
           <h3>Donjon Labyrinthe 3D (Vue 3D & Raycast)</h3>
           <div class="portal-curriculum-tag">Blockly Maze • Algorithme & Syllabes</div>
         </div>
-        <span class="card-rea-badge">✨ v13.0 PURE-CARTOON-ARCADE • ▶ JOUER</span>
+        <span class="card-rea-badge">✨ v14.0 EXAM-SIM & VOICE-SYNC • ▶ JOUER</span>
       </div>
       <p class="portal-desc">Guide Léo dans les 5 cartes de la Savane (Oasis, Pyramide, Volcan, Jungle) en collectant les syllabes et nombres d'or ou utilise le bouton Auto-Pas !</p>
       <div class="portal-counts-badge-bar">
@@ -7767,13 +7837,21 @@ body {
           ansBox.appendChild(b);
         });
         activateRheaUniversalCoach(
-          isEn ? '🧪 RHEA CHEMISTRY & COLOR SYNTHESIS COACH (PHET LAB 3D)' : '🧪 COACH CHIMIE & SYNTHÈSE DES COULEURS RHEA (PHET LAB 3D)',
+          isEn ? '🧪 EXAM SIMULATION, pH TRICK & WORKED EXAMPLE (CHEMISTRY LAB)' : '🧪 SIMULATION D’EXAMEN, ASTUCE pH & EXEMPLE RÉSOLU (CHIMIE)',
           [
-            isEn ? ('1. Target Formula: ' + chemTarget.title.en) : ('1. Formule Cible : ' + chemTarget.title.fr),
-            isEn ? '2. Red + Yellow = Orange • Blue + Yellow = Green • Red + Blue = Purple' : '2. Rouge + Jaune = Orange • Bleu + Jaune = Vert • Rouge + Bleu = Violet',
-            isEn ? '3. Pour 2 test tubes into the Erlenmeyer flask!' : '3. Verse 2 éprouvettes dans le flacon Erlenmeyer !'
+            isEn ? ('🔬 Simulation: ' + chemTarget.title.en + ' (Pour 2 test tubes into the flask)') : ('🔬 Simulation : ' + chemTarget.title.fr + ' (Verse 2 éprouvettes dans l’erlenmeyer)'),
+            isEn ? '🎓 Exam Trick (pH & Colors): pH < 7 = Acid (Lemon) • pH = 7 = Neutral (Water) • pH > 7 = Base (Soap)' : '🎓 Astuce Examen (pH & Couleurs) : pH < 7 = Acide (Citron) • pH = 7 = Neutre (Eau) • pH > 7 = Base (Savon)',
+            isEn ? '📝 Worked Exam Example: Blue + Yellow ➜ Green (Chlorophyll) • Acid + Bicarbonate ➜ CO₂ gas bubbles!' : '📝 Exemple Examen Résolu : Bleu + Jaune ➜ Vert • Acide + Bicarbonate ➜ Bulles de gaz CO₂ !'
           ],
-          chemSpeech
+          chemSpeech + (isEn ? ' Exam tip: pH below 7 is acidic, pH 7 is neutral water, and pH above 7 is basic!' : ' Astuce d’examen : un pH inférieur à 7 est acide, pH 7 est neutre comme l’eau pure, et supérieur à 7 est basique !'),
+          isEn ? '🧪 Auto-Run Reaction Demo' : '🧪 Simuler la Réaction d’Examen',
+          () => {
+            const parts = (chemTarget.recipe || 'blue+yellow').split('+');
+            state.pouredColors = [parts[0]];
+            state.flask.fluidHeight = 62;
+            onChemistryColorBlend();
+            VoiceEngine.speak(isEn ? 'First reagent poured! Now pour the second tube to complete the synthesis!' : 'Premier réactif versé ! Verse maintenant la deuxième éprouvette pour réussir la synthèse !');
+          }
         );
       } else if (g === 'botany') {
         const botTarget = DB.botanyPlants[challengeIndex % DB.botanyPlants.length];
@@ -7799,16 +7877,17 @@ body {
         };
         ansBox.appendChild(btnWater);
         activateRheaUniversalCoach(
-          isEn ? '🌻 RHEA BOTANY & PHOTOSYNTHESIS COACH (BIOLOGY 3D)' : '🌻 COACH BOTANIQUE & PHOTOSYNTHÈSE RHEA (BIOLOGIE 3D)',
+          isEn ? '🌻 EXAM SIMULATION, PHOTOSYNTHESIS TRICK & EXAMPLE (BOTANY)' : '🌻 SIMULATION D’EXAMEN, ASTUCE PHOTOSYNTHÈSE & EXEMPLE (BOTANIQUE)',
           [
-            isEn ? ('1. Species: ' + botTarget.emoji + ' ' + botTarget.title.en) : ('1. Espèce : ' + botTarget.emoji + ' ' + botTarget.title.fr),
-            isEn ? '2. Roots absorb water (H₂O) from the soil' : '2. Les racines absorbent l’eau (H₂O) du sol',
-            isEn ? '3. Leaves use sunlight (☀️) to grow and bloom!' : '3. Les feuilles captent le soleil (☀️) pour fleurir !'
+            isEn ? ('🔬 Simulation: Water (H₂O) + Sunlight (☀️) + CO₂ ➜ ' + botTarget.emoji + ' ' + botTarget.title.en + ' + Oxygen (O₂)') : ('🔬 Simulation : Eau (H₂O) + Soleil (☀️) + CO₂ ➜ ' + botTarget.emoji + ' ' + botTarget.title.fr + ' + Oxygène (O₂)'),
+            isEn ? '🎓 Exam Trick: Roots absorb water & minerals • Green leaves (chlorophyll) capture sunlight to make food!' : '🎓 Astuce Examen : Les racines absorbent l’eau • Les feuilles vertes (chlorophylle) captent la lumière et rejettent l’oxygène (O₂) !',
+            isEn ? '📝 Worked Exam Example: Without water or light, a seed cannot germinate or perform photosynthesis.' : '📝 Exemple Examen Résolu : Question : Que produit la plante au soleil ? Réponse : Du glucose (nourriture) et du dioxygène (O₂) !'
           ],
-          botSpeech,
-          isEn ? '💧☀️ Trigger Full Bloom' : '💧☀️ Activer la Floraison Complète',
+          botSpeech + (isEn ? ' Exam trick: Through photosynthesis, green leaves use water, carbon dioxide, and sunlight to release oxygen!' : ' Astuce d’examen : grâce à la photosynthèse, les feuilles vertes utilisent l’eau, le CO2 et la lumière du soleil pour libérer de l’oxygène !'),
+          isEn ? '💧☀️ Simulate 7 Days Growth' : '💧☀️ Simuler +7 Jours de Croissance',
           () => {
-            for (let s = 0; s < 30; s++) advanceBotanyGrowth();
+            for (let s = 0; s < 14; s++) advanceBotanyGrowth();
+            AudioEngine.playSuccess();
           }
         );
       } else if (g === 'density') {
@@ -7848,15 +7927,22 @@ body {
           ansBox.appendChild(b);
         });
         activateRheaUniversalCoach(
-          isEn ? '🌊 RHEA ARCHIMEDES BUOYANCY & DENSITY COACH (PHET 3D)' : '🌊 COACH POIDS, POUSSÉE D’ARCHIMÈDE & DENSITÉ RHEA (PHET 3D)',
+          isEn ? '🌊 EXAM SIMULATION, ARCHIMEDES TRICK & EXAMPLE (DENSITY)' : '🌊 SIMULATION D’EXAMEN, ASTUCE D’ARCHIMÈDE & EXEMPLE (DENSITÉ)',
           [
-            isEn ? ('1. Object: ' + targetItem.emoji + ' ' + targetItem.name + ' (d = ' + targetItem.rho + ')') : ('1. Objet : ' + targetItem.emoji + ' ' + targetItem.name + ' (densité = ' + targetItem.rho + ')'),
-            isEn ? '2. Water density = 1.00 g/cm³' : '2. Densité de l’eau pure = 1,00 g/cm³',
+            isEn ? ('🔬 Simulation: ' + targetItem.emoji + ' ' + targetItem.name + ' (ρ = ' + targetItem.rho + ' g/cm³) vs Water (1.00 g/cm³)') : ('🔬 Simulation : ' + targetItem.emoji + ' ' + targetItem.name + ' (d = ' + targetItem.rho + ' g/cm³) vs Eau (1,00 g/cm³)'),
             floats
-              ? (isEn ? ('3. ' + targetItem.rho + ' < 1.00 ➜ Lighter than water: IT FLOATS!') : ('3. ' + targetItem.rho + ' < 1,00 ➜ Plus léger que l’eau : IL FLOTTE !'))
-              : (isEn ? ('3. ' + targetItem.rho + ' > 1.00 ➜ Heavier than water: IT SINKS!') : ('3. ' + targetItem.rho + ' > 1,00 ➜ Plus lourd que l’eau : IL COULE !'))
+              ? (isEn ? ('🎓 Exam Trick: Density ' + targetItem.rho + ' < 1.00 ➜ Upward Buoyancy (↑Fa) wins: IT FLOATS!') : ('🎓 Astuce Examen : Densité ' + targetItem.rho + ' < 1,00 ➜ La poussée d’Archimède (↑Fa) l’emporte : IL FLOTTE !'))
+              : (isEn ? ('🎓 Exam Trick: Density ' + targetItem.rho + ' > 1.00 ➜ Weight (↓P) is greater: IT SINKS!') : ('🎓 Astuce Examen : Densité ' + targetItem.rho + ' > 1,00 ➜ Le poids (↓P) l’emporte : IL COULE !')),
+            isEn ? '📝 Worked Exam Example: Wood (d = 0.6) and Ice (d = 0.92) float • Iron (d = 7.8) and Gold (d = 19.3) sink!' : '📝 Exemple Examen Résolu : Le bois (d=0,6) et la glace (d=0,92) flottent • Le fer (d=7,8) et l’or (d=19,3) coulent !'
           ],
-          denSpeech
+          denSpeech + (isEn ? (' Exam rule: Water has a density of 1. Since ' + targetItem.name + ' has a density of ' + targetItem.rho + ', compare it to 1!') : (' Astuce d’examen : la densité de l’eau vaut 1. Comme ' + targetItem.name + ' a une densité de ' + targetItem.rho + ', compare-la à 1 !')),
+          isEn ? '🌊 Drop Object in Tank (Test Simulation)' : '🌊 Plonger dans l’Aquarium (Tester Simulation)',
+          () => {
+            targetItem.x = CW / 2;
+            targetItem.y = state.waterSurfaceY + 18;
+            targetItem.inWater = true;
+            AudioEngine.playSplash();
+          }
         );
       } else if (g === 'circuit') {
         state.circuitClosed = false;
@@ -7900,14 +7986,14 @@ body {
           ansBox.appendChild(btn);
         });
         activateRheaUniversalCoach(
-          isEn ? '⚡ RHEA OHM’S LAW & 3D CIRCUIT COACH (PHET CIRCUIT KIT)' : '⚡ COACH LOI D’OHM & CIRCUIT ÉLECTRIQUE 3D RHEA (PHET)',
+          isEn ? '⚡ EXAM SIMULATION, OHM’S LAW TRICK & WORKED EXAMPLE (CIRCUIT)' : '⚡ SIMULATION D’EXAMEN, ASTUCE LOI D’OHM & EXEMPLE RÉSOLU (CIRCUIT)',
           [
-            isEn ? ('1. Voltage (U) = ' + state.circuitVoltage + ' V • Resistance (R) = 5 Ω') : ('1. Tension (U) = ' + state.circuitVoltage + ' V • Résistance (R) = 5 Ω'),
-            isEn ? ('2. Ohm’s Law: I = U ÷ R = ' + (state.circuitVoltage / 5).toFixed(2) + ' A') : ('2. Loi d’Ohm : I = U ÷ R = ' + (state.circuitVoltage / 5).toFixed(2) + ' A'),
-            isEn ? '3. Close the switch so electrons flow in a closed loop!' : '3. Ferme l’interrupteur pour faire circuler les électrons !'
+            isEn ? ('🔬 Simulation: U = ' + state.circuitVoltage + ' V • R = 5 Ω ➜ Current I = U ÷ R = ' + (state.circuitVoltage / 5).toFixed(2) + ' A') : ('🔬 Simulation : U = ' + state.circuitVoltage + ' V • R = 5 Ω ➜ Intensité I = U ÷ R = ' + (state.circuitVoltage / 5).toFixed(2) + ' A'),
+            isEn ? '🎓 Exam Trick: Conductors (Copper, Gold, Iron) let current pass • Insulators (Wood, Plastic, Glass) block current!' : '🎓 Astuce Examen : Conducteurs (Cuivre, Or, Fer) laissent passer le courant • Isolants (Bois, Plastique, Verre) bloquent le courant !',
+            isEn ? '📝 Worked Exam Example: If U = 9 V and R = 5 Ω, then I = 9 ÷ 5 = 1.80 A when switch is closed!' : '📝 Exemple Examen Résolu : Si U = 9 V et R = 5 Ω, alors I = 9 ÷ 5 = 1,80 A quand l’interrupteur est fermé !'
           ],
-          circSpeech,
-          isEn ? '⚡ Close Switch Now' : '⚡ Fermer l’Interrupteur',
+          circSpeech + (isEn ? (' Exam formula: Ohm’s Law states Current I equals Voltage U divided by Resistance R: ' + state.circuitVoltage + ' divided by 5 equals ' + (state.circuitVoltage / 5).toFixed(2) + ' Amps!') : (' Formule d’examen : Loi d’Ohm : Intensité I égale Tension U divisée par Résistance R, soit ' + state.circuitVoltage + ' divisé par 5 égale ' + (state.circuitVoltage / 5).toFixed(2) + ' Ampères !')),
+          isEn ? '⚡ Close Switch & Test Circuit' : '⚡ Fermer l’Interrupteur & Tester',
           () => { state.switchBlade.angle = 0; checkCircuitClosed(); }
         );
       } else if (g === 'comet') {
@@ -8544,66 +8630,82 @@ body {
     const em = item.itemEmoji || '🍎';
     if (t === 'count') {
       const n = item.targetCount || item.ans || 3;
-      const seq = Array.from({ length: n }, (_, i) => (i + 1) + em).join(' ➜ ');
+      const seq = Array.from({ length: Math.min(10, n) }, (_, i) => (i + 1) + em).join(' ➜ ');
       return [
-        isEn ? ('1. Touch each ' + em + ' on the Ten-Frame: ' + seq) : ('1. Touche chaque ' + em + ' dans la Boîte de 10 : ' + seq),
-        isEn ? ('2. Last number counted = ' + n) : ('2. Dernier nombre compté = ' + n)
+        isEn ? ('🔬 Simulation: ' + seq) : ('🔬 Simulation Boîte de 10 : ' + seq),
+        isEn ? ('🎓 Exam Trick: Group by 5 on the Ten-Frame (' + (n > 5 ? '5 + ' + (n - 5) + ' = ' + n : 'count 1 to ' + n) + ')') : ('🎓 Astuce Examen : Regroupe par 5 dans la boîte (' + (n > 5 ? '5 + ' + (n - 5) + ' = ' + n : 'compte de 1 à ' + n) + ')'),
+        isEn ? ('📝 Worked Example: 5 🍎 + 2 🍎 = 7 🍎') : ('📝 Exemple Résolu : 5 🍎 en haut + 2 🍎 en bas = 7 🍎')
       ];
     }
     if (t === 'addition') {
       const a = item.a || 3, b = item.b || 2, sum = item.ans || (a + b);
       return [
-        isEn ? ('1. Start at ' + a + ' ' + em) : ('1. Groupe A : ' + a + ' ' + em),
-        isEn ? ('2. Frog jumps +' + b + ' steps on the number line') : ('2. Saute de +' + b + ' sur la droite graduée'),
-        isEn ? ('3. Total: ' + a + ' + ' + b + ' = ' + sum) : ('3. Total : ' + a + ' + ' + b + ' = ' + sum)
+        isEn ? ('🔬 Simulation: ' + a + ' ' + em + ' + ' + b + ' frog hops = ' + sum) : ('🔬 Simulation : ' + a + ' ' + em + ' + ' + b + ' sauts de grenouille = ' + sum),
+        isEn ? ('🎓 Exam Trick (Make 10): ' + (item.tip ? item.tip.en : ('Put ' + Math.max(a, b) + ' in your head, count on +' + Math.min(a, b)))) : ('🎓 Astuce Examen (Passage par 10) : ' + (item.tip ? item.tip.fr : ('Mets ' + Math.max(a, b) + ' dans ta tête et avance de +' + Math.min(a, b)))),
+        isEn ? ('📝 Worked Example: 8 + 5 ➜ (8 + 2) + 3 = 10 + 3 = 13') : ('📝 Exemple Type Examen : 8 + 5 ➜ (8 + 2) + 3 = 10 + 3 = 13')
       ];
     }
     if (t === 'subtraction') {
       const a = item.a || 9, b = item.b || 4, diff = item.ans || (a - b);
       return [
-        isEn ? ('1. Start with ' + a + ' ' + em) : ('1. Au départ : ' + a + ' ' + em),
-        isEn ? ('2. Take away -' + b + ' ' + em) : ('2. Enlève -' + b + ' ' + em + ' (barrés en rouge)'),
-        isEn ? ('3. Remaining: ' + a + ' - ' + b + ' = ' + diff) : ('3. Il reste : ' + a + ' - ' + b + ' = ' + diff)
+        isEn ? ('🔬 Simulation: Start with ' + a + ' ' + em + ', cross out -' + b + ' = ' + diff) : ('🔬 Simulation : Départ ' + a + ' ' + em + ', barre -' + b + ' en rouge = ' + diff),
+        isEn ? ('🎓 Exam Trick: Think addition! ' + b + ' + ? = ' + a + ' ➜ ? = ' + diff) : ('🎓 Astuce Examen (Addition à trou) : ' + b + ' + ? = ' + a + ' ➜ ? = ' + diff),
+        isEn ? ('📝 Worked Example: 12 - 5 ➜ 12 - 2 = 10, then 10 - 3 = 7') : ('📝 Exemple Type Examen : 12 - 5 ➜ 12 - 2 = 10, puis 10 - 3 = 7')
       ];
     }
     if (t === 'multiply') {
       const a = item.a || 3, b = item.b || 4, prod = item.ans || (a * b);
       return [
-        isEn ? ('1. ' + a + ' rows of ' + b + ' ' + em) : ('1. Grille 3D : ' + a + ' rangées de ' + b + ' ' + em),
-        isEn ? ('2. Skip-count: ' + Array.from({length: Math.min(a, 6)}, (_, i) => (i + 1) * b).join(', ')) : ('2. Compte par bond : ' + Array.from({length: Math.min(a, 6)}, (_, i) => (i + 1) * b).join(', ')),
-        isEn ? ('3. Product: ' + a + ' × ' + b + ' = ' + prod) : ('3. Produit : ' + a + ' × ' + b + ' = ' + prod)
+        isEn ? ('🔬 3D Array Simulation: ' + a + ' rows × ' + b + ' columns = ' + prod) : ('🔬 Simulation Grille 3D : ' + a + ' rangées × ' + b + ' colonnes = ' + prod),
+        isEn ? ('🎓 Exam Trick: ' + (item.tip ? item.tip.en : ('Skip-count: ' + Array.from({length: Math.min(a, 5)}, (_, i) => (i + 1) * b).join(', ')))) : ('🎓 Astuce Examen : ' + (item.tip ? item.tip.fr : ('Compte par bond : ' + Array.from({length: Math.min(a, 5)}, (_, i) => (i + 1) * b).join(', ')))),
+        isEn ? ('📝 Worked Example: 4 × 6 = (2 × 6) × 2 = 12 + 12 = 24') : ('📝 Exemple Type Examen : 4 × 6 = double de (2 × 6) = 12 + 12 = 24')
       ];
     }
     if (t === 'division') {
       const a = item.a || 36, b = item.b || 4, quot = item.ans || (a / b);
       return [
-        isEn ? ('1. Share ' + a + ' ' + em + ' into ' + b + ' equal boxes') : ('1. Partage ' + a + ' ' + em + ' dans ' + b + ' paniers égaux'),
-        isEn ? ('2. Check inverse: ' + b + ' × ' + quot + ' = ' + a) : ('2. Vérifie : ' + b + ' × ' + quot + ' = ' + a),
-        isEn ? ('3. Each box gets ' + quot) : ('3. Chaque panier reçoit ' + quot + ' ' + em)
+        isEn ? ('🔬 Fair-Share Simulation: ' + a + ' ' + em + ' ÷ ' + b + ' equal baskets = ' + quot) : ('🔬 Simulation Partage : ' + a + ' ' + em + ' ÷ ' + b + ' paniers égaux = ' + quot),
+        isEn ? ('🎓 Exam Trick (Inverse Table): Find ? × ' + b + ' = ' + a + ' ➜ ' + quot + ' × ' + b + ' = ' + a) : ('🎓 Astuce Examen (Table inverse) : Cherche ? × ' + b + ' = ' + a + ' ➜ ' + quot + ' × ' + b + ' = ' + a),
+        isEn ? ('📝 Worked Example: 20 ÷ 4 = 5 because 4 × 5 = 20') : ('📝 Exemple Type Examen : 20 ÷ 4 = 5 car 4 × 5 = 20')
       ];
     }
-    if (t === 'fraction') {
-      const num = item.num || 3, den = item.den || 4, addN = item.addNum || 0;
-      if (addN > 0) {
-        return [
-          isEn ? ('1. Same denominator: /' + den) : ('1. Même dénominateur : /' + den),
-          isEn ? ('2. Add numerators: ' + num + ' + ' + addN + ' = ' + (num + addN)) : ('2. Additionne les parts : ' + num + ' + ' + addN + ' = ' + (num + addN)),
-          isEn ? ('3. Result = ' + (num + addN) + '/' + den) : ('3. Résultat = ' + (num + addN) + '/' + den)
-        ];
-      }
+    if (t === 'fraction' || t === 'decimal') {
+      const num = item.num || 3, den = item.den || 4;
       return [
-        isEn ? ('1. Whole split into ' + den + ' equal parts (1/' + den + ' = ' + (1/den).toFixed(2) + ')') : ('1. Disque coupé en ' + den + ' parts égales (1/' + den + ' = ' + (1/den).toFixed(2) + ')'),
-        isEn ? ('2. Color ' + num + ' parts: ' + num + ' × ' + (1/den).toFixed(2)) : ('2. Colorie ' + num + ' parts : ' + num + ' × ' + (1/den).toFixed(2)),
-        isEn ? ('3. Decimal = ' + item.ans) : ('3. Valeur décimale = ' + item.ans)
+        isEn ? ('🔬 Pizza & Bar Simulation: ' + (t === 'decimal' ? (item.a + ' + ' + item.b + ' = ' + item.ans) : (num + '/' + den + ' colored slices'))) : ('🔬 Simulation Disque & Barre : ' + (t === 'decimal' ? (item.a + ' + ' + item.b + ' = ' + item.ans) : (num + '/' + den + ' parts colorées'))),
+        isEn ? ('🎓 Exam Trick: 1/2 = 0.50 • 1/4 = 0.25 • 3/4 = 0.75 • Same denominator ➜ add numerators!') : ('🎓 Astuce Examen : 1/2 = 0,50 • 1/4 = 0,25 • 3/4 = 0,75 • Même dénominateur ➜ additionne les numérateurs !'),
+        isEn ? ('📝 Worked Example: 1/5 + 2/5 = (1+2)/5 = 3/5') : ('📝 Exemple Type Examen : 1/5 + 2/5 = (1+2)/5 = 3/5')
+      ];
+    }
+    if (t === 'percentage') {
+      const pct = item.pct || 25, tot = item.total || 120;
+      return [
+        isEn ? ('🔬 Percentage Bar Simulation: ' + pct + '% of ' + tot + ' = ' + tot + ' × (' + pct + '/100) = ' + item.ans) : ('🔬 Simulation Barre % : ' + pct + ' % de ' + tot + ' = ' + tot + ' × (' + pct + '/100) = ' + item.ans),
+        isEn ? ('🎓 Exam Trick: 50% = ÷ 2 • 25% = ÷ 4 • 10% = ÷ 10') : ('🎓 Astuce Examen : 50% = diviser par 2 • 25% = diviser par 4 • 10% = diviser par 10'),
+        isEn ? ('📝 Worked Example: 25% of 80 = 80 ÷ 4 = 20') : ('📝 Exemple Type Examen : 25 % de 80 € = 80 ÷ 4 = 20 €')
+      ];
+    }
+    if (t === 'proportionality') {
+      return [
+        isEn ? ('🔬 Unit-Rate Simulation: 3 items = 15 ➜ 1 item = 15 ÷ 3 = 5 ➜ 7 items = 7 × 5 = 35') : ('🔬 Simulation Règle de Trois : 3 billets = 15 € ➜ 1 billet = 15 ÷ 3 = 5 € ➜ 7 billets = 7 × 5 = 35 €'),
+        isEn ? ('🎓 Exam Trick (Rule of Three): Always divide to find the price of 1 unit first!') : ('🎓 Astuce Examen (Règle de 3) : Passe toujours par la valeur de 1 seule unité !'),
+        isEn ? ('📝 Worked Example: 4 mangoes cost 8 € ➜ 1 mango = 2 € ➜ 5 mangoes = 10 €') : ('📝 Exemple Type Examen : 4 mangues coûtent 8 € ➜ 1 mangue = 2 € ➜ 5 mangues = 10 €')
+      ];
+    }
+    if (t === 'volume' || t === 'geometry' || t === 'geometry_area') {
+      return [
+        isEn ? ('🔬 3D Geometry Simulation: ' + (item.tip ? item.tip.en : ('Result = ' + item.ans))) : ('🔬 Simulation Géométrie 3D : ' + (item.tip ? item.tip.fr : ('Résultat = ' + item.ans))),
+        isEn ? ('🎓 Exam Formulas: Perimeter = (L+W)×2 • Area = L×W • Cube Volume = s×s×s') : ('🎓 Formules Examen : Périmètre = (L+l)×2 • Aire = L×l • Volume Cube = c×c×c'),
+        isEn ? ('📝 Worked Example: Cube edge 3 cm ➜ V = 3 × 3 × 3 = 27 cm³') : ('📝 Exemple Type Examen : Cube d’arête 3 cm ➜ V = 3 × 3 × 3 = 27 cm³')
       ];
     }
     if (t === 'algebra') {
       const c = item.coeff || 2, k = item.constVal || 4, r = item.rhs || 10;
       const rem = r - k;
       return [
-        isEn ? ('1. Scale Equation: ' + (c === 1 ? 'x' : c + 'x') + ' + ' + k + ' = ' + r) : ('1. Balance : ' + (c === 1 ? 'x' : c + 'x') + ' + ' + k + ' = ' + r),
-        isEn ? ('2. Remove ' + k + ' kg from both pans ➜ ' + (c === 1 ? 'x' : c + 'x') + ' = ' + rem) : ('2. Retire ' + k + ' kg des 2 côtés ➜ ' + (c === 1 ? 'x' : c + 'x') + ' = ' + rem),
-        isEn ? ('3. Divide by ' + c + ' ➜ x = ' + rem + ' ÷ ' + c + ' = ' + item.ans) : ('3. Divise par ' + c + ' ➜ x = ' + rem + ' ÷ ' + c + ' = ' + item.ans)
+        isEn ? ('🔬 3D Scale Simulation: ' + (c === 1 ? 'x' : c + 'x') + ' + ' + k + ' = ' + r + ' ➜ Remove ' + k + ' kg ➜ ' + (c === 1 ? 'x' : c + 'x') + ' = ' + rem) : ('🔬 Simulation Balance 3D : ' + (c === 1 ? 'x' : c + 'x') + ' + ' + k + ' = ' + r + ' ➜ Retire ' + k + ' kg ➜ ' + (c === 1 ? 'x' : c + 'x') + ' = ' + rem),
+        isEn ? ('🎓 Exam Trick: Subtract ' + k + ' from both sides, then divide by ' + c + ' ➜ x = ' + rem + ' ÷ ' + c + ' = ' + item.ans) : ('🎓 Astuce Examen : Enlève ' + k + ' des 2 côtés, puis divise par ' + c + ' ➜ x = ' + rem + ' ÷ ' + c + ' = ' + item.ans),
+        isEn ? ('📝 Worked Example: 2x + 4 = 10 ➜ 2x = 6 ➜ x = 6 ÷ 2 = 3') : ('📝 Exemple Type Examen : 2x + 4 = 10 ➜ 2x = 6 ➜ x = 6 ÷ 2 = 3')
       ];
     }
     return [
@@ -9033,6 +9135,15 @@ body {
   // ============================================================================
   // GRAMMAR, VOCABULARY & CONJUGATION ENGINE (BOTH FRENCH & ENGLISH SECTIONS)
   // ============================================================================
+  // Helper to build a worked class-exam example for any Grammar, Vocabulary, or Conjugation exercise
+  function buildLanguageWorkedExample(data, isEn) {
+    if (data.example) return data.example;
+    const completed = data.sentence.replace('___', '« ' + data.blank + ' »');
+    return isEn
+      ? ('📝 Worked Example: ' + completed)
+      : ('📝 Exemple résolu : ' + completed);
+  }
+
   function setupLanguageQuestActivity(gameType) {
     $('canvas-wrapper').style.display = 'block';
     $('maze-dpad-container').classList.remove('active');
@@ -9059,13 +9170,34 @@ body {
     const data = rawEntry[langKey];
     state.currentLangQuestItem = data;
 
+    // 1. Resolve the EXACT Cartoon Subject Icon from the sentence & answer (e.g., 'banane' -> 🍌, 'elephant' -> 🐘)
+    const cleanSentenceForIcon = data.sentence + ' ' + data.blank;
+    const sentenceSprites = extractSceneSprites(data.sentence, data.blank);
+    const sentenceHeroIcon = (sentenceSprites[0] && sentenceSprites[0] !== '🌟') ? sentenceSprites[0] : resolveCartoonIcon(cleanSentenceForIcon);
+    state.cartoonHeroEmoji = (sentenceHeroIcon && sentenceHeroIcon !== '🌟' && sentenceHeroIcon !== '🔤') ? sentenceHeroIcon : '🦁';
+    state.cartoonSceneSprites = sentenceSprites.length > 0 ? sentenceSprites : [state.cartoonHeroEmoji];
+
+    // 2. Build a 100% SYNCHRONIZED Spoken Question Prompt (reads the actual question with the blank + choices + exam trick, NEVER spoiling the answer as if already filled!)
+    const spokenBlankWord = isEn ? ' ... blank ... ' : ' ... point d’interrogation ... ';
+    const spokenSentenceQuestion = data.sentence.replace('___', spokenBlankWord);
+    const cleanOptionsText = data.options.map(o => String(o).replace(/[\u{1F300}-\u{1FAFF}\u{2600}-\u{27BF}]/gu, '').trim()).join(', ');
+    const cleanRuleText = String(data.rule || '').replace(/^💡\s*/, '');
+    const syncedVoicePrompt = isEn
+      ? ('Question: ' + spokenSentenceQuestion + '. Choose between: ' + cleanOptionsText + '. Exam Tip: ' + cleanRuleText)
+      : ('Question : ' + spokenSentenceQuestion + '. Choisis entre : ' + cleanOptionsText + '. Astuce d’examen : ' + cleanRuleText);
+
+    // Store on state so Canvas & Replay button use the exact same question + trick!
+    state.cartoonQuestionText = data.sentence.replace('___', '[ ? ]');
+    state.cartoonExamTrick = data.rule || '';
+    state.cartoonWorkedExample = buildLanguageWorkedExample(data, isEn);
+
     const lStage = document.querySelector('.lang-quest-stage');
     if (lStage) lStage.setAttribute('data-phase', String(state.activityPhase));
-    const phasePrefix = state.activityPhase === 1 ? '🧭 MODE 1/3 (DÉCOUVERTE) • ' : (state.activityPhase === 2 ? '⚡ MODE 2/3 (ARCADE) • ' : '👑 MODE 3/3 (BOSS) • ');
+    const phasePrefix = state.activityPhase === 1 ? '🧭 MODE 1/3 • ' : (state.activityPhase === 2 ? '⚡ MODE 2/3 • ' : '👑 MODE 3/3 • ');
     $('lang-quest-badge').textContent = phasePrefix + data.cat + (isEn ? ' • 🇬🇧 ENGLISH VOICE' : ' • 🇫🇷 VOIX FRANÇAISE');
     $('lang-quest-sentence').innerHTML = data.sentence.replace('___', '<span class="lang-blank-slot" id="lang-active-blank">?</span>');
     $('lang-quest-rule').textContent = data.rule;
-    $('instruction-title').textContent = data.speech;
+    $('instruction-title').textContent = syncedVoicePrompt;
 
     if ($('btn-switch-lang-section')) {
       $('btn-switch-lang-section').textContent = isEn
@@ -9078,15 +9210,12 @@ body {
       };
     }
 
-    const sentenceHeroPre = resolveCartoonIcon(data.sentence + " " + data.blank);
-    state.cartoonHeroEmoji = (sentenceHeroPre && sentenceHeroPre !== "🌟" && sentenceHeroPre !== "🔤") ? sentenceHeroPre : "🦁";
     const optContainer = $('lang-quest-options');
     optContainer.innerHTML = '';
     data.options.forEach((choice, idx) => {
       const btn = document.createElement('button');
       btn.className = 'btn-lang-choice';
-      const letter = ['A', 'B', 'C', 'D'][idx] || '•';
-      btn.innerHTML = '<span>' + decorateVisualAssetText(choice) + '</span> <span class="choice-speaker-chip" title="Écouter">🔊</span>';
+      btn.innerHTML = '<span>' + decorateVisualAssetText(choice, state.cartoonHeroEmoji) + '</span> <span class="choice-speaker-chip" title="Écouter">🔊</span>';
       const spk = btn.querySelector('.choice-speaker-chip');
       if (spk) {
         spk.onclick = (ev) => {
@@ -9107,29 +9236,26 @@ body {
           onActivityTaskCompleted();
         } else {
           AudioEngine.playWrong();
-          VoiceEngine.speak(isEn ? "Look at the grammar rule and try again!" : "Regarde bien l'indice de la règle et réessaie !");
+          VoiceEngine.speak(cleanRuleText);
         }
       };
       optContainer.appendChild(btn);
     });
 
+    // 3. Activate the Exam Trick & Worked Example Gear Bar for Language Lab!
     activateRheaUniversalCoach(
-      isEn ? '🦉 RHEA LANGUAGE ENGINE • GRAMMAR, VOCABULARY & CONJUGATION' : '🦉 MOTEUR LINGUISTIQUE RHEA • RÈGLE & ASTUCE INTERACTIVE',
+      isEn ? '🎓 EXAM TRICK & WORKED EXAMPLE • ' + data.cat : '🎓 ASTUCE D’EXAMEN & EXEMPLE TYPE • ' + data.cat,
       [
-        isEn ? ('1. Category: ' + data.cat) : ('1. Catégorie : ' + data.cat),
+        '❓ ' + state.cartoonQuestionText,
         data.rule,
-        isEn ? ('3. Target Answer: « ' + data.blank + ' »') : ('3. Mot clé à trouver : « ' + data.blank + ' »')
+        state.cartoonWorkedExample
       ],
-      data.rule,
-      isEn ? '💡 Highlight Clue in Sentence' : '💡 Illuminer l’Indice dans la Phrase',
+      syncedVoicePrompt,
+      isEn ? '🎓 Hear Exam Rule & Example' : '🎓 Écouter l’Astuce Examen & Exemple',
       () => {
-        const slot = $('lang-active-blank');
-        if (slot) {
-          slot.textContent = data.blank[0] + '...';
-          slot.style.borderColor = '#F59E0B';
-        }
         AudioEngine.playSnap();
-        VoiceEngine.speak(data.rule);
+        document.querySelectorAll('#khan-steps-track .khan-step-chip').forEach(el => el.classList.add('highlighted'));
+        VoiceEngine.speak(cleanRuleText + '. ' + state.cartoonWorkedExample.replace('📝 ', ''));
       }
     );
 
@@ -9139,7 +9265,7 @@ body {
       data.options.forEach((choice, idx) => {
         const bigBtn = document.createElement('button');
         bigBtn.className = 'btn-interactive';
-        bigBtn.innerHTML = '<span>' + decorateVisualAssetText(choice) + '</span> <span class="choice-speaker-chip">🔊</span>';
+        bigBtn.innerHTML = '<span>' + decorateVisualAssetText(choice, state.cartoonHeroEmoji) + '</span> <span class="choice-speaker-chip">🔊</span>';
         const spk = bigBtn.querySelector('.choice-speaker-chip');
         if (spk) spk.onclick = (ev) => { ev.stopPropagation(); VoiceEngine.speak(String(choice)); };
         bigBtn.onclick = () => {
@@ -9149,27 +9275,27 @@ body {
         ansBoxLang.appendChild(bigBtn);
       });
     }
-    // Spawn synchronized moving cartoon targets on the 60fps Arcade Canvas!
-    const sentenceHeroIcon = resolveCartoonIcon(data.sentence + ' ' + data.blank);
+
+    // 4. Spawn synchronized moving cartoon targets on the 60fps Arcade Canvas with the exact matching icon!
     spawnCartoonArcadeTargets(
-      sentenceHeroIcon + ' ' + data.sentence.replace('___', ' [ ? ] '),
-      sentenceHeroIcon,
+      state.cartoonHeroEmoji + ' ' + state.cartoonQuestionText,
+      state.cartoonHeroEmoji,
       data.options.map((choice, idx) => ({
         label: choice,
-        icon: resolveCartoonIcon(choice + ' ' + data.sentence),
+        icon: resolveCartoonIcon(choice) !== '🌟' && resolveCartoonIcon(choice) !== '🔤' ? resolveCartoonIcon(choice) : state.cartoonHeroEmoji,
         correct: choice === data.blank,
         onSelect: () => {
           const allBtns = optContainer.querySelectorAll('.btn-lang-choice');
           if (allBtns[idx]) allBtns[idx].click();
         }
-      }))
+      })),
+      data.sentence + ' ' + data.blank
     );
 
-    // Speak ONLY in the active single native voice (French OR English)
-    VoiceEngine.speak(data.speech);
+    // Speak the exact question + choices + exam trick!
+    VoiceEngine.speak(syncedVoicePrompt);
   }
 
-  
   // ============================================================================
   // V11.0 RHEA VISUAL ASSET MAPPER & CLASS-TO-CLASS JOURNEY ENGINE
   // ============================================================================
@@ -9181,21 +9307,24 @@ body {
     const correctOpt = (optionsList || []).find(o => o.correct);
     const correctLabel = correctOpt ? correctOpt.label : '';
     const sprites = extractSceneSprites(titlePrompt + ' ' + (extraSceneText || ''), correctLabel);
-    state.cartoonSceneSprites = sprites;
+    state.cartoonSceneSprites = sprites.length > 0 ? sprites : [heroEmoji || '🦁'];
     state.cartoonHeroEmoji = (sprites[0] && sprites[0] !== '🌟') ? sprites[0] : (heroEmoji || '🦁');
 
     const count = (optionsList || []).length;
     const colors = ['#FF2A32', '#10B981', '#F59E0B', '#6366F1', '#EC4899', '#06B6D4'];
     state.cartoonTargets = (optionsList || []).map((opt, idx) => {
-      const spanW = (CW - 185) / Math.max(1, count);
-      const baseX = 155 + idx * spanW + spanW * 0.42;
-      const baseY = 185 + (idx % 2) * 58;
+      const spanW = (CW - 175) / Math.max(1, count);
+      const baseX = 152 + idx * spanW + spanW * 0.44;
+      const baseY = 235 + (idx % 2) * 34;
       const rawLbl = String(opt.label || '').trim();
-      const optIcon = (opt.icon && opt.icon !== '🌟') ? opt.icon : resolveCartoonIcon(rawLbl + ' ' + titlePrompt);
+      let optIcon = (opt.icon && opt.icon !== '🌟' && opt.icon !== '🔢' && opt.icon !== '🔤') ? opt.icon : resolveCartoonIcon(rawLbl);
+      if (!optIcon || optIcon === '🌟' || optIcon === '🔢' || optIcon === '🔤') {
+        optIcon = state.cartoonHeroEmoji || '🌟';
+      }
       return {
         id: 'ct_' + idx,
         label: rawLbl,
-        icon: optIcon === '🌟' ? state.cartoonHeroEmoji : optIcon,
+        icon: optIcon,
         correct: Boolean(opt.correct),
         onSelect: opt.onSelect,
         baseX,
@@ -9205,7 +9334,7 @@ body {
         vx: (idx % 2 === 0 ? 1 : -1) * (0.75 + (idx * 0.15)),
         vy: (idx % 2 === 0 ? -1 : 1) * 0.5,
         phase: idx * 1.4,
-        r: count > 4 ? 40 : 48,
+        r: count > 4 ? 36 : 42,
         color: colors[idx % colors.length],
         popScale: 1
       };
@@ -9223,150 +9352,182 @@ body {
     CM:  { icon: '🎓', fr: 'CM2', en: 'Grade 6' }
   };
 
-  
+  // V14.0 BULLETPROOF TOKEN-BASED CARTOON ICON RESOLVER (NO REGEX BACKSLASH LOSS IN TEMPLATE STRINGS!)
+  const CARTOON_WORD_GROUPS = [
+    // Fruits, Food & Market (checked first so 'banane jaune' matches 🍌 before 'jaune' ☀️!)
+    ['banane|bananes|bananier|banana|bananas|plantain', '🍌'],
+    ['mangue|mangues|manguier|mango|mangoes|sucre|sucree|sucres', '🥭'],
+    ['pomme|pommes|pommier|apple|apples', '🍎'],
+    ['orange|oranges', '🍊'],
+    ['fraise|fraises|fraisier|strawberry|strawberries', '🍓'],
+    ['ananas|pineapple|pineapples', '🍍'],
+    ['carotte|carottes|carrot|carrots|legume|legumes', '🥕'],
+    ['coco|coconuts|coconut', '🥥'],
+    ['mais|maize|corn|manioc|cassava|mil', '🌽'],
+    ['cacao|cacaoyer|chocolat|chocolate|cabosse', '🍫'],
+    ['gateau|gateaux|cupcake|cupcakes|cake|savoureux|delicieux|easy', '🧁'],
+    ['biscuit|biscuits|cookie|cookies', '🍪'],
+    ['pain|boulanger|boulangerie|bakery|bread', '🥐'],
+    ['pizza|fraction|fractions|quart|quarts|demi|cinquieme|cinquiemes', '🍕'],
+    ['lait|laitier|milk', '🥛'],
+    ['cafe|cafeier|coffee|the|tea', '☕'],
+    ['citron|citrique|lemon', '🍋'],
+    ['panier|paniers|basket|woven|full|empty|faim|hungry', '🧺'],
+
+    // Animals & Characters
+    ['lion|lionceau|lions|lione|lionceaux|leo|rugit|roar|bondit', '🦁'],
+    ['singe|singes|monkey|kiki', '🐒'],
+    ['elephant|elephants|trompe|trunk', '🐘'],
+    ['girafe|girafes|giraffe|giraffes|cou|neck|tachetees|tachetee|taller', '🦒'],
+    ['zebre|zebres|zebra|zebras|rayures|stripes|animals', '🦓'],
+    ['guepard|cheetah|quickly|quick|fast', '🐆'],
+    ['crocodile|croco', '🐊'],
+    ['hippopotame|hippopotamus|hippo', '🦛'],
+    ['oiseau|oiseaux|bird|birds|vole|volent|fly|nid', '🐦'],
+    ['aigle|eagle', '🦅'],
+    ['poussin|poussins|poule|coq|chick|chicks|hen|rooster', '🐥'],
+    ['grenouille|treefrog|frog', '🐸'],
+    ['poisson|poissons|fish|goldfish|dauphin|dolphin|dolphins|nage|swim', '🐟'],
+    ['abeille|abeilles|bee|honeybee|miel|honey|ruche', '🐝'],
+    ['papillon|papillons|butterfly|butterflies|chenille', '🦋'],
+    ['coccinelle|ladybug', '🐞'],
+    ['tortue|tortoise|turtle|lentement|doucement', '🐢'],
+    ['dromadaire|chameau|camel|caravane|traversaient', '🐪'],
+    ['cheval|chevaux|horse', '🐎'],
+    ['chat|chaton|cat|kitten|miaou|miaule', '🐱'],
+    ['chien|chiens|dog|aboie', '🐶'],
+    ['canard|duck', '🦆'],
+    ['lapin|rabbit', '🐰'],
+    ['mouton|sheep|laine', '🐑'],
+    ['souris|mouse|petite', '🐭'],
+    ['loup|wolf', '🐺'],
+    ['dinosaure|dino|dinosaur|monstre|monster', '🦖'],
+    ['panda', '🐼'],
+    ['araignee|spider', '🕷️'],
+    ['escargot|snail', '🐌'],
+    ['crabe|crab', '🦀'],
+    ['fourmi|ant', '🐜'],
+
+    // School, Clothing, Family & Objects
+    ['robe|robes|blanche|blanc|vetement|vetements|dress', '👗'],
+    ['livre|livres|book|books|histoire|histoires|story|stories|conte|griot|griots|bibliotheque|library|lisez|lit|read|reading|wrote|write|hampate|dont', '📖'],
+    ['cahier|cahiers|crayon|crayons|pencil|pencils|board|tableau|dessin|ecrit|nos|cartable|cartables', '📓'],
+    ['ecole|school|schoolyard|classe|classes|eleve|eleves|pupil|enfant|enfants|children|kids|ami|friend|amina|kofi|moussa|awa|sister|soeur|brother|frere|toutes|olympiade', '🏫'],
+    ['maman|mere|mother|berceuse|chante|mama|koko', '👩🏾'],
+    ['papa|pere|father|bus|driving', '🚌'],
+    ['velo|bicycle|bicyclette|comment', '🚲'],
+    ['boite|boites|box|boxes|caisse|caisses|crate|crates|paquet|lunch', '📦'],
+    ['ecoutent|ecoutais|ecoute|ecouter|oreille|listen|hearing', '👂'],
+    ['oeil|yeux|eyes|see|saw|regarde|regardes|observer|observerions|telescope|transparent', '👀'],
+    ['main|mains|doigt|doigts|sens|senses|tape|clap|touch|touche|hands|these', '🖐️'],
+    ['hopital|hospital|medecin|docteur|doctor|infirmier|nurse|soigne|prescrit|patient', '🏥'],
+    ['fermier|agriculteur|farmer|farm|champ', '🌾'],
+    ['pont|batir|construire|bridge|tower|rebuild', '🌉'],
+    ['mosquee|djenne|musee|museum|capitale|capital|pyramide|pyramid|palais|chateau|citadelle|habiter|resider|visiterons|visiterez', '🏛️'],
+
+    // Nature, Plants & Geography
+    ['baobab|arbre|arbres|tree|trees|foret|forest|banyan|bois|wood|maathai', '🌳'],
+    ['palmier|palm|oasis', '🌴'],
+    ['fleur|fleurs|fleurissent|flower|flowers|hibiscus|bissap|tulipe|tulip|lotus|rose|rosier|plantees', '🌺'],
+    ['graine|germer|plant|plants|photosynthese|photosynthesis|herbe|grass|green|vert|biodiversity|biologie|biology', '🌱'],
+    ['arc-en-ciel|rainbow', '🌈'],
+    ['pluie|pleut|rain|raining|nuage|cloud|clouds|arrose', '🌧️'],
+    ['eau|eaux|water|potable|fleuve|nil|nile|congo|zambeze|lac|victoria|mer|sea|ocean|cascade|chutes|calmes|ruisseau', '🌊'],
+    ['feu|fire|chaud|hot|volcan|volcano|flamme', '🔥'],
+    ['glace|glacon|ice|froid|cold|gele|neige|snow', '🧊'],
+    ['desert|sahara|sable|arid|dunes', '🏜️'],
+    ['mont|montagne|kilimandjaro|kilimanjaro|colline|sommet|highest|arrivées|arrivees', '🏔️'],
+    ['horizon|matin|aurore|sunrise', '🌅'],
+    ['etoile|etoiles|star|stars|nuit|soir|night|evening', '⭐'],
+    ['lune|moon', '🌙'],
+    ['planete|mars|saturne|terre|earth|atterrir|revolve|revolves', '🪐'],
+    ['soleil|solaire|sun|sunshine|sunlight|jaune|yellow|jour|midi|warm|sunny|renewable', '☀️'],
+    ['afrique|africa|continent|ecosysteme|pays|country|countries|monde|senegal|dakar|cameroun|yaounde|egypte|nigeria|kenya|nairobi|ghana|maroc|rabat|mali|rwanda|madagascar|algerie', '🌍'],
+
+    // Science, Math & Vehicles
+    ['electricite|electrique|circuit|ampoule|lampe|lamp|lumiere|light|eteindre|allumer|volt|volts|ohm|barrage|hydroelectrique|auras', '⚡'],
+    ['chimie|chemistry|eprouvette|flacon|potion|elixir|serum|acide|ph|font', '🧪'],
+    ['microscope|science|scientifique|scientist|experience', '🔬'],
+    ['thermometre|temperature', '🌡️'],
+    ['oxygene|oxygen|poumons|lungs|air|vent|wind|souffle', '💨'],
+    ['balance|algebre|equation|poids|kg|kilos|coffre|sac|scale|regle', '⚖️'],
+    ['cube|cubes|volume|carre|rectangle|perimetre|aire|geometrie|tangram|puzzle', '🧊'],
+    ['piece|pieces|monnaie|coin|coins|euro|euros|dollar|argent|or|gold|lingot|pourcentage|percentage', '🪙'],
+    ['diamant|diamants|diamond|tresor|cristal', '💎'],
+    ['billet|billets|train|rail|gare|ticket|tickets|prennent', '🚅'],
+    ['voiture|voitures|car|cars|racecar|course|vite|rapide', '🚗'],
+    ['bateau|voilier|pirogue|boat|sailboat|navire', '⛵'],
+    ['fusee|rocket|astronaute|astronaut|astronauts|espace|space|comete|laser', '🚀'],
+    ['avion|plane|aeroport', '✈️'],
+    ['robot|android|ordinateur|computer', '🤖'],
+    ['tambour|tambours|djembe|tam-tam|drum|drums|boum', '🥁'],
+    ['chanson|sing|singing|song|musique|music', '🎵'],
+    ['ballon|ballons|football|soccer|joue|jouons|play|playing|played|sport|corde', '⚽'],
+    ['coeur|genereux|heureux|happy|joyeux|joyful|joie|fiers|kind|bravo|must', '❤️'],
+    ['semaine|jours|days|demain|tomorrow|hier|yesterday|temps|heure|calendrier|will|had', '📅']
+  ];
+
+  function normalizeTokenString(s) {
+    return String(s || '')
+      .toLowerCase()
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, '')
+      .replace(/[^a-z0-9]+/g, ' ')
+      .trim();
+  }
+
   function resolveCartoonIcon(rawText) {
     const str = String(rawText || '').trim();
-    const existingMatch = str.match(/(?:[🇦-🇿]{2}|[🌀-🫿☀-➿])/u);
-    if (existingMatch) return existingMatch[0];
-    const low = str.toLowerCase();
-    const dict = [
-      // Animals & Characters
-      [/(lion|lionceau|lions|leo|léo|rugit|roar)/i, '🦁'],
-      [/(singe|singes|monkey|kiki)/i, '🐒'],
-      [/(éléphant|éléphants|elephant|elephants|trompe|trunk)/i, '🐘'],
-      [/(girafe|girafes|giraffe|giraffes|cou|neck)/i, '🦒'],
-      [/(zèbre|zèbres|zebra|zebras|rayures|stripes)/i, '🦓'],
-      [/(guépard|cheetah)/i, '🐆'],
-      [/(crocodile|croco)/i, '🐊'],
-      [/(hippopotame|hippopotamus|hippo)/i, '🦛'],
-      [/(oiseau|oiseaux|bird|birds|vole|volent|fly|nid)/i, '🐦'],
-      [/(aigle|eagle)/i, '🦅'],
-      [/(poussin|poussins|poule|coq|chick|chicks|hen|rooster)/i, '🐥'],
-      [/(grenouille|treefrog|frog)/i, '🐸'],
-      [/(poisson|poissons|fish|goldfish|dauphin|dolphin|nage|swim)/i, '🐟'],
-      [/(abeille|abeilles|bee|honeybee|miel|honey|ruche)/i, '🐝'],
-      [/(papillon|papillons|butterfly|butterflies|chenille)/i, '🦋'],
-      [/(coccinelle|ladybug)/i, '🐞'],
-      [/(tortue|tortoise|turtle)/i, '🐢'],
-      [/(dromadaire|chameau|camel|caravane)/i, '🐪'],
-      [/(cheval|chevaux|horse)/i, '🐎'],
-      [/(chat|chaton|cat|kitten|miaou|miaule)/i, '🐱'],
-      [/(chien|chiens|dog|aboie)/i, '🐶'],
-      [/(canard|duck)/i, '🦆'],
-      [/(lapin|rabbit)/i, '🐰'],
-      [/(mouton|sheep|laine)/i, '🐑'],
-      [/(dinosaure|dino|dinosaur)/i, '🦖'],
-      [/(panda)/i, '🐼'],
-      [/(araignée|spider)/i, '🕷️'],
-      [/(escargot|snail)/i, '🐌'],
-      [/(crabe|crab)/i, '🦀'],
-      [/(fourmi|ant)/i, '🐜'],
-
-      // Fruits, Food & Market
-      [/(mangue|mangues|manguier|mango|mangoes|sucrée|sucré)/i, '🥭'],
-      [/(banane|bananes|bananier|banana|bananas|plantain)/i, '🍌'],
-      [/(pomme|pommes|pommier|apple|apples)/i, '🍎'],
-      [/(orange|oranges)/i, '🍊'],
-      [/(fraise|fraises|fraisier|strawberry|strawberries)/i, '🍓'],
-      [/(ananas|pineapple|pineapples)/i, '🍍'],
-      [/(carotte|carottes|carrot|carrots|légume)/i, '🥕'],
-      [/(coco|coconuts|coconut)/i, '🥥'],
-      [/(maïs|maize|corn)/i, '🌽'],
-      [/(cacao|cacaoyer|chocolat|chocolate|cabosse)/i, '🍫'],
-      [/(gâteau|gâteaux|cupcake|cupcakes|cake|savoureux|délicieux|easy)/i, '🧁'],
-      [/(biscuit|biscuits|cookie|cookies)/i, '🍪'],
-      [/(pain|boulanger|boulangerie|bakery|bread)/i, '🥐'],
-      [/(pizza|fraction|fractions|quart|demi|cinquième)/i, '🍕'],
-      [/(lait|laitier|milk)/i, '🥛'],
-      [/(café|caféier|coffee|thé|tea)/i, '☕'],
-      [/(citron|citrique|lemon)/i, '🍋'],
-
-      // Nature, Plants & Geography
-      [/(baobab|arbre|arbres|tree|trees|forêt|forest|banyan|bois|wood|maathai)/i, '🌳'],
-      [/(palmier|palm|oasis)/i, '🌴'],
-      [/(fleur|fleurs|fleurissent|flower|flowers|hibiscus|bissap|tulipe|tulip|lotus|rose|rosier|plantées)/i, '🌺'],
-      [/(graine|germer|plant|plants|photosynthèse|photosynthesis|herbe|grass|green|vert)/i, '🌱'],
-      [/(soleil|solaire|sun|sunshine|sunlight|jaune|yellow|jour|midi|warm|sunny)/i, '☀️'],
-      [/(étoile|étoiles|star|stars|nuit|soir|night|evening)/i, '⭐'],
-      [/(lune|moon)/i, '🌙'],
-      [/(planète|mars|saturne|terre|earth|système solaire)/i, '🪐'],
-      [/(arc-en-ciel|rainbow)/i, '🌈'],
-      [/(pluie|pleut|rain|raining|nuage|cloud|clouds|arrose)/i, '🌧️'],
-      [/(eau|water|potable|fleuve|nil|congo|zambèze|lac|victoria|mer|sea|océan|cascade|chutes)/i, '🌊'],
-      [/(feu|fire|chaud|hot|volcan|volcano|flamme)/i, '🔥'],
-      [/(glace|glaçon|ice|froid|cold|gèle|neige|snow|0 °c)/i, '🧊'],
-      [/(désert|sahara|sable|arid|dunes)/i, '🏜️'],
-      [/(mont|montagne|kilimandjaro|kilimanjaro|colline|sommet)/i, '🏔️'],
-      [/(afrique|africa|continent|écosystème|pays|country|monde)/i, '🌍'],
-
-      // Science, Objects, School & Actions
-      [/(électricité|électrique|circuit|ampoule|lampe|lamp|lumière|light|éteindre|allumer|volt|volts|ohm|300 000|300,000)/i, '⚡'],
-      [/(chimie|chemistry|éprouvette|flacon|potion|élixir|sérum|acide|ph)/i, '🧪'],
-      [/(microscope|science|scientifique|scientist|biologie|biology|expérience)/i, '🔬'],
-      [/(thermomètre|température|temperature)/i, '🌡️'],
-      [/(oxygène|oxygen|poumons|lungs|air|vent|wind|souffle)/i, '💨'],
-      [/(balance|algèbre|équation|poids|kg|kilos|coffre|sac|boîte|box|scale)/i, '⚖️'],
-      [/(caisse|caisses|crate|crates|paquet)/i, '📦'],
-      [/(cube|cubes|volume|carré|rectangle|périmètre|aire|géométrie|tangram|puzzle)/i, '🧊'],
-      [/(pièce|pièces|monnaie|coin|coins|euro|euros|dollar|argent|or|gold|lingot)/i, '🪙'],
-      [/(diamant|diamants|diamond|trésor|cristal)/i, '💎'],
-      [/(billet|billets|train|rail|gare|ticket|tickets)/i, '🚅'],
-      [/(voiture|voitures|car|cars|racecar|course|vite|rapide|quick|fast)/i, '🚗'],
-      [/(bateau|voilier|pirogue|boat|sailboat|navire)/i, '⛵'],
-      [/(fusée|rocket|astronaute|astronaut|espace|space|comète|laser)/i, '🚀'],
-      [/(avion|plane|aéroport|arrivées)/i, '✈️'],
-      [/(robot|android|ordinateur|computer)/i, '🤖'],
-      [/(tambour|tambours|djembé|djembe|tam-tam|drum|drums|boum)/i, '🥁'],
-      [/(chante|chanter|chanson|sing|singing|song|musique|music)/i, '🎵'],
-      [/(ballon|ballons|football|soccer|joue|jouons|play|playing|played|sport|corde)/i, '⚽'],
-      [/(école|school|classe|élève|élèves|pupil|enfant|enfants|children|kids|ami|friend|amina|kofi|moussa|awa)/i, '🏫'],
-      [/(livre|livres|book|books|histoire|histoires|story|stories|conte|griot|bibliothèque|library|lisez|read|reading|wrote|write|hampâté)/i, '📖'],
-      [/(cahier|crayon|pencil|board|tableau|dessin|écrit)/i, '✏️'],
-      [/(hôpital|hospital|médecin|docteur|doctor|infirmier|nurse|soigne|prescrit)/i, '🏥'],
-      [/(musée|museum|capitale|capital|pyramide|pyramid|palais|château|citadelle|pont|bâtir)/i, '🏛️'],
-      [/(oeil|yeux|eyes|see|regarde|regardes|observer|télescope|transparent)/i, '👀'],
-      [/(main|mains|doigt|doigts|sens|senses|tape|clap|touch|touche)/i, '🖐️'],
-      [/(coeur|généreux|heureux|happy|joie|fiers|kind|bravo)/i, '❤️'],
-      [/(semaine|jours|days|demain|tomorrow|hier|yesterday|temps|heure|calendrier)/i, '📅'],
-      [/^d+/, '🔢']
-    ];
-    for (const [rx, emo] of dict) {
-      if (rx.test(low)) return emo;
+    if (!str) return '🌟';
+    const existingMatch = str.match(/(?:[\u{1F1E6}-\u{1F1FF}]{2}|[\u{1F300}-\u{1FAFF}\u{2600}-\u{27BF}])/u);
+    if (existingMatch && existingMatch[0] !== '✍️' && existingMatch[0] !== '🗂️' && existingMatch[0] !== '⏳') {
+      return existingMatch[0];
     }
-    // Check phoneme single letters
-    if (/^[a-z]{1,2}$/i.test(str)) return '🔤';
+    const tokens = normalizeTokenString(str).split(' ').filter(Boolean);
+    if (tokens.length === 0) return '🌟';
+    const tokenSet = new Set(tokens);
+
+    for (const [wordsPipe, emo] of CARTOON_WORD_GROUPS) {
+      const candidates = wordsPipe.split('|');
+      for (const cand of candidates) {
+        if (tokenSet.has(cand)) return emo;
+      }
+    }
+    // Pure number check
+    if (/^[0-9]+([.,][0-9]+)?$/.test(str.trim())) return '🔢';
+    if (/^[a-z]{1,2}$/i.test(str.trim())) return '🔤';
     return '🌟';
   }
 
-  // Extract 1 to 3 matching cartoon scene sprites from any spoken sentence + answer so the canvas scene 100% matches the voice!
   function extractSceneSprites(textA, textB) {
     const combined = String(textA || '') + ' ' + String(textB || '');
     const found = [];
     const addUnique = (em) => {
-      if (em && em !== '🌟' && em !== '🔢' && !found.includes(em)) found.push(em);
+      if (em && em !== '🌟' && em !== '🔢' && em !== '🔤' && em !== '✍️' && em !== '🗂️' && em !== '⏳' && !found.includes(em)) {
+        found.push(em);
+      }
     };
-    // First check explicit emojis (keeping 2-char regional indicator flags together!)
-    const explicit = combined.match(/(?:[🇦-🇿]{2}|[🌀-🫿☀-➿])/gu) || [];
+    const explicit = combined.match(/(?:[\u{1F1E6}-\u{1F1FF}]{2}|[\u{1F300}-\u{1FAFF}\u{2600}-\u{27BF}])/gu) || [];
     explicit.forEach(addUnique);
 
-    // Split words (length >= 3 first so 'im'/'un'/'le' don't trigger generic letter icon!)
     const words = combined.split(/[^a-zA-ZÀ-ÿ0-9'-]+/).filter(Boolean);
     for (const w of words) {
       if (w.length >= 3) {
         const icon = resolveCartoonIcon(w);
-        if (icon && icon !== '🔤') addUnique(icon);
+        if (icon) addUnique(icon);
       }
       if (found.length >= 3) break;
     }
     if (found.length === 0) {
-      found.push(resolveCartoonIcon(textB || textA));
+      const fallback = resolveCartoonIcon(combined);
+      addUnique(fallback !== '🌟' ? fallback : '🦁');
     }
     return found.slice(0, 3);
   }
 
   function decorateVisualAssetText(rawText, fallbackHero) {
     const str = String(rawText || '').trim();
-    if (/(?:[🇦-🇿]{2}|[🌀-🫿☀-➿])/u.test(str)) return str;
+    if (/(?:[\u{1F1E6}-\u{1F1FF}]{2}|[\u{1F300}-\u{1FAFF}\u{2600}-\u{27BF}])/u.test(str)) return str;
     let ico = resolveCartoonIcon(str);
     if (!ico || ico === '🌟' || ico === '🔢' || ico === '🔤') {
       ico = (fallbackHero && fallbackHero !== '🌟') ? fallbackHero : (state.cartoonHeroEmoji || ico || '🌟');
@@ -10462,28 +10623,27 @@ body {
       });
     }
 
-    // 8. KHAN ACADEMY KIDS × PERSEUS VISUAL & AUDIO MATH, CALCULATION & ALGEBRA 3D STUDIO
+    // 8. KHAN ACADEMY KIDS × PERSEUS VISUAL & AUDIO MATH, CALCULATION & ALGEBRA 3D STUDIO + EXAM TRICK & WORKED EXAMPLE GEAR
     else if (g === 'math_lab') {
       const tNow = Date.now() / 1000;
       const isEn = state.lang === 'en';
 
       // 3D Perspective Math Stage Floor
-      const stageGrad = ctx.createLinearGradient(0, 20, 0, 360);
+      const stageGrad = ctx.createLinearGradient(0, 12, 0, 368);
       stageGrad.addColorStop(0, '#0F172A');
       stageGrad.addColorStop(1, '#1E1B4B');
       ctx.fillStyle = stageGrad;
       ctx.beginPath();
-      ctx.roundRect(28, 18, CW - 56, 342, 22);
+      ctx.roundRect(14, 10, CW - 28, 360, 20);
       ctx.fill();
       ctx.strokeStyle = '#38BDF8';
       ctx.lineWidth = 2.5;
       ctx.stroke();
 
-      // Helper to draw a real 3D Isometric Shaded Cube at (cx, cy, size, topCol, leftCol, rightCol)
+      // Helper to draw a real 3D Isometric Shaded Cube
       const drawIsoCube = (cx, cy, sz, topC, leftC, rightC, labelText) => {
         ctx.save();
         ctx.translate(cx, cy);
-        // Top Face
         ctx.fillStyle = topC;
         ctx.beginPath();
         ctx.moveTo(0, -sz);
@@ -10494,7 +10654,6 @@ body {
         ctx.fill();
         ctx.strokeStyle = 'rgba(255,255,255,0.5)';
         ctx.stroke();
-        // Left Face
         ctx.fillStyle = leftC;
         ctx.beginPath();
         ctx.moveTo(-sz * 1.1, -sz * 0.45);
@@ -10504,7 +10663,6 @@ body {
         ctx.closePath();
         ctx.fill();
         ctx.stroke();
-        // Right Face
         ctx.fillStyle = rightC;
         ctx.beginPath();
         ctx.moveTo(0, sz * 0.1);
@@ -10516,25 +10674,41 @@ body {
         ctx.stroke();
         if (labelText) {
           ctx.fillStyle = '#FFFFFF';
-          ctx.font = 'bold 14px sans-serif';
+          ctx.font = 'bold 13px sans-serif';
           ctx.fillText(labelText, -ctx.measureText(labelText).width / 2, -sz * 0.2);
         }
         ctx.restore();
       };
 
       const mItem = state.currentMathItem || {};
+      const mPromptTxt = mItem.prompt ? mItem.prompt[isEn ? 'en' : 'fr'] : '';
+      const mTipTxt = mItem.tip ? mItem.tip[isEn ? 'en' : 'fr'] : '';
 
-      // MODE A: FRACTIONS & DECIMALS (3D Pizza Cylinder + Graduated Perseus Number Line)
-      if (mItem.type === 'fraction' || mItem.type === 'decimal') {
-        const cx = 210, cy = 175, radius = 82;
-        const num = mItem.num || 3, den = mItem.den || 4;
+      // Top Question Banner on Math Canvas (Full clarity!)
+      ctx.save();
+      ctx.fillStyle = 'rgba(2, 6, 23, 0.92)';
+      ctx.beginPath();
+      ctx.roundRect(24, 18, CW - 48, 36, 10);
+      ctx.fill();
+      ctx.strokeStyle = '#FACC15';
+      ctx.lineWidth = 2;
+      ctx.stroke();
+      ctx.fillStyle = '#FEF08A';
+      ctx.font = 'bold 14px sans-serif';
+      ctx.fillText('❓ ' + (mItem.itemEmoji || '🧮') + ' ' + mPromptTxt.slice(0, 82), 34, 41);
+      ctx.restore();
+
+      // MODE A: FRACTIONS, DECIMALS & PERCENTAGES (3D Pizza Cylinder + Graduated Bar)
+      if (mItem.type === 'fraction' || mItem.type === 'decimal' || mItem.type === 'percentage') {
+        const cx = 155, cy = 155, radius = 68;
+        const num = mItem.type === 'percentage' ? Math.round((mItem.pct || 25) / 25) : (mItem.num || 3);
+        const den = mItem.type === 'percentage' ? 4 : (mItem.den || 4);
         const totalActive = mItem.type === 'decimal' ? 6 : (num + (mItem.addNum || 0));
         const totalSlices = mItem.type === 'decimal' ? 10 : den;
 
-        // 3D Cylinder Bottom Rim
         ctx.fillStyle = '#7F1D1D';
         ctx.beginPath();
-        ctx.ellipse(cx, cy + 20, radius, radius * 0.64, 0, 0, Math.PI * 2);
+        ctx.ellipse(cx, cy + 16, radius, radius * 0.64, 0, 0, Math.PI * 2);
         ctx.fill();
 
         for (let s = 0; s < totalSlices; s++) {
@@ -10550,47 +10724,39 @@ body {
           ctx.fillStyle = s < totalActive ? (s < num ? '#EF4444' : '#F59E0B') : 'rgba(255,255,255,0.14)';
           ctx.fill();
           ctx.strokeStyle = '#FFFFFF';
-          ctx.lineWidth = 2.5;
+          ctx.lineWidth = 2;
           ctx.stroke();
           ctx.restore();
         }
 
-        // Right-side Khan Perseus Graduated Number Line & Step Breakdown
         ctx.fillStyle = '#FDE047';
-        ctx.font = 'bold 18px sans-serif';
+        ctx.font = 'bold 15px sans-serif';
         const fracTitle = mItem.type === 'decimal'
-          ? ('📏 Calcul Décimal : ' + mItem.a + ' + ' + mItem.b + ' = ' + mItem.ans)
-          : ('🍕 Fraction Visuelle : ' + num + '/' + den + (mItem.addNum ? (' + ' + mItem.addNum + '/' + den + ' = ' + totalActive + '/' + den) : (' = ' + (num / den).toFixed(2))));
-        ctx.fillText(fracTitle, 355, 95);
+          ? ('📏 Simulation Décimale : ' + mItem.a + ' + ' + mItem.b + ' = ?')
+          : mItem.type === 'percentage'
+          ? ('🏷️ Simulation % : ' + mItem.pct + '% = 1/4 du disque (' + mItem.total + ' ÷ 4)')
+          : ('🍕 Simulation Fraction : ' + num + '/' + den + (mItem.addNum ? (' + ' + mItem.addNum + '/' + den) : ''));
+        ctx.fillText(fracTitle, 260, 88);
 
-        // Visual Fraction Bar
         ctx.fillStyle = 'rgba(255,255,255,0.12)';
-        ctx.fillRect(355, 125, 360, 38);
+        ctx.fillRect(260, 102, 260, 30);
         const fillRatio = Math.min(1, totalActive / totalSlices);
-        const barGrad = ctx.createLinearGradient(355, 125, 355 + 360 * fillRatio, 163);
-        barGrad.addColorStop(0, '#10B981');
-        barGrad.addColorStop(1, '#059669');
-        ctx.fillStyle = barGrad;
-        ctx.fillRect(355, 125, 360 * fillRatio, 38);
+        ctx.fillStyle = '#10B981';
+        ctx.fillRect(260, 102, 260 * fillRatio, 30);
         for (let d = 0; d <= totalSlices; d++) {
-          const tx = 355 + (d / totalSlices) * 360;
+          const tx = 260 + (d / totalSlices) * 260;
           ctx.strokeStyle = '#FFFFFF';
-          ctx.lineWidth = 2;
           ctx.beginPath();
-          ctx.moveTo(tx, 125);
-          ctx.lineTo(tx, 163);
+          ctx.moveTo(tx, 102);
+          ctx.lineTo(tx, 132);
           ctx.stroke();
           ctx.fillStyle = '#BAE6FD';
-          ctx.font = 'bold 12px sans-serif';
-          ctx.fillText(d + '/' + totalSlices, tx - 10, 182);
+          ctx.font = 'bold 11px sans-serif';
+          ctx.fillText(d + '/' + totalSlices, tx - 8, 147);
         }
-
-        ctx.fillStyle = '#FFFFFF';
-        ctx.font = 'bold 15px sans-serif';
-        ctx.fillText('💡 ' + (mItem.tip ? mItem.tip[isEn ? 'en' : 'fr'] : ''), 355, 235);
       }
 
-      // MODE B: DYNAMIC ALGEBRAIC BALANCE SCALE (Adaptively renders coeff*x + constVal = rhs!)
+      // MODE B: DYNAMIC ALGEBRAIC BALANCE SCALE
       else if (mItem.type === 'algebra') {
         const coeff = mItem.coeff || 2;
         const constVal = mItem.constVal || 4;
@@ -10599,114 +10765,119 @@ body {
         const activeConst = simplified ? 0 : constVal;
         const activeRhs = simplified ? (rhs - constVal) : rhs;
 
-        // Top Equation Step Banner on Canvas
-        ctx.fillStyle = 'rgba(15, 23, 42, 0.9)';
-        ctx.beginPath();
-        ctx.roundRect(90, 30, CW - 180, 48, 14);
-        ctx.fill();
-        ctx.strokeStyle = simplified ? '#10B981' : '#F59E0B';
-        ctx.lineWidth = 2;
-        ctx.stroke();
-
-        ctx.fillStyle = '#FDE047';
-        ctx.font = 'bold 18px sans-serif';
-        const eqStr = simplified
-          ? ('✅ Balance Simplifiée (-' + constVal + ' kg) :   ' + (coeff === 1 ? 'x' : coeff + 'x') + ' = ' + activeRhs + ' kg   ➜   x = ' + activeRhs + ' ÷ ' + coeff + ' = ' + mItem.ans + ' kg !')
-          : ('⚖️ Équation sur Balance :   ' + (coeff === 1 ? 'x' : coeff + 'x') + ' + ' + constVal + ' kg = ' + rhs + ' kg   (Touche la balance pour retirer ' + constVal + ' kg !)');
-        ctx.fillText(eqStr, 110, 60);
-
-        const pivotX = CW / 2, pivotY = 278;
+        const pivotX = 285, pivotY = 235;
         const beamAngle = simplified ? 0 : Math.sin(tNow * 2.2) * 0.035;
         ctx.save();
         ctx.translate(pivotX, pivotY);
 
-        // 3D Pyramid Fulcrum
-        const fulGrad = ctx.createLinearGradient(-35, 0, 35, 55);
-        fulGrad.addColorStop(0, '#F59E0B');
-        fulGrad.addColorStop(1, '#B45309');
-        ctx.fillStyle = fulGrad;
+        ctx.fillStyle = '#D97706';
         ctx.beginPath();
-        ctx.moveTo(0, -10);
-        ctx.lineTo(-40, 52);
-        ctx.lineTo(40, 52);
+        ctx.moveTo(0, -8);
+        ctx.lineTo(-32, 42);
+        ctx.lineTo(32, 42);
         ctx.closePath();
         ctx.fill();
         ctx.strokeStyle = '#FEF3C7';
         ctx.stroke();
 
         ctx.rotate(beamAngle);
-        // 3D Metallic Beam
         ctx.fillStyle = '#E2E8F0';
-        ctx.fillRect(-250, -10, 500, 14);
-        ctx.strokeStyle = '#38BDF8';
-        ctx.strokeRect(-250, -10, 500, 14);
+        ctx.fillRect(-190, -8, 380, 11);
 
-        // Left Pan Plate
         ctx.fillStyle = '#475569';
-        ctx.fillRect(-235, -18, 190, 8);
-        // Draw 'coeff' Mystery X Cubes on Left Pan
+        ctx.fillRect(-180, -15, 145, 7);
         for (let c = 0; c < coeff; c++) {
-          const cxPos = -210 + c * (coeff > 2 ? 42 : 55);
-          drawIsoCube(cxPos, -42, 21, '#FF2A32', '#B91C1C', '#7F1D1D', 'x');
+          const cxPos = -160 + c * (coeff > 2 ? 32 : 42);
+          drawIsoCube(cxPos, -34, 17, '#FF2A32', '#B91C1C', '#7F1D1D', 'x');
         }
-        // Draw Constant Weight on Left Pan if not yet simplified
         if (!simplified && activeConst > 0) {
-          drawIsoCube(-75, -36, 18, '#38BDF8', '#0284C7', '#0369A1', '+' + activeConst + 'kg');
+          drawIsoCube(-55, -30, 15, '#38BDF8', '#0284C7', '#0369A1', '+' + activeConst);
         }
 
-        // Right Pan Plate
         ctx.fillStyle = '#475569';
-        ctx.fillRect(45, -18, 190, 8);
-        // Draw Right-Hand Side Golden Weight
-        drawIsoCube(140, -45, 28, '#10B981', '#059669', '#065F46', activeRhs + ' kg');
+        ctx.fillRect(35, -15, 145, 7);
+        drawIsoCube(105, -38, 22, '#10B981', '#059669', '#065F46', activeRhs + 'kg');
         ctx.restore();
+
+        ctx.fillStyle = '#7DD3FC';
+        ctx.font = 'bold 12px sans-serif';
+        ctx.fillText(
+          simplified
+            ? ('✅ Simplifié (-' + constVal + 'kg) : ' + coeff + 'x = ' + activeRhs + ' ➜ x = ' + activeRhs + ' ÷ ' + coeff)
+            : ('👆 Touche la balance 3D pour retirer ' + constVal + ' kg des 2 plateaux !'),
+          45, 82
+        );
       }
 
-      // MODE C: KHAN KIDS TEN-FRAME (BOÎTE DE 10), FROG NUMBER LINE & 3D ARRAY MATRIX
-      else {
-        // Draw Khan Kids Ten-Frame Grid Outline behind tokens
-        ctx.fillStyle = '#7DD3FC';
-        ctx.font = 'bold 15px sans-serif';
-        const modeTitle = mItem.type === 'multiply'
-          ? ('🟦 Grille 3D (' + mItem.a + ' rangées × ' + mItem.b + ' colonnes = ' + mItem.ans + ') • Touche chaque cube pour compter !')
-          : mItem.type === 'subtraction'
-          ? ('✂️ Soustraction Visuelle : ' + mItem.a + ' - ' + mItem.b + ' = ' + mItem.ans + ' (Les objets retirés sont barrés)')
-          : ('🐻 Boîte de 10 Khan Kids & Manipulation Tactile • Touche les objets pour les compter à voix haute !');
-        ctx.fillText(modeTitle, 55, 48);
+      // MODE C: PROPORTIONALITY & 3D VOLUME / GEOMETRY SIMULATION
+      else if (mItem.type === 'proportionality' || mItem.type === 'volume' || mItem.type === 'geometry' || mItem.type === 'geometry_area') {
+        if (mItem.type === 'proportionality') {
+          // Draw interactive Rule-of-Three Cross Table on Canvas!
+          ctx.fillStyle = 'rgba(15, 23, 42, 0.9)';
+          ctx.fillRect(45, 75, 440, 115);
+          ctx.strokeStyle = '#38BDF8';
+          ctx.strokeRect(45, 75, 440, 115);
+          ctx.fillStyle = '#FDE047';
+          ctx.font = 'bold 14px sans-serif';
+          ctx.fillText('📊 TABLEAU DE PROPORTIONNALITÉ (RÈGLE DE TROIS)', 60, 98);
+          ctx.fillStyle = '#FFFFFF';
+          ctx.font = 'bold 13px sans-serif';
+          ctx.fillText('Quantité (Billets) :      3 billets      ➜     1 billet (÷3)     ➜     7 billets (×7)', 60, 128);
+          ctx.fillStyle = '#34D399';
+          ctx.fillText('Prix en Euros (€)  :      15 €           ➜     5 € (unité)       ➜     7 × 5 = ? €', 60, 158);
+        } else {
+          // Draw 3D Cube / Rectangle Grid
+          const side = mItem.a || 4;
+          for (let r = 0; r < Math.min(3, side); r++) {
+            for (let c = 0; c < Math.min(4, side); c++) {
+              drawIsoCube(110 + c * 46 + r * 18, 150 + r * 26, 18, '#38BDF8', '#0284C7', '#0369A1', '');
+            }
+          }
+          ctx.fillStyle = '#FDE047';
+          ctx.font = 'bold 14px sans-serif';
+          ctx.fillText('📐 Simulation 3D : c = ' + (mItem.a || 4) + ' • Formule : ' + mTipTxt.slice(0, 48), 260, 125);
+        }
+      }
 
+      // MODE D: TEN-FRAME, FROG NUMBER LINE & 3D ARRAY MATRIX
+      else {
         state.mathItemsOnStage.forEach((it, idx) => {
-          const bounceY = Math.sin(tNow * 3.5 + idx * 0.7) * 4;
+          const bounceY = Math.sin(tNow * 3.5 + idx * 0.7) * 3;
           const topCol = it.counted ? '#10B981' : (it.isSecondGroup ? '#F59E0B' : (it.isSubtracted ? '#64748B' : '#6366F1'));
           const leftCol = it.counted ? '#059669' : (it.isSecondGroup ? '#D97706' : (it.isSubtracted ? '#475569' : '#4338CA'));
           const rightCol = it.counted ? '#047857' : (it.isSecondGroup ? '#B45309' : (it.isSubtracted ? '#334155' : '#312E81'));
 
-          drawIsoCube(it.x, it.y + bounceY, 22, topCol, leftCol, rightCol, '');
-          ctx.font = '26px sans-serif';
-          ctx.fillText(it.emoji, it.x - 14, it.y - 8 + bounceY);
+          const drawX = 72 + (idx % 5) * 62;
+          const drawY = 98 + Math.floor(idx / 5) * 52;
+          it.x = drawX;
+          it.y = drawY;
 
-          // If subtracted, draw red cross-out X over the taken-away items!
+          drawIsoCube(drawX, drawY + bounceY, 18, topCol, leftCol, rightCol, '');
+          ctx.font = '22px sans-serif';
+          ctx.fillText(it.emoji, drawX - 11, drawY - 6 + bounceY);
+
           if (it.isSubtracted) {
             ctx.strokeStyle = '#EF4444';
-            ctx.lineWidth = 3.5;
+            ctx.lineWidth = 3;
             ctx.beginPath();
-            ctx.moveTo(it.x - 18, it.y - 24 + bounceY);
-            ctx.lineTo(it.x + 18, it.y + 12 + bounceY);
-            ctx.moveTo(it.x + 18, it.y - 24 + bounceY);
-            ctx.lineTo(it.x - 18, it.y + 12 + bounceY);
+            ctx.moveTo(drawX - 14, drawY - 18 + bounceY);
+            ctx.lineTo(drawX + 14, drawY + 10 + bounceY);
+            ctx.moveTo(drawX + 14, drawY - 18 + bounceY);
+            ctx.lineTo(drawX - 14, drawY + 10 + bounceY);
             ctx.stroke();
           }
 
           ctx.fillStyle = it.counted ? '#FEF08A' : '#E2E8F0';
-          ctx.font = 'bold 13px sans-serif';
-          ctx.fillText(String(idx + 1), it.x - 5, it.y + 36 + bounceY);
+          ctx.font = 'bold 11px sans-serif';
+          ctx.fillText(String(idx + 1), drawX - 4, drawY + 28 + bounceY);
         });
 
-        // Bottom Interactive Khan Perseus Graduated Number Line with Frog Hops!
-        const nlY = 318, nlX0 = 75, nlX1 = CW - 75;
+        // Graduated Number Line with Frog Hops at y = 262
+        const nlY = 264, nlX0 = 50, nlX1 = 500;
         const maxTick = Math.max(10, Number(mItem.ans) || 10, (mItem.a || 0) + (mItem.b || 0));
         if (maxTick <= 20) {
           ctx.strokeStyle = '#38BDF8';
-          ctx.lineWidth = 3;
+          ctx.lineWidth = 2.5;
           ctx.beginPath();
           ctx.moveTo(nlX0, nlY);
           ctx.lineTo(nlX1, nlY);
@@ -10717,39 +10888,56 @@ body {
             const tx = nlX0 + t * stepW;
             const isTarget = t === Number(mItem.ans);
             ctx.strokeStyle = isTarget ? '#FBBF24' : '#94A3B8';
-            ctx.lineWidth = isTarget ? 3 : 1.5;
             ctx.beginPath();
-            ctx.moveTo(tx, nlY - 7);
-            ctx.lineTo(tx, nlY + 7);
+            ctx.moveTo(tx, nlY - 5);
+            ctx.lineTo(tx, nlY + 5);
             ctx.stroke();
             ctx.fillStyle = isTarget ? '#FDE047' : '#CBD5E1';
-            ctx.font = isTarget ? 'bold 14px sans-serif' : 'bold 11px sans-serif';
-            ctx.fillText(String(t), tx - 5, nlY + 22);
+            ctx.font = isTarget ? 'bold 12px sans-serif' : 'bold 10px sans-serif';
+            ctx.fillText(String(t), tx - 4, nlY + 17);
           }
 
-          // Animated Frog Jump Arcs for Addition / Counting
           const targetN = Math.min(maxTick, Number(mItem.ans) || (mItem.targetCount || 3));
           for (let j = 0; j < targetN; j++) {
             const xA = nlX0 + j * stepW;
             const xB = nlX0 + (j + 1) * stepW;
-            const midX = (xA + xB) / 2;
             ctx.strokeStyle = (mItem.type === 'addition' && j >= (mItem.a || 0)) ? '#F59E0B' : '#10B981';
-            ctx.lineWidth = 2;
+            ctx.lineWidth = 1.8;
             ctx.beginPath();
-            ctx.moveTo(xA, nlY - 4);
-            ctx.quadraticCurveTo(midX, nlY - 24, xB, nlY - 4);
+            ctx.moveTo(xA, nlY - 3);
+            ctx.quadraticCurveTo((xA + xB) / 2, nlY - 18, xB, nlY - 3);
             ctx.stroke();
           }
-          const frogX = nlX0 + targetN * stepW;
-          ctx.font = '24px sans-serif';
-          ctx.fillText('🐸', frogX - 12, nlY - 12 + Math.sin(tNow * 6) * 4);
+          ctx.font = '18px sans-serif';
+          ctx.fillText('🐸', nlX0 + targetN * stepW - 9, nlY - 10 + Math.sin(tNow * 6) * 3);
         }
       }
 
+      // ON-CANVAS "🎓 ASTUCE EXAMEN & EXEMPLE RÉSOLU" GEAR BOX AT BOTTOM OF MATH STAGE (y = 292..362)
+      const mathCoachSteps = buildKhanMathSteps(mItem, isEn);
+      ctx.save();
+      ctx.fillStyle = 'rgba(15, 23, 42, 0.94)';
+      ctx.beginPath();
+      ctx.roundRect(24, 292, 505, 68, 12);
+      ctx.fill();
+      ctx.strokeStyle = '#10B981';
+      ctx.lineWidth = 2;
+      ctx.stroke();
+      ctx.fillStyle = '#FDE047';
+      ctx.font = 'bold 12px sans-serif';
+      ctx.fillText((mathCoachSteps[1] || ('🎓 Astuce : ' + mTipTxt)).slice(0, 74), 34, 314);
+      ctx.fillStyle = '#A7F3D0';
+      ctx.font = 'bold 12px sans-serif';
+      ctx.fillText((mathCoachSteps[2] || '').slice(0, 74), 34, 334);
+      ctx.fillStyle = '#7DD3FC';
+      ctx.font = 'bold 11px sans-serif';
+      ctx.fillText((mathCoachSteps[0] || '').slice(0, 76), 34, 352);
+      ctx.restore();
+
       // Draw Floating Cartoon Answer Targets on Right Side of Math Lab Stage!
       (state.cartoonTargets || []).forEach((ct, idx) => {
-        const rx = 560 + (idx % 2) * 115 + Math.sin(tNow * 2.2 + idx) * 10;
-        const ry = 115 + Math.floor(idx / 2) * 105 + Math.cos(tNow * 2.5 + idx) * 8;
+        const rx = 585 + (idx % 2) * 115 + Math.sin(tNow * 2.2 + idx) * 8;
+        const ry = 125 + Math.floor(idx / 2) * 115 + Math.cos(tNow * 2.5 + idx) * 7;
         ct.x = rx;
         ct.y = ry;
         ct.r = 38;
@@ -10766,18 +10954,17 @@ body {
         ctx.strokeStyle = '#FEF08A';
         ctx.lineWidth = 3;
         ctx.stroke();
-        ctx.font = '22px sans-serif';
-        ctx.fillText(mItem.itemEmoji || '🍎', -12, -6);
+        ctx.font = '20px sans-serif';
+        ctx.fillText(mItem.itemEmoji || '🍎', -11, -5);
         ctx.fillStyle = '#FEF08A';
-        ctx.font = 'bold 18px sans-serif';
+        ctx.font = 'bold 17px sans-serif';
         const lbl = String(ct.label);
-        ctx.fillText(lbl, -ctx.measureText(lbl).width / 2, 20);
+        ctx.fillText(lbl, -ctx.measureText(lbl).width / 2, 19);
         ctx.restore();
       });
     }
 
-
-    // 9. V12.0 UNIVERSAL 60FPS CARTOON ARCADE STAGE FOR ALL LANGUAGE, READING, VOICE, STORY, GEOGRAPHY & QUIZ GAMES!
+    // 9. V14.0 UNIVERSAL 60FPS CARTOON ARCADE STAGE WITH FULL QUESTION, MATCHING SCENE SPRITES & EXAM TRICK GEAR!
     else if (['grammar_lab', 'vocabulary_lab', 'conjugation_lab', 'reading_lab', 'pronunciation_lab', 'story_lab', 'africa_geography', 'fun_facts_quiz'].includes(g)) {
       const tNow = Date.now() / 1000;
 
@@ -10791,74 +10978,84 @@ body {
 
       // Animated Rotating Cartoon Sun in Top-Right
       ctx.save();
-      ctx.translate(CW - 68, 62);
+      ctx.translate(CW - 54, 52);
       ctx.rotate(tNow * 0.45);
       ctx.fillStyle = 'rgba(253, 224, 71, 0.35)';
       for (let r = 0; r < 8; r++) {
         ctx.rotate(Math.PI / 4);
         ctx.beginPath();
-        ctx.roundRect(-6, -42, 12, 84, 6);
+        ctx.roundRect(-5, -36, 10, 72, 5);
         ctx.fill();
       }
       ctx.fillStyle = '#FACC15';
       ctx.beginPath();
-      ctx.arc(0, 0, 26, 0, Math.PI * 2);
+      ctx.arc(0, 0, 22, 0, Math.PI * 2);
       ctx.fill();
       ctx.strokeStyle = '#FEF08A';
-      ctx.lineWidth = 3;
+      ctx.lineWidth = 2.5;
       ctx.stroke();
       ctx.restore();
 
       // Drifting Fluffy Cartoon Clouds
       for (let c = 0; c < 4; c++) {
         const cx = ((c * 220 + tNow * (18 + c * 4)) % (CW + 120)) - 60;
-        const cy = 48 + (c % 2) * 28;
+        const cy = 78 + (c % 2) * 24;
         ctx.fillStyle = 'rgba(255, 255, 255, 0.82)';
         ctx.beginPath();
-        ctx.arc(cx, cy, 18, 0, Math.PI * 2);
-        ctx.arc(cx + 16, cy - 6, 22, 0, Math.PI * 2);
-        ctx.arc(cx + 34, cy, 17, 0, Math.PI * 2);
+        ctx.arc(cx, cy, 16, 0, Math.PI * 2);
+        ctx.arc(cx + 15, cy - 5, 20, 0, Math.PI * 2);
+        ctx.arc(cx + 32, cy, 15, 0, Math.PI * 2);
         ctx.fill();
       }
 
       // Rolling Green Cartoon Hills at Bottom
-      const hillGrad = ctx.createLinearGradient(0, CH - 95, 0, CH);
+      const hillGrad = ctx.createLinearGradient(0, CH - 90, 0, CH);
       hillGrad.addColorStop(0, '#22C55E');
       hillGrad.addColorStop(1, '#15803D');
       ctx.fillStyle = hillGrad;
       ctx.beginPath();
       ctx.moveTo(0, CH);
-      ctx.lineTo(0, CH - 68);
-      ctx.quadraticCurveTo(CW * 0.28, CH - 105, CW * 0.55, CH - 64);
-      ctx.quadraticCurveTo(CW * 0.8, CH - 35, CW, CH - 78);
+      ctx.lineTo(0, CH - 64);
+      ctx.quadraticCurveTo(CW * 0.28, CH - 98, CW * 0.55, CH - 60);
+      ctx.quadraticCurveTo(CW * 0.8, CH - 32, CW, CH - 72);
       ctx.lineTo(CW, CH);
       ctx.closePath();
       ctx.fill();
 
-      // Top Cartoon Banner Showing Current Visual + Voice Prompt
+      // TOP FULL QUESTION CARD (Multi-line capable so no question is EVER cut off!)
       ctx.save();
-      ctx.fillStyle = 'rgba(15, 23, 42, 0.88)';
+      ctx.fillStyle = 'rgba(15, 23, 42, 0.92)';
       ctx.beginPath();
-      ctx.roundRect(18, 10, CW - 115, 42, 14);
+      ctx.roundRect(14, 8, CW - 92, 54, 14);
       ctx.fill();
       ctx.strokeStyle = '#FDE047';
       ctx.lineWidth = 2.5;
       ctx.stroke();
+
+      const fullQ = String(state.cartoonStageTitle || ($('instruction-title') ? $('instruction-title').textContent : '')).trim();
       ctx.fillStyle = '#FFFFFF';
-      ctx.font = 'bold 16px sans-serif';
-      const bannerTxt = String(state.cartoonStageTitle || ($('instruction-title') ? $('instruction-title').textContent : '')).slice(0, 68);
-      ctx.fillText(bannerTxt, 32, 36);
+      ctx.font = 'bold 15px sans-serif';
+      if (fullQ.length <= 68) {
+        ctx.fillText(fullQ, 26, 40);
+      } else {
+        // Split cleanly into 2 lines around character 64
+        const splitPos = fullQ.lastIndexOf(' ', 66);
+        const line1 = splitPos > 20 ? fullQ.slice(0, splitPos) : fullQ.slice(0, 66);
+        const line2 = (splitPos > 20 ? fullQ.slice(splitPos + 1) : fullQ.slice(66)).slice(0, 74);
+        ctx.fillText(line1, 26, 29);
+        ctx.fillStyle = '#FEF08A';
+        ctx.fillText(line2, 26, 50);
+      }
       ctx.restore();
 
-      // CENTER ANIMATED CARTOON SCENE STAGE (100% Synced with Spoken Voice Noun/Action!)
+      // CENTER ANIMATED CARTOON SCENE STAGE (100% Synced with Question Subject Noun/Action!)
       const sceneSprites = (state.cartoonSceneSprites && state.cartoonSceneSprites.length > 0)
         ? state.cartoonSceneSprites
         : [state.cartoonHeroEmoji || '🦁'];
       ctx.save();
-      // Glowing Cartoon Cloud Stage Platform at Top-Center (y = 88)
-      ctx.fillStyle = 'rgba(255, 255, 255, 0.92)';
+      ctx.fillStyle = 'rgba(255, 255, 255, 0.94)';
       ctx.beginPath();
-      ctx.roundRect(CW / 2 - 145, 58, 290, 64, 32);
+      ctx.roundRect(CW / 2 - 140, 68, 280, 60, 30);
       ctx.fill();
       ctx.strokeStyle = '#F59E0B';
       ctx.lineWidth = 3.5;
@@ -10866,66 +11063,77 @@ body {
 
       sceneSprites.forEach((spEmo, sIdx) => {
         const tot = sceneSprites.length;
-        const sx = (CW / 2) + (sIdx - (tot - 1) / 2) * 78 + Math.sin(tNow * 3.2 + sIdx) * 8;
-        const sy = 102 + Math.cos(tNow * 4.5 + sIdx) * 6;
-        ctx.font = '44px sans-serif';
-        ctx.fillText(spEmo, sx - 22, sy);
+        const sx = (CW / 2) + (sIdx - (tot - 1) / 2) * 76 + Math.sin(tNow * 3.2 + sIdx) * 7;
+        const sy = 110 + Math.cos(tNow * 4.5 + sIdx) * 5;
+        ctx.font = '42px sans-serif';
+        ctx.fillText(spEmo, sx - 21, sy);
       });
       ctx.restore();
 
+      // ON-CANVAS EXAM TRICK & RULE RIBBON (y = 134..166) for Grammar, Vocab, Conjugation & Quiz!
+      if (state.cartoonExamTrick && ['grammar_lab', 'vocabulary_lab', 'conjugation_lab'].includes(g)) {
+        ctx.save();
+        ctx.fillStyle = 'rgba(30, 27, 75, 0.92)';
+        ctx.beginPath();
+        ctx.roundRect(130, 134, CW - 150, 32, 10);
+        ctx.fill();
+        ctx.strokeStyle = '#38BDF8';
+        ctx.lineWidth = 1.8;
+        ctx.stroke();
+        ctx.fillStyle = '#A7F3D0';
+        ctx.font = 'bold 12.5px sans-serif';
+        ctx.fillText('🎓 ' + String(state.cartoonExamTrick).replace(/^💡\s*/, '').slice(0, 82), 142, 155);
+        ctx.restore();
+      }
+
       // Animated Bouncing Cartoon Hero Mascot on Left Stage (Speaks with Sound Waves when VoiceEngine is active!)
       const isSpeakingNow = Boolean(VoiceEngine.audio || (window.speechSynthesis && window.speechSynthesis.speaking));
-      const heroBounceY = Math.sin(tNow * 5.5) * 7;
-      const hx = 68, hy = CH - 78 + heroBounceY;
+      const heroBounceY = Math.sin(tNow * 5.5) * 6;
+      const hx = 66, hy = CH - 76 + heroBounceY;
 
       ctx.save();
       ctx.translate(hx, hy);
       if (isSpeakingNow) {
-        // Pulsing Cartoon Speech Halo Rings
         for (let ring = 1; ring <= 2; ring++) {
-          const rad = 36 + ring * 12 + ((tNow * 30) % 14);
-          ctx.strokeStyle = 'rgba(253, 224, 71, 0.75)';
+          const rad = 34 + ring * 11 + ((tNow * 30) % 12);
+          ctx.strokeStyle = 'rgba(253, 224, 71, 0.8)';
           ctx.lineWidth = 2.5;
           ctx.beginPath();
           ctx.arc(0, -10, rad, 0, Math.PI * 2);
           ctx.stroke();
         }
       }
-      // Mascot Pedestal & Body Circle
       ctx.fillStyle = '#E5252A';
       ctx.beginPath();
-      ctx.arc(0, -10, 34, 0, Math.PI * 2);
+      ctx.arc(0, -10, 32, 0, Math.PI * 2);
       ctx.fill();
       ctx.strokeStyle = '#FFFFFF';
-      ctx.lineWidth = 3.5;
+      ctx.lineWidth = 3;
       ctx.stroke();
-      ctx.font = '38px sans-serif';
+      ctx.font = '36px sans-serif';
       const heroEmo = state.cartoonHeroEmoji || '🦁';
-      ctx.fillText(heroEmo, -20, 4);
+      ctx.fillText(heroEmo, -19, 3);
       ctx.fillStyle = '#FEF08A';
-      ctx.font = 'bold 11px sans-serif';
-      ctx.fillText('🔊 TAP ME', -26, 38);
+      ctx.font = 'bold 10px sans-serif';
+      ctx.fillText('🔊 ÉCOUTER', -28, 35);
       ctx.restore();
 
       // Floating, Moving, Bouncing Cartoon Answer Bubbles / Characters!
       (state.cartoonTargets || []).forEach((ct, idx) => {
-        // Continuous smooth arcade motion around base position
-        ct.x = ct.baseX + Math.sin(tNow * 1.9 + ct.phase) * 24;
-        ct.y = ct.baseY + Math.cos(tNow * 2.4 + ct.phase) * 18;
+        ct.x = ct.baseX + Math.sin(tNow * 1.9 + ct.phase) * 18;
+        ct.y = ct.baseY + Math.cos(tNow * 2.4 + ct.phase) * 12;
         if (ct.popScale > 1) ct.popScale = Math.max(1, ct.popScale - 0.04);
 
         ctx.save();
         ctx.translate(ct.x, ct.y);
         ctx.scale(ct.popScale, ct.popScale);
 
-        // Cartoon 3D Bubble Shadow
         ctx.fillStyle = 'rgba(15, 23, 42, 0.32)';
         ctx.beginPath();
-        ctx.arc(4, 8, ct.r, 0, Math.PI * 2);
+        ctx.arc(4, 7, ct.r, 0, Math.PI * 2);
         ctx.fill();
 
-        // Glossy Cartoon Bubble Body
-        const bGrad = ctx.createRadialGradient(-ct.r * 0.3, -ct.r * 0.3, 6, 0, 0, ct.r);
+        const bGrad = ctx.createRadialGradient(-ct.r * 0.3, -ct.r * 0.3, 5, 0, 0, ct.r);
         bGrad.addColorStop(0, '#FFFFFF');
         bGrad.addColorStop(0.25, ct.color);
         bGrad.addColorStop(1, '#0F172A');
@@ -10937,30 +11145,27 @@ body {
         ctx.lineWidth = 3;
         ctx.stroke();
 
-        // Cartoon Specular Shine Dot
         ctx.fillStyle = 'rgba(255, 255, 255, 0.65)';
         ctx.beginPath();
         ctx.ellipse(-ct.r * 0.35, -ct.r * 0.38, ct.r * 0.22, ct.r * 0.12, -0.5, 0, Math.PI * 2);
         ctx.fill();
 
-        // Big Cartoon Icon Inside Bubble
-        ctx.font = '30px sans-serif';
-        ctx.fillText(ct.icon, -16, -4);
+        ctx.font = '26px sans-serif';
+        ctx.fillText(ct.icon, -14, -3);
 
-        // Crisp Cartoon Label Pill Under Icon
-        const shortLbl = String(ct.label).replace(/^[🌀-🫿☀-➿]s*/u, '').slice(0, 16);
+        const shortLbl = String(ct.label).replace(/^[\u{1F300}-\u{1FAFF}\u{2600}-\u{27BF}]\s*/u, '').slice(0, 16);
         ctx.font = 'bold 13px sans-serif';
         const tw = ctx.measureText(shortLbl).width;
-        ctx.fillStyle = 'rgba(15, 23, 42, 0.88)';
+        ctx.fillStyle = 'rgba(15, 23, 42, 0.9)';
         ctx.beginPath();
-        ctx.roundRect(-tw / 2 - 8, 8, tw + 16, 22, 9);
+        ctx.roundRect(-tw / 2 - 8, 7, tw + 16, 21, 8);
         ctx.fill();
         ctx.strokeStyle = '#FFFFFF';
         ctx.lineWidth = 1.5;
         ctx.stroke();
 
         ctx.fillStyle = '#FEF08A';
-        ctx.fillText(shortLbl, -tw / 2, 24);
+        ctx.fillText(shortLbl, -tw / 2, 22);
         ctx.restore();
       });
     }
@@ -11086,7 +11291,7 @@ body {
         sessionStorage.clear();
       } catch (e) {}
       const url = new URL(window.location.href);
-      url.searchParams.set('v', '13.0.' + Date.now());
+      url.searchParams.set('v', '14.0.' + Date.now());
       window.location.replace(url.toString());
     });
   }
