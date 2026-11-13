@@ -2981,6 +2981,32 @@ body {
     display: none !important;
   }
 
+  /* V17.0 NATIVE-CARTOON-TRICKS: 5 AUTOMATIC LEVELS & 100% BOX-FIT CARTOONS */
+  #level-selector-section,
+  #ingame-lvl-pills {
+    display: none !important;
+  }
+  .btn-interactive, .btn-lang-choice, .btn-mcq-choice, .btn-comp-option {
+    box-sizing: border-box !important;
+    max-width: 100% !important;
+    overflow: hidden !important;
+  }
+  .btn-interactive span:first-child,
+  .btn-lang-choice span:first-child,
+  .btn-mcq-choice span:first-child {
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+    max-width: calc(100% - 36px) !important;
+    white-space: normal !important;
+    word-break: break-word !important;
+    font-size: 0.96rem !important;
+  }
+  #simCanvas {
+    max-width: 100% !important;
+    object-fit: contain !important;
+  }
+
 </style>
 </head>
 <body>
@@ -3011,7 +3037,7 @@ body {
         <option value="en">🇬🇧 English (Studio Voice)</option>
       </select>
       <button class="btn-pill" id="btn-sound-toggle">🔊 Son</button>
-      <button class="version-cache-pill" id="btn-version-cache" title="Version active • Cliquer pour vider le cache et recharger">🚀 v16.0 REA-SUPER-ARCADE (v1.9.0) • 🔄 Vider Cache</button>
+      <button class="version-cache-pill" id="btn-version-cache" title="Version active • Cliquer pour vider le cache et recharger">🚀 v17.0 NATIVE-CARTOON-TRICKS (v1.10.0) • 🔄 Vider Cache</button>
     </div>
   </header>
 
@@ -3134,6 +3160,43 @@ body {
 
   <!-- PORTALS GRID (WITH APPLE FLOTATION — ORDERED BY MANDATORY CORE SUBJECTS FIRST) -->
   <section class="portals-grid" id="portals-grid">
+    <!-- NEW #21: Cartoon Math Magic Tricks (Make-10, 9-Fingers, Doubles & Pizza) -->
+    <button class="portal-card" data-cat="math" data-game="math_magic_tricks">
+      <div class="card-top-glow"></div>
+      <div class="portal-card-header">
+        <div class="portal-badge">🪄</div>
+        <div class="portal-titles">
+          <h3>Astuces Maths Cartoon : Doigts, Doubles & Pont de 10</h3>
+          <div class="portal-curriculum-tag">Pont de 10 • 10 Doigts ×9 • Doubles • Fractions %</div>
+        </div>
+        <span class="card-rea-badge">✨ v17.0 NATIVE-CARTOON-TRICKS (v1.10.0) • ▶ JOUER</span>
+      </div>
+      <p class="portal-desc">Apprends les astuces cartoon pour calculer instantanément : pont arc-en-ciel de 10, astuce des doigts pour la table de 9, et miroir des doubles !</p>
+      <div class="portal-counts-badge-bar">
+        <span class="count-pill highlight">🪄 4 Astuces Cartoon</span>
+        <span class="count-pill black">⚡ 5 Niveaux Auto</span>
+        <span class="count-pill">🎁 Récompenses</span>
+      </div>
+    </button>
+
+    <!-- NEW #22: Cartoon Science Hero Tricks (Levers, Water Cycle, Body & Light) -->
+    <button class="portal-card" data-cat="sci" data-game="science_hero_tricks">
+      <div class="card-top-glow"></div>
+      <div class="portal-card-header">
+        <div class="portal-badge">🦸‍♂️</div>
+        <div class="portal-titles">
+          <h3>Astuces Sciences Cartoon : Leviers, Corps, Eau & Lumière</h3>
+          <div class="portal-curriculum-tag">Levier Souris-Éléphant • Cycle de l'Eau • Prisme Arc-en-Ciel</div>
+        </div>
+        <span class="card-rea-badge">✨ v17.0 NATIVE-CARTOON-TRICKS (v1.10.0) • ▶ JOUER</span>
+      </div>
+      <p class="portal-desc">Découvre les super-pouvoirs de la science : comment soulever un éléphant avec un levier, le voyage de la goutte d'eau et le prisme de lumière !</p>
+      <div class="portal-counts-badge-bar">
+        <span class="count-pill highlight">🦸‍♂️ 4 Expériences Cartoon</span>
+        <span class="count-pill black">⚡ 5 Niveaux Auto</span>
+        <span class="count-pill">🏆 Savant Savane</span>
+      </div>
+    </button>
     <!-- REA SUPER-ARCADE #1: Educational Word & Math Tetris (Tetris Party × WordBlox / MathBlox) -->
     <button class="portal-card" data-cat="arcade" data-game="tetris_blocks">
       <div class="card-top-glow"></div>
@@ -3143,7 +3206,7 @@ body {
           <h3>Tetris Éducatif : Blocs Mots & Maths</h3>
           <div class="portal-curriculum-tag">Tetris Arcade • Nombres • Syllabes • Auto-Drop</div>
         </div>
-        <span class="card-rea-badge">✨ v16.0 REA-SUPER-ARCADE (v1.9.0) • ▶ JOUER</span>
+        <span class="card-rea-badge">✨ v17.0 NATIVE-CARTOON-TRICKS (v1.10.0) • ▶ JOUER</span>
       </div>
       <p class="portal-desc">Empile les blocs colorés Tetris de nombres, calculs et syllabes pour compléter les lignes et ouvrir le coffre à récompenses !</p>
       <div class="portal-counts-badge-bar">
@@ -3162,7 +3225,7 @@ body {
           <h3>Course Auto Turbo : Rallye Savane</h3>
           <div class="portal-curriculum-tag">Course 3 Voies • Auto-Pilote • Récompenses</div>
         </div>
-        <span class="card-rea-badge">✨ v16.0 REA-SUPER-ARCADE (v1.9.0) • ▶ JOUER</span>
+        <span class="card-rea-badge">✨ v17.0 NATIVE-CARTOON-TRICKS (v1.10.0) • ▶ JOUER</span>
       </div>
       <p class="portal-desc">Pilote le bolide turbo de Léo sur 3 voies ou active l'Auto-Pilote pour franchir le portique de la bonne réponse avec boost nitro !</p>
       <div class="portal-counts-badge-bar">
@@ -3181,7 +3244,7 @@ body {
           <h3>Prodigy Maths : Monstres & Cristaux</h3>
           <div class="portal-curriculum-tag">Prodigy Math • Sorts Visuels • Coffre Magique</div>
         </div>
-        <span class="card-rea-badge">✨ v16.0 REA-SUPER-ARCADE (v1.9.0) • ▶ JOUER</span>
+        <span class="card-rea-badge">✨ v17.0 NATIVE-CARTOON-TRICKS (v1.10.0) • ▶ JOUER</span>
       </div>
       <p class="portal-desc">Lance des sorts mathématiques visuels (addition, tables, fractions, algèbre) pour apprivoiser les créatures et gagner des familiers !</p>
       <div class="portal-counts-badge-bar">
@@ -3200,7 +3263,7 @@ body {
           <h3>Labo Sciences : Écosystème, Aimants & Espace</h3>
           <div class="portal-curriculum-tag">Chaîne Alimentaire • États de l'Eau • Aimants • Planètes</div>
         </div>
-        <span class="card-rea-badge">✨ v16.0 REA-SUPER-ARCADE (v1.9.0) • ▶ JOUER</span>
+        <span class="card-rea-badge">✨ v17.0 NATIVE-CARTOON-TRICKS (v1.10.0) • ▶ JOUER</span>
       </div>
       <p class="portal-desc">Simule la chaîne alimentaire de la savane, les 3 états de l'eau (0°C/100°C), les pôles d'aimants (N⇄S) et le système solaire !</p>
       <div class="portal-counts-badge-bar">
@@ -3218,7 +3281,7 @@ body {
           <h3>Grammaire & Syntaxe (FR / EN)</h3>
           <div class="portal-curriculum-tag">Noms • Verbes • Adjectifs • Accords</div>
         </div>
-        <span class="card-rea-badge">✨ v16.0 REA-SUPER-ARCADE (v1.9.0) • ▶ JOUER</span>
+        <span class="card-rea-badge">✨ v17.0 NATIVE-CARTOON-TRICKS (v1.10.0) • ▶ JOUER</span>
       </div>
       <p class="portal-desc">Maîtrise la grammaire en français et en anglais (articles, pluriels, nature des mots, accords sujet-verbe) avec une seule voix native pure !</p>
       <div class="portal-counts-badge-bar">
@@ -3237,7 +3300,7 @@ body {
           <h3>Vocabulaire & Mots du Monde (FR / EN)</h3>
           <div class="portal-curriculum-tag">Synonymes • Contraires • Thèmes d'Afrique</div>
         </div>
-        <span class="card-rea-badge">✨ v16.0 REA-SUPER-ARCADE (v1.9.0) • ▶ JOUER</span>
+        <span class="card-rea-badge">✨ v17.0 NATIVE-CARTOON-TRICKS (v1.10.0) • ▶ JOUER</span>
       </div>
       <p class="portal-desc">Enrichis ton vocabulaire en français et en anglais : synonymes, contraires, objets de l'école, animaux et métiers avec prononciation native !</p>
       <div class="portal-counts-badge-bar">
@@ -3256,7 +3319,7 @@ body {
           <h3>Conjugaison & Temps (FR / EN)</h3>
           <div class="portal-curriculum-tag">Présent • Passé • Futur • Être/Avoir & To Be</div>
         </div>
-        <span class="card-rea-badge">✨ v16.0 REA-SUPER-ARCADE (v1.9.0) • ▶ JOUER</span>
+        <span class="card-rea-badge">✨ v17.0 NATIVE-CARTOON-TRICKS (v1.10.0) • ▶ JOUER</span>
       </div>
       <p class="portal-desc">Voyage dans le temps (Passé, Présent, Futur) pour conjuguer les verbes en français et en anglais selon le pronom sujet !</p>
       <div class="portal-counts-badge-bar">
@@ -3275,7 +3338,7 @@ body {
           <h3>Studio Prononciation (FR ⇄ EN)</h3>
           <div class="portal-curriculum-tag">Anglais & Français • Micro Live • Spectre</div>
         </div>
-        <span class="card-rea-badge">✨ v16.0 REA-SUPER-ARCADE (v1.9.0) • ▶ JOUER</span>
+        <span class="card-rea-badge">✨ v17.0 NATIVE-CARTOON-TRICKS (v1.10.0) • ▶ JOUER</span>
       </div>
       <p class="portal-desc">Écoute la vraie voix studio française et anglaise, parle dans ton micro pour obtenir ton score de prononciation et suis les billes de rythme !</p>
       <div class="portal-counts-badge-bar">
@@ -3294,7 +3357,7 @@ body {
           <h3>Géographie des Pays d'Afrique</h3>
           <div class="portal-curriculum-tag">Carte SVG Interactive • Drapeaux • Capitales</div>
         </div>
-        <span class="card-rea-badge">✨ v16.0 REA-SUPER-ARCADE (v1.9.0) • ▶ JOUER</span>
+        <span class="card-rea-badge">✨ v17.0 NATIVE-CARTOON-TRICKS (v1.10.0) • ▶ JOUER</span>
       </div>
       <p class="portal-desc">Explore la vraie carte vectorielle interactive des pays d'Afrique ! Touche les pays au doigt, découvre leurs drapeaux, leurs capitales et leurs fleuves !</p>
       <div class="portal-counts-badge-bar">
@@ -3313,7 +3376,7 @@ body {
           <h3>Fun Facts & Culture Générale (QCM)</h3>
           <div class="portal-curriculum-tag">Quiz Choix Multiples • Indice 50/50 • Afrique</div>
         </div>
-        <span class="card-rea-badge">✨ v16.0 REA-SUPER-ARCADE (v1.9.0) • ▶ JOUER</span>
+        <span class="card-rea-badge">✨ v17.0 NATIVE-CARTOON-TRICKS (v1.10.0) • ▶ JOUER</span>
       </div>
       <p class="portal-desc">Réponds aux questions à choix multiples (A, B, C, D) avec l'indice 50/50 sur les merveilles d'Afrique, les animaux, l'espace et les sciences !</p>
       <div class="portal-counts-badge-bar">
@@ -3332,7 +3395,7 @@ body {
           <h3>Compréhension de Texte & Contes</h3>
           <div class="portal-curriculum-tag">Lecture Karaoké FR/EN • Quiz Compréhension</div>
         </div>
-        <span class="card-rea-badge">✨ v16.0 REA-SUPER-ARCADE (v1.9.0) • ▶ JOUER</span>
+        <span class="card-rea-badge">✨ v17.0 NATIVE-CARTOON-TRICKS (v1.10.0) • ▶ JOUER</span>
       </div>
       <p class="portal-desc">Écoute et lis des contes africains et scientifiques bilingues avec surlignage phrase par phrase, puis réponds aux questions de compréhension !</p>
       <div class="portal-counts-badge-bar">
@@ -3351,13 +3414,13 @@ body {
           <h3>Monstre des Syllabes & Lecture</h3>
           <div class="portal-curriculum-tag">Feed The Monster • Voyelles & Consonnes</div>
         </div>
-        <span class="card-rea-badge">✨ v16.0 REA-SUPER-ARCADE (v1.9.0) • ▶ JOUER</span>
+        <span class="card-rea-badge">✨ v17.0 NATIVE-CARTOON-TRICKS (v1.10.0) • ▶ JOUER</span>
       </div>
       <p class="portal-desc">Nourris le Monstre magique avec les bonnes syllabes colorées (voyelles en rouge, consonnes en bleu) pour former des mots en français et en anglais !</p>
       <div class="portal-counts-badge-bar">
         <span class="count-pill highlight">🦖 Monstre Interactif</span>
         <span class="count-pill black">⚡ 3 Activités / Exercice</span>
-        <span class="count-pill">🏆 10 Niveaux</span>
+        <span class="count-pill">🏆 5 Niveaux</span>
       </div>
     </button>
 
@@ -3370,13 +3433,13 @@ body {
           <h3>Maths 3D, Fractions & Balance Algébrique</h3>
           <div class="portal-curriculum-tag">Boîtes de 10 • Disque Fractions • Balance 2x+4</div>
         </div>
-        <span class="card-rea-badge">✨ v16.0 REA-SUPER-ARCADE (v1.9.0) • ▶ JOUER</span>
+        <span class="card-rea-badge">✨ v17.0 NATIVE-CARTOON-TRICKS (v1.10.0) • ▶ JOUER</span>
       </div>
       <p class="portal-desc">Manipule les boîtes de 10, le disque interactif des fractions et la balance algébrique selon ta classe (de la Maternelle au CM2 / Primary 6) !</p>
       <div class="portal-counts-badge-bar">
         <span class="count-pill highlight">⚖️ Adapté par Classe</span>
         <span class="count-pill black">⚡ 3 Activités / Exercice</span>
-        <span class="count-pill">🏆 10 Niveaux</span>
+        <span class="count-pill">🏆 5 Niveaux</span>
       </div>
     </button>
 
@@ -3389,13 +3452,13 @@ body {
           <h3>Labo Chimie & Échelle pH</h3>
           <div class="portal-curriculum-tag">Sciences • Réactions • Indicateur pH 0–14</div>
         </div>
-        <span class="card-rea-badge">✨ v16.0 REA-SUPER-ARCADE (v1.9.0) • ▶ JOUER</span>
+        <span class="card-rea-badge">✨ v17.0 NATIVE-CARTOON-TRICKS (v1.10.0) • ▶ JOUER</span>
       </div>
       <p class="portal-desc">Verse les éprouvettes dans l'erlenmeyer, observe l'indicateur de pH en direct, les mélanges de couleurs et l'effervescence des bulles de gaz !</p>
       <div class="portal-counts-badge-bar">
         <span class="count-pill highlight">⚗️ Échelle pH Live</span>
         <span class="count-pill black">⚡ 3 Activités / Exercice</span>
-        <span class="count-pill">🏆 10 Niveaux</span>
+        <span class="count-pill">🏆 5 Niveaux</span>
       </div>
     </button>
 
@@ -3408,13 +3471,13 @@ body {
           <h3>Bassin d'Archimède (Flotte/Coule)</h3>
           <div class="portal-curriculum-tag">Physique • Vecteurs Poussée ↑Fa & Poids ↓P</div>
         </div>
-        <span class="card-rea-badge">✨ v16.0 REA-SUPER-ARCADE (v1.9.0) • ▶ JOUER</span>
+        <span class="card-rea-badge">✨ v17.0 NATIVE-CARTOON-TRICKS (v1.10.0) • ▶ JOUER</span>
       </div>
       <p class="portal-desc">Plonge le bois, la mangue, l'or ou la brique dans l'eau et visualise en direct les vecteurs de la poussée d'Archimède (↑Fa) et du poids (↓P) !</p>
       <div class="portal-counts-badge-bar">
         <span class="count-pill highlight">🌊 Vecteurs ↑Fa / ↓P</span>
         <span class="count-pill black">⚡ 3 Activités / Exercice</span>
-        <span class="count-pill">🏆 10 Niveaux</span>
+        <span class="count-pill">🏆 5 Niveaux</span>
       </div>
     </button>
 
@@ -3427,13 +3490,13 @@ body {
           <h3>Circuit Électrique 3D & Oscilloscope</h3>
           <div class="portal-curriculum-tag">Loi d'Ohm (U=R×I) • Électrons & Hélice</div>
         </div>
-        <span class="card-rea-badge">✨ v16.0 REA-SUPER-ARCADE (v1.9.0) • ▶ JOUER</span>
+        <span class="card-rea-badge">✨ v17.0 NATIVE-CARTOON-TRICKS (v1.10.0) • ▶ JOUER</span>
       </div>
       <p class="portal-desc">Ferme l'interrupteur pour observer la circulation des électrons bleus, allumer l'ampoule de 4,5 V et faire tourner l'hélice du moteur électrique !</p>
       <div class="portal-counts-badge-bar">
         <span class="count-pill highlight">⚡ Moteur + Loi d'Ohm</span>
         <span class="count-pill black">⚡ 3 Activités / Exercice</span>
-        <span class="count-pill">🏆 10 Niveaux</span>
+        <span class="count-pill">🏆 5 Niveaux</span>
       </div>
     </button>
 
@@ -3446,13 +3509,13 @@ body {
           <h3>Jardin Botanique & Photosynthèse</h3>
           <div class="portal-curriculum-tag">Biologie • Racines, Tige & Floraison 21 Jours</div>
         </div>
-        <span class="card-rea-badge">✨ v16.0 REA-SUPER-ARCADE (v1.9.0) • ▶ JOUER</span>
+        <span class="card-rea-badge">✨ v17.0 NATIVE-CARTOON-TRICKS (v1.10.0) • ▶ JOUER</span>
       </div>
       <p class="portal-desc">Dose la pluie et le soleil pour faire germer le Baobab, le Tournesol, le Cacaoyer et l'Hibiscus en observant les racines pousser sous terre !</p>
       <div class="portal-counts-badge-bar">
         <span class="count-pill highlight">🌱 Morphogenèse 21J</span>
         <span class="count-pill black">⚡ 3 Activités / Exercice</span>
-        <span class="count-pill">🏆 10 Niveaux</span>
+        <span class="count-pill">🏆 5 Niveaux</span>
       </div>
     </button>
 
@@ -3465,13 +3528,13 @@ body {
           <h3>Comet Defender : Calcul Spatial</h3>
           <div class="portal-curriculum-tag">TuxMath Arcade • Lasers & Calcul Mental</div>
         </div>
-        <span class="card-rea-badge">✨ v16.0 REA-SUPER-ARCADE (v1.9.0) • ▶ JOUER</span>
+        <span class="card-rea-badge">✨ v17.0 NATIVE-CARTOON-TRICKS (v1.10.0) • ▶ JOUER</span>
       </div>
       <p class="portal-desc">Pilote le vaisseau spatial et tire au laser sur la comète qui porte la bonne réponse à l'équation affichée sur le tableau de bord !</p>
       <div class="portal-counts-badge-bar">
         <span class="count-pill highlight">☄️ Équations Dynamiques</span>
         <span class="count-pill black">⚡ 3 Activités / Exercice</span>
-        <span class="count-pill">🏆 10 Niveaux</span>
+        <span class="count-pill">🏆 5 Niveaux</span>
       </div>
     </button>
 
@@ -3484,13 +3547,13 @@ body {
           <h3>Tangram Géométrique Magnétique</h3>
           <div class="portal-curriculum-tag">Mathigon Euclid • Polygones & Silhouettes</div>
         </div>
-        <span class="card-rea-badge">✨ v16.0 REA-SUPER-ARCADE (v1.9.0) • ▶ JOUER</span>
+        <span class="card-rea-badge">✨ v17.0 NATIVE-CARTOON-TRICKS (v1.10.0) • ▶ JOUER</span>
       </div>
       <p class="portal-desc">Assemble la Fusée, le Bateau, le Chat, le Lion et le Papillon en glissant les polygones géométriques avec aimantation de précision !</p>
       <div class="portal-counts-badge-bar">
         <span class="count-pill highlight">📐 5 Silhouettes Uniques</span>
         <span class="count-pill black">⚡ 3 Activités / Exercice</span>
-        <span class="count-pill">🏆 10 Niveaux</span>
+        <span class="count-pill">🏆 5 Niveaux</span>
       </div>
     </button>
 
@@ -3503,13 +3566,13 @@ body {
           <h3>Donjon Labyrinthe 3D (Vue 3D & Raycast)</h3>
           <div class="portal-curriculum-tag">Blockly Maze • Algorithme & Syllabes</div>
         </div>
-        <span class="card-rea-badge">✨ v16.0 REA-SUPER-ARCADE (v1.9.0) • ▶ JOUER</span>
+        <span class="card-rea-badge">✨ v17.0 NATIVE-CARTOON-TRICKS (v1.10.0) • ▶ JOUER</span>
       </div>
       <p class="portal-desc">Guide Léo dans les 5 cartes de la Savane (Oasis, Pyramide, Volcan, Jungle) en collectant les syllabes et nombres d'or ou utilise le bouton Auto-Pas !</p>
       <div class="portal-counts-badge-bar">
         <span class="count-pill highlight">🧭 5 Cartes + Auto-Guide</span>
         <span class="count-pill black">⚡ 3 Activités / Exercice</span>
-        <span class="count-pill">🏆 10 Niveaux</span>
+        <span class="count-pill">🏆 5 Niveaux</span>
       </div>
     </button>
   </section>
@@ -3525,7 +3588,7 @@ body {
         <div class="hud-badge red" id="hud-exercise-badge">🎯 Exercice 1/5 • Niveau 1</div>
       </div>
       <div class="hud-stats">
-        <span class="hud-badge" id="hud-version-pill" style="background:#312E81;color:#FDE047;border:1.5px solid #38BDF8;font-size:0.72rem;padding:4px 8px;">🚀 v16.0 (v1.9.0)</span>
+        <span class="hud-badge" id="hud-version-pill" style="background:#312E81;color:#FDE047;border:1.5px solid #38BDF8;font-size:0.72rem;padding:4px 8px;">🚀 v17.0 (v1.10.0)</span>
         <div class="hud-badge" id="hud-reward-chest" title="Coffre à Récompenses Éducatives (Stickers & Trophées)" style="background:#065F46;color:#FEF08A;border:1.5px solid #34D399;cursor:pointer;">🎁 <span id="hud-sticker-count">1</span> <span id="hud-latest-sticker">🦁</span></div>
         <div class="hud-badge">⭐ <span id="hud-score-val">0</span> XP</div>
         <div class="combo-multiplier" id="hud-combo-badge">🔥 COMBO x1</div>
@@ -3772,6 +3835,299 @@ body {
   // DATABASE: CURRICULUMS, STORIES, PHONICS, MATHS & PUZZLES
   // ============================================================================
   const DB = {
+    mathMagicTrickChallenges: [
+      {
+        grade: 'MAT',
+        q: { fr: "🌈 Astuce Pont de 10 : 8 grenouilles sautent, combien en manque-t-il pour faire 10 ?", en: "🌈 Make-10 Bridge: 8 frogs are on the log, how many more to make 10?" },
+        trick: { fr: "🐸 8 + 2 = 10 ! Le pont magique de 10 !", en: "🐸 8 + 2 = 10! The Make-10 Rainbow Bridge!" },
+        emoji: "🐸",
+        visualTrick: "make10",
+        a: 8, b: 2, sum: 10,
+        ans: { fr: "2 grenouilles (8 + 2 = 10)", en: "2 frogs (8 + 2 = 10)" },
+        options: [
+          { fr: "2 grenouilles (8 + 2 = 10)", en: "2 frogs (8 + 2 = 10)" },
+          { fr: "1 grenouille", en: "1 frog" },
+          { fr: "5 grenouilles", en: "5 frogs" },
+          { fr: "9 grenouilles", en: "9 frogs" }
+        ]
+      },
+      {
+        grade: 'MAT',
+        q: { fr: "🦋 Miroir des Doubles : Le papillon a 2 taches à gauche et 2 à droite. Combien en tout ?", en: "🦋 Double Mirror: Butterfly has 2 spots on the left and 2 on the right. Total?" },
+        trick: { fr: "🦋 Double de 2 : 2 + 2 = 4 !", en: "🦋 Double of 2: 2 + 2 = 4!" },
+        emoji: "🦋",
+        visualTrick: "doubles",
+        a: 2, b: 2, sum: 4,
+        ans: { fr: "4 taches (2 + 2 = 4)", en: "4 spots (2 + 2 = 4)" },
+        options: [
+          { fr: "4 taches (2 + 2 = 4)", en: "4 spots (2 + 2 = 4)" },
+          { fr: "3 taches", en: "3 spots" },
+          { fr: "5 taches", en: "5 spots" },
+          { fr: "6 taches", en: "6 spots" }
+        ]
+      },
+      {
+        grade: 'SIL',
+        q: { fr: "🌈 Pont de 10 : 7 mangues dans le panier, ajoute 3 mangues. Combien as-tu ?", en: "🌈 Make-10 Bridge: 7 mangoes in basket, add 3 more. How many?" },
+        trick: { fr: "🥭 7 + 3 = 10 ! C'est la dizaine parfaite !", en: "🥭 7 + 3 = 10! Perfect ten!" },
+        emoji: "🥭",
+        visualTrick: "make10",
+        a: 7, b: 3, sum: 10,
+        ans: { fr: "10 mangues (7 + 3 = 10)", en: "10 mangoes (7 + 3 = 10)" },
+        options: [
+          { fr: "10 mangues (7 + 3 = 10)", en: "10 mangoes (7 + 3 = 10)" },
+          { fr: "8 mangues", en: "8 mangoes" },
+          { fr: "9 mangues", en: "9 mangoes" },
+          { fr: "12 mangues", en: "12 mangoes" }
+        ]
+      },
+      {
+        grade: 'SIL',
+        q: { fr: "🦋 Miroir des Doubles : 4 doigts sur une main et 4 sur l'autre, combien font 4 + 4 ?", en: "🦋 Double Mirror: 4 fingers and 4 fingers, what is 4 + 4?" },
+        trick: { fr: "🖐️ Double de 4 : 4 + 4 = 8 !", en: "🖐️ Double of 4: 4 + 4 = 8!" },
+        emoji: "🖐️",
+        visualTrick: "doubles",
+        a: 4, b: 4, sum: 8,
+        ans: { fr: "8 doigts (4 + 4 = 8)", en: "8 fingers (4 + 4 = 8)" },
+        options: [
+          { fr: "8 doigts (4 + 4 = 8)", en: "8 fingers (4 + 4 = 8)" },
+          { fr: "6 doigts", en: "6 fingers" },
+          { fr: "7 doigts", en: "7 fingers" },
+          { fr: "10 doigts", en: "10 fingers" }
+        ]
+      },
+      {
+        grade: 'CP',
+        q: { fr: "🌈 Astuce Pont de 10 : Pour calculer 8 + 5, fais 8 + 2 (= 10) puis ajoute 3. Combien trouves-tu ?", en: "🌈 Make-10 Bridge: To solve 8 + 5, do 8 + 2 (= 10) then add 3. Total?" },
+        trick: { fr: "🐸 8 + 2 = 10, puis 10 + 3 = 13 !", en: "🐸 8 + 2 = 10, then 10 + 3 = 13!" },
+        emoji: "🐸",
+        visualTrick: "make10",
+        a: 8, b: 5, sum: 13,
+        ans: { fr: "13 (8 + 2 = 10 ➜ +3 = 13)", en: "13 (8 + 2 = 10 ➜ +3 = 13)" },
+        options: [
+          { fr: "13 (8 + 2 = 10 ➜ +3 = 13)", en: "13 (8 + 2 = 10 ➜ +3 = 13)" },
+          { fr: "11", en: "11" },
+          { fr: "12", en: "12" },
+          { fr: "14", en: "14" }
+        ]
+      },
+      {
+        grade: 'CP',
+        q: { fr: "🖐️ Astuce des 10 Doigts : Pour 9 × 2, baisse le 2e doigt. Il reste 1 doigt à gauche et 8 à droite. Quel nombre ?", en: "🖐️ 9× Finger Trick: For 9 × 2, fold 2nd finger. 1 finger left and 8 right. What number?" },
+        trick: { fr: "🖐️ 1 dizaine et 8 unités font 18 (9 × 2 = 18) !", en: "🖐️ 1 ten and 8 ones make 18 (9 × 2 = 18)!" },
+        emoji: "🖐️",
+        visualTrick: "finger9",
+        bentFinger: 2, tens: 1, ones: 8,
+        ans: { fr: "18 (9 × 2 = 18)", en: "18 (9 × 2 = 18)" },
+        options: [
+          { fr: "18 (9 × 2 = 18)", en: "18 (9 × 2 = 18)" },
+          { fr: "16", en: "16" },
+          { fr: "19", en: "19" },
+          { fr: "20", en: "20" }
+        ]
+      },
+      {
+        grade: 'CE',
+        q: { fr: "🖐️ Astuce des 10 Doigts : Pour 9 × 3, baisse le 3e doigt. 2 doigts à gauche et 7 à droite. Quel résultat ?", en: "🖐️ 9× Finger Trick: For 9 × 3, fold 3rd finger. 2 fingers left and 7 right. What is 9 × 3?" },
+        trick: { fr: "🖐️ 2 dizaines et 7 unités font 27 (9 × 3 = 27) !", en: "🖐️ 2 tens and 7 ones make 27 (9 × 3 = 27)!" },
+        emoji: "🖐️",
+        visualTrick: "finger9",
+        bentFinger: 3, tens: 2, ones: 7,
+        ans: { fr: "27 (9 × 3 = 27)", en: "27 (9 × 3 = 27)" },
+        options: [
+          { fr: "27 (9 × 3 = 27)", en: "27 (9 × 3 = 27)" },
+          { fr: "24", en: "24" },
+          { fr: "28", en: "28" },
+          { fr: "36", en: "36" }
+        ]
+      },
+      {
+        grade: 'CE',
+        q: { fr: "🍕 Coupe-Pizza : Prendre 50% d'un gâteau de 20 parts, c'est diviser par 2. Combien as-tu de parts ?", en: "🍕 Pizza Slicer: Taking 50% of 20 slices means dividing by 2. How many slices?" },
+        trick: { fr: "🍕 50% = Diviser par 2 : 20 ÷ 2 = 10 !", en: "🍕 50% = Divide by 2: 20 ÷ 2 = 10!" },
+        emoji: "🍕",
+        visualTrick: "pizza",
+        ans: { fr: "10 parts (20 ÷ 2 = 10)", en: "10 slices (20 ÷ 2 = 10)" },
+        options: [
+          { fr: "10 parts (20 ÷ 2 = 10)", en: "10 slices (20 ÷ 2 = 10)" },
+          { fr: "5 parts", en: "5 slices" },
+          { fr: "8 parts", en: "8 slices" },
+          { fr: "15 parts", en: "15 slices" }
+        ]
+      },
+      {
+        grade: 'CE2',
+        q: { fr: "🖐️ Astuce des 10 Doigts : Pour 9 × 6, baisse le 6e doigt. 5 doigts à gauche et 4 à droite. Quel est le produit ?", en: "🖐️ 9× Finger Trick: For 9 × 6, fold 6th finger. 5 fingers left and 4 right. What is 9 × 6?" },
+        trick: { fr: "🖐️ 5 dizaines et 4 unités font 54 (9 × 6 = 54) !", en: "🖐️ 5 tens and 4 ones make 54 (9 × 6 = 54)!" },
+        emoji: "🖐️",
+        visualTrick: "finger9",
+        bentFinger: 6, tens: 5, ones: 4,
+        ans: { fr: "54 (9 × 6 = 54)", en: "54 (9 × 6 = 54)" },
+        options: [
+          { fr: "54 (9 × 6 = 54)", en: "54 (9 × 6 = 54)" },
+          { fr: "45", en: "45" },
+          { fr: "56", en: "56" },
+          { fr: "63", en: "63" }
+        ]
+      },
+      {
+        grade: 'CE2',
+        q: { fr: "🦋 Rime Magique 5,6,7,8 : Quelle multiplication correspond à 56 = 7 × 8 ?", en: "🦋 Magic Rhythm 5,6,7,8: Which fact matches 56 = 7 × 8?" },
+        trick: { fr: "🦋 Retiens : 5, 6, 7, 8 ➜ 56 = 7 × 8 !", en: "🦋 Remember: 5, 6, 7, 8 ➜ 56 = 7 × 8!" },
+        emoji: "🦋",
+        visualTrick: "doubles",
+        ans: { fr: "7 × 8 = 56 (5, 6, 7, 8)", en: "7 × 8 = 56 (5, 6, 7, 8)" },
+        options: [
+          { fr: "7 × 8 = 56 (5, 6, 7, 8)", en: "7 × 8 = 56 (5, 6, 7, 8)" },
+          { fr: "6 × 7 = 42", en: "6 × 7 = 42" },
+          { fr: "7 × 7 = 49", en: "7 × 7 = 49" },
+          { fr: "8 × 8 = 64", en: "8 × 8 = 64" }
+        ]
+      },
+      {
+        grade: 'CM1',
+        q: { fr: "🍕 Coupe-Pizza : 25% d'un prix de 40 €, c'est diviser par 4 (la moitié de la moitié). Combien cela fait-il ?", en: "🍕 Pizza Slicer: 25% of 40 € means dividing by 4 (half of half). How much is it?" },
+        trick: { fr: "🍕 25% = Diviser par 4 : 40 ÷ 4 = 10 € !", en: "🍕 25% = Divide by 4: 40 ÷ 4 = 10 €!" },
+        emoji: "🍕",
+        visualTrick: "pizza",
+        ans: { fr: "10 € (40 ÷ 4 = 10)", en: "10 € (40 ÷ 4 = 10)" },
+        options: [
+          { fr: "10 € (40 ÷ 4 = 10)", en: "10 € (40 ÷ 4 = 10)" },
+          { fr: "8 €", en: "8 €" },
+          { fr: "15 €", en: "15 €" },
+          { fr: "20 €", en: "20 €" }
+        ]
+      },
+      {
+        grade: 'CM',
+        q: { fr: "🌈 Astuce Multiplication par 11 : Pour 23 × 11, écarte 2 et 3 et insère leur somme (2+3=5) au milieu. Quel résultat ?", en: "🌈 ×11 Trick: For 23 × 11, separate 2 and 3 and put their sum (2+3=5) in the middle. Result?" },
+        trick: { fr: "🔢 2 _ 3 ➜ 2 (2+3) 3 = 253 !", en: "🔢 2 _ 3 ➜ 2 (2+3) 3 = 253!" },
+        emoji: "🔢",
+        visualTrick: "mult11",
+        ans: { fr: "253 (2 _ 3 ➜ 253)", en: "253 (2 _ 3 ➜ 253)" },
+        options: [
+          { fr: "253 (2 _ 3 ➜ 253)", en: "253 (2 _ 3 ➜ 253)" },
+          { fr: "230", en: "230" },
+          { fr: "243", en: "243" },
+          { fr: "263", en: "263" }
+        ]
+      }
+    ],
+
+    scienceHeroTrickChallenges: [
+      {
+        grade: 'MAT',
+        q: { fr: "☀️💧 Astuce du Cycle de l'Eau : Que fait le soleil chaud à la flaque d'eau de pluie ?", en: "☀️💧 Water Trick: What does the hot sun do to the rain puddle?" },
+        trick: { fr: "☀️ La chaleur transforme l'eau en vapeur qui monte au ciel !", en: "☀️ Heat turns water into vapor rising to the sky!" },
+        emoji: "☀️",
+        visualTrick: "watercycle",
+        ans: { fr: "L'eau s'évapore en vapeur 💨", en: "Water evaporates into vapor 💨" },
+        options: [
+          { fr: "L'eau s'évapore en vapeur 💨", en: "Water evaporates into vapor 💨" },
+          { fr: "Elle gèle en glaçon", en: "It freezes into ice" },
+          { fr: "Elle devient du chocolat", en: "It turns into chocolate" },
+          { fr: "Elle s'endort", en: "It goes to sleep" }
+        ]
+      },
+      {
+        grade: 'MAT',
+        q: { fr: "🫁💨 Astuce Corps Humain : Quel organe se gonfle comme un ballon quand tu respires l'air ?", en: "🫁💨 Body Trick: Which organ fills with air like a balloon when you breathe?" },
+        trick: { fr: "🫁 Tes 2 poumons absorbent l'air et le souffle !", en: "🫁 Your 2 lungs take in air and breathe!" },
+        emoji: "🫁",
+        visualTrick: "lungs",
+        ans: { fr: "Les Poumons 🫁", en: "The Lungs 🫁" },
+        options: [
+          { fr: "Les Poumons 🫁", en: "The Lungs 🫁" },
+          { fr: "Les Dents", en: "The Teeth" },
+          { fr: "Les Doigts", en: "The Fingers" },
+          { fr: "Les Cheveux", en: "The Hair" }
+        ]
+      },
+      {
+        grade: 'SIL',
+        q: { fr: "☀️➡️☁️➡️🌧️ D'où tombent les gouttes de pluie sur la terre ?", en: "☀️➡️☁️➡️🌧️ Where do rain droplets fall from onto the ground?" },
+        trick: { fr: "☁️ Les nuages pleins de gouttelettes déversent la pluie !", en: "☁️ Clouds full of droplets pour down the rain!" },
+        emoji: "🌧️",
+        visualTrick: "watercycle",
+        ans: { fr: "Des Nuages ☁️", en: "From the Clouds ☁️" },
+        options: [
+          { fr: "Des Nuages ☁️", en: "From the Clouds ☁️" },
+          { fr: "Des Cailloux", en: "From Rocks" },
+          { fr: "Des Voitures", en: "From Cars" },
+          { fr: "Des Lampadaires", en: "From Streetlights" }
+        ]
+      },
+      {
+        grade: 'CP',
+        q: { fr: "⚖️ Astuce du Levier : Comment la petite souris peut-elle soulever le gros éléphant sur la balançoire ?", en: "⚖️ Lever Trick: How can the little mouse lift the heavy elephant on the seesaw?" },
+        trick: { fr: "⚖️ Rapproche le pivot de l'éléphant pour allonger le bras de la souris !", en: "⚖️ Move fulcrum near elephant to make mouse's arm longer!" },
+        emoji: "⚖️",
+        visualTrick: "lever",
+        ans: { fr: "Approcher le pivot 🔺 de l'éléphant", en: "Move fulcrum 🔺 near elephant" },
+        options: [
+          { fr: "Approcher le pivot 🔺 de l'éléphant", en: "Move fulcrum 🔺 near elephant" },
+          { fr: "Éloigner le pivot de l'éléphant", en: "Move fulcrum away" },
+          { fr: "Casser la balançoire", en: "Break the seesaw" },
+          { fr: "Appeler un deuxième éléphant", en: "Call a second elephant" }
+        ]
+      },
+      {
+        grade: 'CE',
+        q: { fr: "🔦💎 Astuce Prisme & Lumière : Que se passe-t-il quand un faisceau de lumière blanche traverse un prisme ?", en: "🔦💎 Prism Trick: What happens when white light passes through a crystal prism?" },
+        trick: { fr: "🌈 La lumière blanche se sépare en 7 couleurs de l'arc-en-ciel !", en: "🌈 White light splits into the 7 rainbow colors!" },
+        emoji: "🌈",
+        visualTrick: "prism",
+        ans: { fr: "Elle se sépare en 7 couleurs 🌈", en: "It splits into 7 rainbow colors 🌈" },
+        options: [
+          { fr: "Elle se sépare en 7 couleurs 🌈", en: "It splits into 7 rainbow colors 🌈" },
+          { fr: "Elle disparaît complètement", en: "It disappears completely" },
+          { fr: "Elle devient toute noire", en: "It turns pitch black" },
+          { fr: "Elle explose", en: "It explodes" }
+        ]
+      },
+      {
+        grade: 'CE2',
+        q: { fr: "🫁❤️ Astuce Corps Humain : Quel muscle infatigable pompe le sang vers tous les organes ?", en: "🫁❤️ Body Trick: Which tireless muscle pumps blood to all your organs?" },
+        trick: { fr: "❤️ Le cœur bat environ 80 fois par minute toute ta vie !", en: "❤️ The heart beats about 80 times every minute!" },
+        emoji: "❤️",
+        visualTrick: "heart",
+        ans: { fr: "Le Cœur ❤️", en: "The Heart ❤️" },
+        options: [
+          { fr: "Le Cœur ❤️", en: "The Heart ❤️" },
+          { fr: "L'Estomac", en: "The Stomach" },
+          { fr: "Le Genou", en: "The Knee" },
+          { fr: "Le Nez", en: "The Nose" }
+        ]
+      },
+      {
+        grade: 'CM1',
+        q: { fr: "☀️💧 Astuce Température de l'Eau : À quelle température l'eau liquide bout-elle pour devenir de la vapeur ?", en: "☀️💧 Water Trick: At what temperature does liquid water boil into steam?" },
+        trick: { fr: "🌡️ 0 °C = Glace Solide • 100 °C = Ébullition Vapeur !", en: "🌡️ 0 °C = Solid Ice • 100 °C = Boiling Steam!" },
+        emoji: "🌡️",
+        visualTrick: "watercycle",
+        ans: { fr: "100 °C (Ébullition)", en: "100 °C (Boiling)" },
+        options: [
+          { fr: "100 °C (Ébullition)", en: "100 °C (Boiling)" },
+          { fr: "0 °C (Gel)", en: "0 °C (Freezing)" },
+          { fr: "25 °C (Tiède)", en: "25 °C (Lukewarm)" },
+          { fr: "500 °C", en: "500 °C" }
+        ]
+      },
+      {
+        grade: 'CM',
+        q: { fr: "⚖️ Astuce d'Archimède : Qui a formulé la loi du levier : « Donnez-moi un point d'appui et je soulèverai le monde » ?", en: "⚖️ Archimedes Trick: Who stated the law of the lever: 'Give me a place to stand, and I will move the Earth'?" },
+        trick: { fr: "🏛️ Archimède de Syracuse, le génie des leviers et de la flottabilité !", en: "🏛️ Archimedes of Syracuse, master of levers and buoyancy!" },
+        emoji: "🏛️",
+        visualTrick: "lever",
+        ans: { fr: "Archimède de Syracuse 🏛️", en: "Archimedes of Syracuse 🏛️" },
+        options: [
+          { fr: "Archimède de Syracuse 🏛️", en: "Archimedes of Syracuse 🏛️" },
+          { fr: "Christophe Colomb", en: "Christopher Columbus" },
+          { fr: "Napoléon", en: "Napoleon" },
+          { fr: "Marco Polo", en: "Marco Polo" }
+        ]
+      }
+    ],
     // 20+ Stories (5 per grade)
     stories: {
       MAT: [
@@ -6397,7 +6753,7 @@ body {
     score: 0,
     level: 1,
     selectedLevel: 1,
-    totalLevels: 10,
+    totalLevels: 5,
     exerciseInLevel: 1,
     totalExercisesPerLevel: 5,
     activityPhase: 1,
@@ -6494,6 +6850,62 @@ body {
     audio: null,
     currentUtteranceId: 0,
 
+    toNaturalNativeSpeech(rawText, lang) {
+      if (!rawText) return '';
+      let s = String(rawText).trim();
+      const isEn = lang === 'en';
+
+      if (isEn) {
+        s = s.replace(/\b1\/2\b/g, ' one half ')
+             .replace(/\b1\/4\b/g, ' one quarter ')
+             .replace(/\b3\/4\b/g, ' three quarters ')
+             .replace(/\b50%\b/g, ' fifty percent ')
+             .replace(/\b25%\b/g, ' twenty-five percent ')
+             .replace(/\b100%\b/g, ' one hundred percent ')
+             .replace(/\+/g, ' plus ')
+             .replace(/\s-\s/g, ' minus ')
+             .replace(/[×*]/g, ' times ')
+             .replace(/[÷]/g, ' divided by ')
+             .replace(/=/g, ' equals ')
+             .replace(/°C\b/g, ' degrees Celsius ')
+             .replace(/cm²\b/g, ' square centimeters ')
+             .replace(/cm³\b/g, ' cubic centimeters ')
+             .replace(/km\/h\b/g, ' kilometers per hour ')
+             .replace(/O₂/g, ' oxygen ')
+             .replace(/CO₂/g, ' carbon dioxide ')
+             .replace(/H₂O/g, ' water ');
+      } else {
+        s = s.replace(/\b1\/2\b/g, ' un demi ')
+             .replace(/\b1\/4\b/g, ' un quart ')
+             .replace(/\b3\/4\b/g, ' trois quarts ')
+             .replace(/\b50%\b/g, ' cinquante pour cent ')
+             .replace(/\b25%\b/g, ' vingt-cinq pour cent ')
+             .replace(/\b100%\b/g, ' cent pour cent ')
+             .replace(/\+/g, ' plus ')
+             .replace(/\s-\s/g, ' moins ')
+             .replace(/[×*]/g, ' fois ')
+             .replace(/[÷]/g, ' divisé par ')
+             .replace(/=/g, ' égale ')
+             .replace(/°C\b/g, ' degrés Celsius ')
+             .replace(/cm²\b/g, ' centimètres carrés ')
+             .replace(/cm³\b/g, ' centimètres cubes ')
+             .replace(/km\/h\b/g, ' kilomètres par heure ')
+             .replace(/O₂/g, ' oxygène ')
+             .replace(/CO₂/g, ' dioxyde de carbone ')
+             .replace(/H₂O/g, ' eau ');
+      }
+
+      s = s.replace(/(?:[\uD800-\uDBFF][\uDC00-\uDFFF]|[\u2600-\u27BF])/g, ' ')
+           .replace(/[➜➔→←↑↓⇄▲▼]/g, ' ')
+           .replace(/[_]{2,}/g, isEn ? ' blank ' : " point d'interrogation ")
+           .replace(/\[\s*\?\s*\]/g, isEn ? ' blank ' : " point d'interrogation ")
+           .replace(/[|•🎓🔬📝💡❓🎁💥✨🚀]/g, ' ')
+           .replace(/\s+/g, ' ')
+           .trim();
+
+      return s;
+    },
+
     fallbackWebSpeech(text, lang, myId, onEnded, rate = 0.96) {
       if (!('speechSynthesis' in window)) {
         if (onEnded) onEnded();
@@ -6501,7 +6913,8 @@ body {
       }
       try {
         window.speechSynthesis.cancel();
-        const utter = new SpeechSynthesisUtterance(text.trim());
+        const naturalText = this.toNaturalNativeSpeech(text, lang);
+        const utter = new SpeechSynthesisUtterance(naturalText.trim());
         utter.lang = lang === 'en' ? 'en-US' : 'fr-FR';
         utter.rate = rate;
         const voices = window.speechSynthesis.getVoices() || [];
@@ -6577,6 +6990,7 @@ body {
         return;
       }
       this.stop();
+      text = this.toNaturalNativeSpeech(text, state.lang);
       state.narrationLog = state.narrationLog || [];
       state.narrationLog.push({ text: String(text).trim(), ts: Date.now(), lang: state.lang });
       window.__NATEIVA_NARRATION_LOG__ = state.narrationLog;
@@ -6857,12 +7271,34 @@ body {
         state.wateringCan.tilt = 28;
       }
     } else if (g === 'density') {
+      let hitAny = false;
       state.densityItems.forEach(item => {
-        if (Math.hypot(p.x - item.x, p.y - item.y) < 32) {
+        if (Math.hypot(p.x - item.x, p.y - item.y) < 38) {
+          hitAny = true;
           state.dragged = item;
-          item.inWater = false;
+          item.inWater = !item.inWater;
+          if (item.inWater) {
+            item.x = CW / 2;
+            item.y = state.waterSurfaceY + 22;
+            AudioEngine.playSplash();
+            createExplosion(CW / 2, state.waterSurfaceY, '#38BDF8', 18);
+          } else {
+            item.x = item.origX;
+            item.y = item.origY;
+          }
         }
       });
+      // Tapping inside water tank drops active target item into water!
+      if (!hitAny && p.y > state.waterSurfaceY && p.y < state.waterBottomY) {
+        const tItem = state.densityTarget || state.densityItems[0];
+        if (tItem) {
+          tItem.inWater = true;
+          tItem.x = Math.max(80, Math.min(CW - 80, p.x));
+          tItem.y = state.waterSurfaceY + 22;
+          AudioEngine.playSplash();
+          createExplosion(tItem.x, state.waterSurfaceY, '#38BDF8', 18);
+        }
+      }
     } else if (g === 'circuit') {
       if (Math.hypot(p.x - (state.switchBlade.x + 30), p.y - 255) < 68) {
         state.switchBlade.angle = state.switchBlade.angle === 0 ? 36 : 0;
@@ -7911,7 +8347,7 @@ body {
       setupFunFactsQuizActivity();
     } else if (g === 'grammar_lab' || g === 'vocabulary_lab' || g === 'conjugation_lab') {
       setupLanguageQuestActivity(g);
-    } else if (g === 'tetris_blocks' || g === 'auto_racer' || g === 'math_monster_quest' || g === 'science_ecosystem') {
+    } else if (g === 'tetris_blocks' || g === 'auto_racer' || g === 'math_monster_quest' || g === 'science_ecosystem' || g === 'math_magic_tricks' || g === 'science_hero_tricks') {
       setupReaSuperArcadeActivity(g);
     } else {
       $('canvas-wrapper').style.display = 'block';
@@ -8149,6 +8585,16 @@ body {
           };
           ansBox.appendChild(b);
         });
+        spawnCartoonArcadeTargets(
+          denSpeech,
+          targetItem.emoji || '🌊',
+          [
+            { label: isEn ? "🌊 Floats (d < 1)" : "🌊 Flotte (d < 1)", icon: "🌊", correct: floats, onSelect: () => { const btns = $('answers-container').querySelectorAll('.btn-interactive'); if (btns[0]) btns[0].click(); } },
+            { label: isEn ? "⚓ Sinks (d > 1)" : "⚓ Coule (d > 1)", icon: "⚓", correct: !floats, onSelect: () => { const btns = $('answers-container').querySelectorAll('.btn-interactive'); if (btns[1]) btns[1].click(); } }
+          ],
+          targetItem.name + ' ' + targetItem.rho
+        );
+
         activateRheaUniversalCoach(
           '🌊 ARCHIMÈDE & DENSITÉ',
           [
@@ -8713,7 +9159,7 @@ body {
       ? "Read or listen to the story and answer the comprehension question!"
       : "Lis ou écoute l'histoire puis réponds à la question de compréhension !";
 
-    const sentences = storyFullText.split(/(?<=[.!?])s+/);
+    const sentences = storyFullText.split(/(?<=[.!?])\s+/);
     const container = $('story-text-container');
     container.innerHTML = '';
     sentences.forEach((sent, idx) => {
@@ -9386,7 +9832,9 @@ body {
       tetris_blocks: DB.tetrisChallenges,
       auto_racer: DB.autoRacerChallenges,
       math_monster_quest: DB.mathMonsterChallenges,
-      science_ecosystem: DB.scienceEcosystemChallenges
+      science_ecosystem: DB.scienceEcosystemChallenges,
+      math_magic_tricks: DB.mathMagicTrickChallenges,
+      science_hero_tricks: DB.scienceHeroTrickChallenges
     };
     const rawPool = poolMap[gameType] || DB.tetrisChallenges;
     const gradeMatches = rawPool.filter(it => it.grade === state.grade);
@@ -9444,8 +9892,8 @@ body {
     }
 
     // Build ultra-clean synchronized spoken prompt (Question + Options + Exam Trick)
-    const cleanOptsSpoken = optsList.map(o => o.replace(/[🌀-🫿☀-➿]/gu, '').trim()).join(', ');
-    const cleanTrickSpoken = trickText.replace(/^🎓s*/, '');
+    const cleanOptsSpoken = optsList.map(o => o.replace(/[\u{1F300}-\u{1FAFF}\u{2600}-\u{27BF}]/gu, '').trim()).join(', ');
+    const cleanTrickSpoken = trickText.replace(/^🎓\s*/, '');
     const fullSpeech = isEn
       ? (qText + '. Choose: ' + cleanOptsSpoken + '. ' + cleanTrickSpoken)
       : (qText + '. Choisis : ' + cleanOptsSpoken + '. ' + cleanTrickSpoken);
@@ -9506,7 +9954,9 @@ body {
       tetris_blocks: isEn ? '🧱 TETRIS BLOCKS & AUTO-DROP COACH' : '🧱 COACH TETRIS ÉDUCATIF & AUTO-DROP',
       auto_racer: isEn ? '🏎️ AUTO TURBO RACER & NITRO COACH' : '🏎️ COACH COURSE AUTO TURBO & NITRO',
       math_monster_quest: isEn ? '👾 PRODIGY MATH SPELL & REWARD CHEST' : '👾 COACH PRODIGY MATHS & COFFRE MAGIQUE',
-      science_ecosystem: isEn ? '🪐 INTERACTIVE SCIENCE EXAM SIMULATOR' : '🪐 SIMULATEUR SCIENCES & ASTUCE EXAMEN'
+      science_ecosystem: isEn ? '🪐 INTERACTIVE SCIENCE EXAM SIMULATOR' : '🪐 SIMULATEUR SCIENCES & ASTUCE EXAMEN',
+      math_magic_tricks: isEn ? '🪄 CARTOON MATH TRICK COACH' : '🪄 COACH ASTUCES MATHS CARTOON',
+      science_hero_tricks: isEn ? '🦸‍♂️ CARTOON SCIENCE HERO COACH' : '🦸‍♂️ COACH ASTUCES SCIENCES CARTOON'
     };
     activateRheaUniversalCoach(
       badgeLabels[gameType] || '🎓 COACH RHEA',
@@ -9568,7 +10018,7 @@ body {
     // 2. Build a 100% SYNCHRONIZED Spoken Question Prompt (reads the actual question with the blank + choices + exam trick, NEVER spoiling the answer as if already filled!)
     const spokenBlankWord = isEn ? ' ... blank ... ' : ' ... point d’interrogation ... ';
     const spokenSentenceQuestion = data.sentence.replace('___', spokenBlankWord);
-    const cleanOptionsText = data.options.map(o => String(o).replace(/[\u{1F300}-\u{1FAFF}\u{2600}-\u{27BF}]/gu, '').trim()).join(', ');
+    const cleanOptionsText = data.options.map(o => String(o).replace(/(?:[\uD800-\uDBFF][\uDC00-\uDFFF]|[\u2600-\u27BF])/g, '').trim()).join(', ');
     const cleanRuleText = String(data.rule || '').replace(/^💡\s*/, '');
     const syncedVoicePrompt = isEn
       ? ('Question: ' + spokenSentenceQuestion + '. Choose between: ' + cleanOptionsText + '. Exam Tip: ' + cleanRuleText)
@@ -9631,7 +10081,7 @@ body {
     });
 
     // 3. Activate Ultra-Visual Exam Trick & Worked Example Gear Bar for Language Lab!
-    const shortRuleVisual = String(data.rule || '').replace(/^💡s*/, '');
+    const shortRuleVisual = String(data.rule || '').replace(/^💡\s*/, '');
     activateRheaUniversalCoach(
       isEn ? '🎓 EXAM TRICK & VISUAL GEAR' : '🎓 ASTUCE EXAMEN & EXEMPLE VISUEL',
       [
@@ -9862,7 +10312,7 @@ body {
     return String(s || '')
       .toLowerCase()
       .normalize('NFD')
-      .replace(/[\u0300-\u036f]/g, '')
+      .replace(/[\\u0300-\\u036f]/g, '')
       .replace(/[^a-z0-9]+/g, ' ')
       .trim();
   }
@@ -9870,7 +10320,7 @@ body {
   function resolveCartoonIcon(rawText) {
     const str = String(rawText || '').trim();
     if (!str) return '🌟';
-    const existingMatch = str.match(/(?:[\u{1F1E6}-\u{1F1FF}]{2}|[\u{1F300}-\u{1FAFF}\u{2600}-\u{27BF}])/u);
+    const existingMatch = str.match(/(?:(?:[\uD83C][\uDDE6-\uDDFF]){2}|[\uD800-\uDBFF][\uDC00-\uDFFF]|[\u2600-\u27BF])/);
     if (existingMatch && existingMatch[0] !== '✍️' && existingMatch[0] !== '🗂️' && existingMatch[0] !== '⏳') {
       return existingMatch[0];
     }
@@ -9898,7 +10348,7 @@ body {
         found.push(em);
       }
     };
-    const explicit = combined.match(/(?:[\u{1F1E6}-\u{1F1FF}]{2}|[\u{1F300}-\u{1FAFF}\u{2600}-\u{27BF}])/gu) || [];
+    const explicit = combined.match(/(?:(?:[\uD83C][\uDDE6-\uDDFF]){2}|[\uD800-\uDBFF][\uDC00-\uDFFF]|[\u2600-\u27BF])/g) || [];
     explicit.forEach(addUnique);
 
     const words = combined.split(/[^a-zA-ZÀ-ÿ0-9'-]+/).filter(Boolean);
@@ -9926,7 +10376,7 @@ body {
 
   function decorateVisualAssetText(rawText, fallbackHero) {
     const str = String(rawText || '').trim();
-    if (/(?:[\u{1F1E6}-\u{1F1FF}]{2}|[\u{1F300}-\u{1FAFF}\u{2600}-\u{27BF}])/u.test(str)) return str;
+    if (/(?:(?:[\uD83C][\uDDE6-\uDDFF]){2}|[\uD800-\uDBFF][\uDC00-\uDFFF]|[\u2600-\u27BF])/.test(str)) return str;
     let ico = resolveCartoonIcon(str);
     if (!ico || ico === '🌟' || ico === '🔢' || ico === '🔤') {
       ico = (fallbackHero && fallbackHero !== '🌟') ? fallbackHero : (state.cartoonHeroEmoji || ico || '🌟');
@@ -9947,8 +10397,8 @@ body {
     if ($('journey-avatar-emoji')) $('journey-avatar-emoji').textContent = gInfo.icon;
     if ($('journey-status-text')) {
       $('journey-status-text').textContent = isEn
-        ? (labelName + ' • Lvl ' + state.level + '/10 (' + pct + '%)')
-        : (labelName + ' • Niv ' + state.level + '/10 (' + pct + '%)');
+        ? (labelName + ' • Lvl ' + state.level + '/5 (' + pct + '%)')
+        : (labelName + ' • Niv ' + state.level + '/5 (' + pct + '%)');
     }
     if ($('journey-overall-bar-fill')) {
       $('journey-overall-bar-fill').style.width = pct + '%';
@@ -10133,7 +10583,9 @@ body {
       tetris_blocks: isEn ? "🧱 Edu Tetris" : "🧱 Tetris Blocs",
       auto_racer: isEn ? "🏎️ Auto Racer" : "🏎️ Course Auto",
       math_monster_quest: isEn ? "👾 Prodigy Math" : "👾 Prodigy Maths",
-      science_ecosystem: isEn ? "🪐 Science Lab" : "🪐 Écosystème"
+      science_ecosystem: isEn ? "🪐 Science Lab" : "🪐 Écosystème",
+      math_magic_tricks: isEn ? "🪄 Math Tricks" : "🪄 Astuces Maths",
+      science_hero_tricks: isEn ? "🦸‍♂️ Science Tricks" : "🦸‍♂️ Astuces Sciences"
     };
     $('hud-game-name').textContent = titleMap[gameKey] || "🎮 Quête Éducative";
     nextActivityChallenge(true);
@@ -10758,13 +11210,13 @@ body {
       const previewItems = [tItem, ...state.densityItems.filter(x => x.id !== tItem.id).slice(0, 5)];
       previewItems.forEach((it, idx) => {
         const isMain = it.id === tItem.id;
-        if (!it.inWater) {
+        if (state.dragged !== it && !it.inWater) {
           it.x = 115 + idx * 114;
           it.y = 118 + (isMain ? Math.sin(tNow * 5) * 5 : 0);
-        } else {
+        } else if (it.inWater && state.dragged !== it) {
           it.y = it.rho < 1.0
-            ? state.waterSurfaceY + 12 + Math.sin(tNow * 3.5 + idx) * 5
-            : Math.min(state.waterBottomY - 28, it.y + 3.2);
+            ? state.waterSurfaceY + 14 + Math.sin(tNow * 3.5 + idx) * 5
+            : Math.min(state.waterBottomY - 26, it.y + 3.2);
         }
         ctx.save();
         ctx.fillStyle = it.color;
@@ -11810,6 +12262,282 @@ body {
       });
     }
 
+    // 8F. V17.0 CARTOON MATH MAGIC TRICKS (MAKE-10 RAINBOW BRIDGE, 9x FINGER TRICK, BUTTERFLY DOUBLES & PIZZA SLICER)
+    else if (g === 'math_magic_tricks') {
+      const tNow = Date.now() / 1000;
+      const item = state.currentReaItem || {};
+      const trickMode = item.visualTrick || 'make10';
+
+      const grad = ctx.createLinearGradient(0, 0, 0, CH);
+      grad.addColorStop(0, '#0F172A');
+      grad.addColorStop(1, '#1E1B4B');
+      ctx.fillStyle = grad;
+      ctx.fillRect(0, 0, CW, CH);
+
+      // Top Question & Trick Ribbon
+      ctx.save();
+      ctx.fillStyle = 'rgba(15, 23, 42, 0.94)';
+      ctx.beginPath();
+      ctx.roundRect(16, 10, CW - 32, 54, 14);
+      ctx.fill();
+      ctx.strokeStyle = '#FDE047';
+      ctx.lineWidth = 2.5;
+      ctx.stroke();
+      ctx.fillStyle = '#FEF08A';
+      ctx.font = 'bold 16px sans-serif';
+      ctx.fillText(String(state.cartoonStageTitle || '').slice(0, 58), 28, 33);
+      ctx.fillStyle = '#A7F3D0';
+      ctx.font = 'bold 13px sans-serif';
+      ctx.fillText(String(state.cartoonExamTrick || '').slice(0, 68), 28, 52);
+      ctx.restore();
+
+      // Visual Cartoon Trick Stage
+      if (trickMode === 'make10') {
+        // Rainbow Arc-en-Ciel Bridge from 0 to 10
+        ctx.save();
+        ctx.strokeStyle = '#F43F5E'; ctx.lineWidth = 5; ctx.beginPath(); ctx.arc(CW / 2, 230, 110, Math.PI, 0); ctx.stroke();
+        ctx.strokeStyle = '#F59E0B'; ctx.lineWidth = 5; ctx.beginPath(); ctx.arc(CW / 2, 230, 102, Math.PI, 0); ctx.stroke();
+        ctx.strokeStyle = '#10B981'; ctx.lineWidth = 5; ctx.beginPath(); ctx.arc(CW / 2, 230, 94, Math.PI, 0); ctx.stroke();
+        ctx.strokeStyle = '#38BDF8'; ctx.lineWidth = 5; ctx.beginPath(); ctx.arc(CW / 2, 230, 86, Math.PI, 0); ctx.stroke();
+
+        // Hopping Cartoon Frog
+        const hopFrac = (tNow * 1.6) % 1;
+        const frogAng = Math.PI - hopFrac * Math.PI;
+        const fx = CW / 2 + Math.cos(frogAng) * 94;
+        const fy = 230 - Math.sin(frogAng) * 94;
+        ctx.font = '42px sans-serif';
+        ctx.fillText('🐸', fx - 21, fy + 12);
+
+        ctx.fillStyle = '#FEF08A';
+        ctx.font = 'bold 18px sans-serif';
+        ctx.fillText('🌈 8 + 2 = 10 ➜ +3 = 13', CW / 2 - 100, 248);
+        ctx.restore();
+      } else if (trickMode === 'finger9') {
+        // 10 Cartoon Fingers with Bent Finger
+        const bent = item.bentFinger || 3;
+        ctx.save();
+        ctx.font = '36px sans-serif';
+        for (let f = 1; f <= 10; f++) {
+          const fx = 150 + f * 48 + (f > 5 ? 24 : 0);
+          const fy = f === bent ? 190 : 160 + Math.sin(tNow * 3 + f) * 4;
+          if (f === bent) {
+            ctx.fillStyle = '#EF4444';
+            ctx.fillText('👇', fx - 16, fy);
+            ctx.font = 'bold 11px sans-serif';
+            ctx.fillStyle = '#FEF08A';
+            ctx.fillText('BAISSÉ', fx - 22, fy + 26);
+            ctx.font = '36px sans-serif';
+          } else {
+            ctx.fillText('☝️', fx - 16, fy);
+          }
+        }
+        ctx.fillStyle = '#38BDF8';
+        ctx.font = 'bold 17px sans-serif';
+        const tens = item.tens || (bent - 1);
+        const ones = item.ones || (10 - bent);
+        ctx.fillText('🖐️ ' + tens + ' Dizaines  +  ' + ones + ' Unités  =  ' + (tens * 10 + ones), CW / 2 - 130, 246);
+        ctx.restore();
+      } else if (trickMode === 'pizza') {
+        // Pizza Cylinder
+        ctx.save();
+        ctx.fillStyle = '#F59E0B';
+        ctx.beginPath();
+        ctx.arc(CW / 2, 175, 58, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.strokeStyle = '#FFFFFF';
+        ctx.lineWidth = 3;
+        ctx.stroke();
+        // Cut lines
+        ctx.strokeStyle = '#B91C1C';
+        ctx.beginPath();
+        ctx.moveTo(CW / 2 - 58, 175); ctx.lineTo(CW / 2 + 58, 175);
+        ctx.moveTo(CW / 2, 175 - 58); ctx.lineTo(CW / 2, 175 + 58);
+        ctx.stroke();
+        ctx.font = '32px sans-serif';
+        ctx.fillText('🍕', CW / 2 - 16, 185);
+        ctx.fillStyle = '#FDE047';
+        ctx.font = 'bold 16px sans-serif';
+        ctx.fillText('50% = ÷2  •  25% = ÷4', CW / 2 - 85, 252);
+        ctx.restore();
+      } else {
+        // Butterfly Double Mirror
+        ctx.save();
+        ctx.font = '64px sans-serif';
+        ctx.fillText('🦋', CW / 2 - 32, 175 + Math.sin(tNow * 4) * 6);
+        ctx.fillStyle = '#FEF08A';
+        ctx.font = 'bold 18px sans-serif';
+        ctx.fillText('✨ DOUBLE : 6 + 6 = 12  •  7 × 8 = 56', CW / 2 - 140, 246);
+        ctx.restore();
+      }
+
+      // Canvas Answer Buttons
+      (state.cartoonTargets || []).forEach((ct, idx) => {
+        const bx = 155 + idx * 162;
+        const by = 310 + Math.sin(tNow * 3 + idx) * 4;
+        ct.x = bx; ct.y = by; ct.r = 44;
+        ctx.save();
+        ctx.translate(bx, by);
+        ctx.fillStyle = ct.color;
+        ctx.beginPath();
+        ctx.roundRect(-68, -26, 136, 52, 14);
+        ctx.fill();
+        ctx.strokeStyle = '#FEF08A';
+        ctx.lineWidth = 2.5;
+        ctx.stroke();
+        ctx.fillStyle = '#FFFFFF';
+        ctx.font = 'bold 14.5px sans-serif';
+        const lbl = String(ct.label).slice(0, 15);
+        ctx.fillText(lbl, -ctx.measureText(lbl).width / 2, 6);
+        ctx.restore();
+      });
+    }
+
+    // 8G. V17.0 CARTOON SCIENCE HERO TRICKS (SEESAW LEVER, WATER CYCLE, PRISM & HEART-LUNGS)
+    else if (g === 'science_hero_tricks') {
+      const tNow = Date.now() / 1000;
+      const item = state.currentReaItem || {};
+      const trickMode = item.visualTrick || 'lever';
+
+      const grad = ctx.createLinearGradient(0, 0, 0, CH);
+      grad.addColorStop(0, '#064E3B');
+      grad.addColorStop(1, '#022C22');
+      ctx.fillStyle = grad;
+      ctx.fillRect(0, 0, CW, CH);
+
+      // Top Question & Trick Banner
+      ctx.save();
+      ctx.fillStyle = 'rgba(15, 23, 42, 0.94)';
+      ctx.beginPath();
+      ctx.roundRect(16, 10, CW - 32, 54, 14);
+      ctx.fill();
+      ctx.strokeStyle = '#34D399';
+      ctx.lineWidth = 2.5;
+      ctx.stroke();
+      ctx.fillStyle = '#FEF08A';
+      ctx.font = 'bold 16px sans-serif';
+      ctx.fillText(String(state.cartoonStageTitle || '').slice(0, 58), 28, 33);
+      ctx.fillStyle = '#A7F3D0';
+      ctx.font = 'bold 13px sans-serif';
+      ctx.fillText(String(state.cartoonExamTrick || '').slice(0, 68), 28, 52);
+      ctx.restore();
+
+      // Cartoon Science Trick Visuals
+      if (trickMode === 'lever') {
+        // Seesaw Lever: Elephant on left near fulcrum, Mouse on right far!
+        const fulcrumX = CW / 2 - 60;
+        ctx.save();
+        // Base triangle fulcrum
+        ctx.fillStyle = '#F59E0B';
+        ctx.beginPath();
+        ctx.moveTo(fulcrumX, 195);
+        ctx.lineTo(fulcrumX - 22, 235);
+        ctx.lineTo(fulcrumX + 22, 235);
+        ctx.closePath();
+        ctx.fill();
+        ctx.strokeStyle = '#FEF08A';
+        ctx.lineWidth = 2.5;
+        ctx.stroke();
+
+        // Plank tilted
+        const plankAng = -0.12 + Math.sin(tNow * 2.5) * 0.04;
+        ctx.save();
+        ctx.translate(fulcrumX, 195);
+        ctx.rotate(plankAng);
+        ctx.fillStyle = '#D97706';
+        ctx.fillRect(-140, -6, 360, 12);
+        ctx.strokeStyle = '#FEF3C7';
+        ctx.strokeRect(-140, -6, 360, 12);
+        // Elephant on short left arm
+        ctx.font = '48px sans-serif';
+        ctx.fillText('🐘', -120, -12);
+        // Mouse on long right arm
+        ctx.font = '36px sans-serif';
+        ctx.fillText('🐭', 170, -10);
+        ctx.restore();
+
+        ctx.fillStyle = '#A7F3D0';
+        ctx.font = 'bold 15px sans-serif';
+        ctx.fillText('⚖️ Bras long ➜ Force multipliée ! La souris soulève l\'éléphant !', CW / 2 - 190, 255);
+        ctx.restore();
+      } else if (trickMode === 'watercycle') {
+        // Water Cycle: Ocean + Sun + Rising Vapor Arrows + Cloud + Rain
+        ctx.save();
+        // Ocean at bottom
+        ctx.fillStyle = '#0284C7';
+        ctx.fillRect(80, 215, CW - 160, 28);
+        ctx.font = '28px sans-serif';
+        ctx.fillText('🌊', 110, 236);
+        ctx.fillText('☀️', 140, 135);
+        // Rising vapor arrows
+        const vOff = (tNow * 30) % 50;
+        ctx.fillStyle = '#38BDF8';
+        ctx.font = '20px sans-serif';
+        ctx.fillText('⬆️ 💨', 270, 205 - vOff);
+        ctx.fillText('☁️', CW / 2 + 50, 125);
+        ctx.fillText('🌧️', CW / 2 + 50, 165);
+        ctx.fillStyle = '#FEF08A';
+        ctx.font = 'bold 15px sans-serif';
+        ctx.fillText('☀️ Soleil ➜ 💨 Vapeur (Évaporation) ➜ ☁️ Nuages ➜ 🌧️ Pluie', CW / 2 - 180, 255);
+        ctx.restore();
+      } else if (trickMode === 'prism') {
+        // Flashlight + Glass Prism splitting into 7 colors
+        ctx.save();
+        ctx.font = '36px sans-serif';
+        ctx.fillText('🔦', 120, 175);
+        ctx.fillText('💎', CW / 2 - 30, 175);
+        // 7 Rainbow Rays
+        const cols = ['#EF4444', '#F97316', '#FBBF24', '#10B981', '#06B6D4', '#3B82F6', '#8B5CF6'];
+        cols.forEach((col, cIdx) => {
+          ctx.strokeStyle = col;
+          ctx.lineWidth = 3.5;
+          ctx.beginPath();
+          ctx.moveTo(CW / 2 + 10, 165);
+          ctx.lineTo(CW - 180, 125 + cIdx * 14);
+          ctx.stroke();
+        });
+        ctx.fillStyle = '#FEF08A';
+        ctx.font = 'bold 15px sans-serif';
+        ctx.fillText('🌈 Lumière blanche ➜ Séparation en 7 couleurs du prisme !', CW / 2 - 170, 255);
+        ctx.restore();
+      } else {
+        // Lungs & Heart Pump
+        ctx.save();
+        const pulse = 1 + Math.sin(tNow * 6) * 0.12;
+        ctx.font = '54px sans-serif';
+        ctx.fillText('🫁', CW / 2 - 80, 175);
+        ctx.save();
+        ctx.translate(CW / 2 + 50, 155);
+        ctx.scale(pulse, pulse);
+        ctx.fillText('❤️', -25, 18);
+        ctx.restore();
+        ctx.fillStyle = '#FEF08A';
+        ctx.font = 'bold 15px sans-serif';
+        ctx.fillText('🫁 Poumons = 💨 O₂ Air  •  ❤️ Cœur = Pompe du sang', CW / 2 - 160, 255);
+        ctx.restore();
+      }
+
+      // Canvas Answer Buttons
+      (state.cartoonTargets || []).forEach((ct, idx) => {
+        const bx = 155 + idx * 162;
+        const by = 310 + Math.sin(tNow * 3 + idx) * 4;
+        ct.x = bx; ct.y = by; ct.r = 44;
+        ctx.save();
+        ctx.translate(bx, by);
+        ctx.fillStyle = ct.color;
+        ctx.beginPath();
+        ctx.roundRect(-68, -26, 136, 52, 14);
+        ctx.fill();
+        ctx.strokeStyle = '#FEF08A';
+        ctx.lineWidth = 2.5;
+        ctx.stroke();
+        ctx.fillStyle = '#FFFFFF';
+        ctx.font = 'bold 14px sans-serif';
+        const lbl = String(ct.label).slice(0, 15);
+        ctx.fillText(lbl, -ctx.measureText(lbl).width / 2, 6);
+        ctx.restore();
+      });
+    }
+
     // 8E. REA INTERACTIVE SCIENCE ECOSYSTEM, MATTER, MAGNETS & SOLAR SYSTEM SIMULATOR
     else if (g === 'science_ecosystem') {
       const tNow = Date.now() / 1000;
@@ -12030,7 +12758,7 @@ body {
         ctx.stroke();
         ctx.fillStyle = '#A7F3D0';
         ctx.font = 'bold 12.5px sans-serif';
-        ctx.fillText('🎓 ' + String(state.cartoonExamTrick).replace(/^💡\s*/, '').slice(0, 82), 142, 155);
+        ctx.fillText('🎓 ' + String(state.cartoonExamTrick).replace(/^💡\\s*/, '').slice(0, 82), 142, 155);
         ctx.restore();
       }
 
@@ -12101,8 +12829,8 @@ body {
         ctx.font = '26px sans-serif';
         ctx.fillText(ct.icon, -14, -3);
 
-        const shortLbl = String(ct.label).replace(/^[\u{1F300}-\u{1FAFF}\u{2600}-\u{27BF}]\s*/u, '').slice(0, 16);
-        const cleanLbl = String(ct.label).replace(/^[\u{1F1E6}-\u{1F1FF}]{2}\s*|^[\u{1F300}-\u{1FAFF}\u{2600}-\u{27BF}]\s*/u, '').trim();
+        const shortLbl = String(ct.label).replace(/^(?:(?:[\uD83C][\uDDE6-\uDDFF]){2}|[\uD800-\uDBFF][\uDC00-\uDFFF]|[\u2600-\u27BF])\s*/, '').slice(0, 16);
+        const cleanLbl = String(ct.label).replace(/^(?:(?:[\uD83C][\uDDE6-\uDDFF]){2}|[\uD800-\uDBFF][\uDC00-\uDFFF]|[\u2600-\u27BF])\s*/, '').trim();
         const fitLbl = cleanLbl.length > 18 ? cleanLbl.slice(0, 17) + '…' : cleanLbl;
         ctx.font = fitLbl.length > 12 ? 'bold 11.5px sans-serif' : 'bold 13px sans-serif';
         const tw = ctx.measureText(fitLbl).width;
@@ -12241,7 +12969,7 @@ body {
         sessionStorage.clear();
       } catch (e) {}
       const url = new URL(window.location.href);
-      url.searchParams.set('v', '16.0.' + Date.now());
+      url.searchParams.set('v', '17.0.' + Date.now());
       window.location.replace(url.toString());
     });
   }
