@@ -2206,29 +2206,35 @@ body {
     font-size: 0.74rem !important;
   }
 
-  /* Gamified Level-Up / Activity-Won Toast Notification */
+  /* V18.0 REA-ULTRA-PERFECT-FIT: Sleek Top-Right Toast (Zero overlap with Accueil on left!) */
   .gamified-reward-toast {
     position: fixed;
-    top: 16px;
-    left: 50%;
-    transform: translateX(-50%) translateY(-120px);
+    top: 12px;
+    right: 14px;
+    left: auto;
+    transform: translateY(-90px);
     background: linear-gradient(135deg, #0F172A 0%, #1E1B4B 60%, #E5252A 100%);
     color: #FFFFFF;
-    padding: 12px 22px;
+    padding: 5px 12px;
     border-radius: 999px;
-    border: 2.5px solid #FDE047;
-    box-shadow: 0 16px 36px rgba(0,0,0,0.45);
+    border: 1.5px solid #FDE047;
+    box-shadow: 0 14px 30px rgba(0,0,0,0.5);
     z-index: 9999;
     font-weight: 900;
-    font-size: 0.95rem;
+    font-size: 0.72rem;
     display: flex;
     align-items: center;
-    gap: 10px;
-    transition: transform 0.38s cubic-bezier(0.34, 1.56, 0.64, 1);
+    justify-content: center;
+    gap: 6px;
+    max-width: 210px;
+    box-sizing: border-box;
+    white-space: normal;
+    text-align: center;
+    transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
     pointer-events: none;
   }
   .gamified-reward-toast.show {
-    transform: translateX(-50%) translateY(0);
+    transform: translateY(0);
   }
 
   /* Phone Responsive Optimizations (<= 680px) */
@@ -2986,10 +2992,36 @@ body {
   #ingame-lvl-pills {
     display: none !important;
   }
-  .btn-interactive, .btn-lang-choice, .btn-mcq-choice, .btn-comp-option {
+  /* V18.0 ULTRA-PERFECT-FIT: Guaranteed Box-Fit with ZERO Overlap or Truncation */
+  .btn-interactive, .btn-lang-choice, .btn-mcq-choice, .btn-comp-option, .touch-opt-btn {
     box-sizing: border-box !important;
     max-width: 100% !important;
     overflow: hidden !important;
+    word-break: normal !important;
+    overflow-wrap: break-word !important;
+    padding: 10px 14px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    min-height: 54px !important;
+    height: auto !important;
+    border-radius: 18px !important;
+  }
+  .btn-interactive span:first-child,
+  .btn-lang-choice span:first-child,
+  .btn-mcq-choice span:first-child {
+    flex: 1 1 auto !important;
+    max-width: calc(100% - 42px) !important;
+    font-size: clamp(0.85rem, 2.8vw, 1.05rem) !important;
+    line-height: 1.3 !important;
+    white-space: normal !important;
+  }
+  .answers-grid {
+    display: grid !important;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)) !important;
+    gap: 12px !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
   }
   .btn-interactive span:first-child,
   .btn-lang-choice span:first-child,
@@ -3037,7 +3069,7 @@ body {
         <option value="en">🇬🇧 English (Studio Voice)</option>
       </select>
       <button class="btn-pill" id="btn-sound-toggle">🔊 Son</button>
-      <button class="version-cache-pill" id="btn-version-cache" title="Version active • Cliquer pour vider le cache et recharger">🚀 v17.0 NATIVE-CARTOON-TRICKS (v1.10.0) • 🔄 Vider Cache</button>
+      <button class="version-cache-pill" id="btn-version-cache" title="Version active • Cliquer pour vider le cache et recharger">🚀 v18.0 REA-ULTRA-PERFECT-FIT (v1.11.0) • 🔄 Vider Cache</button>
     </div>
   </header>
 
@@ -3169,7 +3201,7 @@ body {
           <h3>Astuces Maths Cartoon : Doigts, Doubles & Pont de 10</h3>
           <div class="portal-curriculum-tag">Pont de 10 • 10 Doigts ×9 • Doubles • Fractions %</div>
         </div>
-        <span class="card-rea-badge">✨ v17.0 NATIVE-CARTOON-TRICKS (v1.10.0) • ▶ JOUER</span>
+        <span class="card-rea-badge">✨ v18.0 REA-ULTRA-PERFECT-FIT (v1.11.0) • ▶ JOUER</span>
       </div>
       <p class="portal-desc">Apprends les astuces cartoon pour calculer instantanément : pont arc-en-ciel de 10, astuce des doigts pour la table de 9, et miroir des doubles !</p>
       <div class="portal-counts-badge-bar">
@@ -3188,7 +3220,7 @@ body {
           <h3>Astuces Sciences Cartoon : Leviers, Corps, Eau & Lumière</h3>
           <div class="portal-curriculum-tag">Levier Souris-Éléphant • Cycle de l'Eau • Prisme Arc-en-Ciel</div>
         </div>
-        <span class="card-rea-badge">✨ v17.0 NATIVE-CARTOON-TRICKS (v1.10.0) • ▶ JOUER</span>
+        <span class="card-rea-badge">✨ v18.0 REA-ULTRA-PERFECT-FIT (v1.11.0) • ▶ JOUER</span>
       </div>
       <p class="portal-desc">Découvre les super-pouvoirs de la science : comment soulever un éléphant avec un levier, le voyage de la goutte d'eau et le prisme de lumière !</p>
       <div class="portal-counts-badge-bar">
@@ -3206,7 +3238,7 @@ body {
           <h3>Tetris Éducatif : Blocs Mots & Maths</h3>
           <div class="portal-curriculum-tag">Tetris Arcade • Nombres • Syllabes • Auto-Drop</div>
         </div>
-        <span class="card-rea-badge">✨ v17.0 NATIVE-CARTOON-TRICKS (v1.10.0) • ▶ JOUER</span>
+        <span class="card-rea-badge">✨ v18.0 REA-ULTRA-PERFECT-FIT (v1.11.0) • ▶ JOUER</span>
       </div>
       <p class="portal-desc">Empile les blocs colorés Tetris de nombres, calculs et syllabes pour compléter les lignes et ouvrir le coffre à récompenses !</p>
       <div class="portal-counts-badge-bar">
@@ -3225,7 +3257,7 @@ body {
           <h3>Course Auto Turbo : Rallye Savane</h3>
           <div class="portal-curriculum-tag">Course 3 Voies • Auto-Pilote • Récompenses</div>
         </div>
-        <span class="card-rea-badge">✨ v17.0 NATIVE-CARTOON-TRICKS (v1.10.0) • ▶ JOUER</span>
+        <span class="card-rea-badge">✨ v18.0 REA-ULTRA-PERFECT-FIT (v1.11.0) • ▶ JOUER</span>
       </div>
       <p class="portal-desc">Pilote le bolide turbo de Léo sur 3 voies ou active l'Auto-Pilote pour franchir le portique de la bonne réponse avec boost nitro !</p>
       <div class="portal-counts-badge-bar">
@@ -3244,7 +3276,7 @@ body {
           <h3>Prodigy Maths : Monstres & Cristaux</h3>
           <div class="portal-curriculum-tag">Prodigy Math • Sorts Visuels • Coffre Magique</div>
         </div>
-        <span class="card-rea-badge">✨ v17.0 NATIVE-CARTOON-TRICKS (v1.10.0) • ▶ JOUER</span>
+        <span class="card-rea-badge">✨ v18.0 REA-ULTRA-PERFECT-FIT (v1.11.0) • ▶ JOUER</span>
       </div>
       <p class="portal-desc">Lance des sorts mathématiques visuels (addition, tables, fractions, algèbre) pour apprivoiser les créatures et gagner des familiers !</p>
       <div class="portal-counts-badge-bar">
@@ -3263,7 +3295,7 @@ body {
           <h3>Labo Sciences : Écosystème, Aimants & Espace</h3>
           <div class="portal-curriculum-tag">Chaîne Alimentaire • États de l'Eau • Aimants • Planètes</div>
         </div>
-        <span class="card-rea-badge">✨ v17.0 NATIVE-CARTOON-TRICKS (v1.10.0) • ▶ JOUER</span>
+        <span class="card-rea-badge">✨ v18.0 REA-ULTRA-PERFECT-FIT (v1.11.0) • ▶ JOUER</span>
       </div>
       <p class="portal-desc">Simule la chaîne alimentaire de la savane, les 3 états de l'eau (0°C/100°C), les pôles d'aimants (N⇄S) et le système solaire !</p>
       <div class="portal-counts-badge-bar">
@@ -3281,7 +3313,7 @@ body {
           <h3>Grammaire & Syntaxe (FR / EN)</h3>
           <div class="portal-curriculum-tag">Noms • Verbes • Adjectifs • Accords</div>
         </div>
-        <span class="card-rea-badge">✨ v17.0 NATIVE-CARTOON-TRICKS (v1.10.0) • ▶ JOUER</span>
+        <span class="card-rea-badge">✨ v18.0 REA-ULTRA-PERFECT-FIT (v1.11.0) • ▶ JOUER</span>
       </div>
       <p class="portal-desc">Maîtrise la grammaire en français et en anglais (articles, pluriels, nature des mots, accords sujet-verbe) avec une seule voix native pure !</p>
       <div class="portal-counts-badge-bar">
@@ -3300,7 +3332,7 @@ body {
           <h3>Vocabulaire & Mots du Monde (FR / EN)</h3>
           <div class="portal-curriculum-tag">Synonymes • Contraires • Thèmes d'Afrique</div>
         </div>
-        <span class="card-rea-badge">✨ v17.0 NATIVE-CARTOON-TRICKS (v1.10.0) • ▶ JOUER</span>
+        <span class="card-rea-badge">✨ v18.0 REA-ULTRA-PERFECT-FIT (v1.11.0) • ▶ JOUER</span>
       </div>
       <p class="portal-desc">Enrichis ton vocabulaire en français et en anglais : synonymes, contraires, objets de l'école, animaux et métiers avec prononciation native !</p>
       <div class="portal-counts-badge-bar">
@@ -3319,7 +3351,7 @@ body {
           <h3>Conjugaison & Temps (FR / EN)</h3>
           <div class="portal-curriculum-tag">Présent • Passé • Futur • Être/Avoir & To Be</div>
         </div>
-        <span class="card-rea-badge">✨ v17.0 NATIVE-CARTOON-TRICKS (v1.10.0) • ▶ JOUER</span>
+        <span class="card-rea-badge">✨ v18.0 REA-ULTRA-PERFECT-FIT (v1.11.0) • ▶ JOUER</span>
       </div>
       <p class="portal-desc">Voyage dans le temps (Passé, Présent, Futur) pour conjuguer les verbes en français et en anglais selon le pronom sujet !</p>
       <div class="portal-counts-badge-bar">
@@ -3338,7 +3370,7 @@ body {
           <h3>Studio Prononciation (FR ⇄ EN)</h3>
           <div class="portal-curriculum-tag">Anglais & Français • Micro Live • Spectre</div>
         </div>
-        <span class="card-rea-badge">✨ v17.0 NATIVE-CARTOON-TRICKS (v1.10.0) • ▶ JOUER</span>
+        <span class="card-rea-badge">✨ v18.0 REA-ULTRA-PERFECT-FIT (v1.11.0) • ▶ JOUER</span>
       </div>
       <p class="portal-desc">Écoute la vraie voix studio française et anglaise, parle dans ton micro pour obtenir ton score de prononciation et suis les billes de rythme !</p>
       <div class="portal-counts-badge-bar">
@@ -3357,7 +3389,7 @@ body {
           <h3>Géographie des Pays d'Afrique</h3>
           <div class="portal-curriculum-tag">Carte SVG Interactive • Drapeaux • Capitales</div>
         </div>
-        <span class="card-rea-badge">✨ v17.0 NATIVE-CARTOON-TRICKS (v1.10.0) • ▶ JOUER</span>
+        <span class="card-rea-badge">✨ v18.0 REA-ULTRA-PERFECT-FIT (v1.11.0) • ▶ JOUER</span>
       </div>
       <p class="portal-desc">Explore la vraie carte vectorielle interactive des pays d'Afrique ! Touche les pays au doigt, découvre leurs drapeaux, leurs capitales et leurs fleuves !</p>
       <div class="portal-counts-badge-bar">
@@ -3376,7 +3408,7 @@ body {
           <h3>Fun Facts & Culture Générale (QCM)</h3>
           <div class="portal-curriculum-tag">Quiz Choix Multiples • Indice 50/50 • Afrique</div>
         </div>
-        <span class="card-rea-badge">✨ v17.0 NATIVE-CARTOON-TRICKS (v1.10.0) • ▶ JOUER</span>
+        <span class="card-rea-badge">✨ v18.0 REA-ULTRA-PERFECT-FIT (v1.11.0) • ▶ JOUER</span>
       </div>
       <p class="portal-desc">Réponds aux questions à choix multiples (A, B, C, D) avec l'indice 50/50 sur les merveilles d'Afrique, les animaux, l'espace et les sciences !</p>
       <div class="portal-counts-badge-bar">
@@ -3395,7 +3427,7 @@ body {
           <h3>Compréhension de Texte & Contes</h3>
           <div class="portal-curriculum-tag">Lecture Karaoké FR/EN • Quiz Compréhension</div>
         </div>
-        <span class="card-rea-badge">✨ v17.0 NATIVE-CARTOON-TRICKS (v1.10.0) • ▶ JOUER</span>
+        <span class="card-rea-badge">✨ v18.0 REA-ULTRA-PERFECT-FIT (v1.11.0) • ▶ JOUER</span>
       </div>
       <p class="portal-desc">Écoute et lis des contes africains et scientifiques bilingues avec surlignage phrase par phrase, puis réponds aux questions de compréhension !</p>
       <div class="portal-counts-badge-bar">
@@ -3414,7 +3446,7 @@ body {
           <h3>Monstre des Syllabes & Lecture</h3>
           <div class="portal-curriculum-tag">Feed The Monster • Voyelles & Consonnes</div>
         </div>
-        <span class="card-rea-badge">✨ v17.0 NATIVE-CARTOON-TRICKS (v1.10.0) • ▶ JOUER</span>
+        <span class="card-rea-badge">✨ v18.0 REA-ULTRA-PERFECT-FIT (v1.11.0) • ▶ JOUER</span>
       </div>
       <p class="portal-desc">Nourris le Monstre magique avec les bonnes syllabes colorées (voyelles en rouge, consonnes en bleu) pour former des mots en français et en anglais !</p>
       <div class="portal-counts-badge-bar">
@@ -3433,7 +3465,7 @@ body {
           <h3>Maths 3D, Fractions & Balance Algébrique</h3>
           <div class="portal-curriculum-tag">Boîtes de 10 • Disque Fractions • Balance 2x+4</div>
         </div>
-        <span class="card-rea-badge">✨ v17.0 NATIVE-CARTOON-TRICKS (v1.10.0) • ▶ JOUER</span>
+        <span class="card-rea-badge">✨ v18.0 REA-ULTRA-PERFECT-FIT (v1.11.0) • ▶ JOUER</span>
       </div>
       <p class="portal-desc">Manipule les boîtes de 10, le disque interactif des fractions et la balance algébrique selon ta classe (de la Maternelle au CM2 / Primary 6) !</p>
       <div class="portal-counts-badge-bar">
@@ -3452,7 +3484,7 @@ body {
           <h3>Labo Chimie & Échelle pH</h3>
           <div class="portal-curriculum-tag">Sciences • Réactions • Indicateur pH 0–14</div>
         </div>
-        <span class="card-rea-badge">✨ v17.0 NATIVE-CARTOON-TRICKS (v1.10.0) • ▶ JOUER</span>
+        <span class="card-rea-badge">✨ v18.0 REA-ULTRA-PERFECT-FIT (v1.11.0) • ▶ JOUER</span>
       </div>
       <p class="portal-desc">Verse les éprouvettes dans l'erlenmeyer, observe l'indicateur de pH en direct, les mélanges de couleurs et l'effervescence des bulles de gaz !</p>
       <div class="portal-counts-badge-bar">
@@ -3471,7 +3503,7 @@ body {
           <h3>Bassin d'Archimède (Flotte/Coule)</h3>
           <div class="portal-curriculum-tag">Physique • Vecteurs Poussée ↑Fa & Poids ↓P</div>
         </div>
-        <span class="card-rea-badge">✨ v17.0 NATIVE-CARTOON-TRICKS (v1.10.0) • ▶ JOUER</span>
+        <span class="card-rea-badge">✨ v18.0 REA-ULTRA-PERFECT-FIT (v1.11.0) • ▶ JOUER</span>
       </div>
       <p class="portal-desc">Plonge le bois, la mangue, l'or ou la brique dans l'eau et visualise en direct les vecteurs de la poussée d'Archimède (↑Fa) et du poids (↓P) !</p>
       <div class="portal-counts-badge-bar">
@@ -3490,7 +3522,7 @@ body {
           <h3>Circuit Électrique 3D & Oscilloscope</h3>
           <div class="portal-curriculum-tag">Loi d'Ohm (U=R×I) • Électrons & Hélice</div>
         </div>
-        <span class="card-rea-badge">✨ v17.0 NATIVE-CARTOON-TRICKS (v1.10.0) • ▶ JOUER</span>
+        <span class="card-rea-badge">✨ v18.0 REA-ULTRA-PERFECT-FIT (v1.11.0) • ▶ JOUER</span>
       </div>
       <p class="portal-desc">Ferme l'interrupteur pour observer la circulation des électrons bleus, allumer l'ampoule de 4,5 V et faire tourner l'hélice du moteur électrique !</p>
       <div class="portal-counts-badge-bar">
@@ -3509,7 +3541,7 @@ body {
           <h3>Jardin Botanique & Photosynthèse</h3>
           <div class="portal-curriculum-tag">Biologie • Racines, Tige & Floraison 21 Jours</div>
         </div>
-        <span class="card-rea-badge">✨ v17.0 NATIVE-CARTOON-TRICKS (v1.10.0) • ▶ JOUER</span>
+        <span class="card-rea-badge">✨ v18.0 REA-ULTRA-PERFECT-FIT (v1.11.0) • ▶ JOUER</span>
       </div>
       <p class="portal-desc">Dose la pluie et le soleil pour faire germer le Baobab, le Tournesol, le Cacaoyer et l'Hibiscus en observant les racines pousser sous terre !</p>
       <div class="portal-counts-badge-bar">
@@ -3528,7 +3560,7 @@ body {
           <h3>Comet Defender : Calcul Spatial</h3>
           <div class="portal-curriculum-tag">TuxMath Arcade • Lasers & Calcul Mental</div>
         </div>
-        <span class="card-rea-badge">✨ v17.0 NATIVE-CARTOON-TRICKS (v1.10.0) • ▶ JOUER</span>
+        <span class="card-rea-badge">✨ v18.0 REA-ULTRA-PERFECT-FIT (v1.11.0) • ▶ JOUER</span>
       </div>
       <p class="portal-desc">Pilote le vaisseau spatial et tire au laser sur la comète qui porte la bonne réponse à l'équation affichée sur le tableau de bord !</p>
       <div class="portal-counts-badge-bar">
@@ -3547,7 +3579,7 @@ body {
           <h3>Tangram Géométrique Magnétique</h3>
           <div class="portal-curriculum-tag">Mathigon Euclid • Polygones & Silhouettes</div>
         </div>
-        <span class="card-rea-badge">✨ v17.0 NATIVE-CARTOON-TRICKS (v1.10.0) • ▶ JOUER</span>
+        <span class="card-rea-badge">✨ v18.0 REA-ULTRA-PERFECT-FIT (v1.11.0) • ▶ JOUER</span>
       </div>
       <p class="portal-desc">Assemble la Fusée, le Bateau, le Chat, le Lion et le Papillon en glissant les polygones géométriques avec aimantation de précision !</p>
       <div class="portal-counts-badge-bar">
@@ -3566,7 +3598,7 @@ body {
           <h3>Donjon Labyrinthe 3D (Vue 3D & Raycast)</h3>
           <div class="portal-curriculum-tag">Blockly Maze • Algorithme & Syllabes</div>
         </div>
-        <span class="card-rea-badge">✨ v17.0 NATIVE-CARTOON-TRICKS (v1.10.0) • ▶ JOUER</span>
+        <span class="card-rea-badge">✨ v18.0 REA-ULTRA-PERFECT-FIT (v1.11.0) • ▶ JOUER</span>
       </div>
       <p class="portal-desc">Guide Léo dans les 5 cartes de la Savane (Oasis, Pyramide, Volcan, Jungle) en collectant les syllabes et nombres d'or ou utilise le bouton Auto-Pas !</p>
       <div class="portal-counts-badge-bar">
@@ -3588,7 +3620,7 @@ body {
         <div class="hud-badge red" id="hud-exercise-badge">🎯 Exercice 1/5 • Niveau 1</div>
       </div>
       <div class="hud-stats">
-        <span class="hud-badge" id="hud-version-pill" style="background:#312E81;color:#FDE047;border:1.5px solid #38BDF8;font-size:0.72rem;padding:4px 8px;">🚀 v17.0 (v1.10.0)</span>
+        <span class="hud-badge" id="hud-version-pill" style="background:#312E81;color:#FDE047;border:1.5px solid #38BDF8;font-size:0.72rem;padding:4px 8px;">🚀 v18.0 (v1.11.0)</span>
         <div class="hud-badge" id="hud-reward-chest" title="Coffre à Récompenses Éducatives (Stickers & Trophées)" style="background:#065F46;color:#FEF08A;border:1.5px solid #34D399;cursor:pointer;">🎁 <span id="hud-sticker-count">1</span> <span id="hud-latest-sticker">🦁</span></div>
         <div class="hud-badge">⭐ <span id="hud-score-val">0</span> XP</div>
         <div class="combo-multiplier" id="hud-combo-badge">🔥 COMBO x1</div>
@@ -6856,53 +6888,57 @@ body {
       const isEn = lang === 'en';
 
       if (isEn) {
-        s = s.replace(/\b1\/2\b/g, ' one half ')
-             .replace(/\b1\/4\b/g, ' one quarter ')
-             .replace(/\b3\/4\b/g, ' three quarters ')
-             .replace(/\b50%\b/g, ' fifty percent ')
-             .replace(/\b25%\b/g, ' twenty-five percent ')
-             .replace(/\b100%\b/g, ' one hundred percent ')
-             .replace(/\+/g, ' plus ')
-             .replace(/\s-\s/g, ' minus ')
-             .replace(/[×*]/g, ' times ')
-             .replace(/[÷]/g, ' divided by ')
-             .replace(/=/g, ' equals ')
-             .replace(/°C\b/g, ' degrees Celsius ')
-             .replace(/cm²\b/g, ' square centimeters ')
-             .replace(/cm³\b/g, ' cubic centimeters ')
-             .replace(/km\/h\b/g, ' kilometers per hour ')
-             .replace(/O₂/g, ' oxygen ')
-             .replace(/CO₂/g, ' carbon dioxide ')
-             .replace(/H₂O/g, ' water ');
+        s = s.split('1/2').join(' one half ')
+             .split('1/4').join(' one quarter ')
+             .split('3/4').join(' three quarters ')
+             .split('50%').join(' fifty percent ')
+             .split('25%').join(' twenty-five percent ')
+             .split('100%').join(' one hundred percent ')
+             .split('+').join(' plus ')
+             .split(' - ').join(' minus ')
+             .split('=').join(' equals ')
+             .split('°C').join(' degrees Celsius ')
+             .split('cm²').join(' square centimeters ')
+             .split('cm³').join(' cubic centimeters ')
+             .split('km/h').join(' kilometers per hour ')
+             .split('O₂').join(' oxygen ')
+             .split('CO₂').join(' carbon dioxide ')
+             .split('H₂O').join(' water ');
       } else {
-        s = s.replace(/\b1\/2\b/g, ' un demi ')
-             .replace(/\b1\/4\b/g, ' un quart ')
-             .replace(/\b3\/4\b/g, ' trois quarts ')
-             .replace(/\b50%\b/g, ' cinquante pour cent ')
-             .replace(/\b25%\b/g, ' vingt-cinq pour cent ')
-             .replace(/\b100%\b/g, ' cent pour cent ')
-             .replace(/\+/g, ' plus ')
-             .replace(/\s-\s/g, ' moins ')
-             .replace(/[×*]/g, ' fois ')
-             .replace(/[÷]/g, ' divisé par ')
-             .replace(/=/g, ' égale ')
-             .replace(/°C\b/g, ' degrés Celsius ')
-             .replace(/cm²\b/g, ' centimètres carrés ')
-             .replace(/cm³\b/g, ' centimètres cubes ')
-             .replace(/km\/h\b/g, ' kilomètres par heure ')
-             .replace(/O₂/g, ' oxygène ')
-             .replace(/CO₂/g, ' dioxyde de carbone ')
-             .replace(/H₂O/g, ' eau ');
+        s = s.split('1/2').join(' un demi ')
+             .split('1/4').join(' un quart ')
+             .split('3/4').join(' trois quarts ')
+             .split('50%').join(' cinquante pour cent ')
+             .split('25%').join(' vingt-cinq pour cent ')
+             .split('100%').join(' cent pour cent ')
+             .split('+').join(' plus ')
+             .split(' - ').join(' moins ')
+             .split('=').join(' égale ')
+             .split('°C').join(' degrés Celsius ')
+             .split('cm²').join(' centimètres carrés ')
+             .split('cm³').join(' centimètres cubes ')
+             .split('km/h').join(' kilomètres par heure ')
+             .split('O₂').join(' oxygène ')
+             .split('CO₂').join(' dioxyde de carbone ')
+             .split('H₂O').join(' eau ');
       }
 
-      s = s.replace(/(?:[\uD800-\uDBFF][\uDC00-\uDFFF]|[\u2600-\u27BF])/g, ' ')
+      s = s.replace(/[×*]/g, isEn ? ' times ' : ' fois ')
+           .replace(/[÷]/g, isEn ? ' divided by ' : ' divisé par ')
            .replace(/[➜➔→←↑↓⇄▲▼]/g, ' ')
-           .replace(/[_]{2,}/g, isEn ? ' blank ' : " point d'interrogation ")
-           .replace(/\[\s*\?\s*\]/g, isEn ? ' blank ' : " point d'interrogation ")
            .replace(/[|•🎓🔬📝💡❓🎁💥✨🚀]/g, ' ')
-           .replace(/\s+/g, ' ')
+           .split('[?]').join(isEn ? ' blank ' : " point d'interrogation ")
+           .split('(?)').join(isEn ? ' blank ' : " point d'interrogation ")
+           .split('___').join(isEn ? ' blank ' : " point d'interrogation ")
+           .split('__').join(isEn ? ' blank ' : " point d'interrogation ");
+
+      s = s.replace(/[�-�][�-�]/g, ' ')
+           .replace(/[☀-➿]/g, ' ')
+           .replace(/[�-�]/g, ' ')
+           .replace(/s+/g, ' ')
            .trim();
 
+      if (typeof s.toWellFormed === 'function') s = s.toWellFormed();
       return s;
     },
 
@@ -6943,7 +6979,15 @@ body {
       function gg(a, b, c, d, x, s, t) { return cmn((b & d) | (c & (~d)), a, b, x, s, t); }
       function hh(a, b, c, d, x, s, t) { return cmn(b ^ c ^ d, a, b, x, s, t); }
       function ii(a, b, c, d, x, s, t) { return cmn(c ^ (b | (~d)), a, b, x, s, t); }
-      const utf8 = unescape(encodeURIComponent(inputStr));
+      let sInput = String(inputStr || '');
+      if (typeof sInput.toWellFormed === 'function') sInput = sInput.toWellFormed();
+      let encodedStr;
+      try {
+        encodedStr = encodeURIComponent(sInput);
+      } catch (err) {
+        encodedStr = encodeURIComponent(sInput.replace(/[�-�]/g, ' '));
+      }
+      const utf8 = unescape(encodedStr);
       const n = utf8.length;
       const words = new Array(((n + 8) >> 6) * 16 + 16).fill(0);
       for (let i = 0; i < n; i++) words[i >> 2] |= utf8.charCodeAt(i) << ((i % 4) * 8);
@@ -7002,7 +7046,7 @@ body {
       const urls = [
         "public/audio_cache/" + cacheFile,
         "audio_cache/" + cacheFile,
-        "/tts?lang=" + lang + "&q=" + encodeURIComponent(text.trim())
+        "/tts?lang=" + lang + "&q=" + (function(t){ try { return encodeURIComponent(typeof t.toWellFormed === "function" ? t.toWellFormed() : t); } catch(e){ return encodeURIComponent(t.replace(/[�-�]/g, " ")); } })(text.trim())
       ];
       let urlIdx = 0;
 
@@ -7265,6 +7309,21 @@ body {
           t.tilt = 35;
         }
       });
+    } else if (g === 'math_magic_tricks') {
+      const item = state.currentReaItem || {};
+      if (item.visualTrick === 'finger9') {
+        for (let f = 1; f <= 10; f++) {
+          const fx = 150 + f * 48 + (f > 5 ? 24 : 0);
+          if (Math.hypot(p.x - fx, p.y - 180) < 32) {
+            item.bentFinger = f;
+            item.tens = f - 1;
+            item.ones = 10 - f;
+            AudioEngine.playSnap();
+            createExplosion(fx, 180, '#FDE047', 14);
+            VoiceEngine.speak(f === 1 ? (state.lang === 'en' ? "1st finger down!" : "Premier doigt baissé !") : (state.lang === 'en' ? (f + "th finger down!") : (f + "e doigt baissé !")));
+          }
+        }
+      }
     } else if (g === 'botany') {
       if (Math.hypot(p.x - state.wateringCan.x, p.y - state.wateringCan.y) < 45) {
         state.dragged = state.wateringCan;
@@ -8563,12 +8622,32 @@ body {
         ansBox.innerHTML = '';
         const floats = targetItem.rho < 1.0;
         [
-          { label: isEn ? "🌊 It Floats! (Density < 1)" : "🌊 Il Flotte ! (Plus léger que l'eau)", ok: floats },
-          { label: isEn ? "⚓ It Sinks! (Density > 1)" : "⚓ Il Coule ! (Plus lourd que l'eau)", ok: !floats }
+          {
+            title: isEn ? "🌊 It Floats!" : "🌊 Il Flotte !",
+            sub: isEn ? "Density < 1.0 (Lighter than water)" : "d < 1,00 (Plus léger que l'eau)",
+            speech: isEn ? "It Floats! Density is less than 1" : "Il Flotte ! Plus léger que l'eau",
+            ok: floats
+          },
+          {
+            title: isEn ? "⚓ It Sinks!" : "⚓ Il Coule !",
+            sub: isEn ? "Density > 1.0 (Heavier than water)" : "d > 1,00 (Plus lourd que l'eau)",
+            speech: isEn ? "It Sinks! Density is greater than 1" : "Il Coule ! Plus lourd que l'eau",
+            ok: !floats
+          }
         ].forEach(choice => {
           const b = document.createElement('button');
           b.className = 'btn-interactive';
-          b.textContent = choice.label;
+          b.innerHTML = '<div style="display:flex;flex-direction:column;align-items:flex-start;gap:3px;flex:1 1 auto;min-width:0;"><span style="font-weight:900;font-size:1.05rem;line-height:1.2;">' + choice.title + '</span><span style="font-size:0.8rem;opacity:0.88;line-height:1.1;">' + choice.sub + '</span></div><span class="opt-audio-btn" title="Écouter" style="flex:0 0 34px;width:34px;height:34px;display:flex;align-items:center;justify-content:center;background:rgba(255,255,255,0.15);border-radius:50%;">🔊</span>';
+          
+          const spk = b.querySelector('.opt-audio-btn');
+          if (spk) {
+            spk.addEventListener('click', (ev) => {
+              ev.stopPropagation();
+              AudioEngine.playSnap();
+              VoiceEngine.speak(choice.speech);
+            });
+          }
+
           b.onclick = () => {
             targetItem.x = CW / 2;
             targetItem.y = state.waterSurfaceY + 20;
@@ -9159,7 +9238,7 @@ body {
       ? "Read or listen to the story and answer the comprehension question!"
       : "Lis ou écoute l'histoire puis réponds à la question de compréhension !";
 
-    const sentences = storyFullText.split(/(?<=[.!?])\s+/);
+    const sentences = storyFullText.split(/(?<=[.!?])s+/);
     const container = $('story-text-container');
     container.innerHTML = '';
     sentences.forEach((sent, idx) => {
@@ -9892,8 +9971,8 @@ body {
     }
 
     // Build ultra-clean synchronized spoken prompt (Question + Options + Exam Trick)
-    const cleanOptsSpoken = optsList.map(o => o.replace(/[\u{1F300}-\u{1FAFF}\u{2600}-\u{27BF}]/gu, '').trim()).join(', ');
-    const cleanTrickSpoken = trickText.replace(/^🎓\s*/, '');
+    const cleanOptsSpoken = optsList.map(o => o.replace(/[🌀-🫿☀-➿]/gu, '').trim()).join(', ');
+    const cleanTrickSpoken = trickText.replace(/^🎓s*/, '');
     const fullSpeech = isEn
       ? (qText + '. Choose: ' + cleanOptsSpoken + '. ' + cleanTrickSpoken)
       : (qText + '. Choisis : ' + cleanOptsSpoken + '. ' + cleanTrickSpoken);
@@ -10018,8 +10097,8 @@ body {
     // 2. Build a 100% SYNCHRONIZED Spoken Question Prompt (reads the actual question with the blank + choices + exam trick, NEVER spoiling the answer as if already filled!)
     const spokenBlankWord = isEn ? ' ... blank ... ' : ' ... point d’interrogation ... ';
     const spokenSentenceQuestion = data.sentence.replace('___', spokenBlankWord);
-    const cleanOptionsText = data.options.map(o => String(o).replace(/(?:[\uD800-\uDBFF][\uDC00-\uDFFF]|[\u2600-\u27BF])/g, '').trim()).join(', ');
-    const cleanRuleText = String(data.rule || '').replace(/^💡\s*/, '');
+    const cleanOptionsText = data.options.map(o => String(o).replace(/(?:[�-�][�-�]|[☀-➿])/g, '').trim()).join(', ');
+    const cleanRuleText = String(data.rule || '').replace(/^💡s*/, '');
     const syncedVoicePrompt = isEn
       ? ('Question: ' + spokenSentenceQuestion + '. Choose between: ' + cleanOptionsText + '. Exam Tip: ' + cleanRuleText)
       : ('Question : ' + spokenSentenceQuestion + '. Choisis entre : ' + cleanOptionsText + '. Astuce d’examen : ' + cleanRuleText);
@@ -10081,7 +10160,7 @@ body {
     });
 
     // 3. Activate Ultra-Visual Exam Trick & Worked Example Gear Bar for Language Lab!
-    const shortRuleVisual = String(data.rule || '').replace(/^💡\s*/, '');
+    const shortRuleVisual = String(data.rule || '').replace(/^💡s*/, '');
     activateRheaUniversalCoach(
       isEn ? '🎓 EXAM TRICK & VISUAL GEAR' : '🎓 ASTUCE EXAMEN & EXEMPLE VISUEL',
       [
@@ -10312,7 +10391,7 @@ body {
     return String(s || '')
       .toLowerCase()
       .normalize('NFD')
-      .replace(/[\\u0300-\\u036f]/g, '')
+      .replace(/[\u0300-\u036f]/g, '')
       .replace(/[^a-z0-9]+/g, ' ')
       .trim();
   }
@@ -10320,7 +10399,7 @@ body {
   function resolveCartoonIcon(rawText) {
     const str = String(rawText || '').trim();
     if (!str) return '🌟';
-    const existingMatch = str.match(/(?:(?:[\uD83C][\uDDE6-\uDDFF]){2}|[\uD800-\uDBFF][\uDC00-\uDFFF]|[\u2600-\u27BF])/);
+    const existingMatch = str.match(/(?:(?:[�][�-�]){2}|[�-�][�-�]|[☀-➿])/);
     if (existingMatch && existingMatch[0] !== '✍️' && existingMatch[0] !== '🗂️' && existingMatch[0] !== '⏳') {
       return existingMatch[0];
     }
@@ -10348,7 +10427,7 @@ body {
         found.push(em);
       }
     };
-    const explicit = combined.match(/(?:(?:[\uD83C][\uDDE6-\uDDFF]){2}|[\uD800-\uDBFF][\uDC00-\uDFFF]|[\u2600-\u27BF])/g) || [];
+    const explicit = combined.match(/(?:(?:[�][�-�]){2}|[�-�][�-�]|[☀-➿])/g) || [];
     explicit.forEach(addUnique);
 
     const words = combined.split(/[^a-zA-ZÀ-ÿ0-9'-]+/).filter(Boolean);
@@ -10376,7 +10455,7 @@ body {
 
   function decorateVisualAssetText(rawText, fallbackHero) {
     const str = String(rawText || '').trim();
-    if (/(?:(?:[\uD83C][\uDDE6-\uDDFF]){2}|[\uD800-\uDBFF][\uDC00-\uDFFF]|[\u2600-\u27BF])/.test(str)) return str;
+    if (/(?:(?:[�][�-�]){2}|[�-�][�-�]|[☀-➿])/.test(str)) return str;
     let ico = resolveCartoonIcon(str);
     if (!ico || ico === '🌟' || ico === '🔢' || ico === '🔤') {
       ico = (fallbackHero && fallbackHero !== '🌟') ? fallbackHero : (state.cartoonHeroEmoji || ico || '🌟');
@@ -10602,6 +10681,60 @@ body {
     $('level-selector-section').style.display = 'flex';
     $('category-tabs').style.setProperty('display', 'flex', 'important');
     window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  // ============================================================================
+  // V18.0 REA-ULTRA-PERFECT-FIT: ZERO OVERLAP & 100% BOX-FIT CANVAS HELPERS
+  // ============================================================================
+  function formatShortCardLabel(rawStr, fallbackEmoji) {
+    if (!rawStr) return fallbackEmoji || '⭐';
+    let str = String(rawStr).trim();
+    // 1. Extract main answer before parentheses
+    if (str.indexOf('(') !== -1) {
+      str = str.split('(')[0].trim();
+    }
+    // 2. Extract before arrows
+    if (str.indexOf('➜') !== -1) {
+      str = str.split('➜')[0].trim();
+    }
+    // 3. Known science phrases
+    if (/s'évapore|evaporates/i.test(str)) return 'Vapeur 💨';
+    if (/gèle en glaçon|freezes/i.test(str)) return 'Glaçon 🧊';
+    if (/chocolat|chocolate/i.test(str)) return 'Chocolat 🍫';
+    if (/s'endort|sleep/i.test(str)) return 'Sommeil 😴';
+    if (/Approcher le pivot|Move fulcrum.*near/i.test(str)) return 'Approcher 🔺';
+    if (/Éloigner le pivot|Move fulcrum.*away/i.test(str)) return 'Éloigner 🔺';
+    if (/Casser la balançoire|Break/i.test(str)) return 'Casser ❌';
+    if (/deuxième éléphant|second elephant/i.test(str)) return '2e Éléphant 🐘';
+    if (/se sépare en 7 couleurs|splits into 7/i.test(str)) return '7 Couleurs 🌈';
+    if (/disparaît complètement|disappears/i.test(str)) return 'Disparaît ❌';
+    if (/devient toute noire|turns pitch/i.test(str)) return 'Noire 🌑';
+    if (/explose|explodes/i.test(str)) return 'Explose 💥';
+    // 4. Strip trailing punctuation
+    str = str.replace(/[:-–—]+$/, '').trim();
+    return str || fallbackEmoji || '⭐';
+  }
+
+  function drawFittedCanvasText(ctx, text, x, y, maxW, baseFontSize, color, align) {
+    ctx.save();
+    let fSize = baseFontSize || 14;
+    ctx.font = 'bold ' + fSize + 'px sans-serif';
+    while (ctx.measureText(text).width > maxW && fSize > 9) {
+      fSize -= 0.5;
+      ctx.font = 'bold ' + fSize + 'px sans-serif';
+    }
+    let out = text;
+    if (ctx.measureText(out).width > maxW) {
+      while (ctx.measureText(out + '…').width > maxW && out.length > 4) {
+        out = out.slice(0, -1);
+      }
+      out += '…';
+    }
+    ctx.fillStyle = color || '#FFFFFF';
+    const tw = ctx.measureText(out).width;
+    const dx = align === 'center' ? x - tw / 2 : (align === 'right' ? x - tw : x);
+    ctx.fillText(out, dx, y);
+    ctx.restore();
   }
 
   // ============================================================================
@@ -11188,7 +11321,7 @@ body {
       ctx.fillText('🐠', 140 + Math.sin(tNow * 1.4) * 65, 285 + Math.cos(tNow * 2.5) * 8);
       ctx.fillText('🐟', 580 + Math.cos(tNow * 1.6) * 55, 305 + Math.sin(tNow * 2.2) * 6);
 
-      // Top Target Banner + Archimedes Visual Rule Card (Clean, Zero Overlap!)
+      // Top Target Banner + Archimedes Visual Rule Card (V18.0 100% Box-Fit Guaranteed!)
       const tItem = state.densityTarget || state.densityItems[0];
       ctx.save();
       ctx.fillStyle = 'rgba(15, 23, 42, 0.94)';
@@ -11198,12 +11331,8 @@ body {
       ctx.strokeStyle = '#FACC15';
       ctx.lineWidth = 2.5;
       ctx.stroke();
-      ctx.fillStyle = '#FEF08A';
-      ctx.font = 'bold 16px sans-serif';
-      ctx.fillText('🌊 ' + tItem.emoji + ' ' + tItem.name + ' (d = ' + tItem.rho + ') vs 💧 Eau (1,00)', 56, 35);
-      ctx.fillStyle = '#A7F3D0';
-      ctx.font = 'bold 13px sans-serif';
-      ctx.fillText('🎓 d < 1,00 ➜ ↑Fa (FLOTTE 🌊)   •   d > 1,00 ➜ ↓P (COULE ⚓)', 56, 56);
+      drawFittedCanvasText(ctx, '🌊 ' + tItem.emoji + ' ' + tItem.name + ' (d = ' + tItem.rho + ') vs 💧 Eau (1,00)', 56, 34, CW - 112, 16, '#FEF08A', 'left');
+      drawFittedCanvasText(ctx, '🎓 d < 1,00 ➜ ↑Fa (FLOTTE 🌊)   •   d > 1,00 ➜ ↓P (COULE ⚓)', 56, 54, CW - 112, 13, '#A7F3D0', 'left');
       ctx.restore();
 
       // Render ONLY the active target object + 5 evenly spaced comparison objects on shelf (NO overlapping pile!)
@@ -11236,23 +11365,27 @@ body {
         ctx.fillText(dLbl, it.x - ctx.measureText(dLbl).width / 2, it.y + sz / 2 + 14);
 
         if (it.inWater) {
+          // Buoyant Force ↑Fa (Poussée d'Archimède) - offset left
           ctx.strokeStyle = '#10B981';
           ctx.lineWidth = 3.5;
           ctx.beginPath();
-          ctx.moveTo(it.x - 32, it.y);
-          ctx.lineTo(it.x - 32, it.y - (it.rho < 1 ? 38 : 18));
+          ctx.moveTo(it.x - 36, it.y);
+          ctx.lineTo(it.x - 36, it.y - (it.rho < 1 ? 40 : 20));
           ctx.stroke();
           ctx.fillStyle = '#10B981';
           ctx.font = 'bold 12px sans-serif';
-          ctx.fillText('↑Fa', it.x - 46, it.y - (it.rho < 1 ? 42 : 22));
+          ctx.fillText('↑Fa', it.x - 52, it.y - (it.rho < 1 ? 44 : 24));
 
+          // Gravity Force ↓P (Poids) - offset right
           ctx.strokeStyle = '#EF4444';
+          ctx.lineWidth = 3.5;
           ctx.beginPath();
-          ctx.moveTo(it.x + 32, it.y);
-          ctx.lineTo(it.x + 32, it.y + (it.rho > 1 ? 38 : 18));
+          ctx.moveTo(it.x + 36, it.y);
+          ctx.lineTo(it.x + 36, it.y + (it.rho > 1 ? 40 : 20));
           ctx.stroke();
           ctx.fillStyle = '#EF4444';
-          ctx.fillText('↓P', it.x + 24, it.y + (it.rho > 1 ? 50 : 30));
+          ctx.font = 'bold 12px sans-serif';
+          ctx.fillText('↓P', it.x + 28, it.y + (it.rho > 1 ? 52 : 32));
         }
         ctx.restore();
       });
@@ -12012,7 +12145,7 @@ body {
       ctx.fillText(pTxt, fallX - 18 + (cellS + 32 - ctx.measureText(pTxt).width) / 2, ts.fallY + 29);
       ctx.restore();
 
-      // Top Question Banner & Exam Trick on Right Stage
+      // Top Question Banner & Exam Trick on Right Stage - V18.0 Zero Overlap
       ctx.save();
       ctx.fillStyle = 'rgba(15, 23, 42, 0.94)';
       ctx.beginPath();
@@ -12021,15 +12154,11 @@ body {
       ctx.strokeStyle = '#FACC15';
       ctx.lineWidth = 2.5;
       ctx.stroke();
-      ctx.fillStyle = '#FEF08A';
-      ctx.font = 'bold 19px sans-serif';
-      ctx.fillText('🧱 ' + String(state.cartoonStageTitle || '').slice(0, 38), 346, 44);
-      ctx.fillStyle = '#A7F3D0';
-      ctx.font = 'bold 14px sans-serif';
-      ctx.fillText(String(state.cartoonExamTrick || '').slice(0, 48), 346, 76);
+      drawFittedCanvasText(ctx, '🧱 ' + String(state.cartoonStageTitle || ''), 346, 44, CW - 364, 17, '#FEF08A', 'left');
+      drawFittedCanvasText(ctx, String(state.cartoonExamTrick || ''), 346, 76, CW - 364, 13.5, '#A7F3D0', 'left');
       ctx.restore();
 
-      // Draw 4 Clickable Tetris Answer Blocks on Right Stage (x: 345..760, y: 125..340)
+      // Draw 4 Clickable Tetris Answer Blocks on Right Stage (x: 345..760, y: 125..340) - 100% Box-Fit
       (state.cartoonTargets || []).forEach((ct, idx) => {
         const bx = 425 + (idx % 2) * 210;
         const by = 165 + Math.floor(idx / 2) * 110 + Math.sin(tNow * 3 + idx) * 5;
@@ -12040,15 +12169,14 @@ body {
         ctx.translate(bx, by);
         ctx.fillStyle = ct.color;
         ctx.beginPath();
-        ctx.roundRect(-82, -36, 164, 72, 14);
+        const bw = 164, bh = 72;
+        ctx.roundRect(-bw / 2, -bh / 2, bw, bh, 14);
         ctx.fill();
         ctx.strokeStyle = '#FEF08A';
         ctx.lineWidth = 3;
         ctx.stroke();
-        ctx.fillStyle = '#FFFFFF';
-        ctx.font = 'bold 18px sans-serif';
-        const lbl = String(ct.label).slice(0, 16);
-        ctx.fillText(lbl, -ctx.measureText(lbl).width / 2, 7);
+        const shortLbl = formatShortCardLabel(ct.label, ct.icon);
+        drawFittedCanvasText(ctx, shortLbl, 0, 7, bw - 18, 17, '#FFFFFF', 'center');
         ctx.restore();
       });
     }
@@ -12104,15 +12232,12 @@ body {
       ctx.strokeStyle = '#FDE047';
       ctx.lineWidth = 2.5;
       ctx.stroke();
-      ctx.fillStyle = '#FEF08A';
-      ctx.font = 'bold 18px sans-serif';
-      ctx.fillText(String(state.cartoonStageTitle || '').slice(0, 56), 32, 36);
-      ctx.fillStyle = '#34D399';
-      ctx.font = 'bold 13px sans-serif';
-      ctx.fillText('⚡ TURBO ' + (rs.speedKmh || 140) + ' KM/H  •  ' + String(state.cartoonExamTrick || '').slice(0, 58), 32, 56);
+      // V18.0 Auto-Racer Header & Gates Zero Overlap
+      drawFittedCanvasText(ctx, String(state.cartoonStageTitle || ''), 32, 36, CW - 64, 17, '#FEF08A', 'left');
+      drawFittedCanvasText(ctx, '⚡ TURBO ' + (rs.speedKmh || 140) + ' KM/H  •  ' + String(state.cartoonExamTrick || ''), 32, 56, CW - 64, 13, '#34D399', 'left');
       ctx.restore();
 
-      // Draw 4 Overhead Highway Answer Gates Across the Road
+      // Draw 4 Overhead Highway Answer Gates Across the Road - 100% Box-Fit
       (state.cartoonTargets || []).forEach((ct, idx) => {
         const gx = 155 + idx * 162;
         const gy = 175 + Math.sin(tNow * 3 + idx) * 6;
@@ -12123,15 +12248,14 @@ body {
         ctx.translate(gx, gy);
         ctx.fillStyle = ct.color;
         ctx.beginPath();
-        ctx.roundRect(-70, -28, 140, 56, 12);
+        const bw = 140, bh = 56;
+        ctx.roundRect(-bw / 2, -bh / 2, bw, bh, 12);
         ctx.fill();
         ctx.strokeStyle = '#FEF08A';
         ctx.lineWidth = 2.5;
         ctx.stroke();
-        ctx.fillStyle = '#FFFFFF';
-        ctx.font = 'bold 15px sans-serif';
-        const lbl = String(ct.label).slice(0, 15);
-        ctx.fillText(lbl, -ctx.measureText(lbl).width / 2, 6);
+        const shortLbl = formatShortCardLabel(ct.label, ct.icon);
+        drawFittedCanvasText(ctx, shortLbl, 0, 6, bw - 16, 14.5, '#FFFFFF', 'center');
         ctx.restore();
       });
 
@@ -12181,12 +12305,8 @@ body {
       ctx.strokeStyle = '#A855F7';
       ctx.lineWidth = 2.5;
       ctx.stroke();
-      ctx.fillStyle = '#FEF08A';
-      ctx.font = 'bold 18px sans-serif';
-      ctx.fillText(String(state.cartoonStageTitle || '').slice(0, 56), 32, 35);
-      ctx.fillStyle = '#A7F3D0';
-      ctx.font = 'bold 13.5px sans-serif';
-      ctx.fillText(String(state.cartoonExamTrick || '').slice(0, 66), 32, 56);
+      drawFittedCanvasText(ctx, String(state.cartoonStageTitle || ''), 32, 35, CW - 64, 17, '#FEF08A', 'left');
+      drawFittedCanvasText(ctx, String(state.cartoonExamTrick || ''), 32, 56, CW - 64, 13, '#A7F3D0', 'left');
       ctx.restore();
 
       // Left Stage: Wizard Lion Hero Platform
@@ -12238,7 +12358,7 @@ body {
       ctx.fillText(mName, -ctx.measureText(mName).width / 2, 58);
       ctx.restore();
 
-      // Bottom 4 Spell Crystal Answer Buttons on Canvas
+      // Bottom 4 Spell Crystal Answer Buttons on Canvas - 100% Box-Fit
       (state.cartoonTargets || []).forEach((ct, idx) => {
         const sx = 155 + idx * 162;
         const sy = 318 + Math.sin(tNow * 3.2 + idx) * 4;
@@ -12249,15 +12369,14 @@ body {
         ctx.translate(sx, sy);
         ctx.fillStyle = ct.color;
         ctx.beginPath();
-        ctx.roundRect(-68, -26, 136, 52, 14);
+        const bw = 140, bh = 54;
+        ctx.roundRect(-bw / 2, -bh / 2, bw, bh, 14);
         ctx.fill();
         ctx.strokeStyle = '#FEF08A';
         ctx.lineWidth = 2.5;
         ctx.stroke();
-        ctx.fillStyle = '#FFFFFF';
-        ctx.font = 'bold 16px sans-serif';
-        const lbl = String(ct.label).slice(0, 14);
-        ctx.fillText(lbl, -ctx.measureText(lbl).width / 2, 6);
+        const shortLbl = formatShortCardLabel(ct.label, ct.icon);
+        drawFittedCanvasText(ctx, shortLbl, 0, 6, bw - 16, 15, '#FFFFFF', 'center');
         ctx.restore();
       });
     }
@@ -12283,12 +12402,8 @@ body {
       ctx.strokeStyle = '#FDE047';
       ctx.lineWidth = 2.5;
       ctx.stroke();
-      ctx.fillStyle = '#FEF08A';
-      ctx.font = 'bold 16px sans-serif';
-      ctx.fillText(String(state.cartoonStageTitle || '').slice(0, 58), 28, 33);
-      ctx.fillStyle = '#A7F3D0';
-      ctx.font = 'bold 13px sans-serif';
-      ctx.fillText(String(state.cartoonExamTrick || '').slice(0, 68), 28, 52);
+      drawFittedCanvasText(ctx, String(state.cartoonStageTitle || ''), 28, 33, CW - 56, 15.5, '#FEF08A', 'left');
+      drawFittedCanvasText(ctx, String(state.cartoonExamTrick || ''), 28, 52, CW - 56, 13, '#A7F3D0', 'left');
       ctx.restore();
 
       // Visual Cartoon Trick Stage
@@ -12370,7 +12485,7 @@ body {
         ctx.restore();
       }
 
-      // Canvas Answer Buttons
+      // Canvas Answer Buttons - V18.0 100% Box-Fit
       (state.cartoonTargets || []).forEach((ct, idx) => {
         const bx = 155 + idx * 162;
         const by = 310 + Math.sin(tNow * 3 + idx) * 4;
@@ -12379,15 +12494,14 @@ body {
         ctx.translate(bx, by);
         ctx.fillStyle = ct.color;
         ctx.beginPath();
-        ctx.roundRect(-68, -26, 136, 52, 14);
+        const bw = 142, bh = 54;
+        ctx.roundRect(-bw / 2, -bh / 2, bw, bh, 14);
         ctx.fill();
         ctx.strokeStyle = '#FEF08A';
         ctx.lineWidth = 2.5;
         ctx.stroke();
-        ctx.fillStyle = '#FFFFFF';
-        ctx.font = 'bold 14.5px sans-serif';
-        const lbl = String(ct.label).slice(0, 15);
-        ctx.fillText(lbl, -ctx.measureText(lbl).width / 2, 6);
+        const shortLbl = formatShortCardLabel(ct.label, ct.icon);
+        drawFittedCanvasText(ctx, shortLbl, 0, 6, bw - 16, 14.5, '#FFFFFF', 'center');
         ctx.restore();
       });
     }
@@ -12413,12 +12527,8 @@ body {
       ctx.strokeStyle = '#34D399';
       ctx.lineWidth = 2.5;
       ctx.stroke();
-      ctx.fillStyle = '#FEF08A';
-      ctx.font = 'bold 16px sans-serif';
-      ctx.fillText(String(state.cartoonStageTitle || '').slice(0, 58), 28, 33);
-      ctx.fillStyle = '#A7F3D0';
-      ctx.font = 'bold 13px sans-serif';
-      ctx.fillText(String(state.cartoonExamTrick || '').slice(0, 68), 28, 52);
+      drawFittedCanvasText(ctx, String(state.cartoonStageTitle || ''), 28, 33, CW - 56, 15.5, '#FEF08A', 'left');
+      drawFittedCanvasText(ctx, String(state.cartoonExamTrick || ''), 28, 52, CW - 56, 13, '#A7F3D0', 'left');
       ctx.restore();
 
       // Cartoon Science Trick Visuals
@@ -12457,7 +12567,7 @@ body {
 
         ctx.fillStyle = '#A7F3D0';
         ctx.font = 'bold 15px sans-serif';
-        ctx.fillText('⚖️ Bras long ➜ Force multipliée ! La souris soulève l\'éléphant !', CW / 2 - 190, 255);
+        ctx.fillText("⚖️ Bras long ➜ Force multipliée ! La souris soulève l'éléphant !", CW / 2 - 190, 255);
         ctx.restore();
       } else if (trickMode === 'watercycle') {
         // Water Cycle: Ocean + Sun + Rising Vapor Arrows + Cloud + Rain
@@ -12516,7 +12626,7 @@ body {
         ctx.restore();
       }
 
-      // Canvas Answer Buttons
+      // Canvas Answer Buttons - V18.0 100% Box-Fit
       (state.cartoonTargets || []).forEach((ct, idx) => {
         const bx = 155 + idx * 162;
         const by = 310 + Math.sin(tNow * 3 + idx) * 4;
@@ -12525,15 +12635,14 @@ body {
         ctx.translate(bx, by);
         ctx.fillStyle = ct.color;
         ctx.beginPath();
-        ctx.roundRect(-68, -26, 136, 52, 14);
+        const bw = 142, bh = 54;
+        ctx.roundRect(-bw / 2, -bh / 2, bw, bh, 14);
         ctx.fill();
         ctx.strokeStyle = '#FEF08A';
         ctx.lineWidth = 2.5;
         ctx.stroke();
-        ctx.fillStyle = '#FFFFFF';
-        ctx.font = 'bold 14px sans-serif';
-        const lbl = String(ct.label).slice(0, 15);
-        ctx.fillText(lbl, -ctx.measureText(lbl).width / 2, 6);
+        const shortLbl = formatShortCardLabel(ct.label, ct.icon);
+        drawFittedCanvasText(ctx, shortLbl, 0, 6, bw - 16, 14, '#FFFFFF', 'center');
         ctx.restore();
       });
     }
@@ -12558,12 +12667,8 @@ body {
       ctx.strokeStyle = '#34D399';
       ctx.lineWidth = 2.5;
       ctx.stroke();
-      ctx.fillStyle = '#FEF08A';
-      ctx.font = 'bold 17px sans-serif';
-      ctx.fillText(String(state.cartoonStageTitle || '').slice(0, 62), 32, 35);
-      ctx.fillStyle = '#A7F3D0';
-      ctx.font = 'bold 13.5px sans-serif';
-      ctx.fillText(String(state.cartoonExamTrick || '').slice(0, 68), 32, 56);
+      drawFittedCanvasText(ctx, String(state.cartoonStageTitle || ''), 32, 35, CW - 64, 16.5, '#FEF08A', 'left');
+      drawFittedCanvasText(ctx, String(state.cartoonExamTrick || ''), 32, 56, CW - 64, 13, '#A7F3D0', 'left');
       ctx.restore();
 
       // Interactive Animated Diagram Nodes (Food Chain / States of Matter / Solar Orbit / Magnetic Poles)
@@ -12606,7 +12711,7 @@ body {
         ctx.restore();
       });
 
-      // Bottom 4 Interactive Science Answer Bubbles on Canvas
+      // Bottom 4 Interactive Science Answer Bubbles on Canvas - 100% Box-Fit
       (state.cartoonTargets || []).forEach((ct, idx) => {
         const bx = 155 + idx * 162;
         const by = 298 + Math.sin(tNow * 2.8 + idx) * 5;
@@ -12617,15 +12722,14 @@ body {
         ctx.translate(bx, by);
         ctx.fillStyle = ct.color;
         ctx.beginPath();
-        ctx.roundRect(-70, -28, 140, 56, 14);
+        const bw = 140, bh = 56;
+        ctx.roundRect(-bw / 2, -bh / 2, bw, bh, 14);
         ctx.fill();
         ctx.strokeStyle = '#FEF08A';
         ctx.lineWidth = 2.5;
         ctx.stroke();
-        ctx.fillStyle = '#FFFFFF';
-        ctx.font = 'bold 14.5px sans-serif';
-        const lbl = String(ct.label).slice(0, 15);
-        ctx.fillText(lbl, -ctx.measureText(lbl).width / 2, 6);
+        const shortLbl = formatShortCardLabel(ct.label, ct.icon);
+        drawFittedCanvasText(ctx, shortLbl, 0, 6, bw - 16, 14.5, '#FFFFFF', 'center');
         ctx.restore();
       });
     }
@@ -12758,7 +12862,7 @@ body {
         ctx.stroke();
         ctx.fillStyle = '#A7F3D0';
         ctx.font = 'bold 12.5px sans-serif';
-        ctx.fillText('🎓 ' + String(state.cartoonExamTrick).replace(/^💡\\s*/, '').slice(0, 82), 142, 155);
+        ctx.fillText('🎓 ' + String(state.cartoonExamTrick).replace(/^💡\s*/, '').slice(0, 82), 142, 155);
         ctx.restore();
       }
 
@@ -12829,8 +12933,8 @@ body {
         ctx.font = '26px sans-serif';
         ctx.fillText(ct.icon, -14, -3);
 
-        const shortLbl = String(ct.label).replace(/^(?:(?:[\uD83C][\uDDE6-\uDDFF]){2}|[\uD800-\uDBFF][\uDC00-\uDFFF]|[\u2600-\u27BF])\s*/, '').slice(0, 16);
-        const cleanLbl = String(ct.label).replace(/^(?:(?:[\uD83C][\uDDE6-\uDDFF]){2}|[\uD800-\uDBFF][\uDC00-\uDFFF]|[\u2600-\u27BF])\s*/, '').trim();
+        const shortLbl = String(ct.label).replace(/^(?:(?:[�][�-�]){2}|[�-�][�-�]|[☀-➿])s*/, '').slice(0, 16);
+        const cleanLbl = String(ct.label).replace(/^(?:(?:[�][�-�]){2}|[�-�][�-�]|[☀-➿])s*/, '').trim();
         const fitLbl = cleanLbl.length > 18 ? cleanLbl.slice(0, 17) + '…' : cleanLbl;
         ctx.font = fitLbl.length > 12 ? 'bold 11.5px sans-serif' : 'bold 13px sans-serif';
         const tw = ctx.measureText(fitLbl).width;
@@ -12969,7 +13073,7 @@ body {
         sessionStorage.clear();
       } catch (e) {}
       const url = new URL(window.location.href);
-      url.searchParams.set('v', '17.0.' + Date.now());
+      url.searchParams.set('v', '18.0.' + Date.now());
       window.location.replace(url.toString());
     });
   }

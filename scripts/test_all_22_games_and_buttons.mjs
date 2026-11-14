@@ -31,7 +31,7 @@ const ALL_22_GAMES = [
 ];
 
 async function runTests() {
-  console.log('🚀 Starting Comprehensive Playwright Verification for v17.0 NATIVE-CARTOON-TRICKS (v1.10.0)...');
+  console.log('🚀 Starting Comprehensive Playwright Verification for v18.0 REA-ULTRA-PERFECT-FIT (v1.11.0)...');
   const browser = await chromium.launch({
     headless: true,
     channel: 'chrome',
@@ -53,10 +53,10 @@ async function runTests() {
   console.log('--- TEST 1: Version & Header Inspection ---');
   const cachePillText = await page.$eval('#btn-version-cache', el => el.textContent.trim());
   console.log('Cache pill text:', cachePillText);
-  if (!cachePillText.includes('v17.0') || !cachePillText.includes('v1.10.0')) {
+  if (!cachePillText.includes('v18.0') || !cachePillText.includes('v1.11.0')) {
     throw new Error('Version mismatch in cache pill: ' + cachePillText);
   }
-  console.log('✓ Version verified: v17.0 NATIVE-CARTOON-TRICKS (v1.10.0)');
+  console.log('✓ Version verified: v18.0 REA-ULTRA-PERFECT-FIT (v1.11.0)');
 
   console.log('--- TEST 2: 5 Auto-Levels & Manual Level Selector Hiding ---');
   const totalLevels = await page.evaluate(() => window.__NATEIVA_STATE__.totalLevels);
@@ -121,7 +121,7 @@ async function runTests() {
     window.__NATEIVA_SELECT_LEVEL__(1);
   });
 
-  const hubScreenshotPath = 'C:/Users/eteme/.gemini/antigravity/brain/4bd7cc10-f77b-465a-a865-ae8158cb6eb2/v17_mobile_hub_clean.png';
+  const hubScreenshotPath = 'C:/Users/eteme/.gemini/antigravity/brain/4bd7cc10-f77b-465a-a865-ae8158cb6eb2/v18_mobile_hub_clean.png';
   await page.screenshot({ path: hubScreenshotPath });
   console.log('✓ Captured mobile Hub screenshot:', hubScreenshotPath);
 
@@ -182,7 +182,7 @@ async function runTests() {
     throw new Error('Archimedes answer button was not found or clicked');
   }
 
-  const archimedesScreenshotPath = 'C:/Users/eteme/.gemini/antigravity/brain/4bd7cc10-f77b-465a-a865-ae8158cb6eb2/v17_mobile_archimedes_tank.png';
+  const archimedesScreenshotPath = 'C:/Users/eteme/.gemini/antigravity/brain/4bd7cc10-f77b-465a-a865-ae8158cb6eb2/v18_mobile_archimedes_tank.png';
   await page.screenshot({ path: archimedesScreenshotPath });
   console.log('✓ Captured Archimedes tank screenshot:', archimedesScreenshotPath);
 
@@ -208,12 +208,12 @@ async function runTests() {
 
     // Capture specific screenshot for math_magic_tricks and science_hero_tricks
     if (gameKey === 'math_magic_tricks') {
-      const p = 'C:/Users/eteme/.gemini/antigravity/brain/4bd7cc10-f77b-465a-a865-ae8158cb6eb2/v17_mobile_math_magic_tricks.png';
+      const p = 'C:/Users/eteme/.gemini/antigravity/brain/4bd7cc10-f77b-465a-a865-ae8158cb6eb2/v18_mobile_math_magic_tricks.png';
       await page.screenshot({ path: p });
       console.log('  -> Captured math_magic_tricks screenshot:', p);
     }
     if (gameKey === 'science_hero_tricks') {
-      const p = 'C:/Users/eteme/.gemini/antigravity/brain/4bd7cc10-f77b-465a-a865-ae8158cb6eb2/v17_mobile_science_hero_tricks.png';
+      const p = 'C:/Users/eteme/.gemini/antigravity/brain/4bd7cc10-f77b-465a-a865-ae8158cb6eb2/v18_mobile_science_hero_tricks.png';
       await page.screenshot({ path: p });
       console.log('  -> Captured science_hero_tricks screenshot:', p);
     }
@@ -287,7 +287,7 @@ async function runTests() {
   console.log('✓ Educational Reward Chest & Audio Toggle verified');
 
   await browser.close();
-  console.log('\n🎉 ALL 8 TESTS PASSED WITH 100% SUCCESS FOR v17.0 NATIVE-CARTOON-TRICKS (v1.10.0)!');
+  console.log('\n🎉 ALL 8 TESTS PASSED WITH 100% SUCCESS FOR v18.0 REA-ULTRA-PERFECT-FIT (v1.11.0)!');
 }
 
 runTests().catch(err => {
