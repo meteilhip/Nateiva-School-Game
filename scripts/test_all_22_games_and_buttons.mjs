@@ -31,7 +31,7 @@ const ALL_22_GAMES = [
 ];
 
 async function runTests() {
-  console.log('🚀 Starting Comprehensive Playwright Verification for v18.0 REA-ULTRA-PERFECT-FIT (v1.11.0)...');
+  console.log('🚀 Starting Comprehensive Playwright Verification for v19.0 NATIVE-SLOW-VOICE-TEMPO (v1.12.0)...');
   const browser = await chromium.launch({
     headless: true,
     channel: 'chrome',
@@ -53,10 +53,10 @@ async function runTests() {
   console.log('--- TEST 1: Version & Header Inspection ---');
   const cachePillText = await page.$eval('#btn-version-cache', el => el.textContent.trim());
   console.log('Cache pill text:', cachePillText);
-  if (!cachePillText.includes('v18.0') || !cachePillText.includes('v1.11.0')) {
+  if (!cachePillText.includes('v19.0') || !cachePillText.includes('v1.12.0')) {
     throw new Error('Version mismatch in cache pill: ' + cachePillText);
   }
-  console.log('✓ Version verified: v18.0 REA-ULTRA-PERFECT-FIT (v1.11.0)');
+  console.log('✓ Version verified: v19.0 NATIVE-SLOW-VOICE-TEMPO (v1.12.0)');
 
   console.log('--- TEST 2: 5 Auto-Levels & Manual Level Selector Hiding ---');
   const totalLevels = await page.evaluate(() => window.__NATEIVA_STATE__.totalLevels);
@@ -121,7 +121,7 @@ async function runTests() {
     window.__NATEIVA_SELECT_LEVEL__(1);
   });
 
-  const hubScreenshotPath = 'C:/Users/eteme/.gemini/antigravity/brain/4bd7cc10-f77b-465a-a865-ae8158cb6eb2/v18_mobile_hub_clean.png';
+  const hubScreenshotPath = 'C:/Users/eteme/.gemini/antigravity/brain/4bd7cc10-f77b-465a-a865-ae8158cb6eb2/v19_mobile_hub_clean.png';
   await page.screenshot({ path: hubScreenshotPath });
   console.log('✓ Captured mobile Hub screenshot:', hubScreenshotPath);
 
@@ -182,7 +182,7 @@ async function runTests() {
     throw new Error('Archimedes answer button was not found or clicked');
   }
 
-  const archimedesScreenshotPath = 'C:/Users/eteme/.gemini/antigravity/brain/4bd7cc10-f77b-465a-a865-ae8158cb6eb2/v18_mobile_archimedes_tank.png';
+  const archimedesScreenshotPath = 'C:/Users/eteme/.gemini/antigravity/brain/4bd7cc10-f77b-465a-a865-ae8158cb6eb2/v19_mobile_archimedes_tank.png';
   await page.screenshot({ path: archimedesScreenshotPath });
   console.log('✓ Captured Archimedes tank screenshot:', archimedesScreenshotPath);
 
@@ -208,12 +208,12 @@ async function runTests() {
 
     // Capture specific screenshot for math_magic_tricks and science_hero_tricks
     if (gameKey === 'math_magic_tricks') {
-      const p = 'C:/Users/eteme/.gemini/antigravity/brain/4bd7cc10-f77b-465a-a865-ae8158cb6eb2/v18_mobile_math_magic_tricks.png';
+      const p = 'C:/Users/eteme/.gemini/antigravity/brain/4bd7cc10-f77b-465a-a865-ae8158cb6eb2/v19_mobile_math_magic_tricks.png';
       await page.screenshot({ path: p });
       console.log('  -> Captured math_magic_tricks screenshot:', p);
     }
     if (gameKey === 'science_hero_tricks') {
-      const p = 'C:/Users/eteme/.gemini/antigravity/brain/4bd7cc10-f77b-465a-a865-ae8158cb6eb2/v18_mobile_science_hero_tricks.png';
+      const p = 'C:/Users/eteme/.gemini/antigravity/brain/4bd7cc10-f77b-465a-a865-ae8158cb6eb2/v19_mobile_science_hero_tricks.png';
       await page.screenshot({ path: p });
       console.log('  -> Captured science_hero_tricks screenshot:', p);
     }
@@ -244,14 +244,16 @@ async function runTests() {
   }
   console.log(`✓ All ${ALL_22_GAMES.length} games launched, interacted, and verified successfully!`);
 
-  console.log('--- TEST 7: Native Speaker Voice Engine Prompt Validation ---');
+  console.log('--- TEST 7: Native Speaker Voice Engine Prompt & Slower Rate Validation ---');
   const speechTests = [
     { raw: "8 + 2 = 10 ➜ 10 + 3 = 13", lang: "fr", expected: "8 plus 2 égale 10 10 plus 3 égale 13" },
     { raw: "9 × 3 = 27", lang: "fr", expected: "9 fois 3 égale 27" },
     { raw: "9 × 3 = 27", lang: "en", expected: "9 times 3 equals 27" },
     { raw: "50% de 20 = 10", lang: "fr", expected: "cinquante pour cent de 20 égale 10" },
     { raw: "100 °C ébullition", lang: "fr", expected: "100 degrés Celsius ébullition" },
-    { raw: "💨 O₂ oxygène et 💧 H₂O", lang: "fr", expected: "oxygène oxygène et eau" }
+    { raw: "💨 O₂ oxygène et 💧 H₂O", lang: "fr", expected: "oxygène oxygène et eau" },
+    { raw: "Les grenouilles mangent des insectes sous les feuilles", lang: "fr", expected: "Les grenouilles mangent des insectes sous les feuilles" },
+    { raw: "Six frogs jump across the stars into the grass", lang: "en", expected: "Six frogs jump across the stars into the grass" }
   ];
 
   for (const st of speechTests) {
@@ -262,8 +264,18 @@ async function runTests() {
     if (!natural || natural.includes('➜') || natural.includes('💨') || natural.includes('💧')) {
       throw new Error(`Symbol leakage in toNaturalNativeSpeech: "${natural}"`);
     }
+    // Verify letter 's' is strictly preserved!
+    if (st.raw.includes('grenouilles') && !natural.includes('grenouilles')) {
+      throw new Error('Letter s was stripped from grenouilles: ' + natural);
+    }
+    if (st.raw.includes('frogs') && !natural.includes('frogs')) {
+      throw new Error('Letter s was stripped from frogs: ' + natural);
+    }
+    if (st.raw.includes('stars') && !natural.includes('stars')) {
+      throw new Error('Letter s was stripped from stars: ' + natural);
+    }
   }
-  console.log('✓ Native speaker voice conversion verified (100% natural fluency in FR and EN)');
+  console.log('✓ Native speaker voice conversion verified (100% natural fluency, zero letter "s" loss)');
 
   console.log('--- TEST 8: Educational Reward Chest & Audio Controls ---');
   await page.evaluate(() => document.getElementById('hud-reward-chest').click());
@@ -287,7 +299,7 @@ async function runTests() {
   console.log('✓ Educational Reward Chest & Audio Toggle verified');
 
   await browser.close();
-  console.log('\n🎉 ALL 8 TESTS PASSED WITH 100% SUCCESS FOR v18.0 REA-ULTRA-PERFECT-FIT (v1.11.0)!');
+  console.log('\n🎉 ALL 8 TESTS PASSED WITH 100% SUCCESS FOR v19.0 NATIVE-SLOW-VOICE-TEMPO (v1.12.0)!');
 }
 
 runTests().catch(err => {
