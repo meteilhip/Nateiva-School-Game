@@ -1,5 +1,20 @@
 # Changelog
 
+## v1.20.0 — Curriculum Engine, Real Africa & Quiz Academy
+- **Layout engine**: the island map now computes the truly visible band under `slice` cropping plus the HUD/grade-dock overlays and uniformly fits the whole island inside it — the title is never cut, the grade pills never cover station labels/stars, and the sun no longer collides with the star counter.
+- **Real Africa**: Balloon Safari now flies over the TRUE 49-country map (real cartography, shared `africa-data.js`), with region-colored countries, shape-recognition clue cards, capital-only mode for CM1/CM2, star markers on found countries and a 3-miss hint glow.
+- **Académie des Champions (13th island)**: searchable curriculum quizzes per class — type "fractions", "conjugaison", "capitales"… → 5 grade-level MCQs, each with a spoken step-by-step Astuce, auto-opened on mistakes, and a full **fiche de réponses** (answer sheet) with per-question worked solutions.
+- **Curriculum matrix**: official program per class (MAT→CM2 × maths/langues/sciences/géo) shown in the Academy and driving topic availability; 27 bilingual question generators (proportionnalité FCFA, pourcentages, aire/volume, équations-balance, nature des mots, préfixes, loi d'Ohm, photosynthèse, cycle de l'eau…).
+- **Science realism**: Splash Lagoon shows & speaks real density values (ρ) for CM1/CM2 with the ρ>1 sinks rule.
+- Island search now also returns quiz topics; world smoke test extended (13 stations, generator fuzzing ×25 per grade).
+
+## v1.19.0 — Hover Fix + 4 New Zones
+- Fixed the hover zig-zag that made island stations unclickable (CSS transform was replacing the SVG station position; hover is now glow-only).
+- 4 new zones: Chantier de Tibo (blueprint building), Cherche & Trouve (hidden-object observation), Fabrique de Mots (drag-letter spelling), Atelier Magique (free stamp creation).
+
+## v1.18.0 — NATEIVA WORLD responsive hardening
+- Dual landscape/portrait layouts, fat touch targets, window-level drag tracking, safe-band repositioning of play objects.
+
 ## 1.17.x — 2026-11-18 — NATEIVA WORLD (brand-new game, built from zero)
 
 - **`play.html` — a completely new experience** sharing only the learning objectives with the classic arcade (documented in `GAME_INVENTORY.md`): a living hand-drawn SVG cartoon island (no emoji sprites) with 8 adventure zones — Lagune aux Bulles (pop rising fish-bubbles to count/sum), Verger de Momo (drag fruit into baskets: counting→addition→multiplication→equal sharing), Rivière de Fela (the frog leaps on the lily pad that matches the spoken syllable, builds words), Studio de Zara (paint the zebra's parts / all the triangles in the asked color), Lagon Splash (drop objects into real buoyant water, then sort FLOTTE/COULE), Jardin de Nana (drag the rain cloud and sun to grow the plant — too much hurts it), Safari Ballon (fly Léo's balloon to the right country by name, flag or capital), Théâtre Kalulu (animated fable plays out, then pick/sequence picture panels).

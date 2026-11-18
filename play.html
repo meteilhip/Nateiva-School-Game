@@ -119,6 +119,45 @@ html,body{ width:100%; height:100%; overflow:hidden; font-family:'Baloo 2','Fred
 .sr-card svg{ width:70px; height:70px; }
 .sr-sub{ display:inline-block; margin-top:4px; padding:4px 12px; border-radius:999px; color:#fff; font-weight:900; font-size:0.74rem; }
 .sr-name{ font-weight:800; color:var(--ink); margin-top:5px; font-size:1.02rem; }
+
+/* ---------- Academy quiz (searchable curriculum quizzes) ---------- */
+.quiz-wrap{ position:absolute; inset:0; overflow:auto; background:linear-gradient(160deg,#5E60CE 0%,#4EA8DE 100%); padding:150px 14px 24px; display:flex; flex-direction:column; align-items:center; gap:14px; }
+.qz-panel{ background:#fff; border:5px solid #FFD23F; border-radius:28px; width:min(880px,97%); padding:18px 22px; box-shadow:0 20px 50px rgba(0,0,0,0.3); }
+.qz-title{ font-size:1.5rem; font-weight:800; color:#2B2D42; text-align:center; }
+.qz-sub{ text-align:center; color:#8A93AD; font-weight:700; margin-top:4px; }
+.qz-cur{ background:#EDF2FB; border-radius:16px; padding:10px 14px; margin-top:12px; font-weight:700; color:#5C6784; font-size:0.95rem; line-height:1.45; }
+.qz-cur b{ color:#5E60CE; }
+.qz-search{ width:100%; font-family:inherit; font-size:1.1rem; font-weight:800; color:#2B2D42; border:4px solid #C9D3EE; border-radius:999px; padding:11px 20px; outline:none; margin-top:12px; }
+.qz-search:focus{ border-color:#5E60CE; }
+.qz-chips{ display:flex; flex-wrap:wrap; gap:10px; justify-content:center; margin-top:14px; }
+.qz-chip{ border:3px solid #E3E8F7; background:#FBFCFF; border-radius:999px; padding:11px 18px; font-family:inherit; font-weight:800; font-size:1rem; color:#2B2D42; cursor:pointer; transition:transform 0.18s cubic-bezier(0.34,1.56,0.64,1), border-color 0.18s; }
+.qz-chip:hover{ transform:scale(1.07); border-color:#5E60CE; }
+.qz-chip .dot{ display:inline-block; width:11px; height:11px; border-radius:50%; margin-right:8px; }
+.qz-q{ font-size:1.5rem; font-weight:800; color:#2B2D42; text-align:center; line-height:1.35; }
+.qz-dots{ font-size:1.9rem; text-align:center; letter-spacing:4px; margin-top:6px; }
+.qz-answers{ display:grid; grid-template-columns:repeat(auto-fit,minmax(170px,1fr)); gap:12px; margin-top:16px; }
+.qz-a{ border:4px solid #C9D3EE; background:#FBFCFF; border-radius:20px; padding:16px 10px; font-family:inherit; font-size:1.3rem; font-weight:800; color:#2B2D42; cursor:pointer; transition:transform 0.15s, border-color 0.15s; }
+.qz-a:hover:not(:disabled){ border-color:#5E60CE; transform:scale(1.04); }
+.qz-a.good{ background:#57CC57; border-color:#2E9E5B; color:#fff; }
+.qz-a.bad{ background:#FF4D57; border-color:#C42631; color:#fff; }
+.qz-a:disabled{ cursor:default; }
+.qz-steps{ margin-top:14px; background:#FFF8E1; border:3px solid #FFD23F; border-radius:18px; padding:12px 16px; display:none; text-align:left; }
+.qz-steps.on{ display:block; }
+.qz-steps h4{ color:#B4654A; margin-bottom:6px; font-size:1.05rem; }
+.qz-steps ol{ margin-left:24px; color:#2B2D42; font-weight:700; line-height:1.55; }
+.qz-btnrow{ text-align:center; }
+.qz-next{ margin-top:14px; background:linear-gradient(145deg,#57CC57,#2E9E5B); color:#fff; border:4px solid #fff; border-radius:999px; padding:12px 36px; font-size:1.15rem; font-weight:800; font-family:inherit; cursor:pointer; box-shadow:var(--shadow); display:none; }
+.qz-next.on{ display:inline-block; }
+.qz-next:active{ transform:scale(0.93); }
+.qz-hintbtn{ margin-top:12px; background:#FFF8E1; border:3px solid #FFD23F; border-radius:999px; padding:9px 22px; font-family:inherit; font-weight:800; font-size:1rem; color:#B4654A; cursor:pointer; display:inline-block; }
+.qz-prog{ text-align:center; font-weight:800; color:#5E60CE; margin-bottom:4px; }
+.qz-sheet-row{ border:3px solid #E3E8F7; border-radius:16px; padding:10px 14px; margin-top:10px; font-weight:700; color:#2B2D42; }
+.qz-sheet-row.ok{ border-color:#57CC57; background:#F0FBF0; }
+.qz-sheet-row.ko{ border-color:#FF4D57; background:#FFF3F3; }
+.qz-sheet-row details{ margin-top:6px; }
+.qz-sheet-row summary{ cursor:pointer; color:#B4654A; font-weight:800; }
+.qz-sheet-row ol{ margin-left:22px; margin-top:6px; line-height:1.5; }
+.qz-score{ text-align:center; font-size:1.3rem; font-weight:800; color:#2B2D42; margin-top:8px; }
 </style>
 </head>
 <body>
@@ -144,6 +183,7 @@ html,body{ width:100%; height:100%; overflow:hidden; font-family:'Baloo 2','Fred
   </div>
   <div id="cheer-card"><div id="cheer-inner"><div id="cheer-art"></div><div id="cheer-title"></div><div id="cheer-stars"></div><button id="cheer-btn"></button></div></div>
 </div>
+<script src="africa-data.js"></script>
 <script>
 (() => {
 'use strict';
@@ -474,41 +514,44 @@ function updateStarPill() {
 /* ================= WORLD MAP (the island) ================= */
 const ZONES = [
   { key: 'bubbles', fr: 'Lagune aux Bulles', en: 'Bubble Lagoon', color: '#4CC9F0', mx: 250, my: 620, px: 235, py: 1270,
-    subject: { fr: 'MATHS', en: 'MATH', color: '#FF9F1C' },
+    subject: { fr: 'MATHS', dens: '1', en: 'MATH', color: '#FF9F1C' },
     topics: ['maths', 'math', 'compter', 'counting', 'nombres', 'numbers', 'addition', 'somme', 'sums', 'calcul', 'compléments', 'bonds'] },
   { key: 'orchard', fr: 'Verger de Momo', en: "Momo's Orchard", color: '#FF9F1C', mx: 450, my: 520, px: 575, py: 1175,
-    subject: { fr: 'MATHS', en: 'MATH', color: '#FF9F1C' },
+    subject: { fr: 'MATHS', dens: '1', en: 'MATH', color: '#FF9F1C' },
     topics: ['maths', 'math', 'addition', 'multiplication', 'division', 'partage', 'share', 'times', 'tables', 'calcul', 'opérations', 'operations', 'multiplier', 'diviser'] },
   { key: 'river', fr: 'Rivière de Fela', en: "Fela's River", color: '#57CC57', mx: 330, my: 390, px: 235, py: 1080,
-    subject: { fr: 'LECTURE & SONS', en: 'READING & PHONICS', color: '#4CC9F0' },
+    subject: { fr: 'LECTURE & SONS', dens: '1', en: 'READING & PHONICS', color: '#4CC9F0' },
     topics: ['lecture', 'reading', 'syllabes', 'syllables', 'sons', 'sounds', 'phonics', 'lettres', 'letters', 'mots', 'words', 'français', 'french', 'anglais', 'english', 'prononciation', 'pronunciation'] },
   { key: 'paint', fr: 'Studio de Zara', en: "Zara's Studio", color: '#9B5DE5', mx: 540, my: 310, px: 575, py: 985,
-    subject: { fr: 'FORMES & COULEURS', en: 'SHAPES & COLORS', color: '#9B5DE5' },
+    subject: { fr: 'FORMES & COULEURS', dens: '1', en: 'SHAPES & COLORS', color: '#9B5DE5' },
     topics: ['formes', 'shapes', 'couleurs', 'colors', 'géométrie', 'geometry', 'triangle', 'cercle', 'circle', 'carré', 'square', 'vocabulaire', 'vocabulary', 'corps', 'body', 'art'] },
   { key: 'splash', fr: 'Lagon Splash', en: 'Splash Lagoon', color: '#1C7ED6', mx: 960, my: 310, px: 575, py: 795,
-    subject: { fr: 'SCIENCES', en: 'SCIENCE', color: '#2EC4B6' },
+    subject: { fr: 'SCIENCES', dens: '1', en: 'SCIENCE', color: '#2EC4B6' },
     topics: ['sciences', 'science', 'flotte', 'coule', 'float', 'sink', 'densité', 'density', 'archimède', 'archimedes', 'eau', 'water', 'physique', 'physics', 'expérience', 'experiment'] },
   { key: 'garden', fr: 'Jardin de Nana', en: "Nana's Garden", color: '#3FA34D', mx: 1170, my: 390, px: 235, py: 700,
-    subject: { fr: 'SCIENCES', en: 'SCIENCE', color: '#2EC4B6' },
+    subject: { fr: 'SCIENCES', dens: '1', en: 'SCIENCE', color: '#2EC4B6' },
     topics: ['sciences', 'science', 'plantes', 'plants', 'jardin', 'garden', 'photosynthèse', 'photosynthesis', 'germination', 'nature', 'biologie', 'biology', 'eau', 'soleil', 'sun'] },
   { key: 'safari', fr: 'Safari Ballon', en: 'Balloon Safari', color: '#E5252A', mx: 1130, my: 620, px: 235, py: 510,
-    subject: { fr: 'GÉOGRAPHIE', en: 'GEOGRAPHY', color: '#E5252A' },
+    subject: { fr: 'GÉOGRAPHIE', dens: '1', en: 'GEOGRAPHY', color: '#E5252A' },
     topics: ['géographie', 'geography', 'pays', 'countries', 'afrique', 'africa', 'capitales', 'capitals', 'drapeaux', 'flags', 'cartes', 'maps', 'monde', 'world', 'cameroun', 'cameroon'] },
   { key: 'theatre', fr: 'Théâtre Kalulu', en: 'Kalulu Theatre', color: '#F25CA2', mx: 730, my: 650, px: 575, py: 415,
-    subject: { fr: 'COMPRÉHENSION', en: 'COMPREHENSION', color: '#F25CA2' },
+    subject: { fr: 'COMPRÉHENSION', dens: '1', en: 'COMPREHENSION', color: '#F25CA2' },
     topics: ['compréhension', 'comprehension', 'histoires', 'stories', 'contes', 'tales', 'écouter', 'listening', 'trivia', 'questions', 'fables', 'lecture', 'reading'] },
   { key: 'builder', fr: 'Chantier de Tibo', en: "Tibo's Building Site", color: '#B4654A', mx: 750, my: 285, px: 235, py: 320,
-    subject: { fr: 'CONSTRUCTION', en: 'BUILDING', color: '#B4654A' },
+    subject: { fr: 'CONSTRUCTION', dens: '1', en: 'BUILDING', color: '#B4654A' },
     topics: ['construction', 'building', 'build', 'bâtir', 'maison', 'house', 'pont', 'bridge', 'fusée', 'rocket', 'blocs', 'blocks', 'ingénieur', 'engineer', 'projet', 'project', 'chantier', 'robot', 'bateau', 'boat'] },
   { key: 'seek', fr: 'Cherche & Trouve', en: 'Seek & Find', color: '#FFB703', mx: 1280, my: 520, px: 575, py: 605,
-    subject: { fr: 'OBSERVATION', en: 'OBSERVATION', color: '#F3A712' },
+    subject: { fr: 'OBSERVATION', dens: '1', en: 'OBSERVATION', color: '#F3A712' },
     topics: ['observation', 'chercher', 'cherche', 'search', 'trouve', 'find', 'seek', 'caché', 'hidden', 'papillon', 'butterfly', 'attention', 'regarder', 'look'] },
   { key: 'words', fr: 'Fabrique de Mots', en: 'Word Factory', color: '#06B6D4', mx: 950, my: 650, px: 575, py: 225,
-    subject: { fr: 'MOTS & LETTRES', en: 'WORDS & LETTERS', color: '#06B6D4' },
+    subject: { fr: 'MOTS & LETTRES', dens: '1', en: 'WORDS & LETTERS', color: '#06B6D4' },
     topics: ['mots', 'words', 'lettres', 'letters', 'orthographe', 'spelling', 'écrire', 'write', 'writing', 'alphabet', 'word game', 'jeu de mots', 'vocabulaire', 'vocabulary', 'épeler', 'spell'] },
   { key: 'create', fr: 'Atelier Magique', en: 'Magic Workshop', color: '#FF6FB5', mx: 520, my: 650, px: 300, py: 215,
-    subject: { fr: 'CRÉATION', en: 'CREATION', color: '#FF6FB5' },
-    topics: ['création', 'creation', 'créer', 'create', 'art', 'dessin', 'drawing', 'imagination', 'atelier', 'studio', 'tableau', 'picture', 'inventer', 'invent', 'libre', 'free'] }
+    subject: { fr: 'CRÉATION', dens: '1', en: 'CREATION', color: '#FF6FB5' },
+    topics: ['création', 'creation', 'créer', 'create', 'art', 'dessin', 'drawing', 'imagination', 'atelier', 'studio', 'tableau', 'picture', 'inventer', 'invent', 'libre', 'free'] },
+  { key: 'academy', fr: 'Académie des Champions', en: 'Champions Academy', color: '#5E60CE', mx: 870, my: 462, px: 420, py: 893,
+    subject: { fr: 'QUIZ & ASTUCES', dens: '1', en: 'QUIZ & TRICKS', color: '#5E60CE' },
+    topics: ['quiz', 'révision', 'revision', 'réviser', 'examen', 'exam', 'test', 'astuce', 'trick', 'école', 'school', 'programme', 'curriculum', 'devoirs', 'homework', 'leçon', 'lesson', 'exercice', 'exercise', 'académie', 'academy'] }
 ];
 // Concept & trick coaching per zone — harder classes get real strategies (Astuces)
 const TRICKS = {
@@ -536,7 +579,9 @@ const TRICKS = {
     : ['Astuce de détective : avance case par case et compte ce que tu as déjà trouvé pour ne rien oublier !', 'Detective trick: scan square by square and count what you found so you miss nothing!'],
   words: d => d <= 2 ? ['Astuce : dis le mot à voix haute et écoute le premier son !', 'Trick: say the word out loud and listen for the first sound!']
     : ['Astuce : découpe le mot en syllabes et écris-les une par une : MAI-SON !', 'Trick: break the word into syllables and spell them one at a time!'],
-  create: () => ['Astuce d\u2019artiste : en création, il n\u2019y a pas d\u2019erreur, seulement des idées ! Raconte ton tableau à la fin.', 'Artist trick: in creation there are no mistakes, only ideas! Tell the story of your picture at the end.']
+  create: () => ['Astuce d\u2019artiste : en création, il n\u2019y a pas d\u2019erreur, seulement des idées ! Raconte ton tableau à la fin.', 'Artist trick: in creation there are no mistakes, only ideas! Tell the story of your picture at the end.'],
+  academy: d => d <= 2 ? ['Astuce de champion : \u00e9coute bien la question, puis regarde chaque r\u00e9ponse avant de choisir !', 'Champion trick: listen to the question, then look at every answer before you choose!']
+    : ['Astuce de champion : lis la question deux fois, \u00e9limine les r\u00e9ponses impossibles, puis v\u00e9rifie avec l\u2019astuce pas \u00e0 pas !', 'Champion trick: read the question twice, cross out impossible answers, then check with the step-by-step trick!']
 };
 // tiny drawn icon per zone for its medallion
 const ZONE_ICONS = {
@@ -551,6 +596,7 @@ const ZONE_ICONS = {
   builder: g => { S('rect', { x: -14, y: -2, width: 28, height: 20, rx: 3, fill: '#F2C078', stroke: '#B4654A', 'stroke-width': 2.5 }, g); S('path', { d: 'M -18 -2 L 0 -20 L 18 -2 Z', fill: '#E5252A' }, g); S('rect', { x: -4, y: 7, width: 8, height: 11, fill: '#8A5A33' }, g); },
   seek: g => { S('circle', { cx: -4, cy: -4, r: 11, fill: 'none', stroke: '#F3A712', 'stroke-width': 4 }, g); S('path', { d: 'M 4 4 L 15 15', stroke: '#F3A712', 'stroke-width': 5, 'stroke-linecap': 'round' }, g); S('path', { d: 'M -8 -6 Q -4 -12 0 -6 Q -4 0 -8 -6 Z M 0 -6 Q 4 -12 8 -6 Q 4 0 0 -6 Z', fill: '#9B5DE5', transform: 'scale(0.7) translate(-5,-4)' }, g); },
   words: g => { [['A', -10, -8, '#FF4D57'], ['B', 10, -8, '#4CC9F0'], ['C', 0, 10, '#57CC57']].forEach(([L, x, y, c]) => { S('rect', { x: x - 9, y: y - 9, width: 18, height: 18, rx: 4, fill: '#fff', stroke: c, 'stroke-width': 2.5 }, g); S('text', { x, y: y + 5.5, 'text-anchor': 'middle', 'font-size': 13, 'font-weight': 800, fill: c, 'font-family': 'inherit', text: L }, g); }); },
+  academy: g => { S('path', { d: 'M -20 -6 L 0 -16 L 20 -6 L 0 4 Z', fill: '#2B2D42' }, g); S('path', { d: 'M -11 -2 L -11 8 Q 0 15 11 8 L 11 -2', fill: '#5E60CE', stroke: '#2B2D42', 'stroke-width': 1.5 }, g); S('path', { d: 'M 14 -8 L 14 6', stroke: '#FFD23F', 'stroke-width': 2.4 }, g); S('circle', { cx: 14, cy: 9, r: 4, fill: '#FFD23F', stroke: '#E58E09', 'stroke-width': 1.5 }, g); },
   create: g => { S('path', { d: 'M -2 16 Q -18 16 -16 0 Q -15 -14 0 -16 Q 16 -17 16 -4 Q 16 4 8 4 Q 0 4 2 10 Q 3 16 -2 16 Z', fill: '#fff', stroke: '#FF6FB5', 'stroke-width': 2.5 }, g); [['#FF4D57', -8, -7], ['#4CC9F0', 1, -10], ['#FFD23F', 9, -3], ['#57CC57', -9, 3]].forEach(([c, x, y]) => S('circle', { cx: x, cy: y, r: 3.2, fill: c }, g)); }
 };
 let leoMapAvatar = null;
@@ -560,6 +606,16 @@ function buildMap() {
   const W = landscape ? 1500 : 850, H = landscape ? 850 : 1500;
   const svg = S('svg', { class: 'stage', viewBox: `0 0 ${W} ${H}`, preserveAspectRatio: 'xMidYMid slice' }, host);
   gradDefs(svg);
+  // --- 'slice' crops the viewBox on wide/tall windows; compute the truly visible band
+  // and the space eaten by the HTML overlays (HUD on top, grade dock at the bottom),
+  // then fit the whole island inside it so NOTHING is ever cut or covered.
+  const winW = Math.max(1, innerWidth), winH = Math.max(1, innerHeight);
+  const pxScale = Math.max(winW / W, winH / H);     // css px per viewBox unit
+  const u = px => px / pxScale;                     // css px -> viewBox units
+  const cropX = Math.max(0, (W - winW / pxScale) / 2);
+  const cropY = Math.max(0, (H - winH / pxScale) / 2);
+  const topSafe = cropY + u(78);                    // below the HUD row (buttons + star pill)
+  const dockSafe = H - cropY - u(104);              // above the grade dock
   const seaY = landscape ? 500 : 560;
   S('rect', { x: 0, y: 0, width: W, height: seaY + 20, fill: 'url(#gSky)' }, svg);
   S('rect', { x: 0, y: seaY, width: W, height: H - seaY, fill: 'url(#gSea)' }, svg);
@@ -569,39 +625,44 @@ function buildMap() {
     const wave = S('path', { d, fill: 'none', stroke: 'rgba(255,255,255,0.4)', 'stroke-width': 5, 'stroke-linecap': 'round' }, svg);
     wave.animate([{ transform: 'translateX(0)' }, { transform: 'translateX(-60px)' }], { duration: 3000 + w * 900, iterations: Infinity });
   }
-  drawSun(svg, W - 140, 110, landscape ? 1.1 : 0.9);
-  [[-40, 90, 1, 70], [W * 0.33, 60, 0.8, 95], [W * 0.66, 140, 1.1, 120]].forEach(([x, y, s, dur]) => {
+  // sun sits below the star pill so the HUD never covers it
+  drawSun(svg, W - cropX - 160, topSafe + 100, landscape ? 0.95 : 0.85);
+  [[-40, 30, 1, 70], [W * 0.33, 4, 0.8, 95], [W * 0.66, 60, 1.1, 120]].forEach(([x, dy, s, dur]) => {
+    const y = topSafe + 30 + dy;
     const c = drawCloud(svg, x, y, s, 'rgba(255,255,255,0.95)');
     c.animate([{ transform: `translate(${x}px,${y}px) scale(${s})` }, { transform: `translate(${x + W + 300}px,${y}px) scale(${s})` }], { duration: dur * 1000, iterations: Infinity });
   });
-  // island
+  // everything that belongs to the island goes into one 'world' group that is
+  // uniformly rescaled into the safe visible band (no distortion, no overlap)
+  const world = S('g', {}, svg);
   const icx = W / 2, icy = landscape ? 560 : 870, irx = landscape ? 640 : 395, iry = landscape ? 270 : 620;
-  S('ellipse', { cx: icx, cy: icy, rx: irx, ry: iry, fill: 'url(#gSand)', stroke: '#E8B567', 'stroke-width': 6 }, svg);
-  S('ellipse', { cx: icx, cy: icy - 15, rx: irx - 60, ry: iry - 35, fill: 'url(#gGrass)' }, svg);
-  const mnt = landscape ? [720, 380] : [425, 430];
-  S('path', { d: `M ${mnt[0] - 100} ${mnt[1]} L ${mnt[0]} ${mnt[1] - 130} L ${mnt[0] + 100} ${mnt[1]} Z`, fill: '#7A8B99' }, svg);
-  S('path', { d: `M ${mnt[0] - 20} ${mnt[1]} L ${mnt[0] + 50} ${mnt[1] - 90} L ${mnt[0] + 130} ${mnt[1]} Z`, fill: '#93A8B8' }, svg);
-  S('path', { d: `M ${mnt[0]} ${mnt[1] - 130} L ${mnt[0] + 25} ${mnt[1] - 98} L ${mnt[0] + 42} ${mnt[1] - 118} L ${mnt[0] + 55} ${mnt[1] - 96} L ${mnt[0]} ${mnt[1] - 96} Z`, fill: '#fff' }, svg);
+  S('ellipse', { cx: icx, cy: icy, rx: irx, ry: iry, fill: 'url(#gSand)', stroke: '#E8B567', 'stroke-width': 6 }, world);
+  S('ellipse', { cx: icx, cy: icy - 15, rx: irx - 60, ry: iry - 35, fill: 'url(#gGrass)' }, world);
+  const mnt = landscape ? [660, 372] : [425, 430];
+  S('path', { d: `M ${mnt[0] - 100} ${mnt[1]} L ${mnt[0]} ${mnt[1] - 130} L ${mnt[0] + 100} ${mnt[1]} Z`, fill: '#7A8B99' }, world);
+  S('path', { d: `M ${mnt[0] - 20} ${mnt[1]} L ${mnt[0] + 50} ${mnt[1] - 90} L ${mnt[0] + 130} ${mnt[1]} Z`, fill: '#93A8B8' }, world);
+  S('path', { d: `M ${mnt[0]} ${mnt[1] - 130} L ${mnt[0] + 25} ${mnt[1] - 98} L ${mnt[0] + 42} ${mnt[1] - 118} L ${mnt[0] + 55} ${mnt[1] - 96} L ${mnt[0]} ${mnt[1] - 96} Z`, fill: '#fff' }, world);
   const treeSpots = landscape ? [[260, 560], [1240, 520], [900, 430], [540, 680]] : [[140, 760], [700, 660], [660, 1180], [180, 1320]];
   treeSpots.forEach(([x, y]) => {
-    const t = S('g', { transform: `translate(${x},${y})`, style: 'transform-box:fill-box;transform-origin:50% 100%;animation:sway 5s ease-in-out infinite;' }, svg);
+    const t = S('g', { transform: `translate(${x},${y})`, style: 'transform-box:fill-box;transform-origin:50% 100%;animation:sway 5s ease-in-out infinite;' }, world);
     S('rect', { x: -7, y: -10, width: 14, height: 52, rx: 6, fill: 'url(#gWood)' }, t);
     [-30, 0, 30].forEach((dx, i) => S('path', { d: `M 0 -8 Q ${dx} ${-48 - (i % 2) * 14} ${dx * 1.6} ${-20 - (i % 2) * 8}`, stroke: '#3FA34D', 'stroke-width': 11, fill: 'none', 'stroke-linecap': 'round' }, t));
   });
   const ZX = z => landscape ? z.mx : z.px, ZY = z => landscape ? z.my : z.py;
   let pd = '';
   ZONES.forEach((z, i) => { pd += (i ? ' L ' : 'M ') + ZX(z) + ' ' + ZY(z); });
-  S('path', { d: pd, fill: 'none', stroke: '#FFF4D6', 'stroke-width': 26, 'stroke-linecap': 'round', 'stroke-linejoin': 'round', opacity: 0.9 }, svg);
-  S('path', { d: pd, fill: 'none', stroke: '#E8B567', 'stroke-width': 6, 'stroke-dasharray': '2 26', 'stroke-linecap': 'round' }, svg);
-  // title banner
-  const bw = Math.min(660, W - 60);
-  const tg = S('g', { transform: `translate(${W / 2},74)` }, svg);
-  S('rect', { x: -bw / 2, y: -46, width: bw, height: 86, rx: 43, fill: '#fff', stroke: '#FFD23F', 'stroke-width': 6, filter: 'drop-shadow(0 8px 14px rgba(43,45,66,0.25))' }, tg);
-  S('text', { x: 0, y: 2, 'text-anchor': 'middle', 'font-size': landscape ? 40 : 34, 'font-weight': 800, fill: '#2B2D42', 'font-family': 'inherit', text: 'NATEIVA WORLD' }, tg);
-  S('text', { x: 0, y: 30, 'text-anchor': 'middle', 'font-size': landscape ? 17 : 15, 'font-weight': 700, fill: '#8A93AD', 'font-family': 'inherit', text: T("Touche une île d'aventure !", 'Tap an adventure spot!') }, tg);
+  S('path', { d: pd, fill: 'none', stroke: '#FFF4D6', 'stroke-width': 26, 'stroke-linecap': 'round', 'stroke-linejoin': 'round', opacity: 0.9 }, world);
+  S('path', { d: pd, fill: 'none', stroke: '#E8B567', 'stroke-width': 6, 'stroke-dasharray': '2 26', 'stroke-linecap': 'round' }, world);
+  // title banner — always fully visible, under the HUD
+  const bw = Math.min(660, W - cropX * 2 - 40);
+  const titleCy = topSafe + 48;
+  const tg = S('g', { transform: `translate(${W / 2},${titleCy})` }, svg);
+  S('rect', { x: -bw / 2, y: -44, width: bw, height: 84, rx: 42, fill: '#fff', stroke: '#FFD23F', 'stroke-width': 6, filter: 'drop-shadow(0 8px 14px rgba(43,45,66,0.25))' }, tg);
+  S('text', { x: 0, y: 2, 'text-anchor': 'middle', 'font-size': landscape ? 38 : 32, 'font-weight': 800, fill: '#2B2D42', 'font-family': 'inherit', text: 'NATEIVA WORLD' }, tg);
+  S('text', { x: 0, y: 29, 'text-anchor': 'middle', 'font-size': landscape ? 17 : 15, 'font-weight': 700, fill: '#8A93AD', 'font-family': 'inherit', text: T("Touche une île d'aventure !", 'Tap an adventure spot!') }, tg);
   // stations with SUBJECT pills
   ZONES.forEach(z => {
-    const st = S('g', { class: 'station', transform: `translate(${ZX(z)},${ZY(z)})` }, svg);
+    const st = S('g', { class: 'station', transform: `translate(${ZX(z)},${ZY(z)})` }, world);
     const ring = S('g', { class: 'ring' }, st);
     S('circle', { cx: 0, cy: 6, r: 50, fill: 'rgba(0,0,0,0.14)' }, ring);
     S('circle', { cx: 0, cy: 0, r: 50, fill: '#fff', stroke: z.color, 'stroke-width': 7, class: 'st-ring-main' }, ring);
@@ -615,8 +676,16 @@ function buildMap() {
     S('text', { x: 0, y: 114, 'text-anchor': 'middle', 'font-size': 18, 'font-weight': 800, fill: '#2B2D42', 'font-family': 'inherit', text: T(z.fr, z.en) }, st);
     st.addEventListener('click', () => { sfx.boing(); enterZone(z.key); });
   });
-  leoMapAvatar = drawLeo(svg, ZX(ZONES[0]), ZY(ZONES[0]) - 92, 0.62);
+  leoMapAvatar = drawLeo(world, ZX(ZONES[0]), ZY(ZONES[0]) - 92, 0.62);
   fxBob(leoMapAvatar, 15, 2200);
+  // fit the island + stations + labels into the band that is actually on screen
+  let mnY = 1e9, mxY = -1e9, mnX = 1e9, mxX = -1e9;
+  ZONES.forEach(z => { const x = ZX(z), y = ZY(z); mnY = Math.min(mnY, y); mxY = Math.max(mxY, y); mnX = Math.min(mnX, x); mxX = Math.max(mxX, x); });
+  const dTop = mnY - 160, dBot = mxY + 128, dL = mnX - 118, dR = mxX + 118;
+  const aTop = titleCy + 56, aBot = dockSafe - 4, aL = cropX + 6, aR = W - cropX - 6;
+  const fit = Math.min(1, (aBot - aTop) / (dBot - dTop), (aR - aL) / (dR - dL));
+  const dcx = (dL + dR) / 2, dcy = (dTop + dBot) / 2;
+  world.setAttribute('transform', `translate(${(aL + aR) / 2},${(aTop + aBot) / 2}) scale(${fit}) translate(${-dcx},${-dcy})`);
 }
 let resizeTimer = null;
 window.addEventListener('resize', () => {
@@ -1118,13 +1187,13 @@ ZONE_BUILDERS.splash = function (host) {
   S('path', { d: 'M 0 -24 L 16 0 L 5 0 L 5 16 L -5 16 L -5 0 L -16 0 Z', fill: '#fff', transform: 'rotate(180)', 'stroke-width': 0 }, dockS);
   S('text', { x: 0, y: 64, 'text-anchor': 'middle', 'font-size': 23, 'font-weight': 800, fill: '#fff', 'font-family': 'inherit', text: T('COULE', 'SINKS') }, dockS);
   const OBJECTS = [
-    { fr: 'la feuille', en: 'the leaf', floats: true, draw: g => { S('path', { d: 'M 0 -26 Q 30 -8 0 26 Q -30 -8 0 -26 Z', fill: '#57CC57', stroke: '#2C6B2A', 'stroke-width': 3 }, g); S('path', { d: 'M 0 -20 L 0 20', stroke: '#2C6B2A', 'stroke-width': 2.4 }, g); } },
-    { fr: 'la pierre', en: 'the stone', floats: false, draw: g => { S('path', { d: 'M -26 10 Q -30 -16 -6 -22 Q 22 -28 28 -4 Q 32 16 10 22 Q -14 28 -26 10 Z', fill: '#8D99AE', stroke: '#5C6784', 'stroke-width': 3 }, g); } },
-    { fr: 'le canard', en: 'the duck', floats: true, draw: g => { S('ellipse', { cx: 2, cy: 8, rx: 24, ry: 15, fill: '#FFD23F', stroke: '#D9A400', 'stroke-width': 3 }, g); S('circle', { cx: -16, cy: -10, r: 11, fill: '#FFD23F', stroke: '#D9A400', 'stroke-width': 3 }, g); S('path', { d: 'M -27 -10 L -38 -6 L -27 -3 Z', fill: '#FF9F1C' }, g); S('circle', { cx: -18, cy: -12, r: 2.4, fill: '#222' }, g); } },
-    { fr: 'la clé', en: 'the key', floats: false, draw: g => { S('circle', { cx: -14, cy: 0, r: 10, fill: 'none', stroke: '#C9A227', 'stroke-width': 6 }, g); S('path', { d: 'M -4 0 L 26 0 M 16 0 L 16 9 M 24 0 L 24 9', stroke: '#C9A227', 'stroke-width': 6, 'stroke-linecap': 'round' }, g); } },
-    { fr: 'le ballon', en: 'the ball', floats: true, draw: g => { S('circle', { cx: 0, cy: 0, r: 20, fill: '#FF4D57', stroke: '#C42631', 'stroke-width': 3 }, g); S('path', { d: 'M -20 0 Q 0 -12 20 0 M -20 0 Q 0 12 20 0', stroke: '#fff', 'stroke-width': 3.4, fill: 'none' }, g); } },
-    { fr: 'la cuillère', en: 'the spoon', floats: false, draw: g => { S('ellipse', { cx: -16, cy: 0, rx: 10, ry: 14, fill: '#C0C7D8', stroke: '#8D99AE', 'stroke-width': 3 }, g); S('rect', { x: -6, y: -4, width: 34, height: 8, rx: 4, fill: '#C0C7D8', stroke: '#8D99AE', 'stroke-width': 2.4 }, g); } },
-    { fr: 'la mangue', en: 'the mango', floats: true, draw: g => { S('ellipse', { cx: 0, cy: 0, rx: 22, ry: 16, fill: '#FF9F1C', stroke: '#D97800', 'stroke-width': 3 }, g); S('path', { d: 'M 8 -12 Q 16 -22 24 -16', stroke: '#3FA34D', 'stroke-width': 4, fill: 'none', 'stroke-linecap': 'round' }, g); } },
+    { fr: 'la feuille', dens: '0,3', en: 'the leaf', floats: true, draw: g => { S('path', { d: 'M 0 -26 Q 30 -8 0 26 Q -30 -8 0 -26 Z', fill: '#57CC57', stroke: '#2C6B2A', 'stroke-width': 3 }, g); S('path', { d: 'M 0 -20 L 0 20', stroke: '#2C6B2A', 'stroke-width': 2.4 }, g); } },
+    { fr: 'la pierre', dens: '2,7', en: 'the stone', floats: false, draw: g => { S('path', { d: 'M -26 10 Q -30 -16 -6 -22 Q 22 -28 28 -4 Q 32 16 10 22 Q -14 28 -26 10 Z', fill: '#8D99AE', stroke: '#5C6784', 'stroke-width': 3 }, g); } },
+    { fr: 'le canard', dens: '0,4', en: 'the duck', floats: true, draw: g => { S('ellipse', { cx: 2, cy: 8, rx: 24, ry: 15, fill: '#FFD23F', stroke: '#D9A400', 'stroke-width': 3 }, g); S('circle', { cx: -16, cy: -10, r: 11, fill: '#FFD23F', stroke: '#D9A400', 'stroke-width': 3 }, g); S('path', { d: 'M -27 -10 L -38 -6 L -27 -3 Z', fill: '#FF9F1C' }, g); S('circle', { cx: -18, cy: -12, r: 2.4, fill: '#222' }, g); } },
+    { fr: 'la clé', dens: '7,8', en: 'the key', floats: false, draw: g => { S('circle', { cx: -14, cy: 0, r: 10, fill: 'none', stroke: '#C9A227', 'stroke-width': 6 }, g); S('path', { d: 'M -4 0 L 26 0 M 16 0 L 16 9 M 24 0 L 24 9', stroke: '#C9A227', 'stroke-width': 6, 'stroke-linecap': 'round' }, g); } },
+    { fr: 'le ballon', dens: '0,1', en: 'the ball', floats: true, draw: g => { S('circle', { cx: 0, cy: 0, r: 20, fill: '#FF4D57', stroke: '#C42631', 'stroke-width': 3 }, g); S('path', { d: 'M -20 0 Q 0 -12 20 0 M -20 0 Q 0 12 20 0', stroke: '#fff', 'stroke-width': 3.4, fill: 'none' }, g); } },
+    { fr: 'la cuillère', dens: '7,9', en: 'the spoon', floats: false, draw: g => { S('ellipse', { cx: -16, cy: 0, rx: 10, ry: 14, fill: '#C0C7D8', stroke: '#8D99AE', 'stroke-width': 3 }, g); S('rect', { x: -6, y: -4, width: 34, height: 8, rx: 4, fill: '#C0C7D8', stroke: '#8D99AE', 'stroke-width': 2.4 }, g); } },
+    { fr: 'la mangue', dens: '0,95', en: 'the mango', floats: true, draw: g => { S('ellipse', { cx: 0, cy: 0, rx: 22, ry: 16, fill: '#FF9F1C', stroke: '#D97800', 'stroke-width': 3 }, g); S('path', { d: 'M 8 -12 Q 16 -22 24 -16', stroke: '#3FA34D', 'stroke-width': 4, fill: 'none', 'stroke-linecap': 'round' }, g); } },
     { fr: "l'ancre", en: 'the anchor', floats: false, draw: g => { S('path', { d: 'M 0 -20 L 0 16 M -16 6 Q 0 26 16 6 M 0 -20 m -6 0 a 6 6 0 1 0 12 0 a 6 6 0 1 0 -12 0', stroke: '#2B2D42', 'stroke-width': 6, fill: 'none', 'stroke-linecap': 'round' }, g); } }
   ];
   let items = [], sorted = 0, roundItems = [], roundLive = false;
@@ -1184,7 +1253,14 @@ ZONE_BUILDERS.splash = function (host) {
               g.animate([{ transform: `translate(${p.x}px,${WATER_Y}px)` }, { transform: `translate(${p.x + rnd(-20, 20)}px,700px) rotate(20deg)` }], { duration: 1100, easing: 'ease-in', fill: 'forwards' });
               for (let b = 0; b < 5; b++) { const bb = S('circle', { cx: p.x + rnd(-14, 14), cy: WATER_Y + 40 + b * 40, r: rnd(3, 7), fill: 'rgba(255,255,255,0.7)' }, svg); bb.animate([{ opacity: 0.8, transform: 'translateY(0)' }, { opacity: 0, transform: 'translateY(-70px)' }], { duration: 900, delay: b * 120 }).onfinish = () => bb.remove(); }
             }
-            say(T(it.o.fr, it.o.en) + ' ... ' + T(it.o.floats ? 'ça flotte !' : 'ça coule !', it.o.floats ? 'it floats!' : 'it sinks!'));
+            if (D() >= 5 && it.o.dens) {
+              const lab = S('g', { transform: `translate(${p.x},${WATER_Y - 64})` }, svg);
+              S('rect', { x: -74, y: -22, width: 148, height: 36, rx: 18, fill: '#fff', stroke: '#2EC4B6', 'stroke-width': 4 }, lab);
+              S('text', { x: 0, y: 4, 'text-anchor': 'middle', 'font-size': 19, 'font-weight': 800, fill: '#2B2D42', 'font-family': 'inherit', text: T('densité ' + it.o.dens, 'density ' + it.o.dens.replace(',', '.')) }, lab);
+              fxPop(lab);
+              setTimeout(() => lab.remove(), 2600);
+              say(T(it.o.fr, it.o.en) + ' : ' + T('densité ' + it.o.dens + '. ', 'density ' + it.o.dens.replace(',', '.') + '. ') + T(it.o.floats ? 'Moins de un : ça flotte !' : 'Plus de un : ça coule !', it.o.floats ? 'Less than one: it floats!' : 'More than one: it sinks!'));
+            } else say(T(it.o.fr, it.o.en) + ' ... ' + T(it.o.floats ? 'ça flotte !' : 'ça coule !', it.o.floats ? 'it floats!' : 'it sinks!'));
             setTimeout(() => say('Range-' + (isEN() ? 'it' : 'le') + ' sur le bon ponton !', 'Drag it to the right dock!'), 1800);
           } else {
             g.animate([{ transform: `translate(${p.x}px,${p.y}px)` }, { transform: `translate(${it.home[0]}px,${it.home[1]}px)` }], { duration: 420, easing: 'cubic-bezier(0.34,1.56,0.64,1)' }).onfinish = () => g.setAttribute('transform', `translate(${it.home[0]},${it.home[1]})`);
@@ -1229,7 +1305,7 @@ ZONE_BUILDERS.garden = function (host) {
   const sunFill = meter(54, '#FFD23F', g => { S('circle', { cx: 0, cy: 0, r: 9, fill: '#FFD23F' }, g); for (let i = 0; i < 8; i++) S('rect', { x: -1.6, y: -17, width: 3.2, height: 6, rx: 1.6, fill: '#FFD23F', transform: `rotate(${i * 45})` }, g); });
   let water = 0, sun = 0, stage = 0, needW = 3, needS = 3, roundLive = false, plantKind = 0;
   const PLANTS = [
-    { fr: 'le tournesol', en: 'the sunflower' }, { fr: 'le baobab', en: 'the baobab' }, { fr: "l'hibiscus", en: 'the hibiscus' }
+    { fr: 'le tournesol', dens: '1', en: 'the sunflower' }, { fr: 'le baobab', dens: '1', en: 'the baobab' }, { fr: "l'hibiscus", en: 'the hibiscus' }
   ];
   function drawPlant() {
     plantG.innerHTML = '';
@@ -1305,34 +1381,24 @@ ZONE_BUILDERS.safari = function (host) {
   const svg = S('svg', { class: 'stage', viewBox: '0 0 1500 850', preserveAspectRatio: (innerWidth >= innerHeight * 1.02 ? 'xMidYMid slice' : 'xMidYMid meet') }, host);
   gradDefs(svg);
   S('rect', { width: 1500, height: 850, fill: 'url(#gSky)' }, svg);
-  drawCloud(svg, 200, 700, 1, 'rgba(255,255,255,0.8)');
-  drawCloud(svg, 1300, 760, 0.8, 'rgba(255,255,255,0.8)');
-  // cartoon Africa: friendly rounded regions (not to scale — made for small hands)
-  const map = S('g', { transform: 'translate(700,440) scale(1.15)' }, svg);
-  const COUNTRIES = [
-    { key: 'ma', fr: 'le Maroc', en: 'Morocco', cap: 'Rabat', color: '#F28F6B', d: 'M -210 -300 Q -120 -330 -60 -300 L -40 -240 Q -110 -210 -150 -230 L -230 -250 Z', lx: -130, ly: -275, flag: g => { S('rect', { x: -20, y: -13, width: 40, height: 26, fill: '#C1272D' }, g); S('path', { d: 'M 0 -8 L 2.4 -2 L 8 -2 L 3.4 2 L 5 8 L 0 4 L -5 8 L -3.4 2 L -8 -2 L -2.4 -2 Z', fill: 'none', stroke: '#006233', 'stroke-width': 1.6 }, g); } },
-    { key: 'eg', fr: "l'Égypte", en: 'Egypt', cap: 'Le Caire', color: '#EFD08E', d: 'M 90 -310 L 230 -310 L 240 -210 L 100 -200 Z', lx: 165, ly: -255, landmark: g => { S('path', { d: 'M -16 10 L 0 -14 L 16 10 Z', fill: '#D9A400', stroke: '#8A5A00', 'stroke-width': 2 }, g); }, flag: g => { S('rect', { x: -20, y: -13, width: 40, height: 9 }, g).setAttribute('fill', '#CE1126'); S('rect', { x: -20, y: -4, width: 40, height: 9, fill: '#fff' }, g); S('rect', { x: -20, y: 5, width: 40, height: 9, fill: '#000' }, g); S('circle', { cx: 0, cy: 0.5, r: 3, fill: '#C09300' }, g); } },
-    { key: 'sn', fr: 'le Sénégal', en: 'Senegal', cap: 'Dakar', color: '#8ED081', d: 'M -330 -140 Q -260 -170 -210 -140 L -220 -80 L -320 -80 Z', lx: -272, ly: -115, flag: g => { ['#00853F', '#FDEF42', '#E31B23'].forEach((c, i) => S('rect', { x: -20 + i * 13.3, y: -13, width: 13.4, height: 26, fill: c }, g)); S('path', { d: 'M 0 -6 L 1.8 -1.5 L 6 -1.5 L 2.6 1.5 L 4 6 L 0 3 L -4 6 L -2.6 1.5 L -6 -1.5 L -1.8 -1.5 Z', fill: '#00853F' }, g); } },
-    { key: 'ml', fr: 'le Mali', en: 'Mali', cap: 'Bamako', color: '#F5C96B', d: 'M -200 -210 L -60 -230 L -40 -120 L -180 -90 Z', lx: -115, ly: -160, flag: g => { ['#14B53A', '#FCD116', '#CE1126'].forEach((c, i) => S('rect', { x: -20 + i * 13.3, y: -13, width: 13.4, height: 26, fill: c }, g)); } },
-    { key: 'ng', fr: 'le Nigéria', en: 'Nigeria', cap: 'Abuja', color: '#7FC97F', d: 'M -120 -60 L 10 -70 L 30 30 L -90 40 Z', lx: -45, ly: -15, flag: g => { ['#008751', '#FFFFFF', '#008751'].forEach((c, i) => S('rect', { x: -20 + i * 13.3, y: -13, width: 13.4, height: 26, fill: c }, g)); } },
-    { key: 'cm', fr: 'le Cameroun', en: 'Cameroon', cap: 'Yaoundé', color: '#69B578', d: 'M 40 -60 L 130 -40 L 110 70 L 40 50 Z', lx: 85, ly: 0, flag: g => { ['#007A5E', '#CE1126', '#FCD116'].forEach((c, i) => S('rect', { x: -20 + i * 13.3, y: -13, width: 13.4, height: 26, fill: c }, g)); S('path', { d: 'M 0 -5 L 1.6 -1.2 L 5.4 -1.2 L 2.3 1.3 L 3.4 5 L 0 2.6 L -3.4 5 L -2.3 1.3 L -5.4 -1.2 L -1.6 -1.2 Z', fill: '#FCD116' }, g); } },
-    { key: 'et', fr: "l'Éthiopie", en: 'Ethiopie', cap: 'Addis-Abeba', color: '#D9A05B', d: 'M 180 -150 L 300 -120 L 270 -20 L 170 -50 Z', lx: 232, ly: -85, flag: g => { ['#078930', '#FCDD09', '#DA121A'].forEach((c, i) => S('rect', { x: -20, y: -13 + i * 8.7, width: 40, height: 8.7, fill: c }, g)); S('circle', { cx: 0, cy: 0, r: 5.4, fill: '#0F47AF' }, g); } },
-    { key: 'ke', fr: 'le Kenya', en: 'Kenya', cap: 'Nairobi', color: '#C98F62', d: 'M 180 -10 L 280 10 L 240 110 L 160 80 Z', lx: 215, ly: 48, landmark: g => { S('path', { d: 'M -18 10 L -4 -10 L 4 -2 L 10 -10 L 20 10 Z', fill: '#8D99AE', stroke: '#5C6784', 'stroke-width': 2 }, g); S('path', { d: 'M -8 -4 L -4 -10 L 0 -5 Z', fill: '#fff' }, g); }, flag: g => { ['#000000', '#BB0000', '#006600'].forEach((c, i) => S('rect', { x: -20, y: -13 + i * 8.7, width: 40, height: 8.7, fill: c }, g)); S('ellipse', { cx: 0, cy: 0, rx: 5, ry: 9, fill: '#BB0000', stroke: '#fff', 'stroke-width': 1.6 }, g); } },
-    { key: 'mg', fr: 'Madagascar', en: 'Madagascar', cap: 'Antananarivo', color: '#B3E07E', d: 'M 330 120 Q 370 90 380 150 L 360 250 Q 330 260 325 210 Z', lx: 352, ly: 172, flag: g => { S('rect', { x: -20, y: -13, width: 13.3, height: 26, fill: '#fff' }, g); S('rect', { x: -6.7, y: -13, width: 26.7, height: 13, fill: '#FC3D32' }, g); S('rect', { x: -6.7, y: 0, width: 26.7, height: 13, fill: '#007E3A' }, g); } },
-    { key: 'za', fr: "l'Afrique du Sud", en: 'South Africa', cap: 'Pretoria', color: '#F2A6C4', d: 'M 60 180 L 220 170 L 230 280 Q 140 330 60 280 Z', lx: 145, ly: 240, flag: g => { S('rect', { x: -20, y: -13, width: 40, height: 26, fill: '#007A4D' }, g); S('rect', { x: -20, y: -13, width: 40, height: 8, fill: '#DE3831' }, g); S('rect', { x: -20, y: 5, width: 40, height: 8, fill: '#002395' }, g); S('path', { d: 'M -20 -13 L 0 0 L -20 13 Z', fill: '#FFB612', stroke: '#000', 'stroke-width': 1.2 }, g); } }
-  ];
-  // continent silhouette backdrop
-  S('path', { d: 'M -260 -330 Q 100 -400 260 -300 Q 320 -180 300 -40 Q 380 60 360 180 L 250 320 Q 120 380 40 300 Q -120 220 -180 60 Q -360 -40 -340 -120 Q -360 -220 -260 -330 Z', fill: '#FFE9B8', stroke: '#E8B567', 'stroke-width': 8, opacity: 0.9 }, map);
-  const regionEls = {};
-  COUNTRIES.forEach(c => {
-    const p = S('path', { d: c.d, fill: c.color, stroke: '#fff', 'stroke-width': 5, class: 'grab', style: 'transition:filter 0.2s, transform 0.2s; transform-box:fill-box; transform-origin:center;' }, map);
-    regionEls[c.key] = p;
-    if (c.landmark) { const lg = S('g', { transform: `translate(${c.lx},${c.ly - 34})` }, map); c.landmark(lg); }
-    p.addEventListener('pointerenter', () => p.style.filter = 'brightness(1.12)');
-    p.addEventListener('pointerleave', () => p.style.filter = '');
+  drawCloud(svg, 220, 740, 1, 'rgba(255,255,255,0.8)');
+  drawCloud(svg, 1330, 130, 0.75, 'rgba(255,255,255,0.8)');
+  // THE REAL AFRICA — true cartography, all 49 countries (same map data as the atlas)
+  const DATA = (window.AFRICA_MAP || []);
+  const K = 2.92, ox = 800 - 532.5 * K, oy = 455 - 452.5 * K;
+  const map = S('g', { transform: `translate(${ox},${oy}) scale(${K})` }, svg);
+  S('ellipse', { cx: 532.5, cy: 452.5, rx: 122, ry: 122, fill: 'rgba(255,255,255,0.32)' }, map);
+  const REGION_HUE = { 'North Africa': '#F5C96B', 'West Africa': '#8ED081', 'Central Africa': '#69B578', 'East Africa': '#F28F6B', 'Southern Africa': '#F2A6C4', 'Central/Southern Africa': '#7FC9C0' };
+  const els = {};
+  let target = null, roundLive = false, found = [], tries = 0;
+  DATA.forEach(c => {
+    const p = S('path', { d: c.path, fill: REGION_HUE[c.region] || '#B3A6E0', stroke: '#fff', 'stroke-width': 0.38, 'stroke-linejoin': 'round', class: 'grab', style: 'transition:filter 0.2s;' }, map);
+    els[c.id] = p;
+    p.addEventListener('pointerenter', () => { if (!found.includes(c.id)) p.style.filter = 'brightness(1.16)'; });
+    p.addEventListener('pointerleave', () => { if (!found.includes(c.id)) p.style.filter = ''; });
   });
-  // balloon with Léo
-  const balloon = S('g', { transform: 'translate(170,180)' }, svg);
+  // balloon with Leo
+  const balloon = S('g', { transform: 'translate(170,190)' }, svg);
   const balloonInner = S('g', {}, balloon);
   S('path', { d: 'M 0 -96 A 62 70 0 1 1 -0.1 -96 Z', fill: '#FF4D57', stroke: '#C42631', 'stroke-width': 5 }, balloonInner);
   S('path', { d: 'M 0 -96 A 62 70 0 0 1 0 36 A 24 70 0 0 0 0 -96 Z', fill: '#FFD23F', opacity: 0.9 }, balloonInner);
@@ -1340,20 +1406,29 @@ ZONE_BUILDERS.safari = function (host) {
   S('path', { d: 'M -18 60 L 18 60 L 12 92 L -12 92 Z', fill: 'url(#gWood)', stroke: '#6B421D', 'stroke-width': 4 }, balloonInner);
   drawLeo(balloonInner, 0, 44, 0.42);
   fxBob(balloonInner, 13, 3000);
-  let balloonPos = { x: 170, y: 180 };
-  // flag card
-  const flagCard = S('g', { transform: 'translate(170,560)' }, svg);
-  let target = null, roundLive = false, found = [];
+  let balloonPos = { x: 170, y: 190 };
+  // clue card: the country's REAL shape + name (or only its capital for the big kids)
+  const clueCard = S('g', { transform: 'translate(170,600)' }, svg);
+  const EASY = ['ma', 'eg', 'ng', 'cm', 'za', 'cd', 'ke', 'sn', 'dz', 'mg'];
+  const MID = EASY.concat(['tz', 'gh', 'ci', 'ml', 'ne', 'td', 'sd', 'et', 'ug', 'zm', 'zw', 'ao', 'mz', 'ly', 'tn', 'bf']);
+  function pool() { const d = D(); const ids = d <= 1 ? EASY : (d <= 3 ? MID : DATA.map(c => c.id)); return DATA.filter(c => ids.includes(c.id) && !found.includes(c.id)); }
   function showClue() {
-    flagCard.innerHTML = '';
-    S('rect', { x: -95, y: -75, width: 190, height: 165, rx: 22, fill: '#fff', stroke: '#FFD23F', 'stroke-width': 6 }, flagCard);
-    const fg = S('g', { transform: 'translate(0,-26) scale(3)' }, flagCard);
-    S('rect', { x: -21, y: -14, width: 42, height: 28, rx: 2, fill: '#fff', stroke: '#C9D3EE', 'stroke-width': 1 }, fg);
-    target.flag(fg);
+    clueCard.innerHTML = '';
     const d = D();
+    S('rect', { x: -108, y: -92, width: 216, height: 196, rx: 22, fill: '#fff', stroke: '#FFD23F', 'stroke-width': 6 }, clueCard);
+    if (d <= 4) {
+      let bb; try { bb = els[target.id].getBBox(); } catch (e) { bb = { x: 0, y: 0, width: 20, height: 20 }; }
+      const sc = Math.min(112 / Math.max(1, bb.width), 112 / Math.max(1, bb.height));
+      const mini = S('g', { transform: `translate(0,-30) scale(${sc}) translate(${-(bb.x + bb.width / 2)},${-(bb.y + bb.height / 2)})` }, clueCard);
+      S('path', { d: target.path, fill: '#5E60CE', stroke: '#2B2D42', 'stroke-width': Math.min(1.4, 0.8 / sc) }, mini);
+    } else {
+      S('text', { x: 0, y: -8, 'text-anchor': 'middle', 'font-size': 86, 'font-weight': 800, fill: '#C9D3EE', 'font-family': 'inherit', text: '?' }, clueCard);
+    }
     const lbl = d >= 4 ? T('Capitale : ' + target.cap, 'Capital: ' + target.cap) : T(target.fr, target.en);
-    S('text', { x: 0, y: 66, 'text-anchor': 'middle', 'font-size': 21, 'font-weight': 800, fill: '#2B2D42', 'font-family': 'inherit', text: d <= 1 ? '' : lbl }, flagCard);
-    fxPop(flagCard);
+    S('text', { x: 0, y: 52, 'text-anchor': 'middle', 'font-size': 20, 'font-weight': 800, fill: '#2B2D42', 'font-family': 'inherit', text: d < 1 ? '' : lbl }, clueCard);
+    if (d >= 2 && d <= 3) S('text', { x: 0, y: 82, 'text-anchor': 'middle', 'font-size': 14, 'font-weight': 700, fill: '#8A93AD', 'font-family': 'inherit', text: T('Région : ', 'Region: ') + target.region }, clueCard);
+    else if (d >= 4) S('text', { x: 0, y: 82, 'text-anchor': 'middle', 'font-size': 14, 'font-weight': 700, fill: '#8A93AD', 'font-family': 'inherit', text: T('Quel pays ?', 'Which country?') }, clueCard);
+    fxPop(clueCard);
   }
   function flyTo(x, y, cb) {
     sfx.whoosh();
@@ -1363,41 +1438,47 @@ ZONE_BUILDERS.safari = function (host) {
       balloon.setAttribute('transform', `translate(${x0 + (x - x0) * e},${y0 + (y - y0) * e - Math.sin(k * Math.PI) * 60}) rotate(${Math.sin(k * Math.PI * 2) * 4})`);
     }, () => { balloonPos = { x, y }; cb && cb(); });
   }
+  function hintTarget() {
+    const p = els[target.id];
+    p.setAttribute('stroke', '#FFD23F'); p.setAttribute('stroke-width', 1.6); p.style.filter = 'brightness(1.3)';
+    setTimeout(() => { p.setAttribute('stroke', '#fff'); p.setAttribute('stroke-width', 0.38); p.style.filter = ''; }, 1800);
+  }
   map.addEventListener('pointerdown', ev => {
     if (!roundLive) return;
-    const hit = COUNTRIES.find(c => regionEls[c.key] === ev.target);
-    if (!hit) return;
+    const hit = DATA.find(c => els[c.id] === ev.target);
+    if (!hit || found.includes(hit.id)) return;
     roundLive = false;
     const pt = svg.createSVGPoint(); pt.x = ev.clientX; pt.y = ev.clientY;
     const p = pt.matrixTransform(svg.getScreenCTM().inverse());
     flyTo(p.x, p.y - 60, () => {
-      if (hit.key === target.key) {
-        regionEls[hit.key].style.filter = 'brightness(1.2) saturate(1.4)';
-        found.push(hit.key);
-        // plant a mini flag
-        const mini = S('g', { transform: `translate(${700 + hit.lx * 1.15},${440 + hit.ly * 1.15}) scale(0.8)` }, svg);
-        S('rect', { x: -1.5, y: -30, width: 3, height: 30, fill: '#6B421D' }, mini);
-        const mf = S('g', { transform: 'translate(12,-22) scale(0.6)' }, mini);
-        hit.flag(mf);
-        fxPop(mini);
+      if (hit.id === target.id) {
+        els[hit.id].style.filter = 'brightness(1.2) saturate(1.5)';
+        found.push(hit.id);
+        const mk = S('g', { transform: `translate(${ox + hit.x * K},${oy + hit.y * K})` }, svg);
+        const stw = S('g', { transform: 'scale(1.1) translate(-12,-12)' }, mk);
+        drawStarIcon(stw, 1, '#FFD23F');
+        fxPop(mk);
         sfx.good(); confetti(16);
         say('Bravo ! ' + target.fr + ' ! Capitale : ' + target.cap + ' !', 'Great! ' + target.en + '! Capital: ' + target.cap + '!');
         setTimeout(() => { if (Rounds.gem()) setTimeout(zoneComplete, 800); else nextRound(); }, 1100);
       } else {
-        Rounds.miss(); sfx.bad();
-        fxWobble(regionEls[hit.key]);
-        say('Ici c’est ' + hit.fr + ' ! Cherche ' + target.fr + ' !', 'This is ' + hit.en + '! Look for ' + target.en + '!');
+        Rounds.miss(); sfx.bad(); tries++;
+        fxWobble(els[hit.id]);
+        say('Ici c’est ' + hit.fr + ', en ' + hit.region + ' ! Cherche ' + (D() >= 4 ? 'le pays de ' + target.cap : target.fr) + ' !',
+            'This is ' + hit.en + ', in ' + hit.region + '! Look for ' + (D() >= 4 ? 'the country of ' + target.cap : target.en) + '!');
+        if (tries >= 3) hintTarget();
         roundLive = true;
       }
     });
   });
   function nextRound() {
-    const pool = COUNTRIES.filter(c => !found.includes(c.key));
-    target = pool[ri(0, pool.length - 1)] || COUNTRIES[ri(0, COUNTRIES.length - 1)];
+    tries = 0;
+    const po = pool();
+    target = po[ri(0, po.length - 1)] || DATA[ri(0, DATA.length - 1)];
     showClue();
     const d = D();
     if (d >= 4) mission('Vole vers le pays dont la capitale est ' + target.cap + ' !', 'Fly to the country whose capital is ' + target.cap + '!', ZONE_ICONS.safari);
-    else mission('Vole avec Léo vers ' + target.fr + ' !', 'Fly with Leo to ' + target.en + '!', ZONE_ICONS.safari);
+    else mission('Vole avec Léo vers ' + target.fr + ' ! Regarde sa forme !', 'Fly with Leo to ' + target.en + '! Look at its shape!', ZONE_ICONS.safari);
     roundLive = true;
   }
   nextRound();
@@ -1435,9 +1516,9 @@ ZONE_BUILDERS.theatre = function (host) {
   const STORIES = [
     {
       lines: [
-        { fr: 'Léo le lion a trouvé trois mangues sous le grand arbre.', en: 'Leo the lion found three mangoes under the big tree.', act: () => move(actors.leo, 600, 470) },
-        { fr: 'Momo le singe avait très faim.', en: 'Momo the monkey was very hungry.', act: () => { fxWobble(actors.momo); } },
-        { fr: 'Alors Léo a partagé ses mangues avec Momo !', en: 'So Leo shared his mangoes with Momo!', act: () => { move(actors.leo, 900, 460); sfx.good(); } }
+        { fr: 'Léo le lion a trouvé trois mangues sous le grand arbre.', dens: '1', en: 'Leo the lion found three mangoes under the big tree.', act: () => move(actors.leo, 600, 470) },
+        { fr: 'Momo le singe avait très faim.', dens: '1', en: 'Momo the monkey was very hungry.', act: () => { fxWobble(actors.momo); } },
+        { fr: 'Alors Léo a partagé ses mangues avec Momo !', dens: '1', en: 'So Leo shared his mangoes with Momo!', act: () => { move(actors.leo, 900, 460); sfx.good(); } }
       ],
       q: { fr: "Qu'a fait Léo ?", en: 'What did Leo do?' },
       panels: [
@@ -1448,11 +1529,11 @@ ZONE_BUILDERS.theatre = function (host) {
     },
     {
       lines: [
-        { fr: 'Fela la grenouille sautait sous la pluie.', en: 'Fela the frog was hopping in the rain.', act: () => move(actors.frog, 500, 500) },
-        { fr: 'Elle a glissé et est tombée dans la boue !', en: 'She slipped and fell in the mud!', act: () => { fxSquish(actors.frog); sfx.splash(); } },
-        { fr: 'Léo lui a tendu la patte pour la relever.', en: 'Leo reached out his paw and helped her up.', act: () => { move(actors.leo, 560, 480); sfx.good(); } }
+        { fr: 'Fela la grenouille sautait sous la pluie.', dens: '1', en: 'Fela the frog was hopping in the rain.', act: () => move(actors.frog, 500, 500) },
+        { fr: 'Elle a glissé et est tombée dans la boue !', dens: '1', en: 'She slipped and fell in the mud!', act: () => { fxSquish(actors.frog); sfx.splash(); } },
+        { fr: 'Léo lui a tendu la patte pour la relever.', dens: '1', en: 'Leo reached out his paw and helped her up.', act: () => { move(actors.leo, 560, 480); sfx.good(); } }
       ],
-      q: { fr: 'Qui a aidé Fela ?', en: 'Who helped Fela?' },
+      q: { fr: 'Qui a aidé Fela ?', dens: '1', en: 'Who helped Fela?' },
       panels: [
         { ok: false, draw: g => { drawMonkey(g, 0, -10, 0.46) } },
         { ok: true, draw: g => { drawLeo(g, 0, -2, 0.46) } },
@@ -1461,9 +1542,9 @@ ZONE_BUILDERS.theatre = function (host) {
     },
     {
       lines: [
-        { fr: 'Momo a planté une petite graine le matin.', en: 'Momo planted a tiny seed in the morning.', act: () => move(actors.momo, 700, 470) },
-        { fr: 'La pluie est tombée, le soleil a brillé.', en: 'The rain fell and the sun shone bright.', act: () => sfx.splash() },
-        { fr: 'Le soir, une jolie fleur est apparue !', en: 'By evening, a pretty flower appeared!', act: () => sfx.good() }
+        { fr: 'Momo a planté une petite graine le matin.', dens: '1', en: 'Momo planted a tiny seed in the morning.', act: () => move(actors.momo, 700, 470) },
+        { fr: 'La pluie est tombée, le soleil a brillé.', dens: '1', en: 'The rain fell and the sun shone bright.', act: () => sfx.splash() },
+        { fr: 'Le soir, une jolie fleur est apparue !', dens: '1', en: 'By evening, a pretty flower appeared!', act: () => sfx.good() }
       ],
       q: { fr: "Qu'est-ce qui a poussé ?", en: 'What grew?' },
       panels: [
@@ -1534,35 +1615,35 @@ ZONE_BUILDERS.builder = function (host) {
   const trayG = S('g', {}, svg);
   const fxG = S('g', {}, svg);
   const STRUCTURES = [
-    { fr: 'la maison', en: 'the house', parts: [
+    { fr: 'la maison', dens: '1', en: 'the house', parts: [
       { t: 'r', x: -110, y: -10, w: 220, h: 160, c: '#F2C078' },
       { t: 't', pts: [[-135, -10], [135, -10], [0, -135]], c: '#E5252A' },
       { t: 'r', x: -32, y: 66, w: 64, h: 84, c: '#8A5A33' },
       { t: 'c', x: -62, y: 36, r: 25, c: '#4CC9F0' },
       { t: 'c', x: 62, y: 36, r: 25, c: '#4CC9F0' }
     ] },
-    { fr: 'la fusée', en: 'the rocket', parts: [
+    { fr: 'la fusée', dens: '1', en: 'the rocket', parts: [
       { t: 'r', x: -48, y: -80, w: 96, h: 210, c: '#E8EAF3' },
       { t: 't', pts: [[-58, -80], [58, -80], [0, -190]], c: '#E5252A' },
       { t: 'c', x: 0, y: -14, r: 30, c: '#4CC9F0' },
       { t: 't', pts: [[-48, 70], [-48, 130], [-104, 130]], c: '#FF9F1C' },
       { t: 't', pts: [[48, 70], [48, 130], [104, 130]], c: '#FF9F1C' }
     ] },
-    { fr: 'le pont', en: 'the bridge', parts: [
+    { fr: 'le pont', dens: '1', en: 'the bridge', parts: [
       { t: 'r', x: -170, y: 20, w: 340, h: 34, c: '#B4654A' },
       { t: 'r', x: -140, y: -110, w: 34, h: 130, c: '#8A5A33' },
       { t: 'r', x: 106, y: -110, w: 34, h: 130, c: '#8A5A33' },
       { t: 't', pts: [[-106, 20], [-16, 20], [-106, -94]], c: '#FFD23F' },
       { t: 't', pts: [[106, 20], [16, 20], [106, -94]], c: '#FFD23F' }
     ] },
-    { fr: 'le robot', en: 'the robot', parts: [
+    { fr: 'le robot', dens: '1', en: 'the robot', parts: [
       { t: 'r', x: -75, y: -55, w: 150, h: 130, c: '#8D99AE' },
       { t: 'r', x: -52, y: -150, w: 104, h: 86, c: '#C0C7D8' },
       { t: 'c', x: -24, y: -112, r: 14, c: '#4CC9F0' },
       { t: 'c', x: 24, y: -112, r: 14, c: '#4CC9F0' },
       { t: 't', pts: [[-14, -150], [14, -150], [0, -192]], c: '#E5252A' }
     ] },
-    { fr: 'le bateau', en: 'the boat', parts: [
+    { fr: 'le bateau', dens: '1', en: 'the boat', parts: [
       { t: 'r', x: -140, y: 40, w: 280, h: 56, c: '#B4654A' },
       { t: 'r', x: -8, y: -140, w: 16, h: 180, c: '#8A5A33' },
       { t: 't', pts: [[8, -140], [8, -20], [122, -34]], c: '#FFD23F' },
@@ -1647,10 +1728,10 @@ ZONE_BUILDERS.seek = function (host) {
   const sceneG = S('g', {}, svg);
   const stripG = S('g', { transform: 'translate(1310,250)' }, svg);
   const TARGETS = {
-    butterfly: { fr: 'papillons', en: 'butterflies', draw: (g, s2) => { const w = S('g', { transform: `scale(${s2})` }, g); S('path', { d: 'M 0 -4 Q -16 -22 -24 -8 Q -28 2 -12 4 Q -26 10 -16 18 Q -8 22 0 8 Q 8 22 16 18 Q 26 10 12 4 Q 28 2 24 -8 Q 16 -22 0 -4 Z', fill: '#9B5DE5', stroke: '#6D3BBF', 'stroke-width': 2 }, w); S('rect', { x: -2, y: -10, width: 4, height: 22, rx: 2, fill: '#2B2D42' }, w); S('circle', { cx: -6, cy: -2, r: 3, fill: '#FFD23F' }, w); S('circle', { cx: 6, cy: -2, r: 3, fill: '#FFD23F' }, w); } },
-    ladybug: { fr: 'coccinelles', en: 'ladybugs', draw: (g, s2) => { const w = S('g', { transform: `scale(${s2})` }, g); S('circle', { cx: 0, cy: 0, r: 15, fill: '#FF4D57', stroke: '#9E1C24', 'stroke-width': 2 }, w); S('path', { d: 'M 0 -15 L 0 15', stroke: '#2B2D42', 'stroke-width': 2.4 }, w); S('circle', { cx: 0, cy: -14, r: 6, fill: '#2B2D42' }, w); [[-7, -5], [7, -3], [-5, 7], [6, 8]].forEach(([x, y]) => S('circle', { cx: x, cy: y, r: 2.6, fill: '#2B2D42' }, w)); } },
-    chick: { fr: 'poussins', en: 'chicks', draw: (g, s2) => { const w = S('g', { transform: `scale(${s2})` }, g); S('circle', { cx: 0, cy: 4, r: 13, fill: '#FFD23F', stroke: '#D9A400', 'stroke-width': 2 }, w); S('circle', { cx: 0, cy: -10, r: 9, fill: '#FFD23F', stroke: '#D9A400', 'stroke-width': 2 }, w); S('path', { d: 'M 7 -10 L 14 -8 L 7 -5 Z', fill: '#FF9F1C' }, w); S('circle', { cx: 3, cy: -12, r: 1.8, fill: '#2B2D42' }, w); } },
-    star: { fr: 'étoiles tombées', en: 'fallen stars', draw: (g, s2) => { const w = S('g', { transform: `scale(${s2 * 1.2}) translate(-12,-12)` }, g); drawStarIcon(w, 1, '#FFD23F'); } }
+    butterfly: { fr: 'papillons', dens: '1', en: 'butterflies', draw: (g, s2) => { const w = S('g', { transform: `scale(${s2})` }, g); S('path', { d: 'M 0 -4 Q -16 -22 -24 -8 Q -28 2 -12 4 Q -26 10 -16 18 Q -8 22 0 8 Q 8 22 16 18 Q 26 10 12 4 Q 28 2 24 -8 Q 16 -22 0 -4 Z', fill: '#9B5DE5', stroke: '#6D3BBF', 'stroke-width': 2 }, w); S('rect', { x: -2, y: -10, width: 4, height: 22, rx: 2, fill: '#2B2D42' }, w); S('circle', { cx: -6, cy: -2, r: 3, fill: '#FFD23F' }, w); S('circle', { cx: 6, cy: -2, r: 3, fill: '#FFD23F' }, w); } },
+    ladybug: { fr: 'coccinelles', dens: '1', en: 'ladybugs', draw: (g, s2) => { const w = S('g', { transform: `scale(${s2})` }, g); S('circle', { cx: 0, cy: 0, r: 15, fill: '#FF4D57', stroke: '#9E1C24', 'stroke-width': 2 }, w); S('path', { d: 'M 0 -15 L 0 15', stroke: '#2B2D42', 'stroke-width': 2.4 }, w); S('circle', { cx: 0, cy: -14, r: 6, fill: '#2B2D42' }, w); [[-7, -5], [7, -3], [-5, 7], [6, 8]].forEach(([x, y]) => S('circle', { cx: x, cy: y, r: 2.6, fill: '#2B2D42' }, w)); } },
+    chick: { fr: 'poussins', dens: '1', en: 'chicks', draw: (g, s2) => { const w = S('g', { transform: `scale(${s2})` }, g); S('circle', { cx: 0, cy: 4, r: 13, fill: '#FFD23F', stroke: '#D9A400', 'stroke-width': 2 }, w); S('circle', { cx: 0, cy: -10, r: 9, fill: '#FFD23F', stroke: '#D9A400', 'stroke-width': 2 }, w); S('path', { d: 'M 7 -10 L 14 -8 L 7 -5 Z', fill: '#FF9F1C' }, w); S('circle', { cx: 3, cy: -12, r: 1.8, fill: '#2B2D42' }, w); } },
+    star: { fr: 'étoiles tombées', dens: '1', en: 'fallen stars', draw: (g, s2) => { const w = S('g', { transform: `scale(${s2 * 1.2}) translate(-12,-12)` }, g); drawStarIcon(w, 1, '#FFD23F'); } }
   };
   const DECOYS = {
     butterfly: (g, s2) => { const w = S('g', { transform: `scale(${s2})` }, g); S('path', { d: 'M 0 -4 Q -14 -18 -20 -6 Q -22 2 -10 4 Q -20 10 -12 16 Q -6 18 0 8 Q 6 18 12 16 Q 20 10 10 4 Q 22 2 20 -6 Q 14 -18 0 -4 Z', fill: '#8D99AE', stroke: '#5C6784', 'stroke-width': 2 }, w); S('rect', { x: -2, y: -8, width: 4, height: 18, rx: 2, fill: '#2B2D42' }, w); },
@@ -1910,6 +1991,425 @@ ZONE_BUILDERS.create = function (host) {
   mission('Crée TON tableau magique : choisis des tampons, touche la scène pour les poser ! 4 ou plus, puis la coche verte !', 'Create YOUR magic picture: pick stamps, tap the scene to place them! 4 or more, then the green check!', ZONE_ICONS.create);
 };
 
+
+/* ================= CURRICULUM (official program per class, FR+EN) ================= */
+const SUBJ = {
+  m: { f: 'MATHS', e: 'MATH', c: '#FF9F1C' },
+  l: { f: 'FRANÇAIS & ANGLAIS', e: 'FRENCH & ENGLISH', c: '#4CC9F0' },
+  s: { f: 'SCIENCES', e: 'SCIENCE', c: '#2EC4B6' },
+  g: { f: 'GÉOGRAPHIE', e: 'GEOGRAPHY', c: '#E5252A' }
+};
+const CURRICULUM = [
+  { m: ['Compter de 1 à 10, formes et couleurs', 'Counting 1–10, shapes and colors'], l: ['Sons, comptines, vocabulaire des animaux', 'Sounds, rhymes, animal words'], s: ['Les 5 sens, les animaux, la nature', 'The 5 senses, animals, nature'], g: ['Mon village, ma maison', 'My village, my home'] },
+  { m: ['Nombres 1–20, petites additions', 'Numbers 1–20, simple addition'], l: ['Voyelles, consonnes, syllabes (ba, ma, ta, li)', 'Vowels, consonants, syllables'], s: ['Flotte ou coule, la germination', 'Float or sink, germination'], g: ['Mon quartier, mon pays', 'My neighborhood, my country'] },
+  { m: ['Nombres 1–100, addition et soustraction mentales', 'Numbers 1–100, mental add & subtract'], l: ['Sons complexes (ou, on, ch, an, in)', 'Digraphs and nasal sounds'], s: ["Le cycle de l'eau, les parties de la plante", 'The water cycle, plant parts'], g: ['Les grands pays d’Afrique', 'The great countries of Africa'] },
+  { m: ['Tables de 2 à 5, formes géométriques', 'Times tables 2–5, geometry shapes'], l: ['Nom, verbe, adjectif ; lecture courante', 'Noun, verb, adjective; fluent reading'], s: ['Les états de la matière', 'States of matter'], g: ['Les régions d’Afrique', 'The regions of Africa'] },
+  { m: ['Tables de 6 à 9, division, périmètre', 'Times tables 6–9, division, perimeter'], l: ['Conjugaison au présent, compréhension de contes', 'Present-tense conjugation, story comprehension'], s: ['Électricité : le circuit fermé, la boussole', 'Electricity: closed circuits, the compass'], g: ['Pays et capitales d’Afrique', 'African countries and capitals'] },
+  { m: ['Fractions, nombres décimaux, aire (L × l)', 'Fractions, decimals, area (L × w)'], l: ['Futur et imparfait, préfixes des mots', 'Future & imperfect tenses, word prefixes'], s: ['Le système solaire, l’énergie', 'The solar system, energy'], g: ['Les 49 pays sur la vraie carte', 'All 49 countries on the real map'] },
+  { m: ['Proportionnalité, pourcentages, volume, équations', 'Proportionality, percentages, volume, equations'], l: ['Préfixes et familles de mots, rédaction', 'Prefixes, word families, writing'], s: ['Photosynthèse, loi d’Ohm, Archimède', 'Photosynthesis, Ohm’s law, Archimedes'], g: ['Capitales expertes, régions et records', 'Expert capitals, regions and records'] }
+];
+
+/* ================= QUIZ ACADEMY — generators with step-by-step tricks ================= */
+function numCh(correct, min0) {
+  const set = new Set([correct]); let guard = 0;
+  while (set.size < 4 && guard++ < 80) {
+    const sp = Math.max(2, Math.round(Math.abs(correct) * 0.35));
+    const v = correct + ri(1, sp) * (Math.random() < 0.5 ? -1 : 1);
+    if (v !== correct && v >= (min0 == null ? 0 : min0)) set.add(v);
+  }
+  const arr = shuffle([...set]);
+  return { arr, ci: arr.indexOf(correct) };
+}
+function nQ(qf, qe, correct, sf, se, dots) {
+  const { arr, ci } = numCh(correct);
+  return { qf, qe, dots, ch: arr.map(v => [String(v), String(v)]), ci, sf, se };
+}
+function listQ(qf, qe, options, correctIdx, sf, se) {
+  const order = shuffle(options.map((_, i) => i));
+  return { qf, qe, ch: order.map(i => options[i]), ci: order.indexOf(correctIdx), sf, se };
+}
+const GEO_EASY = ['ma', 'eg', 'ng', 'cm', 'za', 'cd', 'ke', 'sn', 'dz', 'mg', 'gh', 'ci', 'tz', 'et', 'ml'];
+const REGION_FR = { 'North Africa': 'Afrique du Nord', 'West Africa': "Afrique de l'Ouest", 'Central Africa': 'Afrique centrale', 'East Africa': "Afrique de l'Est", 'Southern Africa': 'Afrique australe', 'Central/Southern Africa': 'Afrique centrale et australe' };
+const QUIZ_TOPICS = [
+  { id: 'compter', f: 'Compter', e: 'Counting', sub: 'm', lo: 0, hi: 1, kw: ['compter', 'count', 'nombres', 'numbers'], gen(d) {
+    const n = d <= 0 ? ri(2, 6) : ri(5, 12);
+    return nQ('Compte les billes !', 'Count the marbles!', n,
+      ['Pose ton doigt sur chaque bille, une par une.', 'Compte à voix haute : un, deux, trois…', 'Le dernier nombre dit, c’est la réponse : ' + n + ' !'],
+      ['Put your finger on each marble, one by one.', 'Count out loud: one, two, three…', 'The last number you say is the answer: ' + n + '!'],
+      '● '.repeat(n).trim());
+  } },
+  { id: 'addition', f: 'Addition', e: 'Addition', sub: 'm', lo: 1, hi: 2, kw: ['addition', 'ajouter', 'plus', 'somme', 'add', 'sum', 'calcul mental', 'mental math'], gen(d) {
+    if (d <= 1) { const a = ri(2, 9), b = ri(1, 9); return nQ(`${a} + ${b} = ?`, `${a} + ${b} = ?`, a + b,
+      ['Garde le grand nombre dans ta tête : ' + Math.max(a, b) + '.', 'Compte en avant avec tes doigts : +1, +2…', `${a} + ${b} = ${a + b} !`],
+      ['Keep the bigger number in your head: ' + Math.max(a, b) + '.', 'Count on with your fingers: +1, +2…', `${a} + ${b} = ${a + b}!`]); }
+    const a = ri(15, 78), b = ri(6, 21), t = Math.floor(b / 10) * 10, u = b % 10;
+    return nQ(`Calcul mental : ${a} + ${b} = ?`, `Mental math: ${a} + ${b} = ?`, a + b,
+      [`Ajoute d’abord les dizaines : ${a} + ${t} = ${a + t}.`, `Puis les unités : ${a + t} + ${u} = ${a + b}.`, 'Astuce : toujours les dizaines d’abord, les unités ensuite !'],
+      [`Add the tens first: ${a} + ${t} = ${a + t}.`, `Then the ones: ${a + t} + ${u} = ${a + b}.`, 'Trick: always tens first, then ones!']);
+  } },
+  { id: 'soustraction', f: 'Soustraction', e: 'Subtraction', sub: 'm', lo: 2, hi: 3, kw: ['soustraction', 'moins', 'enlever', 'subtract', 'minus', 'différence'], gen(d) {
+    if (d <= 2) { const a = ri(8, 20), b = ri(2, 7); return nQ(`${a} − ${b} = ?`, `${a} − ${b} = ?`, a - b,
+      ['Pars de ' + a + ' et recule de ' + b + ' pas.', 'Compte à rebours : ' + a + ', ' + (a - 1) + '…', `${a} − ${b} = ${a - b} !`],
+      ['Start at ' + a + ' and go back ' + b + ' steps.', 'Count backwards: ' + a + ', ' + (a - 1) + '…', `${a} − ${b} = ${a - b}!`]); }
+    const a = ri(35, 99), b = ri(11, 29), t = Math.floor(b / 10) * 10, u = b % 10;
+    return nQ(`Calcul mental : ${a} − ${b} = ?`, `Mental math: ${a} − ${b} = ?`, a - b,
+      [`Enlève d’abord les dizaines : ${a} − ${t} = ${a - t}.`, `Puis les unités : ${a - t} − ${u} = ${a - b}.`, 'Astuce : découpe le nombre en dizaines et unités !'],
+      [`Take away the tens first: ${a} − ${t} = ${a - t}.`, `Then the ones: ${a - t} − ${u} = ${a - b}.`, 'Trick: split the number into tens and ones!']);
+  } },
+  { id: 'tables', f: 'Tables de multiplication', e: 'Times tables', sub: 'm', lo: 3, hi: 4, kw: ['multiplication', 'tables', 'fois', 'times', 'multiplier'], gen(d) {
+    const t = d <= 3 ? ri(2, 5) : ri(6, 9), k = ri(2, 9), r = t * k;
+    return nQ(`${t} × ${k} = ?`, `${t} × ${k} = ?`, r,
+      [`${t} × ${k}, c’est ${t} ajouté ${k} fois : la multiplication est une addition répétée.`, `Astuce : ${t} × ${k} = ${k} × ${t} — choisis la table la plus facile !`, `${t} × ${k} = ${r}.`],
+      [`${t} × ${k} means ${t} added ${k} times: multiplication is repeated addition.`, `Trick: ${t} × ${k} = ${k} × ${t} — pick the easier table!`, `${t} × ${k} = ${r}.`]);
+  } },
+  { id: 'division', f: 'Division', e: 'Division', sub: 'm', lo: 4, hi: 5, kw: ['division', 'diviser', 'partager', 'divide', 'share'], gen() {
+    const a = ri(2, 9), b = ri(2, 9), n = a * b;
+    return nQ(`${n} ÷ ${a} = ?`, `${n} ÷ ${a} = ?`, b,
+      [`Cherche : ${a} × ? = ${n}.`, `Dans la table de ${a} : ${a} × ${b} = ${n}.`, `Donc ${n} ÷ ${a} = ${b}. La division est l’inverse de la multiplication !`],
+      [`Ask: ${a} × ? = ${n}.`, `In the ${a} times table: ${a} × ${b} = ${n}.`, `So ${n} ÷ ${a} = ${b}. Division is multiplication in reverse!`]);
+  } },
+  { id: 'perimetre', f: 'Périmètre', e: 'Perimeter', sub: 'm', lo: 4, hi: 6, kw: ['périmètre', 'perimeter', 'tour', 'rectangle', 'géométrie', 'geometry'], gen() {
+    const L = ri(6, 15), l = ri(2, L - 1), P = 2 * (L + l);
+    return nQ(`Un champ rectangulaire mesure ${L} m sur ${l} m. Quel est son PÉRIMÈTRE (en m) ?`, `A rectangular field is ${L} m by ${l} m. What is its PERIMETER (in m)?`, P,
+      ['Le périmètre, c’est le tour complet : P = 2 × (L + l).', `L + l = ${L} + ${l} = ${L + l}.`, `P = 2 × ${L + l} = ${P} m.`],
+      ['The perimeter is the full border: P = 2 × (L + w).', `L + w = ${L} + ${l} = ${L + l}.`, `P = 2 × ${L + l} = ${P} m.`]);
+  } },
+  { id: 'aire', f: 'Aire (L × l)', e: 'Area (L × w)', sub: 'm', lo: 5, hi: 6, kw: ['aire', 'area', 'surface', 'rectangle'], gen() {
+    const L = ri(6, 12), l = ri(3, 9), A = L * l;
+    return nQ(`Une salle de classe mesure ${L} m sur ${l} m. Quelle est son AIRE (en m²) ?`, `A classroom is ${L} m by ${l} m. What is its AREA (in m²)?`, A,
+      ['L’aire du rectangle = Longueur × largeur.', `A = ${L} × ${l} = ${A}.`, 'Astuce : le périmètre fait le TOUR, l’aire REMPLIT la surface. Réponse en m² !'],
+      ['Rectangle area = Length × width.', `A = ${L} × ${l} = ${A}.`, 'Trick: perimeter goes AROUND, area FILLS the surface. Answer in m²!']);
+  } },
+  { id: 'fractions', f: 'Fractions', e: 'Fractions', sub: 'm', lo: 5, hi: 6, kw: ['fraction', 'fractions', 'moitié', 'quart', 'tiers', 'half', 'quarter'], gen() {
+    const n = ri(2, 4), k = ri(3, 9), N = n * k, name = n === 2 ? ['la moitié', 'half'] : n === 3 ? ['le tiers', 'a third'] : ['le quart', 'a quarter'];
+    return nQ(`Quel est 1/${n} de ${N} ?`, `What is 1/${n} of ${N}?`, k,
+      [`1/${n}, c’est ${name[0]} : on partage en ${n} parts égales.`, 'Astuce : « de » veut dire DIVISER !', `${N} ÷ ${n} = ${k}.`],
+      [`1/${n} is ${name[1]}: split into ${n} equal parts.`, 'Trick: “of” means DIVIDE!', `${N} ÷ ${n} = ${k}.`]);
+  } },
+  { id: 'decimaux', f: 'Nombres décimaux', e: 'Decimals', sub: 'm', lo: 5, hi: 6, kw: ['décimaux', 'décimal', 'virgule', 'decimal', 'decimals'], gen() {
+    const a = ri(11, 89), b = ri(11, 89), s = (a + b) / 10, fa = (a / 10).toFixed(1), fb = (b / 10).toFixed(1);
+    const set = new Set([s]); let g = 0;
+    while (set.size < 4 && g++ < 60) { const v = Math.round((s + ri(1, 20) * (Math.random() < 0.5 ? -0.1 : 0.1)) * 10) / 10; if (v > 0 && v !== s) set.add(v); }
+    const arr = shuffle([...set]);
+    return { qf: `${fa.replace('.', ',')} + ${fb.replace('.', ',')} = ?`, qe: `${fa} + ${fb} = ?`,
+      ch: arr.map(v => [v.toFixed(1).replace('.', ','), v.toFixed(1)]), ci: arr.indexOf(s),
+      sf: ['Aligne les virgules l’une sous l’autre !', `Additionne comme d’habitude : ${a} + ${b} = ${a + b}.`, `Remets la virgule : ${s.toFixed(1).replace('.', ',')}.`],
+      se: ['Line up the decimal points!', `Add as usual: ${a} + ${b} = ${a + b}.`, `Put the point back: ${s.toFixed(1)}.`] };
+  } },
+  { id: 'pourcentages', f: 'Pourcentages', e: 'Percentages', sub: 'm', lo: 6, hi: 6, kw: ['pourcentage', 'pourcentages', 'percent', 'percentage', '%', 'réduction', 'discount'], gen() {
+    const p = [50, 25, 10][ri(0, 2)];
+    const N = p === 50 ? ri(6, 49) * 2 : p === 25 ? ri(3, 24) * 4 : ri(3, 20) * 10;
+    const ans = N * p / 100, tip = p === 50 ? ['50 % = la moitié → divise par 2.', '50% = half → divide by 2.'] : p === 25 ? ['25 % = le quart → divise par 4.', '25% = a quarter → divide by 4.'] : ['10 % → divise par 10.', '10% → divide by 10.'];
+    return nQ(`Un sac coûte ${N} F. Il y a ${p} % de réduction. Combien économises-tu ?`, `A bag costs ${N} F with ${p}% off. How much do you save?`, ans,
+      [`${p} % de ${N}, c’est (${N} × ${p}) ÷ 100.`, 'Astuce rapide : ' + tip[0], `Réponse : ${ans} F.`],
+      [`${p}% of ${N} is (${N} × ${p}) ÷ 100.`, 'Quick trick: ' + tip[1], `Answer: ${ans} F.`]);
+  } },
+  { id: 'proportion', f: 'Proportionnalité', e: 'Proportionality', sub: 'm', lo: 6, hi: 6, kw: ['proportionnalité', 'proportion', 'proportionality', 'prix', 'price', 'règle de trois'], gen() {
+    const n = ri(2, 4), unit = ri(2, 8) * 50, total = n * unit, k = ri(5, 9), ans = k * unit;
+    return nQ(`${n} cahiers coûtent ${total} F. Combien coûtent ${k} cahiers ?`, `${n} notebooks cost ${total} F. How much do ${k} notebooks cost?`, ans,
+      [`Trouve le prix d’UN cahier : ${total} ÷ ${n} = ${unit} F.`, `Multiplie par ${k} : ${unit} × ${k} = ${ans} F.`, 'Astuce d’or : passe TOUJOURS par le prix de l’unité !'],
+      [`Find the price of ONE notebook: ${total} ÷ ${n} = ${unit} F.`, `Multiply by ${k}: ${unit} × ${k} = ${ans} F.`, 'Golden trick: ALWAYS go through the unit price!']);
+  } },
+  { id: 'volume', f: 'Volume', e: 'Volume', sub: 'm', lo: 6, hi: 6, kw: ['volume', 'pavé', 'cube', '3d'], gen() {
+    const L = ri(3, 8), l = ri(2, 6), h = ri(2, 5), V = L * l * h;
+    return nQ(`Une boîte mesure ${L} cm × ${l} cm × ${h} cm. Quel est son VOLUME (en cm³) ?`, `A box is ${L} cm × ${l} cm × ${h} cm. What is its VOLUME (in cm³)?`, V,
+      ['Volume du pavé = Longueur × largeur × hauteur.', `${L} × ${l} = ${L * l}, puis ${L * l} × ${h} = ${V}.`, 'Astuce : 3 dimensions → réponse en cm³ (cube) !'],
+      ['Box volume = Length × width × height.', `${L} × ${l} = ${L * l}, then ${L * l} × ${h} = ${V}.`, 'Trick: 3 dimensions → answer in cm³ (cubed)!']);
+  } },
+  { id: 'equations', f: 'Équations (balance)', e: 'Equations (balance)', sub: 'm', lo: 6, hi: 6, kw: ['équation', 'equation', 'balance', 'x', 'inconnue', 'unknown', 'algèbre', 'algebra'], gen() {
+    if (Math.random() < 0.5) { const a = ri(3, 20), x = ri(2, 30), b = x + a;
+      return nQ(`x + ${a} = ${b}.  x = ?`, `x + ${a} = ${b}.  x = ?`, x,
+        ['Une équation est une balance : fais la même chose des deux côtés.', `Enlève ${a} des deux côtés : x = ${b} − ${a}.`, `x = ${x}. Vérifie : ${x} + ${a} = ${b} ✓`],
+        ['An equation is a balance: do the same on both sides.', `Take ${a} from both sides: x = ${b} − ${a}.`, `x = ${x}. Check: ${x} + ${a} = ${b} ✓`]); }
+    const k = ri(2, 9), x = ri(2, 9), m = k * x;
+    return nQ(`${k} × x = ${m}.  x = ?`, `${k} × x = ${m}.  x = ?`, x,
+      ['La balance : divise les deux côtés par ' + k + '.', `x = ${m} ÷ ${k}.`, `x = ${x}. Vérifie : ${k} × ${x} = ${m} ✓`],
+      ['The balance: divide both sides by ' + k + '.', `x = ${m} ÷ ${k}.`, `x = ${x}. Check: ${k} × ${x} = ${m} ✓`]);
+  } },
+  { id: 'syllabes', f: 'Syllabes', e: 'Syllables', sub: 'l', lo: 1, hi: 2, kw: ['syllabes', 'syllables', 'sons', 'lecture', 'reading', 'phonics'], gen() {
+    const W = [['BA-NA-NE', 3], ['MAI-SON', 2], ['TO-MA-TE', 3], ['CHAT', 1], ['PA-PA-YE', 3], ['VÉ-LO', 2], ['É-CO-LE', 3], ['LION', 1], ['TA-BLE', 2], ['CA-HIER', 2]];
+    const w = W[ri(0, W.length - 1)], word = w[0].replace(/-/g, '');
+    return nQ(`Combien de syllabes dans « ${word} » ?`, `How many syllables in “${word}”?`, w[1],
+      ['Dis le mot en frappant des mains : ' + w[0] + ' !', 'Chaque frappe = une syllabe.', `${word} → ${w[1]} syllabe${w[1] > 1 ? 's' : ''} !`],
+      ['Say the word and clap: ' + w[0] + '!', 'Each clap = one syllable.', `${word} → ${w[1]} syllable${w[1] > 1 ? 's' : ''}!`]);
+  } },
+  { id: 'grammaire', f: 'Nature des mots', e: 'Parts of speech', sub: 'l', lo: 3, hi: 4, kw: ['grammaire', 'grammar', 'verbe', 'verb', 'nom', 'noun', 'adjectif', 'adjective'], gen() {
+    const BANK = [
+      { s: 'Le petit lion mange la viande', v: 'mange', n: 'lion', a: 'petit' },
+      { s: 'La grande fille lit un livre', v: 'lit', n: 'fille', a: 'grande' },
+      { s: 'Le vieux pêcheur répare son filet', v: 'répare', n: 'pêcheur', a: 'vieux' },
+      { s: 'Un joli oiseau chante le matin', v: 'chante', n: 'oiseau', a: 'joli' }
+    ];
+    const it = BANK[ri(0, BANK.length - 1)];
+    const kind = ['v', 'n', 'a'][ri(0, 2)];
+    const kindName = kind === 'v' ? ['le VERBE', 'the VERB'] : kind === 'n' ? ['le NOM principal', 'the main NOUN'] : ["l'ADJECTIF", 'the ADJECTIVE'];
+    const words = shuffle([it.v, it.n, it.a, it.s.split(' ').pop()]);
+    const correct = kind === 'v' ? it.v : kind === 'n' ? it.n : it.a;
+    const tip = kind === 'v' ? ['Le verbe dit ce qu’on FAIT. Teste : « hier, il …ait ».', 'The verb says what someone DOES. Test: “yesterday he was …ing”.']
+      : kind === 'n' ? ['Le nom désigne une personne, un animal ou une chose. Mets « le/la » devant !', 'A noun names a person, animal or thing. Put “the” in front!']
+      : ['L’adjectif décrit COMMENT est le nom : petit, grand, joli…', 'An adjective describes the noun: small, big, pretty…'];
+    return { qf: `« ${it.s} » — quel mot est ${kindName[0]} ?`, qe: `“${it.s}” — which word is ${kindName[1]}?`,
+      ch: words.map(w => [w, w]), ci: words.indexOf(correct),
+      sf: [tip[0], `Dans la phrase : « ${correct} ».`, 'Astuce : V = action, N = qui/quoi, ADJ = comment.'],
+      se: [tip[1], `In the sentence: “${correct}”.`, 'Trick: V = action, N = who/what, ADJ = how.'] };
+  } },
+  { id: 'conjugaison', f: 'Conjugaison', e: 'Conjugation', sub: 'l', lo: 4, hi: 5, kw: ['conjugaison', 'conjugation', 'présent', 'futur', 'imparfait', 'verbe', 'tense'], gen(d) {
+    const P = ['je', 'tu', 'il', 'nous', 'vous', 'ils'];
+    const TAB = {
+      present: { chanter: ['chante', 'chantes', 'chante', 'chantons', 'chantez', 'chantent'], finir: ['finis', 'finis', 'finit', 'finissons', 'finissez', 'finissent'], avoir: ['ai', 'as', 'a', 'avons', 'avez', 'ont'] },
+      futur: { chanter: ['chanterai', 'chanteras', 'chantera', 'chanterons', 'chanterez', 'chanteront'], finir: ['finirai', 'finiras', 'finira', 'finirons', 'finirez', 'finiront'], avoir: ['aurai', 'auras', 'aura', 'aurons', 'aurez', 'auront'] }
+    };
+    const tense = d >= 5 ? (Math.random() < 0.5 ? 'futur' : 'present') : 'present';
+    const verbs = Object.keys(TAB[tense]); const vb = verbs[ri(0, verbs.length - 1)];
+    const pi = ri(0, 5); const forms = TAB[tense][vb]; const correct = forms[pi];
+    const others = shuffle([...new Set(forms)].filter(x => x !== correct)).slice(0, 3);
+    const opts = shuffle([correct].concat(others));
+    const tn = tense === 'futur' ? ['au FUTUR', 'in the FUTURE tense'] : ['au PRÉSENT', 'in the PRESENT tense'];
+    const tipF = tense === 'futur' ? 'Terminaisons du futur : -rai, -ras, -ra, -rons, -rez, -ront.' : 'Au présent (-er) : -e, -es, -e, -ons, -ez, -ent.';
+    const tipE = tense === 'futur' ? 'Future endings: -rai, -ras, -ra, -rons, -rez, -ront.' : 'Present (-er): -e, -es, -e, -ons, -ez, -ent.';
+    return { qf: `Conjugue « ${vb} » ${tn[0]} : ${P[pi]} …`, qe: `Conjugate “${vb}” ${tn[1]}: ${P[pi]} …`,
+      ch: opts.map(o => [o, o]), ci: opts.indexOf(correct),
+      sf: ['Repère le temps demandé : ' + tn[0] + '.', tipF, `${P[pi]} ${correct} ✓`],
+      se: ['Spot the tense: ' + tn[1] + '.', tipE, `${P[pi]} ${correct} ✓`] };
+  } },
+  { id: 'prefixes', f: 'Préfixes', e: 'Prefixes', sub: 'l', lo: 5, hi: 6, kw: ['préfixe', 'préfixes', 'prefix', 'prefixes', 'morphologie', 'familles de mots', 'word families'], gen() {
+    const BANK = [
+      ['refaire', ['faire encore une fois', 'do again'], 're- = encore / again'],
+      ['défaire', ['le contraire de faire', 'the opposite of doing'], 'dé- = contraire / opposite'],
+      ['impossible', ['pas possible', 'not possible'], 'im- = pas / not'],
+      ['prévoir', ['voir à l’avance', 'see in advance'], 'pré- = avant / before'],
+      ['relire', ['lire encore une fois', 'read again'], 're- = encore / again'],
+      ['transporter', ['porter d’un lieu à un autre', 'carry from one place to another'], 'trans- = à travers / across']
+    ];
+    const it = BANK[ri(0, BANK.length - 1)];
+    const others = shuffle(BANK.filter(b => b[0] !== it[0])).slice(0, 3).map(b => b[1]);
+    const opts = shuffle([it[1]].concat(others));
+    return { qf: `Que veut dire « ${it[0]} » ?`, qe: `What does “${it[0]}” mean?`,
+      ch: opts.map(o => [o[0], o[1]]), ci: opts.indexOf(it[1]),
+      sf: ['Découpe le mot : préfixe + petit mot caché.', 'Ici : ' + it[2] + '.', `Donc ${it[0]} = ${it[1][0]}.`],
+      se: ['Split the word: prefix + hidden little word.', 'Here: ' + it[2] + '.', `So ${it[0]} = ${it[1][1]}.`] };
+  } },
+  { id: 'vocab', f: 'Vocabulaire anglais', e: 'English words', sub: 'l', lo: 1, hi: 6, kw: ['anglais', 'english', 'vocabulaire', 'vocabulary', 'traduire', 'translate', 'mots', 'words'], gen(d) {
+    const LOW = [['le chat', 'cat'], ['le chien', 'dog'], ['le soleil', 'sun'], ["l'eau", 'water'], ['rouge', 'red'], ['bleu', 'blue'], ['la maison', 'house'], ['le lion', 'lion']];
+    const MIDP = [['le livre', 'book'], ['la chaise', 'chair'], ["l'école", 'school'], ['la porte', 'door'], ['le maître', 'teacher'], ['le cahier', 'notebook']];
+    const HIGH = [['manger', 'to eat'], ['courir', 'to run'], ['écrire', 'to write'], ['penser', 'to think'], ['apprendre', 'to learn'], ['réussir', 'to succeed']];
+    const pool = d <= 2 ? LOW : d <= 4 ? LOW.concat(MIDP) : MIDP.concat(HIGH);
+    const it = pool[ri(0, pool.length - 1)];
+    const others = shuffle(pool.filter(p => p[1] !== it[1])).slice(0, 3).map(p => p[1]);
+    const opts = shuffle([it[1]].concat(others));
+    return { qf: `Comment dit-on « ${it[0]} » en anglais ?`, qe: `How do you say “${it[0]}” in English?`,
+      ch: opts.map(o => [o, o]), ci: opts.indexOf(it[1]),
+      sf: ['Écoute bien le mot : ' + it[1] + '.', 'Fais une image dans ta tête : ' + it[0] + ' = ' + it[1] + '.', 'Répète-le 3 fois à voix haute pour le retenir !'],
+      se: ['Listen to the word: ' + it[1] + '.', 'Make a picture in your head: ' + it[0] + ' = ' + it[1] + '.', 'Say it 3 times out loud to remember it!'] };
+  } },
+  { id: 'flotte', f: 'Flotte ou coule', e: 'Float or sink', sub: 's', lo: 1, hi: 3, kw: ['flotte', 'coule', 'float', 'sink', 'eau', 'water', 'densité', 'density'], gen(d) {
+    const IT = [['la pierre', 'the stone', false, '2,7'], ['la feuille', 'the leaf', true, '0,3'], ['le clou', 'the nail', false, '7,8'], ['le bouchon de liège', 'the cork', true, '0,2'], ['la mangue', 'the mango', true, '0,9'], ['la cuillère en métal', 'the metal spoon', false, '7,9']];
+    const it = IT[ri(0, IT.length - 1)];
+    const sf = d >= 3 ? ['Densité de ' + it[0] + ' : environ ' + it[3] + '.', 'Règle : densité > 1 → COULE ; densité < 1 → FLOTTE.', 'L’eau a une densité de 1 !']
+      : ['Pense : est-ce lourd pour sa taille ?', 'Lourd pour sa taille → coule. Léger → flotte.', it[0] + (it[2] ? ' flotte !' : ' coule !')];
+    const se = d >= 3 ? ['Density of ' + it[1] + ': about ' + it[3].replace(',', '.') + '.', 'Rule: density > 1 → SINKS; density < 1 → FLOATS.', 'Water has a density of 1!']
+      : ['Think: is it heavy for its size?', 'Heavy for its size → sinks. Light → floats.', it[1] + (it[2] ? ' floats!' : ' sinks!')];
+    return { qf: `Dans l’eau, que fait ${it[0]} ?`, qe: `In water, what does ${it[1]} do?`,
+      ch: [['Il FLOTTE', 'It FLOATS'], ['Il COULE', 'It SINKS']], ci: it[2] ? 0 : 1, sf, se };
+  } },
+  { id: 'germination', f: 'La germination', e: 'Germination', sub: 's', lo: 1, hi: 2, kw: ['germination', 'graine', 'seed', 'plante', 'plant', 'pousser', 'grow'], gen() {
+    if (Math.random() < 0.5) return listQ('De quoi une graine a-t-elle besoin pour germer ?', 'What does a seed need to sprout?',
+      [["De l'eau et de la chaleur", 'Water and warmth'], ['De bonbons', 'Candy'], ['De musique', 'Music'], ['De peinture', 'Paint']], 0,
+      ['La graine boit l’eau et gonfle.', 'La chaleur la réveille.', 'Eau + chaleur = la graine germe !'],
+      ['The seed drinks water and swells.', 'Warmth wakes it up.', 'Water + warmth = the seed sprouts!']);
+    return listQ('Qu’est-ce qui sort en PREMIER de la graine ?', 'What comes out of the seed FIRST?',
+      [['La racine', 'The root'], ['La fleur', 'The flower'], ['Le fruit', 'The fruit'], ['La feuille', 'The leaf']], 0,
+      ['D’abord la racine descend chercher l’eau.', 'Ensuite la tige monte vers la lumière.', 'Enfin viennent les feuilles !'],
+      ['First the root goes down to find water.', 'Then the stem climbs toward the light.', 'The leaves come after!']);
+  } },
+  { id: 'cycleau', f: "Le cycle de l'eau", e: 'The water cycle', sub: 's', lo: 2, hi: 4, kw: ['cycle', 'eau', 'water', 'pluie', 'rain', 'nuage', 'cloud', 'évaporation', 'evaporation'], gen() {
+    const QS = [
+      ['Le soleil chauffe la mer et l’eau monte en vapeur. C’est…', 'The sun heats the sea and water rises as vapor. This is…', [["l'évaporation", 'evaporation'], ['la condensation', 'condensation'], ['les précipitations', 'precipitation'], ['la congélation', 'freezing']], 0],
+      ['La vapeur se transforme en nuages. C’est…', 'Vapor turns into clouds. This is…', [['la condensation', 'condensation'], ["l'évaporation", 'evaporation'], ['les précipitations', 'precipitation'], ['la fusion', 'melting']], 0],
+      ['L’eau tombe des nuages en pluie. Ce sont…', 'Water falls from clouds as rain. This is…', [['les précipitations', 'precipitation'], ['la condensation', 'condensation'], ["l'évaporation", 'evaporation'], ['la congélation', 'freezing']], 0]
+    ];
+    const q = QS[ri(0, QS.length - 1)];
+    return listQ(q[0], q[1], q[2], q[3],
+      ['Le cycle : évaporation → condensation → précipitations.', 'Astuce : l’eau MONTE (vapeur), s’ASSEMBLE (nuage), TOMBE (pluie).', 'Et ça recommence, toujours en rond !'],
+      ['The cycle: evaporation → condensation → precipitation.', 'Trick: water goes UP (vapor), GATHERS (cloud), FALLS (rain).', 'And it starts again, round and round!']);
+  } },
+  { id: 'matiere', f: 'États de la matière', e: 'States of matter', sub: 's', lo: 3, hi: 4, kw: ['matière', 'matter', 'solide', 'liquide', 'gaz', 'solid', 'liquid', 'gas', 'états', 'states'], gen() {
+    const IT = [["l'eau du lac", 'lake water', 1], ['la pierre', 'the stone', 0], ['la vapeur', 'steam', 2], ['le jus de mangue', 'mango juice', 1], ['la glace', 'ice', 0], ["l'air", 'air', 2]];
+    const it = IT[ri(0, IT.length - 1)];
+    return { qf: `${it[0].charAt(0).toUpperCase() + it[0].slice(1)}, c’est un…`, qe: `${it[1].charAt(0).toUpperCase() + it[1].slice(1)} is a…`,
+      ch: [['SOLIDE', 'SOLID'], ['LIQUIDE', 'LIQUID'], ['GAZ', 'GAS']], ci: it[2],
+      sf: ['Solide : garde sa forme tout seul.', 'Liquide : coule et prend la forme du récipient.', 'Gaz : invisible, remplit tout l’espace !'],
+      se: ['Solid: keeps its own shape.', 'Liquid: flows and takes the container’s shape.', 'Gas: invisible, fills all the space!'] };
+  } },
+  { id: 'electricite', f: 'Électricité', e: 'Electricity', sub: 's', lo: 4, hi: 6, kw: ['électricité', 'electricity', 'circuit', 'ampoule', 'bulb', 'courant', 'current', 'ohm'], gen(d) {
+    if (d >= 6) { const R = ri(2, 6), I = ri(2, 5), U = R * I;
+      return nQ(`Loi d’Ohm : R = ${R} Ω et I = ${I} A. U = ?`, `Ohm’s law: R = ${R} Ω and I = ${I} A. U = ?`, U,
+        ['Loi d’Ohm : U = R × I.', `U = ${R} × ${I} = ${U} volts.`, 'Astuce : U-R-I — U égale R fois I !'],
+        ['Ohm’s law: U = R × I.', `U = ${R} × ${I} = ${U} volts.`, 'Trick: U-R-I — U equals R times I!']); }
+    if (Math.random() < 0.5) return listQ('Pour que l’ampoule s’allume, le circuit doit être…', 'For the bulb to light up, the circuit must be…',
+      [['fermé (en boucle)', 'closed (a loop)'], ['ouvert', 'open'], ['mouillé', 'wet'], ['très long', 'very long']], 0,
+      ['Le courant voyage en BOUCLE : pile → fil → ampoule → pile.', 'Une coupure = circuit ouvert = plus de lumière.', 'Ferme l’interrupteur pour fermer la boucle !'],
+      ['Current travels in a LOOP: battery → wire → bulb → battery.', 'A break = open circuit = no light.', 'Close the switch to close the loop!']);
+    return listQ('Quel matériau laisse passer le courant ?', 'Which material lets current flow?',
+      [['le fil de cuivre', 'copper wire'], ['le bois', 'wood'], ['le plastique', 'plastic'], ['le verre', 'glass']], 0,
+      ['Les MÉTAUX conduisent le courant : cuivre, fer, aluminium.', 'Bois, plastique, verre sont des ISOLANTS.', 'C’est pour ça que les fils sont en cuivre couvert de plastique !'],
+      ['METALS conduct current: copper, iron, aluminium.', 'Wood, plastic and glass are INSULATORS.', 'That’s why wires are copper covered in plastic!']);
+  } },
+  { id: 'solaire', f: 'Le système solaire', e: 'The solar system', sub: 's', lo: 5, hi: 6, kw: ['solaire', 'solar', 'planète', 'planet', 'espace', 'space', 'soleil', 'sun', 'terre', 'earth'], gen() {
+    const QS = [
+      ['Quelle planète est la plus proche du Soleil ?', 'Which planet is closest to the Sun?', [['Mercure', 'Mercury'], ['Vénus', 'Venus'], ['la Terre', 'Earth'], ['Mars', 'Mars']], 0],
+      ['La Terre est la combientième planète depuis le Soleil ?', 'Earth is which planet from the Sun?', [['la 3e', '3rd'], ['la 1re', '1st'], ['la 5e', '5th'], ['la 8e', '8th']], 0],
+      ['Quelle est la plus GROSSE planète ?', 'Which is the BIGGEST planet?', [['Jupiter', 'Jupiter'], ['Mars', 'Mars'], ['Mercure', 'Mercury'], ['la Terre', 'Earth']], 0]
+    ];
+    const q = QS[ri(0, QS.length - 1)];
+    return listQ(q[0], q[1], q[2], q[3],
+      ['Retiens l’ordre avec : « Me Voici Tout Mouillé, J’ai Suivi Un Nuage ».', 'Mercure, Vénus, Terre, Mars, Jupiter, Saturne, Uranus, Neptune.', 'Le Soleil est une ÉTOILE, pas une planète !'],
+      ['Remember the order: “My Very Educated Mother Just Served Us Noodles”.', 'Mercury, Venus, Earth, Mars, Jupiter, Saturn, Uranus, Neptune.', 'The Sun is a STAR, not a planet!']);
+  } },
+  { id: 'photosynthese', f: 'Photosynthèse', e: 'Photosynthesis', sub: 's', lo: 6, hi: 6, kw: ['photosynthèse', 'photosynthesis', 'plante', 'plant', 'oxygène', 'oxygen', 'lumière', 'light'], gen() {
+    if (Math.random() < 0.5) return listQ('Pour fabriquer sa nourriture, la plante a besoin de…', 'To make its food, a plant needs…',
+      [['lumière, eau et gaz carbonique', 'light, water and carbon dioxide'], ['viande et poisson', 'meat and fish'], ['nuit et silence', 'night and silence'], ['sable et vent', 'sand and wind']], 0,
+      ['La feuille capte la LUMIÈRE du soleil.', 'Les racines apportent l’EAU, l’air apporte le CO₂.', 'Lumière + eau + CO₂ → sucre (nourriture) + oxygène !'],
+      ['The leaf catches SUNLIGHT.', 'Roots bring WATER, air brings CO₂.', 'Light + water + CO₂ → sugar (food) + oxygen!']);
+    return listQ('Pendant la photosynthèse, que REJETTE la plante ?', 'During photosynthesis, what does the plant RELEASE?',
+      [["de l'oxygène", 'oxygen'], ['du sable', 'sand'], ['du lait', 'milk'], ['du feu', 'fire']], 0,
+      ['La plante fabrique du sucre pour elle…', '…et rejette de l’OXYGÈNE pour nous !', 'C’est pour ça que les forêts sont les poumons de la planète.'],
+      ['The plant makes sugar for itself…', '…and releases OXYGEN for us!', 'That’s why forests are the lungs of the planet.']);
+  } },
+  { id: 'capitales', f: "Capitales d'Afrique", e: 'African capitals', sub: 'g', lo: 2, hi: 6, kw: ['capitale', 'capitales', 'capital', 'capitals', 'pays', 'countries', 'afrique', 'africa'], gen(d) {
+    const DATA = window.AFRICA_MAP || [];
+    if (!DATA.length) return nQ('2 + 2 = ?', '2 + 2 = ?', 4, ['...'], ['...']);
+    const pool = d <= 3 ? DATA.filter(c => GEO_EASY.includes(c.id)) : DATA;
+    const c = pool[ri(0, pool.length - 1)];
+    const others = shuffle(DATA.filter(x => x.cap !== c.cap)).slice(0, 3).map(x => x.cap);
+    const opts = shuffle([c.cap].concat(others));
+    return { qf: `Quelle est la capitale de : ${c.fr} ?`, qe: `What is the capital of ${c.en}?`,
+      ch: opts.map(o => [o, o]), ci: opts.indexOf(c.cap),
+      sf: [`${c.fr} est en ${REGION_FR[c.region] || c.region}.`, `Astuce : la capitale commence par « ${c.cap[0]} ».`, `Capitale : ${c.cap} !`],
+      se: [`${c.en} is in ${c.region}.`, `Trick: the capital starts with “${c.cap[0]}”.`, `Capital: ${c.cap}!`] };
+  } },
+  { id: 'regions', f: "Régions d'Afrique", e: 'Regions of Africa', sub: 'g', lo: 3, hi: 6, kw: ['région', 'régions', 'region', 'regions', 'nord', 'sud', 'ouest', 'est', 'carte', 'map'], gen(d) {
+    const DATA = window.AFRICA_MAP || [];
+    if (!DATA.length) return nQ('2 + 2 = ?', '2 + 2 = ?', 4, ['...'], ['...']);
+    const pool = (d <= 4 ? DATA.filter(c => GEO_EASY.includes(c.id)) : DATA).filter(c => REGION_FR[c.region]);
+    const c = pool[ri(0, pool.length - 1)];
+    const regions = ['North Africa', 'West Africa', 'Central Africa', 'East Africa', 'Southern Africa'];
+    const base = regions.includes(c.region) ? c.region : 'Southern Africa';
+    const opts = shuffle([base].concat(shuffle(regions.filter(r => r !== base)).slice(0, 3)));
+    return { qf: `Dans quelle région d’Afrique se trouve : ${c.fr} ?`, qe: `In which region of Africa is ${c.en}?`,
+      ch: opts.map(o => [REGION_FR[o], o]), ci: opts.indexOf(base),
+      sf: ['Regarde la carte comme une horloge : Nord en haut, Ouest à gauche, Est à droite, australe en bas.', `${c.fr} → ${REGION_FR[c.region]}.`, `Sa capitale est ${c.cap} — deux infos d’un coup !`],
+      se: ['Read the map like a clock: North on top, West left, East right, Southern at the bottom.', `${c.en} → ${c.region}.`, `Its capital is ${c.cap} — two facts in one!`] };
+  } }
+];
+const Academy = { pending: null };
+
+/* ================= Z13 — ACADÉMIE DES CHAMPIONS (curriculum quiz + answer sheet) ================= */
+ZONE_BUILDERS.academy = function (host) {
+  const d = D();
+  const wrap = H('div', { class: 'quiz-wrap' }, host);
+  const topics = QUIZ_TOPICS.filter(t => d >= t.lo && d <= t.hi);
+  const gradeName = GRADES[save.grade] ? T(GRADES[save.grade].fr, GRADES[save.grade].en) : '';
+  const pending = Academy.pending; Academy.pending = null;
+
+  function picker(filter) {
+    wrap.innerHTML = '';
+    const p = H('div', { class: 'qz-panel' }, wrap);
+    H('div', { class: 'qz-title', text: T('🎓 Académie des Champions', '🎓 Champions Academy') }, p);
+    H('div', { class: 'qz-sub', text: T('Classe ' + gradeName + ' — choisis ou tape un sujet, gagne ton quiz !', 'Class ' + gradeName + ' — pick or type a topic, win your quiz!') }, p);
+    const cur = CURRICULUM[save.grade] || CURRICULUM[0];
+    const cb = H('div', { class: 'qz-cur' }, p);
+    cb.innerHTML = '<b>' + T('Programme de ta classe :', 'Your class program:') + '</b><br>' +
+      '🔢 ' + T(cur.m[0], cur.m[1]) + '<br>📖 ' + T(cur.l[0], cur.l[1]) + '<br>🔬 ' + T(cur.s[0], cur.s[1]) + '<br>🌍 ' + T(cur.g[0], cur.g[1]);
+    const inp = H('input', { class: 'qz-search', type: 'text', autocomplete: 'off', spellcheck: 'false' }, p);
+    inp.placeholder = T('Recherche un sujet : fractions, conjugaison, capitales…', 'Search a topic: fractions, conjugation, capitals…');
+    const chips = H('div', { class: 'qz-chips' }, p);
+    function renderChips(q) {
+      q = (q || '').trim().toLowerCase();
+      chips.innerHTML = '';
+      const hits = topics.filter(t => !q || t.kw.some(k => k.includes(q) || q.includes(k)) || T(t.f, t.e).toLowerCase().includes(q));
+      (hits.length ? hits : topics).forEach(t => {
+        const b = H('button', { class: 'qz-chip' }, chips);
+        b.innerHTML = '<span class="dot" style="background:' + SUBJ[t.sub].c + '"></span>' + T(t.f, t.e);
+        b.addEventListener('click', () => { sfx.boing(); playTopic(t); });
+      });
+    }
+    inp.addEventListener('input', ev => renderChips(ev.target.value));
+    renderChips(filter || '');
+    if (filter) inp.value = filter;
+    mission('Bienvenue à l’Académie ! Choisis un sujet de ta classe et gagne ton quiz !', 'Welcome to the Academy! Pick a topic from your class and win your quiz!', ZONE_ICONS.academy);
+  }
+
+  function playTopic(t) {
+    const QN = 5;
+    const records = [];
+    let qi = 0;
+    say(T(t.f, t.e) + ' ! ' + T('Cinq questions, à toi de jouer !', 'Five questions, your turn!'));
+    function ask() {
+      wrap.innerHTML = '';
+      const q = t.gen(d);
+      const p = H('div', { class: 'qz-panel' }, wrap);
+      H('div', { class: 'qz-prog', text: T('Question ', 'Question ') + (qi + 1) + ' / ' + QN + ' — ' + T(t.f, t.e) }, p);
+      H('div', { class: 'qz-q', text: T(q.qf, q.qe) }, p);
+      if (q.dots) H('div', { class: 'qz-dots', text: q.dots }, p);
+      const grid = H('div', { class: 'qz-answers' }, p);
+      const steps = H('div', { class: 'qz-steps' }, p);
+      steps.innerHTML = '<h4>💡 ' + T('Astuce pas à pas', 'Step-by-step trick') + '</h4><ol>' + (isEN() ? q.se : q.sf).map(s => '<li>' + s + '</li>').join('') + '</ol>';
+      const row = H('div', { class: 'qz-btnrow' }, p);
+      const hintBtn = H('button', { class: 'qz-hintbtn', text: '💡 ' + T('Voir l’astuce', 'Show the trick') }, row);
+      const next = H('button', { class: 'qz-next', text: qi + 1 < QN ? T('Question suivante ➡', 'Next question ➡') : T('Voir ma fiche de réponses 📄', 'See my answer sheet 📄') }, row);
+      hintBtn.addEventListener('click', () => { steps.classList.toggle('on'); sfx.tap(); say((isEN() ? q.se : q.sf).join(' '), null, d <= 2 ? 0.8 : 0.92); });
+      let answered = false;
+      const btns = [];
+      q.ch.forEach(([cf, ce], i) => {
+        const b = H('button', { class: 'qz-a', text: T(cf, ce) }, grid);
+        btns.push(b);
+        b.addEventListener('click', () => {
+          if (answered) return; answered = true;
+          btns.forEach(x => x.disabled = true);
+          const ok = i === q.ci;
+          b.classList.add(ok ? 'good' : 'bad');
+          btns[q.ci].classList.add('good');
+          records.push({ q, pick: i, ok });
+          if (ok) { Rounds.gem(); say(['Bravo !', 'Exact !', 'Champion !'][ri(0, 2)], ['Great!', 'Correct!', 'Champion!'][ri(0, 2)]); }
+          else { Rounds.miss(); sfx.bad(); steps.classList.add('on'); say('Pas grave ! Regarde l’astuce pas à pas !', 'No worries! Look at the step-by-step trick!'); }
+          next.classList.add('on');
+        });
+      });
+      if (d <= 2) say(q.qf, q.qe, 0.84);
+      next.addEventListener('click', () => {
+        qi++;
+        if (qi < QN) ask(); else sheet();
+      });
+    }
+    function sheet() {
+      wrap.innerHTML = '';
+      const p = H('div', { class: 'qz-panel' }, wrap);
+      const score = records.filter(r => r.ok).length;
+      H('div', { class: 'qz-title', text: '📄 ' + T('Fiche de réponses', 'Answer sheet') + ' — ' + T(t.f, t.e) }, p);
+      H('div', { class: 'qz-score', text: T('Score : ', 'Score: ') + score + ' / ' + records.length + (score === records.length ? ' 🏆' : '') }, p);
+      records.forEach((r, i) => {
+        const row = H('div', { class: 'qz-sheet-row ' + (r.ok ? 'ok' : 'ko') }, p);
+        const yours = T(r.q.ch[r.pick][0], r.q.ch[r.pick][1]);
+        const good = T(r.q.ch[r.q.ci][0], r.q.ch[r.q.ci][1]);
+        row.innerHTML = '<div>' + (r.ok ? '✅' : '❌') + ' <b>Q' + (i + 1) + '.</b> ' + T(r.q.qf, r.q.qe) + '</div>' +
+          '<div>' + T('Ta réponse : ', 'Your answer: ') + '<b>' + yours + '</b>' + (r.ok ? '' : ' — ' + T('Bonne réponse : ', 'Correct answer: ') + '<b>' + good + '</b>') + '</div>' +
+          '<details' + (r.ok ? '' : ' open') + '><summary>💡 ' + T('Astuce pas à pas', 'Step-by-step trick') + '</summary><ol>' + (isEN() ? r.q.se : r.q.sf).map(s => '<li>' + s + '</li>').join('') + '</ol></details>';
+      });
+      const row = H('div', { class: 'qz-btnrow' }, p);
+      const again = H('button', { class: 'qz-next on', text: '🔁 ' + T('Autre sujet', 'Another topic') }, row);
+      const fin = H('button', { class: 'qz-next on', text: '🏁 ' + T('Terminer', 'Finish') }, row);
+      again.style.marginRight = '10px';
+      again.addEventListener('click', () => { Rounds.start('academy', 5); picker(); });
+      fin.addEventListener('click', () => zoneComplete());
+      say(T('Ta fiche de réponses ! Tu as ', 'Your answer sheet! You got ') + score + T(' bonnes réponses sur ', ' right out of ') + records.length + ' !');
+    }
+    ask();
+  }
+
+  pending ? playTopic(pending) : picker();
+};
+
 /* ================= BOOT ================= */
 function buildHudIcons() {
   $('btn-home').appendChild(iconSvg(svg => { S('path', { d: 'M 3 11 L 12 3 L 21 11 M 6 10 L 6 20 L 18 20 L 18 10', stroke: '#fff', 'stroke-width': 2.6, fill: 'none', 'stroke-linecap': 'round', 'stroke-linejoin': 'round' }, svg); }));
@@ -1937,7 +2437,17 @@ function renderSearch(q) {
     z.topics.some(t => t.includes(q) || q.includes(t)) ||
     T(z.fr, z.en).toLowerCase().includes(q) ||
     T(z.subject.fr, z.subject.en).toLowerCase().includes(q));
-  (hits.length ? hits : ZONES).forEach(z => {
+  const d = D();
+  const qt = QUIZ_TOPICS.filter(t => d >= t.lo && d <= t.hi && q && (t.kw.some(k => k.includes(q) || q.includes(k)) || T(t.f, t.e).toLowerCase().includes(q)));
+  qt.forEach(t => {
+    const card = H('div', { class: 'sr-card' }, box);
+    const ic = iconSvg(g2 => { S('circle', { cx: 0, cy: 0, r: 34, fill: '#fff', stroke: '#5E60CE', 'stroke-width': 5 }, g2); const gg = S('g', {}, g2); ZONE_ICONS.academy(gg); }, '-40 -40 80 80');
+    card.appendChild(ic);
+    const sub = H('div', { class: 'sr-sub' }, card); sub.textContent = 'QUIZ • ' + T(SUBJ[t.sub].f, SUBJ[t.sub].e); sub.style.background = SUBJ[t.sub].c;
+    H('div', { class: 'sr-name', text: T(t.f, t.e) }, card);
+    card.addEventListener('click', () => { $('search-overlay').classList.remove('on'); sfx.boing(); Academy.pending = t; enterZone('academy'); });
+  });
+  (hits.length || qt.length ? hits : ZONES).forEach(z => {
     const card = H('div', { class: 'sr-card' }, box);
     const ic = iconSvg(g2 => { S('circle', { cx: 0, cy: 0, r: 34, fill: '#fff', stroke: z.color, 'stroke-width': 5 }, g2); const gg = S('g', {}, g2); (ZONE_ICONS[z.key] || (() => {}))(gg); }, '-40 -40 80 80');
     card.appendChild(ic);
@@ -1945,7 +2455,7 @@ function renderSearch(q) {
     H('div', { class: 'sr-name', text: T(z.fr, z.en) }, card);
     card.addEventListener('click', () => { $('search-overlay').classList.remove('on'); sfx.boing(); enterZone(z.key); });
   });
-  if (q && !hits.length) say('Essaie un mot comme maths, sciences ou géographie !', 'Try a word like math, science or geography!');
+  if (q && !hits.length && !qt.length) say('Essaie un mot comme maths, fractions, conjugaison ou capitales !', 'Try a word like math, fractions, conjugation or capitals!');
 }
 $('btn-search').appendChild(iconSvg(svg2 => { S('circle', { cx: 10.5, cy: 10.5, r: 6.5, fill: 'none', stroke: '#fff', 'stroke-width': 3 }, svg2); S('path', { d: 'M 15.5 15.5 L 21 21', stroke: '#fff', 'stroke-width': 3.4, 'stroke-linecap': 'round' }, svg2); }));
 $('btn-search').addEventListener('click', () => {
@@ -1969,7 +2479,7 @@ buildHudIcons();
 buildGradeDock();
 updateStarPill();
 showMap();
-window.__WORLD__ = { ZONES, ZONE_BUILDERS, enterZone, showMap, save, Rounds };
+window.__WORLD__ = { ZONES, ZONE_BUILDERS, enterZone, showMap, save, Rounds, QUIZ_TOPICS, CURRICULUM, Academy };
 })();
 </script>
 </body>
