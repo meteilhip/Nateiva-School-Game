@@ -89,6 +89,7 @@ html,body{ width:100%; height:100%; overflow:hidden; font-family:'Baloo 2','Fred
 @keyframes squish{ 0%{ transform:scale(1,1); } 35%{ transform:scale(1.25,0.75); } 70%{ transform:scale(0.85,1.15); } 100%{ transform:scale(1,1); } }
 @keyframes popIn{ from{ transform:scale(0); } to{ transform:scale(1); } }
 .pop-in{ animation:popIn 0.4s cubic-bezier(0.34,1.56,0.64,1); }
+.pop-in,.wobble,.squish{ transform-box:fill-box; transform-origin:center; }
 .wobble{ animation:wobble 0.45s ease 2; }
 .squish{ animation:squish 0.5s ease; }
 .grab{ cursor:grab; } .grabbing{ cursor:grabbing; }
@@ -174,6 +175,12 @@ function tween(ms, step, done) {
   })(t0);
 }
 const easeOutBack = k => 1 + 2.70158 * Math.pow(k - 1, 3) + 1.70158 * Math.pow(k - 1, 2);
+// FX that COMPOSE with an element's SVG transform attribute (never override position)
+function fxPrep(el) { el.style.transformBox = 'fill-box'; el.style.transformOrigin = 'center'; }
+function fxBob(el, amp = 9, dur = 2600) { fxPrep(el); try { el.animate([{ transform: 'translateY(0px)' }, { transform: `translateY(${-amp}px)` }, { transform: 'translateY(0px)' }], { duration: dur, iterations: Infinity, composite: 'add', easing: 'ease-in-out' }); } catch (e) {} }
+function fxPop(el) { fxPrep(el); try { el.animate([{ transform: 'scale(0.05)' }, { transform: 'scale(1)' }], { duration: 380, easing: 'cubic-bezier(0.34,1.56,0.64,1)', composite: 'add' }); } catch (e) {} }
+function fxWobble(el) { fxPrep(el); try { el.animate([{ transform: 'rotate(0deg)' }, { transform: 'rotate(-8deg)' }, { transform: 'rotate(8deg)' }, { transform: 'rotate(0deg)' }], { duration: 440, iterations: 2, composite: 'add' }); } catch (e) {} }
+function fxSquish(el) { fxPrep(el); try { el.animate([{ transform: 'scale(1,1)' }, { transform: 'scale(1.25,0.75)' }, { transform: 'scale(0.85,1.15)' }, { transform: 'scale(1,1)' }], { duration: 520, composite: 'add' }); } catch (e) {} }
 const easeIn = k => k * k;
 const easeOut = k => 1 - (1 - k) * (1 - k);
 
@@ -507,7 +514,7 @@ function buildMap() {
     st.addEventListener('click', () => { sfx.boing(); enterZone(z.key); });
   });
   leoMapAvatar = drawLeo(svg, ZONES[0].mx, ZONES[0].my - 92, 0.62);
-  leoMapAvatar.style.animation = 'bobBig 2.2s ease-in-out infinite';
+  fxBob(leoMapAvatar, 15, 2200);
 }
 
 /* ================= SCENE ROUTER ================= */
@@ -659,7 +666,7 @@ ZONE_BUILDERS.orchard = function (host) {
   [[-150, -120, 110], [0, -190, 130], [150, -120, 110], [-70, -60, 90], [80, -60, 90]].forEach(([cx, cy, r]) => S('circle', { cx, cy, r, fill: '#3FA34D' }, tree));
   [[-150, -120], [0, -190], [150, -120]].forEach(([cx, cy]) => S('circle', { cx: cx - 26, cy: cy - 22, r: 30, fill: 'rgba(255,255,255,0.18)' }, tree));
   const momo = drawMonkey(svg, 1210, 330, 1.05);
-  momo.style.animation = 'bob 2.6s ease-in-out infinite';
+  fxBob(momo, 9, 2600);
   const fruitLayer = S('g', {}, svg);
   const basketLayer = S('g', {}, svg);
   const FRUITS = [
@@ -679,8 +686,9 @@ ZONE_BUILDERS.orchard = function (host) {
   }
   function spawnFruit(x, y) {
     const g = S('g', { transform: `translate(${x},${y})` }, fruitLayer);
-    const art = S('g', { class: 'pop-in' }, g);
+    const art = S('g', {}, g);
     fruitDef.draw(art);
+    fxPop(art);
     const f = { g, home: [x, y], free: true };
     makeDraggable(g, svg, {
       start: () => { if (!roundLive || !f.free) return; sfx.tap(); g.parentNode.appendChild(g); },
@@ -690,8 +698,9 @@ ZONE_BUILDERS.orchard = function (host) {
         const b = baskets.find(bk => Math.abs(p.x - bk.x) < 95 && p.y > bk.y - 40 && p.y < bk.y + 95);
         if (b && b.got < b.slots) {
           b.got++; f.free = false;
-          const fg = S('g', { transform: `translate(${-52 + ((b.got - 1) % 5) * 26},${28 + Math.floor((b.got - 1) / 5) * 24}) scale(0.55)`, class: 'pop-in' }, b.fills);
+          const fg = S('g', { transform: `translate(${-52 + ((b.got - 1) % 5) * 26},${28 + Math.floor((b.got - 1) / 5) * 24}) scale(0.55)` }, b.fills);
           fruitDef.draw(fg);
+          fxPop(fg);
           g.remove(); sfx.pop();
           checkDone();
         } else {
@@ -709,7 +718,7 @@ ZONE_BUILDERS.orchard = function (host) {
       if (total === needTotal) {
         const per = needTotal / baskets.length;
         if (baskets.every(b => b.got === per)) winRound();
-        else { sfx.bad(); Rounds.miss(); momo.classList.add('wobble'); setTimeout(() => momo.classList.remove('wobble'), 1000); say('Partage pareil dans chaque panier !', 'Share the same in every basket!'); }
+        else { sfx.bad(); Rounds.miss(); fxWobble(momo); say('Partage pareil dans chaque panier !', 'Share the same in every basket!'); }
       }
       return;
     }
@@ -718,7 +727,7 @@ ZONE_BUILDERS.orchard = function (host) {
   }
   function winRound() {
     roundLive = false;
-    momo.classList.add('squish'); setTimeout(() => momo.classList.remove('squish'), 600);
+    fxSquish(momo);
     say('Miam ! Merci !', 'Yummy! Thank you!');
     if (Rounds.gem()) setTimeout(zoneComplete, 900); else setTimeout(nextRound, 1200);
   }
@@ -827,7 +836,7 @@ ZONE_BUILDERS.river = function (host) {
           });
         } else {
           Rounds.miss(); sfx.bad();
-          g.classList.add('wobble');
+          fxWobble(g);
           const sink = g.animate([{ transform: `translate(${m.e}px,${m.f}px)` }, { transform: `translate(${m.e}px,${m.f + 26}px)` }, { transform: `translate(${m.e}px,${m.f}px)` }], { duration: 700 });
           say('Écoute bien : ' + current, 'Listen: ' + current);
         }
@@ -922,14 +931,13 @@ ZONE_BUILDERS.paint = function (host) {
         const okPart = task.match(p);
         if (okPart && selected[2] === task.color[2]) {
           p.el.setAttribute('fill', selected[2]);
-          p.el.classList.add('squish');
-          setTimeout(() => p.el.classList.remove('squish'), 520);
+          fxSquish(p.el);
           sfx.pop();
           task.left--;
           if (task.left <= 0) { taskIdx++; if (taskIdx >= tasks.length) done(); else announceTask(); }
         } else {
           Rounds.miss(); sfx.bad();
-          p.el.classList.add('wobble'); setTimeout(() => p.el.classList.remove('wobble'), 1000);
+          fxWobble(p.el);
           announceTask();
         }
       });
@@ -1105,7 +1113,7 @@ ZONE_BUILDERS.garden = function (host) {
     plantG.innerHTML = '';
     S('path', { d: 'M -70 0 L 70 0 L 52 90 Q 0 104 -52 90 Z', fill: '#C96F3B', stroke: '#8A4B20', 'stroke-width': 5 }, plantG);
     S('ellipse', { cx: 0, cy: 0, rx: 70, ry: 16, fill: '#5C3A17' }, plantG);
-    const sgrow = S('g', { class: 'pop-in' }, plantG);
+    const sgrow = S('g', {}, plantG); fxPop(sgrow);
     if (stage >= 1) S('path', { d: `M 0 -4 Q -4 ${-30 * stage} 0 ${-52 * stage}`, stroke: '#3FA34D', 'stroke-width': 10, fill: 'none', 'stroke-linecap': 'round' }, sgrow);
     if (stage >= 2) { S('path', { d: `M 0 ${-30 * stage + 16} Q -34 ${-30 * stage} -44 ${-30 * stage + 20}`, stroke: '#57CC57', 'stroke-width': 9, fill: 'none', 'stroke-linecap': 'round' }, sgrow); S('path', { d: `M 0 ${-30 * stage + 30} Q 34 ${-30 * stage + 14} 44 ${-30 * stage + 34}`, stroke: '#57CC57', 'stroke-width': 9, fill: 'none', 'stroke-linecap': 'round' }, sgrow); }
     if (stage >= 3) {
@@ -1203,12 +1211,13 @@ ZONE_BUILDERS.safari = function (host) {
   });
   // balloon with Léo
   const balloon = S('g', { transform: 'translate(170,180)' }, svg);
-  S('path', { d: 'M 0 -96 A 62 70 0 1 1 -0.1 -96 Z', fill: '#FF4D57', stroke: '#C42631', 'stroke-width': 5 }, balloon);
-  S('path', { d: 'M 0 -96 A 62 70 0 0 1 0 36 A 24 70 0 0 0 0 -96 Z', fill: '#FFD23F', opacity: 0.9 }, balloon);
-  S('path', { d: 'M -34 20 L -16 62 M 34 20 L 16 62', stroke: '#8A5A33', 'stroke-width': 4 }, balloon);
-  S('path', { d: 'M -18 60 L 18 60 L 12 92 L -12 92 Z', fill: 'url(#gWood)', stroke: '#6B421D', 'stroke-width': 4 }, balloon);
-  drawLeo(balloon, 0, 44, 0.42);
-  balloon.style.animation = 'bobBig 3s ease-in-out infinite';
+  const balloonInner = S('g', {}, balloon);
+  S('path', { d: 'M 0 -96 A 62 70 0 1 1 -0.1 -96 Z', fill: '#FF4D57', stroke: '#C42631', 'stroke-width': 5 }, balloonInner);
+  S('path', { d: 'M 0 -96 A 62 70 0 0 1 0 36 A 24 70 0 0 0 0 -96 Z', fill: '#FFD23F', opacity: 0.9 }, balloonInner);
+  S('path', { d: 'M -34 20 L -16 62 M 34 20 L 16 62', stroke: '#8A5A33', 'stroke-width': 4 }, balloonInner);
+  S('path', { d: 'M -18 60 L 18 60 L 12 92 L -12 92 Z', fill: 'url(#gWood)', stroke: '#6B421D', 'stroke-width': 4 }, balloonInner);
+  drawLeo(balloonInner, 0, 44, 0.42);
+  fxBob(balloonInner, 13, 3000);
   let balloonPos = { x: 170, y: 180 };
   // flag card
   const flagCard = S('g', { transform: 'translate(170,560)' }, svg);
@@ -1222,7 +1231,7 @@ ZONE_BUILDERS.safari = function (host) {
     const d = D();
     const lbl = d >= 4 ? T('Capitale : ' + target.cap, 'Capital: ' + target.cap) : T(target.fr, target.en);
     S('text', { x: 0, y: 66, 'text-anchor': 'middle', 'font-size': 21, 'font-weight': 800, fill: '#2B2D42', 'font-family': 'inherit', text: d <= 1 ? '' : lbl }, flagCard);
-    flagCard.classList.add('pop-in');
+    fxPop(flagCard);
   }
   function flyTo(x, y, cb) {
     sfx.whoosh();
@@ -1244,16 +1253,17 @@ ZONE_BUILDERS.safari = function (host) {
         regionEls[hit.key].style.filter = 'brightness(1.2) saturate(1.4)';
         found.push(hit.key);
         // plant a mini flag
-        const mini = S('g', { transform: `translate(${700 + hit.lx * 1.15},${440 + hit.ly * 1.15}) scale(0.8)`, class: 'pop-in' }, svg);
+        const mini = S('g', { transform: `translate(${700 + hit.lx * 1.15},${440 + hit.ly * 1.15}) scale(0.8)` }, svg);
         S('rect', { x: -1.5, y: -30, width: 3, height: 30, fill: '#6B421D' }, mini);
         const mf = S('g', { transform: 'translate(12,-22) scale(0.6)' }, mini);
         hit.flag(mf);
+        fxPop(mini);
         sfx.good(); confetti(16);
         say('Bravo ! ' + target.fr + ' ! Capitale : ' + target.cap + ' !', 'Great! ' + target.en + '! Capital: ' + target.cap + '!');
         setTimeout(() => { if (Rounds.gem()) setTimeout(zoneComplete, 800); else nextRound(); }, 1100);
       } else {
         Rounds.miss(); sfx.bad();
-        regionEls[hit.key].classList.add('wobble'); setTimeout(() => regionEls[hit.key].classList.remove('wobble'), 1000);
+        fxWobble(regionEls[hit.key]);
         say('Ici c’est ' + hit.fr + ' ! Cherche ' + target.fr + ' !', 'This is ' + hit.en + '! Look for ' + target.en + '!');
         roundLive = true;
       }
@@ -1304,7 +1314,7 @@ ZONE_BUILDERS.theatre = function (host) {
     {
       lines: [
         { fr: 'Léo le lion a trouvé trois mangues sous le grand arbre.', en: 'Leo the lion found three mangoes under the big tree.', act: () => move(actors.leo, 600, 470) },
-        { fr: 'Momo le singe avait très faim.', en: 'Momo the monkey was very hungry.', act: () => { actors.momo.classList.add('wobble'); setTimeout(() => actors.momo.classList.remove('wobble'), 900); } },
+        { fr: 'Momo le singe avait très faim.', en: 'Momo the monkey was very hungry.', act: () => { fxWobble(actors.momo); } },
         { fr: 'Alors Léo a partagé ses mangues avec Momo !', en: 'So Leo shared his mangoes with Momo!', act: () => { move(actors.leo, 900, 460); sfx.good(); } }
       ],
       q: { fr: "Qu'a fait Léo ?", en: 'What did Leo do?' },
@@ -1317,7 +1327,7 @@ ZONE_BUILDERS.theatre = function (host) {
     {
       lines: [
         { fr: 'Fela la grenouille sautait sous la pluie.', en: 'Fela the frog was hopping in the rain.', act: () => move(actors.frog, 500, 500) },
-        { fr: 'Elle a glissé et est tombée dans la boue !', en: 'She slipped and fell in the mud!', act: () => { actors.frog.classList.add('squish'); sfx.splash(); setTimeout(() => actors.frog.classList.remove('squish'), 700); } },
+        { fr: 'Elle a glissé et est tombée dans la boue !', en: 'She slipped and fell in the mud!', act: () => { fxSquish(actors.frog); sfx.splash(); } },
         { fr: 'Léo lui a tendu la patte pour la relever.', en: 'Leo reached out his paw and helped her up.', act: () => { move(actors.leo, 560, 480); sfx.good(); } }
       ],
       q: { fr: 'Qui a aidé Fela ?', en: 'Who helped Fela?' },
@@ -1361,14 +1371,14 @@ ZONE_BUILDERS.theatre = function (host) {
     answerG.innerHTML = '';
     shuffle(story.panels).forEach((p, i) => {
       const x = 430 + i * 320;
-      const g = S('g', { transform: `translate(${x},${760})`, class: 'grab pop-in' }, answerG);
+      const g = S('g', { transform: `translate(${x},${760})`, class: 'grab' }, answerG);
       S('rect', { x: -120, y: -70, width: 240, height: 140, rx: 22, fill: '#fff', stroke: '#FFD23F', 'stroke-width': 6 }, g);
-      const art = S('g', { transform: 'translate(0,6)' }, g); p.draw(art);
+      const art = S('g', { transform: 'translate(0,6)' }, g); p.draw(art); fxPop(g);
       g.addEventListener('pointerdown', () => {
         if (p.ok) {
           sfx.good(); answerG.innerHTML = '';
           if (Rounds.gem()) setTimeout(zoneComplete, 900); else setTimeout(nextRound, 1000);
-        } else { Rounds.miss(); sfx.bad(); g.classList.add('wobble'); setTimeout(() => g.classList.remove('wobble'), 900); say('Regarde encore la scène !', 'Watch the scene again!'); }
+        } else { Rounds.miss(); sfx.bad(); fxWobble(g); say('Regarde encore la scène !', 'Watch the scene again!'); }
       });
     });
   }
