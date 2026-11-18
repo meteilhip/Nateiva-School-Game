@@ -1,0 +1,226 @@
+{
+ "date": "2026-11-18T14:08:46.449Z",
+ "allPass": true,
+ "report": [
+  {
+   "game": "math_magic_tricks",
+   "score": 5,
+   "of": 5,
+   "stable": 1,
+   "audioFirst": 1,
+   "visualFirst": 1,
+   "interactive": 1,
+   "adaptiveReward": 1
+  },
+  {
+   "game": "science_hero_tricks",
+   "score": 5,
+   "of": 5,
+   "stable": 1,
+   "audioFirst": 1,
+   "visualFirst": 1,
+   "interactive": 1,
+   "adaptiveReward": 1
+  },
+  {
+   "game": "tetris_blocks",
+   "score": 5,
+   "of": 5,
+   "stable": 1,
+   "audioFirst": 1,
+   "visualFirst": 1,
+   "interactive": 1,
+   "adaptiveReward": 1
+  },
+  {
+   "game": "auto_racer",
+   "score": 5,
+   "of": 5,
+   "stable": 1,
+   "audioFirst": 1,
+   "visualFirst": 1,
+   "interactive": 1,
+   "adaptiveReward": 1
+  },
+  {
+   "game": "math_monster_quest",
+   "score": 5,
+   "of": 5,
+   "stable": 1,
+   "audioFirst": 1,
+   "visualFirst": 1,
+   "interactive": 1,
+   "adaptiveReward": 1
+  },
+  {
+   "game": "science_ecosystem",
+   "score": 5,
+   "of": 5,
+   "stable": 1,
+   "audioFirst": 1,
+   "visualFirst": 1,
+   "interactive": 1,
+   "adaptiveReward": 1
+  },
+  {
+   "game": "grammar_lab",
+   "score": 5,
+   "of": 5,
+   "stable": 1,
+   "audioFirst": 1,
+   "visualFirst": 1,
+   "interactive": 1,
+   "adaptiveReward": 1
+  },
+  {
+   "game": "vocabulary_lab",
+   "score": 5,
+   "of": 5,
+   "stable": 1,
+   "audioFirst": 1,
+   "visualFirst": 1,
+   "interactive": 1,
+   "adaptiveReward": 1
+  },
+  {
+   "game": "conjugation_lab",
+   "score": 5,
+   "of": 5,
+   "stable": 1,
+   "audioFirst": 1,
+   "visualFirst": 1,
+   "interactive": 1,
+   "adaptiveReward": 1
+  },
+  {
+   "game": "pronunciation_lab",
+   "score": 5,
+   "of": 5,
+   "stable": 1,
+   "audioFirst": 1,
+   "visualFirst": 1,
+   "interactive": 1,
+   "adaptiveReward": 1
+  },
+  {
+   "game": "africa_geography",
+   "score": 5,
+   "of": 5,
+   "stable": 1,
+   "audioFirst": 1,
+   "visualFirst": 1,
+   "interactive": 1,
+   "adaptiveReward": 1
+  },
+  {
+   "game": "fun_facts_quiz",
+   "score": 5,
+   "of": 5,
+   "stable": 1,
+   "audioFirst": 1,
+   "visualFirst": 1,
+   "interactive": 1,
+   "adaptiveReward": 1
+  },
+  {
+   "game": "story_lab",
+   "score": 5,
+   "of": 5,
+   "stable": 1,
+   "audioFirst": 1,
+   "visualFirst": 1,
+   "interactive": 1,
+   "adaptiveReward": 1
+  },
+  {
+   "game": "reading_lab",
+   "score": 5,
+   "of": 5,
+   "stable": 1,
+   "audioFirst": 1,
+   "visualFirst": 1,
+   "interactive": 1,
+   "adaptiveReward": 1
+  },
+  {
+   "game": "math_lab",
+   "score": 5,
+   "of": 5,
+   "stable": 1,
+   "audioFirst": 1,
+   "visualFirst": 1,
+   "interactive": 1,
+   "adaptiveReward": 1
+  },
+  {
+   "game": "chemistry",
+   "score": 5,
+   "of": 5,
+   "stable": 1,
+   "audioFirst": 1,
+   "visualFirst": 1,
+   "interactive": 1,
+   "adaptiveReward": 1
+  },
+  {
+   "game": "density",
+   "score": 5,
+   "of": 5,
+   "stable": 1,
+   "audioFirst": 1,
+   "visualFirst": 1,
+   "interactive": 1,
+   "adaptiveReward": 1
+  },
+  {
+   "game": "circuit",
+   "score": 5,
+   "of": 5,
+   "stable": 1,
+   "audioFirst": 1,
+   "visualFirst": 1,
+   "interactive": 1,
+   "adaptiveReward": 1
+  },
+  {
+   "game": "botany",
+   "score": 5,
+   "of": 5,
+   "stable": 1,
+   "audioFirst": 1,
+   "visualFirst": 1,
+   "interactive": 1,
+   "adaptiveReward": 1
+  },
+  {
+   "game": "comet",
+   "score": 5,
+   "of": 5,
+   "stable": 1,
+   "audioFirst": 1,
+   "visualFirst": 1,
+   "interactive": 1,
+   "adaptiveReward": 1
+  },
+  {
+   "game": "tangram_puzzle",
+   "score": 5,
+   "of": 5,
+   "stable": 1,
+   "audioFirst": 1,
+   "visualFirst": 1,
+   "interactive": 1,
+   "adaptiveReward": 1
+  },
+  {
+   "game": "maze_quest",
+   "score": 5,
+   "of": 5,
+   "stable": 1,
+   "audioFirst": 1,
+   "visualFirst": 1,
+   "interactive": 1,
+   "adaptiveReward": 1
+  }
+ ]
+}

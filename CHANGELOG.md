@@ -1,5 +1,14 @@
 # Changelog
 
+## 1.14.0 — 2026-11-18 — V21.0 AGE-ADAPTIVE REA TOP-GAME REBUILD
+
+- REA analysis of the top-rated education game per category (Khan Academy Kids, Duolingo ABC, Teach Your Monster to Read, Prodigy Math, Toca Lab/PhET, Stack the Countries/Seterra, Kahoot!) distilled into `GAME_DESIGN_RESEARCH.md` v2 and rebuilt into the engine.
+- **Age-Adaptive Presentation Layer across all 22 games**: Maternelle (2–5, pre-readers) now plays picture-first — every answer choice shows a BIG animated cartoon picture (≥3rem) matched to its meaning, long text dims to caption size, touch targets grow to ≥84px, speech slows to 0.68 rate, and every choice has a tap-to-hear 🔊 chip. SIL/CP keep pictures primary with short words; CE1→CM2 progressively text-forward with faster narration.
+- **Persistent Sticker Book** (Teach-Your-Monster × Prodigy collection law): 24 African animal & badge stickers earned every 3 completed activities, saved in localStorage, with celebratory unlock popup (confetti + narration) and a floating 🎖️ collection viewer with silhouettes for locked stickers.
+- **Mastery stars on every game card** (Seterra/Prodigy law): per-game × per-class progress (☆☆☆→★★★) persisted and displayed on the hub, updating live with the selected class.
+- **Tutor escalation** (Khan/Prodigy law): a wrong-answer streak (1 miss at MAT, 2 at SIL/CP, 3 at CE+) auto-replays the prompt slowly and pulses the Rhea visual coach.
+- **Full automated bug-hunt & quality gate**: `npm run test:games` launches all 22 games × 7 classes in jsdom hunting dead buttons, missing voice narration, visual/answer mismatches, unwinnable MCQs and JS errors (`scripts/smoke-test.mjs`), then rates every game 0–5 against the REA feature matrix (`scripts/age-adaptive-audit.mjs`). Current release: **154/154 runs pass, all 22 games rated 5/5** (gate requires ≥4/5).
+
 ## 1.4.0 — 2026-11-08
 
 - Replaced the shared language quiz interaction with three distinct touch-first activities: vocabulary picture matching, grammar sentence-train building, and conjugation time portals.

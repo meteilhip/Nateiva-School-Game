@@ -3406,6 +3406,71 @@ body {
   }
 
 </style>
+<style id="nateiva-age-adaptive-css">
+/* ============================================================
+   V21.0 AGE-ADAPTIVE PRESENTATION LAYER (REA TOP-GAME REBUILD)
+   Khan Kids × Duolingo ABC × TYMTR × Prodigy × Kahoot laws
+   MAT = picture-first, zero reading • text scales up with grade
+   ============================================================ */
+.ux-pict { display:inline-block; font-size:1.9rem; line-height:1; margin-right:9px; vertical-align:middle; filter:drop-shadow(0 2px 3px rgba(0,0,0,0.18)); }
+.ux-label { vertical-align:middle; }
+
+/* ---- MATERNELLE (2–5 ans, pre-readers): BIG pictures, tiny dimmed text ---- */
+body.age-mat .btn-interactive,
+body.age-mat .btn-mcq-choice,
+body.age-mat .lang-options-grid button,
+body.age-mat .comprehension-options-grid button {
+  min-height:84px; padding:16px 20px; border-radius:24px; font-size:1.15rem;
+}
+body.age-mat .ux-pict { display:block; font-size:3.1rem; margin:0 auto 7px auto; animation:uxPictBob 2.6s ease-in-out infinite; }
+body.age-mat .ux-longtext .ux-label { font-size:0.72rem; opacity:0.62; font-weight:700; }
+body.age-mat .choice-speaker-chip { font-size:1.45rem; padding:4px 10px; }
+body.age-mat #instruction-title { font-size:1.28rem; }
+body.age-mat .portal-desc { display:none; }
+body.age-mat .portal-card h3 { font-size:1.02rem; }
+body.age-mat .portal-badge { font-size:2.6rem; }
+body.age-mat .card-audio-preview-btn { font-size:1.8rem; }
+body.age-mat .portal-curriculum-tag { display:none; }
+
+/* ---- SIL / CP (5–7 ans, early readers): pictures primary, short words visible ---- */
+body.age-sil .ux-pict, body.age-cp .ux-pict { display:block; font-size:2.4rem; margin:0 auto 5px auto; }
+body.age-sil .btn-interactive, body.age-sil .btn-mcq-choice,
+body.age-cp .btn-interactive, body.age-cp .btn-mcq-choice { min-height:68px; border-radius:20px; }
+body.age-sil .ux-longtext .ux-label, body.age-cp .ux-longtext .ux-label { font-size:0.86rem; opacity:0.85; }
+body.age-sil .portal-desc, body.age-cp .portal-desc { font-size:0.82rem; }
+
+/* ---- CE1+ (7–12 ans): inline pictures, full text forward ---- */
+body.age-ce .ux-pict, body.age-ce2 .ux-pict, body.age-cm1 .ux-pict, body.age-cm .ux-pict { font-size:1.6rem; }
+
+@keyframes uxPictBob { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-5px)} }
+
+/* ---- Tutor escalation pulse (Rhea coach) ---- */
+.ux-coach-pulse { animation:uxCoachPulse 0.9s ease-in-out 4; }
+@keyframes uxCoachPulse { 0%,100%{box-shadow:0 0 0 0 rgba(229,37,42,0)} 50%{box-shadow:0 0 0 10px rgba(229,37,42,0.35)} }
+
+/* ---- Mastery stars on portal cards (Seterra/Prodigy law) ---- */
+.ux-mastery { position:absolute; top:10px; right:12px; background:rgba(17,24,39,0.82); color:#FBBF24; font-size:0.92rem; font-weight:900; padding:4px 10px; border-radius:999px; border:2px solid rgba(251,191,36,0.6); letter-spacing:2px; pointer-events:none; z-index:5; }
+.portal-card { position:relative; }
+
+/* ---- Persistent Sticker Book (TYMTR/Prodigy collection law) ---- */
+#ux-sticker-fab { position:fixed; right:18px; bottom:86px; z-index:1200; background:linear-gradient(135deg,#FF2A32 0%,#E5252A 100%); color:#fff; border:2px solid rgba(255,255,255,0.65); border-radius:999px; padding:12px 18px; font-size:1.05rem; font-weight:900; cursor:pointer; box-shadow:0 10px 26px rgba(229,37,42,0.45); display:flex; align-items:center; gap:8px; }
+#ux-sticker-fab:hover { transform:scale(1.06); }
+#ux-sticker-modal { position:fixed; inset:0; z-index:1300; background:rgba(15,23,42,0.72); backdrop-filter:blur(10px); display:none; align-items:center; justify-content:center; padding:20px; }
+#ux-sticker-modal.active { display:flex; }
+.ux-sticker-panel { background:#fff; border:2px solid rgba(17,24,39,0.24); border-radius:24px; max-width:680px; width:100%; max-height:82vh; overflow:auto; padding:22px; }
+.ux-sticker-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(92px,1fr)); gap:12px; margin-top:14px; }
+.ux-sticker-cell { border:2px solid rgba(17,24,39,0.18); border-radius:18px; padding:10px 6px; text-align:center; background:#F8FAFC; }
+.ux-sticker-cell .em { font-size:2.3rem; display:block; }
+.ux-sticker-cell .nm { font-size:0.66rem; font-weight:800; color:#334155; display:block; margin-top:4px; }
+.ux-sticker-cell.locked .em { filter:grayscale(1) opacity(0.3); }
+.ux-sticker-cell.locked .nm { opacity:0.4; }
+.ux-sticker-cell.unlocked { border-color:#FBBF24; background:linear-gradient(135deg,#FFFBEB 0%,#FEF3C7 100%); }
+#ux-sticker-popup { position:fixed; left:50%; top:38%; transform:translate(-50%,-50%) scale(0.6); z-index:1400; background:linear-gradient(135deg,#FFFBEB 0%,#FEF3C7 100%); border:3px solid #FBBF24; border-radius:28px; padding:26px 38px; text-align:center; opacity:0; pointer-events:none; transition:all 0.35s cubic-bezier(0.34,1.56,0.64,1); box-shadow:0 24px 60px rgba(0,0,0,0.35); }
+#ux-sticker-popup.active { opacity:1; transform:translate(-50%,-50%) scale(1); }
+#ux-sticker-popup .em { font-size:4rem; display:block; animation:uxPictBob 1.4s ease-in-out infinite; }
+#ux-sticker-popup .ttl { font-size:1.1rem; font-weight:900; color:#92400E; margin-top:6px; }
+@media(max-width:720px){ #ux-sticker-fab{ bottom:96px; right:12px; padding:10px 14px; font-size:0.95rem; } }
+</style>
 </head>
 <body>
 <div id="root" style="display:none;"></div>
@@ -3435,7 +3500,7 @@ body {
         <option value="en">🇬🇧 English (Studio Voice)</option>
       </select>
       <button class="btn-pill" id="btn-sound-toggle">🔊 Son</button>
-      <button class="version-cache-pill" id="btn-version-cache" title="Version active • Cliquer pour vider le cache et recharger">🚀 v20.0 REA-TOP-GAME-REBUILD (v1.13.0) • 🔄 Vider Cache</button>
+      <button class="version-cache-pill" id="btn-version-cache" title="Version active • Cliquer pour vider le cache et recharger">🚀 v21.0 AGE-ADAPTIVE REBUILD (v1.14.0) • 🔄 Vider Cache</button>
     </div>
   </header>
 
@@ -3567,7 +3632,7 @@ body {
           <h3>Astuces Maths Cartoon : Doigts, Doubles & Pont de 10</h3>
           <div class="portal-curriculum-tag">Pont de 10 • 10 Doigts ×9 • Doubles • Fractions %</div>
         </div>
-        <span class="card-rea-badge">✨ v20.0 REA-TOP-GAME-REBUILD (v1.13.0) • ▶ JOUER</span>
+        <span class="card-rea-badge">✨ v21.0 AGE-ADAPTIVE REBUILD (v1.14.0) • ▶ JOUER</span>
       </div>
       <p class="portal-desc">Apprends les astuces cartoon pour calculer instantanément : pont arc-en-ciel de 10, astuce des doigts pour la table de 9, et miroir des doubles !</p>
       <div class="portal-counts-badge-bar">
@@ -3586,7 +3651,7 @@ body {
           <h3>Astuces Sciences Cartoon : Leviers, Corps, Eau & Lumière</h3>
           <div class="portal-curriculum-tag">Levier Souris-Éléphant • Cycle de l'Eau • Prisme Arc-en-Ciel</div>
         </div>
-        <span class="card-rea-badge">✨ v20.0 REA-TOP-GAME-REBUILD (v1.13.0) • ▶ JOUER</span>
+        <span class="card-rea-badge">✨ v21.0 AGE-ADAPTIVE REBUILD (v1.14.0) • ▶ JOUER</span>
       </div>
       <p class="portal-desc">Découvre les super-pouvoirs de la science : comment soulever un éléphant avec un levier, le voyage de la goutte d'eau et le prisme de lumière !</p>
       <div class="portal-counts-badge-bar">
@@ -3604,7 +3669,7 @@ body {
           <h3>Tetris Éducatif : Blocs Mots & Maths</h3>
           <div class="portal-curriculum-tag">Tetris Arcade • Nombres • Syllabes • Auto-Drop</div>
         </div>
-        <span class="card-rea-badge">✨ v20.0 REA-TOP-GAME-REBUILD (v1.13.0) • ▶ JOUER</span>
+        <span class="card-rea-badge">✨ v21.0 AGE-ADAPTIVE REBUILD (v1.14.0) • ▶ JOUER</span>
       </div>
       <p class="portal-desc">Empile les blocs colorés Tetris de nombres, calculs et syllabes pour compléter les lignes et ouvrir le coffre à récompenses !</p>
       <div class="portal-counts-badge-bar">
@@ -3623,7 +3688,7 @@ body {
           <h3>Course Auto Turbo : Rallye Savane</h3>
           <div class="portal-curriculum-tag">Course 3 Voies • Auto-Pilote • Récompenses</div>
         </div>
-        <span class="card-rea-badge">✨ v20.0 REA-TOP-GAME-REBUILD (v1.13.0) • ▶ JOUER</span>
+        <span class="card-rea-badge">✨ v21.0 AGE-ADAPTIVE REBUILD (v1.14.0) • ▶ JOUER</span>
       </div>
       <p class="portal-desc">Pilote le bolide turbo de Léo sur 3 voies ou active l'Auto-Pilote pour franchir le portique de la bonne réponse avec boost nitro !</p>
       <div class="portal-counts-badge-bar">
@@ -3642,7 +3707,7 @@ body {
           <h3>Prodigy Maths : Monstres & Cristaux</h3>
           <div class="portal-curriculum-tag">Prodigy Math • Sorts Visuels • Coffre Magique</div>
         </div>
-        <span class="card-rea-badge">✨ v20.0 REA-TOP-GAME-REBUILD (v1.13.0) • ▶ JOUER</span>
+        <span class="card-rea-badge">✨ v21.0 AGE-ADAPTIVE REBUILD (v1.14.0) • ▶ JOUER</span>
       </div>
       <p class="portal-desc">Lance des sorts mathématiques visuels (addition, tables, fractions, algèbre) pour apprivoiser les créatures et gagner des familiers !</p>
       <div class="portal-counts-badge-bar">
@@ -3661,7 +3726,7 @@ body {
           <h3>Labo Sciences : Écosystème, Aimants & Espace</h3>
           <div class="portal-curriculum-tag">Chaîne Alimentaire • États de l'Eau • Aimants • Planètes</div>
         </div>
-        <span class="card-rea-badge">✨ v20.0 REA-TOP-GAME-REBUILD (v1.13.0) • ▶ JOUER</span>
+        <span class="card-rea-badge">✨ v21.0 AGE-ADAPTIVE REBUILD (v1.14.0) • ▶ JOUER</span>
       </div>
       <p class="portal-desc">Simule la chaîne alimentaire de la savane, les 3 états de l'eau (0°C/100°C), les pôles d'aimants (N⇄S) et le système solaire !</p>
       <div class="portal-counts-badge-bar">
@@ -3679,7 +3744,7 @@ body {
           <h3>Grammaire & Syntaxe (FR / EN)</h3>
           <div class="portal-curriculum-tag">Noms • Verbes • Adjectifs • Accords</div>
         </div>
-        <span class="card-rea-badge">✨ v20.0 REA-TOP-GAME-REBUILD (v1.13.0) • ▶ JOUER</span>
+        <span class="card-rea-badge">✨ v21.0 AGE-ADAPTIVE REBUILD (v1.14.0) • ▶ JOUER</span>
       </div>
       <p class="portal-desc">Maîtrise la grammaire en français et en anglais (articles, pluriels, nature des mots, accords sujet-verbe) avec une seule voix native pure !</p>
       <div class="portal-counts-badge-bar">
@@ -3698,7 +3763,7 @@ body {
           <h3>Vocabulaire & Mots du Monde (FR / EN)</h3>
           <div class="portal-curriculum-tag">Synonymes • Contraires • Thèmes d'Afrique</div>
         </div>
-        <span class="card-rea-badge">✨ v20.0 REA-TOP-GAME-REBUILD (v1.13.0) • ▶ JOUER</span>
+        <span class="card-rea-badge">✨ v21.0 AGE-ADAPTIVE REBUILD (v1.14.0) • ▶ JOUER</span>
       </div>
       <p class="portal-desc">Enrichis ton vocabulaire en français et en anglais : synonymes, contraires, objets de l'école, animaux et métiers avec prononciation native !</p>
       <div class="portal-counts-badge-bar">
@@ -3717,7 +3782,7 @@ body {
           <h3>Conjugaison & Temps (FR / EN)</h3>
           <div class="portal-curriculum-tag">Présent • Passé • Futur • Être/Avoir & To Be</div>
         </div>
-        <span class="card-rea-badge">✨ v20.0 REA-TOP-GAME-REBUILD (v1.13.0) • ▶ JOUER</span>
+        <span class="card-rea-badge">✨ v21.0 AGE-ADAPTIVE REBUILD (v1.14.0) • ▶ JOUER</span>
       </div>
       <p class="portal-desc">Voyage dans le temps (Passé, Présent, Futur) pour conjuguer les verbes en français et en anglais selon le pronom sujet !</p>
       <div class="portal-counts-badge-bar">
@@ -3736,7 +3801,7 @@ body {
           <h3>Studio Prononciation (FR ⇄ EN)</h3>
           <div class="portal-curriculum-tag">Anglais & Français • Micro Live • Spectre</div>
         </div>
-        <span class="card-rea-badge">✨ v20.0 REA-TOP-GAME-REBUILD (v1.13.0) • ▶ JOUER</span>
+        <span class="card-rea-badge">✨ v21.0 AGE-ADAPTIVE REBUILD (v1.14.0) • ▶ JOUER</span>
       </div>
       <p class="portal-desc">Écoute la vraie voix studio française et anglaise, parle dans ton micro pour obtenir ton score de prononciation et suis les billes de rythme !</p>
       <div class="portal-counts-badge-bar">
@@ -3755,7 +3820,7 @@ body {
           <h3>Géographie des Pays d'Afrique</h3>
           <div class="portal-curriculum-tag">Carte SVG Interactive • Drapeaux • Capitales</div>
         </div>
-        <span class="card-rea-badge">✨ v20.0 REA-TOP-GAME-REBUILD (v1.13.0) • ▶ JOUER</span>
+        <span class="card-rea-badge">✨ v21.0 AGE-ADAPTIVE REBUILD (v1.14.0) • ▶ JOUER</span>
       </div>
       <p class="portal-desc">Explore la vraie carte vectorielle interactive des pays d'Afrique ! Touche les pays au doigt, découvre leurs drapeaux, leurs capitales et leurs fleuves !</p>
       <div class="portal-counts-badge-bar">
@@ -3774,7 +3839,7 @@ body {
           <h3>Fun Facts & Culture Générale (QCM)</h3>
           <div class="portal-curriculum-tag">Quiz Choix Multiples • Indice 50/50 • Afrique</div>
         </div>
-        <span class="card-rea-badge">✨ v20.0 REA-TOP-GAME-REBUILD (v1.13.0) • ▶ JOUER</span>
+        <span class="card-rea-badge">✨ v21.0 AGE-ADAPTIVE REBUILD (v1.14.0) • ▶ JOUER</span>
       </div>
       <p class="portal-desc">Réponds aux questions à choix multiples (A, B, C, D) avec l'indice 50/50 sur les merveilles d'Afrique, les animaux, l'espace et les sciences !</p>
       <div class="portal-counts-badge-bar">
@@ -3793,7 +3858,7 @@ body {
           <h3>Compréhension de Texte & Contes</h3>
           <div class="portal-curriculum-tag">Lecture Karaoké FR/EN • Quiz Compréhension</div>
         </div>
-        <span class="card-rea-badge">✨ v20.0 REA-TOP-GAME-REBUILD (v1.13.0) • ▶ JOUER</span>
+        <span class="card-rea-badge">✨ v21.0 AGE-ADAPTIVE REBUILD (v1.14.0) • ▶ JOUER</span>
       </div>
       <p class="portal-desc">Écoute et lis des contes africains et scientifiques bilingues avec surlignage phrase par phrase, puis réponds aux questions de compréhension !</p>
       <div class="portal-counts-badge-bar">
@@ -3812,7 +3877,7 @@ body {
           <h3>Monstre des Syllabes & Lecture</h3>
           <div class="portal-curriculum-tag">Feed The Monster • Voyelles & Consonnes</div>
         </div>
-        <span class="card-rea-badge">✨ v20.0 REA-TOP-GAME-REBUILD (v1.13.0) • ▶ JOUER</span>
+        <span class="card-rea-badge">✨ v21.0 AGE-ADAPTIVE REBUILD (v1.14.0) • ▶ JOUER</span>
       </div>
       <p class="portal-desc">Nourris le Monstre magique avec les bonnes syllabes colorées (voyelles en rouge, consonnes en bleu) pour former des mots en français et en anglais !</p>
       <div class="portal-counts-badge-bar">
@@ -3831,7 +3896,7 @@ body {
           <h3>Maths 3D, Fractions & Balance Algébrique</h3>
           <div class="portal-curriculum-tag">Boîtes de 10 • Disque Fractions • Balance 2x+4</div>
         </div>
-        <span class="card-rea-badge">✨ v20.0 REA-TOP-GAME-REBUILD (v1.13.0) • ▶ JOUER</span>
+        <span class="card-rea-badge">✨ v21.0 AGE-ADAPTIVE REBUILD (v1.14.0) • ▶ JOUER</span>
       </div>
       <p class="portal-desc">Manipule les boîtes de 10, le disque interactif des fractions et la balance algébrique selon ta classe (de la Maternelle au CM2 / Primary 6) !</p>
       <div class="portal-counts-badge-bar">
@@ -3850,7 +3915,7 @@ body {
           <h3>Labo Chimie & Échelle pH</h3>
           <div class="portal-curriculum-tag">Sciences • Réactions • Indicateur pH 0–14</div>
         </div>
-        <span class="card-rea-badge">✨ v20.0 REA-TOP-GAME-REBUILD (v1.13.0) • ▶ JOUER</span>
+        <span class="card-rea-badge">✨ v21.0 AGE-ADAPTIVE REBUILD (v1.14.0) • ▶ JOUER</span>
       </div>
       <p class="portal-desc">Verse les éprouvettes dans l'erlenmeyer, observe l'indicateur de pH en direct, les mélanges de couleurs et l'effervescence des bulles de gaz !</p>
       <div class="portal-counts-badge-bar">
@@ -3869,7 +3934,7 @@ body {
           <h3>Bassin d'Archimède (Flotte/Coule)</h3>
           <div class="portal-curriculum-tag">Physique • Vecteurs Poussée ↑Fa & Poids ↓P</div>
         </div>
-        <span class="card-rea-badge">✨ v20.0 REA-TOP-GAME-REBUILD (v1.13.0) • ▶ JOUER</span>
+        <span class="card-rea-badge">✨ v21.0 AGE-ADAPTIVE REBUILD (v1.14.0) • ▶ JOUER</span>
       </div>
       <p class="portal-desc">Plonge le bois, la mangue, l'or ou la brique dans l'eau et visualise en direct les vecteurs de la poussée d'Archimède (↑Fa) et du poids (↓P) !</p>
       <div class="portal-counts-badge-bar">
@@ -3888,7 +3953,7 @@ body {
           <h3>Circuit Électrique 3D & Oscilloscope</h3>
           <div class="portal-curriculum-tag">Loi d'Ohm (U=R×I) • Électrons & Hélice</div>
         </div>
-        <span class="card-rea-badge">✨ v20.0 REA-TOP-GAME-REBUILD (v1.13.0) • ▶ JOUER</span>
+        <span class="card-rea-badge">✨ v21.0 AGE-ADAPTIVE REBUILD (v1.14.0) • ▶ JOUER</span>
       </div>
       <p class="portal-desc">Ferme l'interrupteur pour observer la circulation des électrons bleus, allumer l'ampoule de 4,5 V et faire tourner l'hélice du moteur électrique !</p>
       <div class="portal-counts-badge-bar">
@@ -3907,7 +3972,7 @@ body {
           <h3>Jardin Botanique & Photosynthèse</h3>
           <div class="portal-curriculum-tag">Biologie • Racines, Tige & Floraison 21 Jours</div>
         </div>
-        <span class="card-rea-badge">✨ v20.0 REA-TOP-GAME-REBUILD (v1.13.0) • ▶ JOUER</span>
+        <span class="card-rea-badge">✨ v21.0 AGE-ADAPTIVE REBUILD (v1.14.0) • ▶ JOUER</span>
       </div>
       <p class="portal-desc">Dose la pluie et le soleil pour faire germer le Baobab, le Tournesol, le Cacaoyer et l'Hibiscus en observant les racines pousser sous terre !</p>
       <div class="portal-counts-badge-bar">
@@ -3926,7 +3991,7 @@ body {
           <h3>Comet Defender : Calcul Spatial</h3>
           <div class="portal-curriculum-tag">TuxMath Arcade • Lasers & Calcul Mental</div>
         </div>
-        <span class="card-rea-badge">✨ v20.0 REA-TOP-GAME-REBUILD (v1.13.0) • ▶ JOUER</span>
+        <span class="card-rea-badge">✨ v21.0 AGE-ADAPTIVE REBUILD (v1.14.0) • ▶ JOUER</span>
       </div>
       <p class="portal-desc">Pilote le vaisseau spatial et tire au laser sur la comète qui porte la bonne réponse à l'équation affichée sur le tableau de bord !</p>
       <div class="portal-counts-badge-bar">
@@ -3945,7 +4010,7 @@ body {
           <h3>Tangram Géométrique Magnétique</h3>
           <div class="portal-curriculum-tag">Mathigon Euclid • Polygones & Silhouettes</div>
         </div>
-        <span class="card-rea-badge">✨ v20.0 REA-TOP-GAME-REBUILD (v1.13.0) • ▶ JOUER</span>
+        <span class="card-rea-badge">✨ v21.0 AGE-ADAPTIVE REBUILD (v1.14.0) • ▶ JOUER</span>
       </div>
       <p class="portal-desc">Assemble la Fusée, le Bateau, le Chat, le Lion et le Papillon en glissant les polygones géométriques avec aimantation de précision !</p>
       <div class="portal-counts-badge-bar">
@@ -3964,7 +4029,7 @@ body {
           <h3>Donjon Labyrinthe 3D (Vue 3D & Raycast)</h3>
           <div class="portal-curriculum-tag">Blockly Maze • Algorithme & Syllabes</div>
         </div>
-        <span class="card-rea-badge">✨ v20.0 REA-TOP-GAME-REBUILD (v1.13.0) • ▶ JOUER</span>
+        <span class="card-rea-badge">✨ v21.0 AGE-ADAPTIVE REBUILD (v1.14.0) • ▶ JOUER</span>
       </div>
       <p class="portal-desc">Guide Léo dans les 5 cartes de la Savane (Oasis, Pyramide, Volcan, Jungle) en collectant les syllabes et nombres d'or ou utilise le bouton Auto-Pas !</p>
       <div class="portal-counts-badge-bar">
@@ -3986,7 +4051,7 @@ body {
         <div class="hud-badge red" id="hud-exercise-badge">🎯 Exercice 1/5 • Niveau 1</div>
       </div>
       <div class="hud-stats">
-        <span class="hud-badge" id="hud-version-pill" style="background:#312E81;color:#FDE047;border:1.5px solid #38BDF8;font-size:0.72rem;padding:4px 8px;">🚀 v20.0 (v1.13.0)</span>
+        <span class="hud-badge" id="hud-version-pill" style="background:#312E81;color:#FDE047;border:1.5px solid #38BDF8;font-size:0.72rem;padding:4px 8px;">🚀 v20.0 (v1.14.0)</span>
         <div class="hud-badge" id="hud-reward-chest" title="Coffre à Récompenses Éducatives (Stickers & Trophées)" style="background:#065F46;color:#FEF08A;border:1.5px solid #34D399;cursor:pointer;">🎁 <span id="hud-sticker-count">1</span> <span id="hud-latest-sticker">🦁</span></div>
         <div class="hud-badge">⭐ <span id="hud-score-val">0</span> XP</div>
         <div class="combo-multiplier" id="hud-combo-badge">🔥 COMBO x1</div>
@@ -14180,6 +14245,321 @@ body {
   // Auto-start Render Loop
   requestAnimationFrame(renderLoop);
 
+  // ============================================================================
+  // V21.0 AGE-ADAPTIVE REDESIGN LAYER (REA TOP-GAME REBUILD)
+  // Khan Academy Kids × Duolingo ABC × Teach Your Monster × Prodigy × Seterra × Kahoot
+  // MAT = 100% picture-first & audio-first (pre-readers) ➜ text scales with grade.
+  // ============================================================================
+  const AGE_PROFILES = {
+    MAT: { cls: 'age-mat',  pictorial: true,  hideTextLen: 14, autoHintAfter: 1, speakRate: 0.68 },
+    SIL: { cls: 'age-sil',  pictorial: true,  hideTextLen: 24, autoHintAfter: 2, speakRate: 0.72 },
+    CP:  { cls: 'age-cp',   pictorial: true,  hideTextLen: 34, autoHintAfter: 2, speakRate: 0.76 },
+    CE:  { cls: 'age-ce',   pictorial: false, hideTextLen: 60, autoHintAfter: 3, speakRate: 0.80 },
+    CE2: { cls: 'age-ce2',  pictorial: false, hideTextLen: 70, autoHintAfter: 3, speakRate: 0.80 },
+    CM1: { cls: 'age-cm1',  pictorial: false, hideTextLen: 90, autoHintAfter: 3, speakRate: 0.84 },
+    CM:  { cls: 'age-cm',   pictorial: false, hideTextLen: 90, autoHintAfter: 3, speakRate: 0.84 }
+  };
+  function currentAgeProfile() { return AGE_PROFILES[state.grade] || AGE_PROFILES.MAT; }
+
+  const UX_EMOJI_RE = /\p{Extended_Pictographic}(?:️|‍\p{Extended_Pictographic})*/gu;
+
+  function applyAgeProfile(gradeCode) {
+    const prof = AGE_PROFILES[gradeCode] || AGE_PROFILES.MAT;
+    Object.values(AGE_PROFILES).forEach(p => document.body.classList.remove(p.cls));
+    document.body.classList.add(prof.cls);
+    renderMasteryBadges();
+  }
+
+  // --- Universal pictorial answer decorator (applies to ALL 22 games) ---
+  const UX_BTN_SELECTOR = [
+    '#answers-container button',
+    '#funfact-mcq-grid button',
+    '#lang-quest-options button',
+    '#geo-options-grid button',
+    '.comprehension-options-grid button'
+  ].join(', ');
+
+  let uxDecorating = false;
+  function uxCleanLabel(btn) {
+    let t = '';
+    btn.childNodes.forEach(n => {
+      if (n.nodeType === 3) t += n.textContent;
+      else if (n.nodeType === 1 && !n.classList.contains('choice-speaker-chip') && !n.classList.contains('ux-pict')) t += n.textContent;
+    });
+    return t.replace(/🔊/g, '').trim();
+  }
+
+  function decorateAnswerButtons() {
+    if (uxDecorating) return;
+    uxDecorating = true;
+    try {
+      const prof = currentAgeProfile();
+      document.querySelectorAll(UX_BTN_SELECTOR).forEach(btn => {
+        if (btn.classList.contains('ux-aged') || btn.dataset.uxSkip === '1') return;
+        const label = uxCleanLabel(btn);
+        if (!label) { btn.classList.add('ux-aged'); return; }
+        btn.classList.add('ux-aged');
+
+        // 1. Ensure the label lives in a .ux-label span
+        const chip = btn.querySelector('.choice-speaker-chip');
+        let labelSpan = null;
+        for (const el of Array.from(btn.children)) {
+          if (el !== chip && el.tagName === 'SPAN' && !el.classList.contains('ux-pict') && !el.classList.contains('choice-speaker-chip')) { labelSpan = el; break; }
+        }
+        if (!labelSpan) {
+          labelSpan = document.createElement('span');
+          labelSpan.textContent = label;
+          const keep = chip ? chip : null;
+          Array.from(btn.childNodes).forEach(n => { if (n !== keep) btn.removeChild(n); });
+          btn.insertBefore(labelSpan, btn.firstChild);
+        }
+        labelSpan.classList.add('ux-label');
+
+        // 2. Visual-match guarantee: big picture that MATCHES the answer text
+        const emojiMatches = label.match(UX_EMOJI_RE);
+        let pictEmoji = emojiMatches ? emojiMatches[0] : null;
+        if (!pictEmoji) {
+          const ico = resolveCartoonIcon(label);
+          if (ico) pictEmoji = ico;
+        }
+        if (pictEmoji && !btn.querySelector('.ux-pict')) {
+          const p = document.createElement('span');
+          p.className = 'ux-pict';
+          p.setAttribute('aria-hidden', 'true');
+          p.textContent = pictEmoji;
+          btn.insertBefore(p, btn.firstChild);
+          // Avoid double emoji: strip the same leading emoji from the label text
+          if (emojiMatches && labelSpan.textContent.trim().startsWith(pictEmoji)) {
+            labelSpan.textContent = labelSpan.textContent.trim().slice(pictEmoji.length).trim() || labelSpan.textContent.trim();
+          }
+        }
+
+        // 3. Pre-reader law: long text gets dimmed to caption size (MAT/SIL/CP)
+        const plainLen = label.replace(UX_EMOJI_RE, '').trim().length;
+        if (plainLen > prof.hideTextLen) btn.classList.add('ux-longtext');
+
+        // 4. Khan-Kids law: every choice is tap-to-hear
+        if (!chip) {
+          const spk = document.createElement('span');
+          spk.className = 'choice-speaker-chip';
+          spk.title = state.lang === 'en' ? 'Listen' : 'Écouter';
+          spk.textContent = '🔊';
+          spk.addEventListener('click', ev => {
+            ev.stopPropagation();
+            VoiceEngine.speak(label.replace(UX_EMOJI_RE, '').trim() || label);
+          });
+          btn.appendChild(spk);
+        }
+      });
+    } finally { uxDecorating = false; }
+  }
+
+  let uxDecorateQueued = false;
+  const uxObserver = new MutationObserver(() => {
+    if (uxDecorating || uxDecorateQueued) return;
+    uxDecorateQueued = true;
+    requestAnimationFrame(() => { uxDecorateQueued = false; decorateAnswerButtons(); });
+  });
+  uxObserver.observe(document.body, { childList: true, subtree: true });
+
+  // --- Narration logger + per-age speech rate (Khan Kids slow narration at MAT) ---
+  window.__NATEIVA_SPEECH_LOG__ = [];
+  window.__NATEIVA_SPEECH_COUNT__ = 0;
+  const _uxOrigSpeak = VoiceEngine.speak.bind(VoiceEngine);
+  VoiceEngine.speak = function (text, onEnded, rate) {
+    const t = String(text == null ? '' : text);
+    window.__NATEIVA_SPEECH_COUNT__++;
+    window.__NATEIVA_SPEECH_LOG__.push(t.slice(0, 180));
+    if (window.__NATEIVA_SPEECH_LOG__.length > 500) window.__NATEIVA_SPEECH_LOG__.shift();
+    return _uxOrigSpeak(text, onEnded, (rate == null ? currentAgeProfile().speakRate : rate));
+  };
+
+  // --- Prodigy/Khan tutor escalation: misses trigger slow re-narration + coach pulse ---
+  const _uxOrigPlayWrong = AudioEngine.playWrong.bind(AudioEngine);
+  AudioEngine.playWrong = function () {
+    _uxOrigPlayWrong();
+    state.missStreak = (state.missStreak || 0) + 1;
+    const prof = currentAgeProfile();
+    if (state.missStreak >= prof.autoHintAfter) {
+      state.missStreak = 0;
+      const promptText = $('instruction-title') ? $('instruction-title').textContent : '';
+      if (promptText) {
+        setTimeout(() => {
+          VoiceEngine.speak((state.lang === 'en' ? 'Listen carefully! ' : 'Écoute bien ! ') + promptText, null, Math.max(0.58, prof.speakRate - 0.08));
+        }, 1100);
+      }
+      const coach = $('khan-visual-explainer');
+      if (coach) {
+        coach.classList.add('active', 'ux-coach-pulse');
+        setTimeout(() => coach.classList.remove('ux-coach-pulse'), 4200);
+      }
+    }
+  };
+
+  // --- Persistent Sticker Book (TYMTR "Trickies" × Prodigy pets collection) ---
+  const UX_STICKERS = [
+    { id: 'lion', em: '🦁', fr: 'Lion', en: 'Lion' }, { id: 'elephant', em: '🐘', fr: 'Éléphant', en: 'Elephant' },
+    { id: 'giraffe', em: '🦒', fr: 'Girafe', en: 'Giraffe' }, { id: 'zebra', em: '🦓', fr: 'Zèbre', en: 'Zebra' },
+    { id: 'hippo', em: '🦛', fr: 'Hippopotame', en: 'Hippo' }, { id: 'rhino', em: '🦏', fr: 'Rhinocéros', en: 'Rhino' },
+    { id: 'croc', em: '🐊', fr: 'Crocodile', en: 'Crocodile' }, { id: 'monkey', em: '🐵', fr: 'Singe Kiki', en: 'Kiki Monkey' },
+    { id: 'parrot', em: '🦜', fr: 'Perroquet', en: 'Parrot' }, { id: 'flamingo', em: '🦩', fr: 'Flamant Rose', en: 'Flamingo' },
+    { id: 'turtle', em: '🐢', fr: 'Tortue', en: 'Turtle' }, { id: 'butterfly', em: '🦋', fr: 'Papillon', en: 'Butterfly' },
+    { id: 'eagle', em: '🦅', fr: 'Aigle', en: 'Eagle' }, { id: 'leopard', em: '🐆', fr: 'Léopard', en: 'Leopard' },
+    { id: 'gorilla', em: '🦍', fr: 'Gorille', en: 'Gorilla' }, { id: 'camel', em: '🐪', fr: 'Dromadaire', en: 'Camel' },
+    { id: 'baobab', em: '🌳', fr: 'Baobab', en: 'Baobab' }, { id: 'drum', em: '🥁', fr: 'Tam-Tam', en: 'Drum' },
+    { id: 'star', em: '🌟', fr: 'Super Étoile', en: 'Super Star' }, { id: 'rocket', em: '🚀', fr: 'Fusée', en: 'Rocket' },
+    { id: 'crown', em: '👑', fr: 'Couronne Royale', en: 'Royal Crown' }, { id: 'diamond', em: '💎', fr: 'Diamant', en: 'Diamond' },
+    { id: 'medal', em: '🏅', fr: 'Médaille d\'Or', en: 'Gold Medal' }, { id: 'trophy', em: '🏆', fr: 'Coupe d\'Afrique', en: 'Africa Cup' }
+  ];
+  const StickerBook = {
+    load() {
+      try { return JSON.parse(localStorage.getItem('nateiva_sticker_book_v1') || '[]'); } catch (e) { return []; }
+    },
+    save(arr) { try { localStorage.setItem('nateiva_sticker_book_v1', JSON.stringify(arr)); } catch (e) {} },
+    progress() { return parseInt(localStorage.getItem('nateiva_sticker_prog_v1') || '0', 10) || 0; },
+    onActivityCompleted() {
+      const prog = this.progress() + 1;
+      try { localStorage.setItem('nateiva_sticker_prog_v1', String(prog)); } catch (e) {}
+      if (prog % 3 === 0) {
+        const owned = this.load();
+        const next = UX_STICKERS.find(s => owned.indexOf(s.id) === -1);
+        if (next) {
+          owned.push(next.id);
+          this.save(owned);
+          this.showUnlockPopup(next);
+        }
+      }
+      this.updateFab();
+    },
+    showUnlockPopup(sticker) {
+      const isEn = state.lang === 'en';
+      let pop = $('ux-sticker-popup');
+      if (!pop) {
+        pop = document.createElement('div');
+        pop.id = 'ux-sticker-popup';
+        document.body.appendChild(pop);
+      }
+      pop.innerHTML = '<span class="em">' + sticker.em + '</span><div class="ttl">' +
+        (isEn ? '🎁 NEW STICKER: ' + sticker.en + '!' : '🎁 NOUVEAU STICKER : ' + sticker.fr + ' !') + '</div>';
+      pop.classList.add('active');
+      spawn3DConfettiBurst();
+      VoiceEngine.speak(isEn ? ('Amazing! You earned the ' + sticker.en + ' sticker!') : ('Bravo ! Tu as gagné le sticker ' + sticker.fr + ' !'));
+      setTimeout(() => pop.classList.remove('active'), 3200);
+      pop.onclick = () => pop.classList.remove('active');
+    },
+    updateFab() {
+      const fab = $('ux-sticker-fab');
+      if (fab) {
+        const n = this.load().length;
+        fab.innerHTML = '🎖️ <span>' + n + '/' + UX_STICKERS.length + '</span>';
+        if ($('hud-sticker-count')) $('hud-sticker-count').textContent = String(n);
+      }
+    },
+    buildUI() {
+      if ($('ux-sticker-fab')) return;
+      const fab = document.createElement('button');
+      fab.id = 'ux-sticker-fab';
+      fab.title = state.lang === 'en' ? 'My Sticker Collection' : 'Ma Collection de Stickers';
+      fab.addEventListener('click', () => this.openModal());
+      document.body.appendChild(fab);
+      const modal = document.createElement('div');
+      modal.id = 'ux-sticker-modal';
+      modal.innerHTML = '<div class="ux-sticker-panel"><h3 style="margin:0;">🎖️ ' +
+        (state.lang === 'en' ? 'My Sticker Collection' : 'Ma Collection de Stickers') +
+        '</h3><p style="margin:6px 0 0;font-size:0.85rem;color:#64748B;" id="ux-sticker-sub"></p><div class="ux-sticker-grid" id="ux-sticker-grid"></div>' +
+        '<button class="btn-interactive" data-ux-skip="1" id="ux-sticker-close" style="margin-top:16px;">✖️ Fermer / Close</button></div>';
+      document.body.appendChild(modal);
+      modal.addEventListener('click', ev => { if (ev.target === modal) modal.classList.remove('active'); });
+      $('ux-sticker-close').addEventListener('click', () => modal.classList.remove('active'));
+      this.updateFab();
+    },
+    openModal() {
+      const isEn = state.lang === 'en';
+      const owned = this.load();
+      const grid = $('ux-sticker-grid');
+      if (!grid) return;
+      grid.innerHTML = '';
+      UX_STICKERS.forEach(s => {
+        const cell = document.createElement('div');
+        const has = owned.indexOf(s.id) !== -1;
+        cell.className = 'ux-sticker-cell ' + (has ? 'unlocked' : 'locked');
+        cell.innerHTML = '<span class="em">' + s.em + '</span><span class="nm">' + (has ? (isEn ? s.en : s.fr) : '???') + '</span>';
+        grid.appendChild(cell);
+      });
+      if ($('ux-sticker-sub')) {
+        $('ux-sticker-sub').textContent = isEn
+          ? ('Complete 3 activities to earn each new sticker! (' + owned.length + '/' + UX_STICKERS.length + ')')
+          : ('Réussis 3 activités pour gagner chaque nouveau sticker ! (' + owned.length + '/' + UX_STICKERS.length + ')');
+      }
+      $('ux-sticker-modal').classList.add('active');
+      AudioEngine.playSnap();
+    }
+  };
+
+  // --- Per-game × per-class Mastery Stars on portal cards (Seterra/Prodigy law) ---
+  function uxLoadMastery() {
+    try { return JSON.parse(localStorage.getItem('nateiva_mastery_v1') || '{}'); } catch (e) { return {}; }
+  }
+  function uxBumpMastery() {
+    const m = uxLoadMastery();
+    const key = state.game + '_' + state.grade;
+    m[key] = (m[key] || 0) + 1;
+    try { localStorage.setItem('nateiva_mastery_v1', JSON.stringify(m)); } catch (e) {}
+    renderMasteryBadges();
+  }
+  function renderMasteryBadges() {
+    const m = uxLoadMastery();
+    document.querySelectorAll('.portal-card[data-game]').forEach(card => {
+      const key = card.getAttribute('data-game') + '_' + state.grade;
+      const n = m[key] || 0;
+      const stars = n >= 18 ? '★★★' : (n >= 9 ? '★★☆' : (n >= 3 ? '★☆☆' : '☆☆☆'));
+      let badge = card.querySelector('.ux-mastery');
+      if (!badge) {
+        badge = document.createElement('span');
+        badge.className = 'ux-mastery';
+        card.appendChild(badge);
+      }
+      badge.textContent = stars;
+      badge.title = (state.lang === 'en' ? 'Mastery for this class: ' : 'Maîtrise pour cette classe : ') + n;
+    });
+  }
+
+  // --- Hook success + grade-change into the redesign layer ---
+  const _uxOrigCompleted = onActivityTaskCompleted;
+  onActivityTaskCompleted = function () {
+    state.missStreak = 0;
+    uxBumpMastery();
+    StickerBook.onActivityCompleted();
+    _uxOrigCompleted();
+  };
+  window.__NATEIVA_COMPLETE_ACTIVITY__ = onActivityTaskCompleted;
+
+  const _uxOrigSelectGrade = selectGradeClass;
+  selectGradeClass = function (gradeCode, speakAnnouncement = true) {
+    _uxOrigSelectGrade(gradeCode, speakAnnouncement);
+    applyAgeProfile(gradeCode);
+    decorateAnswerButtons();
+  };
+  window.__NATEIVA_SELECT_CLASS__ = selectGradeClass;
+
+  // --- Initialize the layer ---
+  applyAgeProfile(state.grade);
+  StickerBook.buildUI();
+  decorateAnswerButtons();
+  renderMasteryBadges();
+
+  window.__NATEIVA_AGEUX__ = {
+    profiles: AGE_PROFILES,
+    apply: applyAgeProfile,
+    decorate: decorateAnswerButtons,
+    stickers: UX_STICKERS,
+    stickerBook: StickerBook,
+    mastery: uxLoadMastery,
+    resolveIcon: resolveCartoonIcon,
+    cleanLabel: uxCleanLabel
+  };
+  window.__NATEIVA_DB__ = DB;
+
   // Expose state & APIs for test automation
   window.state = state;
   window.__NATEIVA_STATE__ = state;
@@ -14188,7 +14568,7 @@ body {
   window.__NATEIVA_SELECT_LEVEL__ = onSelectLevel;
   window.__NATEIVA_COMPLETE_ACTIVITY__ = onActivityTaskCompleted;
 
-  console.log("[Nateiva] Level-First Educational Arcade & Flotation Suite Initialized.");
+  console.log("[Nateiva] V21.0 Age-Adaptive Level-First Educational Arcade Initialized (MAT picture-first ➜ CM2 text-forward).");
 })();
 </script>
 </body>
