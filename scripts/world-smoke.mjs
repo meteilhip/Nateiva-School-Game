@@ -31,7 +31,7 @@ const d = window.document;
   const W = window.__WORLD__;
   if (!W) { console.log('FATAL: world did not boot'); errs.forEach(e => console.log(' ✗ ' + e)); process.exit(1); }
   if (!d.querySelector('#scene-map svg')) errs.push('MAP: no svg built');
-  if (d.querySelectorAll('#scene-map .station').length !== 8) errs.push('MAP: expected 8 stations');
+  if (d.querySelectorAll('#scene-map .station').length !== 12) errs.push('MAP: expected 12 stations');
   for (const grade of [0, 2, 6]) {
     W.save.grade = grade;
     for (const z of W.ZONES) {
@@ -49,7 +49,7 @@ const d = window.document;
   }
   // theatre needs longer (timed narration) — let timers run briefly at g0
   W.save.grade = 0; W.enterZone('theatre'); await sleep(400);
-  console.log(errs.length ? `WORLD SMOKE: ${errs.length} issues` : 'WORLD SMOKE: ALL CLEAR ✅ (8 zones × 3 grades)');
+  console.log(errs.length ? `WORLD SMOKE: ${errs.length} issues` : 'WORLD SMOKE: ALL CLEAR ✅ (' + W.ZONES.length + ' zones × 3 grades)');
   errs.forEach(e => console.log(' ✗ ' + e.slice(0, 220)));
   process.exit(errs.length ? 1 : 0);
 })();

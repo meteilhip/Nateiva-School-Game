@@ -100,8 +100,9 @@ html,body{ width:100%; height:100%; overflow:hidden; font-family:'Baloo 2','Fred
 .grab{ cursor:grab; } .grabbing{ cursor:grabbing; }
 
 /* Map stations */
-.station{ cursor:pointer; transition:transform 0.25s cubic-bezier(0.34,1.56,0.64,1); transform-box:fill-box; transform-origin:center; }
-.station:hover{ transform:scale(1.12); }
+.station{ cursor:pointer; }
+.station:hover .st-ring-main{ stroke-width:11; filter:brightness(1.06); }
+.station:hover .st-pill{ filter:brightness(1.12); }
 .station .ring{ animation:bob 2.6s ease-in-out infinite; transform-box:fill-box; transform-origin:center; }
 #back-home-float{ position:absolute; bottom:14px; right:14px; z-index:40; }
 .hbtn.search{ background:linear-gradient(145deg,#2EC4B6,#1B9C8F); }
@@ -472,30 +473,42 @@ function updateStarPill() {
 
 /* ================= WORLD MAP (the island) ================= */
 const ZONES = [
-  { key: 'bubbles', fr: 'Lagune aux Bulles', en: 'Bubble Lagoon', color: '#4CC9F0', mx: 320, my: 700, px: 230, py: 1150,
+  { key: 'bubbles', fr: 'Lagune aux Bulles', en: 'Bubble Lagoon', color: '#4CC9F0', mx: 250, my: 620, px: 235, py: 1270,
     subject: { fr: 'MATHS', en: 'MATH', color: '#FF9F1C' },
     topics: ['maths', 'math', 'compter', 'counting', 'nombres', 'numbers', 'addition', 'somme', 'sums', 'calcul', 'compléments', 'bonds'] },
-  { key: 'orchard', fr: 'Verger de Momo', en: "Momo's Orchard", color: '#FF9F1C', mx: 580, my: 560, px: 560, py: 1060,
+  { key: 'orchard', fr: 'Verger de Momo', en: "Momo's Orchard", color: '#FF9F1C', mx: 450, my: 520, px: 575, py: 1175,
     subject: { fr: 'MATHS', en: 'MATH', color: '#FF9F1C' },
     topics: ['maths', 'math', 'addition', 'multiplication', 'division', 'partage', 'share', 'times', 'tables', 'calcul', 'opérations', 'operations', 'multiplier', 'diviser'] },
-  { key: 'river', fr: 'Rivière de Fela', en: "Fela's River", color: '#57CC57', mx: 420, my: 420, px: 240, py: 890,
+  { key: 'river', fr: 'Rivière de Fela', en: "Fela's River", color: '#57CC57', mx: 330, my: 390, px: 235, py: 1080,
     subject: { fr: 'LECTURE & SONS', en: 'READING & PHONICS', color: '#4CC9F0' },
     topics: ['lecture', 'reading', 'syllabes', 'syllables', 'sons', 'sounds', 'phonics', 'lettres', 'letters', 'mots', 'words', 'français', 'french', 'anglais', 'english', 'prononciation', 'pronunciation'] },
-  { key: 'paint', fr: 'Studio de Zara', en: "Zara's Studio", color: '#9B5DE5', mx: 700, my: 330, px: 585, py: 760,
+  { key: 'paint', fr: 'Studio de Zara', en: "Zara's Studio", color: '#9B5DE5', mx: 540, my: 310, px: 575, py: 985,
     subject: { fr: 'FORMES & COULEURS', en: 'SHAPES & COLORS', color: '#9B5DE5' },
     topics: ['formes', 'shapes', 'couleurs', 'colors', 'géométrie', 'geometry', 'triangle', 'cercle', 'circle', 'carré', 'square', 'vocabulaire', 'vocabulary', 'corps', 'body', 'art'] },
-  { key: 'splash', fr: 'Lagon Splash', en: 'Splash Lagoon', color: '#1C7ED6', mx: 1000, my: 250, px: 255, py: 620,
+  { key: 'splash', fr: 'Lagon Splash', en: 'Splash Lagoon', color: '#1C7ED6', mx: 960, my: 310, px: 575, py: 795,
     subject: { fr: 'SCIENCES', en: 'SCIENCE', color: '#2EC4B6' },
     topics: ['sciences', 'science', 'flotte', 'coule', 'float', 'sink', 'densité', 'density', 'archimède', 'archimedes', 'eau', 'water', 'physique', 'physics', 'expérience', 'experiment'] },
-  { key: 'garden', fr: 'Jardin de Nana', en: "Nana's Garden", color: '#3FA34D', mx: 1210, my: 400, px: 590, py: 490,
+  { key: 'garden', fr: 'Jardin de Nana', en: "Nana's Garden", color: '#3FA34D', mx: 1170, my: 390, px: 235, py: 700,
     subject: { fr: 'SCIENCES', en: 'SCIENCE', color: '#2EC4B6' },
     topics: ['sciences', 'science', 'plantes', 'plants', 'jardin', 'garden', 'photosynthèse', 'photosynthesis', 'germination', 'nature', 'biologie', 'biology', 'eau', 'soleil', 'sun'] },
-  { key: 'safari', fr: 'Safari Ballon', en: 'Balloon Safari', color: '#E5252A', mx: 1080, my: 580, px: 290, py: 360,
+  { key: 'safari', fr: 'Safari Ballon', en: 'Balloon Safari', color: '#E5252A', mx: 1130, my: 620, px: 235, py: 510,
     subject: { fr: 'GÉOGRAPHIE', en: 'GEOGRAPHY', color: '#E5252A' },
     topics: ['géographie', 'geography', 'pays', 'countries', 'afrique', 'africa', 'capitales', 'capitals', 'drapeaux', 'flags', 'cartes', 'maps', 'monde', 'world', 'cameroun', 'cameroon'] },
-  { key: 'theatre', fr: 'Théâtre Kalulu', en: 'Kalulu Theatre', color: '#F25CA2', mx: 820, my: 700, px: 555, py: 235,
+  { key: 'theatre', fr: 'Théâtre Kalulu', en: 'Kalulu Theatre', color: '#F25CA2', mx: 730, my: 650, px: 575, py: 415,
     subject: { fr: 'COMPRÉHENSION', en: 'COMPREHENSION', color: '#F25CA2' },
-    topics: ['compréhension', 'comprehension', 'histoires', 'stories', 'contes', 'tales', 'écouter', 'listening', 'trivia', 'questions', 'fables', 'lecture', 'reading'] }
+    topics: ['compréhension', 'comprehension', 'histoires', 'stories', 'contes', 'tales', 'écouter', 'listening', 'trivia', 'questions', 'fables', 'lecture', 'reading'] },
+  { key: 'builder', fr: 'Chantier de Tibo', en: "Tibo's Building Site", color: '#B4654A', mx: 750, my: 285, px: 235, py: 320,
+    subject: { fr: 'CONSTRUCTION', en: 'BUILDING', color: '#B4654A' },
+    topics: ['construction', 'building', 'build', 'bâtir', 'maison', 'house', 'pont', 'bridge', 'fusée', 'rocket', 'blocs', 'blocks', 'ingénieur', 'engineer', 'projet', 'project', 'chantier', 'robot', 'bateau', 'boat'] },
+  { key: 'seek', fr: 'Cherche & Trouve', en: 'Seek & Find', color: '#FFB703', mx: 1280, my: 520, px: 575, py: 605,
+    subject: { fr: 'OBSERVATION', en: 'OBSERVATION', color: '#F3A712' },
+    topics: ['observation', 'chercher', 'cherche', 'search', 'trouve', 'find', 'seek', 'caché', 'hidden', 'papillon', 'butterfly', 'attention', 'regarder', 'look'] },
+  { key: 'words', fr: 'Fabrique de Mots', en: 'Word Factory', color: '#06B6D4', mx: 950, my: 650, px: 575, py: 225,
+    subject: { fr: 'MOTS & LETTRES', en: 'WORDS & LETTERS', color: '#06B6D4' },
+    topics: ['mots', 'words', 'lettres', 'letters', 'orthographe', 'spelling', 'écrire', 'write', 'writing', 'alphabet', 'word game', 'jeu de mots', 'vocabulaire', 'vocabulary', 'épeler', 'spell'] },
+  { key: 'create', fr: 'Atelier Magique', en: 'Magic Workshop', color: '#FF6FB5', mx: 520, my: 650, px: 300, py: 215,
+    subject: { fr: 'CRÉATION', en: 'CREATION', color: '#FF6FB5' },
+    topics: ['création', 'creation', 'créer', 'create', 'art', 'dessin', 'drawing', 'imagination', 'atelier', 'studio', 'tableau', 'picture', 'inventer', 'invent', 'libre', 'free'] }
 ];
 // Concept & trick coaching per zone — harder classes get real strategies (Astuces)
 const TRICKS = {
@@ -516,7 +529,14 @@ const TRICKS = {
   safari: d => d <= 2 ? ['Astuce : regarde le drapeau, puis cherche sur la carte sans te presser !', 'Trick: look at the flag, then search the map calmly!']
     : ['Astuce : repère d\u2019abord la région : le Maroc est au Nord, le Kenya à l\u2019Est, l\u2019Afrique du Sud tout en bas !', 'Trick: find the region first: Morocco is in the North, Kenya in the East, South Africa at the very bottom!'],
   theatre: d => d <= 2 ? ['Astuce : regarde bien QUI fait QUOI dans le spectacle !', 'Trick: watch closely WHO does WHAT in the show!']
-    : ['Astuce : retiens le héros, son problème et la solution : c\u2019est le squelette de toutes les histoires !', 'Trick: remember the hero, the problem and the solution: that is the skeleton of every story!']
+    : ['Astuce : retiens le héros, son problème et la solution : c\u2019est le squelette de toutes les histoires !', 'Trick: remember the hero, the problem and the solution: that is the skeleton of every story!'],
+  builder: d => d <= 2 ? ['Astuce de chantier : commence toujours par la base, comme un vrai maçon !', 'Builder trick: always start with the base, like a real builder!']
+    : ['Astuce d\u2019ingénieur : regarde le plan, compte les pièces de chaque forme, puis construis de bas en haut !', 'Engineer trick: read the blueprint, count the pieces of each shape, then build from the bottom up!'],
+  seek: d => d <= 2 ? ['Astuce : balaye la scène avec tes yeux, de gauche à droite, comme pour lire !', 'Trick: sweep the scene with your eyes, left to right, like reading!']
+    : ['Astuce de détective : avance case par case et compte ce que tu as déjà trouvé pour ne rien oublier !', 'Detective trick: scan square by square and count what you found so you miss nothing!'],
+  words: d => d <= 2 ? ['Astuce : dis le mot à voix haute et écoute le premier son !', 'Trick: say the word out loud and listen for the first sound!']
+    : ['Astuce : découpe le mot en syllabes et écris-les une par une : MAI-SON !', 'Trick: break the word into syllables and spell them one at a time!'],
+  create: () => ['Astuce d\u2019artiste : en création, il n\u2019y a pas d\u2019erreur, seulement des idées ! Raconte ton tableau à la fin.', 'Artist trick: in creation there are no mistakes, only ideas! Tell the story of your picture at the end.']
 };
 // tiny drawn icon per zone for its medallion
 const ZONE_ICONS = {
@@ -527,7 +547,11 @@ const ZONE_ICONS = {
   splash: g => { S('path', { d: 'M 0 -16 Q 12 0 12 8 A 12 12 0 1 1 -12 8 Q -12 0 0 -16 Z', fill: '#4CC9F0', stroke: '#1C7ED6', 'stroke-width': 2 }, g); },
   garden: g => { S('rect', { x: -3, y: -2, width: 6, height: 18, rx: 3, fill: '#3FA34D' }, g); [0, 72, 144, 216, 288].forEach(a => S('ellipse', { cx: 0, cy: -10, rx: 6, ry: 10, fill: '#FF9BC0', transform: `rotate(${a} 0 -4)` }, g)); S('circle', { cx: 0, cy: -4, r: 5, fill: '#FFD23F' }, g); },
   safari: g => { S('path', { d: 'M 0 -18 A 15 16 0 1 1 -0.1 -18 Z', fill: '#FF4D57' }, g); S('path', { d: 'M -15 -4 Q 0 6 15 -4 L 6 10 L -6 10 Z', fill: '#E5252A' }, g); S('rect', { x: -6, y: 10, width: 12, height: 8, rx: 2, fill: '#8A5A33' }, g); },
-  theatre: g => { S('path', { d: 'M -16 -12 Q 0 -2 16 -12 L 16 14 Q 0 20 -16 14 Z', fill: '#F25CA2' }, g); S('circle', { cx: -6, cy: 2, r: 3, fill: '#fff' }, g); S('circle', { cx: 6, cy: 2, r: 3, fill: '#fff' }, g); S('path', { d: 'M -6 9 Q 0 13 6 9', stroke: '#fff', 'stroke-width': 2.4, fill: 'none', 'stroke-linecap': 'round' }, g); }
+  theatre: g => { S('path', { d: 'M -16 -12 Q 0 -2 16 -12 L 16 14 Q 0 20 -16 14 Z', fill: '#F25CA2' }, g); S('circle', { cx: -6, cy: 2, r: 3, fill: '#fff' }, g); S('circle', { cx: 6, cy: 2, r: 3, fill: '#fff' }, g); S('path', { d: 'M -6 9 Q 0 13 6 9', stroke: '#fff', 'stroke-width': 2.4, fill: 'none', 'stroke-linecap': 'round' }, g); },
+  builder: g => { S('rect', { x: -14, y: -2, width: 28, height: 20, rx: 3, fill: '#F2C078', stroke: '#B4654A', 'stroke-width': 2.5 }, g); S('path', { d: 'M -18 -2 L 0 -20 L 18 -2 Z', fill: '#E5252A' }, g); S('rect', { x: -4, y: 7, width: 8, height: 11, fill: '#8A5A33' }, g); },
+  seek: g => { S('circle', { cx: -4, cy: -4, r: 11, fill: 'none', stroke: '#F3A712', 'stroke-width': 4 }, g); S('path', { d: 'M 4 4 L 15 15', stroke: '#F3A712', 'stroke-width': 5, 'stroke-linecap': 'round' }, g); S('path', { d: 'M -8 -6 Q -4 -12 0 -6 Q -4 0 -8 -6 Z M 0 -6 Q 4 -12 8 -6 Q 4 0 0 -6 Z', fill: '#9B5DE5', transform: 'scale(0.7) translate(-5,-4)' }, g); },
+  words: g => { [['A', -10, -8, '#FF4D57'], ['B', 10, -8, '#4CC9F0'], ['C', 0, 10, '#57CC57']].forEach(([L, x, y, c]) => { S('rect', { x: x - 9, y: y - 9, width: 18, height: 18, rx: 4, fill: '#fff', stroke: c, 'stroke-width': 2.5 }, g); S('text', { x, y: y + 5.5, 'text-anchor': 'middle', 'font-size': 13, 'font-weight': 800, fill: c, 'font-family': 'inherit', text: L }, g); }); },
+  create: g => { S('path', { d: 'M -2 16 Q -18 16 -16 0 Q -15 -14 0 -16 Q 16 -17 16 -4 Q 16 4 8 4 Q 0 4 2 10 Q 3 16 -2 16 Z', fill: '#fff', stroke: '#FF6FB5', 'stroke-width': 2.5 }, g); [['#FF4D57', -8, -7], ['#4CC9F0', 1, -10], ['#FFD23F', 9, -3], ['#57CC57', -9, 3]].forEach(([c, x, y]) => S('circle', { cx: x, cy: y, r: 3.2, fill: c }, g)); }
 };
 let leoMapAvatar = null;
 function buildMap() {
@@ -580,15 +604,15 @@ function buildMap() {
     const st = S('g', { class: 'station', transform: `translate(${ZX(z)},${ZY(z)})` }, svg);
     const ring = S('g', { class: 'ring' }, st);
     S('circle', { cx: 0, cy: 6, r: 50, fill: 'rgba(0,0,0,0.14)' }, ring);
-    S('circle', { cx: 0, cy: 0, r: 50, fill: '#fff', stroke: z.color, 'stroke-width': 7 }, ring);
+    S('circle', { cx: 0, cy: 0, r: 50, fill: '#fff', stroke: z.color, 'stroke-width': 7, class: 'st-ring-main' }, ring);
     const icg = S('g', {}, ring); (ZONE_ICONS[z.key] || (() => {}))(icg);
     const starRow = S('g', { transform: 'translate(-33,46)' }, ring);
     for (let i = 0; i < 3; i++) { const sg2 = S('g', { transform: `translate(${i * 24},0)` }, starRow); drawStarIcon(sg2, 0.95, (save.stars[z.key] || 0) > i ? '#FFD23F' : '#E6E9F5'); }
     // subject pill (kids always know the school subject)
     const subW = Math.max(118, T(z.subject.fr, z.subject.en).length * 11 + 26);
-    S('rect', { x: -subW / 2, y: 70, width: subW, height: 30, rx: 15, fill: z.subject.color, stroke: '#fff', 'stroke-width': 3 }, st);
-    S('text', { x: 0, y: 91, 'text-anchor': 'middle', 'font-size': 15.5, 'font-weight': 800, fill: '#fff', 'font-family': 'inherit', text: T(z.subject.fr, z.subject.en) }, st);
-    S('text', { x: 0, y: 124, 'text-anchor': 'middle', 'font-size': 19, 'font-weight': 800, fill: '#2B2D42', 'font-family': 'inherit', text: T(z.fr, z.en) }, st);
+    S('rect', { x: -subW / 2, y: 64, width: subW, height: 28, rx: 14, fill: z.subject.color, stroke: '#fff', 'stroke-width': 3, class: 'st-pill' }, st);
+    S('text', { x: 0, y: 84, 'text-anchor': 'middle', 'font-size': 15, 'font-weight': 800, fill: '#fff', 'font-family': 'inherit', text: T(z.subject.fr, z.subject.en) }, st);
+    S('text', { x: 0, y: 114, 'text-anchor': 'middle', 'font-size': 18, 'font-weight': 800, fill: '#2B2D42', 'font-family': 'inherit', text: T(z.fr, z.en) }, st);
     st.addEventListener('click', () => { sfx.boing(); enterZone(z.key); });
   });
   leoMapAvatar = drawLeo(svg, ZX(ZONES[0]), ZY(ZONES[0]) - 92, 0.62);
@@ -1489,6 +1513,401 @@ ZONE_BUILDERS.theatre = function (host) {
     setTimeout(() => { openCurtains(); setTimeout(playLine, 1000); }, 600);
   }
   nextRound();
+};
+
+
+/* ================= Z9 — CHANTIER DE TIBO (building projects) ================= */
+ZONE_BUILDERS.builder = function (host) {
+  const svg = S('svg', { class: 'stage', viewBox: '0 0 1500 850', preserveAspectRatio: (innerWidth >= innerHeight * 1.02 ? 'xMidYMid slice' : 'xMidYMid meet') }, host);
+  gradDefs(svg);
+  S('rect', { width: 1500, height: 620, fill: 'url(#gSky)' }, svg);
+  S('rect', { y: 600, width: 1500, height: 250, fill: 'url(#gSand)' }, svg);
+  drawSun(svg, 1380, 100, 0.8);
+  drawCloud(svg, 240, 110, 0.8);
+  // crane décor
+  const crane = S('g', { transform: 'translate(1300,600)' }, svg);
+  S('rect', { x: -12, y: -330, width: 24, height: 330, fill: '#F3A712', stroke: '#B4654A', 'stroke-width': 3 }, crane);
+  S('rect', { x: -160, y: -330, width: 200, height: 16, fill: '#F3A712', stroke: '#B4654A', 'stroke-width': 3 }, crane);
+  S('path', { d: 'M -150 -316 L -150 -230', stroke: '#5C3A17', 'stroke-width': 4 }, crane);
+  S('path', { d: 'M -165 -230 L -135 -230 L -150 -205 Z', fill: '#8A5A33' }, crane);
+  const blueprintG = S('g', { transform: 'translate(950,440)' }, svg);
+  const trayG = S('g', {}, svg);
+  const fxG = S('g', {}, svg);
+  const STRUCTURES = [
+    { fr: 'la maison', en: 'the house', parts: [
+      { t: 'r', x: -110, y: -10, w: 220, h: 160, c: '#F2C078' },
+      { t: 't', pts: [[-135, -10], [135, -10], [0, -135]], c: '#E5252A' },
+      { t: 'r', x: -32, y: 66, w: 64, h: 84, c: '#8A5A33' },
+      { t: 'c', x: -62, y: 36, r: 25, c: '#4CC9F0' },
+      { t: 'c', x: 62, y: 36, r: 25, c: '#4CC9F0' }
+    ] },
+    { fr: 'la fusée', en: 'the rocket', parts: [
+      { t: 'r', x: -48, y: -80, w: 96, h: 210, c: '#E8EAF3' },
+      { t: 't', pts: [[-58, -80], [58, -80], [0, -190]], c: '#E5252A' },
+      { t: 'c', x: 0, y: -14, r: 30, c: '#4CC9F0' },
+      { t: 't', pts: [[-48, 70], [-48, 130], [-104, 130]], c: '#FF9F1C' },
+      { t: 't', pts: [[48, 70], [48, 130], [104, 130]], c: '#FF9F1C' }
+    ] },
+    { fr: 'le pont', en: 'the bridge', parts: [
+      { t: 'r', x: -170, y: 20, w: 340, h: 34, c: '#B4654A' },
+      { t: 'r', x: -140, y: -110, w: 34, h: 130, c: '#8A5A33' },
+      { t: 'r', x: 106, y: -110, w: 34, h: 130, c: '#8A5A33' },
+      { t: 't', pts: [[-106, 20], [-16, 20], [-106, -94]], c: '#FFD23F' },
+      { t: 't', pts: [[106, 20], [16, 20], [106, -94]], c: '#FFD23F' }
+    ] },
+    { fr: 'le robot', en: 'the robot', parts: [
+      { t: 'r', x: -75, y: -55, w: 150, h: 130, c: '#8D99AE' },
+      { t: 'r', x: -52, y: -150, w: 104, h: 86, c: '#C0C7D8' },
+      { t: 'c', x: -24, y: -112, r: 14, c: '#4CC9F0' },
+      { t: 'c', x: 24, y: -112, r: 14, c: '#4CC9F0' },
+      { t: 't', pts: [[-14, -150], [14, -150], [0, -192]], c: '#E5252A' }
+    ] },
+    { fr: 'le bateau', en: 'the boat', parts: [
+      { t: 'r', x: -140, y: 40, w: 280, h: 56, c: '#B4654A' },
+      { t: 'r', x: -8, y: -140, w: 16, h: 180, c: '#8A5A33' },
+      { t: 't', pts: [[8, -140], [8, -20], [122, -34]], c: '#FFD23F' },
+      { t: 't', pts: [[-8, -140], [-8, -56], [-86, -70]], c: '#E5252A' }
+    ] }
+  ];
+  function drawShape(parent, part, mode) {
+    const common = mode === 'outline'
+      ? { fill: 'rgba(255,255,255,0.35)', stroke: '#8A93AD', 'stroke-width': 4, 'stroke-dasharray': '10 8' }
+      : { fill: part.c, stroke: 'rgba(0,0,0,0.25)', 'stroke-width': 4 };
+    if (part.t === 'r') return S('rect', Object.assign({ x: part.x, y: part.y, width: part.w, height: part.h, rx: 8 }, common), parent);
+    if (part.t === 'c') return S('circle', Object.assign({ cx: part.x, cy: part.y, r: part.r }, common), parent);
+    return S('path', Object.assign({ d: 'M ' + part.pts.map(p => p.join(' ')).join(' L ') + ' Z' }, common), parent);
+  }
+  const center = p => p.t === 'r' ? [p.x + p.w / 2, p.y + p.h / 2] : (p.t === 'c' ? [p.x, p.y] : [(p.pts[0][0] + p.pts[1][0] + p.pts[2][0]) / 3, (p.pts[0][1] + p.pts[1][1] + p.pts[2][1]) / 3]);
+  let structIdx = -1, placed = 0, parts = [], roundLive = false;
+  function nextRound() {
+    blueprintG.innerHTML = ''; trayG.innerHTML = ''; fxG.innerHTML = '';
+    structIdx = (structIdx + 1) % STRUCTURES.length;
+    const st = STRUCTURES[structIdx];
+    const d = D();
+    parts = st.parts.slice(0, d <= 1 ? 3 : (d <= 3 ? 4 : st.parts.length));
+    placed = 0;
+    parts.forEach(p => drawShape(blueprintG, p, 'outline'));
+    // tray pieces (shuffled)
+    shuffle(parts.map((p, i) => i)).forEach((pi, slot) => {
+      const p = parts[pi];
+      const hx = 180 + (slot % 2) * 220, hy = 300 + Math.floor(slot / 2) * 170;
+      const c = center(p);
+      const g = S('g', { transform: `translate(${hx},${hy})` }, trayG);
+      const art = S('g', { transform: `translate(${-c[0]},${-c[1]}) ` }, g);
+      drawShape(art, p, 'solid');
+      S('circle', { r: 60, fill: 'rgba(255,255,255,0.001)' }, g);
+      fxPop(g);
+      let done = false;
+      makeDraggable(g, svg, {
+        start: () => { if (!roundLive || done) return; sfx.tap(); trayG.appendChild(g); },
+        move: pt2 => { if (!roundLive || done) return; g.setAttribute('transform', `translate(${pt2.x},${pt2.y}) scale(1.08)`); },
+        end: pt2 => {
+          if (!roundLive || done) return;
+          const tx = 950 + c[0], ty = 440 + c[1];
+          if (Math.hypot(pt2.x - tx, pt2.y - ty) < 85) {
+            done = true; placed++;
+            g.remove();
+            const solid = S('g', {}, blueprintG);
+            drawShape(solid, p, 'solid');
+            fxPop(solid);
+            sfx.pop();
+            say(placed === parts.length ? '' : 'Bien construit !', placed === parts.length ? '' : 'Well built!');
+            if (placed === parts.length) finishStructure(st);
+          } else {
+            Rounds.miss();
+            g.animate([{ transform: `translate(${pt2.x}px,${pt2.y}px)` }, { transform: `translate(${hx}px,${hy}px)` }], { duration: 420, easing: 'cubic-bezier(0.34,1.56,0.64,1)' }).onfinish = () => g.setAttribute('transform', `translate(${hx},${hy})`);
+            sfx.whoosh();
+          }
+        }
+      });
+    });
+    mission('Construis ' + st.fr + ' : pose chaque pièce sur le plan en pointillés !', 'Build ' + st.en + ': drop each piece onto the dotted blueprint!', ZONE_ICONS.builder);
+    roundLive = true;
+  }
+  function finishStructure(st) {
+    roundLive = false;
+    for (let i = 0; i < 6; i++) {
+      const puff = S('circle', { cx: 950 + rnd(-120, 120), cy: 440 + rnd(-120, 80), r: rnd(8, 16), fill: 'rgba(255,255,255,0.85)' }, fxG);
+      puff.animate([{ transform: 'translateY(0) scale(1)', opacity: 0.9 }, { transform: 'translateY(-70px) scale(2.2)', opacity: 0 }], { duration: 900, delay: i * 90 }).onfinish = () => puff.remove();
+    }
+    sfx.fanfare();
+    say('Magnifique, ' + st.fr + ' est fini !', 'Beautiful, ' + st.en + ' is finished!');
+    if (Rounds.gem()) setTimeout(zoneComplete, 1000); else setTimeout(nextRound, 1300);
+  }
+  nextRound();
+};
+
+/* ================= Z10 — CHERCHE & TROUVE (seek and find) ================= */
+ZONE_BUILDERS.seek = function (host) {
+  const svg = S('svg', { class: 'stage', viewBox: '0 0 1500 850', preserveAspectRatio: (innerWidth >= innerHeight * 1.02 ? 'xMidYMid slice' : 'xMidYMid meet') }, host);
+  gradDefs(svg);
+  S('rect', { width: 1500, height: 420, fill: 'url(#gSky)' }, svg);
+  S('rect', { y: 400, width: 1500, height: 450, fill: 'url(#gGrass)' }, svg);
+  drawSun(svg, 130, 100, 0.8);
+  const sceneG = S('g', {}, svg);
+  const stripG = S('g', { transform: 'translate(1310,250)' }, svg);
+  const TARGETS = {
+    butterfly: { fr: 'papillons', en: 'butterflies', draw: (g, s2) => { const w = S('g', { transform: `scale(${s2})` }, g); S('path', { d: 'M 0 -4 Q -16 -22 -24 -8 Q -28 2 -12 4 Q -26 10 -16 18 Q -8 22 0 8 Q 8 22 16 18 Q 26 10 12 4 Q 28 2 24 -8 Q 16 -22 0 -4 Z', fill: '#9B5DE5', stroke: '#6D3BBF', 'stroke-width': 2 }, w); S('rect', { x: -2, y: -10, width: 4, height: 22, rx: 2, fill: '#2B2D42' }, w); S('circle', { cx: -6, cy: -2, r: 3, fill: '#FFD23F' }, w); S('circle', { cx: 6, cy: -2, r: 3, fill: '#FFD23F' }, w); } },
+    ladybug: { fr: 'coccinelles', en: 'ladybugs', draw: (g, s2) => { const w = S('g', { transform: `scale(${s2})` }, g); S('circle', { cx: 0, cy: 0, r: 15, fill: '#FF4D57', stroke: '#9E1C24', 'stroke-width': 2 }, w); S('path', { d: 'M 0 -15 L 0 15', stroke: '#2B2D42', 'stroke-width': 2.4 }, w); S('circle', { cx: 0, cy: -14, r: 6, fill: '#2B2D42' }, w); [[-7, -5], [7, -3], [-5, 7], [6, 8]].forEach(([x, y]) => S('circle', { cx: x, cy: y, r: 2.6, fill: '#2B2D42' }, w)); } },
+    chick: { fr: 'poussins', en: 'chicks', draw: (g, s2) => { const w = S('g', { transform: `scale(${s2})` }, g); S('circle', { cx: 0, cy: 4, r: 13, fill: '#FFD23F', stroke: '#D9A400', 'stroke-width': 2 }, w); S('circle', { cx: 0, cy: -10, r: 9, fill: '#FFD23F', stroke: '#D9A400', 'stroke-width': 2 }, w); S('path', { d: 'M 7 -10 L 14 -8 L 7 -5 Z', fill: '#FF9F1C' }, w); S('circle', { cx: 3, cy: -12, r: 1.8, fill: '#2B2D42' }, w); } },
+    star: { fr: 'étoiles tombées', en: 'fallen stars', draw: (g, s2) => { const w = S('g', { transform: `scale(${s2 * 1.2}) translate(-12,-12)` }, g); drawStarIcon(w, 1, '#FFD23F'); } }
+  };
+  const DECOYS = {
+    butterfly: (g, s2) => { const w = S('g', { transform: `scale(${s2})` }, g); S('path', { d: 'M 0 -4 Q -14 -18 -20 -6 Q -22 2 -10 4 Q -20 10 -12 16 Q -6 18 0 8 Q 6 18 12 16 Q 20 10 10 4 Q 22 2 20 -6 Q 14 -18 0 -4 Z', fill: '#8D99AE', stroke: '#5C6784', 'stroke-width': 2 }, w); S('rect', { x: -2, y: -8, width: 4, height: 18, rx: 2, fill: '#2B2D42' }, w); },
+    ladybug: (g, s2) => { const w = S('g', { transform: `scale(${s2})` }, g); S('circle', { cx: 0, cy: 0, r: 15, fill: '#B4654A', stroke: '#6B421D', 'stroke-width': 2 }, w); S('circle', { cx: 0, cy: -14, r: 6, fill: '#2B2D42' }, w); },
+    chick: (g, s2) => { const w = S('g', { transform: `scale(${s2})` }, g); S('circle', { cx: 0, cy: 4, r: 13, fill: '#E8EAF3', stroke: '#8D99AE', 'stroke-width': 2 }, w); S('circle', { cx: 0, cy: -10, r: 9, fill: '#E8EAF3', stroke: '#8D99AE', 'stroke-width': 2 }, w); S('path', { d: 'M 7 -10 L 14 -8 L 7 -5 Z', fill: '#FF9F1C' }, w); },
+    star: (g, s2) => { const w = S('g', { transform: `scale(${s2})` }, g); S('circle', { cx: 0, cy: 0, r: 11, fill: '#FFD23F', stroke: '#D9A400', 'stroke-width': 2 }, w); }
+  };
+  let found = 0, need = 0, roundLive = false;
+  function decor() {
+    for (let i = 0; i < 16; i++) {
+      const x = rnd(60, 1240), y = rnd(430, 800);
+      const kind = i % 3;
+      if (kind === 0) { const b = S('g', { transform: `translate(${x},${y})` }, sceneG); [[0, 0, 34], [-28, 10, 26], [28, 10, 26]].forEach(([cx, cy, r]) => S('circle', { cx, cy, r, fill: i % 2 ? '#3FA34D' : '#57CC57' }, b)); }
+      else if (kind === 1) { const f = S('g', { transform: `translate(${x},${y})` }, sceneG); [0, 72, 144, 216, 288].forEach(a => S('ellipse', { cx: 0, cy: -8, rx: 5, ry: 9, fill: ['#FF9BC0', '#FFD23F', '#C9B6F5'][i % 3], transform: `rotate(${a})` }, f)); S('circle', { r: 4.4, fill: '#FF9F1C' }, f); }
+      else S('ellipse', { cx: x, cy: y, rx: rnd(16, 30), ry: rnd(10, 16), fill: '#A9B4C9' }, sceneG);
+    }
+  }
+  function strip() {
+    stripG.innerHTML = '';
+    S('rect', { x: -58, y: -40, width: 116, height: 80 + need * 44, rx: 20, fill: 'rgba(255,255,255,0.9)', stroke: '#FFB703', 'stroke-width': 5 }, stripG);
+    for (let i = 0; i < need; i++) {
+      const cell = S('g', { transform: `translate(0,${10 + i * 44})` }, stripG);
+      if (i < found) TARGETS[curKind].draw(cell, 0.9);
+      else S('circle', { r: 14, fill: 'none', stroke: '#C9D3EE', 'stroke-width': 3, 'stroke-dasharray': '5 5' }, cell);
+    }
+  }
+  let curKind = 'butterfly';
+  function nextRound() {
+    sceneG.innerHTML = '';
+    decor();
+    const keys = Object.keys(TARGETS);
+    curKind = keys[Rounds.idx % keys.length];
+    const d = D();
+    need = 3 + Math.min(3, Math.floor(d / 2));
+    found = 0;
+    const sSize = d <= 1 ? 1.5 : (d <= 3 ? 1.15 : 0.9);
+    for (let i = 0; i < need; i++) {
+      const x = rnd(90, 1200), y = rnd(440, 790);
+      const g = S('g', { transform: `translate(${x},${y})`, class: 'grab' }, sceneG);
+      S('circle', { r: 34, fill: 'rgba(255,255,255,0.001)' }, g);
+      TARGETS[curKind].draw(g, sSize);
+      g.addEventListener('pointerdown', () => {
+        if (!roundLive || g.dataset.got) return;
+        g.dataset.got = '1';
+        found++;
+        sfx.pop(); fxPop(g);
+        g.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 400, fill: 'forwards' });
+        strip();
+        say(String(found), String(found));
+        if (found >= need) {
+          roundLive = false;
+          say('Oeil de lynx ! Tout trouvé !', 'Eagle eyes! All found!');
+          if (Rounds.gem()) setTimeout(zoneComplete, 900); else setTimeout(nextRound, 1200);
+        }
+      });
+    }
+    if (d >= 3) for (let i = 0; i < 4 + d; i++) {
+      const x = rnd(90, 1200), y = rnd(440, 790);
+      const g = S('g', { transform: `translate(${x},${y})`, class: 'grab' }, sceneG);
+      S('circle', { r: 30, fill: 'rgba(255,255,255,0.001)' }, g);
+      DECOYS[curKind](g, sSize * 0.95);
+      g.addEventListener('pointerdown', () => { if (!roundLive) return; Rounds.miss(); sfx.bad(); fxWobble(g); say('Presque ! Regarde mieux les couleurs !', 'Almost! Look at the colors more closely!'); });
+    }
+    strip();
+    mission('Trouve ' + need + ' ' + TARGETS[curKind].fr + ' cachés dans la savane !', 'Find ' + need + ' hidden ' + TARGETS[curKind].en + ' in the savanna!', ZONE_ICONS.seek);
+    roundLive = true;
+  }
+  nextRound();
+};
+
+/* ================= Z11 — FABRIQUE DE MOTS (word building) ================= */
+ZONE_BUILDERS.words = function (host) {
+  const svg = S('svg', { class: 'stage', viewBox: '0 0 1500 850', preserveAspectRatio: (innerWidth >= innerHeight * 1.02 ? 'xMidYMid slice' : 'xMidYMid meet') }, host);
+  gradDefs(svg);
+  S('rect', { width: 1500, height: 850, fill: '#E9F5FB' }, svg);
+  for (let i = 0; i < 10; i++) S('circle', { cx: rnd(40, 1460), cy: rnd(40, 810), r: rnd(14, 36), fill: ['#D2EDF8', '#C4E8F5', '#DEF2FA'][i % 3] }, svg);
+  const picG = S('g', { transform: 'translate(260,430)' }, svg);
+  const slotG = S('g', { transform: 'translate(880,320)' }, svg);
+  const tileG = S('g', {}, svg);
+  const MINIS = {
+    lion: g => drawLeo(g, 0, 0, 1.1),
+    sun: g => drawSun(g, 0, 0, 1.2),
+    fish: g => drawFish(g, 0, 0, 1.8, '#4CC9F0'),
+    moon: g => { S('circle', { r: 58, fill: '#FFF3B0', stroke: '#E8D47E', 'stroke-width': 4 }, g); S('circle', { cx: -24, cy: 0, r: 50, fill: '#E9F5FB' }, g); },
+    ball: g => { S('circle', { r: 56, fill: '#FF4D57', stroke: '#C42631', 'stroke-width': 4 }, g); S('path', { d: 'M -56 0 Q 0 -30 56 0 M -56 0 Q 0 30 56 0', stroke: '#fff', 'stroke-width': 7, fill: 'none' }, g); },
+    house: g => { S('rect', { x: -56, y: -10, width: 112, height: 80, rx: 6, fill: '#F2C078', stroke: '#B4654A', 'stroke-width': 4 }, g); S('path', { d: 'M -68 -10 L 68 -10 L 0 -72 Z', fill: '#E5252A' }, g); S('rect', { x: -14, y: 28, width: 28, height: 42, fill: '#8A5A33' }, g); },
+    flower: g => { [0, 72, 144, 216, 288].forEach(a => S('ellipse', { cx: 0, cy: -34, rx: 20, ry: 34, fill: '#FF9BC0', transform: `rotate(${a})` }, g)); S('circle', { r: 20, fill: '#FFD23F' }, g); },
+    cat: g => { S('circle', { r: 46, fill: '#8D99AE', stroke: '#5C6784', 'stroke-width': 4 }, g); [[-30, -34], [30, -34]].forEach(([x, y]) => S('path', { d: `M ${x - 14} ${y + 10} L ${x} ${y - 22} L ${x + 14} ${y + 10} Z`, fill: '#8D99AE', stroke: '#5C6784', 'stroke-width': 3 }, g)); [[-16, -6], [16, -6]].forEach(([x, y]) => { S('circle', { cx: x, cy: y, r: 7, fill: '#fff' }, g); S('circle', { cx: x, cy: y + 1.5, r: 3.2, fill: '#2B2D42' }, g); }); S('path', { d: 'M -8 14 Q 0 20 8 14 M 0 8 L 0 14', stroke: '#5C6784', 'stroke-width': 3, fill: 'none', 'stroke-linecap': 'round' }, g); }
+  };
+  const BANK = {
+    fr: [{ w: 'LION', m: 'lion' }, { w: 'SOLEIL', m: 'sun' }, { w: 'LUNE', m: 'moon' }, { w: 'BALLON', m: 'ball' }, { w: 'MAISON', m: 'house' }, { w: 'FLEUR', m: 'flower' }, { w: 'CHAT', m: 'cat' }, { w: 'POISSON', m: 'fish' }],
+    en: [{ w: 'LION', m: 'lion' }, { w: 'SUN', m: 'sun' }, { w: 'MOON', m: 'moon' }, { w: 'BALL', m: 'ball' }, { w: 'HOUSE', m: 'house' }, { w: 'FLOWER', m: 'flower' }, { w: 'CAT', m: 'cat' }, { w: 'FISH', m: 'fish' }]
+  };
+  const VOW = 'AEIOUY';
+  let word = '', filled = [], roundLive = false;
+  function buildSlots() {
+    slotG.innerHTML = '';
+    const w = 86;
+    word.split('').forEach((ch, i) => {
+      const x = (i - (word.length - 1) / 2) * (w + 10);
+      S('rect', { x: x - w / 2, y: -46, width: w, height: 92, rx: 16, fill: filled[i] ? '#DFFAE8' : '#fff', stroke: filled[i] ? '#57CC57' : '#C9D3EE', 'stroke-width': 5 }, slotG);
+      if (filled[i]) S('text', { x, y: 22, 'text-anchor': 'middle', 'font-size': 58, 'font-weight': 800, 'font-family': 'inherit', fill: VOW.includes(ch) ? '#FF4D57' : '#1C7ED6', text: ch }, slotG);
+      S('rect', { x: x - w / 2, y: -46, width: w, height: 92, rx: 16, fill: 'rgba(0,0,0,0)', 'data-slot': i, class: 'word-slot' }, slotG);
+    });
+  }
+  function spawnTiles() {
+    tileG.innerHTML = '';
+    const d = D();
+    const letters = word.split('').map((ch, i) => ({ ch, forIdx: i })).filter((o, i) => !filled[i]);
+    const decoyCount = d <= 1 ? 0 : (d <= 3 ? 2 : 4);
+    const alpha = 'ABCDEFGHIJLMNOPRSTUV';
+    for (let i = 0; i < decoyCount; i++) letters.push({ ch: alpha[ri(0, alpha.length - 1)], forIdx: -1 });
+    shuffle(letters).forEach((L, i) => {
+      const hx = 560 + (i % 5) * 150, hy = 560 + Math.floor(i / 5) * 130;
+      const g = S('g', { transform: `translate(${hx},${hy})`, class: 'grab' }, tileG);
+      S('rect', { x: -40, y: -40, width: 80, height: 80, rx: 14, fill: '#fff', stroke: '#06B6D4', 'stroke-width': 5 }, g);
+      S('rect', { x: -40, y: 28, width: 80, height: 12, rx: 6, fill: '#06B6D4', opacity: 0.4 }, g);
+      S('text', { x: 0, y: 18, 'text-anchor': 'middle', 'font-size': 50, 'font-weight': 800, 'font-family': 'inherit', fill: VOW.includes(L.ch) ? '#FF4D57' : '#1C7ED6', text: L.ch }, g);
+      S('circle', { r: 48, fill: 'rgba(0,0,0,0)' }, g);
+      fxPop(g);
+      let used = false;
+      makeDraggable(g, svg, {
+        start: () => { if (!roundLive || used) return; sfx.tap(); say(L.ch, L.ch); tileG.appendChild(g); },
+        move: p => { if (!roundLive || used) return; g.setAttribute('transform', `translate(${p.x},${p.y}) scale(1.15)`); },
+        end: p => {
+          if (!roundLive || used) return;
+          // which slot was it dropped on?
+          const w = 86;
+          const rel = { x: p.x - 880, y: p.y - 320 };
+          let hit = -1;
+          word.split('').forEach((ch, i) => {
+            const x = (i - (word.length - 1) / 2) * (w + 10);
+            if (!filled[i] && Math.abs(rel.x - x) < w / 2 + 12 && Math.abs(rel.y) < 70) hit = i;
+          });
+          if (hit >= 0 && word[hit] === L.ch) {
+            used = true; filled[hit] = true;
+            g.remove(); sfx.pop(); buildSlots();
+            if (filled.every(Boolean)) {
+              roundLive = false;
+              sfx.fanfare();
+              say('Bravo, tu as écrit ' + word + ' !', 'Great, you spelled ' + word + '!');
+              if (Rounds.gem()) setTimeout(zoneComplete, 900); else setTimeout(nextRound, 1300);
+            }
+          } else {
+            if (hit >= 0) { Rounds.miss(); sfx.bad(); say('Non, là il faut la lettre ' + word[hit] + ' !', 'No, that spot needs the letter ' + word[hit] + '!'); }
+            g.animate([{ transform: `translate(${p.x}px,${p.y}px)` }, { transform: `translate(${hx}px,${hy}px)` }], { duration: 420, easing: 'cubic-bezier(0.34,1.56,0.64,1)' }).onfinish = () => g.setAttribute('transform', `translate(${hx},${hy})`);
+          }
+        }
+      });
+    });
+  }
+  function nextRound() {
+    const bank = BANK[isEN() ? 'en' : 'fr'];
+    const item = bank[Rounds.idx % bank.length];
+    word = item.w;
+    const d = D();
+    filled = word.split('').map((ch, i) => d === 0 ? i > 0 : (d === 1 ? i > 1 : false));
+    picG.innerHTML = '';
+    const frame = S('g', {}, picG);
+    S('circle', { r: 150, fill: '#fff', stroke: '#06B6D4', 'stroke-width': 8 }, frame);
+    const art = S('g', {}, frame);
+    MINIS[item.m](art);
+    fxPop(frame);
+    buildSlots();
+    spawnTiles();
+    mission('Fabrique le mot de l’image avec les lettres !', 'Build the picture’s word with the letters!', ZONE_ICONS.words);
+    say('Écoute bien : ' + word + ' ! À toi !', 'Listen: ' + word + '! Your turn!');
+    roundLive = true;
+  }
+  nextRound();
+};
+
+/* ================= Z12 — ATELIER MAGIQUE (free creation) ================= */
+ZONE_BUILDERS.create = function (host) {
+  const svg = S('svg', { class: 'stage', viewBox: '0 0 1500 850', preserveAspectRatio: (innerWidth >= innerHeight * 1.02 ? 'xMidYMid slice' : 'xMidYMid meet') }, host);
+  gradDefs(svg);
+  Rounds.start('create', 1);
+  S('rect', { width: 1500, height: 560, fill: 'url(#gSky)' }, svg);
+  S('rect', { y: 540, width: 1500, height: 310, fill: 'url(#gGrass)' }, svg);
+  const canvasG = S('g', {}, svg);
+  const STAMPS = [
+    { k: 'tree', fr: ['arbre', 'arbres'], en: ['tree', 'trees'], draw: g => { S('rect', { x: -8, y: -6, width: 16, height: 48, rx: 7, fill: 'url(#gWood)' }, g); [[0, -30, 30], [-24, -16, 22], [24, -16, 22]].forEach(([cx, cy, r]) => S('circle', { cx, cy, r, fill: '#3FA34D' }, g)); } },
+    { k: 'sun', fr: ['soleil', 'soleils'], en: ['sun', 'suns'], draw: g => { S('circle', { r: 20, fill: 'url(#gSun)', stroke: '#F3A712', 'stroke-width': 3 }, g); for (let i = 0; i < 8; i++) S('rect', { x: -2.5, y: -34, width: 5, height: 11, rx: 2.5, fill: '#FFD23F', transform: `rotate(${i * 45})` }, g); } },
+    { k: 'cloud', fr: ['nuage', 'nuages'], en: ['cloud', 'clouds'], draw: g => drawCloud(g, 0, 0, 0.45) },
+    { k: 'lion', fr: ['lion', 'lions'], en: ['lion', 'lions'], draw: g => drawLeo(g, 0, 0, 0.42) },
+    { k: 'frog', fr: ['grenouille', 'grenouilles'], en: ['frog', 'frogs'], draw: g => drawFrog(g, 0, 0, 0.55) },
+    { k: 'fish', fr: ['poisson', 'poissons'], en: ['fish', 'fish'], draw: g => drawFish(g, 0, 0, 0.8, '#4CC9F0') },
+    { k: 'flower', fr: ['fleur', 'fleurs'], en: ['flower', 'flowers'], draw: g => { [0, 72, 144, 216, 288].forEach(a => S('ellipse', { cx: 0, cy: -13, rx: 8, ry: 14, fill: '#FF9BC0', transform: `rotate(${a})` }, g)); S('circle', { r: 8, fill: '#FFD23F' }, g); } },
+    { k: 'star', fr: ['étoile', 'étoiles'], en: ['star', 'stars'], draw: g => { const w = S('g', { transform: 'scale(1.4) translate(-12,-12)' }, g); drawStarIcon(w, 1, '#FFD23F'); } },
+    { k: 'house', fr: ['maison', 'maisons'], en: ['house', 'houses'], draw: g => { S('rect', { x: -22, y: -4, width: 44, height: 32, rx: 3, fill: '#F2C078', stroke: '#B4654A', 'stroke-width': 2.5 }, g); S('path', { d: 'M -27 -4 L 27 -4 L 0 -28 Z', fill: '#E5252A' }, g); S('rect', { x: -6, y: 12, width: 12, height: 16, fill: '#8A5A33' }, g); } }
+  ];
+  let selected = STAMPS[0], eraser = false, placedCount = {}, totalPlaced = 0, doneShown = false;
+  // palette
+  const pal = S('g', {}, svg);
+  STAMPS.forEach((st, i) => {
+    const x = 90, y = 130 + i * 76;
+    const cell = S('g', { transform: `translate(${x},${y})`, class: 'grab' }, pal);
+    const bg = S('circle', { r: 33, fill: '#fff', stroke: '#C9D3EE', 'stroke-width': 4, 'data-pal': st.k }, cell);
+    const mini = S('g', { transform: 'scale(0.78)' }, cell);
+    st.draw(mini);
+    cell.addEventListener('pointerdown', () => {
+      eraser = false; selected = st; sfx.tap();
+      document.querySelectorAll('[data-pal]').forEach(b => b.setAttribute('stroke', '#C9D3EE'));
+      bg.setAttribute('stroke', '#FF6FB5');
+      say(st.fr[0], st.en[0]);
+    });
+    if (i === 0) bg.setAttribute('stroke', '#FF6FB5');
+  });
+  // eraser
+  const er = S('g', { transform: 'translate(90,' + (130 + STAMPS.length * 76) + ')', class: 'grab' }, pal);
+  const erBg = S('circle', { r: 33, fill: '#fff', stroke: '#C9D3EE', 'stroke-width': 4, 'data-pal': 'eraser' }, er);
+  S('rect', { x: -16, y: -10, width: 32, height: 20, rx: 6, fill: '#FF9BC0', stroke: '#E5252A', 'stroke-width': 2.5, transform: 'rotate(-20)' }, er);
+  er.addEventListener('pointerdown', () => { eraser = true; sfx.tap(); document.querySelectorAll('[data-pal]').forEach(b => b.setAttribute('stroke', '#C9D3EE')); erBg.setAttribute('stroke', '#E5252A'); say('Gomme magique !', 'Magic eraser!'); });
+  // done button
+  const doneBtn = S('g', { transform: 'translate(1360,760)', class: 'grab', opacity: 0 }, svg);
+  S('circle', { r: 52, fill: '#57CC57', stroke: '#fff', 'stroke-width': 6 }, doneBtn);
+  S('path', { d: 'M -22 2 L -6 18 L 26 -18', stroke: '#fff', 'stroke-width': 10, fill: 'none', 'stroke-linecap': 'round', 'stroke-linejoin': 'round' }, doneBtn);
+  doneBtn.addEventListener('pointerdown', () => {
+    if (totalPlaced < 4 || doneShown) return;
+    doneShown = true;
+    const bits = STAMPS.filter(s => placedCount[s.k]).map(s => placedCount[s.k] + ' ' + (placedCount[s.k] > 1 ? T(s.fr[1], s.en[1]) : T(s.fr[0], s.en[0])));
+    sfx.fanfare(); confetti(50);
+    say('Quel chef-d’œuvre ! Ton tableau : ' + bits.join(', ') + ' !', 'What a masterpiece! Your picture: ' + bits.join(', ') + '!');
+    Rounds.gem();
+    setTimeout(zoneComplete, 1600);
+  });
+  // place stamps on the big canvas
+  const bgHit = S('rect', { x: 180, y: 70, width: 1120, height: 760, fill: 'rgba(0,0,0,0)' }, svg);
+  bgHit.addEventListener('pointerdown', ev => {
+    const p = svg.createSVGPoint(); p.x = ev.clientX; p.y = ev.clientY;
+    const c = p.matrixTransform(svg.getScreenCTM().inverse());
+    if (eraser) return;
+    const inst = S('g', { transform: `translate(${c.x},${c.y})`, class: 'grab' }, canvasG);
+    S('circle', { r: 40, fill: 'rgba(0,0,0,0)' }, inst);
+    const art = S('g', {}, inst);
+    selected.draw(art);
+    fxPop(inst);
+    sfx.pop();
+    placedCount[selected.k] = (placedCount[selected.k] || 0) + 1;
+    totalPlaced++;
+    const myKind = selected.k;
+    inst.addEventListener('pointerdown', ev2 => {
+      ev2.stopPropagation();
+      if (eraser) {
+        inst.remove(); sfx.whoosh();
+        placedCount[myKind]--; totalPlaced--;
+        if (totalPlaced < 4) doneBtn.setAttribute('opacity', 0);
+        return;
+      }
+    });
+    makeDraggable(inst, svg, {
+      move: p2 => { if (!eraser) inst.setAttribute('transform', `translate(${p2.x},${p2.y})`); },
+      end: () => {}
+    });
+    if (totalPlaced >= 4 && !doneShown) { doneBtn.setAttribute('opacity', 1); fxPop(doneBtn); }
+  });
+  mission('Crée TON tableau magique : choisis des tampons, touche la scène pour les poser ! 4 ou plus, puis la coche verte !', 'Create YOUR magic picture: pick stamps, tap the scene to place them! 4 or more, then the green check!', ZONE_ICONS.create);
 };
 
 /* ================= BOOT ================= */
