@@ -686,6 +686,7 @@ ZONE_BUILDERS.orchard = function (host) {
   }
   function spawnFruit(x, y) {
     const g = S('g', { transform: `translate(${x},${y})` }, fruitLayer);
+    S('circle', { r: 42, fill: 'rgba(255,255,255,0.001)' }, g); // fat touch target
     const art = S('g', {}, g);
     fruitDef.draw(art);
     fxPop(art);
@@ -1027,6 +1028,7 @@ ZONE_BUILDERS.splash = function (host) {
     roundItems.forEach((o, i) => {
       const hx = 70 + (i % 2) * 170, hy = (i < 2 ? 100 : 260);
       const g = S('g', { transform: `translate(${hx},${hy})` }, svg);
+      S('circle', { r: 40, fill: 'rgba(255,255,255,0.001)' }, g); // fat touch target
       o.draw(g);
       const it = { g, o, state: 'shelf', home: [hx, hy], anim: null };
       items.push(it);
