@@ -3039,6 +3039,372 @@ body {
     object-fit: contain !important;
   }
 
+
+  /* ==========================================================================
+     V20.0 REA ARCADE UPGRADES: NUMBER TETRIS, SAFARI RACER, PRODIGY RPG, & LITERACY
+     ========================================================================== */
+  .tetris-world {
+    display: grid;
+    grid-template-columns: minmax(130px, 0.85fr) minmax(210px, 1fr) minmax(130px, 0.85fr);
+    align-items: center;
+    gap: clamp(8px, 2vw, 20px);
+    min-height: 420px;
+    padding: clamp(12px, 2vw, 24px);
+    border-radius: 24px;
+    background: radial-gradient(ellipse at 50% 10%, #1E1B4B 0%, #0F172A 60%, #020617 100%);
+    border: 2px solid #38BDF8;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.7);
+  }
+  .tetris-side-quest {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    color: #FFFDF5;
+    text-align: center;
+    background: rgba(15, 23, 42, 0.85);
+    padding: 16px;
+    border-radius: 20px;
+    border: 1.5px solid rgba(254, 240, 138, 0.4);
+  }
+  .tetris-quest-badge {
+    background: #0284C7;
+    color: #FFFFFF;
+    font-size: 0.76rem;
+    font-weight: 900;
+    padding: 4px 10px;
+    border-radius: 12px;
+  }
+  .tetris-side-quest strong {
+    font: 900 1.15rem/1.2 'Fredoka', 'Nunito', sans-serif;
+    color: #FEF08A;
+  }
+  .tetris-side-quest span {
+    font: 800 0.95rem/1.3 'Nunito', sans-serif;
+    color: #A7F3D0;
+  }
+  .tetris-board-wrap {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+  }
+  .tetris-board {
+    width: 100%;
+    max-width: 320px;
+    box-sizing: border-box;
+    display: grid;
+    grid-template-columns: repeat(10, minmax(0, 1fr));
+    gap: 3px;
+    padding: 10px;
+    border: 2px solid #38BDF8;
+    border-radius: 16px;
+    background: rgba(2, 6, 23, 0.92);
+    box-shadow: 0 16px 36px rgba(0, 0, 0, 0.8);
+  }
+  .tetris-cell {
+    aspect-ratio: 1;
+    display: grid;
+    place-items: center;
+    border-radius: 4px;
+    background: rgba(255, 255, 255, 0.05);
+    color: #FFFFFF;
+    font: 900 0.58rem/1 'Nunito', sans-serif;
+    box-shadow: inset 0 1px 2px rgba(255, 255, 255, 0.08);
+  }
+  .tetris-cell.filled {
+    background: linear-gradient(145deg, color-mix(in srgb, var(--block-color) 85%, white), var(--block-color) 65%, color-mix(in srgb, var(--block-color) 70%, #000));
+    box-shadow: inset 2px 2px 4px rgba(255, 255, 255, 0.6), inset -2px -2px 4px rgba(0,0,0,0.4), 0 4px 8px rgba(0,0,0,0.5);
+    color: #FFFFFF;
+  }
+  .tetris-controls {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(64px, 80px));
+    justify-content: center;
+    gap: 12px;
+  }
+  .tetris-controls button {
+    min-height: 64px;
+    border: 2px solid #FDE047;
+    border-radius: 20px;
+    background: linear-gradient(145deg, #FACC15, #D97706);
+    color: #1E1B4B;
+    font: 900 1.6rem/1 'Nunito', sans-serif;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.5);
+    cursor: pointer;
+    touch-action: manipulation;
+  }
+  .tetris-controls button:active {
+    transform: translateY(3px) scale(0.96);
+  }
+
+  /* Safari Math Racer Styles */
+  .racer-world {
+    overflow: hidden;
+    padding: 14px;
+    border-radius: 24px;
+    background: #022C22;
+    border: 2px solid #34D399;
+  }
+  .race-question-card {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+    min-height: 64px;
+    margin-bottom: 12px;
+    padding: 10px 18px;
+    border-radius: 18px;
+    background: rgba(15, 23, 42, 0.94);
+    border: 2px solid #FDE047;
+    color: #FEF08A;
+  }
+  .race-question-card strong {
+    font: 900 clamp(1.4rem, 4vw, 2.2rem)/1.1 'Fredoka', 'Nunito', sans-serif;
+  }
+  .race-question-card span {
+    color: #A7F3D0;
+    font: 800 0.95rem/1.2 'Nunito', sans-serif;
+  }
+  .race-scene {
+    position: relative;
+    height: clamp(280px, 48vw, 420px);
+    overflow: hidden;
+    isolation: isolate;
+    border-radius: 20px;
+    background: #064E3B;
+  }
+  .race-skyline {
+    position: absolute;
+    inset: 0 0 45%;
+    background: linear-gradient(#0284C7 0%, #38BDF8 60%, #BAE6FD 100%);
+  }
+  .race-road {
+    position: absolute;
+    left: 4%; right: 4%;
+    top: 26%; bottom: -15%;
+    background: linear-gradient(90deg, #334155, #1E293B 18%, #1E293B 82%, #334155);
+    clip-path: polygon(42% 0, 58% 0, 100% 100%, 0 100%);
+    transform: perspective(360px) rotateX(7deg);
+  }
+  .race-road::before, .race-road::after {
+    content: '';
+    position: absolute;
+    top: 0; bottom: 0;
+    width: 4px;
+    background: repeating-linear-gradient(to bottom, #FEF08A 0 24px, transparent 24px 48px);
+    animation: roadFlow 0.5s linear infinite;
+  }
+  .race-road::before { left: 33%; }
+  .race-road::after { right: 33%; }
+  @keyframes roadFlow { to { background-position-y: 48px; } }
+  .race-driver-car {
+    position: absolute;
+    z-index: 2;
+    left: 50%;
+    bottom: 5%;
+    font-size: clamp(48px, 10vw, 76px);
+    transform: translateX(-50%);
+    transition: left 0.32s cubic-bezier(0.2, 0.8, 0.2, 1), transform 0.32s;
+    filter: drop-shadow(0 14px 12px rgba(0,0,0,0.6));
+  }
+  .race-driver-car.racing {
+    transform: translateX(-50%) translateY(-14px) scale(1.08);
+  }
+  .race-gates {
+    position: absolute;
+    z-index: 3;
+    inset: 32% 6% 22%;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    align-items: center;
+    gap: clamp(8px, 2vw, 22px);
+  }
+  .race-gate {
+    min-height: clamp(64px, 11vw, 94px);
+    border: 3px solid #FEF08A;
+    border-radius: 20px;
+    background: linear-gradient(145deg, #0F172A, #1E1B4B);
+    color: #FDE047;
+    font: 900 clamp(1.3rem, 4vw, 2.2rem)/1 'Fredoka', 'Nunito', sans-serif;
+    box-shadow: 0 14px 26px rgba(0,0,0,0.6);
+    cursor: pointer;
+    touch-action: manipulation;
+    transition: transform 0.2s, background 0.2s;
+  }
+  .race-gate:hover, .race-gate:focus-visible {
+    transform: translateY(-6px) scale(1.03);
+    background: #1E293B;
+  }
+  .race-gate.is-correct {
+    background: #059669;
+    border-color: #A7F3D0;
+    color: #FFFFFF;
+    animation: gateFlash 0.45s ease-out;
+  }
+  .race-touch-hint {
+    margin-top: 10px;
+    text-align: center;
+    color: #A7F3D0;
+    font: 800 0.92rem/1.3 'Nunito', sans-serif;
+  }
+
+  /* Prodigy Math Monster RPG Battle Styles */
+  .prodigy-battle-world {
+    padding: 16px;
+    border-radius: 24px;
+    background: radial-gradient(ellipse at 50% 15%, #312E81 0%, #1E1B4B 60%, #0F172A 100%);
+    border: 2px solid #818CF8;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.7);
+  }
+  .battle-stage-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 12px;
+  }
+  .hero-status-card, .monster-status-card {
+    flex: 1;
+    background: rgba(15, 23, 42, 0.85);
+    padding: 10px 14px;
+    border-radius: 16px;
+    border: 2px solid #38BDF8;
+  }
+  .monster-status-card {
+    border-color: #F87171;
+  }
+  .status-name {
+    font: 900 0.82rem/1 'Fredoka', 'Nunito', sans-serif;
+    color: #FEF08A;
+    margin-bottom: 6px;
+  }
+  .hp-bar-wrap {
+    height: 12px;
+    background: #334155;
+    border-radius: 6px;
+    overflow: hidden;
+    margin-bottom: 4px;
+  }
+  .hp-bar-fill.hero {
+    height: 100%;
+    background: linear-gradient(90deg, #10B981, #34D399);
+    transition: width 0.4s ease;
+  }
+  .hp-bar-fill.monster {
+    height: 100%;
+    background: linear-gradient(90deg, #EF4444, #F87171);
+    transition: width 0.4s ease;
+  }
+  .hp-text {
+    font: 800 0.76rem/1 'Nunito', sans-serif;
+    color: #A5B4FC;
+  }
+  .battle-vs-badge {
+    background: #E5252A;
+    color: #FFFFFF;
+    font: 900 0.78rem/1 'Fredoka', 'Nunito', sans-serif;
+    padding: 6px 12px;
+    border-radius: 14px;
+    border: 1.5px solid #FDE047;
+  }
+  .battle-arena-canvas-wrap {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 12px;
+  }
+  .battle-arena-canvas-wrap canvas {
+    width: 100%;
+    max-width: 600px;
+    height: 180px;
+    border-radius: 18px;
+    background: #020617;
+    border: 2px solid rgba(129, 140, 248, 0.4);
+  }
+  .spells-prompt-text {
+    font: 800 0.95rem/1.2 'Nunito', sans-serif;
+    color: #FEF08A;
+    margin-bottom: 10px;
+    text-align: center;
+  }
+  .spells-deck {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 12px;
+  }
+  .spell-btn {
+    min-height: 68px;
+    padding: 10px;
+    border-radius: 18px;
+    border: 2px solid #A7F3D0;
+    background: linear-gradient(145deg, #1E1B4B, #312E81);
+    color: #FFFFFF;
+    font: 900 1.1rem/1.2 'Fredoka', 'Nunito', sans-serif;
+    cursor: pointer;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.5);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    touch-action: manipulation;
+    transition: transform 0.2s, background 0.2s;
+  }
+  .spell-btn:hover {
+    transform: translateY(-4px) scale(1.02);
+    background: #3730A3;
+  }
+  .spell-btn.fire { border-color: #F87171; }
+  .spell-btn.thunder { border-color: #FDE047; }
+  .spell-btn.ice { border-color: #38BDF8; }
+
+  /* Picture-Word Match Styles */
+  .picture-match-board { display:grid; grid-template-columns:1fr 1fr; gap:clamp(10px,2vw,18px); align-items:stretch; }
+  .picture-match-lane { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:clamp(8px,1.5vw,14px); padding:clamp(8px,1.6vw,14px); border-radius:20px; background:#1E1B4B; border:1.5px solid rgba(255,255,255,0.15); }
+  .picture-match-card,.picture-match-word { min-width:0; min-height:clamp(76px,11vw,118px); padding:10px; border:2px solid rgba(255,255,255,0.2); border-radius:18px; color:#FFFFFF; background:#0F172A; box-shadow:0 10px 22px rgba(0,0,0,0.5); cursor:pointer; transition:transform .22s cubic-bezier(.2,.8,.2,1),border-color .2s,background .2s; }
+  .picture-match-card { position:relative; display:grid; place-items:center; }
+  .picture-match-illustration { font-size:clamp(2rem,5vw,3.4rem); filter:drop-shadow(0 6px 4px rgba(0,0,0,0.5)); transition:transform .3s; }
+  .picture-match-hint { position:absolute; right:8px; bottom:5px; font-size:.78rem; }
+  .picture-match-word { font:800 clamp(.9rem,2vw,1.12rem)/1.2 'Nunito',sans-serif; display:flex; align-items:center; justify-content:center; text-align:center; }
+  .picture-match-card:hover,.picture-match-word:hover { transform:translateY(-3px); border-color:#FDE047; }
+  .picture-match-card.is-selected { background:#312E81; border-color:#FDE047; box-shadow:0 0 20px rgba(253, 224, 71, 0.4); }
+  .picture-match-card.is-selected .picture-match-illustration { transform:translateY(-4px) scale(1.15); }
+  .picture-match-card.is-matched,.picture-match-word.is-matched { background:#065F46; border-color:#34D399; opacity:.85; pointer-events:none; }
+  .picture-match-word.is-miss { animation:pictureMatchWiggle .32s ease-in-out; border-color:#EF4444; }
+  @keyframes pictureMatchWiggle { 25%{transform:translateX(-5px)} 75%{transform:translateX(5px)} }
+
+  /* Sentence Train Styles */
+  .sentence-train-deck { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:12px; }
+  .sentence-car { min-height:96px; padding:10px 8px; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:7px; border:2px solid #FDE047; border-radius:18px; background:linear-gradient(155deg,#1E1B4B,#0F172A); color:#FFFFFF; font:800 1rem/1.2 'Nunito',sans-serif; box-shadow:0 12px 20px rgba(0,0,0,0.5); cursor:grab; transition:transform .22s; }
+  .sentence-car:hover,.sentence-car:focus-visible { transform:translateY(-4px); border-color:#38BDF8; }
+  .sentence-car-window { width:38px;height:30px;display:grid;place-items:center;border:1px solid rgba(255,255,255,0.25);border-radius:10px;background:#312E81;font-size:1.25rem; }
+  .grammar-drop-slot { cursor:copy; border:2px dashed #FDE047 !important; background:rgba(253, 224, 71, 0.15) !important; color:#FEF08A !important; }
+  .grammar-drop-slot.is-correct { background:#059669 !important; color:#fff !important; animation:carriageSnap .45s cubic-bezier(.2,.8,.2,1); }
+  .train-departure .sentence-car { animation:trainRide .85s cubic-bezier(.2,.8,.2,1) both; }
+  @keyframes carriageSnap { 50%{transform:scale(1.16) rotate(-4deg)} }
+  @keyframes trainRide { to{transform:translateX(130vw);opacity:.1} }
+
+  /* Time Portals Styles */
+  .time-portal-game { display:flex; flex-direction:column; gap:16px; }
+  .time-portal-track { position:relative; display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:clamp(8px,2vw,18px); padding:12px 4px; }
+  .time-portal-track::before { content:''; position:absolute; z-index:0; left:12%;right:12%;top:50%;height:4px;border-radius:4px;background:linear-gradient(90deg,#F97316,#FACC15,#38BDF8); }
+  .time-portal { position:relative; z-index:1; display:flex; align-items:center; justify-content:center; gap:9px; min-height:clamp(72px,10vw,104px); padding:10px; border:2px solid rgba(255,255,255,0.2); border-radius:20px; background:#0F172A; color:#FFFFFF; font:900 0.95rem/1.1 'Nunito',sans-serif; box-shadow:0 12px 22px rgba(0,0,0,0.5); cursor:pointer; transition:transform .22s,background .2s; }
+  .time-portal:hover,.time-portal.is-active { transform:translateY(-4px) scale(1.03); background:#312E81; border-color:#FDE047; box-shadow:0 0 24px rgba(253, 224, 71, 0.4); }
+  .time-portal-orb { width:46px;height:46px;display:grid;place-items:center;border-radius:50%;background:linear-gradient(145deg,#1E1B4B,#020617);font-size:1.55rem;border:1.5px solid rgba(255,255,255,0.3); }
+  .time-verb-deck { display:flex; flex-wrap:wrap; justify-content:center; gap:12px; min-height:56px; }
+  .time-verb-token { display:flex; align-items:center; gap:8px; min-height:56px; padding:10px 18px; border:2px solid #A7F3D0; border-radius:18px; background:linear-gradient(145deg,#064E3B,#022C22); color:#FFFFFF; font:900 1.05rem/1.1 'Nunito',sans-serif; box-shadow:0 10px 20px rgba(0,0,0,0.5); cursor:pointer; }
+  .time-verb-token:hover { transform:translateY(-3px); border-color:#FDE047; }
+  .time-verb-token.verb-flight { animation:verbFlight 0.5s ease-in both; }
+  @keyframes verbFlight { to { transform: translateY(-80px) scale(0.2); opacity: 0; } }
+
+  @media(max-width:720px) {
+    .tetris-world { grid-template-columns: minmax(0,1fr); gap: 10px; }
+    .tetris-controls { grid-template-columns: repeat(4, minmax(48px, 1fr)); }
+    .spells-deck { grid-template-columns: 1fr; }
+    .picture-match-board { grid-template-columns: 1fr; }
+    .sentence-train-deck { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  }
+
 </style>
 </head>
 <body>
@@ -3069,7 +3435,7 @@ body {
         <option value="en">🇬🇧 English (Studio Voice)</option>
       </select>
       <button class="btn-pill" id="btn-sound-toggle">🔊 Son</button>
-      <button class="version-cache-pill" id="btn-version-cache" title="Version active • Cliquer pour vider le cache et recharger">🚀 v19.0 NATIVE-SLOW-VOICE-TEMPO (v1.12.0) • 🔄 Vider Cache</button>
+      <button class="version-cache-pill" id="btn-version-cache" title="Version active • Cliquer pour vider le cache et recharger">🚀 v20.0 REA-TOP-GAME-REBUILD (v1.13.0) • 🔄 Vider Cache</button>
     </div>
   </header>
 
@@ -3201,7 +3567,7 @@ body {
           <h3>Astuces Maths Cartoon : Doigts, Doubles & Pont de 10</h3>
           <div class="portal-curriculum-tag">Pont de 10 • 10 Doigts ×9 • Doubles • Fractions %</div>
         </div>
-        <span class="card-rea-badge">✨ v19.0 NATIVE-SLOW-VOICE-TEMPO (v1.12.0) • ▶ JOUER</span>
+        <span class="card-rea-badge">✨ v20.0 REA-TOP-GAME-REBUILD (v1.13.0) • ▶ JOUER</span>
       </div>
       <p class="portal-desc">Apprends les astuces cartoon pour calculer instantanément : pont arc-en-ciel de 10, astuce des doigts pour la table de 9, et miroir des doubles !</p>
       <div class="portal-counts-badge-bar">
@@ -3220,7 +3586,7 @@ body {
           <h3>Astuces Sciences Cartoon : Leviers, Corps, Eau & Lumière</h3>
           <div class="portal-curriculum-tag">Levier Souris-Éléphant • Cycle de l'Eau • Prisme Arc-en-Ciel</div>
         </div>
-        <span class="card-rea-badge">✨ v19.0 NATIVE-SLOW-VOICE-TEMPO (v1.12.0) • ▶ JOUER</span>
+        <span class="card-rea-badge">✨ v20.0 REA-TOP-GAME-REBUILD (v1.13.0) • ▶ JOUER</span>
       </div>
       <p class="portal-desc">Découvre les super-pouvoirs de la science : comment soulever un éléphant avec un levier, le voyage de la goutte d'eau et le prisme de lumière !</p>
       <div class="portal-counts-badge-bar">
@@ -3238,7 +3604,7 @@ body {
           <h3>Tetris Éducatif : Blocs Mots & Maths</h3>
           <div class="portal-curriculum-tag">Tetris Arcade • Nombres • Syllabes • Auto-Drop</div>
         </div>
-        <span class="card-rea-badge">✨ v19.0 NATIVE-SLOW-VOICE-TEMPO (v1.12.0) • ▶ JOUER</span>
+        <span class="card-rea-badge">✨ v20.0 REA-TOP-GAME-REBUILD (v1.13.0) • ▶ JOUER</span>
       </div>
       <p class="portal-desc">Empile les blocs colorés Tetris de nombres, calculs et syllabes pour compléter les lignes et ouvrir le coffre à récompenses !</p>
       <div class="portal-counts-badge-bar">
@@ -3257,7 +3623,7 @@ body {
           <h3>Course Auto Turbo : Rallye Savane</h3>
           <div class="portal-curriculum-tag">Course 3 Voies • Auto-Pilote • Récompenses</div>
         </div>
-        <span class="card-rea-badge">✨ v19.0 NATIVE-SLOW-VOICE-TEMPO (v1.12.0) • ▶ JOUER</span>
+        <span class="card-rea-badge">✨ v20.0 REA-TOP-GAME-REBUILD (v1.13.0) • ▶ JOUER</span>
       </div>
       <p class="portal-desc">Pilote le bolide turbo de Léo sur 3 voies ou active l'Auto-Pilote pour franchir le portique de la bonne réponse avec boost nitro !</p>
       <div class="portal-counts-badge-bar">
@@ -3276,7 +3642,7 @@ body {
           <h3>Prodigy Maths : Monstres & Cristaux</h3>
           <div class="portal-curriculum-tag">Prodigy Math • Sorts Visuels • Coffre Magique</div>
         </div>
-        <span class="card-rea-badge">✨ v19.0 NATIVE-SLOW-VOICE-TEMPO (v1.12.0) • ▶ JOUER</span>
+        <span class="card-rea-badge">✨ v20.0 REA-TOP-GAME-REBUILD (v1.13.0) • ▶ JOUER</span>
       </div>
       <p class="portal-desc">Lance des sorts mathématiques visuels (addition, tables, fractions, algèbre) pour apprivoiser les créatures et gagner des familiers !</p>
       <div class="portal-counts-badge-bar">
@@ -3295,7 +3661,7 @@ body {
           <h3>Labo Sciences : Écosystème, Aimants & Espace</h3>
           <div class="portal-curriculum-tag">Chaîne Alimentaire • États de l'Eau • Aimants • Planètes</div>
         </div>
-        <span class="card-rea-badge">✨ v19.0 NATIVE-SLOW-VOICE-TEMPO (v1.12.0) • ▶ JOUER</span>
+        <span class="card-rea-badge">✨ v20.0 REA-TOP-GAME-REBUILD (v1.13.0) • ▶ JOUER</span>
       </div>
       <p class="portal-desc">Simule la chaîne alimentaire de la savane, les 3 états de l'eau (0°C/100°C), les pôles d'aimants (N⇄S) et le système solaire !</p>
       <div class="portal-counts-badge-bar">
@@ -3313,7 +3679,7 @@ body {
           <h3>Grammaire & Syntaxe (FR / EN)</h3>
           <div class="portal-curriculum-tag">Noms • Verbes • Adjectifs • Accords</div>
         </div>
-        <span class="card-rea-badge">✨ v19.0 NATIVE-SLOW-VOICE-TEMPO (v1.12.0) • ▶ JOUER</span>
+        <span class="card-rea-badge">✨ v20.0 REA-TOP-GAME-REBUILD (v1.13.0) • ▶ JOUER</span>
       </div>
       <p class="portal-desc">Maîtrise la grammaire en français et en anglais (articles, pluriels, nature des mots, accords sujet-verbe) avec une seule voix native pure !</p>
       <div class="portal-counts-badge-bar">
@@ -3332,7 +3698,7 @@ body {
           <h3>Vocabulaire & Mots du Monde (FR / EN)</h3>
           <div class="portal-curriculum-tag">Synonymes • Contraires • Thèmes d'Afrique</div>
         </div>
-        <span class="card-rea-badge">✨ v19.0 NATIVE-SLOW-VOICE-TEMPO (v1.12.0) • ▶ JOUER</span>
+        <span class="card-rea-badge">✨ v20.0 REA-TOP-GAME-REBUILD (v1.13.0) • ▶ JOUER</span>
       </div>
       <p class="portal-desc">Enrichis ton vocabulaire en français et en anglais : synonymes, contraires, objets de l'école, animaux et métiers avec prononciation native !</p>
       <div class="portal-counts-badge-bar">
@@ -3351,7 +3717,7 @@ body {
           <h3>Conjugaison & Temps (FR / EN)</h3>
           <div class="portal-curriculum-tag">Présent • Passé • Futur • Être/Avoir & To Be</div>
         </div>
-        <span class="card-rea-badge">✨ v19.0 NATIVE-SLOW-VOICE-TEMPO (v1.12.0) • ▶ JOUER</span>
+        <span class="card-rea-badge">✨ v20.0 REA-TOP-GAME-REBUILD (v1.13.0) • ▶ JOUER</span>
       </div>
       <p class="portal-desc">Voyage dans le temps (Passé, Présent, Futur) pour conjuguer les verbes en français et en anglais selon le pronom sujet !</p>
       <div class="portal-counts-badge-bar">
@@ -3370,7 +3736,7 @@ body {
           <h3>Studio Prononciation (FR ⇄ EN)</h3>
           <div class="portal-curriculum-tag">Anglais & Français • Micro Live • Spectre</div>
         </div>
-        <span class="card-rea-badge">✨ v19.0 NATIVE-SLOW-VOICE-TEMPO (v1.12.0) • ▶ JOUER</span>
+        <span class="card-rea-badge">✨ v20.0 REA-TOP-GAME-REBUILD (v1.13.0) • ▶ JOUER</span>
       </div>
       <p class="portal-desc">Écoute la vraie voix studio française et anglaise, parle dans ton micro pour obtenir ton score de prononciation et suis les billes de rythme !</p>
       <div class="portal-counts-badge-bar">
@@ -3389,7 +3755,7 @@ body {
           <h3>Géographie des Pays d'Afrique</h3>
           <div class="portal-curriculum-tag">Carte SVG Interactive • Drapeaux • Capitales</div>
         </div>
-        <span class="card-rea-badge">✨ v19.0 NATIVE-SLOW-VOICE-TEMPO (v1.12.0) • ▶ JOUER</span>
+        <span class="card-rea-badge">✨ v20.0 REA-TOP-GAME-REBUILD (v1.13.0) • ▶ JOUER</span>
       </div>
       <p class="portal-desc">Explore la vraie carte vectorielle interactive des pays d'Afrique ! Touche les pays au doigt, découvre leurs drapeaux, leurs capitales et leurs fleuves !</p>
       <div class="portal-counts-badge-bar">
@@ -3408,7 +3774,7 @@ body {
           <h3>Fun Facts & Culture Générale (QCM)</h3>
           <div class="portal-curriculum-tag">Quiz Choix Multiples • Indice 50/50 • Afrique</div>
         </div>
-        <span class="card-rea-badge">✨ v19.0 NATIVE-SLOW-VOICE-TEMPO (v1.12.0) • ▶ JOUER</span>
+        <span class="card-rea-badge">✨ v20.0 REA-TOP-GAME-REBUILD (v1.13.0) • ▶ JOUER</span>
       </div>
       <p class="portal-desc">Réponds aux questions à choix multiples (A, B, C, D) avec l'indice 50/50 sur les merveilles d'Afrique, les animaux, l'espace et les sciences !</p>
       <div class="portal-counts-badge-bar">
@@ -3427,7 +3793,7 @@ body {
           <h3>Compréhension de Texte & Contes</h3>
           <div class="portal-curriculum-tag">Lecture Karaoké FR/EN • Quiz Compréhension</div>
         </div>
-        <span class="card-rea-badge">✨ v19.0 NATIVE-SLOW-VOICE-TEMPO (v1.12.0) • ▶ JOUER</span>
+        <span class="card-rea-badge">✨ v20.0 REA-TOP-GAME-REBUILD (v1.13.0) • ▶ JOUER</span>
       </div>
       <p class="portal-desc">Écoute et lis des contes africains et scientifiques bilingues avec surlignage phrase par phrase, puis réponds aux questions de compréhension !</p>
       <div class="portal-counts-badge-bar">
@@ -3446,7 +3812,7 @@ body {
           <h3>Monstre des Syllabes & Lecture</h3>
           <div class="portal-curriculum-tag">Feed The Monster • Voyelles & Consonnes</div>
         </div>
-        <span class="card-rea-badge">✨ v19.0 NATIVE-SLOW-VOICE-TEMPO (v1.12.0) • ▶ JOUER</span>
+        <span class="card-rea-badge">✨ v20.0 REA-TOP-GAME-REBUILD (v1.13.0) • ▶ JOUER</span>
       </div>
       <p class="portal-desc">Nourris le Monstre magique avec les bonnes syllabes colorées (voyelles en rouge, consonnes en bleu) pour former des mots en français et en anglais !</p>
       <div class="portal-counts-badge-bar">
@@ -3465,7 +3831,7 @@ body {
           <h3>Maths 3D, Fractions & Balance Algébrique</h3>
           <div class="portal-curriculum-tag">Boîtes de 10 • Disque Fractions • Balance 2x+4</div>
         </div>
-        <span class="card-rea-badge">✨ v19.0 NATIVE-SLOW-VOICE-TEMPO (v1.12.0) • ▶ JOUER</span>
+        <span class="card-rea-badge">✨ v20.0 REA-TOP-GAME-REBUILD (v1.13.0) • ▶ JOUER</span>
       </div>
       <p class="portal-desc">Manipule les boîtes de 10, le disque interactif des fractions et la balance algébrique selon ta classe (de la Maternelle au CM2 / Primary 6) !</p>
       <div class="portal-counts-badge-bar">
@@ -3484,7 +3850,7 @@ body {
           <h3>Labo Chimie & Échelle pH</h3>
           <div class="portal-curriculum-tag">Sciences • Réactions • Indicateur pH 0–14</div>
         </div>
-        <span class="card-rea-badge">✨ v19.0 NATIVE-SLOW-VOICE-TEMPO (v1.12.0) • ▶ JOUER</span>
+        <span class="card-rea-badge">✨ v20.0 REA-TOP-GAME-REBUILD (v1.13.0) • ▶ JOUER</span>
       </div>
       <p class="portal-desc">Verse les éprouvettes dans l'erlenmeyer, observe l'indicateur de pH en direct, les mélanges de couleurs et l'effervescence des bulles de gaz !</p>
       <div class="portal-counts-badge-bar">
@@ -3503,7 +3869,7 @@ body {
           <h3>Bassin d'Archimède (Flotte/Coule)</h3>
           <div class="portal-curriculum-tag">Physique • Vecteurs Poussée ↑Fa & Poids ↓P</div>
         </div>
-        <span class="card-rea-badge">✨ v19.0 NATIVE-SLOW-VOICE-TEMPO (v1.12.0) • ▶ JOUER</span>
+        <span class="card-rea-badge">✨ v20.0 REA-TOP-GAME-REBUILD (v1.13.0) • ▶ JOUER</span>
       </div>
       <p class="portal-desc">Plonge le bois, la mangue, l'or ou la brique dans l'eau et visualise en direct les vecteurs de la poussée d'Archimède (↑Fa) et du poids (↓P) !</p>
       <div class="portal-counts-badge-bar">
@@ -3522,7 +3888,7 @@ body {
           <h3>Circuit Électrique 3D & Oscilloscope</h3>
           <div class="portal-curriculum-tag">Loi d'Ohm (U=R×I) • Électrons & Hélice</div>
         </div>
-        <span class="card-rea-badge">✨ v19.0 NATIVE-SLOW-VOICE-TEMPO (v1.12.0) • ▶ JOUER</span>
+        <span class="card-rea-badge">✨ v20.0 REA-TOP-GAME-REBUILD (v1.13.0) • ▶ JOUER</span>
       </div>
       <p class="portal-desc">Ferme l'interrupteur pour observer la circulation des électrons bleus, allumer l'ampoule de 4,5 V et faire tourner l'hélice du moteur électrique !</p>
       <div class="portal-counts-badge-bar">
@@ -3541,7 +3907,7 @@ body {
           <h3>Jardin Botanique & Photosynthèse</h3>
           <div class="portal-curriculum-tag">Biologie • Racines, Tige & Floraison 21 Jours</div>
         </div>
-        <span class="card-rea-badge">✨ v19.0 NATIVE-SLOW-VOICE-TEMPO (v1.12.0) • ▶ JOUER</span>
+        <span class="card-rea-badge">✨ v20.0 REA-TOP-GAME-REBUILD (v1.13.0) • ▶ JOUER</span>
       </div>
       <p class="portal-desc">Dose la pluie et le soleil pour faire germer le Baobab, le Tournesol, le Cacaoyer et l'Hibiscus en observant les racines pousser sous terre !</p>
       <div class="portal-counts-badge-bar">
@@ -3560,7 +3926,7 @@ body {
           <h3>Comet Defender : Calcul Spatial</h3>
           <div class="portal-curriculum-tag">TuxMath Arcade • Lasers & Calcul Mental</div>
         </div>
-        <span class="card-rea-badge">✨ v19.0 NATIVE-SLOW-VOICE-TEMPO (v1.12.0) • ▶ JOUER</span>
+        <span class="card-rea-badge">✨ v20.0 REA-TOP-GAME-REBUILD (v1.13.0) • ▶ JOUER</span>
       </div>
       <p class="portal-desc">Pilote le vaisseau spatial et tire au laser sur la comète qui porte la bonne réponse à l'équation affichée sur le tableau de bord !</p>
       <div class="portal-counts-badge-bar">
@@ -3579,7 +3945,7 @@ body {
           <h3>Tangram Géométrique Magnétique</h3>
           <div class="portal-curriculum-tag">Mathigon Euclid • Polygones & Silhouettes</div>
         </div>
-        <span class="card-rea-badge">✨ v19.0 NATIVE-SLOW-VOICE-TEMPO (v1.12.0) • ▶ JOUER</span>
+        <span class="card-rea-badge">✨ v20.0 REA-TOP-GAME-REBUILD (v1.13.0) • ▶ JOUER</span>
       </div>
       <p class="portal-desc">Assemble la Fusée, le Bateau, le Chat, le Lion et le Papillon en glissant les polygones géométriques avec aimantation de précision !</p>
       <div class="portal-counts-badge-bar">
@@ -3598,7 +3964,7 @@ body {
           <h3>Donjon Labyrinthe 3D (Vue 3D & Raycast)</h3>
           <div class="portal-curriculum-tag">Blockly Maze • Algorithme & Syllabes</div>
         </div>
-        <span class="card-rea-badge">✨ v19.0 NATIVE-SLOW-VOICE-TEMPO (v1.12.0) • ▶ JOUER</span>
+        <span class="card-rea-badge">✨ v20.0 REA-TOP-GAME-REBUILD (v1.13.0) • ▶ JOUER</span>
       </div>
       <p class="portal-desc">Guide Léo dans les 5 cartes de la Savane (Oasis, Pyramide, Volcan, Jungle) en collectant les syllabes et nombres d'or ou utilise le bouton Auto-Pas !</p>
       <div class="portal-counts-badge-bar">
@@ -3620,7 +3986,7 @@ body {
         <div class="hud-badge red" id="hud-exercise-badge">🎯 Exercice 1/5 • Niveau 1</div>
       </div>
       <div class="hud-stats">
-        <span class="hud-badge" id="hud-version-pill" style="background:#312E81;color:#FDE047;border:1.5px solid #38BDF8;font-size:0.72rem;padding:4px 8px;">🚀 v19.0 (v1.12.0)</span>
+        <span class="hud-badge" id="hud-version-pill" style="background:#312E81;color:#FDE047;border:1.5px solid #38BDF8;font-size:0.72rem;padding:4px 8px;">🚀 v20.0 (v1.13.0)</span>
         <div class="hud-badge" id="hud-reward-chest" title="Coffre à Récompenses Éducatives (Stickers & Trophées)" style="background:#065F46;color:#FEF08A;border:1.5px solid #34D399;cursor:pointer;">🎁 <span id="hud-sticker-count">1</span> <span id="hud-latest-sticker">🦁</span></div>
         <div class="hud-badge">⭐ <span id="hud-score-val">0</span> XP</div>
         <div class="combo-multiplier" id="hud-combo-badge">🔥 COMBO x1</div>
@@ -3817,6 +4183,78 @@ body {
       </div>
 
       
+      
+      <!-- V20.0 REA ARCADE OVERLAY (NUMBER TETRIS, SAFARI RACER & PRODIGY RPG ENGINES) -->
+      <div class="module-overlay" id="new-arcade-overlay">
+        <section class="new-game-stage" id="new-game-stage">
+          <div class="new-game-intro">
+            <span class="new-game-mascot" id="new-game-mascot" aria-hidden="true">🦁</span>
+            <div>
+              <h2 id="new-game-heading">Arcade Éducatif</h2>
+              <p id="new-game-prompt"></p>
+            </div>
+            <button type="button" id="new-game-replay" class="new-game-audio" aria-label="Écouter la consigne">🔊</button>
+          </div>
+          <!-- 1. Real Playable 10-Column Number Tetris Board with Controls -->
+          <div class="tetris-world" id="math-tetris-panel" hidden>
+            <div class="tetris-side-quest">
+              <div class="tetris-quest-badge">🧩 MISSION TETRIS NOMBRES</div>
+              <strong id="tetris-goal">10 cubes font une ligne complète</strong>
+              <span id="tetris-lines">Lignes : 0 / 1</span>
+              <div id="tetris-math-hint" style="font-size:0.88rem;color:#FDE047;font-weight:900;margin-top:6px;">Remplis 10 cubes pour gagner !</div>
+            </div>
+            <div class="tetris-board-wrap">
+              <div class="tetris-board" id="tetris-board" role="grid" aria-label="Number block puzzle"></div>
+            </div>
+            <div class="tetris-controls" aria-label="Tetris controls">
+              <button type="button" data-tetris="left" aria-label="Move left">◀</button>
+              <button type="button" data-tetris="rotate" aria-label="Rotate">↻</button>
+              <button type="button" data-tetris="right" aria-label="Move right">▶</button>
+              <button type="button" data-tetris="drop" aria-label="Drop block">⬇</button>
+            </div>
+          </div>
+          <!-- 2. Real Playable 3-Lane Safari Math Racer -->
+          <div class="racer-world" id="safari-racer-panel" hidden>
+            <div class="race-question-card">
+              <span id="race-picture-hint" aria-hidden="true">🏎️</span>
+              <strong id="race-equation">8 + 4 = ?</strong>
+              <span id="race-gate-hint">Passe sous la bonne porte !</span>
+            </div>
+            <div class="race-scene" id="race-scene">
+              <div class="race-skyline" aria-hidden="true"></div>
+              <div class="race-road" aria-hidden="true"><i></i><i></i></div>
+              <div class="race-driver-car" id="race-driver">🏎️</div>
+              <div class="race-gates" id="race-gates"></div>
+            </div>
+            <div class="race-touch-hint" id="race-touch-hint">Touche la voie 1, 2 ou 3 ou utilise les flèches ◀ ▶ pour conduire !</div>
+            <div class="race-controls" style="display:flex;justify-content:center;gap:14px;margin-top:10px;"><button type="button" id="steer-left" class="btn-interactive" style="min-width:120px;padding:12px;font-size:1.1rem;font-weight:900;border-radius:18px;">◀ Voie Gauche</button><button type="button" id="steer-right" class="btn-interactive" style="min-width:120px;padding:12px;font-size:1.1rem;font-weight:900;border-radius:18px;">Voie Droite ▶</button></div>
+          </div>
+          <!-- 3. Real Playable Prodigy Math Monster RPG Battle -->
+          <div class="prodigy-battle-world" id="prodigy-battle-panel" hidden>
+            <div class="battle-stage-header">
+              <div class="hero-status-card">
+                <div class="status-name">🧙‍♂️ LÉO MAGE</div>
+                <div class="hp-bar-wrap"><div class="hp-bar-fill hero" id="hero-hp-bar" style="width:100%;"></div></div>
+                <div class="hp-text" id="hero-hp-text">❤️❤️❤️ 100/100</div>
+              </div>
+              <div class="battle-vs-badge">⚡ COMBAT MATH</div>
+              <div class="monster-status-card">
+                <div class="status-name" id="battle-monster-name">🐉 GARDIEN DE LA SAVANE</div>
+                <div class="hp-bar-wrap"><div class="hp-bar-fill monster" id="monster-hp-bar" style="width:100%;"></div></div>
+                <div class="hp-text" id="monster-hp-text">❤️ 100/100 HP</div>
+              </div>
+            </div>
+            <div class="battle-arena-canvas-wrap">
+              <canvas id="battleCanvas" width="600" height="200"></canvas>
+            </div>
+            <div class="battle-spells-container">
+              <div class="spells-prompt-text" id="battle-formula-prompt">Choisis un Sort Élémentaire et résous l'équation pour attaquer :</div>
+              <div class="spells-deck" id="battle-spells-deck"></div>
+            </div>
+          </div>
+        </section>
+      </div>
+
       <!-- V8.0 KHAN ACADEMY KIDS × PERSEUS VISUAL & SOUND STEP-BY-STEP EXPLAINER BAR -->
       <div class="khan-visual-explainer" id="khan-visual-explainer">
         <div class="khan-explainer-top">
@@ -8435,7 +8873,9 @@ body {
       setupFunFactsQuizActivity();
     } else if (g === 'grammar_lab' || g === 'vocabulary_lab' || g === 'conjugation_lab') {
       setupLanguageQuestActivity(g);
-    } else if (g === 'tetris_blocks' || g === 'auto_racer' || g === 'math_monster_quest' || g === 'science_ecosystem' || g === 'math_magic_tricks' || g === 'science_hero_tricks') {
+    } else if (g === 'tetris_blocks' || g === 'math_tetris' || g === 'auto_racer' || g === 'safari_racer' || g === 'math_monster_quest') {
+      setupNewArcadeGame(g);
+    } else if (g === 'science_ecosystem' || g === 'math_magic_tricks' || g === 'science_hero_tricks') {
       setupReaSuperArcadeActivity(g);
     } else {
       $('canvas-wrapper').style.display = 'block';
@@ -10090,6 +10530,370 @@ body {
     VoiceEngine.speak(fullSpeech);
   }
 
+  
+  // ============================================================================
+  // V20.0 REA TOP-GAME ENGINES: NUMBER TETRIS, SAFARI RACER & PRODIGY RPG BATTLE
+  // ============================================================================
+  const TETRIS_COLS = 10;
+  const TETRIS_ROWS = 14;
+  const TETRIS_PIECES = [
+    { color: '#53C8B3', cells: [[1,0],[1,1],[1,2],[1,3]] },
+    { color: '#E59A51', cells: [[0,0],[0,1],[1,0],[1,1]] },
+    { color: '#E97570', cells: [[0,0],[1,0],[1,1],[1,2]] },
+    { color: '#8C8DE8', cells: [[0,2],[1,0],[1,1],[1,2]] },
+    { color: '#EAC968', cells: [[0,1],[0,2],[1,0],[1,1]] },
+    { color: '#70A9D9', cells: [[0,1],[0,2],[1,0],[1,1]] },
+    { color: '#9FC66D', cells: [[0,1],[1,0],[1,1],[1,2]] }
+  ];
+
+  function tetrisPiece() {
+    const def = TETRIS_PIECES[Math.floor(Math.random() * TETRIS_PIECES.length)];
+    return { cells: def.cells.map(cell => cell.slice()), color: def.color, x: 3, y: 0 };
+  }
+
+  function tetrisCollides(piece, x = piece.x, y = piece.y, cells = piece.cells) {
+    if (!state.numberTetris) return false;
+    return cells.some(([cx, cy]) => {
+      const bx = x + cx, by = y + cy;
+      return bx < 0 || bx >= TETRIS_COLS || by >= TETRIS_ROWS || (by >= 0 && state.numberTetris.board[by][bx]);
+    });
+  }
+
+  function renderTetrisBoard() {
+    const grid = $('tetris-board');
+    if (!grid || !state.numberTetris) return;
+    const merged = state.numberTetris.board.map(row => row.slice());
+    state.numberTetris.piece.cells.forEach(([cx, cy]) => {
+      const x = state.numberTetris.piece.x + cx, y = state.numberTetris.piece.y + cy;
+      if (y >= 0 && y < TETRIS_ROWS && x >= 0 && x < TETRIS_COLS) merged[y][x] = state.numberTetris.piece.color;
+    });
+    if (grid.children.length !== TETRIS_ROWS * TETRIS_COLS) {
+      grid.innerHTML = '';
+      const frag = document.createDocumentFragment();
+      for (let i = 0; i < TETRIS_ROWS * TETRIS_COLS; i++) {
+        const cell = document.createElement('div');
+        cell.className = 'tetris-cell';
+        cell.setAttribute('role', 'gridcell');
+        frag.appendChild(cell);
+      }
+      grid.appendChild(frag);
+    }
+    Array.from(grid.children).forEach((cell, index) => {
+      const r = Math.floor(index / TETRIS_COLS), c = index % TETRIS_COLS;
+      const color = merged[r][c];
+      cell.classList.toggle('filled', Boolean(color));
+      if (color) {
+        cell.style.setProperty('--block-color', color);
+        cell.textContent = (state.grade === 'MAT' || state.grade === 'SIL') ? '•' : '1';
+      } else {
+        cell.style.removeProperty('--block-color');
+        cell.textContent = '';
+      }
+    });
+  }
+
+  function lockTetrisPiece() {
+    const game = state.numberTetris;
+    if (!game) return;
+    game.piece.cells.forEach(([cx, cy]) => {
+      const x = game.piece.x + cx, y = game.piece.y + cy;
+      if (y >= 0 && y < TETRIS_ROWS && x >= 0 && x < TETRIS_COLS) game.board[y][x] = game.piece.color;
+    });
+    const remaining = game.board.filter(row => row.some(cell => !cell));
+    const cleared = TETRIS_ROWS - remaining.length;
+    if (cleared) {
+      for (let i = 0; i < cleared; i++) remaining.unshift(Array(TETRIS_COLS).fill(null));
+      game.board = remaining;
+      game.lines += cleared;
+      $('tetris-lines').textContent = (state.lang === 'en' ? 'Rows: ' : 'Lignes : ') + game.lines + ' / ' + game.goal;
+      state.score += cleared * 10;
+      $('hud-score-val').textContent = state.score * 20;
+      AudioEngine.playLevelUp();
+      createExplosion(CW / 2, CH / 2, '#FDE047', 24);
+      if (!game.awarded && game.lines >= game.goal) {
+        game.awarded = true;
+        if (state.nateivaGameTimer) { window.clearInterval(state.nateivaGameTimer); state.nateivaGameTimer = null; }
+        window.setTimeout(() => onActivityTaskCompleted(), 450);
+        return;
+      }
+    }
+    game.piece = tetrisPiece();
+    if (tetrisCollides(game.piece)) {
+      game.board.splice(0, 3, ...Array.from({length:3}, () => Array(TETRIS_COLS).fill(null)));
+      game.piece = tetrisPiece();
+      VoiceEngine.speak(state.lang === 'en' ? 'Keep building. Your blocks are ready again!' : 'Continue à construire. Tes blocs sont prêts !');
+    }
+    renderTetrisBoard();
+  }
+
+  function controlTetris(action) {
+    const game = state.numberTetris;
+    if (!game || game.awarded) return;
+    const piece = game.piece;
+    if (action === 'left' && !tetrisCollides(piece, piece.x - 1)) piece.x--;
+    else if (action === 'right' && !tetrisCollides(piece, piece.x + 1)) piece.x++;
+    else if (action === 'rotate') {
+      const maxX = Math.max(...piece.cells.map(([x]) => x));
+      const maxY = Math.max(...piece.cells.map(([,y]) => y));
+      const rotated = piece.cells.map(([x,y]) => [maxY - y, x]);
+      if (!tetrisCollides(piece, piece.x, piece.y, rotated)) piece.cells = rotated;
+      else if (!tetrisCollides(piece, piece.x - 1, piece.y, rotated)) { piece.x--; piece.cells = rotated; }
+      else if (!tetrisCollides(piece, piece.x + 1, piece.y, rotated)) { piece.x++; piece.cells = rotated; }
+      else return;
+      AudioEngine.playSnap();
+    } else if (action === 'drop') {
+      while (!tetrisCollides(piece, piece.x, piece.y + 1)) piece.y++;
+      lockTetrisPiece();
+      return;
+    }
+    renderTetrisBoard();
+  }
+
+  function buildRaceMath(challengeIndex) {
+    const grade = state.grade;
+    const step = challengeIndex + state.level;
+    let a = 2 + (step % 8), b = 1 + ((step * 3) % 8), symbol = '+', answer;
+    if (grade === 'MAT') { a = 1 + (step % 3); b = 1 + ((step + 1) % 3); }
+    else if (grade === 'SIL' || grade === 'CP') { a = 2 + (step % 8); b = 1 + ((step * 3) % 8); }
+    else if (grade === 'CE') { a = 2 + (step % 7); b = 2 + ((step * 2) % 6); symbol = '×'; }
+    else if (grade === 'CE2') { a = 3 + (step % 7); b = 2 + ((step * 3) % 8); symbol = '×'; }
+    else if (grade === 'CM1') { a = 12 + (step % 19); b = 4 + (step % 8); symbol = '−'; if (b > a) [a,b] = [b,a]; }
+    else { a = 20 + (step % 46); b = 10 + (step % 18); symbol = '+'; }
+    answer = symbol === '×' ? a * b : (symbol === '−' ? a - b : a + b);
+    const distractors = [answer + 2, Math.max(1, answer - 2), answer + 4];
+    const lanes = [answer, distractors[0], distractors[1]].sort(() => (step % 2 === 0 ? 0.3 - Math.random() : Math.random() - 0.5));
+    return { a, b, symbol, answer, lanes, prompt: a + ' ' + symbol + ' ' + b + ' = ?', hint: grade === 'MAT' ? '🦁' : '⚡' };
+  }
+
+  function setupNewArcadeGame(gameKey) {
+    const overlay = $('new-arcade-overlay');
+    if (!overlay) return;
+    overlay.classList.add('active');
+    $('canvas-wrapper').style.display = 'none';
+    $('answers-container').style.display = 'none';
+    $('maze-dpad-container').classList.remove('active');
+    $('new-game-stage').dataset.game = gameKey;
+    const isEn = state.lang === 'en';
+
+    const panelTetris = $('math-tetris-panel');
+    const panelRacer = $('safari-racer-panel');
+    const panelBattle = $('prodigy-battle-panel');
+    panelTetris.hidden = (gameKey !== 'tetris_blocks' && gameKey !== 'math_tetris');
+    panelRacer.hidden = (gameKey !== 'auto_racer' && gameKey !== 'safari_racer');
+    panelBattle.hidden = (gameKey !== 'math_monster_quest');
+
+    if (state.nateivaGameTimer) { window.clearInterval(state.nateivaGameTimer); state.nateivaGameTimer = null; }
+
+    // 1. REA NUMBER TETRIS ENGINE
+    if (gameKey === 'tetris_blocks' || gameKey === 'math_tetris') {
+      $('new-game-heading').textContent = isEn ? 'Number Tetris' : 'Tetris des Nombres';
+      $('new-game-prompt').textContent = isEn
+        ? 'Move, turn and drop the cubes. Clear rows to earn stars!'
+        : 'Déplace, tourne et pose les cubes. Complète les lignes pour gagner des étoiles !';
+      $('new-game-mascot').textContent = '🧱';
+      $('new-game-replay').onclick = () => VoiceEngine.speak($('new-game-prompt').textContent);
+
+      const goal = 1;
+      state.numberTetris = {
+        board: Array.from({length: TETRIS_ROWS}, () => Array(TETRIS_COLS).fill(null)),
+        piece: tetrisPiece(),
+        lines: 0,
+        goal,
+        awarded: false
+      };
+      $('tetris-goal').textContent = isEn ? 'Ten cubes make a full row' : 'Dix cubes remplissent une ligne';
+      $('tetris-lines').textContent = (isEn ? 'Rows: ' : 'Lignes : ') + '0 / ' + goal;
+      renderTetrisBoard();
+      document.querySelectorAll('[data-tetris]').forEach(button => {
+        button.onclick = () => controlTetris(button.dataset.tetris);
+      });
+      if (!window.__NATEIVA_TETRIS_KEYS_BOUND__) {
+        document.addEventListener('keydown', event => {
+          if (!document.getElementById('new-arcade-overlay')?.classList.contains('active') || (state.game !== 'tetris_blocks' && state.game !== 'math_tetris')) return;
+          const command = { ArrowLeft: 'left', ArrowRight: 'right', ArrowDown: 'drop', ArrowUp: 'rotate', ' ': 'drop' }[event.key];
+          if (command) { event.preventDefault(); controlTetris(command); }
+        });
+        window.__NATEIVA_TETRIS_KEYS_BOUND__ = true;
+      }
+      const baseSpeed = state.grade === 'MAT' ? 1000 : (state.grade === 'SIL' || state.grade === 'CP' ? 850 : 700);
+      state.nateivaGameTimer = window.setInterval(() => {
+        const piece = state.numberTetris?.piece;
+        if (!piece || state.numberTetris.awarded) return;
+        if (!tetrisCollides(piece, piece.x, piece.y + 1)) {
+          piece.y++;
+          renderTetrisBoard();
+        } else {
+          lockTetrisPiece();
+        }
+      }, Math.max(350, baseSpeed - (state.level - 1) * 35));
+      VoiceEngine.speak($('new-game-prompt').textContent);
+      return;
+    }
+
+    // 2. REA SAFARI MATH RACER ENGINE
+    if (gameKey === 'auto_racer' || gameKey === 'safari_racer') {
+      $('new-game-heading').textContent = isEn ? 'Safari Math Racer' : 'Course Math Safari';
+      $('new-game-prompt').textContent = isEn
+        ? 'Tap the lane with the right answer to speed through the savannah!'
+        : 'Touche la voie avec la bonne réponse pour foncer dans la savane !';
+      $('new-game-mascot').textContent = '🏎️';
+      $('new-game-replay').onclick = () => VoiceEngine.speak($('new-game-prompt').textContent);
+
+      const challengeIndex = state.gamePlayCounter[state.game + '_' + state.grade] || 0;
+      const challenge = buildRaceMath(challengeIndex);
+      state.safariRace = challenge;
+      $('race-equation').textContent = challenge.prompt;
+      $('race-picture-hint').textContent = challenge.hint;
+      $('race-gate-hint').textContent = isEn ? 'Pick the correct gate!' : 'Choisis la bonne porte !';
+      $('race-touch-hint').textContent = isEn ? 'Use a finger or arrow keys to steer your racecar.' : 'Touche la voie ou utilise les flèches gauche/droite pour conduire.';
+      const gates = $('race-gates');
+      gates.innerHTML = '';
+      challenge.lanes.forEach((value, lane) => {
+        const gate = document.createElement('button');
+        gate.type = 'button';
+        gate.className = 'race-gate';
+        gate.textContent = String(value);
+        gate.tabIndex = 0;
+        gate.setAttribute('aria-label', (isEn ? 'Answer ' : 'Réponse ') + value);
+        gate.addEventListener('keydown', event => {
+          if (event.key !== 'ArrowLeft' && event.key !== 'ArrowRight') return;
+          event.preventDefault();
+          const nextIndex = Math.max(0, Math.min(gates.children.length - 1, lane + (event.key === 'ArrowRight' ? 1 : -1)));
+          gates.children[nextIndex]?.focus();
+        });
+        gate.addEventListener('click', () => {
+          if (state.safariRace?.awarded) return;
+          const driver = $('race-driver');
+          if (driver) driver.style.left = ['17%', '50%', '83%'][lane];
+          if (value === challenge.answer) {
+            state.safariRace.awarded = true;
+            gate.classList.add('is-correct');
+            if (driver) driver.classList.add('racing');
+            AudioEngine.playLevelUp();
+            window.setTimeout(() => onActivityTaskCompleted(), 650);
+          } else {
+            gate.animate([{transform:'translateX(0)'},{transform:'translateX(-6px)'},{transform:'translateX(6px)'},{transform:'translateX(0)'}], {duration: 260});
+            AudioEngine.playWrong();
+          }
+        });
+        gates.appendChild(gate);
+      });
+      const driver = $('race-driver');
+      if (driver) {
+        driver.classList.remove('racing');
+        driver.style.left = '50%';
+      }
+      VoiceEngine.speak(isEn ? ('Solve ' + challenge.a + ' ' + (challenge.symbol === '×' ? 'times' : challenge.symbol === '−' ? 'minus' : 'plus') + ' ' + challenge.b) : ('Résous ' + challenge.a + ' ' + (challenge.symbol === '×' ? 'fois' : challenge.symbol === '−' ? 'moins' : 'plus') + ' ' + challenge.b));
+      return;
+    }
+
+    // 3. REA PRODIGY MATH MONSTER RPG BATTLE
+    if (gameKey === 'math_monster_quest') {
+      const challengeIndex = state.gamePlayCounter[state.game + '_' + state.grade] || 0;
+      const rawPool = DB.mathMonsterChallenges || [];
+      const gradeMatches = rawPool.filter(it => it.grade === state.grade);
+      const orderedPool = gradeMatches.length ? gradeMatches : rawPool;
+      const item = getUniqueChallengeItem(orderedPool, 'monster_' + state.grade, challengeIndex);
+      const resolveLoc = (val) => (val && typeof val === 'object' && (val.fr || val.en)) ? (val[isEn ? 'en' : 'fr'] || val.fr) : String(val || '');
+
+      const qText = resolveLoc(item.q);
+      const ansText = resolveLoc(item.ans);
+      const mName = resolveLoc(item.monsterName || { fr: 'Dragon de la Savane', en: 'Savannah Dragon' });
+      const mEmoji = item.monster || '🐉';
+      const formula = item.visualFormula || qText;
+      const options = (item.options || []).map(resolveLoc);
+
+      $('new-game-heading').textContent = isEn ? 'Prodigy Math RPG Battle' : 'Combat Math Prodigy';
+      $('new-game-prompt').textContent = isEn
+        ? 'Cast your elemental spells to defeat the guardian monster!'
+        : 'Lance tes sorts élémentaires pour vaincre le monstre gardien !';
+      $('new-game-mascot').textContent = '🧙‍♂️';
+      $('new-game-replay').onclick = () => VoiceEngine.speak($('new-game-prompt').textContent);
+
+      $('battle-monster-name').textContent = mEmoji + ' ' + mName.toUpperCase();
+      $('hero-hp-bar').style.width = '100%';
+      $('monster-hp-bar').style.width = '100%';
+      $('hero-hp-text').textContent = '❤️❤️❤️ 100/100 HP';
+      $('monster-hp-text').textContent = '❤️ 100/100 HP';
+      $('battle-formula-prompt').textContent = formula;
+
+      const spellsDeck = $('battle-spells-deck');
+      spellsDeck.innerHTML = '';
+
+      const spellTypes = [
+        { icon: '🔥', class: 'fire', label: isEn ? 'Fireball' : 'Flamme' },
+        { icon: '⚡', class: 'thunder', label: isEn ? 'Thunder' : 'Éclair' },
+        { icon: '❄️', class: 'ice', label: isEn ? 'Frost' : 'Glace' }
+      ];
+
+      options.slice(0, 3).forEach((opt, idx) => {
+        const sType = spellTypes[idx % 3];
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'spell-crystal spell-btn ' + sType.class;
+        btn.innerHTML = '<span style="font-size:1.6rem;">' + sType.icon + '</span><span>' + opt + '</span>';
+        btn.onclick = () => {
+          if (opt === ansText) {
+            btn.style.transform = 'scale(1.1)';
+            $('monster-hp-bar').style.width = '0%';
+            $('monster-hp-text').textContent = '💀 0/100 HP (VAINCU !)';
+            AudioEngine.playLevelUp();
+            createExplosion(CW / 2, CH / 2, '#F59E0B', 32);
+            spawn3DConfettiBurst();
+            VoiceEngine.speak(isEn ? 'Super spell! Monster defeated!' : 'Sort magique réussi ! Le monstre est vaincu !');
+            window.setTimeout(() => onActivityTaskCompleted(), 750);
+          } else {
+            btn.animate([{transform:'translateX(0)'},{transform:'translateX(-6px)'},{transform:'translateX(6px)'},{transform:'translateX(0)'}], {duration: 260});
+            AudioEngine.playWrong();
+            VoiceEngine.speak(resolveLoc(item.trick || 'Essaie un autre sort !'));
+          }
+        };
+        spellsDeck.appendChild(btn);
+      });
+
+      // Render battle canvas with Wizard Leo & Monster
+      const bCanvas = $('battleCanvas');
+      if (bCanvas) {
+        const bCtx = bCanvas.getContext('2d');
+        const bW = bCanvas.width, bH = bCanvas.height;
+        bCtx.clearRect(0, 0, bW, bH);
+        const grad = bCtx.createLinearGradient(0, 0, 0, bH);
+        grad.addColorStop(0, '#0F172A');
+        grad.addColorStop(1, '#1E1B4B');
+        bCtx.fillStyle = grad;
+        bCtx.fillRect(0, 0, bW, bH);
+
+        // Wizard Leo on left
+        bCtx.font = '54px sans-serif';
+        bCtx.fillText('🦁', 60, bH / 2 + 18);
+        bCtx.font = '32px sans-serif';
+        bCtx.fillText('🪄', 115, bH / 2 - 10);
+        bCtx.fillStyle = '#38BDF8';
+        bCtx.font = 'bold 14px sans-serif';
+        bCtx.fillText('MAGE LÉO', 50, bH / 2 + 48);
+
+        // Monster on right
+        bCtx.font = '64px sans-serif';
+        bCtx.fillText(mEmoji, bW - 140, bH / 2 + 20);
+        bCtx.fillStyle = '#F87171';
+        bCtx.font = 'bold 14px sans-serif';
+        bCtx.fillText(mName.slice(0, 16), bW - 160, bH / 2 + 48);
+
+        // Center magical versus beam
+        bCtx.strokeStyle = 'rgba(253, 224, 71, 0.4)';
+        bCtx.lineWidth = 3;
+        bCtx.setLineDash([8, 8]);
+        bCtx.beginPath();
+        bCtx.moveTo(140, bH / 2);
+        bCtx.lineTo(bW - 160, bH / 2);
+        bCtx.stroke();
+        bCtx.setLineDash([]);
+      }
+      VoiceEngine.speak(qText);
+      return;
+    }
+  }
+
   function setupLanguageQuestActivity(gameType) {
     $('canvas-wrapper').style.display = 'block';
     $('maze-dpad-container').classList.remove('active');
@@ -10158,6 +10962,184 @@ body {
 
     const optContainer = $('lang-quest-options');
     optContainer.innerHTML = '';
+
+    // 1. REA VOCABULARY PICTURE-TO-WORD MATCHING LANES (vocabulary_lab)
+    if (gameType === 'vocabulary_lab') {
+      optContainer.className = 'picture-match-board';
+      const pictureLane = document.createElement('div');
+      pictureLane.className = 'picture-match-lane';
+      const wordLane = document.createElement('div');
+      wordLane.className = 'picture-match-lane';
+      const matched = new Set();
+      let selectedPicture = null;
+      const pictureButtons = new Map();
+      const wordButtons = new Map();
+
+      const items = data.options.map((optStr, idx) => {
+        const icon = resolveCartoonIcon(optStr) !== '🌟' ? resolveCartoonIcon(optStr) : (['🦁','🍌','🌳','🚗','🌞','🐘','🍎','⭐'][idx % 8]);
+        const word = String(optStr).replace(/(?:[�-�][�-�]|[☀-➿])/g, '').trim();
+        return { id: idx, icon, word, raw: optStr };
+      });
+
+      const selectPicture = (item) => {
+        if (matched.has(item.id)) return;
+        selectedPicture = item;
+        pictureButtons.forEach(btn => btn.classList.toggle('is-selected', Number(btn.dataset.pair) === item.id));
+        VoiceEngine.speak(item.word);
+      };
+
+      const selectWord = (item) => {
+        if (!selectedPicture || matched.has(item.id)) return;
+        if (selectedPicture.id === item.id) {
+          matched.add(item.id);
+          const pBtn = pictureButtons.get(item.id);
+          const wBtn = wordButtons.get(item.id);
+          if (pBtn) pBtn.classList.add('is-matched');
+          if (wBtn) wBtn.classList.add('is-matched');
+          AudioEngine.playLevelUp();
+          VoiceEngine.speak(item.word);
+          selectedPicture = null;
+          pictureButtons.forEach(btn => btn.classList.remove('is-selected'));
+          if (matched.size === items.length) {
+            spawn3DConfettiBurst();
+            window.setTimeout(() => onActivityTaskCompleted(), 650);
+          }
+        } else {
+          AudioEngine.playWrong();
+          const wBtn = wordButtons.get(item.id);
+          if (wBtn) {
+            wBtn.classList.add('is-miss');
+            window.setTimeout(() => wBtn.classList.remove('is-miss'), 420);
+          }
+        }
+      };
+
+      items.forEach(item => {
+        const pBtn = document.createElement('button');
+        pBtn.type = 'button';
+        pBtn.className = 'picture-match-card';
+        pBtn.dataset.pair = String(item.id);
+        pBtn.innerHTML = '<span class="picture-match-illustration" aria-hidden="true">' + item.icon + '</span><span class="picture-match-hint">🔊</span>';
+        pBtn.addEventListener('click', () => selectPicture(item));
+        pictureButtons.set(item.id, pBtn);
+        pictureLane.appendChild(pBtn);
+
+        const wBtn = document.createElement('button');
+        wBtn.type = 'button';
+        wBtn.className = 'picture-match-word';
+        wBtn.dataset.pair = String(item.id);
+        wBtn.textContent = item.word;
+        wBtn.addEventListener('click', () => selectWord(item));
+        wordButtons.set(item.id, wBtn);
+        wordLane.appendChild(wBtn);
+      });
+
+      optContainer.append(pictureLane, wordLane);
+      VoiceEngine.speak(data.speech);
+      return;
+    }
+
+    // 2. REA GRAMMAR SENTENCE-TRAIN ENGINE (grammar_lab)
+    if (gameType === 'grammar_lab') {
+      $('lang-quest-sentence').innerHTML = data.sentence.replace('___', '<span class="lang-blank-slot grammar-drop-slot" id="lang-active-blank">?</span>');
+      optContainer.className = 'sentence-train-deck';
+      const slot = $('lang-active-blank');
+
+      const placeCarriage = (choice) => {
+        if (!slot || slot.dataset.locked === 'true') return;
+        if (choice === data.blank) {
+          slot.textContent = choice;
+          slot.dataset.locked = 'true';
+          slot.classList.add('is-correct');
+          document.querySelector('.lang-quest-stage')?.classList.add('train-departure');
+          AudioEngine.playLevelUp();
+          window.setTimeout(() => onActivityTaskCompleted(), 550);
+        } else {
+          AudioEngine.playWrong();
+          VoiceEngine.speak(cleanRuleText);
+        }
+      };
+
+      data.options.forEach((choice, idx) => {
+        const car = document.createElement('button');
+        car.type = 'button';
+        car.className = 'sentence-car';
+        car.draggable = true;
+        car.innerHTML = '<span class="sentence-car-window" aria-hidden="true">' + ['🚂', '🚃', '🪟', '⭐'][idx % 4] + '</span><span>' + choice + '</span>';
+        car.addEventListener('click', () => placeCarriage(choice));
+        optContainer.appendChild(car);
+      });
+      VoiceEngine.speak(data.speech);
+      return;
+    }
+
+    // 3. REA CONJUGATION TIME-PORTALS ENGINE (conjugation_lab)
+    if (gameType === 'conjugation_lab') {
+      $('lang-quest-sentence').innerHTML = data.sentence.replace('___', '<span class="lang-blank-slot" id="lang-active-blank">?</span>');
+      const sourceText = (data.sentence + ' ' + data.speech).toLowerCase();
+      const timeKey = /(hier|yesterday|ago|last|was|were|a terminé|a joué|ont fini|jouaient)/.test(sourceText) ? 'past'
+        : (/(demain|tomorrow|will|shall|bientôt|next|jouera|terminera)/.test(sourceText) ? 'future' : 'now');
+      const times = [
+        { id: 'past', icon: '🌅', fr: 'AVANT (Passé)', en: 'BEFORE (Past)' },
+        { id: 'now', icon: '☀️', fr: 'MAINTENANT (Présent)', en: 'NOW (Present)' },
+        { id: 'future', icon: '🌙', fr: 'APRÈS (Futur)', en: 'AFTER (Future)' }
+      ];
+      optContainer.className = 'time-portal-game';
+      const timeline = document.createElement('div');
+      timeline.className = 'time-portal-track';
+      const verbDeck = document.createElement('div');
+      verbDeck.className = 'time-verb-deck';
+      let chosenTime = null;
+
+      const revealVerbs = () => {
+        verbDeck.innerHTML = '';
+        data.options.forEach((choice, idx) => {
+          const button = document.createElement('button');
+          button.type = 'button';
+          button.className = 'time-verb-token';
+          button.innerHTML = '<span aria-hidden="true">' + ['🦁', '🐒', '🐘', '🦜'][idx % 4] + '</span><span>' + choice + '</span>';
+          button.addEventListener('click', () => {
+            if (choice === data.blank && chosenTime === timeKey) {
+              const slot = $('lang-active-blank');
+              if (slot) { slot.textContent = choice; slot.classList.add('is-correct'); }
+              button.classList.add('verb-flight');
+              AudioEngine.playLevelUp();
+              window.setTimeout(() => onActivityTaskCompleted(), 500);
+            } else {
+              AudioEngine.playWrong();
+              VoiceEngine.speak(cleanRuleText);
+            }
+          });
+          verbDeck.appendChild(button);
+        });
+      };
+
+      times.forEach(time => {
+        const portal = document.createElement('button');
+        portal.type = 'button';
+        portal.className = 'time-portal';
+        portal.innerHTML = '<span class="time-portal-orb" aria-hidden="true">' + time.icon + '</span><span>' + (isEn ? time.en : time.fr) + '</span>';
+        portal.addEventListener('click', () => {
+          if (time.id !== timeKey) {
+            AudioEngine.playWrong();
+            VoiceEngine.speak(isEn ? "Not quite! Think about when this happens." : "Observe bien le moment où se passe l'action !");
+            return;
+          }
+          chosenTime = time.id;
+          timeline.querySelectorAll('.time-portal').forEach(node => node.classList.toggle('is-active', node === portal));
+          AudioEngine.playSnap();
+          revealVerbs();
+        });
+        timeline.appendChild(portal);
+      });
+
+      optContainer.append(timeline, verbDeck);
+      VoiceEngine.speak(data.speech);
+      return;
+    }
+
+    // Default Language Choices fallback
+    optContainer.className = 'lang-options-grid';
     data.options.forEach((choice, idx) => {
       const btn = document.createElement('button');
       btn.className = 'btn-lang-choice';
@@ -10701,6 +11683,8 @@ body {
 
   function returnToHub() {
     VoiceEngine.stop();
+    if (state.nateivaGameTimer) { window.clearInterval(state.nateivaGameTimer); state.nateivaGameTimer = null; }
+    if ($('new-arcade-overlay')) $('new-arcade-overlay').classList.remove('active');
     const appNav = document.querySelector('.app-nav');
     if (appNav) appNav.style.display = 'flex';
     $('arcade-workspace').classList.remove('active');
@@ -13102,7 +14086,7 @@ body {
         sessionStorage.clear();
       } catch (e) {}
       const url = new URL(window.location.href);
-      url.searchParams.set('v', '19.0.' + Date.now());
+      url.searchParams.set('v', '20.0.' + Date.now());
       window.location.replace(url.toString());
     });
   }

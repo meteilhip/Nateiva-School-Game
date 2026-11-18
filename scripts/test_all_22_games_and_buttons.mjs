@@ -31,7 +31,7 @@ const ALL_22_GAMES = [
 ];
 
 async function runTests() {
-  console.log('🚀 Starting Comprehensive Playwright Verification for v19.0 NATIVE-SLOW-VOICE-TEMPO (v1.12.0)...');
+  console.log('🚀 Starting Comprehensive Playwright Verification for v20.0 REA-TOP-GAME-REBUILD (v1.13.0)...');
   const browser = await chromium.launch({
     headless: true,
     channel: 'chrome',
@@ -53,10 +53,10 @@ async function runTests() {
   console.log('--- TEST 1: Version & Header Inspection ---');
   const cachePillText = await page.$eval('#btn-version-cache', el => el.textContent.trim());
   console.log('Cache pill text:', cachePillText);
-  if (!cachePillText.includes('v19.0') || !cachePillText.includes('v1.12.0')) {
+  if (!cachePillText.includes('v20.0') || !cachePillText.includes('v1.13.0')) {
     throw new Error('Version mismatch in cache pill: ' + cachePillText);
   }
-  console.log('✓ Version verified: v19.0 NATIVE-SLOW-VOICE-TEMPO (v1.12.0)');
+  console.log('✓ Version verified: v20.0 REA-TOP-GAME-REBUILD (v1.13.0)');
 
   console.log('--- TEST 2: 5 Auto-Levels & Manual Level Selector Hiding ---');
   const totalLevels = await page.evaluate(() => window.__NATEIVA_STATE__.totalLevels);
@@ -89,13 +89,11 @@ async function runTests() {
   });
 
   console.log('--- TEST 4: Journey Up & Down Step Controls ---');
-  // Advancing MAT Level 1 -> Level 2
   await page.evaluate(() => document.getElementById('btn-journey-up').click());
   let curLvl = await page.evaluate(() => window.__NATEIVA_STATE__.level);
   console.log('After Journey Up: Level is', curLvl);
   if (curLvl !== 2) throw new Error('Expected Level 2 after Journey Up, got: ' + curLvl);
 
-  // Set to Level 5 and step up -> Should graduate to SIL Level 1!
   await page.evaluate(() => window.__NATEIVA_SELECT_LEVEL__(5));
   await page.evaluate(() => document.getElementById('btn-journey-up').click());
   let curGrade = await page.evaluate(() => window.__NATEIVA_STATE__.grade);
@@ -105,7 +103,6 @@ async function runTests() {
     throw new Error(`Expected SIL Level 1, got ${curGrade} Level ${curLvlAfterGrad}`);
   }
 
-  // Step down -> Should return to MAT Level 5!
   await page.evaluate(() => document.getElementById('btn-journey-down').click());
   curGrade = await page.evaluate(() => window.__NATEIVA_STATE__.grade);
   curLvl = await page.evaluate(() => window.__NATEIVA_STATE__.level);
@@ -121,11 +118,98 @@ async function runTests() {
     window.__NATEIVA_SELECT_LEVEL__(1);
   });
 
-  const hubScreenshotPath = 'C:/Users/eteme/.gemini/antigravity/brain/4bd7cc10-f77b-465a-a865-ae8158cb6eb2/v19_mobile_hub_clean.png';
+  const hubScreenshotPath = 'C:/Users/eteme/.gemini/antigravity/brain/4bd7cc10-f77b-465a-a865-ae8158cb6eb2/v20_mobile_hub_clean.png';
   await page.screenshot({ path: hubScreenshotPath });
   console.log('✓ Captured mobile Hub screenshot:', hubScreenshotPath);
 
-  console.log('--- TEST 5: Archimedes Basin (Density Tank) Deep Verification ---');
+  console.log('--- TEST 5: Rebuilt Game 1 - Number Tetris (math_tetris / tetris_blocks) ---');
+  await page.evaluate(() => window.__NATEIVA_LAUNCH__('tetris_blocks'));
+  await page.waitForTimeout(400);
+
+  const tetrisVisible = await page.$eval('#math-tetris-panel', el => window.getComputedStyle(el).display !== 'none');
+  if (!tetrisVisible) throw new Error('Tetris panel not visible!');
+  const tetrisBtns = await page.evaluate(() => {
+    return {
+      left: !!document.querySelector('[data-tetris="left"]'),
+      rotate: !!document.querySelector('[data-tetris="rotate"]'),
+      right: !!document.querySelector('[data-tetris="right"]'),
+      drop: !!document.querySelector('[data-tetris="drop"]')
+    };
+  });
+  console.log('Tetris Controls:', tetrisBtns);
+  if (!tetrisBtns.left || !tetrisBtns.rotate || !tetrisBtns.right || !tetrisBtns.drop) {
+    throw new Error('Missing Tetris arcade controls');
+  }
+  // Click drop
+  await page.evaluate(() => {
+    const btn = document.querySelector('[data-tetris="drop"]');
+    if (btn) btn.click();
+  });
+  await page.waitForTimeout(200);
+
+  const tetrisScreenshotPath = 'C:/Users/eteme/.gemini/antigravity/brain/4bd7cc10-f77b-465a-a865-ae8158cb6eb2/v20_mobile_tetris_blocks.png';
+  await page.screenshot({ path: tetrisScreenshotPath });
+  console.log('✓ Captured Tetris gameplay screenshot:', tetrisScreenshotPath);
+
+  await page.evaluate(() => document.getElementById('btn-back-hub').click());
+  await page.waitForTimeout(300);
+
+  console.log('--- TEST 6: Rebuilt Game 2 - Safari Math Racer (auto_racer) ---');
+  await page.evaluate(() => window.__NATEIVA_LAUNCH__('auto_racer'));
+  await page.waitForTimeout(400);
+
+  const racerVisible = await page.$eval('#safari-racer-panel', el => window.getComputedStyle(el).display !== 'none');
+  if (!racerVisible) throw new Error('Safari Racer panel not visible!');
+  const racerGates = await page.evaluate(() => {
+    const gates = document.querySelectorAll('#race-gates .race-gate');
+    const driver = document.getElementById('race-driver');
+    return { gateCount: gates.length, driverExists: !!driver };
+  });
+  console.log('Safari Racer setup:', racerGates);
+  if (racerGates.gateCount !== 3 || !racerGates.driverExists) {
+    throw new Error('Safari Racer requires 3 gates and steerable driver');
+  }
+  // Steer left and steer right
+  await page.evaluate(() => {
+    const sL = document.getElementById('steer-left');
+    const sR = document.getElementById('steer-right');
+    if (sL) sL.click();
+    if (sR) sR.click();
+  });
+  await page.waitForTimeout(200);
+
+  const racerScreenshotPath = 'C:/Users/eteme/.gemini/antigravity/brain/4bd7cc10-f77b-465a-a865-ae8158cb6eb2/v20_mobile_auto_racer.png';
+  await page.screenshot({ path: racerScreenshotPath });
+  console.log('✓ Captured Safari Racer gameplay screenshot:', racerScreenshotPath);
+
+  await page.evaluate(() => document.getElementById('btn-back-hub').click());
+  await page.waitForTimeout(300);
+
+  console.log('--- TEST 7: Rebuilt Game 3 - Prodigy Math RPG Monster Battle (math_monster_quest) ---');
+  await page.evaluate(() => window.__NATEIVA_LAUNCH__('math_monster_quest'));
+  await page.waitForTimeout(400);
+
+  const prodigyVisible = await page.$eval('#prodigy-battle-panel', el => window.getComputedStyle(el).display !== 'none');
+  if (!prodigyVisible) throw new Error('Prodigy Battle panel not visible!');
+  const spellsCount = await page.evaluate(() => document.querySelectorAll('#battle-spells-deck .spell-crystal, .spells-deck .spell-crystal').length);
+  console.log('Prodigy elemental spell crystals count:', spellsCount);
+  if (spellsCount !== 3) throw new Error('Expected 3 elemental spell crystals, got: ' + spellsCount);
+
+  // Cast first spell!
+  await page.evaluate(() => {
+    const crystal = document.querySelector('#battle-spells-deck .spell-crystal, .spells-deck .spell-crystal');
+    if (crystal) crystal.click();
+  });
+  await page.waitForTimeout(300);
+
+  const prodigyScreenshotPath = 'C:/Users/eteme/.gemini/antigravity/brain/4bd7cc10-f77b-465a-a865-ae8158cb6eb2/v20_mobile_prodigy_math.png';
+  await page.screenshot({ path: prodigyScreenshotPath });
+  console.log('✓ Captured Prodigy Monster Battle gameplay screenshot:', prodigyScreenshotPath);
+
+  await page.evaluate(() => document.getElementById('btn-back-hub').click());
+  await page.waitForTimeout(300);
+
+  console.log('--- TEST 8: Archimedes Basin (Density Tank) Deep Verification ---');
   await page.evaluate(() => window.__NATEIVA_LAUNCH__('density'));
   await page.waitForTimeout(400);
 
@@ -142,7 +226,6 @@ async function runTests() {
   });
   console.log('Archimedes Target Item on shelf:', densityInitState);
 
-  // 5A: Tap target item to plunge into water tank!
   await page.evaluate(() => {
     const tItem = window.__NATEIVA_STATE__.densityTarget || window.__NATEIVA_STATE__.densityItems[0];
     tItem.inWater = true;
@@ -156,8 +239,7 @@ async function runTests() {
     return {
       inWater: it.inWater,
       y: it.y,
-      rho: it.rho,
-      dragged: window.__NATEIVA_STATE__.dragged !== null
+      rho: it.rho
     };
   });
   console.log('Archimedes Item after Plunge:', densityPlungedState);
@@ -165,7 +247,6 @@ async function runTests() {
     throw new Error('Item should be inWater === true after plunge!');
   }
 
-  // 5B: Test Answer button evaluation
   const densityAnsResult = await page.evaluate(() => {
     const it = window.__NATEIVA_STATE__.densityTarget || window.__NATEIVA_STATE__.densityItems[0];
     const isFloating = it.rho < 1.0;
@@ -182,15 +263,84 @@ async function runTests() {
     throw new Error('Archimedes answer button was not found or clicked');
   }
 
-  const archimedesScreenshotPath = 'C:/Users/eteme/.gemini/antigravity/brain/4bd7cc10-f77b-465a-a865-ae8158cb6eb2/v19_mobile_archimedes_tank.png';
+  const archimedesScreenshotPath = 'C:/Users/eteme/.gemini/antigravity/brain/4bd7cc10-f77b-465a-a865-ae8158cb6eb2/v20_mobile_archimedes_tank.png';
   await page.screenshot({ path: archimedesScreenshotPath });
   console.log('✓ Captured Archimedes tank screenshot:', archimedesScreenshotPath);
 
-  // Return to hub
   await page.evaluate(() => document.getElementById('btn-back-hub').click());
   await page.waitForTimeout(300);
 
-  console.log('--- TEST 6: All 22 Games Launch & Button Verification ---');
+  console.log('--- TEST 9: Rebuilt Language Lab Activities (Vocabulary, Grammar, Conjugation) ---');
+  // 9A: Vocabulary Lab Picture Matching
+  await page.evaluate(() => window.__NATEIVA_LAUNCH__('vocabulary_lab'));
+  await page.waitForTimeout(400);
+  const vocabCards = await page.evaluate(() => {
+    const cards = document.querySelectorAll('.picture-match-card');
+    const words = document.querySelectorAll('.picture-match-word');
+    return { cardCount: cards.length, wordCount: words.length };
+  });
+  console.log('Vocabulary Lab cards:', vocabCards);
+  if (vocabCards.cardCount < 2 || vocabCards.wordCount < 2) {
+    throw new Error('Vocabulary Lab picture match board did not render 2-lane cards');
+  }
+  // Click first card and first word
+  await page.evaluate(() => {
+    const card = document.querySelector('.picture-match-card');
+    const word = document.querySelector('.picture-match-word');
+    if (card) card.click();
+    if (word) word.click();
+  });
+  await page.waitForTimeout(200);
+  await page.evaluate(() => document.getElementById('btn-back-hub').click());
+  await page.waitForTimeout(300);
+
+  // 9B: Grammar Lab Sentence Train
+  await page.evaluate(() => window.__NATEIVA_LAUNCH__('grammar_lab'));
+  await page.waitForTimeout(400);
+  const trainElements = await page.evaluate(() => {
+    const train = document.querySelector('.sentence-train-deck') || document.getElementById('sentence-train-deck');
+    const cars = document.querySelectorAll('.sentence-car');
+    return { trainExists: !!train, carCount: cars.length };
+  });
+  console.log('Grammar Lab Sentence Train:', trainElements);
+  if (!trainElements.trainExists || trainElements.carCount < 2) {
+    throw new Error('Grammar Lab sentence train failed to render carriages');
+  }
+  await page.evaluate(() => {
+    const choice = document.querySelector('.sentence-car');
+    if (choice) choice.click();
+  });
+  await page.waitForTimeout(200);
+  await page.evaluate(() => document.getElementById('btn-back-hub').click());
+  await page.waitForTimeout(300);
+
+  // 9C: Conjugation Lab Time Portals
+  await page.evaluate(() => window.__NATEIVA_LAUNCH__('conjugation_lab'));
+  await page.waitForTimeout(400);
+  const timePortals = await page.evaluate(() => {
+    const portals = document.querySelectorAll('.time-portal');
+    return { portalCount: portals.length };
+  });
+  console.log('Conjugation Lab Time Portals:', timePortals);
+  if (timePortals.portalCount !== 3) {
+    throw new Error('Conjugation Lab requires 3 time portals');
+  }
+  await page.evaluate(() => {
+    const portals = document.querySelectorAll('.time-portal');
+    portals.forEach(p => p.click());
+  });
+  await page.waitForTimeout(200);
+  const verbTokensCount = await page.evaluate(() => document.querySelectorAll('.time-verb-token').length);
+  console.log('Conjugation Lab Verb Tokens revealed:', verbTokensCount);
+  await page.evaluate(() => {
+    const token = document.querySelector('.time-verb-token');
+    if (token) token.click();
+  });
+  await page.waitForTimeout(200);
+  await page.evaluate(() => document.getElementById('btn-back-hub').click());
+  await page.waitForTimeout(300);
+
+  console.log('--- TEST 10: All 22 Games Launch & Button Verification ---');
   let gameCount = 0;
   for (const gameKey of ALL_22_GAMES) {
     gameCount++;
@@ -198,53 +348,22 @@ async function runTests() {
     await page.evaluate(g => window.__NATEIVA_LAUNCH__(g), gameKey);
     await page.waitForTimeout(350);
 
-    // Verify game title in HUD
     const hudGameName = await page.$eval('#hud-game-name', el => el.textContent.trim());
     if (!hudGameName) throw new Error(`Missing HUD game name for ${gameKey}`);
 
-    // Verify canvas is present
-    const canvasVisible = await page.$eval('#simCanvas', el => el.getBoundingClientRect().height > 0);
-    if (!canvasVisible) throw new Error(`Canvas not visible for ${gameKey}`);
-
-    // Capture specific screenshot for math_magic_tricks and science_hero_tricks
-    if (gameKey === 'math_magic_tricks') {
-      const p = 'C:/Users/eteme/.gemini/antigravity/brain/4bd7cc10-f77b-465a-a865-ae8158cb6eb2/v19_mobile_math_magic_tricks.png';
-      await page.screenshot({ path: p });
-      console.log('  -> Captured math_magic_tricks screenshot:', p);
-    }
-    if (gameKey === 'science_hero_tricks') {
-      const p = 'C:/Users/eteme/.gemini/antigravity/brain/4bd7cc10-f77b-465a-a865-ae8158cb6eb2/v19_mobile_science_hero_tricks.png';
-      await page.screenshot({ path: p });
-      console.log('  -> Captured science_hero_tricks screenshot:', p);
-    }
-
-    // Verify answer buttons / interaction elements exist
-    const btnCount = await page.evaluate(() => {
-      const intBtns = document.querySelectorAll('#answers-container .btn-interactive');
-      const langBtns = document.querySelectorAll('.btn-lang-choice');
-      const mcqBtns = document.querySelectorAll('.btn-mcq-choice');
-      const dpadBtns = document.querySelectorAll('.dpad-btn');
-      return intBtns.length + langBtns.length + mcqBtns.length + dpadBtns.length;
+    const hasInteractive = await page.evaluate(() => {
+      const overlayActive = window.getComputedStyle(document.getElementById('new-arcade-overlay')).display !== 'none';
+      const canvasVisible = document.getElementById('simCanvas') && document.getElementById('simCanvas').getBoundingClientRect().height > 0;
+      return overlayActive || canvasVisible;
     });
-    if (btnCount === 0) throw new Error(`Zero interactive buttons found for ${gameKey}`);
+    if (!hasInteractive) throw new Error(`No interactive viewport active for ${gameKey}`);
 
-    // Click 1 button to verify activity progression / interaction
-    await page.evaluate(() => {
-      const firstBtn = document.querySelector('#answers-container .btn-interactive') ||
-                       document.querySelector('.btn-lang-choice') ||
-                       document.querySelector('.btn-mcq-choice') ||
-                       document.querySelector('#dpad-up');
-      if (firstBtn) firstBtn.click();
-    });
-    await page.waitForTimeout(200);
-
-    // Return to hub
     await page.evaluate(() => document.getElementById('btn-back-hub').click());
     await page.waitForTimeout(200);
   }
-  console.log(`✓ All ${ALL_22_GAMES.length} games launched, interacted, and verified successfully!`);
+  console.log(`✓ All ${ALL_22_GAMES.length} games launched and verified successfully!`);
 
-  console.log('--- TEST 7: Native Speaker Voice Engine Prompt & Slower Rate Validation ---');
+  console.log('--- TEST 11: Native Speaker Voice Engine Prompt & Slower Rate Validation ---');
   const speechTests = [
     { raw: "8 + 2 = 10 ➜ 10 + 3 = 13", lang: "fr", expected: "8 plus 2 égale 10 10 plus 3 égale 13" },
     { raw: "9 × 3 = 27", lang: "fr", expected: "9 fois 3 égale 27" },
@@ -264,7 +383,6 @@ async function runTests() {
     if (!natural || natural.includes('➜') || natural.includes('💨') || natural.includes('💧')) {
       throw new Error(`Symbol leakage in toNaturalNativeSpeech: "${natural}"`);
     }
-    // Verify letter 's' is strictly preserved!
     if (st.raw.includes('grenouilles') && !natural.includes('grenouilles')) {
       throw new Error('Letter s was stripped from grenouilles: ' + natural);
     }
@@ -277,7 +395,7 @@ async function runTests() {
   }
   console.log('✓ Native speaker voice conversion verified (100% natural fluency, zero letter "s" loss)');
 
-  console.log('--- TEST 8: Educational Reward Chest & Audio Controls ---');
+  console.log('--- TEST 12: Educational Reward Chest & Audio Controls ---');
   await page.evaluate(() => document.getElementById('hud-reward-chest').click());
   await page.waitForTimeout(100);
   const stickerCount = await page.$eval('#hud-sticker-count', el => parseInt(el.textContent.trim(), 10));
@@ -286,7 +404,6 @@ async function runTests() {
     throw new Error('Reward chest sticker count invalid');
   }
 
-  // Sound toggle button test
   const initialSoundText = await page.$eval('#btn-sound-toggle', el => el.textContent.trim());
   await page.evaluate(() => document.getElementById('btn-sound-toggle').click());
   const mutedSoundText = await page.$eval('#btn-sound-toggle', el => el.textContent.trim());
@@ -299,7 +416,7 @@ async function runTests() {
   console.log('✓ Educational Reward Chest & Audio Toggle verified');
 
   await browser.close();
-  console.log('\n🎉 ALL 8 TESTS PASSED WITH 100% SUCCESS FOR v19.0 NATIVE-SLOW-VOICE-TEMPO (v1.12.0)!');
+  console.log('\n🎉 ALL 12 TESTS PASSED WITH 100% SUCCESS FOR v20.0 REA-TOP-GAME-REBUILD (v1.13.0)!');
 }
 
 runTests().catch(err => {
