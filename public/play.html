@@ -150,19 +150,21 @@ function makeDraggable(el, svg, handlers) {
   el.addEventListener('pointerdown', ev => {
     ev.preventDefault();
     dragging = true;
-    el.setPointerCapture && el.setPointerCapture(ev.pointerId);
+    try { el.setPointerCapture(ev.pointerId); } catch (e) {}
     el.classList.add('grabbing');
     handlers.start && handlers.start(toSvg(ev), ev);
   });
-  el.addEventListener('pointermove', ev => { if (dragging) handlers.move && handlers.move(toSvg(ev), ev); });
+  const move = ev => { if (dragging && el.isConnected) { handlers.move && handlers.move(toSvg(ev), ev); } };
   const up = ev => {
     if (!dragging) return;
     dragging = false;
     el.classList.remove('grabbing');
-    handlers.end && handlers.end(toSvg(ev), ev);
+    if (el.isConnected) handlers.end && handlers.end(toSvg(ev), ev);
   };
-  el.addEventListener('pointerup', up);
-  el.addEventListener('pointercancel', up);
+  // window-level tracking survives fast pointers, synthetic input and capture failures
+  window.addEventListener('pointermove', move);
+  window.addEventListener('pointerup', up);
+  window.addEventListener('pointercancel', up);
   el.classList.add('grab');
 }
 // rAF tween
@@ -557,7 +559,7 @@ ZONE_BUILDERS.bubbles = function (host) {
   [[340, 812], [900, 820], [1260, 808]].forEach(([x, y]) => { S('path', { d: `M ${x} ${y} q 9 -16 18 0 q 9 16 18 0`, stroke: '#FF9BC0', 'stroke-width': 7, fill: 'none', 'stroke-linecap': 'round' }, svg); });
   const layer = S('g', {}, svg);
   // target board (numeral + dots — picture-first)
-  const board = S('g', { transform: 'translate(135,250)' }, svg);
+  const board = S('g', { transform: 'translate(135,330)' }, svg);
   S('rect', { x: -95, y: -85, width: 190, height: 200, rx: 26, fill: 'rgba(255,255,255,0.92)', stroke: '#4CC9F0', 'stroke-width': 6 }, board);
   const bigNum = S('text', { x: 0, y: -8, 'text-anchor': 'middle', 'font-size': 86, 'font-weight': 800, fill: '#1C7ED6', 'font-family': 'inherit', text: '3' }, board);
   const dotsG = S('g', {}, board);
@@ -749,7 +751,7 @@ ZONE_BUILDERS.orchard = function (host) {
       mission(`Partage ${n * per} fruits entre les ${n} paniers, pareil partout !`, `Share ${n * per} fruits equally between the ${n} baskets!`, ZONE_ICONS.orchard);
     }
     const totalFruit = needPer.reduce((s, n) => s + n, 0) + ri(2, 4);
-    for (let i = 0; i < totalFruit; i++) spawnFruit(190 + (i % 4) * 95 + rnd(-16, 16), 230 + Math.floor(i / 4) * 85 + rnd(-12, 12));
+    for (let i = 0; i < totalFruit; i++) spawnFruit(170 + (i % 4) * 100 + rnd(-16, 16), 370 + Math.floor(i / 4) * 88 + rnd(-12, 12));
     roundLive = true;
   }
   nextRound();
@@ -986,8 +988,8 @@ ZONE_BUILDERS.splash = function (host) {
   const WATER_Y = 430;
   S('path', { d: 'M 0 430 Q 375 410 750 430 T 1500 430 L 1500 455 Q 1125 475 750 455 T 0 455 Z', fill: 'rgba(255,255,255,0.35)' }, svg);
   // shelf
-  S('rect', { x: 0, y: 130, width: 420, height: 26, rx: 12, fill: 'url(#gWood)' }, svg);
-  S('rect', { x: 0, y: 290, width: 420, height: 26, rx: 12, fill: 'url(#gWood)' }, svg);
+  S('rect', { x: 0, y: 200, width: 420, height: 26, rx: 12, fill: 'url(#gWood)' }, svg);
+  S('rect', { x: 0, y: 350, width: 420, height: 26, rx: 12, fill: 'url(#gWood)' }, svg);
   // docks
   const dockF = S('g', { transform: 'translate(1130,392)' }, svg);
   S('rect', { x: -150, y: 0, width: 300, height: 26, rx: 12, fill: 'url(#gWood)', stroke: '#6B421D', 'stroke-width': 3 }, dockF);
@@ -1026,7 +1028,7 @@ ZONE_BUILDERS.splash = function (host) {
     items.forEach(it => it.g.remove()); items = []; sorted = 0;
     roundItems = shuffle(OBJECTS).slice(0, 4);
     roundItems.forEach((o, i) => {
-      const hx = 70 + (i % 2) * 170, hy = (i < 2 ? 100 : 260);
+      const hx = 70 + (i % 2) * 170, hy = (i < 2 ? 170 : 320);
       const g = S('g', { transform: `translate(${hx},${hy})` }, svg);
       S('circle', { r: 40, fill: 'rgba(255,255,255,0.001)' }, g); // fat touch target
       o.draw(g);
