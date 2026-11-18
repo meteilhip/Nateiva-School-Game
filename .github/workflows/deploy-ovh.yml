@@ -16,37 +16,71 @@ jobs:
   deploy:
     if: ${{ vars.OVH_DEPLOY_ENABLED == 'true' }}
     runs-on: ubuntu-latest
+    env:
+      SSH_DIR: ${{ github.workspace }}/.nateiva-school-game-ssh
     steps:
       - name: Check out the GitHub revision
         uses: actions/checkout@v4
 
-      - name: Prepare the dedicated SSH identity
+      - name: Prepare the SSH identity (dedicated key, or password fallback)
         env:
+          OVH_SSH_HOST: ${{ secrets.OVH_SSH_HOST }}
           OVH_SSH_PRIVATE_KEY: ${{ secrets.OVH_SSH_PRIVATE_KEY }}
           OVH_SSH_KNOWN_HOSTS: ${{ secrets.OVH_SSH_KNOWN_HOSTS }}
+          OVH_SSH_PASSWORD: ${{ secrets.OVH_SSH_PASSWORD }}
         run: |
           set -euo pipefail
-          test -n "$OVH_SSH_PRIVATE_KEY" || { echo "Missing OVH_SSH_PRIVATE_KEY repository secret" >&2; exit 1; }
-          test -n "$OVH_SSH_KNOWN_HOSTS" || { echo "Missing OVH_SSH_KNOWN_HOSTS repository secret" >&2; exit 1; }
-          install -m 700 -d "$RUNNER_TEMP/nateiva-school-game-ssh"
-          printf '%s\n' "$OVH_SSH_PRIVATE_KEY" > "$RUNNER_TEMP/nateiva-school-game-ssh/id_ed25519"
-          printf '%s\n' "$OVH_SSH_KNOWN_HOSTS" > "$RUNNER_TEMP/nateiva-school-game-ssh/known_hosts"
-          chmod 600 "$RUNNER_TEMP/nateiva-school-game-ssh/id_ed25519" "$RUNNER_TEMP/nateiva-school-game-ssh/known_hosts"
+          test -n "$OVH_SSH_HOST" || { echo "Missing OVH_SSH_HOST repository secret" >&2; exit 1; }
+          install -m 700 -d "$SSH_DIR"
+
+          # Host verification: use the pinned known_hosts secret when provided, otherwise scan at run time.
+          if [ -n "${OVH_SSH_KNOWN_HOSTS:-}" ]; then
+            printf '%s\n' "$OVH_SSH_KNOWN_HOSTS" > "$SSH_DIR/known_hosts"
+          else
+            ssh-keyscan -H "$OVH_SSH_HOST" > "$SSH_DIR/known_hosts" 2>/dev/null
+            test -s "$SSH_DIR/known_hosts" || { echo "ssh-keyscan failed for $OVH_SSH_HOST" >&2; exit 1; }
+          fi
+          chmod 600 "$SSH_DIR/known_hosts"
+
+          # Auth: prefer the dedicated private key; fall back to password auth via sshpass.
+          if [ -n "${OVH_SSH_PRIVATE_KEY:-}" ]; then
+            printf '%s\n' "$OVH_SSH_PRIVATE_KEY" > "$SSH_DIR/id_ed25519"
+            chmod 600 "$SSH_DIR/id_ed25519"
+            echo "AUTH_MODE=key" >> "$GITHUB_ENV"
+          elif [ -n "${OVH_SSH_PASSWORD:-}" ]; then
+            sudo apt-get update -qq
+            sudo apt-get install -y -qq sshpass >/dev/null
+            echo "AUTH_MODE=password" >> "$GITHUB_ENV"
+          else
+            echo "Provide either OVH_SSH_PRIVATE_KEY or OVH_SSH_PASSWORD as a repository secret" >&2
+            exit 1
+          fi
+
+          # Single SSH wrapper used by ssh and rsync in all later steps.
+          cat > "$SSH_DIR/ssh.sh" <<'WRAP'
+          #!/usr/bin/env bash
+          set -euo pipefail
+          SSH_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+          OPTS=(-o UserKnownHostsFile="$SSH_DIR/known_hosts" -o StrictHostKeyChecking=yes -o ConnectTimeout=20)
+          if [ -f "$SSH_DIR/id_ed25519" ]; then
+            exec ssh -i "$SSH_DIR/id_ed25519" -o IdentitiesOnly=yes "${OPTS[@]}" "$@"
+          else
+            exec sshpass -e ssh -o PreferredAuthentications=password -o PubkeyAuthentication=no "${OPTS[@]}" "$@"
+          fi
+          WRAP
+          chmod 700 "$SSH_DIR/ssh.sh"
 
       - name: Upload the GitHub revision to the isolated game directory
         env:
           OVH_SSH_HOST: ${{ secrets.OVH_SSH_HOST }}
           OVH_SSH_USER: ${{ secrets.OVH_SSH_USER }}
+          SSHPASS: ${{ secrets.OVH_SSH_PASSWORD }}
         run: |
           set -euo pipefail
-          test -n "$OVH_SSH_HOST" || { echo "Missing OVH_SSH_HOST repository secret" >&2; exit 1; }
           test -n "$OVH_SSH_USER" || { echo "Missing OVH_SSH_USER repository secret" >&2; exit 1; }
-          SSH_KEY="$RUNNER_TEMP/nateiva-school-game-ssh/id_ed25519"
-          KNOWN_HOSTS="$RUNNER_TEMP/nateiva-school-game-ssh/known_hosts"
           SSH_TARGET="$OVH_SSH_USER@$OVH_SSH_HOST"
-          SSH_OPTS="-i $SSH_KEY -o IdentitiesOnly=yes -o UserKnownHostsFile=$KNOWN_HOSTS -o StrictHostKeyChecking=yes"
-          ssh $SSH_OPTS "$SSH_TARGET" 'sudo install -d -o ubuntu -g ubuntu /opt/nateiva-school-game/public /opt/nateiva-school-game/ops/ovh-school-game'
-          export RSYNC_RSH="ssh $SSH_OPTS"
+          "$SSH_DIR/ssh.sh" "$SSH_TARGET" 'sudo install -d -o ubuntu -g ubuntu /opt/nateiva-school-game/public /opt/nateiva-school-game/ops/ovh-school-game'
+          export RSYNC_RSH="$SSH_DIR/ssh.sh"
           rsync -az --delete ./public/ "$SSH_TARGET:/opt/nateiva-school-game/public/"
           rsync -az --delete --exclude='.env.production' ./ops/ovh-school-game/ "$SSH_TARGET:/opt/nateiva-school-game/ops/ovh-school-game/"
 
@@ -54,11 +88,10 @@ jobs:
         env:
           OVH_SSH_HOST: ${{ secrets.OVH_SSH_HOST }}
           OVH_SSH_USER: ${{ secrets.OVH_SSH_USER }}
+          SSHPASS: ${{ secrets.OVH_SSH_PASSWORD }}
         run: |
           set -euo pipefail
-          SSH_KEY="$RUNNER_TEMP/nateiva-school-game-ssh/id_ed25519"
-          KNOWN_HOSTS="$RUNNER_TEMP/nateiva-school-game-ssh/known_hosts"
-          ssh -i "$SSH_KEY" -o IdentitiesOnly=yes -o UserKnownHostsFile="$KNOWN_HOSTS" -o StrictHostKeyChecking=yes "$OVH_SSH_USER@$OVH_SSH_HOST" 'bash -se' <<'REMOTE'
+          "$SSH_DIR/ssh.sh" "$OVH_SSH_USER@$OVH_SSH_HOST" 'bash -se' <<'REMOTE'
           set -euo pipefail
           APP_ROOT=/opt/nateiva-school-game
           OPS_DIR="$APP_ROOT/ops/ovh-school-game"
