@@ -56,6 +56,11 @@ html,body{ width:100%; height:100%; overflow:hidden; font-family:'Baloo 2','Fred
 #mission-icon{ width:56px; height:56px; flex:0 0 auto; }
 #mission-text{ font-size:1.22rem; font-weight:800; color:var(--ink); line-height:1.15; }
 #mission-speaker{ margin-left:auto; flex:0 0 auto; width:44px; height:44px; }
+#mission-subject{ flex:0 0 auto; padding:7px 13px; border-radius:999px; color:#fff; font-weight:900; font-size:0.86rem; letter-spacing:0.04em; border:3px solid #fff; box-shadow:0 4px 10px rgba(0,0,0,0.18); white-space:nowrap; }
+#mission-trick{ flex:0 0 auto; width:44px; height:44px; margin-left:auto; display:flex; align-items:center; justify-content:center; font-size:1.5rem; background:#FFF8E1; border:3px solid #FFD23F; border-radius:50%; cursor:pointer; transition:transform 0.2s; animation:bob 2.4s ease-in-out infinite; }
+#mission-trick:active{ transform:scale(0.85); }
+#mission-speaker{ margin-left:0; }
+@media(max-width:760px){ #mission-subject{ font-size:0.7rem; padding:5px 9px; } #mission-text{ font-size:0.98rem; } }
 
 /* ---------- Progress gems ---------- */
 #round-gems{ position:absolute; top:18px; left:50%; transform:translateX(-50%); display:flex; gap:8px; z-index:36; }
@@ -99,6 +104,20 @@ html,body{ width:100%; height:100%; overflow:hidden; font-family:'Baloo 2','Fred
 .station:hover{ transform:scale(1.12); }
 .station .ring{ animation:bob 2.6s ease-in-out infinite; transform-box:fill-box; transform-origin:center; }
 #back-home-float{ position:absolute; bottom:14px; right:14px; z-index:40; }
+.hbtn.search{ background:linear-gradient(145deg,#2EC4B6,#1B9C8F); }
+#search-overlay{ position:fixed; inset:0; z-index:70; background:rgba(43,45,66,0.45); backdrop-filter:blur(6px); display:none; align-items:flex-start; justify-content:center; padding:70px 16px 16px; }
+#search-overlay.on{ display:flex; }
+#search-panel{ background:#fff; border:5px solid #2EC4B6; border-radius:30px; width:min(760px,100%); max-height:82vh; overflow:auto; padding:18px; box-shadow:0 30px 70px rgba(0,0,0,0.4); }
+#search-head{ display:flex; gap:10px; }
+#search-input{ flex:1; font-family:inherit; font-size:1.3rem; font-weight:800; color:var(--ink); border:4px solid #C9D3EE; border-radius:999px; padding:12px 22px; outline:none; }
+#search-input:focus{ border-color:#2EC4B6; }
+#search-close{ width:56px; border-radius:50%; border:4px solid #fff; background:linear-gradient(145deg,#FF4D57,#E5252A); color:#fff; font-size:1.2rem; cursor:pointer; }
+#search-results{ display:grid; grid-template-columns:repeat(auto-fill,minmax(210px,1fr)); gap:12px; margin-top:16px; }
+.sr-card{ border:4px solid #E3E8F7; border-radius:22px; padding:14px 10px; text-align:center; cursor:pointer; background:#FBFCFF; transition:transform 0.2s cubic-bezier(0.34,1.56,0.64,1), border-color 0.2s; }
+.sr-card:hover{ transform:scale(1.05); border-color:#2EC4B6; }
+.sr-card svg{ width:70px; height:70px; }
+.sr-sub{ display:inline-block; margin-top:4px; padding:4px 12px; border-radius:999px; color:#fff; font-weight:900; font-size:0.74rem; }
+.sr-name{ font-weight:800; color:var(--ink); margin-top:5px; font-size:1.02rem; }
 </style>
 </head>
 <body>
@@ -106,15 +125,22 @@ html,body{ width:100%; height:100%; overflow:hidden; font-family:'Baloo 2','Fred
   <div class="scene" id="scene-map"></div>
   <div class="scene" id="scene-game"></div>
   <div id="round-gems"></div>
-  <div id="mission-bar"><div id="mission-icon"></div><div id="mission-text"></div><div id="mission-speaker"></div></div>
+  <div id="mission-bar"><div id="mission-subject"></div><div id="mission-icon"></div><div id="mission-text"></div><div id="mission-trick" title="Astuce / Trick">💡</div><div id="mission-speaker"></div></div>
   <div id="hud">
     <button class="hbtn" id="btn-home" title="Île / Island"></button>
     <button class="hbtn alt" id="btn-lang" title="FR / EN"></button>
     <button class="hbtn sun" id="btn-sound" title="Son / Sound"></button>
+    <button class="hbtn search" id="btn-search" title="Chercher / Search"></button>
     <div id="star-pill"><span id="star-art"></span><span id="star-count">0</span></div>
   </div>
   <div id="grade-dock"></div>
   <div id="confetti-layer"></div>
+  <div id="search-overlay">
+    <div id="search-panel">
+      <div id="search-head"><input id="search-input" type="text" autocomplete="off" spellcheck="false"><button id="search-close">✖</button></div>
+      <div id="search-results"></div>
+    </div>
+  </div>
   <div id="cheer-card"><div id="cheer-inner"><div id="cheer-art"></div><div id="cheer-title"></div><div id="cheer-stars"></div><button id="cheer-btn"></button></div></div>
 </div>
 <script>
@@ -395,14 +421,18 @@ function mission(fr, en, iconBuilder) {
     S('path', { d: 'M 15.5 9.5 Q 18 12 15.5 14.5', stroke: '#7A4E00', 'stroke-width': 1.6, fill: 'none', 'stroke-linecap': 'round' }, svg);
   }));
   $('mission-bar').classList.add('on');
-  say(fr, en);
+  const z = activeZone && ZONES.find(zz => zz.key === activeZone);
+  if (z && Rounds.idx === 0 && !Rounds._subjectSaid) {
+    Rounds._subjectSaid = true;
+    say(T(z.subject.fr, z.subject.en).toLowerCase().replace(/&/g, T('et', 'and')) + ' ! ' + fr, T(z.subject.fr, z.subject.en).toLowerCase() + '! ' + (en == null ? fr : en));
+  } else say(fr, en);
 }
 $('mission-bar') && $('mission-bar').addEventListener('click', () => { if (currentMission) say(currentMission[0], currentMission[1]); sfx.tap(); });
 
 const Rounds = {
   total: 5, idx: 0, mistakes: 0, zone: null,
   start(zoneKey, total = 5) {
-    this.zone = zoneKey; this.total = total; this.idx = 0; this.mistakes = 0;
+    this.zone = zoneKey; this.total = total; this.idx = 0; this.mistakes = 0; this._subjectSaid = false;
     const g = $('round-gems'); g.innerHTML = '';
     for (let i = 0; i < total; i++) H('div', { class: 'gem' }, g);
   },
@@ -442,15 +472,52 @@ function updateStarPill() {
 
 /* ================= WORLD MAP (the island) ================= */
 const ZONES = [
-  { key: 'bubbles', fr: 'Lagune aux Bulles', en: 'Bubble Lagoon', color: '#4CC9F0', mx: 320, my: 700 },
-  { key: 'orchard', fr: 'Verger de Momo', en: "Momo's Orchard", color: '#FF9F1C', mx: 580, my: 560 },
-  { key: 'river', fr: 'Rivière de Fela', en: "Fela's River", color: '#57CC57', mx: 420, my: 420 },
-  { key: 'paint', fr: 'Studio de Zara', en: "Zara's Studio", color: '#9B5DE5', mx: 700, my: 330 },
-  { key: 'splash', fr: 'Lagon Splash', en: 'Splash Lagoon', color: '#1C7ED6', mx: 1000, my: 250 },
-  { key: 'garden', fr: 'Jardin de Nana', en: "Nana's Garden", color: '#3FA34D', mx: 1210, my: 400 },
-  { key: 'safari', fr: 'Safari Ballon', en: 'Balloon Safari', color: '#E5252A', mx: 1080, my: 580 },
-  { key: 'theatre', fr: 'Théâtre Kalulu', en: 'Kalulu Theatre', color: '#F25CA2', mx: 820, my: 700 }
+  { key: 'bubbles', fr: 'Lagune aux Bulles', en: 'Bubble Lagoon', color: '#4CC9F0', mx: 320, my: 700, px: 230, py: 1150,
+    subject: { fr: 'MATHS', en: 'MATH', color: '#FF9F1C' },
+    topics: ['maths', 'math', 'compter', 'counting', 'nombres', 'numbers', 'addition', 'somme', 'sums', 'calcul', 'compléments', 'bonds'] },
+  { key: 'orchard', fr: 'Verger de Momo', en: "Momo's Orchard", color: '#FF9F1C', mx: 580, my: 560, px: 560, py: 1060,
+    subject: { fr: 'MATHS', en: 'MATH', color: '#FF9F1C' },
+    topics: ['maths', 'math', 'addition', 'multiplication', 'division', 'partage', 'share', 'times', 'tables', 'calcul', 'opérations', 'operations', 'multiplier', 'diviser'] },
+  { key: 'river', fr: 'Rivière de Fela', en: "Fela's River", color: '#57CC57', mx: 420, my: 420, px: 240, py: 890,
+    subject: { fr: 'LECTURE & SONS', en: 'READING & PHONICS', color: '#4CC9F0' },
+    topics: ['lecture', 'reading', 'syllabes', 'syllables', 'sons', 'sounds', 'phonics', 'lettres', 'letters', 'mots', 'words', 'français', 'french', 'anglais', 'english', 'prononciation', 'pronunciation'] },
+  { key: 'paint', fr: 'Studio de Zara', en: "Zara's Studio", color: '#9B5DE5', mx: 700, my: 330, px: 585, py: 760,
+    subject: { fr: 'FORMES & COULEURS', en: 'SHAPES & COLORS', color: '#9B5DE5' },
+    topics: ['formes', 'shapes', 'couleurs', 'colors', 'géométrie', 'geometry', 'triangle', 'cercle', 'circle', 'carré', 'square', 'vocabulaire', 'vocabulary', 'corps', 'body', 'art'] },
+  { key: 'splash', fr: 'Lagon Splash', en: 'Splash Lagoon', color: '#1C7ED6', mx: 1000, my: 250, px: 255, py: 620,
+    subject: { fr: 'SCIENCES', en: 'SCIENCE', color: '#2EC4B6' },
+    topics: ['sciences', 'science', 'flotte', 'coule', 'float', 'sink', 'densité', 'density', 'archimède', 'archimedes', 'eau', 'water', 'physique', 'physics', 'expérience', 'experiment'] },
+  { key: 'garden', fr: 'Jardin de Nana', en: "Nana's Garden", color: '#3FA34D', mx: 1210, my: 400, px: 590, py: 490,
+    subject: { fr: 'SCIENCES', en: 'SCIENCE', color: '#2EC4B6' },
+    topics: ['sciences', 'science', 'plantes', 'plants', 'jardin', 'garden', 'photosynthèse', 'photosynthesis', 'germination', 'nature', 'biologie', 'biology', 'eau', 'soleil', 'sun'] },
+  { key: 'safari', fr: 'Safari Ballon', en: 'Balloon Safari', color: '#E5252A', mx: 1080, my: 580, px: 290, py: 360,
+    subject: { fr: 'GÉOGRAPHIE', en: 'GEOGRAPHY', color: '#E5252A' },
+    topics: ['géographie', 'geography', 'pays', 'countries', 'afrique', 'africa', 'capitales', 'capitals', 'drapeaux', 'flags', 'cartes', 'maps', 'monde', 'world', 'cameroun', 'cameroon'] },
+  { key: 'theatre', fr: 'Théâtre Kalulu', en: 'Kalulu Theatre', color: '#F25CA2', mx: 820, my: 700, px: 555, py: 235,
+    subject: { fr: 'COMPRÉHENSION', en: 'COMPREHENSION', color: '#F25CA2' },
+    topics: ['compréhension', 'comprehension', 'histoires', 'stories', 'contes', 'tales', 'écouter', 'listening', 'trivia', 'questions', 'fables', 'lecture', 'reading'] }
 ];
+// Concept & trick coaching per zone — harder classes get real strategies (Astuces)
+const TRICKS = {
+  bubbles: d => d <= 2 ? ['Astuce : compte avec le doigt, un poisson à la fois : un, deux, trois !', 'Trick: count with your finger, one fish at a time: one, two, three!']
+    : ['Astuce : cherche les compléments à dix ! Sept plus trois, six plus quatre... dix arrive plus vite !', 'Trick: look for number bonds to ten! Seven plus three, six plus four... ten comes faster!'],
+  orchard: d => d <= 1 ? ['Astuce : pose les fruits un par un et compte à voix haute !', 'Trick: place the fruits one by one and count out loud!']
+    : d <= 4 ? ['Astuce : trois paniers de quatre, c\u2019est quatre plus quatre plus quatre. La multiplication est une addition répétée !', 'Trick: three baskets of four is four plus four plus four. Multiplication is repeated addition!']
+    : ['Astuce : pour partager, donne un fruit à chaque panier, chacun son tour, jusqu\u2019à la fin. C\u2019est la division !', 'Trick: to share, give one fruit to each basket, taking turns, until none are left. That is division!'],
+  river: d => d <= 2 ? ['Astuce : écoute le premier son : B... A... BA !', 'Trick: listen to the first sound: B... A... BA!']
+    : ['Astuce : découpe le mot en syllabes en frappant des mains : BA-NA-NE, trois syllabes !', 'Trick: clap the word into syllables: BA-NA-NA, three syllables!'],
+  paint: d => d <= 2 ? ['Astuce : écoute bien la couleur ET la partie du corps avant de peindre !', 'Trick: listen for the color AND the body part before painting!']
+    : ['Astuce : un triangle a trois côtés, un carré a quatre côtés égaux, un cercle est tout rond !', 'Trick: a triangle has three sides, a square has four equal sides, a circle is perfectly round!'],
+  splash: d => d <= 2 ? ['Astuce : regarde d\u2019abord ce que fait l\u2019objet dans l\u2019eau, puis range-le !', 'Trick: first watch what the object does in the water, then sort it!']
+    : d <= 4 ? ['Astuce : les objets lourds pour leur taille coulent, les objets légers pour leur taille flottent. C\u2019est la densité !', 'Trick: things heavy for their size sink, things light for their size float. That is density!']
+    : ['Astuce d\u2019Archimède : un objet flotte quand l\u2019eau qu\u2019il pousse pèse plus lourd que lui !', 'Archimedes\u2019 trick: an object floats when the water it pushes away weighs more than it does!'],
+  garden: d => d <= 2 ? ['Astuce : la plante a soif ET besoin de lumière : un peu d\u2019eau, un peu de soleil !', 'Trick: the plant is thirsty AND needs light: some water, some sunshine!']
+    : ['Astuce : avec l\u2019eau, la lumière et l\u2019air, la plante fabrique sa propre nourriture. C\u2019est la photosynthèse !', 'Trick: with water, light and air, the plant makes its own food. That is photosynthesis!'],
+  safari: d => d <= 2 ? ['Astuce : regarde le drapeau, puis cherche sur la carte sans te presser !', 'Trick: look at the flag, then search the map calmly!']
+    : ['Astuce : repère d\u2019abord la région : le Maroc est au Nord, le Kenya à l\u2019Est, l\u2019Afrique du Sud tout en bas !', 'Trick: find the region first: Morocco is in the North, Kenya in the East, South Africa at the very bottom!'],
+  theatre: d => d <= 2 ? ['Astuce : regarde bien QUI fait QUOI dans le spectacle !', 'Trick: watch closely WHO does WHAT in the show!']
+    : ['Astuce : retiens le héros, son problème et la solution : c\u2019est le squelette de toutes les histoires !', 'Trick: remember the hero, the problem and the solution: that is the skeleton of every story!']
+};
 // tiny drawn icon per zone for its medallion
 const ZONE_ICONS = {
   bubbles: g => { S('circle', { cx: -10, cy: 4, r: 15, fill: 'url(#gBubble)', stroke: '#8FD6FF', 'stroke-width': 2 }, g); S('circle', { cx: 16, cy: -10, r: 9, fill: 'url(#gBubble)', stroke: '#8FD6FF', 'stroke-width': 2 }, g); },
@@ -465,59 +532,73 @@ const ZONE_ICONS = {
 let leoMapAvatar = null;
 function buildMap() {
   const host = $('scene-map'); host.innerHTML = '';
-  const svg = S('svg', { class: 'stage', viewBox: '0 0 1500 850', preserveAspectRatio: 'xMidYMid slice' }, host);
+  const landscape = innerWidth >= innerHeight * 1.02;
+  const W = landscape ? 1500 : 850, H = landscape ? 850 : 1500;
+  const svg = S('svg', { class: 'stage', viewBox: `0 0 ${W} ${H}`, preserveAspectRatio: 'xMidYMid slice' }, host);
   gradDefs(svg);
-  S('rect', { x: 0, y: 0, width: 1500, height: 520, fill: 'url(#gSky)' }, svg);
-  S('rect', { x: 0, y: 500, width: 1500, height: 350, fill: 'url(#gSea)' }, svg);
-  // animated waves
+  const seaY = landscape ? 500 : 560;
+  S('rect', { x: 0, y: 0, width: W, height: seaY + 20, fill: 'url(#gSky)' }, svg);
+  S('rect', { x: 0, y: seaY, width: W, height: H - seaY, fill: 'url(#gSea)' }, svg);
   for (let w = 0; w < 3; w++) {
-    let d = `M 0 ${520 + w * 26}`;
-    for (let x = 0; x <= 1560; x += 60) d += ` q 30 ${w % 2 ? 14 : -14} 60 0`;
+    let d = `M 0 ${seaY + 20 + w * 26}`;
+    for (let x = 0; x <= W + 60; x += 60) d += ` q 30 ${w % 2 ? 14 : -14} 60 0`;
     const wave = S('path', { d, fill: 'none', stroke: 'rgba(255,255,255,0.4)', 'stroke-width': 5, 'stroke-linecap': 'round' }, svg);
     wave.animate([{ transform: 'translateX(0)' }, { transform: 'translateX(-60px)' }], { duration: 3000 + w * 900, iterations: Infinity });
   }
-  drawSun(svg, 1360, 110, 1.1);
-  [[-40, 90, 1, 70], [500, 60, 0.8, 95], [1000, 140, 1.15, 120]].forEach(([x, y, s, dur]) => {
+  drawSun(svg, W - 140, 110, landscape ? 1.1 : 0.9);
+  [[-40, 90, 1, 70], [W * 0.33, 60, 0.8, 95], [W * 0.66, 140, 1.1, 120]].forEach(([x, y, s, dur]) => {
     const c = drawCloud(svg, x, y, s, 'rgba(255,255,255,0.95)');
-    c.animate([{ transform: `translate(${x}px,${y}px) scale(${s})` }, { transform: `translate(${x + 1700}px,${y}px) scale(${s})` }], { duration: dur * 1000, iterations: Infinity });
+    c.animate([{ transform: `translate(${x}px,${y}px) scale(${s})` }, { transform: `translate(${x + W + 300}px,${y}px) scale(${s})` }], { duration: dur * 1000, iterations: Infinity });
   });
   // island
-  S('ellipse', { cx: 750, cy: 560, rx: 640, ry: 270, fill: 'url(#gSand)', stroke: '#E8B567', 'stroke-width': 6 }, svg);
-  S('ellipse', { cx: 750, cy: 545, rx: 580, ry: 235, fill: 'url(#gGrass)' }, svg);
-  // mountains + trees décor
-  S('path', { d: 'M 620 380 L 720 250 L 820 380 Z', fill: '#7A8B99' }, svg);
-  S('path', { d: 'M 700 380 L 770 290 L 850 380 Z', fill: '#93A8B8' }, svg);
-  S('path', { d: 'M 720 250 L 745 282 L 762 262 L 775 284 L 720 284 Z', fill: '#fff', transform: 'translate(0,-2)' }, svg);
-  [[260, 560], [1240, 520], [900, 430], [540, 680]].forEach(([x, y]) => {
+  const icx = W / 2, icy = landscape ? 560 : 870, irx = landscape ? 640 : 395, iry = landscape ? 270 : 620;
+  S('ellipse', { cx: icx, cy: icy, rx: irx, ry: iry, fill: 'url(#gSand)', stroke: '#E8B567', 'stroke-width': 6 }, svg);
+  S('ellipse', { cx: icx, cy: icy - 15, rx: irx - 60, ry: iry - 35, fill: 'url(#gGrass)' }, svg);
+  const mnt = landscape ? [720, 380] : [425, 430];
+  S('path', { d: `M ${mnt[0] - 100} ${mnt[1]} L ${mnt[0]} ${mnt[1] - 130} L ${mnt[0] + 100} ${mnt[1]} Z`, fill: '#7A8B99' }, svg);
+  S('path', { d: `M ${mnt[0] - 20} ${mnt[1]} L ${mnt[0] + 50} ${mnt[1] - 90} L ${mnt[0] + 130} ${mnt[1]} Z`, fill: '#93A8B8' }, svg);
+  S('path', { d: `M ${mnt[0]} ${mnt[1] - 130} L ${mnt[0] + 25} ${mnt[1] - 98} L ${mnt[0] + 42} ${mnt[1] - 118} L ${mnt[0] + 55} ${mnt[1] - 96} L ${mnt[0]} ${mnt[1] - 96} Z`, fill: '#fff' }, svg);
+  const treeSpots = landscape ? [[260, 560], [1240, 520], [900, 430], [540, 680]] : [[140, 760], [700, 660], [660, 1180], [180, 1320]];
+  treeSpots.forEach(([x, y]) => {
     const t = S('g', { transform: `translate(${x},${y})`, style: 'transform-box:fill-box;transform-origin:50% 100%;animation:sway 5s ease-in-out infinite;' }, svg);
     S('rect', { x: -7, y: -10, width: 14, height: 52, rx: 6, fill: 'url(#gWood)' }, t);
     [-30, 0, 30].forEach((dx, i) => S('path', { d: `M 0 -8 Q ${dx} ${-48 - (i % 2) * 14} ${dx * 1.6} ${-20 - (i % 2) * 8}`, stroke: '#3FA34D', 'stroke-width': 11, fill: 'none', 'stroke-linecap': 'round' }, t));
   });
-  // path
+  const ZX = z => landscape ? z.mx : z.px, ZY = z => landscape ? z.my : z.py;
   let pd = '';
-  ZONES.forEach((z, i) => { pd += (i ? ' L ' : 'M ') + z.mx + ' ' + z.my; });
+  ZONES.forEach((z, i) => { pd += (i ? ' L ' : 'M ') + ZX(z) + ' ' + ZY(z); });
   S('path', { d: pd, fill: 'none', stroke: '#FFF4D6', 'stroke-width': 26, 'stroke-linecap': 'round', 'stroke-linejoin': 'round', opacity: 0.9 }, svg);
   S('path', { d: pd, fill: 'none', stroke: '#E8B567', 'stroke-width': 6, 'stroke-dasharray': '2 26', 'stroke-linecap': 'round' }, svg);
   // title banner
-  const tg = S('g', { transform: 'translate(750,74)' }, svg);
-  S('rect', { x: -330, y: -46, width: 660, height: 86, rx: 43, fill: '#fff', stroke: '#FFD23F', 'stroke-width': 6, filter: 'drop-shadow(0 8px 14px rgba(43,45,66,0.25))' }, tg);
-  S('text', { x: 0, y: 2, 'text-anchor': 'middle', 'font-size': 40, 'font-weight': 800, fill: '#2B2D42', 'font-family': 'inherit', text: 'NATEIVA WORLD' }, tg);
-  S('text', { x: 0, y: 30, 'text-anchor': 'middle', 'font-size': 17, 'font-weight': 700, fill: '#8A93AD', 'font-family': 'inherit', text: T("Touche une île d'aventure !", 'Tap an adventure spot!') }, tg);
-  // stations
+  const bw = Math.min(660, W - 60);
+  const tg = S('g', { transform: `translate(${W / 2},74)` }, svg);
+  S('rect', { x: -bw / 2, y: -46, width: bw, height: 86, rx: 43, fill: '#fff', stroke: '#FFD23F', 'stroke-width': 6, filter: 'drop-shadow(0 8px 14px rgba(43,45,66,0.25))' }, tg);
+  S('text', { x: 0, y: 2, 'text-anchor': 'middle', 'font-size': landscape ? 40 : 34, 'font-weight': 800, fill: '#2B2D42', 'font-family': 'inherit', text: 'NATEIVA WORLD' }, tg);
+  S('text', { x: 0, y: 30, 'text-anchor': 'middle', 'font-size': landscape ? 17 : 15, 'font-weight': 700, fill: '#8A93AD', 'font-family': 'inherit', text: T("Touche une île d'aventure !", 'Tap an adventure spot!') }, tg);
+  // stations with SUBJECT pills
   ZONES.forEach(z => {
-    const st = S('g', { class: 'station', transform: `translate(${z.mx},${z.my})` }, svg);
+    const st = S('g', { class: 'station', transform: `translate(${ZX(z)},${ZY(z)})` }, svg);
     const ring = S('g', { class: 'ring' }, st);
     S('circle', { cx: 0, cy: 6, r: 50, fill: 'rgba(0,0,0,0.14)' }, ring);
     S('circle', { cx: 0, cy: 0, r: 50, fill: '#fff', stroke: z.color, 'stroke-width': 7 }, ring);
     const icg = S('g', {}, ring); (ZONE_ICONS[z.key] || (() => {}))(icg);
     const starRow = S('g', { transform: 'translate(-33,46)' }, ring);
     for (let i = 0; i < 3; i++) { const sg2 = S('g', { transform: `translate(${i * 24},0)` }, starRow); drawStarIcon(sg2, 0.95, (save.stars[z.key] || 0) > i ? '#FFD23F' : '#E6E9F5'); }
-    S('text', { x: 0, y: 86, 'text-anchor': 'middle', 'font-size': 19, 'font-weight': 800, fill: '#2B2D42', 'font-family': 'inherit', text: T(z.fr, z.en) }, st);
+    // subject pill (kids always know the school subject)
+    const subW = Math.max(118, T(z.subject.fr, z.subject.en).length * 11 + 26);
+    S('rect', { x: -subW / 2, y: 70, width: subW, height: 30, rx: 15, fill: z.subject.color, stroke: '#fff', 'stroke-width': 3 }, st);
+    S('text', { x: 0, y: 91, 'text-anchor': 'middle', 'font-size': 15.5, 'font-weight': 800, fill: '#fff', 'font-family': 'inherit', text: T(z.subject.fr, z.subject.en) }, st);
+    S('text', { x: 0, y: 124, 'text-anchor': 'middle', 'font-size': 19, 'font-weight': 800, fill: '#2B2D42', 'font-family': 'inherit', text: T(z.fr, z.en) }, st);
     st.addEventListener('click', () => { sfx.boing(); enterZone(z.key); });
   });
-  leoMapAvatar = drawLeo(svg, ZONES[0].mx, ZONES[0].my - 92, 0.62);
+  leoMapAvatar = drawLeo(svg, ZX(ZONES[0]), ZY(ZONES[0]) - 92, 0.62);
   fxBob(leoMapAvatar, 15, 2200);
 }
+let resizeTimer = null;
+window.addEventListener('resize', () => {
+  clearTimeout(resizeTimer);
+  resizeTimer = setTimeout(() => { if (!activeZone) buildMap(); }, 350);
+});
 
 /* ================= SCENE ROUTER ================= */
 const ZONE_BUILDERS = {};
@@ -533,6 +614,7 @@ function showMap() {
   $('scene-map').classList.add('on');
   say('Choisis ton île !', 'Pick your adventure!');
 }
+let currentTrick = null;
 function enterZone(key) {
   activeZone = key;
   $('grade-dock').style.display = 'none';
@@ -540,12 +622,22 @@ function enterZone(key) {
   $('scene-map').classList.remove('on');
   $('scene-game').classList.add('on');
   Rounds.start(key, 5);
+  const z = ZONES.find(zz => zz.key === key);
+  const chip = $('mission-subject');
+  chip.textContent = T(z.subject.fr, z.subject.en);
+  chip.style.background = z.subject.color;
+  currentTrick = TRICKS[key] ? TRICKS[key](D()) : null;
   ZONE_BUILDERS[key](host);
 }
+$('mission-trick').addEventListener('click', ev => {
+  ev.stopPropagation();
+  sfx.tap();
+  if (currentTrick) say(currentTrick[0], currentTrick[1], D() <= 1 ? 0.76 : 0.88);
+});
 
 /* ================= Z1 — LAGUNE AUX BULLES (counting & sums by popping) ================= */
 ZONE_BUILDERS.bubbles = function (host) {
-  const svg = S('svg', { class: 'stage', viewBox: '0 0 1500 850', preserveAspectRatio: 'xMidYMid slice' }, host);
+  const svg = S('svg', { class: 'stage', viewBox: '0 0 1500 850', preserveAspectRatio: (innerWidth >= innerHeight * 1.02 ? 'xMidYMid slice' : 'xMidYMid meet') }, host);
   gradDefs(svg);
   S('rect', { width: 1500, height: 850, fill: 'url(#gDeepSea)' }, svg);
   for (let i = 0; i < 5; i++) {
@@ -657,7 +749,7 @@ ZONE_BUILDERS.bubbles = function (host) {
 
 /* ================= Z2 — VERGER DE MOMO (drag fruit: add, multiply, share) ================= */
 ZONE_BUILDERS.orchard = function (host) {
-  const svg = S('svg', { class: 'stage', viewBox: '0 0 1500 850', preserveAspectRatio: 'xMidYMid slice' }, host);
+  const svg = S('svg', { class: 'stage', viewBox: '0 0 1500 850', preserveAspectRatio: (innerWidth >= innerHeight * 1.02 ? 'xMidYMid slice' : 'xMidYMid meet') }, host);
   gradDefs(svg);
   S('rect', { width: 1500, height: 560, fill: 'url(#gSky)' }, svg);
   S('rect', { y: 540, width: 1500, height: 310, fill: 'url(#gGrass)' }, svg);
@@ -744,13 +836,13 @@ ZONE_BUILDERS.orchard = function (host) {
       mission('Donne ' + needPer[0] + ' fruits à Momo !', 'Give Momo ' + needPer[0] + ' fruits!', ZONE_ICONS.orchard);
     } else if (d <= 3) { mode = 'add'; const a = ri(2, 6), b = ri(2, 6); needPer = [a, b];
       baskets = [drawBasket(620, 640, a, a), drawBasket(900, 640, b, b)];
-      mission(`Remplis les paniers : ${a} et ${b} fruits !`, `Fill the baskets: ${a} and ${b} fruits!`, ZONE_ICONS.orchard);
+      mission(`${a} + ${b} = ? Remplis les paniers : ${a} et ${b} fruits !`, `${a} + ${b} = ? Fill the baskets: ${a} and ${b} fruits!`, ZONE_ICONS.orchard);
     } else if (d <= 5) { mode = 'mult'; const n = ri(2, 3), k = ri(3, 5); needPer = Array(n).fill(k);
       baskets = needPer.map((kk, i) => drawBasket(600 + i * 240, 640, kk, kk));
-      mission(`${n} paniers de ${k} fruits : ça fait combien ?`, `${n} baskets of ${k} fruits each!`, ZONE_ICONS.orchard);
+      mission(`${n} × ${k} = ? Remplis ${n} paniers de ${k} fruits !`, `${n} × ${k} = ? Fill ${n} baskets of ${k} fruits!`, ZONE_ICONS.orchard);
     } else { mode = 'share'; const n = ri(2, 3), per = ri(3, 4); needPer = Array(n).fill(per);
       baskets = needPer.map((kk, i) => drawBasket(600 + i * 240, 640, kk, null));
-      mission(`Partage ${n * per} fruits entre les ${n} paniers, pareil partout !`, `Share ${n * per} fruits equally between the ${n} baskets!`, ZONE_ICONS.orchard);
+      mission(`${n * per} ÷ ${n} = ? Partage ${n * per} fruits entre les ${n} paniers, pareil partout !`, `${n * per} ÷ ${n} = ? Share ${n * per} fruits equally between the ${n} baskets!`, ZONE_ICONS.orchard);
     }
     const totalFruit = needPer.reduce((s, n) => s + n, 0) + ri(2, 4);
     for (let i = 0; i < totalFruit; i++) spawnFruit(170 + (i % 4) * 100 + rnd(-16, 16), 370 + Math.floor(i / 4) * 88 + rnd(-12, 12));
@@ -761,7 +853,7 @@ ZONE_BUILDERS.orchard = function (host) {
 
 /* ================= Z3 — RIVIÈRE DE FELA (phonics leaps) ================= */
 ZONE_BUILDERS.river = function (host) {
-  const svg = S('svg', { class: 'stage', viewBox: '0 0 1500 850', preserveAspectRatio: 'xMidYMid slice' }, host);
+  const svg = S('svg', { class: 'stage', viewBox: '0 0 1500 850', preserveAspectRatio: (innerWidth >= innerHeight * 1.02 ? 'xMidYMid slice' : 'xMidYMid meet') }, host);
   gradDefs(svg);
   S('rect', { width: 1500, height: 850, fill: 'url(#gNight)' }, svg);
   S('circle', { cx: 1310, cy: 130, r: 56, fill: '#FFF3B0', opacity: 0.95 }, svg);
@@ -867,7 +959,7 @@ ZONE_BUILDERS.river = function (host) {
 
 /* ================= Z4 — STUDIO DE ZARA (paint colors & shapes) ================= */
 ZONE_BUILDERS.paint = function (host) {
-  const svg = S('svg', { class: 'stage', viewBox: '0 0 1500 850', preserveAspectRatio: 'xMidYMid slice' }, host);
+  const svg = S('svg', { class: 'stage', viewBox: '0 0 1500 850', preserveAspectRatio: (innerWidth >= innerHeight * 1.02 ? 'xMidYMid slice' : 'xMidYMid meet') }, host);
   gradDefs(svg);
   S('rect', { width: 1500, height: 850, fill: '#FBEFF7' }, svg);
   for (let i = 0; i < 9; i++) S('circle', { cx: rnd(40, 1460), cy: rnd(40, 820), r: rnd(16, 42), fill: ['#FDE2F0', '#E4D9FB', '#D7F2EA'][i % 3] }, svg);
@@ -981,7 +1073,7 @@ ZONE_BUILDERS.paint = function (host) {
 
 /* ================= Z5 — LAGON SPLASH (float or sink physics) ================= */
 ZONE_BUILDERS.splash = function (host) {
-  const svg = S('svg', { class: 'stage', viewBox: '0 0 1500 850', preserveAspectRatio: 'xMidYMid slice' }, host);
+  const svg = S('svg', { class: 'stage', viewBox: '0 0 1500 850', preserveAspectRatio: (innerWidth >= innerHeight * 1.02 ? 'xMidYMid slice' : 'xMidYMid meet') }, host);
   gradDefs(svg);
   S('rect', { width: 1500, height: 460, fill: 'url(#gSky)' }, svg);
   drawSun(svg, 150, 110, 0.85);
@@ -1089,7 +1181,7 @@ ZONE_BUILDERS.splash = function (host) {
 
 /* ================= Z6 — JARDIN DE NANA (plant needs) ================= */
 ZONE_BUILDERS.garden = function (host) {
-  const svg = S('svg', { class: 'stage', viewBox: '0 0 1500 850', preserveAspectRatio: 'xMidYMid slice' }, host);
+  const svg = S('svg', { class: 'stage', viewBox: '0 0 1500 850', preserveAspectRatio: (innerWidth >= innerHeight * 1.02 ? 'xMidYMid slice' : 'xMidYMid meet') }, host);
   gradDefs(svg);
   S('rect', { width: 1500, height: 620, fill: 'url(#gSky)' }, svg);
   S('rect', { y: 600, width: 1500, height: 250, fill: '#8A5A33' }, svg);
@@ -1186,7 +1278,7 @@ ZONE_BUILDERS.garden = function (host) {
 
 /* ================= Z7 — SAFARI BALLON (Africa geography) ================= */
 ZONE_BUILDERS.safari = function (host) {
-  const svg = S('svg', { class: 'stage', viewBox: '0 0 1500 850', preserveAspectRatio: 'xMidYMid slice' }, host);
+  const svg = S('svg', { class: 'stage', viewBox: '0 0 1500 850', preserveAspectRatio: (innerWidth >= innerHeight * 1.02 ? 'xMidYMid slice' : 'xMidYMid meet') }, host);
   gradDefs(svg);
   S('rect', { width: 1500, height: 850, fill: 'url(#gSky)' }, svg);
   drawCloud(svg, 200, 700, 1, 'rgba(255,255,255,0.8)');
@@ -1289,7 +1381,7 @@ ZONE_BUILDERS.safari = function (host) {
 
 /* ================= Z8 — THÉÂTRE KALULU (watch & understand) ================= */
 ZONE_BUILDERS.theatre = function (host) {
-  const svg = S('svg', { class: 'stage', viewBox: '0 0 1500 850', preserveAspectRatio: 'xMidYMid slice' }, host);
+  const svg = S('svg', { class: 'stage', viewBox: '0 0 1500 850', preserveAspectRatio: (innerWidth >= innerHeight * 1.02 ? 'xMidYMid slice' : 'xMidYMid meet') }, host);
   gradDefs(svg);
   S('rect', { width: 1500, height: 850, fill: '#3A1F47' }, svg);
   S('rect', { x: 90, y: 110, width: 1320, height: 560, rx: 24, fill: 'url(#gSky)', stroke: '#FFD23F', 'stroke-width': 8 }, svg);
@@ -1418,6 +1510,38 @@ function buildGradeDock() {
     });
   });
 }
+// ---- SEARCH a subject or topic (CE1+ typists; bilingual keywords) ----
+function renderSearch(q) {
+  q = (q || '').trim().toLowerCase();
+  const box = $('search-results'); box.innerHTML = '';
+  const hits = ZONES.filter(z => !q ||
+    z.topics.some(t => t.includes(q) || q.includes(t)) ||
+    T(z.fr, z.en).toLowerCase().includes(q) ||
+    T(z.subject.fr, z.subject.en).toLowerCase().includes(q));
+  (hits.length ? hits : ZONES).forEach(z => {
+    const card = H('div', { class: 'sr-card' }, box);
+    const ic = iconSvg(g2 => { S('circle', { cx: 0, cy: 0, r: 34, fill: '#fff', stroke: z.color, 'stroke-width': 5 }, g2); const gg = S('g', {}, g2); (ZONE_ICONS[z.key] || (() => {}))(gg); }, '-40 -40 80 80');
+    card.appendChild(ic);
+    const sub = H('div', { class: 'sr-sub' }, card); sub.textContent = T(z.subject.fr, z.subject.en); sub.style.background = z.subject.color;
+    H('div', { class: 'sr-name', text: T(z.fr, z.en) }, card);
+    card.addEventListener('click', () => { $('search-overlay').classList.remove('on'); sfx.boing(); enterZone(z.key); });
+  });
+  if (q && !hits.length) say('Essaie un mot comme maths, sciences ou géographie !', 'Try a word like math, science or geography!');
+}
+$('btn-search').appendChild(iconSvg(svg2 => { S('circle', { cx: 10.5, cy: 10.5, r: 6.5, fill: 'none', stroke: '#fff', 'stroke-width': 3 }, svg2); S('path', { d: 'M 15.5 15.5 L 21 21', stroke: '#fff', 'stroke-width': 3.4, 'stroke-linecap': 'round' }, svg2); }));
+$('btn-search').addEventListener('click', () => {
+  sfx.tap();
+  $('search-overlay').classList.add('on');
+  $('search-input').value = '';
+  $('search-input').placeholder = T('Tape une matière : maths, sciences, pays, syllabes…', 'Type a subject: math, science, countries, syllables…');
+  renderSearch('');
+  say('Tape une matière ou un sujet, ou touche une carte !', 'Type a subject or topic, or tap a card!');
+  setTimeout(() => $('search-input').focus(), 150);
+});
+$('search-close').addEventListener('click', () => $('search-overlay').classList.remove('on'));
+$('search-overlay').addEventListener('click', ev => { if (ev.target === $('search-overlay')) $('search-overlay').classList.remove('on'); });
+$('search-input').addEventListener('input', ev => renderSearch(ev.target.value));
+
 $('btn-home').addEventListener('click', () => { sfx.tap(); showMap(); });
 $('btn-lang').addEventListener('click', () => { save.lang = isEN() ? 'fr' : 'en'; persist(); sfx.tap(); say('Bonjour !', 'Hello!'); if (activeZone) enterZone(activeZone); else showMap(); });
 $('btn-sound').addEventListener('click', () => { save.sound = !save.sound; $('btn-sound').style.opacity = save.sound ? 1 : 0.45; sfx.tap(); });
