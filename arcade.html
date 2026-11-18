@@ -3470,6 +3470,27 @@ body.age-ce .ux-pict, body.age-ce2 .ux-pict, body.age-cm1 .ux-pict, body.age-cm 
 #ux-sticker-popup .em { font-size:4rem; display:block; animation:uxPictBob 1.4s ease-in-out infinite; }
 #ux-sticker-popup .ttl { font-size:1.1rem; font-weight:900; color:#92400E; margin-top:6px; }
 @media(max-width:720px){ #ux-sticker-fab{ bottom:96px; right:12px; padding:10px 14px; font-size:0.95rem; } }
+
+/* ---- V22.0 TOUR DU SAVOIR (Stack the Countries × Kahoot rebuild of fun_facts_quiz) ---- */
+.funfact-timer-track { position:relative; height:26px; border-radius:999px; background:rgba(15,23,42,0.35); border:2px solid rgba(255,255,255,0.35); overflow:hidden; margin-top:10px; }
+.funfact-timer-fill { height:100%; width:100%; border-radius:999px; background:linear-gradient(90deg,#10B981 0%,#FBBF24 60%,#E5252A 100%); transition:width 0.2s linear; }
+.funfact-timer-label { position:absolute; inset:0; display:flex; align-items:center; justify-content:center; font-size:0.82rem; font-weight:900; color:#fff; text-shadow:0 1px 3px rgba(0,0,0,0.6); }
+.funfact-play-row { display:grid; grid-template-columns:minmax(0,1fr) 258px; gap:14px; align-items:start; }
+.funfact-tower-panel { background:linear-gradient(180deg,#0B1220 0%,#111C33 100%); border:2px solid rgba(148,163,184,0.45); border-radius:20px; padding:10px; text-align:center; }
+.funfact-tower-header { font-size:0.78rem; font-weight:900; color:#FBBF24; text-transform:uppercase; letter-spacing:0.05em; margin-bottom:6px; }
+#funfact-tower-canvas { width:100%; height:auto; border-radius:14px; display:block; }
+@media(max-width:860px){ .funfact-play-row { grid-template-columns:1fr; } .funfact-tower-panel { order:2; } }
+
+/* ---- V22.0 MISSION ATLAS (true Seterra find-the-country rebuild of africa_geography) ---- */
+.africa-country-path.geo-dimmed { fill:#0F172A; opacity:0.38; pointer-events:none; }
+.africa-country-path.geo-candidate { animation:geoCandidatePulse 1.8s ease-in-out infinite; stroke:#FBBF24; stroke-width:1.1; }
+.africa-country-path.geo-wrong { fill:#F59E0B !important; stroke:#FFFFFF; }
+.africa-country-path.geo-hint-pulse { animation:geoHintPulse 0.55s ease-in-out 4; }
+@keyframes geoCandidatePulse { 0%,100%{fill:#334155} 50%{fill:#475569} }
+@keyframes geoHintPulse { 0%,100%{fill:#1E293B} 50%{fill:#E5252A; filter:drop-shadow(0 0 7px rgba(229,37,42,0.9));} }
+.geo-tries-row { font-size:1.15rem; letter-spacing:3px; }
+.geo-collection-strip { display:flex; flex-wrap:wrap; gap:4px; background:rgba(16,185,129,0.1); border:2px dashed rgba(16,185,129,0.5); border-radius:14px; padding:8px 10px; font-size:1.25rem; min-height:44px; align-items:center; }
+.geo-collection-count { font-size:0.74rem; font-weight:900; color:#047857; text-transform:uppercase; letter-spacing:0.05em; width:100%; }
 </style>
 </head>
 <body>
@@ -3500,7 +3521,7 @@ body.age-ce .ux-pict, body.age-ce2 .ux-pict, body.age-cm1 .ux-pict, body.age-cm 
         <option value="en">🇬🇧 English (Studio Voice)</option>
       </select>
       <button class="btn-pill" id="btn-sound-toggle">🔊 Son</button>
-      <button class="version-cache-pill" id="btn-version-cache" title="Version active • Cliquer pour vider le cache et recharger">🚀 v21.0 AGE-ADAPTIVE REBUILD (v1.14.0) • 🔄 Vider Cache</button>
+      <button class="version-cache-pill" id="btn-version-cache" title="Version active • Cliquer pour vider le cache et recharger">🚀 v22.0 GAMEPLAY-REBUILD (v1.15.0) • 🔄 Vider Cache</button>
     </div>
   </header>
 
@@ -3632,7 +3653,7 @@ body.age-ce .ux-pict, body.age-ce2 .ux-pict, body.age-cm1 .ux-pict, body.age-cm 
           <h3>Astuces Maths Cartoon : Doigts, Doubles & Pont de 10</h3>
           <div class="portal-curriculum-tag">Pont de 10 • 10 Doigts ×9 • Doubles • Fractions %</div>
         </div>
-        <span class="card-rea-badge">✨ v21.0 AGE-ADAPTIVE REBUILD (v1.14.0) • ▶ JOUER</span>
+        <span class="card-rea-badge">✨ v22.0 GAMEPLAY-REBUILD (v1.15.0) • ▶ JOUER</span>
       </div>
       <p class="portal-desc">Apprends les astuces cartoon pour calculer instantanément : pont arc-en-ciel de 10, astuce des doigts pour la table de 9, et miroir des doubles !</p>
       <div class="portal-counts-badge-bar">
@@ -3651,7 +3672,7 @@ body.age-ce .ux-pict, body.age-ce2 .ux-pict, body.age-cm1 .ux-pict, body.age-cm 
           <h3>Astuces Sciences Cartoon : Leviers, Corps, Eau & Lumière</h3>
           <div class="portal-curriculum-tag">Levier Souris-Éléphant • Cycle de l'Eau • Prisme Arc-en-Ciel</div>
         </div>
-        <span class="card-rea-badge">✨ v21.0 AGE-ADAPTIVE REBUILD (v1.14.0) • ▶ JOUER</span>
+        <span class="card-rea-badge">✨ v22.0 GAMEPLAY-REBUILD (v1.15.0) • ▶ JOUER</span>
       </div>
       <p class="portal-desc">Découvre les super-pouvoirs de la science : comment soulever un éléphant avec un levier, le voyage de la goutte d'eau et le prisme de lumière !</p>
       <div class="portal-counts-badge-bar">
@@ -3669,7 +3690,7 @@ body.age-ce .ux-pict, body.age-ce2 .ux-pict, body.age-cm1 .ux-pict, body.age-cm 
           <h3>Tetris Éducatif : Blocs Mots & Maths</h3>
           <div class="portal-curriculum-tag">Tetris Arcade • Nombres • Syllabes • Auto-Drop</div>
         </div>
-        <span class="card-rea-badge">✨ v21.0 AGE-ADAPTIVE REBUILD (v1.14.0) • ▶ JOUER</span>
+        <span class="card-rea-badge">✨ v22.0 GAMEPLAY-REBUILD (v1.15.0) • ▶ JOUER</span>
       </div>
       <p class="portal-desc">Empile les blocs colorés Tetris de nombres, calculs et syllabes pour compléter les lignes et ouvrir le coffre à récompenses !</p>
       <div class="portal-counts-badge-bar">
@@ -3688,7 +3709,7 @@ body.age-ce .ux-pict, body.age-ce2 .ux-pict, body.age-cm1 .ux-pict, body.age-cm 
           <h3>Course Auto Turbo : Rallye Savane</h3>
           <div class="portal-curriculum-tag">Course 3 Voies • Auto-Pilote • Récompenses</div>
         </div>
-        <span class="card-rea-badge">✨ v21.0 AGE-ADAPTIVE REBUILD (v1.14.0) • ▶ JOUER</span>
+        <span class="card-rea-badge">✨ v22.0 GAMEPLAY-REBUILD (v1.15.0) • ▶ JOUER</span>
       </div>
       <p class="portal-desc">Pilote le bolide turbo de Léo sur 3 voies ou active l'Auto-Pilote pour franchir le portique de la bonne réponse avec boost nitro !</p>
       <div class="portal-counts-badge-bar">
@@ -3707,7 +3728,7 @@ body.age-ce .ux-pict, body.age-ce2 .ux-pict, body.age-cm1 .ux-pict, body.age-cm 
           <h3>Prodigy Maths : Monstres & Cristaux</h3>
           <div class="portal-curriculum-tag">Prodigy Math • Sorts Visuels • Coffre Magique</div>
         </div>
-        <span class="card-rea-badge">✨ v21.0 AGE-ADAPTIVE REBUILD (v1.14.0) • ▶ JOUER</span>
+        <span class="card-rea-badge">✨ v22.0 GAMEPLAY-REBUILD (v1.15.0) • ▶ JOUER</span>
       </div>
       <p class="portal-desc">Lance des sorts mathématiques visuels (addition, tables, fractions, algèbre) pour apprivoiser les créatures et gagner des familiers !</p>
       <div class="portal-counts-badge-bar">
@@ -3726,7 +3747,7 @@ body.age-ce .ux-pict, body.age-ce2 .ux-pict, body.age-cm1 .ux-pict, body.age-cm 
           <h3>Labo Sciences : Écosystème, Aimants & Espace</h3>
           <div class="portal-curriculum-tag">Chaîne Alimentaire • États de l'Eau • Aimants • Planètes</div>
         </div>
-        <span class="card-rea-badge">✨ v21.0 AGE-ADAPTIVE REBUILD (v1.14.0) • ▶ JOUER</span>
+        <span class="card-rea-badge">✨ v22.0 GAMEPLAY-REBUILD (v1.15.0) • ▶ JOUER</span>
       </div>
       <p class="portal-desc">Simule la chaîne alimentaire de la savane, les 3 états de l'eau (0°C/100°C), les pôles d'aimants (N⇄S) et le système solaire !</p>
       <div class="portal-counts-badge-bar">
@@ -3744,7 +3765,7 @@ body.age-ce .ux-pict, body.age-ce2 .ux-pict, body.age-cm1 .ux-pict, body.age-cm 
           <h3>Grammaire & Syntaxe (FR / EN)</h3>
           <div class="portal-curriculum-tag">Noms • Verbes • Adjectifs • Accords</div>
         </div>
-        <span class="card-rea-badge">✨ v21.0 AGE-ADAPTIVE REBUILD (v1.14.0) • ▶ JOUER</span>
+        <span class="card-rea-badge">✨ v22.0 GAMEPLAY-REBUILD (v1.15.0) • ▶ JOUER</span>
       </div>
       <p class="portal-desc">Maîtrise la grammaire en français et en anglais (articles, pluriels, nature des mots, accords sujet-verbe) avec une seule voix native pure !</p>
       <div class="portal-counts-badge-bar">
@@ -3763,7 +3784,7 @@ body.age-ce .ux-pict, body.age-ce2 .ux-pict, body.age-cm1 .ux-pict, body.age-cm 
           <h3>Vocabulaire & Mots du Monde (FR / EN)</h3>
           <div class="portal-curriculum-tag">Synonymes • Contraires • Thèmes d'Afrique</div>
         </div>
-        <span class="card-rea-badge">✨ v21.0 AGE-ADAPTIVE REBUILD (v1.14.0) • ▶ JOUER</span>
+        <span class="card-rea-badge">✨ v22.0 GAMEPLAY-REBUILD (v1.15.0) • ▶ JOUER</span>
       </div>
       <p class="portal-desc">Enrichis ton vocabulaire en français et en anglais : synonymes, contraires, objets de l'école, animaux et métiers avec prononciation native !</p>
       <div class="portal-counts-badge-bar">
@@ -3782,7 +3803,7 @@ body.age-ce .ux-pict, body.age-ce2 .ux-pict, body.age-cm1 .ux-pict, body.age-cm 
           <h3>Conjugaison & Temps (FR / EN)</h3>
           <div class="portal-curriculum-tag">Présent • Passé • Futur • Être/Avoir & To Be</div>
         </div>
-        <span class="card-rea-badge">✨ v21.0 AGE-ADAPTIVE REBUILD (v1.14.0) • ▶ JOUER</span>
+        <span class="card-rea-badge">✨ v22.0 GAMEPLAY-REBUILD (v1.15.0) • ▶ JOUER</span>
       </div>
       <p class="portal-desc">Voyage dans le temps (Passé, Présent, Futur) pour conjuguer les verbes en français et en anglais selon le pronom sujet !</p>
       <div class="portal-counts-badge-bar">
@@ -3801,7 +3822,7 @@ body.age-ce .ux-pict, body.age-ce2 .ux-pict, body.age-cm1 .ux-pict, body.age-cm 
           <h3>Studio Prononciation (FR ⇄ EN)</h3>
           <div class="portal-curriculum-tag">Anglais & Français • Micro Live • Spectre</div>
         </div>
-        <span class="card-rea-badge">✨ v21.0 AGE-ADAPTIVE REBUILD (v1.14.0) • ▶ JOUER</span>
+        <span class="card-rea-badge">✨ v22.0 GAMEPLAY-REBUILD (v1.15.0) • ▶ JOUER</span>
       </div>
       <p class="portal-desc">Écoute la vraie voix studio française et anglaise, parle dans ton micro pour obtenir ton score de prononciation et suis les billes de rythme !</p>
       <div class="portal-counts-badge-bar">
@@ -3817,14 +3838,14 @@ body.age-ce .ux-pict, body.age-ce2 .ux-pict, body.age-cm1 .ux-pict, body.age-cm 
       <div class="portal-card-header">
         <div class="portal-badge">🌍</div>
         <div class="portal-titles">
-          <h3>Géographie des Pays d'Afrique</h3>
+          <h3>Mission Atlas : Trouve le Pays d'Afrique !</h3>
           <div class="portal-curriculum-tag">Carte SVG Interactive • Drapeaux • Capitales</div>
         </div>
-        <span class="card-rea-badge">✨ v21.0 AGE-ADAPTIVE REBUILD (v1.14.0) • ▶ JOUER</span>
+        <span class="card-rea-badge">✨ v22.0 GAMEPLAY-REBUILD (v1.15.0) • ▶ JOUER</span>
       </div>
-      <p class="portal-desc">Explore la vraie carte vectorielle interactive des pays d'Afrique ! Touche les pays au doigt, découvre leurs drapeaux, leurs capitales et leurs fleuves !</p>
+      <p class="portal-desc">Pars en mission Seterra : trouve toi-même le bon pays sur la vraie carte d'Afrique (par nom, drapeau ou capitale), gagne chaque drapeau et remplis ton Atlas personnel des 49 pays !</p>
       <div class="portal-counts-badge-bar">
-        <span class="count-pill highlight">🌍 49 Pays Africains SVG</span>
+        <span class="count-pill highlight">🗺️ Atlas Personnel : 49 Drapeaux à Gagner</span>
         <span class="count-pill black">⚡ 3 Activités / Exercice</span>
         <span class="count-pill">🏆 Maternelle–CM2</span>
       </div>
@@ -3836,14 +3857,14 @@ body.age-ce .ux-pict, body.age-ce2 .ux-pict, body.age-cm1 .ux-pict, body.age-cm 
       <div class="portal-card-header">
         <div class="portal-badge">🧠</div>
         <div class="portal-titles">
-          <h3>Fun Facts & Culture Générale (QCM)</h3>
+          <h3>Tour du Savoir : Quiz & Blocs Empilés</h3>
           <div class="portal-curriculum-tag">Quiz Choix Multiples • Indice 50/50 • Afrique</div>
         </div>
-        <span class="card-rea-badge">✨ v21.0 AGE-ADAPTIVE REBUILD (v1.14.0) • ▶ JOUER</span>
+        <span class="card-rea-badge">✨ v22.0 GAMEPLAY-REBUILD (v1.15.0) • ▶ JOUER</span>
       </div>
-      <p class="portal-desc">Réponds aux questions à choix multiples (A, B, C, D) avec l'indice 50/50 sur les merveilles d'Afrique, les animaux, l'espace et les sciences !</p>
+      <p class="portal-desc">Chaque bonne réponse devient un bloc qui tombe et rebondit sur ta Tour du Savoir ! Chrono Kahoot, étoiles de vitesse, indice 50/50 et merveilles d'Afrique, animaux, espace et sciences !</p>
       <div class="portal-counts-badge-bar">
-        <span class="count-pill highlight">💡 Indice 50/50 + QCM</span>
+        <span class="count-pill highlight">🏗️ Tour de Blocs + Chrono + 50/50</span>
         <span class="count-pill black">⚡ 3 Activités / Exercice</span>
         <span class="count-pill">🏆 Maternelle–CM2</span>
       </div>
@@ -3858,7 +3879,7 @@ body.age-ce .ux-pict, body.age-ce2 .ux-pict, body.age-cm1 .ux-pict, body.age-cm 
           <h3>Compréhension de Texte & Contes</h3>
           <div class="portal-curriculum-tag">Lecture Karaoké FR/EN • Quiz Compréhension</div>
         </div>
-        <span class="card-rea-badge">✨ v21.0 AGE-ADAPTIVE REBUILD (v1.14.0) • ▶ JOUER</span>
+        <span class="card-rea-badge">✨ v22.0 GAMEPLAY-REBUILD (v1.15.0) • ▶ JOUER</span>
       </div>
       <p class="portal-desc">Écoute et lis des contes africains et scientifiques bilingues avec surlignage phrase par phrase, puis réponds aux questions de compréhension !</p>
       <div class="portal-counts-badge-bar">
@@ -3877,7 +3898,7 @@ body.age-ce .ux-pict, body.age-ce2 .ux-pict, body.age-cm1 .ux-pict, body.age-cm 
           <h3>Monstre des Syllabes & Lecture</h3>
           <div class="portal-curriculum-tag">Feed The Monster • Voyelles & Consonnes</div>
         </div>
-        <span class="card-rea-badge">✨ v21.0 AGE-ADAPTIVE REBUILD (v1.14.0) • ▶ JOUER</span>
+        <span class="card-rea-badge">✨ v22.0 GAMEPLAY-REBUILD (v1.15.0) • ▶ JOUER</span>
       </div>
       <p class="portal-desc">Nourris le Monstre magique avec les bonnes syllabes colorées (voyelles en rouge, consonnes en bleu) pour former des mots en français et en anglais !</p>
       <div class="portal-counts-badge-bar">
@@ -3896,7 +3917,7 @@ body.age-ce .ux-pict, body.age-ce2 .ux-pict, body.age-cm1 .ux-pict, body.age-cm 
           <h3>Maths 3D, Fractions & Balance Algébrique</h3>
           <div class="portal-curriculum-tag">Boîtes de 10 • Disque Fractions • Balance 2x+4</div>
         </div>
-        <span class="card-rea-badge">✨ v21.0 AGE-ADAPTIVE REBUILD (v1.14.0) • ▶ JOUER</span>
+        <span class="card-rea-badge">✨ v22.0 GAMEPLAY-REBUILD (v1.15.0) • ▶ JOUER</span>
       </div>
       <p class="portal-desc">Manipule les boîtes de 10, le disque interactif des fractions et la balance algébrique selon ta classe (de la Maternelle au CM2 / Primary 6) !</p>
       <div class="portal-counts-badge-bar">
@@ -3915,7 +3936,7 @@ body.age-ce .ux-pict, body.age-ce2 .ux-pict, body.age-cm1 .ux-pict, body.age-cm 
           <h3>Labo Chimie & Échelle pH</h3>
           <div class="portal-curriculum-tag">Sciences • Réactions • Indicateur pH 0–14</div>
         </div>
-        <span class="card-rea-badge">✨ v21.0 AGE-ADAPTIVE REBUILD (v1.14.0) • ▶ JOUER</span>
+        <span class="card-rea-badge">✨ v22.0 GAMEPLAY-REBUILD (v1.15.0) • ▶ JOUER</span>
       </div>
       <p class="portal-desc">Verse les éprouvettes dans l'erlenmeyer, observe l'indicateur de pH en direct, les mélanges de couleurs et l'effervescence des bulles de gaz !</p>
       <div class="portal-counts-badge-bar">
@@ -3934,7 +3955,7 @@ body.age-ce .ux-pict, body.age-ce2 .ux-pict, body.age-cm1 .ux-pict, body.age-cm 
           <h3>Bassin d'Archimède (Flotte/Coule)</h3>
           <div class="portal-curriculum-tag">Physique • Vecteurs Poussée ↑Fa & Poids ↓P</div>
         </div>
-        <span class="card-rea-badge">✨ v21.0 AGE-ADAPTIVE REBUILD (v1.14.0) • ▶ JOUER</span>
+        <span class="card-rea-badge">✨ v22.0 GAMEPLAY-REBUILD (v1.15.0) • ▶ JOUER</span>
       </div>
       <p class="portal-desc">Plonge le bois, la mangue, l'or ou la brique dans l'eau et visualise en direct les vecteurs de la poussée d'Archimède (↑Fa) et du poids (↓P) !</p>
       <div class="portal-counts-badge-bar">
@@ -3953,7 +3974,7 @@ body.age-ce .ux-pict, body.age-ce2 .ux-pict, body.age-cm1 .ux-pict, body.age-cm 
           <h3>Circuit Électrique 3D & Oscilloscope</h3>
           <div class="portal-curriculum-tag">Loi d'Ohm (U=R×I) • Électrons & Hélice</div>
         </div>
-        <span class="card-rea-badge">✨ v21.0 AGE-ADAPTIVE REBUILD (v1.14.0) • ▶ JOUER</span>
+        <span class="card-rea-badge">✨ v22.0 GAMEPLAY-REBUILD (v1.15.0) • ▶ JOUER</span>
       </div>
       <p class="portal-desc">Ferme l'interrupteur pour observer la circulation des électrons bleus, allumer l'ampoule de 4,5 V et faire tourner l'hélice du moteur électrique !</p>
       <div class="portal-counts-badge-bar">
@@ -3972,7 +3993,7 @@ body.age-ce .ux-pict, body.age-ce2 .ux-pict, body.age-cm1 .ux-pict, body.age-cm 
           <h3>Jardin Botanique & Photosynthèse</h3>
           <div class="portal-curriculum-tag">Biologie • Racines, Tige & Floraison 21 Jours</div>
         </div>
-        <span class="card-rea-badge">✨ v21.0 AGE-ADAPTIVE REBUILD (v1.14.0) • ▶ JOUER</span>
+        <span class="card-rea-badge">✨ v22.0 GAMEPLAY-REBUILD (v1.15.0) • ▶ JOUER</span>
       </div>
       <p class="portal-desc">Dose la pluie et le soleil pour faire germer le Baobab, le Tournesol, le Cacaoyer et l'Hibiscus en observant les racines pousser sous terre !</p>
       <div class="portal-counts-badge-bar">
@@ -3991,7 +4012,7 @@ body.age-ce .ux-pict, body.age-ce2 .ux-pict, body.age-cm1 .ux-pict, body.age-cm 
           <h3>Comet Defender : Calcul Spatial</h3>
           <div class="portal-curriculum-tag">TuxMath Arcade • Lasers & Calcul Mental</div>
         </div>
-        <span class="card-rea-badge">✨ v21.0 AGE-ADAPTIVE REBUILD (v1.14.0) • ▶ JOUER</span>
+        <span class="card-rea-badge">✨ v22.0 GAMEPLAY-REBUILD (v1.15.0) • ▶ JOUER</span>
       </div>
       <p class="portal-desc">Pilote le vaisseau spatial et tire au laser sur la comète qui porte la bonne réponse à l'équation affichée sur le tableau de bord !</p>
       <div class="portal-counts-badge-bar">
@@ -4010,7 +4031,7 @@ body.age-ce .ux-pict, body.age-ce2 .ux-pict, body.age-cm1 .ux-pict, body.age-cm 
           <h3>Tangram Géométrique Magnétique</h3>
           <div class="portal-curriculum-tag">Mathigon Euclid • Polygones & Silhouettes</div>
         </div>
-        <span class="card-rea-badge">✨ v21.0 AGE-ADAPTIVE REBUILD (v1.14.0) • ▶ JOUER</span>
+        <span class="card-rea-badge">✨ v22.0 GAMEPLAY-REBUILD (v1.15.0) • ▶ JOUER</span>
       </div>
       <p class="portal-desc">Assemble la Fusée, le Bateau, le Chat, le Lion et le Papillon en glissant les polygones géométriques avec aimantation de précision !</p>
       <div class="portal-counts-badge-bar">
@@ -4029,7 +4050,7 @@ body.age-ce .ux-pict, body.age-ce2 .ux-pict, body.age-cm1 .ux-pict, body.age-cm 
           <h3>Donjon Labyrinthe 3D (Vue 3D & Raycast)</h3>
           <div class="portal-curriculum-tag">Blockly Maze • Algorithme & Syllabes</div>
         </div>
-        <span class="card-rea-badge">✨ v21.0 AGE-ADAPTIVE REBUILD (v1.14.0) • ▶ JOUER</span>
+        <span class="card-rea-badge">✨ v22.0 GAMEPLAY-REBUILD (v1.15.0) • ▶ JOUER</span>
       </div>
       <p class="portal-desc">Guide Léo dans les 5 cartes de la Savane (Oasis, Pyramide, Volcan, Jungle) en collectant les syllabes et nombres d'or ou utilise le bouton Auto-Pas !</p>
       <div class="portal-counts-badge-bar">
@@ -4051,7 +4072,7 @@ body.age-ce .ux-pict, body.age-ce2 .ux-pict, body.age-cm1 .ux-pict, body.age-cm 
         <div class="hud-badge red" id="hud-exercise-badge">🎯 Exercice 1/5 • Niveau 1</div>
       </div>
       <div class="hud-stats">
-        <span class="hud-badge" id="hud-version-pill" style="background:#312E81;color:#FDE047;border:1.5px solid #38BDF8;font-size:0.72rem;padding:4px 8px;">🚀 v20.0 (v1.14.0)</span>
+        <span class="hud-badge" id="hud-version-pill" style="background:#312E81;color:#FDE047;border:1.5px solid #38BDF8;font-size:0.72rem;padding:4px 8px;">🚀 v20.0 (v1.15.0)</span>
         <div class="hud-badge" id="hud-reward-chest" title="Coffre à Récompenses Éducatives (Stickers & Trophées)" style="background:#065F46;color:#FEF08A;border:1.5px solid #34D399;cursor:pointer;">🎁 <span id="hud-sticker-count">1</span> <span id="hud-latest-sticker">🦁</span></div>
         <div class="hud-badge">⭐ <span id="hud-score-val">0</span> XP</div>
         <div class="combo-multiplier" id="hud-combo-badge">🔥 COMBO x1</div>
@@ -4212,7 +4233,9 @@ body.age-ce .ux-pict, body.age-ce2 .ux-pict, body.age-cm1 .ux-pict, body.age-cm 
               </div>
             </div>
             <div style="font-size:1.05rem;font-weight:900;color:#111827;" id="geo-question-prompt">Quelle est la capitale de ce pays d'Afrique ?</div>
-            <div class="comprehension-options-grid" id="geo-options-grid"></div>
+            <div class="geo-tries-row" id="geo-tries-row">❤️❤️❤️</div>
+            <div class="geo-collection-strip" id="geo-collection-strip"><span class="geo-collection-count">🗺️ Mon Atlas : 0/49 pays</span></div>
+            <div class="comprehension-options-grid" id="geo-options-grid" style="display:none;"></div>
           </div>
         </div>
       </div>
@@ -4227,8 +4250,15 @@ body.age-ce .ux-pict, body.age-ce2 .ux-pict, body.age-cm1 .ux-pict, body.age-cm 
             </div>
             <div class="funfact-question-title" id="funfact-q-title">Quel est le plus long fleuve du continent africain ?</div>
             <div class="funfact-didyouknow-box" id="funfact-clue-box">💡 Le savais-tu ? Ce fleuve traverse l'Égypte et mesure plus de 6 650 kilomètres !</div>
+            <div class="funfact-timer-track" id="funfact-timer-track"><div class="funfact-timer-fill" id="funfact-timer-fill"></div><span class="funfact-timer-label" id="funfact-timer-label">⏱️</span></div>
           </div>
-          <div class="funfact-mcq-grid" id="funfact-mcq-grid"></div>
+          <div class="funfact-play-row">
+            <div class="funfact-mcq-grid" id="funfact-mcq-grid"></div>
+            <div class="funfact-tower-panel">
+              <div class="funfact-tower-header" id="funfact-tower-header">🏗️ Tour du Savoir • 0 blocs</div>
+              <canvas id="funfact-tower-canvas" width="238" height="330"></canvas>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -9772,7 +9802,7 @@ body.age-ce .ux-pict, body.age-ce2 .ux-pict, body.age-cm1 .ux-pict, body.age-cm 
       ? "Read or listen to the story and answer the comprehension question!"
       : "Lis ou écoute l'histoire puis réponds à la question de compréhension !";
 
-    const sentences = storyFullText.split(/(?<=[.!?])s+/);
+    const sentences = storyFullText.split(/(?<=[.!?])\s+/);
     const container = $('story-text-container');
     container.innerHTML = '';
     sentences.forEach((sent, idx) => {
@@ -10172,7 +10202,8 @@ body.age-ce .ux-pict, body.age-ce2 .ux-pict, body.age-cm1 .ux-pict, body.age-cm 
   // AFRICA GEOGRAPHY EXPLORER (SETERRA × SVG-MAPS ENGINE)
   // ============================================================================
   function setupAfricaGeographyActivity() {
-    $('canvas-wrapper').style.display = 'block';
+    // V22.0 MISSION ATLAS — true Seterra drill: FIND the country yourself on the map.
+    $('canvas-wrapper').style.display = 'none';
     $('maze-dpad-container').classList.remove('active');
     $('reading-overlay').classList.remove('active');
     $('pronunciation-overlay').classList.remove('active');
@@ -10180,119 +10211,245 @@ body.age-ce .ux-pict, body.age-ce2 .ux-pict, body.age-cm1 .ux-pict, body.age-cm 
     $('funfacts-overlay').classList.remove('active');
     $('geography-overlay').classList.add('active');
     $('answers-container').innerHTML = '';
+    state.cartoonTargets = [];
 
     const isEn = state.lang === 'en';
     const langKey = isEn ? 'en' : 'fr';
     const challengeIndex = state.gamePlayCounter[state.game + '_' + state.grade] || 0;
 
-    // Filter questions prioritizing current grade, while ensuring zero repetition across 3 activities
+    // Zero-repetition pool, current class first
     const gradePool = DB.africaGeographyQuestions.filter(q => q.grade === state.grade);
     const otherPool = DB.africaGeographyQuestions.filter(q => q.grade !== state.grade);
     const combinedPool = [...gradePool, ...otherPool];
     const qItem = getUniqueChallengeItem(combinedPool, "geo_" + state.grade, challengeIndex);
     state.currentGeographyItem = qItem;
+    // Normalize ISO case: some question entries use "TZ" while map paths use "tz"
+    const targetIso = String(qItem.iso || '').trim().toLowerCase();
+    state.geoTargetIso = targetIso;
+    const countryMeta = DB.africaMapData.find(c => c.id === targetIso) || DB.africaMapData[0];
 
-    const countryMeta = DB.africaMapData.find(c => c.id === qItem.iso) || DB.africaMapData[0];
+    // Personal Atlas (Stack the Countries law): every found country is kept forever
+    let atlas = {};
+    try { atlas = JSON.parse(localStorage.getItem('nateiva_geo_atlas_v1') || '{}'); } catch (e) {}
+    const saveAtlas = () => { try { localStorage.setItem('nateiva_geo_atlas_v1', JSON.stringify(atlas)); } catch (e) {} };
 
-    $('geo-flag-emoji').textContent = countryMeta.flag || '🌍';
-    $('geo-region-tag').textContent = countryMeta.region || 'Africa';
-    $('geo-country-title').textContent = countryMeta.fr + ' / ' + countryMeta.en;
-    $('geo-capital-sub').textContent = (isEn ? '🏛️ Capital: ' : '🏛️ Capitale : ') + countryMeta.cap;
-    $('geo-question-prompt').textContent = qItem.q[langKey];
-    $('instruction-title').textContent = qItem.q[langKey];
+    // 3 DISTINCT mission modes across the 3 activities (easy classes always get name + flag)
+    const easyClass = state.grade === 'MAT' || state.grade === 'SIL';
+    const phase = easyClass ? 1 : state.activityPhase;
+    let promptText, titleText, flagShown = countryMeta.flag || '🌍';
+    if (phase === 3) {
+      promptText = isEn ? ('Mission: find the country whose capital is ' + countryMeta.cap + '!') : ('Mission : trouve le pays dont la capitale est ' + countryMeta.cap + ' !');
+      titleText = '🏛️ ' + countryMeta.cap;
+      flagShown = '🏛️';
+    } else if (phase === 2) {
+      promptText = isEn ? 'Mission: find the country of this flag on the map!' : 'Mission : trouve le pays de ce drapeau sur la carte !';
+      titleText = isEn ? '❓ Mystery Country' : '❓ Pays Mystère';
+    } else {
+      promptText = isEn ? ('Mission: find ' + countryMeta.en + ' on the map of Africa!') : ('Mission : trouve « ' + countryMeta.fr + ' » sur la carte d\'Afrique !');
+      titleText = countryMeta.fr + ' / ' + countryMeta.en;
+    }
 
-    // Render interactive SVG Map of Africa with all 49 country vector paths
+    $('geo-flag-emoji').textContent = flagShown;
+    $('geo-region-tag').textContent = (isEn ? '🧭 Region: ' : '🧭 Région : ') + (countryMeta.region || 'Africa');
+    $('geo-country-title').textContent = titleText;
+    $('geo-capital-sub').textContent = phase === 3 ? (isEn ? '🔎 Which country is it?' : '🔎 Quel pays est-ce ?') : (isEn ? '🔒 Capital: ??? (find the country!)' : '🔒 Capitale : ??? (trouve le pays !)');
+    $('geo-question-prompt').textContent = promptText;
+    $('instruction-title').textContent = promptText;
+    if ($('geo-options-grid')) { $('geo-options-grid').innerHTML = ''; $('geo-options-grid').style.display = 'none'; }
+    if ($('africa-map-caption')) $('africa-map-caption').textContent = isEn ? '👆 Tap the right country on the map! Wrong taps teach you their names.' : '👆 Touche le bon pays sur la carte ! Chaque erreur t\'apprend un nouveau pays.';
+
+    // Tries + hint escalation
+    state.geoTries = 3;
+    const renderTries = () => { if ($('geo-tries-row')) $('geo-tries-row').textContent = '❤️'.repeat(Math.max(0, state.geoTries)) + '🤍'.repeat(Math.max(0, 3 - state.geoTries)); };
+    renderTries();
+
+    // Flag collection strip
+    const renderCollection = () => {
+      const strip = $('geo-collection-strip');
+      if (!strip) return;
+      const found = Object.keys(atlas).filter(k => atlas[k]);
+      const flags = found.map(iso => { const m = DB.africaMapData.find(c => c.id === iso); return m ? m.flag : ''; }).filter(Boolean);
+      strip.innerHTML = '<span class="geo-collection-count">🗺️ ' + (isEn ? 'My Atlas: ' : 'Mon Atlas : ') + found.length + '/' + DB.africaMapData.length + ' ' + (isEn ? 'countries' : 'pays') + '</span>' + flags.slice(-14).map(f => '<span>' + f + '</span>').join('');
+    };
+    renderCollection();
+
+    // Easy classes: only 4 big pulsing candidates are tappable, the rest is dimmed
+    const candidates = new Set([targetIso]);
+    if (easyClass) {
+      const decoys = DB.africaMapData.filter(c => c.id !== targetIso);
+      for (let i = 0; i < 3 && decoys.length > 0; i++) {
+        const pick = decoys.splice((challengeIndex * 7 + i * 13) % decoys.length, 1)[0];
+        candidates.add(pick.id);
+      }
+    }
+
+    // Render the real SVG map — WITHOUT revealing the answer
     const svgEl = $('africa-svg-map');
     svgEl.innerHTML = '';
+    let solved = false;
+    const hintPulse = () => {
+      const targetPath = $('africa-iso-' + targetIso);
+      if (targetPath && !solved) {
+        targetPath.classList.add('geo-hint-pulse');
+        setTimeout(() => targetPath.classList.remove('geo-hint-pulse'), 2400);
+      }
+    };
     DB.africaMapData.forEach(c => {
       const pathEl = document.createElementNS('http://www.w3.org/2000/svg', 'path');
       pathEl.setAttribute('d', c.path);
       pathEl.setAttribute('id', 'africa-iso-' + c.id);
       pathEl.setAttribute('data-iso', c.id);
-      const isTarget = c.id === qItem.iso;
-      pathEl.setAttribute('class', 'africa-country-path' + (isTarget ? ' target-highlight' : ''));
+      let cls = 'africa-country-path';
+      if (atlas[c.id]) cls += ' found-country';
+      if (easyClass) cls += candidates.has(c.id) ? ' geo-candidate' : ' geo-dimmed';
+      pathEl.setAttribute('class', cls);
       const titleEl = document.createElementNS('http://www.w3.org/2000/svg', 'title');
       titleEl.textContent = c.flag + ' ' + c.fr + ' / ' + c.en + ' (' + c.cap + ')';
       pathEl.appendChild(titleEl);
       pathEl.addEventListener('click', () => {
-        if (c.id === qItem.iso) {
+        if (solved) return;
+        if (c.id === targetIso) {
+          solved = true;
           pathEl.setAttribute('class', 'africa-country-path found-country');
+          atlas[c.id] = true;
+          saveAtlas();
+          renderCollection();
+          $('geo-flag-emoji').textContent = countryMeta.flag || '🌍';
+          $('geo-country-title').textContent = countryMeta.fr + ' / ' + countryMeta.en;
+          $('geo-capital-sub').textContent = (isEn ? '🏛️ Capital: ' : '🏛️ Capitale : ') + countryMeta.cap;
           AudioEngine.playLevelUp();
-          onActivityTaskCompleted();
+          spawn3DConfettiBurst();
+          VoiceEngine.speak(isEn
+            ? ('Bravo! ' + countryMeta.en + '! Its capital is ' + countryMeta.cap + '. The flag joins your atlas!')
+            : ('Bravo ! ' + countryMeta.fr + ' ! Sa capitale est ' + countryMeta.cap + '. Le drapeau rejoint ton atlas !'));
+          setTimeout(() => onActivityTaskCompleted(), 1500);
         } else {
-          AudioEngine.playSnap();
-          VoiceEngine.speak(c.fr + " / " + c.en + ". " + (isEn ? "Capital: " : "Capitale : ") + c.cap);
+          pathEl.classList.add('geo-wrong');
+          setTimeout(() => pathEl.classList.remove('geo-wrong'), 900);
+          AudioEngine.playWrong();
+          VoiceEngine.speak((isEn ? 'That is ' : 'Ça, c\'est ') + c.fr + ' / ' + c.en + '. ' + (isEn ? 'Capital: ' : 'Capitale : ') + c.cap + '.');
+          state.geoTries--;
+          renderTries();
+          if (state.geoTries <= 0) {
+            hintPulse();
+            state.geoTries = 1;
+            renderTries();
+          }
         }
       });
       svgEl.appendChild(pathEl);
     });
 
-    // Render Multiple-Choice Options
-    const optGrid = $('geo-options-grid');
-    optGrid.innerHTML = '';
-    qItem.options.forEach(opt => {
-      const btn = document.createElement('button');
-      btn.className = 'btn-comp-option';
-      btn.innerHTML = '<span>🌍 ' + opt[langKey] + '</span> <span class="choice-speaker-chip" title="Écouter">🔊</span>';
-      const spk = btn.querySelector('.choice-speaker-chip');
-      if (spk) {
-        spk.onclick = (ev) => {
-          ev.stopPropagation();
-          VoiceEngine.speak(String(opt[langKey]));
-        };
-      }
-      btn.onclick = () => {
-        if (opt[langKey] === qItem.ans[langKey]) {
-          AudioEngine.playLevelUp();
-          onActivityTaskCompleted();
-        } else {
-          AudioEngine.playWrong();
-          VoiceEngine.speak(isEn ? "Look closely at the highlighted country on the map of Africa!" : "Observe bien le pays illuminé en rouge sur la carte d'Afrique !");
-        }
-      };
-      optGrid.appendChild(btn);
-    });
-
-    spawnCartoonArcadeTargets(
-      (countryMeta.flag || '🌍') + ' ' + countryMeta.fr + ' / ' + countryMeta.en,
-      countryMeta.flag || '🌍',
-      qItem.options.map((opt, idx) => ({
-        label: opt[langKey],
-        icon: countryMeta.flag || '🌍',
-        correct: opt[langKey] === qItem.ans[langKey],
-        onSelect: () => {
-          const allBtns = optGrid.querySelectorAll('.btn-comp-option');
-          if (allBtns[idx]) allBtns[idx].click();
-        }
-      }))
-    );
-
     activateRheaUniversalCoach(
-      isEn ? '🌍 RHEA AFRICA ATLAS (SETERRA × SVG-MAPS ENGINE)' : '🌍 ATLAS INTERACTIF D’AFRIQUE RHEA (SETERRA × SVG-MAPS)',
+      isEn ? '🌍 RHEA AFRICA ATLAS MISSION (SETERRA × STACK THE COUNTRIES)' : '🌍 MISSION ATLAS D\'AFRIQUE RHEA (SETERRA × STACK THE COUNTRIES)',
       [
-        countryMeta.flag + ' ' + countryMeta.fr + ' / ' + countryMeta.en,
-        (isEn ? '🏛️ Capital: ' : '🏛️ Capitale : ') + countryMeta.cap,
-        (isEn ? '🧭 Region: ' : '🧭 Région : ') + (countryMeta.region || 'Africa')
+        (phase === 2 ? (flagShown + ' ' + (isEn ? 'Mystery flag' : 'Drapeau mystère')) : (countryMeta.flag + ' ' + countryMeta.fr + ' / ' + countryMeta.en)),
+        (isEn ? '🧭 Region: ' : '🧭 Région : ') + (countryMeta.region || 'Africa'),
+        isEn ? '❤️ 3 tries, then Rhea pulses the country!' : '❤️ 3 essais, puis Rhéa fait clignoter le pays !'
       ],
-      (isEn ? (countryMeta.en + ' is in ' + (countryMeta.region || 'Africa') + '. Its capital is ' + countryMeta.cap + '.') : (countryMeta.fr + ' se situe en ' + (countryMeta.region || 'Afrique') + '. Sa capitale est ' + countryMeta.cap + '.')),
-      isEn ? '🎯 Pulse Country on Map' : '🎯 Faire Clignoter le Pays sur la Carte',
-      () => {
-        const targetPath = $('africa-iso-' + qItem.iso);
-        if (targetPath) {
-          targetPath.setAttribute('class', 'africa-country-path found-country');
-          setTimeout(() => targetPath.setAttribute('class', 'africa-country-path target-highlight'), 900);
-        }
-        AudioEngine.playSnap();
-        VoiceEngine.speak(countryMeta.fr + ', ' + countryMeta.cap);
-      }
+      promptText + ' ' + (isEn ? ('Clue: it is in ' + (countryMeta.region || 'Africa') + '.') : ('Indice : il se situe en ' + (countryMeta.region || 'Afrique') + '.')),
+      isEn ? '💡 Pulse the Country (Hint)' : '💡 Faire Clignoter le Pays (Indice)',
+      () => { hintPulse(); AudioEngine.playSnap(); }
     );
 
-    VoiceEngine.speak(qItem.q[langKey]);
+    VoiceEngine.speak(promptText);
   }
 
   // ============================================================================
-  // FUN FACTS & GENERAL KNOWLEDGE MCQ GAME SHOW ENGINE
+  // V22.0 TOUR DU SAVOIR — STACK THE COUNTRIES × KAHOOT! REBUILD OF FUN FACTS
+  // Correct answers become physical blocks dropped onto a wobbling knowledge
+  // tower (real gravity + bounce). Kahoot-style countdown awards speed stars;
+  // running out of time gives a free 50/50 hint instead of a fail (no-fail law).
   // ============================================================================
+  const FunfactTower = {
+    blocks: [],
+    falling: null,
+    raf: null,
+    BLOCK_H: 32,
+    colors: ['#E5252A', '#F59E0B', '#10B981', '#6366F1', '#EC4899', '#06B6D4'],
+    ctx() {
+      const cv = $('funfact-tower-canvas');
+      return cv ? cv.getContext('2d') : null;
+    },
+    header() {
+      const h = $('funfact-tower-header');
+      if (h) h.textContent = '🏗️ ' + (state.lang === 'en' ? 'Knowledge Tower • ' : 'Tour du Savoir • ') + this.blocks.length + (state.lang === 'en' ? ' blocks' : ' blocs');
+    },
+    drop(emoji, label) {
+      if (this.blocks.length >= 8) this.blocks.shift(); // tower "sinks" like a growing pile
+      this.falling = {
+        x: 119 + (Math.random() * 26 - 13),
+        y: -this.BLOCK_H,
+        vy: 0,
+        rot: (Math.random() * 6 - 3) * Math.PI / 180,
+        emoji: emoji || '⭐',
+        label: String(label || '').slice(0, 16),
+        color: this.colors[(this.blocks.length) % this.colors.length]
+      };
+      if (!this.raf) this.loop();
+    },
+    loop() {
+      const step = () => {
+        this.raf = null;
+        if (!this.falling) { this.draw(); return; }
+        const landingY = 318 - this.BLOCK_H - this.blocks.length * this.BLOCK_H;
+        this.falling.vy += 0.62;
+        this.falling.y += this.falling.vy;
+        if (this.falling.y >= landingY) {
+          this.falling.y = landingY;
+          if (Math.abs(this.falling.vy) > 2.4) {
+            this.falling.vy = -this.falling.vy * 0.32; // bounce!
+            AudioEngine.playSnap();
+          } else {
+            this.blocks.push(this.falling);
+            this.falling = null;
+            this.header();
+            if (this.blocks.length % 5 === 0) spawn3DConfettiBurst();
+          }
+        }
+        this.draw();
+        if (this.falling) this.raf = requestAnimationFrame(step);
+      };
+      this.raf = requestAnimationFrame(step);
+    },
+    draw() {
+      const ctx2 = this.ctx();
+      if (!ctx2) return;
+      ctx2.clearRect(0, 0, 238, 330);
+      // Night-savanna backdrop + ground
+      const sky = ctx2.createLinearGradient(0, 0, 0, 330);
+      sky.addColorStop(0, '#0B1220');
+      sky.addColorStop(1, '#1E2A47');
+      ctx2.fillStyle = sky;
+      ctx2.fillRect(0, 0, 238, 330);
+      ctx2.fillStyle = '#334155';
+      ctx2.fillRect(0, 318, 238, 12);
+      ctx2.font = '14px sans-serif';
+      ctx2.fillText('🌴', 8, 314);
+      ctx2.fillText('🦒', 208, 314);
+      const paint = (b, y) => {
+        ctx2.save();
+        ctx2.translate(b.x, y + this.BLOCK_H / 2);
+        ctx2.rotate(b.rot);
+        ctx2.fillStyle = b.color;
+        ctx2.beginPath();
+        if (ctx2.roundRect) ctx2.roundRect(-78, -this.BLOCK_H / 2, 156, this.BLOCK_H - 3, 9);
+        else ctx2.rect(-78, -this.BLOCK_H / 2, 156, this.BLOCK_H - 3);
+        ctx2.fill();
+        ctx2.strokeStyle = 'rgba(255,255,255,0.65)';
+        ctx2.lineWidth = 2;
+        ctx2.stroke();
+        ctx2.font = '17px sans-serif';
+        ctx2.textBaseline = 'middle';
+        ctx2.fillText(b.emoji, -70, 0);
+        drawFittedCanvasText(ctx2, b.label, 12, 5, 118, 12.5, '#FFFFFF', 'center');
+        ctx2.restore();
+      };
+      this.blocks.forEach((b, i) => paint(b, 318 - this.BLOCK_H - i * this.BLOCK_H));
+      if (this.falling) paint(this.falling, this.falling.y);
+    }
+  };
+
   function setupFunFactsQuizActivity() {
     $('canvas-wrapper').style.display = 'block';
     $('maze-dpad-container').classList.remove('active');
@@ -10317,33 +10474,72 @@ body.age-ce .ux-pict, body.age-ce2 .ux-pict, body.age-cm1 .ux-pict, body.age-cm 
     $('funfact-q-title').textContent = item.q[langKey];
     $('funfact-clue-box').textContent = item.clue[langKey];
     $('instruction-title').textContent = item.q[langKey];
+    FunfactTower.header();
+    FunfactTower.draw();
 
+    const fire5050 = () => {
+      if (!$('btn-lifeline-5050') || $('btn-lifeline-5050').disabled) return;
+      $('btn-lifeline-5050').disabled = true;
+      AudioEngine.playSnap();
+      let removed = 0;
+      document.querySelectorAll('#funfact-mcq-grid .btn-mcq-choice').forEach(b => {
+        if (removed < 2 && b.getAttribute('data-correct') !== 'true') {
+          b.style.opacity = '0.28';
+          b.style.pointerEvents = 'none';
+          removed++;
+        }
+      });
+    };
     if ($('btn-lifeline-5050')) {
       $('btn-lifeline-5050').disabled = false;
       $('btn-lifeline-5050').textContent = isEn ? '💡 50/50 Hint (Remove 2)' : '💡 Indice 50/50 (Éliminer 2)';
-      $('btn-lifeline-5050').onclick = () => {
-        $('btn-lifeline-5050').disabled = true;
-        AudioEngine.playSnap();
-        let removed = 0;
-        document.querySelectorAll('#funfact-mcq-grid .btn-mcq-choice').forEach(b => {
-          if (removed < 2 && b.getAttribute('data-correct') !== 'true') {
-            b.style.opacity = '0.28';
-            b.style.pointerEvents = 'none';
-            removed++;
-          }
-        });
-      };
+      $('btn-lifeline-5050').onclick = fire5050;
+    }
+
+    // KAHOOT COUNTDOWN — no timer at Maternelle; expiry = free hint, never a fail
+    if (state.funfactTimerInt) { clearInterval(state.funfactTimerInt); state.funfactTimerInt = null; }
+    const timerSecs = state.grade === 'MAT' ? 0 : (state.grade === 'SIL' || state.grade === 'CP' ? 45 : 30);
+    const timerTrack = $('funfact-timer-track');
+    const startTs = Date.now();
+    if (timerTrack) timerTrack.style.display = timerSecs > 0 ? 'block' : 'none';
+    if (timerSecs > 0) {
+      state.funfactTimerInt = setInterval(() => {
+        if (state.game !== 'fun_facts_quiz') { clearInterval(state.funfactTimerInt); state.funfactTimerInt = null; return; }
+        const left = Math.max(0, timerSecs - (Date.now() - startTs) / 1000);
+        if ($('funfact-timer-fill')) $('funfact-timer-fill').style.width = (left / timerSecs * 100) + '%';
+        if ($('funfact-timer-label')) $('funfact-timer-label').textContent = '⏱️ ' + Math.ceil(left) + 's';
+        if (left <= 0) {
+          clearInterval(state.funfactTimerInt);
+          state.funfactTimerInt = null;
+          if ($('funfact-timer-label')) $('funfact-timer-label').textContent = isEn ? '🎁 Free hint!' : '🎁 Indice offert !';
+          fire5050();
+          VoiceEngine.speak(isEn ? ('Time flies! Here is a free hint. ' + item.clue[langKey]) : ('Le temps file ! Voici un indice offert. ' + item.clue[langKey]));
+        }
+      }, 200);
     }
 
     const factHeroPre = resolveCartoonIcon(item.q.fr + " " + item.ans.fr);
     state.cartoonHeroEmoji = (factHeroPre && factHeroPre !== "🌟") ? factHeroPre : "🌍";
+
+    const onCorrectAnswer = () => {
+      if (state.funfactTimerInt) { clearInterval(state.funfactTimerInt); state.funfactTimerInt = null; }
+      const elapsed = (Date.now() - startTs) / 1000;
+      if (timerSecs > 0) {
+        const stars = elapsed < timerSecs / 3 ? 3 : (elapsed < (timerSecs * 2) / 3 ? 2 : 1);
+        showGamifiedToast('⚡ ' + (isEn ? 'Speed bonus: ' : 'Bonus vitesse : ') + '⭐'.repeat(stars));
+      }
+      const ansIco = resolveCartoonIcon(item.ans[langKey]);
+      FunfactTower.drop(ansIco !== '🌟' ? ansIco : state.cartoonHeroEmoji, String(item.ans[langKey]).replace(/[\u{1F000}-\u{1FAFF}\u{2600}-\u{27BF}]/gu, '').trim() || item.cat[langKey]);
+      AudioEngine.playLevelUp();
+      setTimeout(() => onActivityTaskCompleted(), 1250);
+    };
+
     const grid = $('funfact-mcq-grid');
     grid.innerHTML = '';
     item.options.forEach((opt, idx) => {
       const btn = document.createElement('button');
       btn.className = 'btn-mcq-choice';
       btn.setAttribute('data-correct', opt[langKey] === item.ans[langKey] ? 'true' : 'false');
-      const letter = ['A', 'B', 'C', 'D'][idx] || '•';
       btn.innerHTML = '<span>' + decorateVisualAssetText(opt[langKey]) + '</span> <span class="choice-speaker-chip" title="Écouter">🔊</span>';
       const spk = btn.querySelector('.choice-speaker-chip');
       if (spk) {
@@ -10354,8 +10550,7 @@ body.age-ce .ux-pict, body.age-ce2 .ux-pict, body.age-cm1 .ux-pict, body.age-cm 
       }
       btn.onclick = () => {
         if (opt[langKey] === item.ans[langKey]) {
-          AudioEngine.playLevelUp();
-          onActivityTaskCompleted();
+          onCorrectAnswer();
         } else {
           AudioEngine.playWrong();
           VoiceEngine.speak(isEn ? "Not quite! Read the clue and try again." : "Pas tout à fait ! Écoute bien l'indice et réessaie.");
@@ -10364,22 +10559,6 @@ body.age-ce .ux-pict, body.age-ce2 .ux-pict, body.age-cm1 .ux-pict, body.age-cm 
       grid.appendChild(btn);
     });
 
-    const ansBoxFact = $('answers-container');
-    if (ansBoxFact) {
-      ansBoxFact.innerHTML = '';
-      item.options.forEach((opt, idx) => {
-        const bigBtn = document.createElement('button');
-        bigBtn.className = 'btn-interactive';
-        bigBtn.innerHTML = '<span>' + decorateVisualAssetText(opt[langKey]) + '</span> <span class="choice-speaker-chip">🔊</span>';
-        const spk = bigBtn.querySelector('.choice-speaker-chip');
-        if (spk) spk.onclick = (ev) => { ev.stopPropagation(); VoiceEngine.speak(String(opt[langKey])); };
-        bigBtn.onclick = () => {
-          const allBtns = grid.querySelectorAll('.btn-mcq-choice');
-          if (allBtns[idx]) allBtns[idx].click();
-        };
-        ansBoxFact.appendChild(bigBtn);
-      });
-    }
     const factHeroEmoji = resolveCartoonIcon(item.q.fr + ' ' + item.ans.fr);
     spawnCartoonArcadeTargets(
       factHeroEmoji + ' ' + item.q[langKey],
@@ -10396,22 +10575,20 @@ body.age-ce .ux-pict, body.age-ce2 .ux-pict, body.age-cm1 .ux-pict, body.age-cm 
     );
 
     activateRheaUniversalCoach(
-      isEn ? '🧠 RHEA ENCYCLOPEDIA COACH (KAHOOT! × TRIVIA STUDIO)' : '🧠 COACH ENCYCLOPÉDIQUE RHEA (KAHOOT! × CULTURE GÉNÉRALE)',
+      isEn ? '🏗️ RHEA KNOWLEDGE TOWER (STACK THE COUNTRIES × KAHOOT!)' : '🏗️ TOUR DU SAVOIR RHEA (STACK THE COUNTRIES × KAHOOT!)',
       [
         item.cat[langKey],
-        item.clue[langKey]
+        item.clue[langKey],
+        isEn ? '🧱 Each right answer drops a block on your tower!' : '🧱 Chaque bonne réponse empile un bloc sur ta tour !'
       ],
       item.clue[langKey],
       isEn ? '💡 Use 50/50 Lifeline' : '💡 Activer l’Indice 50/50',
-      () => {
-        if ($('btn-lifeline-5050') && !$('btn-lifeline-5050').disabled) {
-          $('btn-lifeline-5050').click();
-        }
-      }
+      fire5050
     );
 
     VoiceEngine.speak(item.q[langKey]);
   }
+
 
   // ============================================================================
   // GRAMMAR, VOCABULARY & CONJUGATION ENGINE (BOTH FRENCH & ENGLISH SECTIONS)
@@ -10506,7 +10683,7 @@ body.age-ce .ux-pict, body.age-ce2 .ux-pict, body.age-cm1 .ux-pict, body.age-cm 
 
     // Build ultra-clean synchronized spoken prompt (Question + Options + Exam Trick)
     const cleanOptsSpoken = optsList.map(o => o.replace(/[🌀-🫿☀-➿]/gu, '').trim()).join(', ');
-    const cleanTrickSpoken = trickText.replace(/^🎓s*/, '');
+    const cleanTrickSpoken = trickText.replace(/^🎓\s*/, '');
     const fullSpeech = isEn
       ? (qText + '. Choose: ' + cleanOptsSpoken + '. ' + cleanTrickSpoken)
       : (qText + '. Choisis : ' + cleanOptsSpoken + '. ' + cleanTrickSpoken);
@@ -10996,7 +11173,7 @@ body.age-ce .ux-pict, body.age-ce2 .ux-pict, body.age-cm1 .ux-pict, body.age-cm 
     const spokenBlankWord = isEn ? ' ... blank ... ' : ' ... point d’interrogation ... ';
     const spokenSentenceQuestion = data.sentence.replace('___', spokenBlankWord);
     const cleanOptionsText = data.options.map(o => String(o).replace(/(?:[�-�][�-�]|[☀-➿])/g, '').trim()).join(', ');
-    const cleanRuleText = String(data.rule || '').replace(/^💡s*/, '');
+    const cleanRuleText = String(data.rule || '').replace(/^💡\s*/, '');
     const syncedVoicePrompt = isEn
       ? ('Question: ' + spokenSentenceQuestion + '. Choose between: ' + cleanOptionsText + '. Exam Tip: ' + cleanRuleText)
       : ('Question : ' + spokenSentenceQuestion + '. Choisis entre : ' + cleanOptionsText + '. Astuce d’examen : ' + cleanRuleText);
@@ -11236,7 +11413,7 @@ body.age-ce .ux-pict, body.age-ce2 .ux-pict, body.age-cm1 .ux-pict, body.age-cm 
     });
 
     // 3. Activate Ultra-Visual Exam Trick & Worked Example Gear Bar for Language Lab!
-    const shortRuleVisual = String(data.rule || '').replace(/^💡s*/, '');
+    const shortRuleVisual = String(data.rule || '').replace(/^💡\s*/, '');
     activateRheaUniversalCoach(
       isEn ? '🎓 EXAM TRICK & VISUAL GEAR' : '🎓 ASTUCE EXAMEN & EXEMPLE VISUEL',
       [
@@ -11730,8 +11907,8 @@ body.age-ce .ux-pict, body.age-ce2 .ux-pict, body.age-cm1 .ux-pict, body.age-cm 
       density: isEn ? "🌊 Density" : "🌊 Archimède",
       circuit: isEn ? "💡 Circuit 3D" : "💡 Circuit 3D",
       comet: isEn ? "🚀 Comets" : "🚀 Comètes",
-      africa_geography: isEn ? "🌍 Africa" : "🌍 Afrique",
-      fun_facts_quiz: isEn ? "🧠 Quiz QCM" : "🧠 Quiz QCM",
+      africa_geography: isEn ? "🗺️ Atlas Mission" : "🗺️ Mission Atlas",
+      fun_facts_quiz: isEn ? "🏗️ Knowledge Tower" : "🏗️ Tour du Savoir",
       grammar_lab: isEn ? "✍️ Grammar" : "✍️ Grammaire",
       vocabulary_lab: isEn ? "🗂️ Vocab" : "🗂️ Vocabulaire",
       conjugation_lab: isEn ? "⏳ Verbs" : "⏳ Conjugaison",
@@ -14011,8 +14188,8 @@ body.age-ce .ux-pict, body.age-ce2 .ux-pict, body.age-cm1 .ux-pict, body.age-cm 
         ctx.font = '26px sans-serif';
         ctx.fillText(ct.icon, -14, -3);
 
-        const shortLbl = String(ct.label).replace(/^(?:(?:[�][�-�]){2}|[�-�][�-�]|[☀-➿])s*/, '').slice(0, 16);
-        const cleanLbl = String(ct.label).replace(/^(?:(?:[�][�-�]){2}|[�-�][�-�]|[☀-➿])s*/, '').trim();
+        const shortLbl = String(ct.label).replace(/^(?:(?:[�][�-�]){2}|[�-�][�-�]|[☀-➿])\s*/, '').slice(0, 16);
+        const cleanLbl = String(ct.label).replace(/^(?:(?:[�][�-�]){2}|[�-�][�-�]|[☀-➿])\s*/, '').trim();
         const fitLbl = cleanLbl.length > 18 ? cleanLbl.slice(0, 17) + '…' : cleanLbl;
         ctx.font = fitLbl.length > 12 ? 'bold 11.5px sans-serif' : 'bold 13px sans-serif';
         const tw = ctx.measureText(fitLbl).width;
@@ -14559,6 +14736,7 @@ body.age-ce .ux-pict, body.age-ce2 .ux-pict, body.age-cm1 .ux-pict, body.age-cm 
     cleanLabel: uxCleanLabel
   };
   window.__NATEIVA_DB__ = DB;
+  window.__NATEIVA_TOWER__ = FunfactTower;
 
   // Expose state & APIs for test automation
   window.state = state;

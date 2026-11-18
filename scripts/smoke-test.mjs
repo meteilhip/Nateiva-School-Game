@@ -57,11 +57,18 @@ window.Audio = class { play() { return Promise.resolve(); } pause() {} addEventL
 window.scrollTo = () => {};
 window.onerror = (msg, src, line) => { pageErrors.push(`window.onerror: ${msg} @${line}`); };
 
-// Track intervals so each game's leftover timers can be cleared between launches
+// Track intervals AND timeouts so each game's leftover timers can be cleared between launches
 const liveIntervals = new Set();
+const liveTimeouts = new Set();
 const origSetInterval = window.setInterval.bind(window);
+const origSetTimeout = window.setTimeout.bind(window);
 window.setInterval = (fn, ms, ...a) => { const id = origSetInterval(fn, ms, ...a); liveIntervals.add(id); return id; };
-const clearAllIntervals = () => { for (const id of liveIntervals) window.clearInterval(id); liveIntervals.clear(); };
+window.setTimeout = (fn, ms, ...a) => { const id = origSetTimeout(fn, ms, ...a); liveTimeouts.add(id); return id; };
+const clearAllIntervals = () => {
+  for (const id of liveIntervals) window.clearInterval(id);
+  for (const id of liveTimeouts) window.clearTimeout(id);
+  liveIntervals.clear(); liveTimeouts.clear();
+};
 
 // ---------- Execute the app script ----------
 const scriptEl = [...window.document.querySelectorAll('script')].map(s => s.textContent).join('\n;\n');
@@ -203,12 +210,59 @@ function auditContent() {
   return issues;
 }
 
+// ---------- REBUILT-MECHANIC CHECKS (V22.0 Mission Atlas + Tour du Savoir) ----------
+async function testRebuiltMechanics() {
+  const issues = [];
+  // 1. Mission Atlas: the answer must NOT be pre-highlighted; finding it must complete the activity
+  window.__NATEIVA_SELECT_CLASS__('CP', false);
+  window.__NATEIVA_LAUNCH__('africa_geography');
+  await sleep(80);
+  const paths = d.querySelectorAll('#africa-svg-map path');
+  if (paths.length < 40) issues.push('GEO: map has only ' + paths.length + ' country paths');
+  if (d.querySelector('#africa-svg-map .target-highlight')) issues.push('GEO: answer is pre-highlighted (Seterra drill broken)');
+  const iso = window.state.geoTargetIso;
+  const wrong = [...paths].find(p => p.getAttribute('data-iso') !== iso);
+  const triesBefore = window.state.geoTries;
+  if (wrong) { wrong.dispatchEvent(new window.Event('click')); await sleep(20); }
+  if (window.state.geoTries >= triesBefore) issues.push('GEO: wrong tap does not consume a try');
+  const target = d.getElementById('africa-iso-' + iso);
+  const phaseBefore = window.state.activityPhase + '_' + window.state.exerciseInLevel;
+  if (target) { target.dispatchEvent(new window.Event('click')); await sleep(1700); }
+  if ((window.state.activityPhase + '_' + window.state.exerciseInLevel) === phaseBefore) issues.push('GEO: finding the country does not complete the activity');
+  try { if (!JSON.parse(window.localStorage.getItem('nateiva_geo_atlas_v1') || '{}')[iso]) issues.push('GEO: found country not saved to personal atlas'); } catch (e) { issues.push('GEO: atlas storage unreadable'); }
+  if (!d.getElementById('geo-collection-strip')) issues.push('GEO: flag collection strip missing');
+  clearAllIntervals();
+
+  // 2. Tour du Savoir: timer must run (SIL+), correct answer must drop a block on the tower
+  window.__NATEIVA_SELECT_CLASS__('SIL', false);
+  window.__NATEIVA_LAUNCH__('fun_facts_quiz');
+  await sleep(300);
+  if (!d.getElementById('funfact-tower-canvas')) issues.push('TOWER: canvas missing');
+  const track = d.getElementById('funfact-timer-track');
+  if (!track || track.style.display === 'none') issues.push('TOWER: Kahoot timer not running at SIL');
+  const blocksBefore = window.__NATEIVA_TOWER__.blocks.length;
+  const correctBtn = d.querySelector('#funfact-mcq-grid [data-correct="true"]');
+  if (!correctBtn) issues.push('TOWER: no correct choice rendered');
+  else { correctBtn.click(); await sleep(1700); }
+  if (window.__NATEIVA_TOWER__.blocks.length <= blocksBefore && !window.__NATEIVA_TOWER__.falling) issues.push('TOWER: correct answer did not drop a block');
+  // MAT: no timer (no-pressure law)
+  window.__NATEIVA_SELECT_CLASS__('MAT', false);
+  window.__NATEIVA_LAUNCH__('fun_facts_quiz');
+  await sleep(120);
+  const trackMat = d.getElementById('funfact-timer-track');
+  if (trackMat && trackMat.style.display !== 'none') issues.push('TOWER: timer should be hidden at Maternelle');
+  clearAllIntervals();
+  return issues;
+}
+
 (async () => {
   for (const grade of GRADES) {
     for (const game of GAMES) {
       await testGame(grade, game);
     }
   }
+  const mechanicIssues = await testRebuiltMechanics();
+  mechanicIssues.forEach(i => failures.push({ grade: 'MECHANIC', game: 'rebuilt', ok: false, issues: [i] }));
   const contentIssues = auditContent();
   const passed = results.filter(r => r.ok).length;
   const summary = {

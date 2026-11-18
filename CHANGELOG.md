@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.15.0 — 2026-11-18 — V22.0 CORE-GAMEPLAY REBUILD (quiz-only mechanics eliminated)
+
+- **Tour du Savoir** (rebuild of `fun_facts_quiz`, adapted from *Stack the Countries* × *Kahoot!*): every correct answer becomes a physical block that falls, bounces and stacks onto a wobbling Knowledge Tower rendered on a dedicated canvas (gravity + bounce physics, savanna backdrop, 5-block confetti milestones). Kahoot-style countdown (hidden at Maternelle, 45 s at SIL/CP, 30 s at CE1+) awards ⚡ speed stars; running out of time gives a **free 50/50 hint instead of a fail** (no-fail law).
+- **Mission Atlas** (rebuild of `africa_geography`, adapted from *Seterra* × *Stack the Countries*): the answer is no longer pre-highlighted and the duplicate MCQ buttons are gone — the child must **find the country on the real 49-country SVG map**. 3 distinct missions per exercise (find by name+flag / by flag only / by capital at CE1+), ❤️ 3 tries then the country pulses as a hint, every wrong tap teaches that country's name and capital, and each found country is saved forever to a **personal Atlas** (flag collection strip + permanently green countries, localStorage). Maternelle/SIL get 4 big pulsing candidate countries with the rest dimmed.
+- **Bug fixes found by the harness**: 6 corrupted regexes (lost backslashes) broke sentence-by-sentence story highlighting and emoji-stripping (`/(?<=[.!?])s+/` → `\s+`, etc.); uppercase ISO codes (e.g. "TZ") in geography questions never matched the lowercase map paths, making those rounds unwinnable by map-tap — now case-normalized.
+- **Test suite extended**: mechanic-level checks (answer must not be pre-highlighted, wrong tap must consume a try, found country must persist to the atlas, correct quiz answer must drop a tower block, Maternelle must have no timer) + timeout tracking for test isolation. 154/154 runs green, all 22 games ≥ 4/5.
+
 ## 1.14.0 — 2026-11-18 — V21.0 AGE-ADAPTIVE REA TOP-GAME REBUILD
 
 - REA analysis of the top-rated education game per category (Khan Academy Kids, Duolingo ABC, Teach Your Monster to Read, Prodigy Math, Toca Lab/PhET, Stack the Countries/Seterra, Kahoot!) distilled into `GAME_DESIGN_RESEARCH.md` v2 and rebuilt into the engine.
