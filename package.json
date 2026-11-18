@@ -1,7 +1,7 @@
 {
   "name": "nateiva-school-game",
   "main": "expo-router/entry",
-  "version": "1.16.0",
+  "version": "1.17.0",
   "dependencies": {
     "@expo/metro-runtime": "^57.0.16",
     "@expo/ui": "~57.0.19",
@@ -53,7 +53,8 @@
     "lint": "expo lint",
     "test:smoke": "node scripts/smoke-test.mjs",
     "test:quality": "node scripts/age-adaptive-audit.mjs",
-    "test:games": "node scripts/smoke-test.mjs && node scripts/age-adaptive-audit.mjs"
+    "test:games": "node scripts/smoke-test.mjs && node scripts/age-adaptive-audit.mjs",
+    "test:world": "node scripts/world-smoke.mjs"
   },
   "private": true
 }

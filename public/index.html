@@ -3547,6 +3547,22 @@ body { background:transparent !important; }
 #class-curriculum-desc { font-size:0.78rem; opacity:0.78; }
 #journey-avatar-emoji { font-size:2rem; display:inline-block; animation:uxPictBob 2.4s ease-in-out infinite; }
 body.age-mat .ux-kid-title { font-size:1.6rem; }
+
+/* ---- NATEIVA WORLD hero banner ---- */
+#world-hero-banner { display:flex; align-items:center; gap:18px; margin:14px auto 10px; width:min(1080px,94%);
+  background:linear-gradient(120deg,#2B2D64 0%,#1C7ED6 55%,#2EC4B6 100%); border:4px solid #FFD23F; border-radius:28px;
+  padding:16px 26px; text-decoration:none; box-shadow:0 16px 36px rgba(28,126,214,0.4); position:relative; overflow:hidden;
+  transition:transform 0.25s cubic-bezier(0.34,1.56,0.64,1); }
+#world-hero-banner:hover { transform:scale(1.02) rotate(-0.4deg); }
+#world-hero-banner .whb-globe { font-size:3.6rem; line-height:1; animation:uxPictBob 2.4s ease-in-out infinite; filter:drop-shadow(0 6px 8px rgba(0,0,0,0.35)); }
+#world-hero-banner .whb-copy { display:flex; flex-direction:column; gap:2px; }
+#world-hero-banner .whb-copy b { color:#FFD23F; font-size:1.45rem; font-weight:900; letter-spacing:0.02em; text-shadow:0 2px 0 rgba(0,0,0,0.25); }
+#world-hero-banner .whb-copy i { color:#EAF7FF; font-style:normal; font-size:0.95rem; font-weight:700; }
+#world-hero-banner .whb-play { margin-left:auto; background:linear-gradient(135deg,#FF4D57,#E5252A); color:#fff; font-weight:900; font-size:1.1rem;
+  padding:12px 26px; border-radius:999px; border:3px solid rgba(255,255,255,0.8); box-shadow:0 8px 18px rgba(229,37,42,0.5); white-space:nowrap; }
+#world-hero-banner .whb-burst { position:absolute; inset:0; background:radial-gradient(circle at 18% 30%, rgba(255,255,255,0.22), transparent 40%); pointer-events:none; }
+body.age-mat #world-hero-banner .whb-copy i { display:none; }
+@media(max-width:720px){ #world-hero-banner{ flex-wrap:wrap; justify-content:center; text-align:center; } #world-hero-banner .whb-play{ margin:6px auto 0; } }
 </style>
 </head>
 <body>
@@ -3699,6 +3715,14 @@ body.age-mat .ux-kid-title { font-size:1.6rem; }
   </nav>
 
   <!-- PORTALS GRID (WITH APPLE FLOTATION — ORDERED BY MANDATORY CORE SUBJECTS FIRST) -->
+  <!-- V23.0 NATEIVA WORLD HERO BANNER -->
+  <a id="world-hero-banner" href="play.html" aria-label="NATEIVA WORLD">
+    <span class="whb-burst" aria-hidden="true"></span>
+    <span class="whb-globe" aria-hidden="true">🏝️</span>
+    <span class="whb-copy"><b>NOUVEAU&nbsp;!&nbsp;NATEIVA WORLD</b><i>L'île aux 8 aventures : attrape, peins, saute, fais pousser, envole-toi !</i></span>
+    <span class="whb-play">▶ EXPLORER</span>
+  </a>
+
   <section class="portals-grid" id="portals-grid">
     <!-- NEW #21: Cartoon Math Magic Tricks (Make-10, 9-Fingers, Doubles & Pizza) -->
     <button class="portal-card" data-cat="math" data-game="math_magic_tricks">
