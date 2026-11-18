@@ -1,6 +1,6 @@
 {
  "summary": {
-  "date": "2026-11-18T15:59:41.471Z",
+  "date": "2026-11-18T16:05:39.162Z",
   "totalRuns": 154,
   "passed": 154,
   "failed": 0,
@@ -191,8 +191,8 @@
    "issues": [],
    "buttons": 34,
    "clicked": 14,
-   "picts": 14,
-   "decorated": 14,
+   "picts": 16,
+   "decorated": 16,
    "speaks": 11
   },
   {
@@ -213,8 +213,8 @@
    "issues": [],
    "buttons": 33,
    "clicked": 14,
-   "picts": 14,
-   "decorated": 14,
+   "picts": 15,
+   "decorated": 15,
    "speaks": 11
   },
   {
@@ -433,8 +433,8 @@
    "issues": [],
    "buttons": 34,
    "clicked": 14,
-   "picts": 14,
-   "decorated": 14,
+   "picts": 16,
+   "decorated": 16,
    "speaks": 12
   },
   {
@@ -567,252 +567,10 @@
    "clicked": 14,
    "picts": 11,
    "decorated": 11,
-   "speaks": 11
-  },
-  {
-   "grade": "CP",
-   "game": "vocabulary_lab",
-   "ok": true,
-   "issues": [],
-   "buttons": 33,
-   "clicked": 14,
-   "picts": 15,
-   "decorated": 15,
-   "speaks": 11
-  },
-  {
-   "grade": "CP",
-   "game": "conjugation_lab",
-   "ok": true,
-   "issues": [],
-   "buttons": 28,
-   "clicked": 14,
-   "picts": 10,
-   "decorated": 10,
-   "speaks": 11
-  },
-  {
-   "grade": "CP",
-   "game": "pronunciation_lab",
-   "ok": true,
-   "issues": [],
-   "buttons": 32,
-   "clicked": 14,
-   "picts": 18,
-   "decorated": 18,
-   "speaks": 13
-  },
-  {
-   "grade": "CP",
-   "game": "africa_geography",
-   "ok": true,
-   "issues": [],
-   "buttons": 32,
-   "clicked": 14,
-   "picts": 14,
-   "decorated": 14,
-   "speaks": 13
-  },
-  {
-   "grade": "CP",
-   "game": "fun_facts_quiz",
-   "ok": true,
-   "issues": [],
-   "buttons": 32,
-   "clicked": 14,
-   "picts": 14,
-   "decorated": 14,
-   "speaks": 12
-  },
-  {
-   "grade": "CP",
-   "game": "story_lab",
-   "ok": true,
-   "issues": [],
-   "buttons": 35,
-   "clicked": 14,
-   "picts": 17,
-   "decorated": 17,
-   "speaks": 12
-  },
-  {
-   "grade": "CP",
-   "game": "reading_lab",
-   "ok": true,
-   "issues": [],
-   "buttons": 36,
-   "clicked": 14,
-   "picts": 18,
-   "decorated": 18,
-   "speaks": 14
-  },
-  {
-   "grade": "CP",
-   "game": "math_lab",
-   "ok": true,
-   "issues": [],
-   "buttons": 36,
-   "clicked": 14,
-   "picts": 18,
-   "decorated": 18,
-   "speaks": 12
-  },
-  {
-   "grade": "CP",
-   "game": "chemistry",
-   "ok": true,
-   "issues": [],
-   "buttons": 35,
-   "clicked": 14,
-   "picts": 17,
-   "decorated": 17,
-   "speaks": 9
-  },
-  {
-   "grade": "CP",
-   "game": "density",
-   "ok": true,
-   "issues": [],
-   "buttons": 34,
-   "clicked": 14,
-   "picts": 14,
-   "decorated": 14,
-   "speaks": 11
-  },
-  {
-   "grade": "CP",
-   "game": "circuit",
-   "ok": true,
-   "issues": [],
-   "buttons": 36,
-   "clicked": 14,
-   "picts": 18,
-   "decorated": 18,
-   "speaks": 8
-  },
-  {
-   "grade": "CP",
-   "game": "botany",
-   "ok": true,
-   "issues": [],
-   "buttons": 33,
-   "clicked": 14,
-   "picts": 15,
-   "decorated": 15,
-   "speaks": 12
-  },
-  {
-   "grade": "CP",
-   "game": "comet",
-   "ok": true,
-   "issues": [],
-   "buttons": 35,
-   "clicked": 14,
-   "picts": 17,
-   "decorated": 17,
-   "speaks": 17
-  },
-  {
-   "grade": "CP",
-   "game": "tangram_puzzle",
-   "ok": true,
-   "issues": [],
-   "buttons": 35,
-   "clicked": 14,
-   "picts": 17,
-   "decorated": 17,
-   "speaks": 11
-  },
-  {
-   "grade": "CP",
-   "game": "maze_quest",
-   "ok": true,
-   "issues": [],
-   "buttons": 34,
-   "clicked": 14,
-   "picts": 16,
-   "decorated": 16,
    "speaks": 10
   },
   {
-   "grade": "CE",
-   "game": "math_magic_tricks",
-   "ok": true,
-   "issues": [],
-   "buttons": 36,
-   "clicked": 14,
-   "picts": 18,
-   "decorated": 18,
-   "speaks": 12
-  },
-  {
-   "grade": "CE",
-   "game": "science_hero_tricks",
-   "ok": true,
-   "issues": [],
-   "buttons": 36,
-   "clicked": 14,
-   "picts": 18,
-   "decorated": 18,
-   "speaks": 13
-  },
-  {
-   "grade": "CE",
-   "game": "tetris_blocks",
-   "ok": true,
-   "issues": [],
-   "buttons": 36,
-   "clicked": 14,
-   "picts": 18,
-   "decorated": 18,
-   "speaks": 12
-  },
-  {
-   "grade": "CE",
-   "game": "auto_racer",
-   "ok": true,
-   "issues": [],
-   "buttons": 36,
-   "clicked": 14,
-   "picts": 18,
-   "decorated": 18,
-   "speaks": 12
-  },
-  {
-   "grade": "CE",
-   "game": "math_monster_quest",
-   "ok": true,
-   "issues": [],
-   "buttons": 36,
-   "clicked": 14,
-   "picts": 18,
-   "decorated": 18,
-   "speaks": 13
-  },
-  {
-   "grade": "CE",
-   "game": "science_ecosystem",
-   "ok": true,
-   "issues": [],
-   "buttons": 36,
-   "clicked": 14,
-   "picts": 18,
-   "decorated": 18,
-   "speaks": 12
-  },
-  {
-   "grade": "CE",
-   "game": "grammar_lab",
-   "ok": true,
-   "issues": [],
-   "buttons": 29,
-   "clicked": 14,
-   "picts": 11,
-   "decorated": 11,
-   "speaks": 9
-  },
-  {
-   "grade": "CE",
+   "grade": "CP",
    "game": "vocabulary_lab",
    "ok": true,
    "issues": [],
@@ -820,10 +578,10 @@
    "clicked": 14,
    "picts": 15,
    "decorated": 15,
-   "speaks": 12
+   "speaks": 11
   },
   {
-   "grade": "CE",
+   "grade": "CP",
    "game": "conjugation_lab",
    "ok": true,
    "issues": [],
@@ -834,7 +592,7 @@
    "speaks": 12
   },
   {
-   "grade": "CE",
+   "grade": "CP",
    "game": "pronunciation_lab",
    "ok": true,
    "issues": [],
@@ -845,7 +603,7 @@
    "speaks": 14
   },
   {
-   "grade": "CE",
+   "grade": "CP",
    "game": "africa_geography",
    "ok": true,
    "issues": [],
@@ -856,7 +614,7 @@
    "speaks": 12
   },
   {
-   "grade": "CE",
+   "grade": "CP",
    "game": "fun_facts_quiz",
    "ok": true,
    "issues": [],
@@ -865,6 +623,248 @@
    "picts": 14,
    "decorated": 14,
    "speaks": 13
+  },
+  {
+   "grade": "CP",
+   "game": "story_lab",
+   "ok": true,
+   "issues": [],
+   "buttons": 35,
+   "clicked": 14,
+   "picts": 17,
+   "decorated": 17,
+   "speaks": 12
+  },
+  {
+   "grade": "CP",
+   "game": "reading_lab",
+   "ok": true,
+   "issues": [],
+   "buttons": 36,
+   "clicked": 14,
+   "picts": 18,
+   "decorated": 18,
+   "speaks": 12
+  },
+  {
+   "grade": "CP",
+   "game": "math_lab",
+   "ok": true,
+   "issues": [],
+   "buttons": 36,
+   "clicked": 14,
+   "picts": 18,
+   "decorated": 18,
+   "speaks": 12
+  },
+  {
+   "grade": "CP",
+   "game": "chemistry",
+   "ok": true,
+   "issues": [],
+   "buttons": 35,
+   "clicked": 14,
+   "picts": 17,
+   "decorated": 17,
+   "speaks": 9
+  },
+  {
+   "grade": "CP",
+   "game": "density",
+   "ok": true,
+   "issues": [],
+   "buttons": 34,
+   "clicked": 14,
+   "picts": 16,
+   "decorated": 16,
+   "speaks": 12
+  },
+  {
+   "grade": "CP",
+   "game": "circuit",
+   "ok": true,
+   "issues": [],
+   "buttons": 36,
+   "clicked": 14,
+   "picts": 18,
+   "decorated": 18,
+   "speaks": 8
+  },
+  {
+   "grade": "CP",
+   "game": "botany",
+   "ok": true,
+   "issues": [],
+   "buttons": 33,
+   "clicked": 14,
+   "picts": 14,
+   "decorated": 14,
+   "speaks": 11
+  },
+  {
+   "grade": "CP",
+   "game": "comet",
+   "ok": true,
+   "issues": [],
+   "buttons": 35,
+   "clicked": 14,
+   "picts": 17,
+   "decorated": 17,
+   "speaks": 18
+  },
+  {
+   "grade": "CP",
+   "game": "tangram_puzzle",
+   "ok": true,
+   "issues": [],
+   "buttons": 35,
+   "clicked": 14,
+   "picts": 17,
+   "decorated": 17,
+   "speaks": 10
+  },
+  {
+   "grade": "CP",
+   "game": "maze_quest",
+   "ok": true,
+   "issues": [],
+   "buttons": 34,
+   "clicked": 14,
+   "picts": 16,
+   "decorated": 16,
+   "speaks": 10
+  },
+  {
+   "grade": "CE",
+   "game": "math_magic_tricks",
+   "ok": true,
+   "issues": [],
+   "buttons": 36,
+   "clicked": 14,
+   "picts": 18,
+   "decorated": 18,
+   "speaks": 13
+  },
+  {
+   "grade": "CE",
+   "game": "science_hero_tricks",
+   "ok": true,
+   "issues": [],
+   "buttons": 36,
+   "clicked": 14,
+   "picts": 18,
+   "decorated": 18,
+   "speaks": 12
+  },
+  {
+   "grade": "CE",
+   "game": "tetris_blocks",
+   "ok": true,
+   "issues": [],
+   "buttons": 36,
+   "clicked": 14,
+   "picts": 18,
+   "decorated": 18,
+   "speaks": 12
+  },
+  {
+   "grade": "CE",
+   "game": "auto_racer",
+   "ok": true,
+   "issues": [],
+   "buttons": 36,
+   "clicked": 14,
+   "picts": 18,
+   "decorated": 18,
+   "speaks": 13
+  },
+  {
+   "grade": "CE",
+   "game": "math_monster_quest",
+   "ok": true,
+   "issues": [],
+   "buttons": 36,
+   "clicked": 14,
+   "picts": 18,
+   "decorated": 18,
+   "speaks": 12
+  },
+  {
+   "grade": "CE",
+   "game": "science_ecosystem",
+   "ok": true,
+   "issues": [],
+   "buttons": 36,
+   "clicked": 14,
+   "picts": 18,
+   "decorated": 18,
+   "speaks": 12
+  },
+  {
+   "grade": "CE",
+   "game": "grammar_lab",
+   "ok": true,
+   "issues": [],
+   "buttons": 29,
+   "clicked": 14,
+   "picts": 11,
+   "decorated": 11,
+   "speaks": 10
+  },
+  {
+   "grade": "CE",
+   "game": "vocabulary_lab",
+   "ok": true,
+   "issues": [],
+   "buttons": 33,
+   "clicked": 14,
+   "picts": 15,
+   "decorated": 15,
+   "speaks": 11
+  },
+  {
+   "grade": "CE",
+   "game": "conjugation_lab",
+   "ok": true,
+   "issues": [],
+   "buttons": 28,
+   "clicked": 14,
+   "picts": 10,
+   "decorated": 10,
+   "speaks": 14
+  },
+  {
+   "grade": "CE",
+   "game": "pronunciation_lab",
+   "ok": true,
+   "issues": [],
+   "buttons": 32,
+   "clicked": 14,
+   "picts": 18,
+   "decorated": 18,
+   "speaks": 13
+  },
+  {
+   "grade": "CE",
+   "game": "africa_geography",
+   "ok": true,
+   "issues": [],
+   "buttons": 32,
+   "clicked": 14,
+   "picts": 14,
+   "decorated": 14,
+   "speaks": 13
+  },
+  {
+   "grade": "CE",
+   "game": "fun_facts_quiz",
+   "ok": true,
+   "issues": [],
+   "buttons": 32,
+   "clicked": 14,
+   "picts": 14,
+   "decorated": 14,
+   "speaks": 12
   },
   {
    "grade": "CE",
@@ -886,7 +886,7 @@
    "clicked": 14,
    "picts": 18,
    "decorated": 18,
-   "speaks": 13
+   "speaks": 14
   },
   {
    "grade": "CE",
@@ -917,8 +917,8 @@
    "issues": [],
    "buttons": 34,
    "clicked": 14,
-   "picts": 16,
-   "decorated": 16,
+   "picts": 14,
+   "decorated": 14,
    "speaks": 11
   },
   {
@@ -1214,8 +1214,8 @@
    "issues": [],
    "buttons": 34,
    "clicked": 14,
-   "picts": 16,
-   "decorated": 16,
+   "picts": 14,
+   "decorated": 14,
    "speaks": 10
   },
   {
@@ -1456,8 +1456,8 @@
    "issues": [],
    "buttons": 34,
    "clicked": 14,
-   "picts": 16,
-   "decorated": 16,
+   "picts": 14,
+   "decorated": 14,
    "speaks": 10
   },
   {
@@ -1532,32 +1532,32 @@
    "ok": true,
    "issues": [],
    "buttons": 29,
-   "clicked": 14,
-   "picts": 11,
-   "decorated": 11,
-   "speaks": 9
-  },
-  {
-   "grade": "CM",
-   "game": "vocabulary_lab",
-   "ok": true,
-   "issues": [],
-   "buttons": 33,
-   "clicked": 14,
-   "picts": 15,
-   "decorated": 15,
-   "speaks": 11
-  },
-  {
-   "grade": "CM",
-   "game": "conjugation_lab",
-   "ok": true,
-   "issues": [],
-   "buttons": 28,
    "clicked": 14,
    "picts": 7,
    "decorated": 7,
-   "speaks": 13
+   "speaks": 10
+  },
+  {
+   "grade": "CM",
+   "game": "vocabulary_lab",
+   "ok": true,
+   "issues": [],
+   "buttons": 33,
+   "clicked": 14,
+   "picts": 15,
+   "decorated": 15,
+   "speaks": 11
+  },
+  {
+   "grade": "CM",
+   "game": "conjugation_lab",
+   "ok": true,
+   "issues": [],
+   "buttons": 28,
+   "clicked": 14,
+   "picts": 10,
+   "decorated": 10,
+   "speaks": 11
   },
   {
    "grade": "CM",
@@ -1612,7 +1612,7 @@
    "clicked": 14,
    "picts": 18,
    "decorated": 18,
-   "speaks": 13
+   "speaks": 12
   },
   {
    "grade": "CM",
@@ -1643,8 +1643,8 @@
    "issues": [],
    "buttons": 34,
    "clicked": 14,
-   "picts": 14,
-   "decorated": 14,
+   "picts": 16,
+   "decorated": 16,
    "speaks": 11
   },
   {

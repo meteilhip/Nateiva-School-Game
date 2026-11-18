@@ -3472,6 +3472,12 @@ body.age-ce .ux-pict, body.age-ce2 .ux-pict, body.age-cm1 .ux-pict, body.age-cm 
 @media(max-width:720px){ #ux-sticker-fab{ bottom:96px; right:12px; padding:10px 14px; font-size:0.95rem; } }
 
 /* ---- V22.0 TOUR DU SAVOIR (Stack the Countries × Kahoot rebuild of fun_facts_quiz) ---- */
+#funfacts-overlay.active { display:flex !important; }
+#funfacts-overlay .funfact-hero-card { display:none !important; } /* the canvas stage already shows the question */
+#funfacts-overlay .funfact-mcq-grid { display:none !important; }  /* the canvas bubbles are the answer input */
+#funfacts-overlay .funfact-play-row { grid-template-columns:1fr; justify-items:center; width:100%; }
+#funfacts-overlay .funfact-tower-panel { width:min(430px, 94%); }
+.funfact-timer-track { margin:0 0 8px 0; }
 .funfact-timer-track { position:relative; height:26px; border-radius:999px; background:rgba(15,23,42,0.35); border:2px solid rgba(255,255,255,0.35); overflow:hidden; margin-top:10px; }
 .funfact-timer-fill { height:100%; width:100%; border-radius:999px; background:linear-gradient(90deg,#10B981 0%,#FBBF24 60%,#E5252A 100%); transition:width 0.2s linear; }
 .funfact-timer-label { position:absolute; inset:0; display:flex; align-items:center; justify-content:center; font-size:0.82rem; font-weight:900; color:#fff; text-shadow:0 1px 3px rgba(0,0,0,0.6); }
@@ -4250,12 +4256,12 @@ body.age-ce .ux-pict, body.age-ce2 .ux-pict, body.age-cm1 .ux-pict, body.age-cm 
             </div>
             <div class="funfact-question-title" id="funfact-q-title">Quel est le plus long fleuve du continent africain ?</div>
             <div class="funfact-didyouknow-box" id="funfact-clue-box">💡 Le savais-tu ? Ce fleuve traverse l'Égypte et mesure plus de 6 650 kilomètres !</div>
-            <div class="funfact-timer-track" id="funfact-timer-track"><div class="funfact-timer-fill" id="funfact-timer-fill"></div><span class="funfact-timer-label" id="funfact-timer-label">⏱️</span></div>
           </div>
           <div class="funfact-play-row">
             <div class="funfact-mcq-grid" id="funfact-mcq-grid"></div>
             <div class="funfact-tower-panel">
               <div class="funfact-tower-header" id="funfact-tower-header">🏗️ Tour du Savoir • 0 blocs</div>
+              <div class="funfact-timer-track" id="funfact-timer-track"><div class="funfact-timer-fill" id="funfact-timer-fill"></div><span class="funfact-timer-label" id="funfact-timer-label">⏱️</span></div>
               <canvas id="funfact-tower-canvas" width="238" height="330"></canvas>
             </div>
           </div>
