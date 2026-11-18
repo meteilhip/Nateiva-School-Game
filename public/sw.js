@@ -1,5 +1,7 @@
-// public/sw.js - Nateiva EduKids Offline Service Worker
-const CACHE_NAME = 'nateiva-edukids-v1-1-1';
+// public/sw.js - Nateiva School Game Offline Service Worker
+// v1.16.0 — NETWORK-FIRST for pages so every deploy reaches kids immediately;
+// cache-first only for immutable static assets (audio, images, fonts).
+const CACHE_NAME = 'nateiva-school-game-v1-16-0';
 const APP_ROOT = new URL('./', self.location.href).href;
 const PRECACHE_URLS = [
   APP_ROOT,
@@ -29,41 +31,43 @@ self.addEventListener('activate', (event) => {
   );
 });
 
+const STATIC_ASSET_RE = /\.(?:mp3|ogg|wav|png|jpg|jpeg|webp|svg|gif|woff2?|ttf|ico)(?:\?|$)/i;
+
 self.addEventListener('fetch', (event) => {
   const request = event.request;
-  
-  // Only handle GET requests
   if (request.method !== 'GET') return;
+  const isPage = request.mode === 'navigate' || /\.html(?:\?|$)/i.test(request.url) || request.url === APP_ROOT;
+  const isStatic = STATIC_ASSET_RE.test(request.url);
 
-  // Cache-first for static assets, network-first with cache fallback for pages
-  event.respondWith(
-    caches.match(request).then((cachedResponse) => {
-      if (cachedResponse) {
-        // Return cached and update in background if online
-        fetch(request).then((networkResponse) => {
-          if (networkResponse && networkResponse.status === 200) {
-            caches.open(CACHE_NAME).then((cache) => cache.put(request, networkResponse));
-          }
-        }).catch(() => {});
-        return cachedResponse;
-      }
-
-      return fetch(request).then((networkResponse) => {
-        if (!networkResponse || networkResponse.status !== 200) {
-          return networkResponse;
+  if (isPage || !isStatic) {
+    // NETWORK-FIRST: pages, scripts and JSON always come fresh; cache is only the offline fallback.
+    event.respondWith(
+      fetch(request).then((networkResponse) => {
+        if (networkResponse && networkResponse.status === 200) {
+          const copy = networkResponse.clone();
+          caches.open(CACHE_NAME).then((cache) => cache.put(request, copy));
         }
-
-        const responseToCache = networkResponse.clone();
-        caches.open(CACHE_NAME).then((cache) => {
-          cache.put(request, responseToCache);
-        });
-
         return networkResponse;
       }).catch(() => {
-        // Offline fallback for navigation
-        if (request.mode === 'navigate') {
-          return caches.match(APP_ROOT);
+        return caches.match(request).then((cached) => {
+          if (cached) return cached;
+          if (request.mode === 'navigate') return caches.match(APP_ROOT);
+        });
+      })
+    );
+    return;
+  }
+
+  // CACHE-FIRST: immutable static media (studio audio, images) for instant offline play.
+  event.respondWith(
+    caches.match(request).then((cachedResponse) => {
+      if (cachedResponse) return cachedResponse;
+      return fetch(request).then((networkResponse) => {
+        if (networkResponse && networkResponse.status === 200) {
+          const copy = networkResponse.clone();
+          caches.open(CACHE_NAME).then((cache) => cache.put(request, copy));
         }
+        return networkResponse;
       });
     })
   );

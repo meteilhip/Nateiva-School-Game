@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.16.0 — 2026-11-18 — V23.0 KIDS CINEMA HOME + instant updates
+
+- **Kid-friendly home page**: game cards became big cartoon tiles — huge bobbing icon (4.6 rem), a 1–2 word kid title (full title kept as tooltip/aria-label), a big red ▶ JOUER / PLAY bubble, vivid per-category gradient backgrounds, and a 3D perspective tilt on hover. All long text (descriptions, curriculum tags, pills) hidden — images and cartoons before words, for every class.
+- **Animated cinematic sky**: pulsing sun, three drifting clouds, a rising balloon and a flying parrot behind the whole hub (pure CSS animations, pointer-safe), plus a sky-to-savanna page gradient.
+- **"Version did not update" fixed**: the old service worker was cache-first for the page itself (every visit served the previous deploy) and was never re-registered, leaving stale zombie workers in browsers. `sw.js` is now **network-first for pages** (cache only as offline fallback, cache-first kept for audio/images), properly registered from the app, and served at the root on Vercel too. All version badges unified at v23.0 (v1.16.0).
+- 154/154 test runs green; all 22 games ≥ 4/5.
+
 ## 1.15.0 — 2026-11-18 — V22.0 CORE-GAMEPLAY REBUILD (quiz-only mechanics eliminated)
 
 - **Tour du Savoir** (rebuild of `fun_facts_quiz`, adapted from *Stack the Countries* × *Kahoot!*): every correct answer becomes a physical block that falls, bounces and stacks onto a wobbling Knowledge Tower rendered on a dedicated canvas (gravity + bounce physics, savanna backdrop, 5-block confetti milestones). Kahoot-style countdown (hidden at Maternelle, 45 s at SIL/CP, 30 s at CE1+) awards ⚡ speed stars; running out of time gives a **free 50/50 hint instead of a fail** (no-fail law).

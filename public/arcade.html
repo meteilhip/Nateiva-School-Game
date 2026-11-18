@@ -3497,6 +3497,56 @@ body.age-ce .ux-pict, body.age-ce2 .ux-pict, body.age-cm1 .ux-pict, body.age-cm 
 .geo-tries-row { font-size:1.15rem; letter-spacing:3px; }
 .geo-collection-strip { display:flex; flex-wrap:wrap; gap:4px; background:rgba(16,185,129,0.1); border:2px dashed rgba(16,185,129,0.5); border-radius:14px; padding:8px 10px; font-size:1.25rem; min-height:44px; align-items:center; }
 .geo-collection-count { font-size:0.74rem; font-weight:900; color:#047857; text-transform:uppercase; letter-spacing:0.05em; width:100%; }
+
+/* ============================================================
+   V23.0 KIDS CINEMA HOME — image-first cartoon hub for children
+   Big bobbing icons, 1-2 word titles, vivid tile gradients,
+   3D tilt, animated sky (sun, clouds, balloon, parrot).
+   ============================================================ */
+html { background:linear-gradient(180deg,#CBEBFF 0%,#EAF7FF 38%,#FFF4E3 100%) fixed; }
+body { background:transparent !important; }
+#ux-sky-layer { position:fixed; inset:0; pointer-events:none; z-index:-1; overflow:hidden; }
+#ux-sky-layer span { position:absolute; opacity:0.9; }
+.ux-sun { top:2.5%; right:4%; font-size:4.6rem; animation:uxSunPulse 7s ease-in-out infinite; filter:drop-shadow(0 0 18px rgba(253,224,71,0.8)); }
+.ux-cloud { left:0; font-size:3.4rem; animation:uxCloudDrift linear infinite; }
+.ux-balloon { bottom:-12%; left:10%; font-size:2.9rem; animation:uxBalloonUp 30s linear infinite; }
+.ux-bird { top:20%; left:-8%; font-size:2.1rem; animation:uxBirdFly 36s linear infinite; }
+@keyframes uxSunPulse { 0%,100%{transform:rotate(-4deg) scale(1)} 50%{transform:rotate(6deg) scale(1.1)} }
+@keyframes uxCloudDrift { from{transform:translateX(-160px)} to{transform:translateX(108vw)} }
+@keyframes uxBalloonUp { from{transform:translateY(0) rotate(-3deg)} 50%{transform:translateY(-70vh) rotate(4deg)} to{transform:translateY(-135vh) rotate(-3deg)} }
+@keyframes uxBirdFly { from{transform:translate(0,0)} 50%{transform:translate(58vw,-36px)} to{transform:translate(118vw,0)} }
+
+/* Cartoon tiles: pictures first, words tiny */
+.portal-card .portal-desc, .portal-card .portal-counts-badge-bar,
+.portal-card .portal-curriculum-tag, .portal-card .card-rea-badge, .portal-card h3 { display:none !important; }
+.portal-card { text-align:center !important; border-radius:28px !important; overflow:hidden; min-height:215px;
+  display:flex !important; flex-direction:column; align-items:center; justify-content:flex-start; gap:7px; padding:20px 12px 16px !important;
+  transition:transform 0.28s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.28s ease !important; }
+.portal-card:hover { transform:perspective(720px) rotateX(5deg) rotateY(-4deg) translateY(-6px) scale(1.045) !important; box-shadow:0 26px 48px rgba(17,24,39,0.24) !important; }
+.portal-card .portal-card-header { display:flex; flex-direction:column; align-items:center; gap:4px; width:100%; }
+.portal-card .portal-badge { font-size:4.6rem !important; line-height:1; width:auto !important; height:auto !important;
+  background:none !important; border:none !important; box-shadow:none !important;
+  animation:uxPictBob 2.8s ease-in-out infinite; filter:drop-shadow(0 7px 9px rgba(0,0,0,0.25)); }
+.ux-kid-title { font-size:1.42rem; font-weight:900; color:#111827; line-height:1.1; text-shadow:0 1px 0 rgba(255,255,255,0.75); }
+.ux-kid-play { margin-top:auto; background:linear-gradient(135deg,#FF2A32 0%,#E5252A 100%); color:#FFFFFF; font-weight:900; font-size:1.16rem;
+  padding:10px 28px; border-radius:999px; border:2px solid rgba(255,255,255,0.72); box-shadow:0 9px 20px rgba(229,37,42,0.42);
+  display:inline-flex; align-items:center; gap:8px; }
+.portal-card:hover .ux-kid-play { transform:scale(1.08); }
+.portal-card[data-cat="math"]   { background:linear-gradient(160deg,#FFF7ED 0%,#FFE8CC 55%,#FFD59E 100%) !important; }
+.portal-card[data-cat="sci"]    { background:linear-gradient(160deg,#ECFDF5 0%,#CFF7E3 55%,#A9EFCE 100%) !important; }
+.portal-card[data-cat="arcade"] { background:linear-gradient(160deg,#EEF2FF 0%,#DDE5FF 55%,#C3D0FE 100%) !important; }
+.portal-card[data-cat="grammar"]{ background:linear-gradient(160deg,#FDF2F8 0%,#FBE2F0 55%,#F8C8E2 100%) !important; }
+.portal-card[data-cat="vocab"]  { background:linear-gradient(160deg,#F0FDFA 0%,#C9F8EC 55%,#96F0DC 100%) !important; }
+.portal-card[data-cat="voice"]  { background:linear-gradient(160deg,#FEFCE8 0%,#FDF6C4 55%,#FBE88F 100%) !important; }
+.portal-card[data-cat="geo"]    { background:linear-gradient(160deg,#F0FDF4 0%,#D6F9E2 55%,#AFF2C6 100%) !important; }
+.portal-card[data-cat="quiz"]   { background:linear-gradient(160deg,#F5F3FF 0%,#E6E0FD 55%,#D0C4FB 100%) !important; }
+.portal-card[data-cat="story"]  { background:linear-gradient(160deg,#FFFBEB 0%,#FDF0C8 55%,#FBE098 100%) !important; }
+.portal-card[data-cat="read"]   { background:linear-gradient(160deg,#EFF6FF 0%,#D8EAFE 55%,#B4D7FD 100%) !important; }
+.portal-card[data-cat="puzzle"] { background:linear-gradient(160deg,#F7FEE7 0%,#E9FAC3 55%,#D3F58F 100%) !important; }
+.portal-card .card-audio-preview-btn { font-size:1.6rem; }
+#class-curriculum-desc { font-size:0.78rem; opacity:0.78; }
+#journey-avatar-emoji { font-size:2rem; display:inline-block; animation:uxPictBob 2.4s ease-in-out infinite; }
+body.age-mat .ux-kid-title { font-size:1.6rem; }
 </style>
 </head>
 <body>
@@ -3527,7 +3577,7 @@ body.age-ce .ux-pict, body.age-ce2 .ux-pict, body.age-cm1 .ux-pict, body.age-cm 
         <option value="en">🇬🇧 English (Studio Voice)</option>
       </select>
       <button class="btn-pill" id="btn-sound-toggle">🔊 Son</button>
-      <button class="version-cache-pill" id="btn-version-cache" title="Version active • Cliquer pour vider le cache et recharger">🚀 v22.0 GAMEPLAY-REBUILD (v1.15.0) • 🔄 Vider Cache</button>
+      <button class="version-cache-pill" id="btn-version-cache" title="Version active • Cliquer pour vider le cache et recharger">🚀 v23.0 KIDS-CINEMA (v1.16.0) • 🔄 Vider Cache</button>
     </div>
   </header>
 
@@ -3659,7 +3709,7 @@ body.age-ce .ux-pict, body.age-ce2 .ux-pict, body.age-cm1 .ux-pict, body.age-cm 
           <h3>Astuces Maths Cartoon : Doigts, Doubles & Pont de 10</h3>
           <div class="portal-curriculum-tag">Pont de 10 • 10 Doigts ×9 • Doubles • Fractions %</div>
         </div>
-        <span class="card-rea-badge">✨ v22.0 GAMEPLAY-REBUILD (v1.15.0) • ▶ JOUER</span>
+        <span class="card-rea-badge">✨ v23.0 KIDS-CINEMA (v1.16.0) • ▶ JOUER</span>
       </div>
       <p class="portal-desc">Apprends les astuces cartoon pour calculer instantanément : pont arc-en-ciel de 10, astuce des doigts pour la table de 9, et miroir des doubles !</p>
       <div class="portal-counts-badge-bar">
@@ -3678,7 +3728,7 @@ body.age-ce .ux-pict, body.age-ce2 .ux-pict, body.age-cm1 .ux-pict, body.age-cm 
           <h3>Astuces Sciences Cartoon : Leviers, Corps, Eau & Lumière</h3>
           <div class="portal-curriculum-tag">Levier Souris-Éléphant • Cycle de l'Eau • Prisme Arc-en-Ciel</div>
         </div>
-        <span class="card-rea-badge">✨ v22.0 GAMEPLAY-REBUILD (v1.15.0) • ▶ JOUER</span>
+        <span class="card-rea-badge">✨ v23.0 KIDS-CINEMA (v1.16.0) • ▶ JOUER</span>
       </div>
       <p class="portal-desc">Découvre les super-pouvoirs de la science : comment soulever un éléphant avec un levier, le voyage de la goutte d'eau et le prisme de lumière !</p>
       <div class="portal-counts-badge-bar">
@@ -3696,7 +3746,7 @@ body.age-ce .ux-pict, body.age-ce2 .ux-pict, body.age-cm1 .ux-pict, body.age-cm 
           <h3>Tetris Éducatif : Blocs Mots & Maths</h3>
           <div class="portal-curriculum-tag">Tetris Arcade • Nombres • Syllabes • Auto-Drop</div>
         </div>
-        <span class="card-rea-badge">✨ v22.0 GAMEPLAY-REBUILD (v1.15.0) • ▶ JOUER</span>
+        <span class="card-rea-badge">✨ v23.0 KIDS-CINEMA (v1.16.0) • ▶ JOUER</span>
       </div>
       <p class="portal-desc">Empile les blocs colorés Tetris de nombres, calculs et syllabes pour compléter les lignes et ouvrir le coffre à récompenses !</p>
       <div class="portal-counts-badge-bar">
@@ -3715,7 +3765,7 @@ body.age-ce .ux-pict, body.age-ce2 .ux-pict, body.age-cm1 .ux-pict, body.age-cm 
           <h3>Course Auto Turbo : Rallye Savane</h3>
           <div class="portal-curriculum-tag">Course 3 Voies • Auto-Pilote • Récompenses</div>
         </div>
-        <span class="card-rea-badge">✨ v22.0 GAMEPLAY-REBUILD (v1.15.0) • ▶ JOUER</span>
+        <span class="card-rea-badge">✨ v23.0 KIDS-CINEMA (v1.16.0) • ▶ JOUER</span>
       </div>
       <p class="portal-desc">Pilote le bolide turbo de Léo sur 3 voies ou active l'Auto-Pilote pour franchir le portique de la bonne réponse avec boost nitro !</p>
       <div class="portal-counts-badge-bar">
@@ -3734,7 +3784,7 @@ body.age-ce .ux-pict, body.age-ce2 .ux-pict, body.age-cm1 .ux-pict, body.age-cm 
           <h3>Prodigy Maths : Monstres & Cristaux</h3>
           <div class="portal-curriculum-tag">Prodigy Math • Sorts Visuels • Coffre Magique</div>
         </div>
-        <span class="card-rea-badge">✨ v22.0 GAMEPLAY-REBUILD (v1.15.0) • ▶ JOUER</span>
+        <span class="card-rea-badge">✨ v23.0 KIDS-CINEMA (v1.16.0) • ▶ JOUER</span>
       </div>
       <p class="portal-desc">Lance des sorts mathématiques visuels (addition, tables, fractions, algèbre) pour apprivoiser les créatures et gagner des familiers !</p>
       <div class="portal-counts-badge-bar">
@@ -3753,7 +3803,7 @@ body.age-ce .ux-pict, body.age-ce2 .ux-pict, body.age-cm1 .ux-pict, body.age-cm 
           <h3>Labo Sciences : Écosystème, Aimants & Espace</h3>
           <div class="portal-curriculum-tag">Chaîne Alimentaire • États de l'Eau • Aimants • Planètes</div>
         </div>
-        <span class="card-rea-badge">✨ v22.0 GAMEPLAY-REBUILD (v1.15.0) • ▶ JOUER</span>
+        <span class="card-rea-badge">✨ v23.0 KIDS-CINEMA (v1.16.0) • ▶ JOUER</span>
       </div>
       <p class="portal-desc">Simule la chaîne alimentaire de la savane, les 3 états de l'eau (0°C/100°C), les pôles d'aimants (N⇄S) et le système solaire !</p>
       <div class="portal-counts-badge-bar">
@@ -3771,7 +3821,7 @@ body.age-ce .ux-pict, body.age-ce2 .ux-pict, body.age-cm1 .ux-pict, body.age-cm 
           <h3>Grammaire & Syntaxe (FR / EN)</h3>
           <div class="portal-curriculum-tag">Noms • Verbes • Adjectifs • Accords</div>
         </div>
-        <span class="card-rea-badge">✨ v22.0 GAMEPLAY-REBUILD (v1.15.0) • ▶ JOUER</span>
+        <span class="card-rea-badge">✨ v23.0 KIDS-CINEMA (v1.16.0) • ▶ JOUER</span>
       </div>
       <p class="portal-desc">Maîtrise la grammaire en français et en anglais (articles, pluriels, nature des mots, accords sujet-verbe) avec une seule voix native pure !</p>
       <div class="portal-counts-badge-bar">
@@ -3790,7 +3840,7 @@ body.age-ce .ux-pict, body.age-ce2 .ux-pict, body.age-cm1 .ux-pict, body.age-cm 
           <h3>Vocabulaire & Mots du Monde (FR / EN)</h3>
           <div class="portal-curriculum-tag">Synonymes • Contraires • Thèmes d'Afrique</div>
         </div>
-        <span class="card-rea-badge">✨ v22.0 GAMEPLAY-REBUILD (v1.15.0) • ▶ JOUER</span>
+        <span class="card-rea-badge">✨ v23.0 KIDS-CINEMA (v1.16.0) • ▶ JOUER</span>
       </div>
       <p class="portal-desc">Enrichis ton vocabulaire en français et en anglais : synonymes, contraires, objets de l'école, animaux et métiers avec prononciation native !</p>
       <div class="portal-counts-badge-bar">
@@ -3809,7 +3859,7 @@ body.age-ce .ux-pict, body.age-ce2 .ux-pict, body.age-cm1 .ux-pict, body.age-cm 
           <h3>Conjugaison & Temps (FR / EN)</h3>
           <div class="portal-curriculum-tag">Présent • Passé • Futur • Être/Avoir & To Be</div>
         </div>
-        <span class="card-rea-badge">✨ v22.0 GAMEPLAY-REBUILD (v1.15.0) • ▶ JOUER</span>
+        <span class="card-rea-badge">✨ v23.0 KIDS-CINEMA (v1.16.0) • ▶ JOUER</span>
       </div>
       <p class="portal-desc">Voyage dans le temps (Passé, Présent, Futur) pour conjuguer les verbes en français et en anglais selon le pronom sujet !</p>
       <div class="portal-counts-badge-bar">
@@ -3828,7 +3878,7 @@ body.age-ce .ux-pict, body.age-ce2 .ux-pict, body.age-cm1 .ux-pict, body.age-cm 
           <h3>Studio Prononciation (FR ⇄ EN)</h3>
           <div class="portal-curriculum-tag">Anglais & Français • Micro Live • Spectre</div>
         </div>
-        <span class="card-rea-badge">✨ v22.0 GAMEPLAY-REBUILD (v1.15.0) • ▶ JOUER</span>
+        <span class="card-rea-badge">✨ v23.0 KIDS-CINEMA (v1.16.0) • ▶ JOUER</span>
       </div>
       <p class="portal-desc">Écoute la vraie voix studio française et anglaise, parle dans ton micro pour obtenir ton score de prononciation et suis les billes de rythme !</p>
       <div class="portal-counts-badge-bar">
@@ -3847,7 +3897,7 @@ body.age-ce .ux-pict, body.age-ce2 .ux-pict, body.age-cm1 .ux-pict, body.age-cm 
           <h3>Mission Atlas : Trouve le Pays d'Afrique !</h3>
           <div class="portal-curriculum-tag">Carte SVG Interactive • Drapeaux • Capitales</div>
         </div>
-        <span class="card-rea-badge">✨ v22.0 GAMEPLAY-REBUILD (v1.15.0) • ▶ JOUER</span>
+        <span class="card-rea-badge">✨ v23.0 KIDS-CINEMA (v1.16.0) • ▶ JOUER</span>
       </div>
       <p class="portal-desc">Pars en mission Seterra : trouve toi-même le bon pays sur la vraie carte d'Afrique (par nom, drapeau ou capitale), gagne chaque drapeau et remplis ton Atlas personnel des 49 pays !</p>
       <div class="portal-counts-badge-bar">
@@ -3866,7 +3916,7 @@ body.age-ce .ux-pict, body.age-ce2 .ux-pict, body.age-cm1 .ux-pict, body.age-cm 
           <h3>Tour du Savoir : Quiz & Blocs Empilés</h3>
           <div class="portal-curriculum-tag">Quiz Choix Multiples • Indice 50/50 • Afrique</div>
         </div>
-        <span class="card-rea-badge">✨ v22.0 GAMEPLAY-REBUILD (v1.15.0) • ▶ JOUER</span>
+        <span class="card-rea-badge">✨ v23.0 KIDS-CINEMA (v1.16.0) • ▶ JOUER</span>
       </div>
       <p class="portal-desc">Chaque bonne réponse devient un bloc qui tombe et rebondit sur ta Tour du Savoir ! Chrono Kahoot, étoiles de vitesse, indice 50/50 et merveilles d'Afrique, animaux, espace et sciences !</p>
       <div class="portal-counts-badge-bar">
@@ -3885,7 +3935,7 @@ body.age-ce .ux-pict, body.age-ce2 .ux-pict, body.age-cm1 .ux-pict, body.age-cm 
           <h3>Compréhension de Texte & Contes</h3>
           <div class="portal-curriculum-tag">Lecture Karaoké FR/EN • Quiz Compréhension</div>
         </div>
-        <span class="card-rea-badge">✨ v22.0 GAMEPLAY-REBUILD (v1.15.0) • ▶ JOUER</span>
+        <span class="card-rea-badge">✨ v23.0 KIDS-CINEMA (v1.16.0) • ▶ JOUER</span>
       </div>
       <p class="portal-desc">Écoute et lis des contes africains et scientifiques bilingues avec surlignage phrase par phrase, puis réponds aux questions de compréhension !</p>
       <div class="portal-counts-badge-bar">
@@ -3904,7 +3954,7 @@ body.age-ce .ux-pict, body.age-ce2 .ux-pict, body.age-cm1 .ux-pict, body.age-cm 
           <h3>Monstre des Syllabes & Lecture</h3>
           <div class="portal-curriculum-tag">Feed The Monster • Voyelles & Consonnes</div>
         </div>
-        <span class="card-rea-badge">✨ v22.0 GAMEPLAY-REBUILD (v1.15.0) • ▶ JOUER</span>
+        <span class="card-rea-badge">✨ v23.0 KIDS-CINEMA (v1.16.0) • ▶ JOUER</span>
       </div>
       <p class="portal-desc">Nourris le Monstre magique avec les bonnes syllabes colorées (voyelles en rouge, consonnes en bleu) pour former des mots en français et en anglais !</p>
       <div class="portal-counts-badge-bar">
@@ -3923,7 +3973,7 @@ body.age-ce .ux-pict, body.age-ce2 .ux-pict, body.age-cm1 .ux-pict, body.age-cm 
           <h3>Maths 3D, Fractions & Balance Algébrique</h3>
           <div class="portal-curriculum-tag">Boîtes de 10 • Disque Fractions • Balance 2x+4</div>
         </div>
-        <span class="card-rea-badge">✨ v22.0 GAMEPLAY-REBUILD (v1.15.0) • ▶ JOUER</span>
+        <span class="card-rea-badge">✨ v23.0 KIDS-CINEMA (v1.16.0) • ▶ JOUER</span>
       </div>
       <p class="portal-desc">Manipule les boîtes de 10, le disque interactif des fractions et la balance algébrique selon ta classe (de la Maternelle au CM2 / Primary 6) !</p>
       <div class="portal-counts-badge-bar">
@@ -3942,7 +3992,7 @@ body.age-ce .ux-pict, body.age-ce2 .ux-pict, body.age-cm1 .ux-pict, body.age-cm 
           <h3>Labo Chimie & Échelle pH</h3>
           <div class="portal-curriculum-tag">Sciences • Réactions • Indicateur pH 0–14</div>
         </div>
-        <span class="card-rea-badge">✨ v22.0 GAMEPLAY-REBUILD (v1.15.0) • ▶ JOUER</span>
+        <span class="card-rea-badge">✨ v23.0 KIDS-CINEMA (v1.16.0) • ▶ JOUER</span>
       </div>
       <p class="portal-desc">Verse les éprouvettes dans l'erlenmeyer, observe l'indicateur de pH en direct, les mélanges de couleurs et l'effervescence des bulles de gaz !</p>
       <div class="portal-counts-badge-bar">
@@ -3961,7 +4011,7 @@ body.age-ce .ux-pict, body.age-ce2 .ux-pict, body.age-cm1 .ux-pict, body.age-cm 
           <h3>Bassin d'Archimède (Flotte/Coule)</h3>
           <div class="portal-curriculum-tag">Physique • Vecteurs Poussée ↑Fa & Poids ↓P</div>
         </div>
-        <span class="card-rea-badge">✨ v22.0 GAMEPLAY-REBUILD (v1.15.0) • ▶ JOUER</span>
+        <span class="card-rea-badge">✨ v23.0 KIDS-CINEMA (v1.16.0) • ▶ JOUER</span>
       </div>
       <p class="portal-desc">Plonge le bois, la mangue, l'or ou la brique dans l'eau et visualise en direct les vecteurs de la poussée d'Archimède (↑Fa) et du poids (↓P) !</p>
       <div class="portal-counts-badge-bar">
@@ -3980,7 +4030,7 @@ body.age-ce .ux-pict, body.age-ce2 .ux-pict, body.age-cm1 .ux-pict, body.age-cm 
           <h3>Circuit Électrique 3D & Oscilloscope</h3>
           <div class="portal-curriculum-tag">Loi d'Ohm (U=R×I) • Électrons & Hélice</div>
         </div>
-        <span class="card-rea-badge">✨ v22.0 GAMEPLAY-REBUILD (v1.15.0) • ▶ JOUER</span>
+        <span class="card-rea-badge">✨ v23.0 KIDS-CINEMA (v1.16.0) • ▶ JOUER</span>
       </div>
       <p class="portal-desc">Ferme l'interrupteur pour observer la circulation des électrons bleus, allumer l'ampoule de 4,5 V et faire tourner l'hélice du moteur électrique !</p>
       <div class="portal-counts-badge-bar">
@@ -3999,7 +4049,7 @@ body.age-ce .ux-pict, body.age-ce2 .ux-pict, body.age-cm1 .ux-pict, body.age-cm 
           <h3>Jardin Botanique & Photosynthèse</h3>
           <div class="portal-curriculum-tag">Biologie • Racines, Tige & Floraison 21 Jours</div>
         </div>
-        <span class="card-rea-badge">✨ v22.0 GAMEPLAY-REBUILD (v1.15.0) • ▶ JOUER</span>
+        <span class="card-rea-badge">✨ v23.0 KIDS-CINEMA (v1.16.0) • ▶ JOUER</span>
       </div>
       <p class="portal-desc">Dose la pluie et le soleil pour faire germer le Baobab, le Tournesol, le Cacaoyer et l'Hibiscus en observant les racines pousser sous terre !</p>
       <div class="portal-counts-badge-bar">
@@ -4018,7 +4068,7 @@ body.age-ce .ux-pict, body.age-ce2 .ux-pict, body.age-cm1 .ux-pict, body.age-cm 
           <h3>Comet Defender : Calcul Spatial</h3>
           <div class="portal-curriculum-tag">TuxMath Arcade • Lasers & Calcul Mental</div>
         </div>
-        <span class="card-rea-badge">✨ v22.0 GAMEPLAY-REBUILD (v1.15.0) • ▶ JOUER</span>
+        <span class="card-rea-badge">✨ v23.0 KIDS-CINEMA (v1.16.0) • ▶ JOUER</span>
       </div>
       <p class="portal-desc">Pilote le vaisseau spatial et tire au laser sur la comète qui porte la bonne réponse à l'équation affichée sur le tableau de bord !</p>
       <div class="portal-counts-badge-bar">
@@ -4037,7 +4087,7 @@ body.age-ce .ux-pict, body.age-ce2 .ux-pict, body.age-cm1 .ux-pict, body.age-cm 
           <h3>Tangram Géométrique Magnétique</h3>
           <div class="portal-curriculum-tag">Mathigon Euclid • Polygones & Silhouettes</div>
         </div>
-        <span class="card-rea-badge">✨ v22.0 GAMEPLAY-REBUILD (v1.15.0) • ▶ JOUER</span>
+        <span class="card-rea-badge">✨ v23.0 KIDS-CINEMA (v1.16.0) • ▶ JOUER</span>
       </div>
       <p class="portal-desc">Assemble la Fusée, le Bateau, le Chat, le Lion et le Papillon en glissant les polygones géométriques avec aimantation de précision !</p>
       <div class="portal-counts-badge-bar">
@@ -4056,7 +4106,7 @@ body.age-ce .ux-pict, body.age-ce2 .ux-pict, body.age-cm1 .ux-pict, body.age-cm 
           <h3>Donjon Labyrinthe 3D (Vue 3D & Raycast)</h3>
           <div class="portal-curriculum-tag">Blockly Maze • Algorithme & Syllabes</div>
         </div>
-        <span class="card-rea-badge">✨ v22.0 GAMEPLAY-REBUILD (v1.15.0) • ▶ JOUER</span>
+        <span class="card-rea-badge">✨ v23.0 KIDS-CINEMA (v1.16.0) • ▶ JOUER</span>
       </div>
       <p class="portal-desc">Guide Léo dans les 5 cartes de la Savane (Oasis, Pyramide, Volcan, Jungle) en collectant les syllabes et nombres d'or ou utilise le bouton Auto-Pas !</p>
       <div class="portal-counts-badge-bar">
@@ -4078,7 +4128,7 @@ body.age-ce .ux-pict, body.age-ce2 .ux-pict, body.age-cm1 .ux-pict, body.age-cm 
         <div class="hud-badge red" id="hud-exercise-badge">🎯 Exercice 1/5 • Niveau 1</div>
       </div>
       <div class="hud-stats">
-        <span class="hud-badge" id="hud-version-pill" style="background:#312E81;color:#FDE047;border:1.5px solid #38BDF8;font-size:0.72rem;padding:4px 8px;">🚀 v20.0 (v1.15.0)</span>
+        <span class="hud-badge" id="hud-version-pill" style="background:#312E81;color:#FDE047;border:1.5px solid #38BDF8;font-size:0.72rem;padding:4px 8px;">🚀 v23.0 (v1.16.0)</span>
         <div class="hud-badge" id="hud-reward-chest" title="Coffre à Récompenses Éducatives (Stickers & Trophées)" style="background:#065F46;color:#FEF08A;border:1.5px solid #34D399;cursor:pointer;">🎁 <span id="hud-sticker-count">1</span> <span id="hud-latest-sticker">🦁</span></div>
         <div class="hud-badge">⭐ <span id="hud-score-val">0</span> XP</div>
         <div class="combo-multiplier" id="hud-combo-badge">🔥 COMBO x1</div>
@@ -14334,7 +14384,7 @@ body.age-ce .ux-pict, body.age-ce2 .ux-pict, body.age-cm1 .ux-pict, body.age-cm 
         sessionStorage.clear();
       } catch (e) {}
       const url = new URL(window.location.href);
-      url.searchParams.set('v', '20.0.' + Date.now());
+      url.searchParams.set('v', '23.0.' + Date.now());
       window.location.replace(url.toString());
     });
   }
@@ -14722,14 +14772,77 @@ body.age-ce .ux-pict, body.age-ce2 .ux-pict, body.age-cm1 .ux-pict, body.age-cm 
     _uxOrigSelectGrade(gradeCode, speakAnnouncement);
     applyAgeProfile(gradeCode);
     decorateAnswerButtons();
+    buildKidsCinemaHub();
   };
   window.__NATEIVA_SELECT_CLASS__ = selectGradeClass;
+
+  // --- V23.0 KIDS CINEMA HOME: picture-first cartoon hub ---
+  const KID_TITLES = {
+    math_magic_tricks: { fr: 'Magie Maths', en: 'Math Magic' },
+    science_hero_tricks: { fr: 'Super Science', en: 'Super Science' },
+    tetris_blocks: { fr: 'Tetris', en: 'Tetris' },
+    auto_racer: { fr: 'Course Auto', en: 'Turbo Race' },
+    math_monster_quest: { fr: 'Monstres Maths', en: 'Math Monsters' },
+    science_ecosystem: { fr: 'Labo Nature', en: 'Nature Lab' },
+    grammar_lab: { fr: 'Grammaire', en: 'Grammar' },
+    vocabulary_lab: { fr: 'Les Mots', en: 'Words' },
+    conjugation_lab: { fr: 'Les Verbes', en: 'Verbs' },
+    pronunciation_lab: { fr: 'Je Parle !', en: 'I Speak!' },
+    africa_geography: { fr: 'Mission Atlas', en: 'Atlas Mission' },
+    fun_facts_quiz: { fr: 'Tour du Savoir', en: 'Quiz Tower' },
+    story_lab: { fr: 'Contes', en: 'Tales' },
+    reading_lab: { fr: 'Syllabes', en: 'Syllables' },
+    math_lab: { fr: 'Maths 3D', en: '3D Math' },
+    chemistry: { fr: 'Chimie', en: 'Chemistry' },
+    density: { fr: 'Flotte ?', en: 'Float?' },
+    circuit: { fr: 'Électricité', en: 'Electricity' },
+    botany: { fr: 'Jardin', en: 'Garden' },
+    comet: { fr: 'Fusée', en: 'Rocket' },
+    tangram_puzzle: { fr: 'Tangram', en: 'Tangram' },
+    maze_quest: { fr: 'Labyrinthe', en: 'Maze' }
+  };
+  function buildKidsCinemaHub() {
+    if (!$('ux-sky-layer')) {
+      const sky = document.createElement('div');
+      sky.id = 'ux-sky-layer';
+      sky.setAttribute('aria-hidden', 'true');
+      sky.innerHTML = '<span class="ux-sun">🌞</span>' +
+        '<span class="ux-cloud" style="top:7%;animation-duration:48s;">☁️</span>' +
+        '<span class="ux-cloud" style="top:28%;animation-duration:66s;animation-delay:-20s;font-size:2.6rem;">⛅</span>' +
+        '<span class="ux-cloud" style="top:52%;animation-duration:84s;animation-delay:-45s;font-size:2.2rem;opacity:0.55;">☁️</span>' +
+        '<span class="ux-balloon">🎈</span><span class="ux-bird">🦜</span>';
+      document.body.appendChild(sky);
+    }
+    document.querySelectorAll('.portal-card[data-game]').forEach(card => {
+      const key = card.getAttribute('data-game');
+      const t = KID_TITLES[key];
+      let kt = card.querySelector('.ux-kid-title');
+      if (!kt && t) {
+        const h3 = card.querySelector('h3');
+        if (h3) { card.setAttribute('title', h3.textContent); card.setAttribute('aria-label', h3.textContent); }
+        kt = document.createElement('div');
+        kt.className = 'ux-kid-title';
+        const header = card.querySelector('.portal-card-header') || card;
+        header.appendChild(kt);
+      }
+      if (kt && t) kt.textContent = state.lang === 'en' ? t.en : t.fr;
+      if (!card.querySelector('.ux-kid-play')) {
+        const play = document.createElement('div');
+        play.className = 'ux-kid-play';
+        play.setAttribute('aria-hidden', 'true');
+        card.appendChild(play);
+      }
+      const playEl = card.querySelector('.ux-kid-play');
+      if (playEl) playEl.textContent = '▶ ' + (state.lang === 'en' ? 'PLAY' : 'JOUER');
+    });
+  }
 
   // --- Initialize the layer ---
   applyAgeProfile(state.grade);
   StickerBook.buildUI();
   decorateAnswerButtons();
   renderMasteryBadges();
+  buildKidsCinemaHub();
 
   window.__NATEIVA_AGEUX__ = {
     profiles: AGE_PROFILES,
@@ -14751,6 +14864,10 @@ body.age-ce .ux-pict, body.age-ce2 .ux-pict, body.age-cm1 .ux-pict, body.age-cm 
   window.__NATEIVA_LAUNCH__ = launchGame;
   window.__NATEIVA_SELECT_LEVEL__ = onSelectLevel;
   window.__NATEIVA_COMPLETE_ACTIVITY__ = onActivityTaskCompleted;
+
+  if ('serviceWorker' in navigator) {
+    try { navigator.serviceWorker.register('sw.js').catch(function () {}); } catch (e) {}
+  }
 
   console.log("[Nateiva] V21.0 Age-Adaptive Level-First Educational Arcade Initialized (MAT picture-first ➜ CM2 text-forward).");
 })();
