@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.17.x — 2026-11-18 — NATEIVA WORLD (brand-new game, built from zero)
+
+- **`play.html` — a completely new experience** sharing only the learning objectives with the classic arcade (documented in `GAME_INVENTORY.md`): a living hand-drawn SVG cartoon island (no emoji sprites) with 8 adventure zones — Lagune aux Bulles (pop rising fish-bubbles to count/sum), Verger de Momo (drag fruit into baskets: counting→addition→multiplication→equal sharing), Rivière de Fela (the frog leaps on the lily pad that matches the spoken syllable, builds words), Studio de Zara (paint the zebra's parts / all the triangles in the asked color), Lagon Splash (drop objects into real buoyant water, then sort FLOTTE/COULE), Jardin de Nana (drag the rain cloud and sun to grow the plant — too much hurts it), Safari Ballon (fly Léo's balloon to the right country by name, flag or capital), Théâtre Kalulu (animated fable plays out, then pick/sequence picture panels).
+- **100% direct manipulation**: drag, pop, paint, drop, fly, leap — zero answer buttons, zero required reading; everything narrated FR/EN (toggle), per-class difficulty MAT→CM2, round gems, zone stars and localStorage progression; blinking characters, parallax clouds, waves, confetti, WebAudio sound design.
+- Fixes during live play-testing on OVH: CSS keyframe classes were overriding SVG positioning (invisible Momo/Léo/balloon) → composited Web-Animation FX; fat invisible touch targets for small draggables; window-level drag tracking with guarded pointer capture; play objects moved out from under the mission banner; class dock hidden during gameplay.
+- `npm run test:world` boots the island and all 8 zones × 3 grades in jsdom hunting JS errors.
+- Hub hero banner "NOUVEAU ! NATEIVA WORLD" links to the world from the classic arcade.
+
 ## 1.16.0 — 2026-11-18 — V23.0 KIDS CINEMA HOME + instant updates
 
 - **Kid-friendly home page**: game cards became big cartoon tiles — huge bobbing icon (4.6 rem), a 1–2 word kid title (full title kept as tooltip/aria-label), a big red ▶ JOUER / PLAY bubble, vivid per-category gradient backgrounds, and a 3D perspective tilt on hover. All long text (descriptions, curriculum tags, pills) hidden — images and cartoons before words, for every class.

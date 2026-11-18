@@ -524,6 +524,7 @@ const ZONE_BUILDERS = {};
 let activeZone = null;
 function showMap() {
   activeZone = null;
+  $('grade-dock').style.display = 'flex';
   speechSynthesis && speechSynthesis.cancel();
   $('mission-bar').classList.remove('on');
   $('round-gems').innerHTML = '';
@@ -534,6 +535,7 @@ function showMap() {
 }
 function enterZone(key) {
   activeZone = key;
+  $('grade-dock').style.display = 'none';
   const host = $('scene-game'); host.innerHTML = '';
   $('scene-map').classList.remove('on');
   $('scene-game').classList.add('on');
