@@ -1,5 +1,14 @@
 # Changelog
 
+## v1.23.0 — Portrait-native rebuild: every zone redesigned for the phone
+The game was unplayable on phones inside zones (landscape 1500x850 stages letterboxed to thumbnails). Full rebuild:
+- **New stage engine (`mkStage`)**: every zone now renders on a portrait-native 850x1500 canvas on phones with `slice` — the game fills the screen edge to edge, no letterboxing, with a `PT(landscape, portrait)` coordinate system per element.
+- **All 13 playground zones re-laid-out for portrait**: content stacked vertically (clue/board top → play area middle → baskets/docks/palettes/trays in the thumb zone), touch targets enlarged to ≥44px on screen (fruit 58u, tiles 54u, pads 118u, chess cells 106u), SVG fonts ×1.3–1.7.
+- Zone specifics: bubbles board top-center & bigger bubbles · orchard tree top, fruit grid middle, baskets bottom · river 2×2 pads, slots under the mission, Fela at the bottom · paint pots as a bottom row · splash shelves top, water middle, FLOTTE/COULE docks bottom, hypothesis buttons mid-screen · garden plant center, meters bottom · safari map scaled to full width, clue card bottom · theatre show plays in a scaled stage with full-width answer cards stacked below · builder blueprint center, tray rows in thumb zone · seek full-tall savanna · words picture top, slots middle, letter tiles bottom · create 2-row stamp palette at the bottom · chess board nearly full-width.
+- **Island map**: clean 2-column serpentine grid for all 16 stations on portrait (no label overlaps, Léo in the sky, bigger island).
+- Orientation flip rebuilds the active zone automatically; rotate-hint removed (no longer needed).
+- **Smoke suite now runs twice — desktop landscape AND 412x915 portrait — with an off-canvas detector**: 16 zones × 3 grades, zero out-of-screen elements, both ALL CLEAR.
+
 ## v1.22.0 — Age-differentiation audit: no zone plays the same at 3 and 10
 Audit of all 16 zones found 3 that were too flat across classes; each now has true per-age modes:
 - **Studio de Zara (paint)**: MAT–CP paint the zebra's named body parts in the asked color; CE1–CE2 paint all of a shape; **CM1/CM2 get Magic Fractions — paint exactly k/N of a fence, with a live fraction counter (2/5…) spoken as they go**.

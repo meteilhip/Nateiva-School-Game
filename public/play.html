@@ -484,6 +484,18 @@ function iconSvg(builder, vb = '0 0 24 24') {
   return svg;
 }
 
+/* ============ PHONE-FIRST STAGE: portrait-native canvas, fills the screen ============ */
+function mkStage(host) {
+  const landscape = innerWidth >= innerHeight * 1.02;
+  const W = landscape ? 1500 : 850, H = landscape ? 850 : 1500;
+  const svg = S('svg', { class: 'stage', viewBox: `0 0 ${W} ${H}`, preserveAspectRatio: 'xMidYMid slice' }, host);
+  const winW = Math.max(1, innerWidth), winH = Math.max(1, innerHeight);
+  const sc = Math.max(winW / W, winH / H);
+  const u = px => px / sc;
+  const cropX = Math.max(0, (W - winW / sc) / 2), cropY = Math.max(0, (H - winH / sc) / 2);
+  return { svg, W, H, landscape, P: (l, p) => landscape ? l : p, u, cropX, cropY };
+}
+
 /* ================= HUD, CONFETTI, MISSION, ROUNDS ================= */
 function confetti(n = 36) {
   const layer = $('confetti-layer');
@@ -564,52 +576,52 @@ function updateStarPill() {
 
 /* ================= WORLD MAP (the island) ================= */
 const ZONES = [
-  { key: 'bubbles', fr: 'Lagune aux Bulles', en: 'Bubble Lagoon', color: '#4CC9F0', mx: 270, my: 650, px: 235, py: 1270,
+  { key: 'bubbles', fr: 'Lagune aux Bulles', en: 'Bubble Lagoon', color: '#4CC9F0', mx: 270, my: 650, px: 240, py: 230,
     subject: { fr: 'MATHS', dens: '1', en: 'MATH', color: '#FF9F1C' },
     topics: ['maths', 'math', 'compter', 'counting', 'nombres', 'numbers', 'addition', 'somme', 'sums', 'calcul', 'compléments', 'bonds'] },
-  { key: 'orchard', fr: 'Verger de Momo', en: "Momo's Orchard", color: '#FF9F1C', mx: 450, my: 520, px: 575, py: 1175,
+  { key: 'orchard', fr: 'Verger de Momo', en: "Momo's Orchard", color: '#FF9F1C', mx: 450, my: 520, px: 610, py: 230,
     subject: { fr: 'MATHS', dens: '1', en: 'MATH', color: '#FF9F1C' },
     topics: ['maths', 'math', 'addition', 'multiplication', 'division', 'partage', 'share', 'times', 'tables', 'calcul', 'opérations', 'operations', 'multiplier', 'diviser'] },
-  { key: 'river', fr: 'Rivière de Fela', en: "Fela's River", color: '#57CC57', mx: 330, my: 390, px: 235, py: 1080,
+  { key: 'river', fr: 'Rivière de Fela', en: "Fela's River", color: '#57CC57', mx: 330, my: 390, px: 610, py: 405,
     subject: { fr: 'LECTURE & SONS', dens: '1', en: 'READING & PHONICS', color: '#4CC9F0' },
     topics: ['lecture', 'reading', 'syllabes', 'syllables', 'sons', 'sounds', 'phonics', 'lettres', 'letters', 'mots', 'words', 'français', 'french', 'anglais', 'english', 'prononciation', 'pronunciation'] },
-  { key: 'chess', fr: 'Échecs Magiques', en: 'Magic Chess', color: '#8E44AD', mx: 215, my: 478, px: 420, py: 112,
+  { key: 'chess', fr: 'Échecs Magiques', en: 'Magic Chess', color: '#8E44AD', mx: 215, my: 478, px: 240, py: 405,
     subject: { fr: 'STRATÉGIE', en: 'STRATEGY', color: '#8E44AD' },
     topics: ['échecs', 'echecs', 'chess', 'stratégie', 'strategy', 'pion', 'pawn', 'tour', 'rook', 'fou', 'bishop', 'cavalier', 'knight', 'dame', 'queen', 'roi', 'king', 'réfléchir', 'think', 'logique', 'logic'] },
-  { key: 'paint', fr: 'Studio de Zara', en: "Zara's Studio", color: '#9B5DE5', mx: 540, my: 310, px: 575, py: 985,
+  { key: 'paint', fr: 'Studio de Zara', en: "Zara's Studio", color: '#9B5DE5', mx: 540, my: 310, px: 240, py: 580,
     subject: { fr: 'FORMES & COULEURS', dens: '1', en: 'SHAPES & COLORS', color: '#9B5DE5' },
     topics: ['formes', 'shapes', 'couleurs', 'colors', 'géométrie', 'geometry', 'triangle', 'cercle', 'circle', 'carré', 'square', 'vocabulaire', 'vocabulary', 'corps', 'body', 'art'] },
-  { key: 'splash', fr: 'Lagon Splash', en: 'Splash Lagoon', color: '#1C7ED6', mx: 960, my: 310, px: 575, py: 795,
+  { key: 'splash', fr: 'Lagon Splash', en: 'Splash Lagoon', color: '#1C7ED6', mx: 960, my: 310, px: 610, py: 580,
     subject: { fr: 'SCIENCES', dens: '1', en: 'SCIENCE', color: '#2EC4B6' },
     topics: ['sciences', 'science', 'flotte', 'coule', 'float', 'sink', 'densité', 'density', 'archimède', 'archimedes', 'eau', 'water', 'physique', 'physics', 'expérience', 'experiment'] },
-  { key: 'garden', fr: 'Jardin de Nana', en: "Nana's Garden", color: '#3FA34D', mx: 1170, my: 390, px: 235, py: 700,
+  { key: 'garden', fr: 'Jardin de Nana', en: "Nana's Garden", color: '#3FA34D', mx: 1170, my: 390, px: 610, py: 755,
     subject: { fr: 'SCIENCES', dens: '1', en: 'SCIENCE', color: '#2EC4B6' },
     topics: ['sciences', 'science', 'plantes', 'plants', 'jardin', 'garden', 'photosynthèse', 'photosynthesis', 'germination', 'nature', 'biologie', 'biology', 'eau', 'soleil', 'sun'] },
-  { key: 'safari', fr: 'Safari Ballon', en: 'Balloon Safari', color: '#E5252A', mx: 1160, my: 650, px: 235, py: 510,
+  { key: 'safari', fr: 'Safari Ballon', en: 'Balloon Safari', color: '#E5252A', mx: 1160, my: 650, px: 240, py: 755,
     subject: { fr: 'GÉOGRAPHIE', dens: '1', en: 'GEOGRAPHY', color: '#E5252A' },
     topics: ['géographie', 'geography', 'pays', 'countries', 'afrique', 'africa', 'capitales', 'capitals', 'drapeaux', 'flags', 'cartes', 'maps', 'monde', 'world', 'cameroun', 'cameroon'] },
-  { key: 'theatre', fr: 'Théâtre Kalulu', en: 'Kalulu Theatre', color: '#F25CA2', mx: 730, my: 650, px: 575, py: 415,
+  { key: 'theatre', fr: 'Théâtre Kalulu', en: 'Kalulu Theatre', color: '#F25CA2', mx: 730, my: 650, px: 240, py: 930,
     subject: { fr: 'COMPRÉHENSION', dens: '1', en: 'COMPREHENSION', color: '#F25CA2' },
     topics: ['compréhension', 'comprehension', 'histoires', 'stories', 'contes', 'tales', 'écouter', 'listening', 'trivia', 'questions', 'fables', 'lecture', 'reading'] },
-  { key: 'builder', fr: 'Chantier de Tibo', en: "Tibo's Building Site", color: '#B4654A', mx: 750, my: 285, px: 235, py: 320,
+  { key: 'builder', fr: 'Chantier de Tibo', en: "Tibo's Building Site", color: '#B4654A', mx: 750, my: 285, px: 610, py: 930,
     subject: { fr: 'CONSTRUCTION', dens: '1', en: 'BUILDING', color: '#B4654A' },
     topics: ['construction', 'building', 'build', 'bâtir', 'maison', 'house', 'pont', 'bridge', 'fusée', 'rocket', 'blocs', 'blocks', 'ingénieur', 'engineer', 'projet', 'project', 'chantier', 'robot', 'bateau', 'boat'] },
-  { key: 'seek', fr: 'Cherche & Trouve', en: 'Seek & Find', color: '#FFB703', mx: 1280, my: 520, px: 575, py: 605,
+  { key: 'seek', fr: 'Cherche & Trouve', en: 'Seek & Find', color: '#FFB703', mx: 1280, my: 520, px: 610, py: 1105,
     subject: { fr: 'OBSERVATION', dens: '1', en: 'OBSERVATION', color: '#F3A712' },
     topics: ['observation', 'chercher', 'cherche', 'search', 'trouve', 'find', 'seek', 'caché', 'hidden', 'papillon', 'butterfly', 'attention', 'regarder', 'look'] },
-  { key: 'griot', fr: 'Baobab du Griot', en: "Griot's Baobab", color: '#A0522D', mx: 1035, my: 495, px: 420, py: 655,
+  { key: 'griot', fr: 'Baobab du Griot', en: "Griot's Baobab", color: '#A0522D', mx: 1035, my: 495, px: 240, py: 1105,
     subject: { fr: 'HISTOIRE', en: 'HISTORY', color: '#A0522D' },
     topics: ['histoire', 'history', 'afrique', 'africa', 'cameroun', 'cameroon', 'griot', 'rois', 'kings', 'reine', 'empire', 'mali', 'égypte', 'egypt', 'pyramides', 'pyramids', 'mandela', 'njoya', 'indépendance', 'independence', 'drapeau', 'flag'] },
-  { key: 'words', fr: 'Fabrique de Mots', en: 'Word Factory', color: '#06B6D4', mx: 950, my: 650, px: 575, py: 225,
+  { key: 'words', fr: 'Fabrique de Mots', en: 'Word Factory', color: '#06B6D4', mx: 950, my: 650, px: 240, py: 1280,
     subject: { fr: 'MOTS & LETTRES', dens: '1', en: 'WORDS & LETTERS', color: '#06B6D4' },
     topics: ['mots', 'words', 'lettres', 'letters', 'orthographe', 'spelling', 'écrire', 'write', 'writing', 'alphabet', 'word game', 'jeu de mots', 'vocabulaire', 'vocabulary', 'épeler', 'spell'] },
-  { key: 'create', fr: 'Atelier Magique', en: 'Magic Workshop', color: '#FF6FB5', mx: 520, my: 650, px: 300, py: 215,
+  { key: 'create', fr: 'Atelier Magique', en: 'Magic Workshop', color: '#FF6FB5', mx: 520, my: 650, px: 610, py: 1280,
     subject: { fr: 'CRÉATION', dens: '1', en: 'CREATION', color: '#FF6FB5' },
     topics: ['création', 'creation', 'créer', 'create', 'art', 'dessin', 'drawing', 'imagination', 'atelier', 'studio', 'tableau', 'picture', 'inventer', 'invent', 'libre', 'free'] },
-  { key: 'mathlab', fr: 'Labo des Maths', en: 'Math Lab', color: '#F77F00', mx: 640, my: 468, px: 420, py: 1368,
+  { key: 'mathlab', fr: 'Labo des Maths', en: 'Math Lab', color: '#F77F00', mx: 640, my: 468, px: 610, py: 1455,
     subject: { fr: 'MATHS • LEÇONS', en: 'MATH LESSONS', color: '#F77F00' },
     topics: ['leçon', 'leçons', 'lesson', 'lessons', 'maths', 'math', 'comprendre', 'understand', 'méthode', 'method', 'démonstration', 'demo', 'visuel', 'visual', 'addition', 'soustraction', 'multiplication', 'division', 'fractions', 'racine', 'square root', 'pourcentage', 'balance', 'dizaine', 'ten'] },
-  { key: 'academy', fr: 'Académie des Champions', en: 'Champions Academy', color: '#5E60CE', mx: 870, my: 462, px: 420, py: 893,
+  { key: 'academy', fr: 'Académie des Champions', en: 'Champions Academy', color: '#5E60CE', mx: 870, my: 462, px: 240, py: 1455,
     subject: { fr: 'QUIZ & ASTUCES', dens: '1', en: 'QUIZ & TRICKS', color: '#5E60CE' },
     topics: ['quiz', 'révision', 'revision', 'réviser', 'examen', 'exam', 'test', 'astuce', 'trick', 'école', 'school', 'programme', 'curriculum', 'devoirs', 'homework', 'leçon', 'lesson', 'exercice', 'exercise', 'académie', 'academy'] }
 ];
@@ -704,14 +716,14 @@ function buildMap() {
   // everything that belongs to the island goes into one 'world' group that is
   // uniformly rescaled into the safe visible band (no distortion, no overlap)
   const world = S('g', {}, svg);
-  const icx = W / 2, icy = landscape ? 560 : 870, irx = landscape ? 640 : 395, iry = landscape ? 270 : 620;
+  const icx = W / 2, icy = landscape ? 560 : 850, irx = landscape ? 640 : 400, iry = landscape ? 270 : 690;
   S('ellipse', { cx: icx, cy: icy, rx: irx, ry: iry, fill: 'url(#gSand)', stroke: '#E8B567', 'stroke-width': 6 }, world);
   S('ellipse', { cx: icx, cy: icy - 15, rx: irx - 60, ry: iry - 35, fill: 'url(#gGrass)' }, world);
   const mnt = landscape ? [660, 372] : [425, 430];
   S('path', { d: `M ${mnt[0] - 100} ${mnt[1]} L ${mnt[0]} ${mnt[1] - 130} L ${mnt[0] + 100} ${mnt[1]} Z`, fill: '#7A8B99' }, world);
   S('path', { d: `M ${mnt[0] - 20} ${mnt[1]} L ${mnt[0] + 50} ${mnt[1] - 90} L ${mnt[0] + 130} ${mnt[1]} Z`, fill: '#93A8B8' }, world);
   S('path', { d: `M ${mnt[0]} ${mnt[1] - 130} L ${mnt[0] + 25} ${mnt[1] - 98} L ${mnt[0] + 42} ${mnt[1] - 118} L ${mnt[0] + 55} ${mnt[1] - 96} L ${mnt[0]} ${mnt[1] - 96} Z`, fill: '#fff' }, world);
-  const treeSpots = landscape ? [[260, 560], [1240, 520], [900, 430], [540, 680]] : [[140, 760], [700, 660], [660, 1180], [180, 1320]];
+  const treeSpots = landscape ? [[260, 560], [1240, 520], [900, 430], [540, 680]] : [[425, 690], [425, 1040], [425, 1390]];
   treeSpots.forEach(([x, y]) => {
     const t = S('g', { transform: `translate(${x},${y})`, style: 'transform-box:fill-box;transform-origin:50% 100%;animation:sway 5s ease-in-out infinite;' }, world);
     S('rect', { x: -7, y: -10, width: 14, height: 52, rx: 6, fill: 'url(#gWood)' }, t);
@@ -757,9 +769,15 @@ function buildMap() {
   world.setAttribute('transform', `translate(${(aL + aR) / 2},${(aTop + aBot) / 2}) scale(${fit}) translate(${-dcx},${-dcy})`);
 }
 let resizeTimer = null;
+window.__lastLandscape = innerWidth >= innerHeight * 1.02;
 window.addEventListener('resize', () => {
   clearTimeout(resizeTimer);
-  resizeTimer = setTimeout(() => { if (!activeZone) buildMap(); }, 350);
+  resizeTimer = setTimeout(() => {
+    const nowL = innerWidth >= innerHeight * 1.02;
+    if (!activeZone) buildMap();
+    else if (nowL !== window.__lastLandscape) enterZone(activeZone);
+    window.__lastLandscape = nowL;
+  }, 350);
 });
 
 /* ================= SCENE ROUTER ================= */
@@ -791,14 +809,7 @@ function enterZone(key) {
   chip.style.background = z.subject.color;
   currentTrick = TRICKS[key] ? TRICKS[key](D()) : null;
   ZONE_BUILDERS[key](host);
-  // phone-first: suggest landscape for the big SVG playgrounds
-  const htmlZones = { academy: 1, mathlab: 1, griot: 1 };
-  if (innerHeight > innerWidth * 1.15 && !htmlZones[key]) {
-    const rh = $('rotate-hint');
-    rh.textContent = T('🔄 Tourne ton téléphone pour jouer en grand !', '🔄 Turn your phone sideways to play big!');
-    rh.classList.add('on');
-    clearTimeout(rh._t); rh._t = setTimeout(() => rh.classList.remove('on'), 3400);
-  } else $('rotate-hint').classList.remove('on');
+  $('rotate-hint').classList.remove('on'); // zones are portrait-native since v1.23
 }
 $('mission-trick').addEventListener('click', ev => {
   ev.stopPropagation();
@@ -808,23 +819,23 @@ $('mission-trick').addEventListener('click', ev => {
 
 /* ================= Z1 — LAGUNE AUX BULLES (counting & sums by popping) ================= */
 ZONE_BUILDERS.bubbles = function (host) {
-  const svg = S('svg', { class: 'stage', viewBox: '0 0 1500 850', preserveAspectRatio: (innerWidth >= innerHeight * 1.02 ? 'xMidYMid slice' : 'xMidYMid meet') }, host);
+  const ST = mkStage(host); const svg = ST.svg, PT = ST.P, SW = ST.W, SH = ST.H;
   gradDefs(svg);
-  S('rect', { width: 1500, height: 850, fill: 'url(#gDeepSea)' }, svg);
-  for (let i = 0; i < 5; i++) {
-    const x = 150 + i * 300;
-    S('path', { d: `M ${x} 0 L ${x + 130} 0 L ${x + 260} 850 L ${x + 60} 850 Z`, fill: 'rgba(255,255,255,0.06)' }, svg);
+  S('rect', { width: SW, height: SH, fill: 'url(#gDeepSea)' }, svg);
+  for (let i = 0; i < PT(5, 3); i++) {
+    const x = PT(150 + i * 300, 120 + i * 280);
+    S('path', { d: `M ${x} 0 L ${x + 130} 0 L ${x + 260} ${SH} L ${x + 60} ${SH} Z`, fill: 'rgba(255,255,255,0.06)' }, svg);
   }
   for (let i = 0; i < 7; i++) {
-    const x = rnd(60, 1440), h = rnd(120, 260);
-    const weed = S('path', { d: `M ${x} 850 Q ${x - 28} ${850 - h / 2} ${x} ${850 - h} `, stroke: '#2E8B57', 'stroke-width': 14, fill: 'none', 'stroke-linecap': 'round', style: 'transform-box:fill-box;transform-origin:50% 100%;animation:sway 4.4s ease-in-out infinite;' }, svg);
+    const x = rnd(60, SW - 60), h = rnd(120, 260);
+    const weed = S('path', { d: `M ${x} ${SH} Q ${x - 28} ${SH - h / 2} ${x} ${SH - h} `, stroke: '#2E8B57', 'stroke-width': 14, fill: 'none', 'stroke-linecap': 'round', style: 'transform-box:fill-box;transform-origin:50% 100%;animation:sway 4.4s ease-in-out infinite;' }, svg);
     weed.style.animationDelay = (-i * 0.6) + 's';
   }
-  S('ellipse', { cx: 750, cy: 862, rx: 820, ry: 60, fill: '#C9A36A' }, svg);
-  [[340, 812], [900, 820], [1260, 808]].forEach(([x, y]) => { S('path', { d: `M ${x} ${y} q 9 -16 18 0 q 9 16 18 0`, stroke: '#FF9BC0', 'stroke-width': 7, fill: 'none', 'stroke-linecap': 'round' }, svg); });
+  S('ellipse', { cx: SW / 2, cy: SH + 12, rx: SW * 0.56, ry: 60, fill: '#C9A36A' }, svg);
+  [[SW * 0.22, SH - 38], [SW * 0.6, SH - 30], [SW * 0.84, SH - 42]].forEach(([x, y]) => { S('path', { d: `M ${x} ${y} q 9 -16 18 0 q 9 16 18 0`, stroke: '#FF9BC0', 'stroke-width': 7, fill: 'none', 'stroke-linecap': 'round' }, svg); });
   const layer = S('g', {}, svg);
   // target board (numeral + dots — picture-first)
-  const board = S('g', { transform: 'translate(135,330)' }, svg);
+  const board = S('g', { transform: PT('translate(135,330)', 'translate(425,420)') }, svg);
   S('rect', { x: -95, y: -85, width: 190, height: 200, rx: 26, fill: 'rgba(255,255,255,0.92)', stroke: '#4CC9F0', 'stroke-width': 6 }, board);
   const bigNum = S('text', { x: 0, y: -8, 'text-anchor': 'middle', 'font-size': 86, 'font-weight': 800, fill: '#1C7ED6', 'font-family': 'inherit', text: '3' }, board);
   const dotsG = S('g', {}, board);
@@ -843,19 +854,19 @@ ZONE_BUILDERS.bubbles = function (host) {
   function spawnBubble() {
     if (!roundLive || activeZone !== 'bubbles') return;
     const val = sumMode ? ri(1, Math.max(3, Math.floor(target * 0.7))) : 1;
-    const x = rnd(330, 1400), r = sumMode ? 62 : rnd(52, 72);
-    const g = S('g', { transform: `translate(${x},${900 + r})`, class: 'grab' }, layer);
+    const x = PT(rnd(330, 1400), rnd(140, 710)), r = PT(sumMode ? 62 : rnd(52, 72), sumMode ? 80 : rnd(72, 94));
+    const g = S('g', { transform: `translate(${x},${SH + 60 + r})`, class: 'grab' }, layer);
     S('circle', { r: r, fill: 'url(#gBubble)', stroke: 'rgba(190,235,255,0.9)', 'stroke-width': 3 }, g);
     S('ellipse', { cx: -r * 0.35, cy: -r * 0.4, rx: r * 0.22, ry: r * 0.13, fill: 'rgba(255,255,255,0.9)', transform: 'rotate(-25)' }, g);
-    if (sumMode) S('text', { x: 0, y: 14, 'text-anchor': 'middle', 'font-size': 44, 'font-weight': 800, fill: '#0B4F8A', 'font-family': 'inherit', text: String(val) }, g);
-    else drawFish(g, 0, 0, 0.7, COLORS[ri(0, COLORS.length - 1)]);
+    if (sumMode) S('text', { x: 0, y: PT(14, 18), 'text-anchor': 'middle', 'font-size': PT(44, 58), 'font-weight': 800, fill: '#0B4F8A', 'font-family': 'inherit', text: String(val) }, g);
+    else drawFish(g, 0, 0, PT(0.7, 0.95), COLORS[ri(0, COLORS.length - 1)]);
     const speed = rnd(34, 52) - D() * 1.5;
-    const ob = { g, x, y: 900 + r, val, popped: false };
+    const ob = { g, x, y: SH + 60 + r, val, popped: false };
     alive.push(ob);
     const drift = rnd(-30, 30);
-    const dur = (960 / speed) * 1000;
+    const dur = ((SH + 180) / speed) * 1000;
     const anim = g.animate([
-      { transform: `translate(${x}px,${900 + r}px)` },
+      { transform: `translate(${x}px,${SH + 60 + r}px)` },
       { transform: `translate(${x + drift}px,${-120}px)` }
     ], { duration: dur, easing: 'linear' });
     anim.onfinish = () => { ob.popped = true; g.remove(); };
@@ -920,19 +931,19 @@ ZONE_BUILDERS.bubbles = function (host) {
 
 /* ================= Z2 — VERGER DE MOMO (drag fruit: add, multiply, share) ================= */
 ZONE_BUILDERS.orchard = function (host) {
-  const svg = S('svg', { class: 'stage', viewBox: '0 0 1500 850', preserveAspectRatio: (innerWidth >= innerHeight * 1.02 ? 'xMidYMid slice' : 'xMidYMid meet') }, host);
+  const ST = mkStage(host); const svg = ST.svg, PT = ST.P, SW = ST.W, SH = ST.H;
   gradDefs(svg);
-  S('rect', { width: 1500, height: 560, fill: 'url(#gSky)' }, svg);
-  S('rect', { y: 540, width: 1500, height: 310, fill: 'url(#gGrass)' }, svg);
-  drawSun(svg, 1370, 110, 0.9);
-  drawCloud(svg, 300, 100, 0.9);
+  S('rect', { width: SW, height: PT(560, 1180), fill: 'url(#gSky)' }, svg);
+  S('rect', { y: PT(540, 1160), width: SW, height: PT(310, 360), fill: 'url(#gGrass)' }, svg);
+  drawSun(svg, PT(1370, 700), PT(110, 330), PT(0.9, 0.8));
+  drawCloud(svg, PT(300, 170), PT(100, 320), PT(0.9, 0.75));
   // big tree
-  const tree = S('g', { transform: 'translate(330,430)' }, svg);
+  const tree = S('g', { transform: PT('translate(330,430)', 'translate(230,560) scale(0.78)') }, svg);
   S('rect', { x: -40, y: -40, width: 80, height: 240, rx: 30, fill: 'url(#gWood)' }, tree);
   S('path', { d: 'M -20 60 Q -70 60 -90 110', stroke: '#8A5A33', 'stroke-width': 22, fill: 'none', 'stroke-linecap': 'round' }, tree);
   [[-150, -120, 110], [0, -190, 130], [150, -120, 110], [-70, -60, 90], [80, -60, 90]].forEach(([cx, cy, r]) => S('circle', { cx, cy, r, fill: '#3FA34D' }, tree));
   [[-150, -120], [0, -190], [150, -120]].forEach(([cx, cy]) => S('circle', { cx: cx - 26, cy: cy - 22, r: 30, fill: 'rgba(255,255,255,0.18)' }, tree));
-  const momo = drawMonkey(svg, 1210, 330, 1.05);
+  const momo = drawMonkey(svg, PT(1210, 660), PT(330, 560), PT(1.05, 0.9));
   fxBob(momo, 9, 2600);
   const fruitLayer = S('g', {}, svg);
   const basketLayer = S('g', {}, svg);
@@ -953,8 +964,8 @@ ZONE_BUILDERS.orchard = function (host) {
   }
   function spawnFruit(x, y) {
     const g = S('g', { transform: `translate(${x},${y})` }, fruitLayer);
-    S('circle', { r: 42, fill: 'rgba(255,255,255,0.001)' }, g); // fat touch target
-    const art = S('g', {}, g);
+    S('circle', { r: PT(42, 58), fill: 'rgba(255,255,255,0.001)' }, g); // fat touch target
+    const art = S('g', { transform: PT('', 'scale(1.35)') }, g);
     fruitDef.draw(art);
     fxPop(art);
     const f = { g, home: [x, y], free: true };
@@ -963,7 +974,7 @@ ZONE_BUILDERS.orchard = function (host) {
       move: p => { if (!roundLive || !f.free) return; g.setAttribute('transform', `translate(${p.x},${p.y}) scale(1.2)`); },
       end: p => {
         if (!roundLive || !f.free) return;
-        const b = baskets.find(bk => Math.abs(p.x - bk.x) < 95 && p.y > bk.y - 40 && p.y < bk.y + 95);
+        const b = baskets.find(bk => Math.abs(p.x - bk.x) < PT(95, 120) && p.y > bk.y - PT(40, 60) && p.y < bk.y + PT(95, 120));
         if (b && b.got < b.slots) {
           b.got++; f.free = false;
           const fg = S('g', { transform: `translate(${-52 + ((b.got - 1) % 5) * 26},${28 + Math.floor((b.got - 1) / 5) * 24}) scale(0.55)` }, b.fills);
@@ -1003,20 +1014,20 @@ ZONE_BUILDERS.orchard = function (host) {
     basketLayer.innerHTML = ''; fruitLayer.innerHTML = '';
     baskets = []; fruits = []; fruitDef = FRUITS[ri(0, FRUITS.length - 1)];
     const d = D();
-    if (d <= 1) { mode = 'count'; needPer = [ri(2, d === 0 ? 5 : 8)]; baskets = [drawBasket(750, 640, needPer[0], needPer[0])];
+    if (d <= 1) { mode = 'count'; needPer = [ri(2, d === 0 ? 5 : 8)]; baskets = [drawBasket(PT(750, 425), PT(640, 1250), needPer[0], needPer[0])];
       mission('Donne ' + needPer[0] + ' fruits à Momo !', 'Give Momo ' + needPer[0] + ' fruits!', ZONE_ICONS.orchard);
     } else if (d <= 3) { mode = 'add'; const a = ri(2, 6), b = ri(2, 6); needPer = [a, b];
-      baskets = [drawBasket(620, 640, a, a), drawBasket(900, 640, b, b)];
+      baskets = [drawBasket(PT(620, 240), PT(640, 1250), a, a), drawBasket(PT(900, 610), PT(640, 1250), b, b)];
       mission(`${a} + ${b} = ? Remplis les paniers : ${a} et ${b} fruits !`, `${a} + ${b} = ? Fill the baskets: ${a} and ${b} fruits!`, ZONE_ICONS.orchard);
     } else if (d <= 5) { mode = 'mult'; const n = ri(2, 3), k = ri(3, 5); needPer = Array(n).fill(k);
-      baskets = needPer.map((kk, i) => drawBasket(600 + i * 240, 640, kk, kk));
+      baskets = needPer.map((kk, i) => drawBasket(PT(600 + i * 240, 425 + (i - (needPer.length - 1) / 2) * 250), PT(640, 1250), kk, kk));
       mission(`${n} × ${k} = ? Remplis ${n} paniers de ${k} fruits !`, `${n} × ${k} = ? Fill ${n} baskets of ${k} fruits!`, ZONE_ICONS.orchard);
     } else { mode = 'share'; const n = ri(2, 3), per = ri(3, 4); needPer = Array(n).fill(per);
-      baskets = needPer.map((kk, i) => drawBasket(600 + i * 240, 640, kk, null));
+      baskets = needPer.map((kk, i) => drawBasket(PT(600 + i * 240, 425 + (i - (needPer.length - 1) / 2) * 250), PT(640, 1250), kk, null));
       mission(`${n * per} ÷ ${n} = ? Partage ${n * per} fruits entre les ${n} paniers, pareil partout !`, `${n * per} ÷ ${n} = ? Share ${n * per} fruits equally between the ${n} baskets!`, ZONE_ICONS.orchard);
     }
     const totalFruit = needPer.reduce((s, n) => s + n, 0) + ri(2, 4);
-    for (let i = 0; i < totalFruit; i++) spawnFruit(170 + (i % 4) * 100 + rnd(-16, 16), 370 + Math.floor(i / 4) * 88 + rnd(-12, 12));
+    for (let i = 0; i < totalFruit; i++) spawnFruit(PT(170 + (i % 4) * 100, 180 + (i % 4) * 165) + rnd(-16, 16), PT(370 + Math.floor(i / 4) * 88, 700 + Math.floor(i / 4) * 125) + rnd(-12, 12));
     roundLive = true;
   }
   nextRound();
@@ -1024,20 +1035,20 @@ ZONE_BUILDERS.orchard = function (host) {
 
 /* ================= Z3 — RIVIÈRE DE FELA (phonics leaps) ================= */
 ZONE_BUILDERS.river = function (host) {
-  const svg = S('svg', { class: 'stage', viewBox: '0 0 1500 850', preserveAspectRatio: (innerWidth >= innerHeight * 1.02 ? 'xMidYMid slice' : 'xMidYMid meet') }, host);
+  const ST = mkStage(host); const svg = ST.svg, PT = ST.P, SW = ST.W, SH = ST.H;
   gradDefs(svg);
-  S('rect', { width: 1500, height: 850, fill: 'url(#gNight)' }, svg);
-  S('circle', { cx: 1310, cy: 130, r: 56, fill: '#FFF3B0', opacity: 0.95 }, svg);
-  S('circle', { cx: 1288, cy: 118, r: 50, fill: '#30346B' }, svg);
-  for (let i = 0; i < 26; i++) { const st = S('circle', { cx: rnd(20, 1480), cy: rnd(20, 300), r: rnd(1.5, 3.4), fill: '#fff', opacity: rnd(0.4, 1) }, svg); st.animate([{ opacity: 0.2 }, { opacity: 1 }, { opacity: 0.2 }], { duration: rnd(1500, 3600), iterations: Infinity }); }
-  S('rect', { y: 330, width: 1500, height: 520, fill: 'url(#gDeepSea)', opacity: 0.9 }, svg);
-  S('path', { d: 'M 0 330 Q 375 300 750 330 T 1500 330 L 1500 360 Q 1125 390 750 360 T 0 360 Z', fill: 'rgba(255,255,255,0.14)' }, svg);
+  S('rect', { width: SW, height: SH, fill: 'url(#gNight)' }, svg);
+  S('circle', { cx: PT(1310, 700), cy: PT(130, 200), r: 56, fill: '#FFF3B0', opacity: 0.95 }, svg);
+  S('circle', { cx: PT(1288, 678), cy: PT(118, 188), r: 50, fill: '#30346B' }, svg);
+  for (let i = 0; i < 26; i++) { const st = S('circle', { cx: rnd(20, SW - 20), cy: rnd(20, PT(300, 420)), r: rnd(1.5, 3.4), fill: '#fff', opacity: rnd(0.4, 1) }, svg); st.animate([{ opacity: 0.2 }, { opacity: 1 }, { opacity: 0.2 }], { duration: rnd(1500, 3600), iterations: Infinity }); }
+  S('rect', { y: PT(330, 500), width: SW, height: SH, fill: 'url(#gDeepSea)', opacity: 0.9 }, svg);
+  S('path', { d: PT('M 0 330 Q 375 300 750 330 T 1500 330 L 1500 360 Q 1125 390 750 360 T 0 360 Z', 'M 0 500 Q 212 470 425 500 T 850 500 L 850 530 Q 638 560 425 530 T 0 530 Z'), fill: 'rgba(255,255,255,0.14)' }, svg);
   // word slots
-  const slotBar = S('g', { transform: 'translate(750,120)' }, svg);
+  const slotBar = S('g', { transform: PT('translate(750,120)', 'translate(425,360)') }, svg);
   const slotBox = S('g', {}, slotBar);
   const padLayer = S('g', {}, svg);
-  const fela = drawFrog(svg, 750, 700, 1.1);
-  let felaPos = { x: 750, y: 700 };
+  const fela = drawFrog(svg, PT(750, 425), PT(700, 1330), 1.1);
+  let felaPos = { x: PT(750, 425), y: PT(700, 1330) };
   const VOWELS = 'AEIOUY';
   const colorFor = ch => VOWELS.includes(ch[0]) ? '#FF4D57' : '#4CC9F0';
   const WORDS = {
@@ -1078,13 +1089,13 @@ ZONE_BUILDERS.river = function (host) {
     while (decoys.length < (D() <= 1 ? 2 : 3)) { const c = bank[ri(0, bank.length - 1)]; if (c !== current && !decoys.includes(c)) decoys.push(c); }
     const all = shuffle([current, ...decoys]);
     all.forEach((syl, i) => {
-      const x = 260 + i * (980 / Math.max(1, all.length - 1));
-      const y = 430 + (i % 2) * 150;
+      const x = PT(260 + i * (980 / Math.max(1, all.length - 1)), 425 + ((i % 2) - 0.5) * 330);
+      const y = PT(430 + (i % 2) * 150, 640 + Math.floor(i / 2) * 250);
       const g = S('g', { transform: `translate(${x},${y})`, class: 'grab' }, padLayer);
-      S('ellipse', { cx: 0, cy: 10, rx: 92, ry: 34, fill: '#2C6B2A' }, g);
-      S('ellipse', { cx: 0, cy: 0, rx: 92, ry: 34, fill: '#59C14E', stroke: '#2C6B2A', 'stroke-width': 4 }, g);
+      S('ellipse', { cx: 0, cy: 10, rx: PT(92, 118), ry: PT(34, 44), fill: '#2C6B2A' }, g);
+      S('ellipse', { cx: 0, cy: 0, rx: PT(92, 118), ry: PT(34, 44), fill: '#59C14E', stroke: '#2C6B2A', 'stroke-width': 4 }, g);
       S('path', { d: 'M 0 0 L 58 -20 A 60 24 0 0 0 30 -26 Z', fill: '#2C6B2A', opacity: 0.4 }, g);
-      S('text', { x: 0, y: 12, 'text-anchor': 'middle', 'font-size': 40, 'font-weight': 800, 'font-family': 'inherit', fill: colorFor(syl), stroke: '#fff', 'stroke-width': 0.8, text: syl }, g);
+      S('text', { x: 0, y: PT(12, 16), 'text-anchor': 'middle', 'font-size': PT(40, 52), 'font-weight': 800, 'font-family': 'inherit', fill: colorFor(syl), stroke: '#fff', 'stroke-width': 0.8, text: syl }, g);
       const anim = g.animate([{ transform: `translate(${x}px,${y}px)` }, { transform: `translate(${x + rnd(-36, 36)}px,${y + rnd(-18, 18)}px)` }, { transform: `translate(${x}px,${y}px)` }], { duration: rnd(3200, 5200), iterations: Infinity });
       driftAnims.push(anim);
       g.addEventListener('pointerdown', ev => {
@@ -1119,8 +1130,8 @@ ZONE_BUILDERS.river = function (host) {
     if (!isEN() && d === 0) w = [w[0]];
     targetSeq = w; seqIdx = 0;
     buildSlots();
-    felaPos = { x: 750, y: 700 };
-    fela.setAttribute('transform', 'translate(750,700) scale(1.1)');
+    felaPos = { x: PT(750, 425), y: PT(700, 1330) };
+    fela.setAttribute('transform', `translate(${felaPos.x},${felaPos.y}) scale(1.1)`);
     mission('Saute sur « ' + targetSeq[0] + ' » avec Fela !', 'Leap on "' + targetSeq[0] + '" with Fela!', ZONE_ICONS.river);
     roundLive = true;
     spawnPads();
@@ -1130,11 +1141,11 @@ ZONE_BUILDERS.river = function (host) {
 
 /* ================= Z4 — STUDIO DE ZARA (paint colors & shapes) ================= */
 ZONE_BUILDERS.paint = function (host) {
-  const svg = S('svg', { class: 'stage', viewBox: '0 0 1500 850', preserveAspectRatio: (innerWidth >= innerHeight * 1.02 ? 'xMidYMid slice' : 'xMidYMid meet') }, host);
+  const ST = mkStage(host); const svg = ST.svg, PT = ST.P, SW = ST.W, SH = ST.H;
   gradDefs(svg);
-  S('rect', { width: 1500, height: 850, fill: '#FBEFF7' }, svg);
-  for (let i = 0; i < 9; i++) S('circle', { cx: rnd(40, 1460), cy: rnd(40, 820), r: rnd(16, 42), fill: ['#FDE2F0', '#E4D9FB', '#D7F2EA'][i % 3] }, svg);
-  const easelG = S('g', { transform: 'translate(750,420)' }, svg);
+  S('rect', { width: SW, height: SH, fill: '#FBEFF7' }, svg);
+  for (let i = 0; i < 9; i++) S('circle', { cx: rnd(40, SW - 40), cy: rnd(40, SH - 30), r: rnd(16, 42), fill: ['#FDE2F0', '#E4D9FB', '#D7F2EA'][i % 3] }, svg);
+  const easelG = S('g', { transform: PT('translate(750,420)', 'translate(425,660) scale(0.95)') }, svg);
   S('rect', { x: -330, y: -300, width: 660, height: 560, rx: 30, fill: '#fff', stroke: '#C9D3EE', 'stroke-width': 8 }, easelG);
   const artG = S('g', {}, easelG);
   const POTS = [
@@ -1146,7 +1157,7 @@ ZONE_BUILDERS.paint = function (host) {
   function buildPots() {
     potLayer.innerHTML = ''; potEls = [];
     POTS.forEach((p, i) => {
-      const x = 180, y = 160 + i * 112;
+      const x = PT(180, 125 + i * 120), y = PT(160 + i * 112, 1330);
       const g = S('g', { transform: `translate(${x},${y})`, class: 'grab' }, potLayer);
       S('path', { d: 'M -34 -12 L 34 -12 L 26 38 Q 0 48 -26 38 Z', fill: '#E8EAF3', stroke: '#B9C0D8', 'stroke-width': 4 }, g);
       S('ellipse', { cx: 0, cy: -12, rx: 34, ry: 12, fill: p[2], stroke: '#fff', 'stroke-width': 3 }, g);
@@ -1155,7 +1166,7 @@ ZONE_BUILDERS.paint = function (host) {
         if (!roundLive) return;
         selected = p; sfx.tap();
         potEls.forEach(pe => pe.setAttribute('transform', pe.dataset.base));
-        g.setAttribute('transform', `translate(${x + 26},${y}) scale(1.22)`);
+        g.setAttribute('transform', `translate(${x + PT(26, 0)},${y - PT(0, 26)}) scale(1.28)`);
         say(p[0], p[1]);
       });
       g.dataset.base = `translate(${x},${y})`;
@@ -1270,26 +1281,26 @@ ZONE_BUILDERS.paint = function (host) {
 
 /* ================= Z5 — LAGON SPLASH (float or sink physics) ================= */
 ZONE_BUILDERS.splash = function (host) {
-  const svg = S('svg', { class: 'stage', viewBox: '0 0 1500 850', preserveAspectRatio: (innerWidth >= innerHeight * 1.02 ? 'xMidYMid slice' : 'xMidYMid meet') }, host);
+  const ST = mkStage(host); const svg = ST.svg, PT = ST.P, SW = ST.W, SH = ST.H;
   gradDefs(svg);
-  S('rect', { width: 1500, height: 460, fill: 'url(#gSky)' }, svg);
-  drawSun(svg, 150, 110, 0.85);
-  drawCloud(svg, 1100, 90, 0.95);
-  S('rect', { y: 430, width: 1500, height: 420, fill: 'url(#gDeepSea)' }, svg);
-  const WATER_Y = 430;
-  S('path', { d: 'M 0 430 Q 375 410 750 430 T 1500 430 L 1500 455 Q 1125 475 750 455 T 0 455 Z', fill: 'rgba(255,255,255,0.35)' }, svg);
+  S('rect', { width: SW, height: PT(460, 640), fill: 'url(#gSky)' }, svg);
+  drawSun(svg, PT(150, 140), PT(110, 330), 0.85);
+  drawCloud(svg, PT(1100, 640), PT(90, 320), PT(0.95, 0.8));
+  const WATER_Y = PT(430, 620);
+  S('rect', { y: WATER_Y, width: SW, height: SH - WATER_Y, fill: 'url(#gDeepSea)' }, svg);
+  S('path', { d: `M 0 ${WATER_Y} Q ${SW / 4} ${WATER_Y - 20} ${SW / 2} ${WATER_Y} T ${SW} ${WATER_Y} L ${SW} ${WATER_Y + 25} Q ${SW * 0.75} ${WATER_Y + 45} ${SW / 2} ${WATER_Y + 25} T 0 ${WATER_Y + 25} Z`, fill: 'rgba(255,255,255,0.35)' }, svg);
   // shelf
-  S('rect', { x: 0, y: 260, width: 420, height: 26, rx: 12, fill: 'url(#gWood)' }, svg);
-  S('rect', { x: 0, y: 390, width: 420, height: 26, rx: 12, fill: 'url(#gWood)' }, svg);
+  S('rect', { x: 0, y: PT(260, 420), width: PT(420, 760), height: 26, rx: 12, fill: 'url(#gWood)' }, svg);
+  S('rect', { x: 0, y: PT(390, 560), width: PT(420, 760), height: 26, rx: 12, fill: 'url(#gWood)' }, svg);
   // docks
-  const dockF = S('g', { transform: 'translate(1130,392)' }, svg);
+  const dockF = S('g', { transform: PT('translate(1130,392)', 'translate(230,1180)') }, svg);
   S('rect', { x: -150, y: 0, width: 300, height: 26, rx: 12, fill: 'url(#gWood)', stroke: '#6B421D', 'stroke-width': 3 }, dockF);
   S('path', { d: 'M -40 -36 Q 0 -66 40 -36 Q 0 -6 -40 -36 Z', fill: '#fff', stroke: '#4CC9F0', 'stroke-width': 5 }, dockF);
-  S('text', { x: 0, y: 48, 'text-anchor': 'middle', 'font-size': 23, 'font-weight': 800, fill: '#fff', 'font-family': 'inherit', text: T('FLOTTE', 'FLOATS') }, dockF);
-  const dockS = S('g', { transform: 'translate(1130,620)' }, svg);
+  S('text', { x: 0, y: PT(48, 62), 'text-anchor': 'middle', 'font-size': PT(23, 30), 'font-weight': 800, fill: '#fff', 'font-family': 'inherit', text: T('FLOTTE', 'FLOATS') }, dockF);
+  const dockS = S('g', { transform: PT('translate(1130,620)', 'translate(620,1180)') }, svg);
   S('rect', { x: -150, y: 20, width: 300, height: 26, rx: 12, fill: '#30346B', stroke: '#1E2048', 'stroke-width': 3 }, dockS);
   S('path', { d: 'M 0 -24 L 16 0 L 5 0 L 5 16 L -5 16 L -5 0 L -16 0 Z', fill: '#fff', transform: 'rotate(180)', 'stroke-width': 0 }, dockS);
-  S('text', { x: 0, y: 64, 'text-anchor': 'middle', 'font-size': 23, 'font-weight': 800, fill: '#fff', 'font-family': 'inherit', text: T('COULE', 'SINKS') }, dockS);
+  S('text', { x: 0, y: PT(64, 78), 'text-anchor': 'middle', 'font-size': PT(23, 30), 'font-weight': 800, fill: '#fff', 'font-family': 'inherit', text: T('COULE', 'SINKS') }, dockS);
   const OBJECTS = [
     { fr: 'la feuille', dens: '0,3', en: 'the leaf', floats: true, draw: g => { S('path', { d: 'M 0 -26 Q 30 -8 0 26 Q -30 -8 0 -26 Z', fill: '#57CC57', stroke: '#2C6B2A', 'stroke-width': 3 }, g); S('path', { d: 'M 0 -20 L 0 20', stroke: '#2C6B2A', 'stroke-width': 2.4 }, g); } },
     { fr: 'la pierre', dens: '2,7', en: 'the stone', floats: false, draw: g => { S('path', { d: 'M -26 10 Q -30 -16 -6 -22 Q 22 -28 28 -4 Q 32 16 10 22 Q -14 28 -26 10 Z', fill: '#8D99AE', stroke: '#5C6784', 'stroke-width': 3 }, g); } },
@@ -1308,7 +1319,7 @@ ZONE_BUILDERS.splash = function (host) {
             if (it.o.floats) { sfx.splash(); it.anim = bobAtSurface(it.g, p.x); }
             else {
               sfx.splash();
-              it.g.animate([{ transform: `translate(${p.x}px,${WATER_Y}px)` }, { transform: `translate(${p.x + rnd(-20, 20)}px,700px) rotate(20deg)` }], { duration: 1100, easing: 'ease-in', fill: 'forwards' });
+              it.g.animate([{ transform: `translate(${p.x}px,${WATER_Y}px)` }, { transform: `translate(${p.x + rnd(-20, 20)}px,${PT(700, 1000)}px) rotate(20deg)` }], { duration: 1100, easing: 'ease-in', fill: 'forwards' });
               for (let b = 0; b < 5; b++) { const bb = S('circle', { cx: p.x + rnd(-14, 14), cy: WATER_Y + 40 + b * 40, r: rnd(3, 7), fill: 'rgba(255,255,255,0.7)' }, svg); bb.animate([{ opacity: 0.8, transform: 'translateY(0)' }, { opacity: 0, transform: 'translateY(-70px)' }], { duration: 900, delay: b * 120 }).onfinish = () => bb.remove(); }
             }
             if (D() >= 5 && it.o.dens) {
@@ -1334,12 +1345,12 @@ ZONE_BUILDERS.splash = function (host) {
     if (predG) predG.remove();
     predG = S('g', {}, svg);
     say('Hypothèse de scientifique : ' + T(it.o.fr, it.o.en) + '... flotte ou coule ? Choisis AVANT de voir !', 'Scientist hypothesis: ' + T(it.o.fr, it.o.en) + '... float or sink? Choose BEFORE you see!');
-    [['float', 'FLOTTE ?', 'FLOATS?', 560, '#1C7ED6'], ['sink', 'COULE ?', 'SINKS?', 880, '#30346B']].forEach(([kind, f2, e2, x2, col]) => {
-      const b = S('g', { transform: `translate(${x2},242)`, class: 'grab' }, predG);
+    [['float', 'FLOTTE ?', 'FLOATS?', PT(560, 230), '#1C7ED6'], ['sink', 'COULE ?', 'SINKS?', PT(880, 620), '#30346B']].forEach(([kind, f2, e2, x2, col]) => {
+      const b = S('g', { transform: `translate(${x2},${PT(242, 330)})`, class: 'grab' }, predG);
       S('rect', { x: -112, y: -46, width: 224, height: 92, rx: 26, fill: '#fff', stroke: col, 'stroke-width': 7 }, b);
       S('text', { x: 0, y: 13, 'text-anchor': 'middle', 'font-size': 36, 'font-weight': 800, fill: col, 'font-family': 'inherit', text: T(f2, e2) }, b);
       fxPop(b);
-      b.addEventListener('pointerdown', ev2 => { ev2.stopPropagation(); sfx.tap(); it.pred = kind; if (predG) { predG.remove(); predG = null; } plunge(it, { x: clamp(p.x, 420, 920), y: WATER_Y }); });
+      b.addEventListener('pointerdown', ev2 => { ev2.stopPropagation(); sfx.tap(); it.pred = kind; if (predG) { predG.remove(); predG = null; } plunge(it, { x: clamp(p.x, PT(420, 150), PT(920, 700)), y: WATER_Y }); });
     });
   }
 
@@ -1361,10 +1372,10 @@ ZONE_BUILDERS.splash = function (host) {
     items.forEach(it => it.g.remove()); items = []; sorted = 0;
     roundItems = shuffle(OBJECTS).slice(0, D() === 0 ? 3 : 4);
     roundItems.forEach((o, i) => {
-      const hx = 70 + (i % 2) * 170, hy = (i < 2 ? 230 : 360);
+      const hx = PT(70 + (i % 2) * 170, 230 + (i % 2) * 330), hy = PT(i < 2 ? 230 : 360, i < 2 ? 380 : 525);
       const g = S('g', { transform: `translate(${hx},${hy})` }, svg);
-      S('circle', { r: 40, fill: 'rgba(255,255,255,0.001)' }, g); // fat touch target
-      o.draw(g);
+      S('circle', { r: PT(40, 56), fill: 'rgba(255,255,255,0.001)' }, g); // fat touch target
+      const oart = S('g', { transform: PT('', 'scale(1.3)') }, g); o.draw(oart);
       const it = { g, o, state: 'shelf', home: [hx, hy], anim: null };
       items.push(it);
       makeDraggable(g, svg, {
@@ -1374,13 +1385,13 @@ ZONE_BUILDERS.splash = function (host) {
           if (!roundLive) return;
           if (it.state === 'tested') {
             // sort to dock
-            const wantF = p.x > 950 && p.y < 500;
-            const wantS = p.x > 950 && p.y >= 500;
+            const wantF = PT(p.x > 950 && p.y < 500, p.y > 1050 && p.x < 425);
+            const wantS = PT(p.x > 950 && p.y >= 500, p.y > 1050 && p.x >= 425);
             if (wantF || wantS) {
               const correct = (wantF && it.o.floats) || (wantS && !it.o.floats);
               if (correct) {
                 it.state = 'sorted'; sorted++;
-                const dock = wantF ? [1050 + (sorted * 34) % 190, 372] : [1050 + (sorted * 34) % 190, 600];
+                const dock = wantF ? [PT(1050, 130) + (sorted * 34) % 190, PT(372, 1158)] : [PT(1050, 520) + (sorted * 34) % 190, PT(600, 1158)];
                 g.setAttribute('transform', `translate(${dock[0]},${dock[1]}) scale(0.8)`);
                 sfx.good(); say('Oui ! ' + T(it.o.fr, it.o.en) + T(it.o.floats ? ' flotte !' : ' coule !', it.o.floats ? ' floats!' : ' sinks!'));
                 if (sorted >= roundItems.length) { roundLive = false; if (Rounds.gem()) setTimeout(zoneComplete, 900); else setTimeout(nextRound, 1100); }
@@ -1389,7 +1400,7 @@ ZONE_BUILDERS.splash = function (host) {
             }
             backToWater(it); return;
           }
-          if (p.y > WATER_Y - 60 && p.x < 950) {
+          if (p.y > WATER_Y - 60 && PT(p.x < 950, p.y < 1040)) {
             if (D() >= 4 && !it.pred) { askPrediction(it, p); return; }
             plunge(it, p);
           } else {
@@ -1403,28 +1414,30 @@ ZONE_BUILDERS.splash = function (host) {
     roundLive = true;
   }
   function backToWater(it) {
-    const x = rnd(400, 850);
+    const x = PT(rnd(400, 850), rnd(160, 690));
     if (it.o.floats) { it.anim = bobAtSurface(it.g, x); }
-    else it.g.setAttribute('transform', `translate(${x},690)`);
+    else it.g.setAttribute('transform', `translate(${x},${PT(690, 990)})`);
   }
   nextRound();
 };
 
 /* ================= Z6 — JARDIN DE NANA (plant needs) ================= */
 ZONE_BUILDERS.garden = function (host) {
-  const svg = S('svg', { class: 'stage', viewBox: '0 0 1500 850', preserveAspectRatio: (innerWidth >= innerHeight * 1.02 ? 'xMidYMid slice' : 'xMidYMid meet') }, host);
+  const ST = mkStage(host); const svg = ST.svg, PT = ST.P, SW = ST.W, SH = ST.H;
   gradDefs(svg);
-  S('rect', { width: 1500, height: 620, fill: 'url(#gSky)' }, svg);
-  S('rect', { y: 600, width: 1500, height: 250, fill: '#8A5A33' }, svg);
-  S('rect', { y: 600, width: 1500, height: 36, fill: '#3FA34D' }, svg);
+  const GND = PT(600, 1020), PLX = PT(750, 425);
+  S('rect', { width: SW, height: GND + 20, fill: 'url(#gSky)' }, svg);
+  S('rect', { y: GND, width: SW, height: SH - GND, fill: '#8A5A33' }, svg);
+  S('rect', { y: GND, width: SW, height: 36, fill: '#3FA34D' }, svg);
   // pot + plant stages
-  const plantG = S('g', { transform: 'translate(750,600)' }, svg);
-  const sunO = drawSun(svg, 1280, 150, 1);
-  const cloudO = drawCloud(svg, 260, 150, 1.15, '#E8F1FB');
-  S('path', { d: 'M -30 10 q 10 -18 20 0 q 10 18 20 0', stroke: '#9DB8D6', 'stroke-width': 5, fill: 'none', transform: 'translate(250,195)', 'stroke-linecap': 'round' }, svg);
+  const plantG = S('g', { transform: `translate(${PLX},${GND})` }, svg);
+  const SUNHOME = PT([1280, 150], [660, 350]), CLHOME = PT([260, 150], [190, 350]);
+  const sunO = drawSun(svg, SUNHOME[0], SUNHOME[1], 1);
+  const cloudO = drawCloud(svg, CLHOME[0], CLHOME[1], 1.15, '#E8F1FB');
+  S('path', { d: 'M -30 10 q 10 -18 20 0 q 10 18 20 0', stroke: '#9DB8D6', 'stroke-width': 5, fill: 'none', transform: `translate(${CLHOME[0] - 10},${CLHOME[1] + 45})`, 'stroke-linecap': 'round' }, svg);
   cloudO.classList.add('grab'); sunO.classList.add('grab');
   // meters (picture meters: drops & rays)
-  const meterG = S('g', { transform: 'translate(120,560)' }, svg);
+  const meterG = S('g', { transform: PT('translate(120,560)', 'translate(160,1300)') }, svg);
   function meter(y, color, icon) {
     const m = S('g', { transform: `translate(0,${y})` }, meterG);
     S('rect', { x: 0, y: -16, width: 230, height: 32, rx: 16, fill: 'rgba(255,255,255,0.85)', stroke: '#C9D3EE', 'stroke-width': 3 }, m);
@@ -1477,24 +1490,24 @@ ZONE_BUILDERS.garden = function (host) {
   makeDraggable(cloudO, svg, {
     move: p => { cloudPos = p; cloudO.setAttribute('transform', `translate(${p.x},${p.y}) scale(1.15)`); },
     end: p => {
-      if (gardenMode === 'grow' && Math.abs(p.x - 750) < 180 && p.y < 520) {
+      if (gardenMode === 'grow' && Math.abs(p.x - PLX) < 180 && p.y < GND - 80) {
         if (water >= needW) { sfx.bad(); Rounds.miss(); say('Stop ! Trop d’eau noie la plante !', 'Stop! Too much water drowns the plant!'); }
         else {
-          for (let i = 0; i < 10; i++) { const dr = S('path', { d: `M ${p.x + rnd(-70, 70)} ${p.y + 40} l 0 26`, stroke: '#4CC9F0', 'stroke-width': 5, 'stroke-linecap': 'round' }, svg); dr.animate([{ transform: 'translateY(0)', opacity: 1 }, { transform: `translateY(${560 - p.y}px)`, opacity: 0.2 }], { duration: 600, delay: i * 55 }).onfinish = () => dr.remove(); }
+          for (let i = 0; i < 10; i++) { const dr = S('path', { d: `M ${p.x + rnd(-70, 70)} ${p.y + 40} l 0 26`, stroke: '#4CC9F0', 'stroke-width': 5, 'stroke-linecap': 'round' }, svg); dr.animate([{ transform: 'translateY(0)', opacity: 1 }, { transform: `translateY(${GND - 40 - p.y}px)`, opacity: 0.2 }], { duration: 600, delay: i * 55 }).onfinish = () => dr.remove(); }
           sfx.splash(); water++; meters(); say('Glou glou !', 'Splash splash!'); setTimeout(grow, 700);
         }
       }
-      cloudO.animate([{ transform: `translate(${p.x}px,${p.y}px) scale(1.15)` }, { transform: 'translate(260px,150px) scale(1.15)' }], { duration: 500, easing: 'ease-out' }).onfinish = () => cloudO.setAttribute('transform', 'translate(260,150) scale(1.15)');
+      cloudO.animate([{ transform: `translate(${p.x}px,${p.y}px) scale(1.15)` }, { transform: `translate(${CLHOME[0]}px,${CLHOME[1]}px) scale(1.15)` }], { duration: 500, easing: 'ease-out' }).onfinish = () => cloudO.setAttribute('transform', `translate(${CLHOME[0]},${CLHOME[1]}) scale(1.15)`);
     }
   });
   makeDraggable(sunO, svg, {
     move: p => sunO.setAttribute('transform', `translate(${p.x},${p.y})`),
     end: p => {
-      if (gardenMode === 'grow' && Math.abs(p.x - 750) < 200 && p.y < 520) {
+      if (gardenMode === 'grow' && Math.abs(p.x - PLX) < 200 && p.y < GND - 80) {
         if (sun >= needS) { sfx.bad(); Rounds.miss(); say('Trop de soleil brûle les feuilles !', 'Too much sun burns the leaves!'); }
-        else { const flash = S('circle', { cx: 750, cy: 420, r: 10, fill: 'rgba(255,210,63,0.5)' }, svg); flash.animate([{ transform: 'scale(1)', opacity: 0.8 }, { transform: 'scale(30)', opacity: 0 }], { duration: 650 }).onfinish = () => flash.remove(); sun++; meters(); sfx.tap(); say('Du bon soleil !', 'Lovely sunshine!'); setTimeout(grow, 650); }
+        else { const flash = S('circle', { cx: PLX, cy: GND - 180, r: 10, fill: 'rgba(255,210,63,0.5)' }, svg); flash.animate([{ transform: 'scale(1)', opacity: 0.8 }, { transform: 'scale(30)', opacity: 0 }], { duration: 650 }).onfinish = () => flash.remove(); sun++; meters(); sfx.tap(); say('Du bon soleil !', 'Lovely sunshine!'); setTimeout(grow, 650); }
       }
-      sunO.animate([{ transform: `translate(${p.x}px,${p.y}px)` }, { transform: 'translate(1280px,150px)' }], { duration: 500, easing: 'ease-out' }).onfinish = () => sunO.setAttribute('transform', 'translate(1280,150)');
+      sunO.animate([{ transform: `translate(${p.x}px,${p.y}px)` }, { transform: `translate(${SUNHOME[0]}px,${SUNHOME[1]}px)` }], { duration: 500, easing: 'ease-out' }).onfinish = () => sunO.setAttribute('transform', `translate(${SUNHOME[0]},${SUNHOME[1]})`);
     }
   });
   // --- CE1+: between growing rounds, LABEL the plant organs (CM: by their function) ---
@@ -1550,14 +1563,14 @@ ZONE_BUILDERS.garden = function (host) {
 
 /* ================= Z7 — SAFARI BALLON (Africa geography) ================= */
 ZONE_BUILDERS.safari = function (host) {
-  const svg = S('svg', { class: 'stage', viewBox: '0 0 1500 850', preserveAspectRatio: (innerWidth >= innerHeight * 1.02 ? 'xMidYMid slice' : 'xMidYMid meet') }, host);
+  const ST = mkStage(host); const svg = ST.svg, PT = ST.P, SW = ST.W, SH = ST.H;
   gradDefs(svg);
-  S('rect', { width: 1500, height: 850, fill: 'url(#gSky)' }, svg);
-  drawCloud(svg, 220, 740, 1, 'rgba(255,255,255,0.8)');
-  drawCloud(svg, 1330, 130, 0.75, 'rgba(255,255,255,0.8)');
+  S('rect', { width: SW, height: SH, fill: 'url(#gSky)' }, svg);
+  drawCloud(svg, PT(220, 140), PT(740, 1380), 1, 'rgba(255,255,255,0.8)');
+  drawCloud(svg, PT(1330, 700), PT(130, 250), 0.75, 'rgba(255,255,255,0.8)');
   // THE REAL AFRICA — true cartography, all 49 countries (same map data as the atlas)
   const DATA = (window.AFRICA_MAP || []);
-  const K = 2.92, ox = 800 - 532.5 * K, oy = 455 - 452.5 * K;
+  const K = PT(2.92, 3.25), ox = PT(800, 425) - 532.5 * K, oy = PT(455, 790) - 452.5 * K;
   const map = S('g', { transform: `translate(${ox},${oy}) scale(${K})` }, svg);
   S('ellipse', { cx: 532.5, cy: 452.5, rx: 122, ry: 122, fill: 'rgba(255,255,255,0.32)' }, map);
   const REGION_HUE = { 'North Africa': '#F5C96B', 'West Africa': '#8ED081', 'Central Africa': '#69B578', 'East Africa': '#F28F6B', 'Southern Africa': '#F2A6C4', 'Central/Southern Africa': '#7FC9C0' };
@@ -1570,7 +1583,7 @@ ZONE_BUILDERS.safari = function (host) {
     p.addEventListener('pointerleave', () => { if (!found.includes(c.id)) p.style.filter = ''; });
   });
   // balloon with Leo
-  const balloon = S('g', { transform: 'translate(170,190)' }, svg);
+  const balloon = S('g', { transform: PT('translate(170,190)', 'translate(170,260)') }, svg);
   const balloonInner = S('g', {}, balloon);
   S('path', { d: 'M 0 -96 A 62 70 0 1 1 -0.1 -96 Z', fill: '#FF4D57', stroke: '#C42631', 'stroke-width': 5 }, balloonInner);
   S('path', { d: 'M 0 -96 A 62 70 0 0 1 0 36 A 24 70 0 0 0 0 -96 Z', fill: '#FFD23F', opacity: 0.9 }, balloonInner);
@@ -1578,9 +1591,9 @@ ZONE_BUILDERS.safari = function (host) {
   S('path', { d: 'M -18 60 L 18 60 L 12 92 L -12 92 Z', fill: 'url(#gWood)', stroke: '#6B421D', 'stroke-width': 4 }, balloonInner);
   drawLeo(balloonInner, 0, 44, 0.42);
   fxBob(balloonInner, 13, 3000);
-  let balloonPos = { x: 170, y: 190 };
+  let balloonPos = { x: 170, y: PT(190, 260) };
   // clue card: the country's REAL shape + name (or only its capital for the big kids)
-  const clueCard = S('g', { transform: 'translate(170,600)' }, svg);
+  const clueCard = S('g', { transform: PT('translate(170,600)', 'translate(425,1330)') }, svg);
   const EASY = ['ma', 'eg', 'ng', 'cm', 'za', 'cd', 'ke', 'sn', 'dz', 'mg'];
   const MID = EASY.concat(['tz', 'gh', 'ci', 'ml', 'ne', 'td', 'sd', 'et', 'ug', 'zm', 'zw', 'ao', 'mz', 'ly', 'tn', 'bf']);
   function pool() { const d = D(); const ids = d <= 1 ? EASY : (d <= 3 ? MID : DATA.map(c => c.id)); return DATA.filter(c => ids.includes(c.id) && !found.includes(c.id)); }
@@ -1658,16 +1671,18 @@ ZONE_BUILDERS.safari = function (host) {
 
 /* ================= Z8 — THÉÂTRE KALULU (watch & understand) ================= */
 ZONE_BUILDERS.theatre = function (host) {
-  const svg = S('svg', { class: 'stage', viewBox: '0 0 1500 850', preserveAspectRatio: (innerWidth >= innerHeight * 1.02 ? 'xMidYMid slice' : 'xMidYMid meet') }, host);
+  const ST = mkStage(host); const svg = ST.svg, PT = ST.P, SW = ST.W, SH = ST.H;
   gradDefs(svg);
-  S('rect', { width: 1500, height: 850, fill: '#3A1F47' }, svg);
-  S('rect', { x: 90, y: 110, width: 1320, height: 560, rx: 24, fill: 'url(#gSky)', stroke: '#FFD23F', 'stroke-width': 8 }, svg);
-  S('rect', { x: 90, y: 530, width: 1320, height: 140, fill: 'url(#gGrass)' }, svg);
-  const stageG = S('g', {}, svg);
+  S('rect', { width: SW, height: SH, fill: '#3A1F47' }, svg);
+  // on phones the whole show renders inside a scaled wrapper; the answer cards stay full-size
+  const showWrap = S('g', { transform: PT('', 'translate(425,560) scale(0.56) translate(-750,-390)') }, svg);
+  S('rect', { x: 90, y: 110, width: 1320, height: 560, rx: 24, fill: 'url(#gSky)', stroke: '#FFD23F', 'stroke-width': 8 }, showWrap);
+  S('rect', { x: 90, y: 530, width: 1320, height: 140, fill: 'url(#gGrass)' }, showWrap);
+  const stageG = S('g', {}, showWrap);
   // curtains
-  const curtL = S('path', { d: 'M 90 110 Q 240 300 150 670 L 90 670 Z', fill: '#C42631' }, svg);
-  const curtR = S('path', { d: 'M 1410 110 Q 1260 300 1350 670 L 1410 670 Z', fill: '#C42631' }, svg);
-  S('path', { d: 'M 70 86 L 1430 86 L 1430 140 Q 750 190 70 140 Z', fill: '#E5252A', stroke: '#9E1C24', 'stroke-width': 5 }, svg);
+  const curtL = S('path', { d: 'M 90 110 Q 240 300 150 670 L 90 670 Z', fill: '#C42631' }, showWrap);
+  const curtR = S('path', { d: 'M 1410 110 Q 1260 300 1350 670 L 1410 670 Z', fill: '#C42631' }, showWrap);
+  S('path', { d: 'M 70 86 L 1430 86 L 1430 140 Q 750 190 70 140 Z', fill: '#E5252A', stroke: '#9E1C24', 'stroke-width': 5 }, showWrap);
   const answerG = S('g', {}, svg);
   // actors
   let actors = {};
@@ -1745,9 +1760,9 @@ ZONE_BUILDERS.theatre = function (host) {
     mission(story.q.fr, story.q.en, ZONE_ICONS.theatre);
     answerG.innerHTML = '';
     shuffle(story.panels).forEach((p, i) => {
-      const x = 430 + i * 320;
-      const g = S('g', { transform: `translate(${x},${700})`, class: 'grab' }, answerG);
-      S('rect', { x: -120, y: -70, width: 240, height: 140, rx: 22, fill: '#fff', stroke: '#FFD23F', 'stroke-width': 6 }, g);
+      const x = PT(430 + i * 320, 425), y = PT(700, 1000 + i * 165);
+      const g = S('g', { transform: `translate(${x},${y})`, class: 'grab' }, answerG);
+      S('rect', { x: PT(-120, -200), y: -70, width: PT(240, 400), height: 140, rx: 22, fill: '#fff', stroke: '#FFD23F', 'stroke-width': 6 }, g);
       const art = S('g', { transform: 'translate(0,6)' }, g); p.draw(art); fxPop(g);
       g.addEventListener('pointerdown', () => {
         if (p.ok) {
@@ -1771,19 +1786,20 @@ ZONE_BUILDERS.theatre = function (host) {
 
 /* ================= Z9 — CHANTIER DE TIBO (building projects) ================= */
 ZONE_BUILDERS.builder = function (host) {
-  const svg = S('svg', { class: 'stage', viewBox: '0 0 1500 850', preserveAspectRatio: (innerWidth >= innerHeight * 1.02 ? 'xMidYMid slice' : 'xMidYMid meet') }, host);
+  const ST = mkStage(host); const svg = ST.svg, PT = ST.P, SW = ST.W, SH = ST.H;
   gradDefs(svg);
-  S('rect', { width: 1500, height: 620, fill: 'url(#gSky)' }, svg);
-  S('rect', { y: 600, width: 1500, height: 250, fill: 'url(#gSand)' }, svg);
-  drawSun(svg, 1380, 100, 0.8);
-  drawCloud(svg, 240, 110, 0.8);
+  S('rect', { width: SW, height: PT(620, 1080), fill: 'url(#gSky)' }, svg);
+  S('rect', { y: PT(600, 1060), width: SW, height: PT(250, 440), fill: 'url(#gSand)' }, svg);
+  drawSun(svg, PT(1380, 700), PT(100, 330), 0.8);
+  drawCloud(svg, PT(240, 150), PT(110, 320), 0.8);
   // crane décor
-  const crane = S('g', { transform: 'translate(1300,600)' }, svg);
+  const crane = S('g', { transform: PT('translate(1300,600)', 'translate(730,1060) scale(0.8)') }, svg);
   S('rect', { x: -12, y: -330, width: 24, height: 330, fill: '#F3A712', stroke: '#B4654A', 'stroke-width': 3 }, crane);
   S('rect', { x: -160, y: -330, width: 200, height: 16, fill: '#F3A712', stroke: '#B4654A', 'stroke-width': 3 }, crane);
   S('path', { d: 'M -150 -316 L -150 -230', stroke: '#5C3A17', 'stroke-width': 4 }, crane);
   S('path', { d: 'M -165 -230 L -135 -230 L -150 -205 Z', fill: '#8A5A33' }, crane);
-  const blueprintG = S('g', { transform: 'translate(950,440)' }, svg);
+  const BLX = PT(950, 425), BLY = PT(440, 640);
+  const blueprintG = S('g', { transform: `translate(${BLX},${BLY})` }, svg);
   const trayG = S('g', {}, svg);
   const fxG = S('g', {}, svg);
   const STRUCTURES = [
@@ -1843,12 +1859,12 @@ ZONE_BUILDERS.builder = function (host) {
     // tray pieces (shuffled)
     shuffle(parts.map((p, i) => i)).forEach((pi, slot) => {
       const p = parts[pi];
-      const hx = 180 + (slot % 2) * 220, hy = 300 + Math.floor(slot / 2) * 170;
+      const hx = PT(180 + (slot % 2) * 220, 170 + (slot % 3) * 255), hy = PT(300 + Math.floor(slot / 2) * 170, 1130 + Math.floor(slot / 3) * 200);
       const c = center(p);
       const g = S('g', { transform: `translate(${hx},${hy})` }, trayG);
       const art = S('g', { transform: `translate(${-c[0]},${-c[1]}) ` }, g);
       drawShape(art, p, 'solid');
-      S('circle', { r: 60, fill: 'rgba(255,255,255,0.001)' }, g);
+      S('circle', { r: PT(60, 78), fill: 'rgba(255,255,255,0.001)' }, g);
       fxPop(g);
       let done = false;
       makeDraggable(g, svg, {
@@ -1856,7 +1872,7 @@ ZONE_BUILDERS.builder = function (host) {
         move: pt2 => { if (!roundLive || done) return; g.setAttribute('transform', `translate(${pt2.x},${pt2.y}) scale(1.08)`); },
         end: pt2 => {
           if (!roundLive || done) return;
-          const tx = 950 + c[0], ty = 440 + c[1];
+          const tx = BLX + c[0], ty = BLY + c[1];
           if (Math.hypot(pt2.x - tx, pt2.y - ty) < 85) {
             done = true; placed++;
             g.remove();
@@ -1892,13 +1908,13 @@ ZONE_BUILDERS.builder = function (host) {
 
 /* ================= Z10 — CHERCHE & TROUVE (seek and find) ================= */
 ZONE_BUILDERS.seek = function (host) {
-  const svg = S('svg', { class: 'stage', viewBox: '0 0 1500 850', preserveAspectRatio: (innerWidth >= innerHeight * 1.02 ? 'xMidYMid slice' : 'xMidYMid meet') }, host);
+  const ST = mkStage(host); const svg = ST.svg, PT = ST.P, SW = ST.W, SH = ST.H;
   gradDefs(svg);
-  S('rect', { width: 1500, height: 420, fill: 'url(#gSky)' }, svg);
-  S('rect', { y: 400, width: 1500, height: 450, fill: 'url(#gGrass)' }, svg);
+  S('rect', { width: SW, height: PT(420, 460), fill: 'url(#gSky)' }, svg);
+  S('rect', { y: PT(400, 440), width: SW, height: SH, fill: 'url(#gGrass)' }, svg);
   drawSun(svg, 130, 100, 0.8);
   const sceneG = S('g', {}, svg);
-  const stripG = S('g', { transform: 'translate(1310,250)' }, svg);
+  const stripG = S('g', { transform: PT('translate(1310,250)', 'translate(690,510)') }, svg);
   const TARGETS = {
     butterfly: { fr: 'papillons', dens: '1', en: 'butterflies', draw: (g, s2) => { const w = S('g', { transform: `scale(${s2})` }, g); S('path', { d: 'M 0 -4 Q -16 -22 -24 -8 Q -28 2 -12 4 Q -26 10 -16 18 Q -8 22 0 8 Q 8 22 16 18 Q 26 10 12 4 Q 28 2 24 -8 Q 16 -22 0 -4 Z', fill: '#9B5DE5', stroke: '#6D3BBF', 'stroke-width': 2 }, w); S('rect', { x: -2, y: -10, width: 4, height: 22, rx: 2, fill: '#2B2D42' }, w); S('circle', { cx: -6, cy: -2, r: 3, fill: '#FFD23F' }, w); S('circle', { cx: 6, cy: -2, r: 3, fill: '#FFD23F' }, w); } },
     ladybug: { fr: 'coccinelles', dens: '1', en: 'ladybugs', draw: (g, s2) => { const w = S('g', { transform: `scale(${s2})` }, g); S('circle', { cx: 0, cy: 0, r: 15, fill: '#FF4D57', stroke: '#9E1C24', 'stroke-width': 2 }, w); S('path', { d: 'M 0 -15 L 0 15', stroke: '#2B2D42', 'stroke-width': 2.4 }, w); S('circle', { cx: 0, cy: -14, r: 6, fill: '#2B2D42' }, w); [[-7, -5], [7, -3], [-5, 7], [6, 8]].forEach(([x, y]) => S('circle', { cx: x, cy: y, r: 2.6, fill: '#2B2D42' }, w)); } },
@@ -1914,7 +1930,7 @@ ZONE_BUILDERS.seek = function (host) {
   let found = 0, need = 0, roundLive = false;
   function decor() {
     for (let i = 0; i < 16; i++) {
-      const x = rnd(60, 1240), y = rnd(430, 800);
+      const x = PT(rnd(60, 1240), rnd(60, 790)), y = PT(rnd(430, 800), rnd(470, 1430));
       const kind = i % 3;
       if (kind === 0) { const b = S('g', { transform: `translate(${x},${y})` }, sceneG); [[0, 0, 34], [-28, 10, 26], [28, 10, 26]].forEach(([cx, cy, r]) => S('circle', { cx, cy, r, fill: i % 2 ? '#3FA34D' : '#57CC57' }, b)); }
       else if (kind === 1) { const f = S('g', { transform: `translate(${x},${y})` }, sceneG); [0, 72, 144, 216, 288].forEach(a => S('ellipse', { cx: 0, cy: -8, rx: 5, ry: 9, fill: ['#FF9BC0', '#FFD23F', '#C9B6F5'][i % 3], transform: `rotate(${a})` }, f)); S('circle', { r: 4.4, fill: '#FF9F1C' }, f); }
@@ -1939,11 +1955,11 @@ ZONE_BUILDERS.seek = function (host) {
     const d = D();
     need = 3 + Math.min(3, Math.floor(d / 2));
     found = 0;
-    const sSize = d <= 1 ? 1.5 : (d <= 3 ? 1.15 : 0.9);
+    const sSize = PT(1, 1.35) * (d <= 1 ? 1.5 : (d <= 3 ? 1.15 : 0.9));
     for (let i = 0; i < need; i++) {
-      const x = rnd(90, 1200), y = rnd(440, 790);
+      const x = PT(rnd(90, 1200), rnd(90, 560)), y = PT(rnd(440, 790), rnd(480, 1400));
       const g = S('g', { transform: `translate(${x},${y})`, class: 'grab' }, sceneG);
-      S('circle', { r: 34, fill: 'rgba(255,255,255,0.001)' }, g);
+      S('circle', { r: PT(34, 52), fill: 'rgba(255,255,255,0.001)' }, g);
       TARGETS[curKind].draw(g, sSize);
       g.addEventListener('pointerdown', () => {
         if (!roundLive || g.dataset.got) return;
@@ -1961,9 +1977,9 @@ ZONE_BUILDERS.seek = function (host) {
       });
     }
     if (d >= 3) for (let i = 0; i < 4 + d; i++) {
-      const x = rnd(90, 1200), y = rnd(440, 790);
+      const x = PT(rnd(90, 1200), rnd(90, 560)), y = PT(rnd(440, 790), rnd(480, 1400));
       const g = S('g', { transform: `translate(${x},${y})`, class: 'grab' }, sceneG);
-      S('circle', { r: 30, fill: 'rgba(255,255,255,0.001)' }, g);
+      S('circle', { r: PT(30, 46), fill: 'rgba(255,255,255,0.001)' }, g);
       DECOYS[curKind](g, sSize * 0.95);
       g.addEventListener('pointerdown', () => { if (!roundLive) return; Rounds.miss(); sfx.bad(); fxWobble(g); say('Presque ! Regarde mieux les couleurs !', 'Almost! Look at the colors more closely!'); });
     }
@@ -1976,12 +1992,13 @@ ZONE_BUILDERS.seek = function (host) {
 
 /* ================= Z11 — FABRIQUE DE MOTS (word building) ================= */
 ZONE_BUILDERS.words = function (host) {
-  const svg = S('svg', { class: 'stage', viewBox: '0 0 1500 850', preserveAspectRatio: (innerWidth >= innerHeight * 1.02 ? 'xMidYMid slice' : 'xMidYMid meet') }, host);
+  const ST = mkStage(host); const svg = ST.svg, PT = ST.P, SW = ST.W, SH = ST.H;
   gradDefs(svg);
-  S('rect', { width: 1500, height: 850, fill: '#E9F5FB' }, svg);
-  for (let i = 0; i < 10; i++) S('circle', { cx: rnd(40, 1460), cy: rnd(40, 810), r: rnd(14, 36), fill: ['#D2EDF8', '#C4E8F5', '#DEF2FA'][i % 3] }, svg);
-  const picG = S('g', { transform: 'translate(260,430)' }, svg);
-  const slotG = S('g', { transform: 'translate(880,320)' }, svg);
+  S('rect', { width: SW, height: SH, fill: '#E9F5FB' }, svg);
+  for (let i = 0; i < 10; i++) S('circle', { cx: rnd(40, SW - 40), cy: rnd(40, SH - 40), r: rnd(14, 36), fill: ['#D2EDF8', '#C4E8F5', '#DEF2FA'][i % 3] }, svg);
+  const picG = S('g', { transform: PT('translate(260,430)', 'translate(425,480)') }, svg);
+  const SLX = PT(880, 425), SLY = PT(320, 790);
+  const slotG = S('g', { transform: `translate(${SLX},${SLY})` }, svg);
   const tileG = S('g', {}, svg);
   const MINIS = {
     lion: g => drawLeo(g, 0, 0, 1.1),
@@ -2014,8 +2031,8 @@ ZONE_BUILDERS.words = function (host) {
       const alpha = 'ABCDEFGHIJLMNOPRSTUV'.split('').filter(c => c !== first);
       const opts = shuffle([first, alpha[ri(0, 9)], alpha[ri(10, alpha.length - 1)]]);
       opts.forEach((ch, i) => {
-        const x = 880 + (i - 1) * 190;
-        const cell = S('g', { transform: `translate(${x},420)`, class: 'grab' }, tileG);
+        const x = PT(880 + (i - 1) * 190, 425 + (i - 1) * 235);
+        const cell = S('g', { transform: `translate(${x},${PT(420, 1080)})`, class: 'grab' }, tileG);
         S('rect', { x: -75, y: -75, width: 150, height: 150, rx: 28, fill: '#fff', stroke: VOW.includes(ch) ? '#FF4D57' : '#1C7ED6', 'stroke-width': 7 }, cell);
         S('text', { x: 0, y: 36, 'text-anchor': 'middle', 'font-size': 100, 'font-weight': 800, fill: VOW.includes(ch) ? '#FF4D57' : '#1C7ED6', 'font-family': 'inherit', text: ch }, cell);
         cell.addEventListener('pointerdown', () => {
@@ -2033,7 +2050,7 @@ ZONE_BUILDERS.words = function (host) {
   }
   function buildSlots() {
     slotG.innerHTML = '';
-    const w = 86;
+    const w = PT(86, Math.min(96, 660 / Math.max(1, word.length) - 10));
     word.split('').forEach((ch, i) => {
       const x = (i - (word.length - 1) / 2) * (w + 10);
       S('rect', { x: x - w / 2, y: -46, width: w, height: 92, rx: 16, fill: filled[i] ? '#DFFAE8' : '#fff', stroke: filled[i] ? '#57CC57' : '#C9D3EE', 'stroke-width': 5 }, slotG);
@@ -2049,12 +2066,13 @@ ZONE_BUILDERS.words = function (host) {
     const alpha = 'ABCDEFGHIJLMNOPRSTUV';
     for (let i = 0; i < decoyCount; i++) letters.push({ ch: alpha[ri(0, alpha.length - 1)], forIdx: -1 });
     shuffle(letters).forEach((L, i) => {
-      const hx = 560 + (i % 5) * 150, hy = 560 + Math.floor(i / 5) * 130;
+      const hx = PT(560 + (i % 5) * 150, 155 + (i % 4) * 180), hy = PT(560 + Math.floor(i / 5) * 130, 1010 + Math.floor(i / 4) * 165);
       const g = S('g', { transform: `translate(${hx},${hy})`, class: 'grab' }, tileG);
-      S('rect', { x: -40, y: -40, width: 80, height: 80, rx: 14, fill: '#fff', stroke: '#06B6D4', 'stroke-width': 5 }, g);
-      S('rect', { x: -40, y: 28, width: 80, height: 12, rx: 6, fill: '#06B6D4', opacity: 0.4 }, g);
-      S('text', { x: 0, y: 18, 'text-anchor': 'middle', 'font-size': 50, 'font-weight': 800, 'font-family': 'inherit', fill: VOW.includes(L.ch) ? '#FF4D57' : '#1C7ED6', text: L.ch }, g);
-      S('circle', { r: 48, fill: 'rgba(0,0,0,0)' }, g);
+      const TS = PT(40, 54);
+      S('rect', { x: -TS, y: -TS, width: TS * 2, height: TS * 2, rx: 14, fill: '#fff', stroke: '#06B6D4', 'stroke-width': 5 }, g);
+      S('rect', { x: -TS, y: TS - 12, width: TS * 2, height: 12, rx: 6, fill: '#06B6D4', opacity: 0.4 }, g);
+      S('text', { x: 0, y: PT(18, 24), 'text-anchor': 'middle', 'font-size': PT(50, 66), 'font-weight': 800, 'font-family': 'inherit', fill: VOW.includes(L.ch) ? '#FF4D57' : '#1C7ED6', text: L.ch }, g);
+      S('circle', { r: PT(48, 66), fill: 'rgba(0,0,0,0)' }, g);
       fxPop(g);
       let used = false;
       makeDraggable(g, svg, {
@@ -2063,8 +2081,8 @@ ZONE_BUILDERS.words = function (host) {
         end: p => {
           if (!roundLive || used) return;
           // which slot was it dropped on?
-          const w = 86;
-          const rel = { x: p.x - 880, y: p.y - 320 };
+          const w = PT(86, Math.min(96, 660 / Math.max(1, word.length) - 10));
+          const rel = { x: p.x - SLX, y: p.y - SLY };
           let hit = -1;
           word.split('').forEach((ch, i) => {
             const x = (i - (word.length - 1) / 2) * (w + 10);
@@ -2110,11 +2128,11 @@ ZONE_BUILDERS.words = function (host) {
 
 /* ================= Z12 — ATELIER MAGIQUE (free creation) ================= */
 ZONE_BUILDERS.create = function (host) {
-  const svg = S('svg', { class: 'stage', viewBox: '0 0 1500 850', preserveAspectRatio: (innerWidth >= innerHeight * 1.02 ? 'xMidYMid slice' : 'xMidYMid meet') }, host);
+  const ST = mkStage(host); const svg = ST.svg, PT = ST.P, SW = ST.W, SH = ST.H;
   gradDefs(svg);
   Rounds.start('create', 1);
-  S('rect', { width: 1500, height: 560, fill: 'url(#gSky)' }, svg);
-  S('rect', { y: 540, width: 1500, height: 310, fill: 'url(#gGrass)' }, svg);
+  S('rect', { width: SW, height: PT(560, 900), fill: 'url(#gSky)' }, svg);
+  S('rect', { y: PT(540, 880), width: SW, height: SH, fill: 'url(#gGrass)' }, svg);
   const canvasG = S('g', {}, svg);
   const STAMPS = [
     { k: 'tree', fr: ['arbre', 'arbres'], en: ['tree', 'trees'], draw: g => { S('rect', { x: -8, y: -6, width: 16, height: 48, rx: 7, fill: 'url(#gWood)' }, g); [[0, -30, 30], [-24, -16, 22], [24, -16, 22]].forEach(([cx, cy, r]) => S('circle', { cx, cy, r, fill: '#3FA34D' }, g)); } },
@@ -2131,7 +2149,7 @@ ZONE_BUILDERS.create = function (host) {
   // palette
   const pal = S('g', {}, svg);
   STAMPS.forEach((st, i) => {
-    const x = 90, y = 130 + i * 76;
+    const x = PT(90, 120 + (i % 5) * 130), y = PT(130 + i * 76, 1270 + Math.floor(i / 5) * 135);
     const cell = S('g', { transform: `translate(${x},${y})`, class: 'grab' }, pal);
     const bg = S('circle', { r: 33, fill: '#fff', stroke: '#C9D3EE', 'stroke-width': 4, 'data-pal': st.k }, cell);
     const mini = S('g', { transform: 'scale(0.78)' }, cell);
@@ -2145,12 +2163,12 @@ ZONE_BUILDERS.create = function (host) {
     if (i === 0) bg.setAttribute('stroke', '#FF6FB5');
   });
   // eraser
-  const er = S('g', { transform: 'translate(90,' + (130 + STAMPS.length * 76) + ')', class: 'grab' }, pal);
+  const er = S('g', { transform: PT('translate(90,' + (130 + STAMPS.length * 76) + ')', 'translate(640,1405)'), class: 'grab' }, pal);
   const erBg = S('circle', { r: 33, fill: '#fff', stroke: '#C9D3EE', 'stroke-width': 4, 'data-pal': 'eraser' }, er);
   S('rect', { x: -16, y: -10, width: 32, height: 20, rx: 6, fill: '#FF9BC0', stroke: '#E5252A', 'stroke-width': 2.5, transform: 'rotate(-20)' }, er);
   er.addEventListener('pointerdown', () => { eraser = true; sfx.tap(); document.querySelectorAll('[data-pal]').forEach(b => b.setAttribute('stroke', '#C9D3EE')); erBg.setAttribute('stroke', '#E5252A'); say('Gomme magique !', 'Magic eraser!'); });
   // done button
-  const doneBtn = S('g', { transform: 'translate(1360,760)', class: 'grab', opacity: 0 }, svg);
+  const doneBtn = S('g', { transform: PT('translate(1360,760)', 'translate(425,1165)'), class: 'grab', opacity: 0 }, svg);
   S('circle', { r: 52, fill: '#57CC57', stroke: '#fff', 'stroke-width': 6 }, doneBtn);
   S('path', { d: 'M -22 2 L -6 18 L 26 -18', stroke: '#fff', 'stroke-width': 10, fill: 'none', 'stroke-linecap': 'round', 'stroke-linejoin': 'round' }, doneBtn);
   doneBtn.addEventListener('pointerdown', () => {
@@ -2163,7 +2181,7 @@ ZONE_BUILDERS.create = function (host) {
     setTimeout(zoneComplete, 1600);
   });
   // place stamps on the big canvas
-  const bgHit = S('rect', { x: 180, y: 70, width: 1120, height: 760, fill: 'rgba(0,0,0,0)' }, svg);
+  const bgHit = S('rect', { x: PT(180, 60), y: PT(70, 310), width: PT(1120, 730), height: PT(760, 790), fill: 'rgba(0,0,0,0)' }, svg);
   bgHit.addEventListener('pointerdown', ev => {
     const p = svg.createSVGPoint(); p.x = ev.clientX; p.y = ev.clientY;
     const c = p.matrixTransform(svg.getScreenCTM().inverse());
@@ -3090,21 +3108,21 @@ ZONE_BUILDERS.griot = function (host) {
 
 /* ================= Z16 — ÉCHECS MAGIQUES (kids chess: learn how pieces move) ================= */
 ZONE_BUILDERS.chess = function (host) {
-  const svg = S('svg', { class: 'stage', viewBox: '0 0 1500 850', preserveAspectRatio: (innerWidth >= innerHeight * 1.02 ? 'xMidYMid slice' : 'xMidYMid meet') }, host);
+  const ST = mkStage(host); const svg = ST.svg, PT = ST.P, SW = ST.W, SH = ST.H;
   gradDefs(svg);
   const d = D();
-  S('rect', { width: 1500, height: 850, fill: '#3B2353' }, svg);
+  S('rect', { width: SW, height: SH, fill: '#3B2353' }, svg);
   // castle backdrop
-  [[150, 0.9], [1290, 0.9]].forEach(([x, s]) => {
-    const c = S('g', { transform: `translate(${x},620) scale(${s})` }, svg);
+  PT([[150, 0.9], [1290, 0.9]], [[150, 0.72], [700, 0.72]]).forEach(([x, s]) => {
+    const c = S('g', { transform: `translate(${x},${PT(620, 300)}) scale(${s})` }, svg);
     S('rect', { x: -70, y: -180, width: 140, height: 220, rx: 8, fill: '#54386F' }, c);
     S('path', { d: 'M -70 -180 L -70 -210 L -46 -210 L -46 -190 L -24 -190 L -24 -210 L 0 -210 L 0 -190 L 24 -190 L 24 -210 L 46 -210 L 46 -190 L 70 -190 L 70 -180 Z', fill: '#54386F' }, c);
     S('rect', { x: -18, y: -80, width: 36, height: 120, rx: 16, fill: '#3B2353' }, c);
     S('circle', { cx: 0, cy: -140, r: 14, fill: '#FFD23F', opacity: 0.85 }, c);
   });
-  for (let i = 0; i < 26; i++) S('circle', { cx: rnd(20, 1480), cy: rnd(20, 240), r: rnd(1.4, 3.4), fill: '#FFF3B0', opacity: rnd(0.4, 0.95) }, svg);
+  for (let i = 0; i < 26; i++) S('circle', { cx: rnd(20, SW - 20), cy: rnd(20, PT(240, 330)), r: rnd(1.4, 3.4), fill: '#FFF3B0', opacity: rnd(0.4, 0.95) }, svg);
   // 6x6 board
-  const N = 6, CELL = 92, BX = 474, BY = 168;
+  const N = 6, CELL = PT(92, 106), BX = PT(474, (850 - 106 * 6) / 2), BY = PT(168, 430);
   S('rect', { x: BX - 20, y: BY - 20, width: N * CELL + 40, height: N * CELL + 40, rx: 22, fill: '#6B421D', stroke: '#FFD23F', 'stroke-width': 6 }, svg);
   for (let r = 0; r < N; r++) for (let c = 0; c < N; c++)
     S('rect', { x: BX + c * CELL, y: BY + r * CELL, width: CELL, height: CELL, fill: (r + c) % 2 ? '#B5835A' : '#F6E7C8' }, svg);
@@ -3156,7 +3174,7 @@ ZONE_BUILDERS.chess = function (host) {
     cur = { key, P, c, r, sc, sr, legal };
     // piece
     const pg = S('g', { transform: `translate(${cx(c)},${cy(r)})` }, pieceLayer);
-    P.draw(pg); fxPop(pg); fxBob(pg, 5, 1800);
+    const pin = S('g', { transform: PT('', 'scale(1.18)') }, pg); P.draw(pin); fxPop(pg); fxBob(pg, 5, 1800);
     cur.pg = pg;
     // star target
     const stg = S('g', { transform: `translate(${cx(sc)},${cy(sr)})` }, boardFx);

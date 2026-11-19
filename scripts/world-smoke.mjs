@@ -11,6 +11,11 @@ const vc = new VirtualConsole();
 vc.on('jsdomError', e => { const m = String(e.detail?.stack || e.stack || e); if (!/not implemented/i.test(m)) errs.push(m.split('\n').slice(0, 3).join(' | ')); });
 const dom = new JSDOM(html, { url: 'http://localhost:8081/play.html', runScripts: 'outside-only', pretendToBeVisual: true, virtualConsole: vc });
 const { window } = dom;
+const PORTRAIT = !!process.env.PORTRAIT;
+if (PORTRAIT) {
+  Object.defineProperty(window, 'innerWidth', { get: () => 412, configurable: true });
+  Object.defineProperty(window, 'innerHeight', { get: () => 915, configurable: true });
+}
 // --- stubs for APIs jsdom lacks ---
 window.DOMMatrix = class { constructor() { this.e = 0; this.f = 0; } };
 const fakeAnim = { cancel() {}, finished: Promise.resolve(), set onfinish(f) { setTimeout(f, 5); }, animate: null };
@@ -45,6 +50,18 @@ const d = window.document;
       const quizHtml = d.querySelector('#scene-game .quiz-wrap');
       if (z.key === 'academy' || z.key === 'mathlab' || z.key === 'griot') { if (!quizHtml || !quizHtml.textContent.trim()) errs.push(z.key + '@g' + grade + ': quiz UI empty'); }
       else if (!svg || svg.childNodes.length < 3) errs.push(z.key + '@g' + grade + ': stage looks empty');
+      // off-canvas detector: no element may sit beyond the stage width (depth <= 2)
+      if (svg) {
+        const stW = PORTRAIT ? 850 : 1500;
+        let bad = 0, badEx = '';
+        [...svg.children].forEach(c1 => {
+          [c1, ...c1.children].forEach(el => {
+            const m2 = /translate\(\s*(-?[\d.]+)/.exec(el.getAttribute && (el.getAttribute('transform') || '') || '');
+            if (m2) { const x = parseFloat(m2[1]); if (x > stW + 140) { bad++; if (!badEx) badEx = (el.tagName || '?') + ' x=' + x; } }
+          });
+        });
+        if (bad) errs.push(z.key + '@g' + grade + (PORTRAIT ? ' [PORTRAIT]' : '') + ': ' + bad + ' off-canvas (' + badEx + ')');
+      }
       const mt = d.getElementById('mission-text').textContent;
       if (z.key !== 'theatre' && !mt) errs.push(z.key + '@g' + grade + ': no mission set');
       if (errs.length > before) errs.slice(before).forEach(e => console.log(' ✗ ' + e));
@@ -111,7 +128,7 @@ const d = window.document;
   }
   // theatre needs longer (timed narration) — let timers run briefly at g0
   W.save.grade = 0; W.enterZone('theatre'); await sleep(400);
-  console.log(errs.length ? `WORLD SMOKE: ${errs.length} issues` : 'WORLD SMOKE: ALL CLEAR ✅ (' + W.ZONES.length + ' zones × 3 grades)');
+  console.log(errs.length ? `WORLD SMOKE${PORTRAIT ? ' [PORTRAIT 412x915]' : ''}: ${errs.length} issues` : 'WORLD SMOKE' + (PORTRAIT ? ' [PORTRAIT 412x915]' : ' [LANDSCAPE]') + ': ALL CLEAR ✅ (' + W.ZONES.length + ' zones × 3 grades)');
   errs.forEach(e => console.log(' ✗ ' + e.slice(0, 220)));
   process.exit(errs.length ? 1 : 0);
 })();
