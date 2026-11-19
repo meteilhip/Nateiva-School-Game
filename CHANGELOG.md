@@ -1,5 +1,15 @@
 # Changelog
 
+## v1.26.0 — Tap-first rebuild of the 4 reported zones + visible version
+User-reported: Verger, Formes & Couleurs, Lagon Splash and Jardin de Nana unusable/confusing on phone. Root cause: precision drag-to-target mechanics — wrong pattern for toddlers on touch screens (top kids apps are tap-first). Rebuilt:
+- **Tap gesture everywhere**: a short press with no movement is now a TAP (makeDraggable gained a tap handler); dragging still works for desktop kids.
+- **Verger de Momo**: tap a fruit → it arcs into the GLOWING basket by itself (rotating golden dashed ring marks the active basket; baskets take turns in share mode = visual division dealing); counting spoken on each landing.
+- **Lagon Splash — fully rebuilt**: tap an object → it leaps into the water and the physics plays; then two giant FLOTTE!/COULE! buttons ask what happened (observe → answer). CE2+: hypothesis buttons come FIRST (🧪 "Ton HYPOTHÈSE d'abord !"), then the splash verifies it. No more dragging to docks. Densities still shown at CM.
+- **Jardin de Nana — fully rebuilt**: the plant now shows a THOUGHT BUBBLE with what it needs (💧 or ☀); the cloud and sun are big ringed BUTTONS — tap the cloud, it glides over the plant and rains by itself; tap the sun, light flashes. Over-tapping still teaches "trop d'eau noie la plante". Organ-labelling rounds unchanged.
+- **Studio de Zara**: at Maternelle the right paint pot now selects itself and bounces — toddlers only tap what to paint; clearer flow for everyone.
+- **👉 Animated hand guide**: at MAT/SIL a drawn hand taps the first object of the round in these zones, showing toddlers exactly what to do.
+- **Version visible on the site**: tiny "v1.26.0" tag bottom-right; africa-data.js cache-busted.
+
 ## v1.25.0 — Voice fixed on phones, Perroquet Coco, Imagier Magique (18 zones)
 - **Voice works on Android/iPhone now**: speech is unlocked on the first tap (mobile browsers block speech before a user gesture), the cancel-then-speak race that silently swallowed utterances on Android is fixed (re-queued after a beat), long texts are split into sentences (mobile cuts long utterances), and the first tap replays the current instruction so no child misses it.
 - **🦜 Perroquet Coco (new zone — PRONONCIATION FR+EN)**: Coco says a word, the child taps the word heard. Maternelle: very different words (pure listening). CP+: minimal pairs (PAIN/BAIN, TOUT/DOUX, CHOU/JOUE…) with articulation coaching ("P souffle, B fait vibrer ta gorge — pose ta main sur ton cou"). CE2+: English pairs too (SHIP/SHEEP, CAT/CUT, THREE/FREE). Slow-replay button; **optional microphone bonus**: the child repeats the word and real speech recognition cheers a good pronunciation (graceful fallback when no mic).

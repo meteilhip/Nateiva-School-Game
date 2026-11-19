@@ -199,6 +199,7 @@ html,body{ width:100%; height:100%; overflow:hidden; font-family:'Baloo 2','Fred
 /* rotate hint for big playground zones on portrait phones */
 #rotate-hint{ position:absolute; left:50%; bottom:78px; transform:translateX(-50%); z-index:45; background:rgba(43,45,66,0.9); color:#fff; font-weight:800; padding:10px 20px; border-radius:999px; font-size:0.92rem; display:none; align-items:center; gap:8px; box-shadow:var(--shadow); pointer-events:none; white-space:nowrap; }
 #rotate-hint.on{ display:flex; animation:popIn 0.4s cubic-bezier(0.34,1.56,0.64,1); }
+#ver-tag{ position:absolute; right:9px; bottom:4px; z-index:41; font-size:0.62rem; font-weight:700; color:rgba(43,45,66,0.55); text-shadow:0 1px 2px rgba(255,255,255,0.7); pointer-events:none; }
 /* ---------- Math Lab lesson player ---------- */
 .ml-stage{ width:100%; border:4px solid #FFD23F; border-radius:20px; background:linear-gradient(180deg,#FFFFFF,#F2F7FF); margin-top:12px; display:block; }
 .ml-step{ margin-top:12px; background:#FFF8E1; border:3px solid #FFD23F; border-radius:16px; padding:11px 15px; font-weight:800; color:#2B2D42; font-size:1.1rem; line-height:1.4; text-align:center; }
@@ -235,6 +236,7 @@ html,body{ width:100%; height:100%; overflow:hidden; font-family:'Baloo 2','Fred
   </div>
   <div id="grade-dock"></div>
   <div id="rotate-hint"></div>
+  <div id="ver-tag"></div>
   <div id="confetti-layer"></div>
   <div id="search-overlay">
     <div id="search-panel">
@@ -244,7 +246,7 @@ html,body{ width:100%; height:100%; overflow:hidden; font-family:'Baloo 2','Fred
   </div>
   <div id="cheer-card"><div id="cheer-inner"><div id="cheer-art"></div><div id="cheer-title"></div><div id="cheer-stars"></div><button id="cheer-btn"></button></div></div>
 </div>
-<script src="africa-data.js"></script>
+<script src="africa-data.js?v=126"></script>
 <script>
 (() => {
 'use strict';
@@ -276,9 +278,11 @@ function makeDraggable(el, svg, handlers) {
   let dragging = false;
   const pt = () => svg.createSVGPoint();
   const toSvg = (ev) => { const p = pt(); p.x = ev.clientX; p.y = ev.clientY; return p.matrixTransform(svg.getScreenCTM().inverse()); };
+  let downAt = 0, downX = 0, downY = 0;
   el.addEventListener('pointerdown', ev => {
     ev.preventDefault();
     dragging = true;
+    downAt = performance.now(); downX = ev.clientX; downY = ev.clientY;
     try { el.setPointerCapture(ev.pointerId); } catch (e) {}
     el.classList.add('grabbing');
     handlers.start && handlers.start(toSvg(ev), ev);
@@ -288,7 +292,11 @@ function makeDraggable(el, svg, handlers) {
     if (!dragging) return;
     dragging = false;
     el.classList.remove('grabbing');
-    if (el.isConnected) handlers.end && handlers.end(toSvg(ev), ev);
+    if (!el.isConnected) return;
+    // a short press with no real movement is a TAP — phone-first interaction
+    const isTap = handlers.tap && (performance.now() - downAt) < 420 && Math.hypot(ev.clientX - downX, ev.clientY - downY) < 14;
+    if (isTap) handlers.tap(toSvg(ev), ev);
+    else handlers.end && handlers.end(toSvg(ev), ev);
   };
   // window-level tracking survives fast pointers, synthetic input and capture failures
   window.addEventListener('pointermove', move);
@@ -537,6 +545,27 @@ function iconSvg(builder, vb = '0 0 24 24') {
   return svg;
 }
 
+const APP_VERSION = '1.26.0';
+// animated pointing hand: shows toddlers WHAT to touch (MAT/SIL only)
+function handHint(svg, x, y) {
+  if (D() > 1) return;
+  const h = S('g', { style: 'pointer-events:none' }, svg);
+  const inner = S('g', {}, h);
+  S('circle', { r: 26, fill: 'rgba(255,210,63,0.45)' }, inner);
+  S('path', { d: 'M -10 44 Q -16 20 -8 6 L -4 -26 Q 0 -34 4 -26 L 6 2 L 12 8 Q 22 16 18 32 Q 14 48 0 50 Q -6 50 -10 44 Z', fill: '#fff', stroke: '#2B2D42', 'stroke-width': 3.5 }, inner);
+  h.setAttribute('transform', `translate(${x},${y})`);
+  try {
+    inner.animate([
+      { transform: 'translate(70px,90px) scale(1)' },
+      { transform: 'translate(0px,0px) scale(1)' },
+      { transform: 'translate(0px,0px) scale(0.78)' },
+      { transform: 'translate(0px,0px) scale(1)' },
+      { transform: 'translate(70px,90px) scale(1)' }
+    ], { duration: 1700, iterations: 3, easing: 'ease-in-out' });
+  } catch (e) {}
+  setTimeout(() => h.remove(), 5200);
+  return h;
+}
 /* ============ PHONE-FIRST STAGE: portrait-native canvas, fills the screen ============ */
 function skyFill() { const dd = D(); return dd <= 1 ? 'url(#gSky)' : dd <= 3 ? 'url(#gSkySunset)' : 'url(#gSkyDusk)'; }
 function mkStage(host) {
@@ -1100,6 +1129,24 @@ ZONE_BUILDERS.orchard = function (host) {
     { name: ['pomme', 'apple'], draw: (g) => { S('path', { d: 'M 0 -8 C 22 -22 32 6 14 18 C 6 24 -6 24 -14 18 C -32 6 -22 -22 0 -8 Z', fill: '#FF4D57', stroke: '#C42631', 'stroke-width': 3 }, g); S('rect', { x: -2, y: -22, width: 4, height: 12, rx: 2, fill: '#6B421D' }, g); } }
   ];
   let baskets = [], fruits = [], needPer = [], mode = 'count', roundLive = false, fruitDef = FRUITS[0];
+  function activeBasket() {
+    if (mode === 'share') { const total = baskets.reduce((s2, b) => s2 + b.got, 0); return baskets.every(b => b.got >= b.slots) ? null : baskets[total % baskets.length]; }
+    for (let i = 0; i < baskets.length; i++) if (baskets[i].got < needPer[i]) return baskets[i];
+    return null;
+  }
+  function highlightActive() {
+    const a = activeBasket();
+    baskets.forEach(b => b.hl.setAttribute('opacity', b === a ? 1 : 0));
+  }
+  function dropInto(b, g) {
+    const slotIdx = b.got; b.got++;
+    const fg = S('g', { transform: `translate(${-52 + (slotIdx % 5) * 26},${28 + Math.floor(slotIdx / 5) * 24}) scale(0.55)` }, b.fills);
+    fruitDef.draw(fg); fxPop(fg);
+    g.remove(); sfx.pop();
+    highlightActive();
+    say(String(b.got), String(b.got));
+    checkDone();
+  }
   function drawBasket(x, y, slots, label) {
     const g = S('g', { transform: `translate(${x},${y})` }, basketLayer);
     S('path', { d: 'M -78 0 L 78 0 L 60 66 Q 0 80 -60 66 Z', fill: 'url(#gWood)', stroke: '#6B421D', 'stroke-width': 4 }, g);
@@ -1107,7 +1154,9 @@ ZONE_BUILDERS.orchard = function (host) {
     const slotG = S('g', {}, g);
     for (let i = 0; i < slots; i++) S('circle', { cx: -52 + (i % 5) * 26, cy: 28 + Math.floor(i / 5) * 24, r: 10, fill: 'none', stroke: 'rgba(255,255,255,0.65)', 'stroke-width': 2.6, 'stroke-dasharray': '4 4' }, slotG);
     if (label != null) S('text', { x: 0, y: -16, 'text-anchor': 'middle', 'font-size': 40, 'font-weight': 800, fill: '#5C3A17', 'font-family': 'inherit', text: String(label) }, g);
-    return { g, x, y, got: 0, slots, fills: S('g', {}, g) };
+    const hl = S('circle', { cx: 0, cy: 28, r: 112, fill: 'none', stroke: '#FFD23F', 'stroke-width': 8, 'stroke-dasharray': '18 13', opacity: 0 }, g);
+    try { hl.animate([{ transform: 'rotate(0deg)' }, { transform: 'rotate(360deg)' }], { duration: 9000, iterations: Infinity }); hl.style.transformBox = 'fill-box'; hl.style.transformOrigin = 'center'; } catch (e) {}
+    return { g, x, y, got: 0, slots, fills: S('g', {}, g), hl };
   }
   function spawnFruit(x, y) {
     const g = S('g', { transform: `translate(${x},${y})` }, fruitLayer);
@@ -1119,16 +1168,23 @@ ZONE_BUILDERS.orchard = function (host) {
     makeDraggable(g, svg, {
       start: () => { if (!roundLive || !f.free) return; sfx.tap(); g.parentNode.appendChild(g); },
       move: p => { if (!roundLive || !f.free) return; g.setAttribute('transform', `translate(${p.x},${p.y}) scale(1.2)`); },
+      tap: () => {
+        // phone-first: tap a fruit and it flies into the glowing basket by itself
+        if (!roundLive || !f.free) return;
+        const b = activeBasket();
+        if (!b || b.got >= b.slots) return;
+        f.free = false; sfx.tap();
+        const [hx, hy] = f.home;
+        const slotIdx = b.got;
+        const tx = b.x + (-52 + (slotIdx % 5) * 26), ty = b.y + (28 + Math.floor(slotIdx / 5) * 24);
+        tween(560, k => { const e = easeOut(k); g.setAttribute('transform', `translate(${hx + (tx - hx) * e},${hy + (ty - hy) * e - Math.sin(k * Math.PI) * 170})`); }, () => dropInto(b, g));
+      },
       end: p => {
         if (!roundLive || !f.free) return;
         const b = baskets.find(bk => Math.abs(p.x - bk.x) < PT(95, 120) && p.y > bk.y - PT(40, 60) && p.y < bk.y + PT(95, 120));
         if (b && b.got < b.slots) {
-          b.got++; f.free = false;
-          const fg = S('g', { transform: `translate(${-52 + ((b.got - 1) % 5) * 26},${28 + Math.floor((b.got - 1) / 5) * 24}) scale(0.55)` }, b.fills);
-          fruitDef.draw(fg);
-          fxPop(fg);
-          g.remove(); sfx.pop();
-          checkDone();
+          f.free = false;
+          dropInto(b, g);
         } else {
           g.animate([{ transform: `translate(${p.x}px,${p.y}px)` }, { transform: `translate(${f.home[0]}px,${f.home[1]}px)` }], { duration: 420, easing: 'cubic-bezier(0.34,1.56,0.64,1)' }).onfinish = () => g.setAttribute('transform', `translate(${f.home[0]},${f.home[1]})`);
           sfx.whoosh();
@@ -1175,6 +1231,8 @@ ZONE_BUILDERS.orchard = function (host) {
     }
     const totalFruit = needPer.reduce((s, n) => s + n, 0) + ri(2, 4);
     for (let i = 0; i < totalFruit; i++) spawnFruit(PT(170 + (i % 4) * 100, 180 + (i % 4) * 165) + rnd(-16, 16), PT(370 + Math.floor(i / 4) * 88, 700 + Math.floor(i / 4) * 125) + rnd(-12, 12));
+    highlightActive();
+    handHint(svg, PT(170, 180), PT(370, 700));
     roundLive = true;
   }
   nextRound();
@@ -1387,6 +1445,13 @@ ZONE_BUILDERS.paint = function (host) {
   function announceTask() {
     const t = tasks[taskIdx];
     mission(t.fr, t.en, g => { S('circle', { cx: 0, cy: 0, r: 22, fill: t.color[2], stroke: '#fff', 'stroke-width': 5 }, g); });
+    if (D() <= 1) {
+      // toddlers: the right pot picks itself and bounces — they only paint
+      selected = t.color;
+      const pi2 = POTS.indexOf(t.color);
+      potEls.forEach(pe => pe.setAttribute('transform', pe.dataset.base));
+      if (potEls[pi2]) { const bpos = potEls[pi2].dataset.base; potEls[pi2].setAttribute('transform', bpos + ' scale(1.3)'); fxPop(potEls[pi2]); }
+    }
   }
   function nextRound() {
     selected = null;
@@ -1421,6 +1486,7 @@ ZONE_BUILDERS.paint = function (host) {
       if (Rounds.gem()) setTimeout(zoneComplete, 900); else setTimeout(nextRound, 1100);
     });
     announceTask();
+    handHint(svg, PT(750, 425), PT(420, 660));
     roundLive = true;
   }
   nextRound();
@@ -1430,142 +1496,140 @@ ZONE_BUILDERS.paint = function (host) {
 ZONE_BUILDERS.splash = function (host) {
   const ST = mkStage(host); const svg = ST.svg, PT = ST.P, SW = ST.W, SH = ST.H;
   gradDefs(svg);
+  const d = D();
   S('rect', { width: SW, height: PT(460, 640), fill: skyFill() }, svg);
   drawSun(svg, PT(150, 140), PT(110, 330), 0.85);
   drawCloud(svg, PT(1100, 640), PT(90, 320), PT(0.95, 0.8));
   const WATER_Y = PT(430, 620);
   S('rect', { y: WATER_Y, width: SW, height: SH - WATER_Y, fill: 'url(#gDeepSea)' }, svg);
   S('path', { d: `M 0 ${WATER_Y} Q ${SW / 4} ${WATER_Y - 20} ${SW / 2} ${WATER_Y} T ${SW} ${WATER_Y} L ${SW} ${WATER_Y + 25} Q ${SW * 0.75} ${WATER_Y + 45} ${SW / 2} ${WATER_Y + 25} T 0 ${WATER_Y + 25} Z`, fill: 'rgba(255,255,255,0.35)' }, svg);
-  // shelf
-  S('rect', { x: 0, y: PT(260, 420), width: PT(420, 760), height: 26, rx: 12, fill: 'url(#gWood)' }, svg);
-  S('rect', { x: 0, y: PT(390, 560), width: PT(420, 760), height: 26, rx: 12, fill: 'url(#gWood)' }, svg);
-  // docks
-  const dockF = S('g', { transform: PT('translate(1130,392)', 'translate(230,1180)') }, svg);
-  S('rect', { x: -150, y: 0, width: 300, height: 26, rx: 12, fill: 'url(#gWood)', stroke: '#6B421D', 'stroke-width': 3 }, dockF);
-  S('path', { d: 'M -40 -36 Q 0 -66 40 -36 Q 0 -6 -40 -36 Z', fill: '#fff', stroke: '#4CC9F0', 'stroke-width': 5 }, dockF);
-  S('text', { x: 0, y: PT(48, 62), 'text-anchor': 'middle', 'font-size': PT(23, 30), 'font-weight': 800, fill: '#fff', 'font-family': 'inherit', text: T('FLOTTE', 'FLOATS') }, dockF);
-  const dockS = S('g', { transform: PT('translate(1130,620)', 'translate(620,1180)') }, svg);
-  S('rect', { x: -150, y: 20, width: 300, height: 26, rx: 12, fill: '#30346B', stroke: '#1E2048', 'stroke-width': 3 }, dockS);
-  S('path', { d: 'M 0 -24 L 16 0 L 5 0 L 5 16 L -5 16 L -5 0 L -16 0 Z', fill: '#fff', transform: 'rotate(180)', 'stroke-width': 0 }, dockS);
-  S('text', { x: 0, y: PT(64, 78), 'text-anchor': 'middle', 'font-size': PT(23, 30), 'font-weight': 800, fill: '#fff', 'font-family': 'inherit', text: T('COULE', 'SINKS') }, dockS);
+  // one big shelf of objects
+  S('rect', { x: PT(180, 40), y: PT(238, 420), width: PT(1140, 770), height: 26, rx: 13, fill: 'url(#gWood)', stroke: '#6B421D', 'stroke-width': 3 }, svg);
   const OBJECTS = [
-    { fr: 'la feuille', dens: '0,3', en: 'the leaf', floats: true, draw: g => { S('path', { d: 'M 0 -26 Q 30 -8 0 26 Q -30 -8 0 -26 Z', fill: '#57CC57', stroke: '#2C6B2A', 'stroke-width': 3 }, g); S('path', { d: 'M 0 -20 L 0 20', stroke: '#2C6B2A', 'stroke-width': 2.4 }, g); } },
-    { fr: 'la pierre', dens: '2,7', en: 'the stone', floats: false, draw: g => { S('path', { d: 'M -26 10 Q -30 -16 -6 -22 Q 22 -28 28 -4 Q 32 16 10 22 Q -14 28 -26 10 Z', fill: '#8D99AE', stroke: '#5C6784', 'stroke-width': 3 }, g); } },
-    { fr: 'le canard', dens: '0,4', en: 'the duck', floats: true, draw: g => { S('ellipse', { cx: 2, cy: 8, rx: 24, ry: 15, fill: '#FFD23F', stroke: '#D9A400', 'stroke-width': 3 }, g); S('circle', { cx: -16, cy: -10, r: 11, fill: '#FFD23F', stroke: '#D9A400', 'stroke-width': 3 }, g); S('path', { d: 'M -27 -10 L -38 -6 L -27 -3 Z', fill: '#FF9F1C' }, g); S('circle', { cx: -18, cy: -12, r: 2.4, fill: '#222' }, g); } },
-    { fr: 'la clé', dens: '7,8', en: 'the key', floats: false, draw: g => { S('circle', { cx: -14, cy: 0, r: 10, fill: 'none', stroke: '#C9A227', 'stroke-width': 6 }, g); S('path', { d: 'M -4 0 L 26 0 M 16 0 L 16 9 M 24 0 L 24 9', stroke: '#C9A227', 'stroke-width': 6, 'stroke-linecap': 'round' }, g); } },
-    { fr: 'le ballon', dens: '0,1', en: 'the ball', floats: true, draw: g => { S('circle', { cx: 0, cy: 0, r: 20, fill: '#FF4D57', stroke: '#C42631', 'stroke-width': 3 }, g); S('path', { d: 'M -20 0 Q 0 -12 20 0 M -20 0 Q 0 12 20 0', stroke: '#fff', 'stroke-width': 3.4, fill: 'none' }, g); } },
-    { fr: 'la cuillère', dens: '7,9', en: 'the spoon', floats: false, draw: g => { S('ellipse', { cx: -16, cy: 0, rx: 10, ry: 14, fill: '#C0C7D8', stroke: '#8D99AE', 'stroke-width': 3 }, g); S('rect', { x: -6, y: -4, width: 34, height: 8, rx: 4, fill: '#C0C7D8', stroke: '#8D99AE', 'stroke-width': 2.4 }, g); } },
-    { fr: 'la mangue', dens: '0,95', en: 'the mango', floats: true, draw: g => { S('ellipse', { cx: 0, cy: 0, rx: 22, ry: 16, fill: '#FF9F1C', stroke: '#D97800', 'stroke-width': 3 }, g); S('path', { d: 'M 8 -12 Q 16 -22 24 -16', stroke: '#3FA34D', 'stroke-width': 4, fill: 'none', 'stroke-linecap': 'round' }, g); } },
-    { fr: "l'ancre", en: 'the anchor', floats: false, draw: g => { S('path', { d: 'M 0 -20 L 0 16 M -16 6 Q 0 26 16 6 M 0 -20 m -6 0 a 6 6 0 1 0 12 0 a 6 6 0 1 0 -12 0', stroke: '#2B2D42', 'stroke-width': 6, fill: 'none', 'stroke-linecap': 'round' }, g); } }
+    { fr: 'la feuille', en: 'the leaf', floats: true, dens: '0,3', draw: g => { S('path', { d: 'M 0 -26 Q 30 -8 0 26 Q -30 -8 0 -26 Z', fill: '#57CC57', stroke: '#2C6B2A', 'stroke-width': 3 }, g); S('path', { d: 'M 0 -20 L 0 20', stroke: '#2C6B2A', 'stroke-width': 2.4 }, g); } },
+    { fr: 'la pierre', en: 'the stone', floats: false, dens: '2,7', draw: g => { S('path', { d: 'M -26 10 Q -30 -16 -6 -22 Q 22 -28 28 -4 Q 32 16 10 22 Q -14 28 -26 10 Z', fill: '#8D99AE', stroke: '#5C6784', 'stroke-width': 3 }, g); } },
+    { fr: 'le canard', en: 'the duck', floats: true, dens: '0,4', draw: g => { S('ellipse', { cx: 2, cy: 8, rx: 24, ry: 15, fill: '#FFD23F', stroke: '#D9A400', 'stroke-width': 3 }, g); S('circle', { cx: -16, cy: -10, r: 11, fill: '#FFD23F', stroke: '#D9A400', 'stroke-width': 3 }, g); S('path', { d: 'M -27 -10 L -38 -6 L -27 -3 Z', fill: '#FF9F1C' }, g); S('circle', { cx: -18, cy: -12, r: 2.4, fill: '#222' }, g); } },
+    { fr: 'la clé', en: 'the key', floats: false, dens: '7,8', draw: g => { S('circle', { cx: -14, cy: 0, r: 10, fill: 'none', stroke: '#C9A227', 'stroke-width': 6 }, g); S('path', { d: 'M -4 0 L 26 0 M 16 0 L 16 9 M 24 0 L 24 9', stroke: '#C9A227', 'stroke-width': 6, 'stroke-linecap': 'round' }, g); } },
+    { fr: 'le ballon', en: 'the ball', floats: true, dens: '0,1', draw: g => { S('circle', { cx: 0, cy: 0, r: 20, fill: '#FF4D57', stroke: '#C42631', 'stroke-width': 3 }, g); S('path', { d: 'M -20 0 Q 0 -12 20 0 M -20 0 Q 0 12 20 0', stroke: '#fff', 'stroke-width': 3.4, fill: 'none' }, g); } },
+    { fr: 'la cuillère', en: 'the spoon', floats: false, dens: '7,9', draw: g => { S('ellipse', { cx: -16, cy: 0, rx: 10, ry: 14, fill: '#C0C7D8', stroke: '#8D99AE', 'stroke-width': 3 }, g); S('rect', { x: -6, y: -4, width: 34, height: 8, rx: 4, fill: '#C0C7D8', stroke: '#8D99AE', 'stroke-width': 2.4 }, g); } },
+    { fr: 'la mangue', en: 'the mango', floats: true, dens: '0,95', draw: g => { S('ellipse', { cx: 0, cy: 0, rx: 22, ry: 16, fill: '#FF9F1C', stroke: '#D97800', 'stroke-width': 3 }, g); S('path', { d: 'M 8 -12 Q 16 -22 24 -16', stroke: '#3FA34D', 'stroke-width': 4, fill: 'none', 'stroke-linecap': 'round' }, g); } },
+    { fr: "l'ancre", en: 'the anchor', floats: false, dens: '7,8', draw: g => { S('path', { d: 'M 0 -20 L 0 16 M -16 6 Q 0 26 16 6 M 0 -20 m -6 0 a 6 6 0 1 0 12 0 a 6 6 0 1 0 -12 0', stroke: '#2B2D42', 'stroke-width': 6, fill: 'none', 'stroke-linecap': 'round' }, g); } }
   ];
-  let items = [], sorted = 0, roundItems = [], roundLive = false;
-  function plunge(it, p) {
-            // drop in water → physics!
-            it.state = 'tested';
-            rings(p.x, WATER_Y);
-            if (it.o.floats) { sfx.splash(); it.anim = bobAtSurface(it.g, p.x); }
-            else {
-              sfx.splash();
-              it.g.animate([{ transform: `translate(${p.x}px,${WATER_Y}px)` }, { transform: `translate(${p.x + rnd(-20, 20)}px,${PT(700, 1000)}px) rotate(20deg)` }], { duration: 1100, easing: 'ease-in', fill: 'forwards' });
-              for (let b = 0; b < 5; b++) { const bb = S('circle', { cx: p.x + rnd(-14, 14), cy: WATER_Y + 40 + b * 40, r: rnd(3, 7), fill: 'rgba(255,255,255,0.7)' }, svg); bb.animate([{ opacity: 0.8, transform: 'translateY(0)' }, { opacity: 0, transform: 'translateY(-70px)' }], { duration: 900, delay: b * 120 }).onfinish = () => bb.remove(); }
-            }
-            if (D() >= 5 && it.o.dens) {
-              const lab = S('g', { transform: `translate(${p.x},${WATER_Y - 64})` }, svg);
-              S('rect', { x: -74, y: -22, width: 148, height: 36, rx: 18, fill: '#fff', stroke: '#2EC4B6', 'stroke-width': 4 }, lab);
-              S('text', { x: 0, y: 4, 'text-anchor': 'middle', 'font-size': 19, 'font-weight': 800, fill: '#2B2D42', 'font-family': 'inherit', text: T('densité ' + it.o.dens, 'density ' + it.o.dens.replace(',', '.')) }, lab);
-              fxPop(lab);
-              setTimeout(() => lab.remove(), 2600);
-              say(T(it.o.fr, it.o.en) + ' : ' + T('densité ' + it.o.dens + '. ', 'density ' + it.o.dens.replace(',', '.') + '. ') + T(it.o.floats ? 'Moins de un : ça flotte !' : 'Plus de un : ça coule !', it.o.floats ? 'Less than one: it floats!' : 'More than one: it sinks!'));
-            } else say(T(it.o.fr, it.o.en) + ' ... ' + T(it.o.floats ? 'ça flotte !' : 'ça coule !', it.o.floats ? 'it floats!' : 'it sinks!'));
-            setTimeout(() => say('Range-' + (isEN() ? 'it' : 'le') + ' sur le bon ponton !', 'Drag it to the right dock!'), it.pred ? 3400 : 1800);
-    if (it.pred) {
-      const right = (it.pred === 'float') === it.o.floats;
-      setTimeout(() => {
-        if (right) { confetti(12); sfx.good(); say('Ton hypothèse était JUSTE, petit scientifique !', 'Your hypothesis was RIGHT, little scientist!'); }
-        else { Rounds.miss(); say('Hypothèse fausse... et c\u2019est comme ça que les scientifiques apprennent !', 'Wrong hypothesis... and that is how scientists learn!'); }
-      }, 1400);
-    }
-  }
-  let predG = null;
-  function askPrediction(it, p) {
-    it.g.setAttribute('transform', `translate(${p.x},${WATER_Y - 74}) scale(1.1)`);
-    if (predG) predG.remove();
-    predG = S('g', {}, svg);
-    say('Hypothèse de scientifique : ' + T(it.o.fr, it.o.en) + '... flotte ou coule ? Choisis AVANT de voir !', 'Scientist hypothesis: ' + T(it.o.fr, it.o.en) + '... float or sink? Choose BEFORE you see!');
-    [['float', 'FLOTTE ?', 'FLOATS?', PT(560, 230), '#1C7ED6'], ['sink', 'COULE ?', 'SINKS?', PT(880, 620), '#30346B']].forEach(([kind, f2, e2, x2, col]) => {
-      const b = S('g', { transform: `translate(${x2},${PT(242, 330)})`, class: 'grab' }, predG);
-      S('rect', { x: -112, y: -46, width: 224, height: 92, rx: 26, fill: '#fff', stroke: col, 'stroke-width': 7 }, b);
-      S('text', { x: 0, y: 13, 'text-anchor': 'middle', 'font-size': 36, 'font-weight': 800, fill: col, 'font-family': 'inherit', text: T(f2, e2) }, b);
-      fxPop(b);
-      b.addEventListener('pointerdown', ev2 => { ev2.stopPropagation(); sfx.tap(); it.pred = kind; if (predG) { predG.remove(); predG = null; } plunge(it, { x: clamp(p.x, PT(420, 150), PT(920, 700)), y: WATER_Y }); });
-    });
-  }
-
-  function bobAtSurface(g, x) {
-    const anim = g.animate([
-      { transform: `translate(${x}px,${WATER_Y - 4}px) rotate(-5deg)` },
-      { transform: `translate(${x}px,${WATER_Y + 5}px) rotate(5deg)` },
-      { transform: `translate(${x}px,${WATER_Y - 4}px) rotate(-5deg)` }
-    ], { duration: 2000, iterations: Infinity });
-    return anim;
-  }
   function rings(x, y) {
     for (let i = 0; i < 3; i++) {
       const r = S('ellipse', { cx: x, cy: y, rx: 10, ry: 4, fill: 'none', stroke: 'rgba(255,255,255,0.8)', 'stroke-width': 3.4 }, svg);
       r.animate([{ transform: 'scale(1)', opacity: 0.9 }, { transform: 'scale(4.6)', opacity: 0 }], { duration: 760 + i * 150 }).onfinish = () => r.remove();
     }
   }
-  function nextRound() {
-    items.forEach(it => it.g.remove()); items = []; sorted = 0;
-    roundItems = shuffle(OBJECTS).slice(0, D() === 0 ? 3 : 4);
-    roundItems.forEach((o, i) => {
-      const hx = PT(70 + (i % 2) * 170, 230 + (i % 2) * 330), hy = PT(i < 2 ? 230 : 360, i < 2 ? 380 : 525);
-      const g = S('g', { transform: `translate(${hx},${hy})` }, svg);
-      S('circle', { r: PT(40, 56), fill: 'rgba(255,255,255,0.001)' }, g); // fat touch target
-      const oart = S('g', { transform: PT('', 'scale(1.3)') }, g); o.draw(oart);
-      const it = { g, o, state: 'shelf', home: [hx, hy], anim: null };
-      items.push(it);
-      makeDraggable(g, svg, {
-        start: () => { if (!roundLive) return; sfx.tap(); if (it.anim) { it.anim.cancel(); it.anim = null; } svg.appendChild(g); },
-        move: p => { if (!roundLive) return; g.setAttribute('transform', `translate(${p.x},${p.y}) scale(1.15)`); },
-        end: p => {
-          if (!roundLive) return;
-          if (it.state === 'tested') {
-            // sort to dock
-            const wantF = PT(p.x > 950 && p.y < 500, p.y > 1050 && p.x < 425);
-            const wantS = PT(p.x > 950 && p.y >= 500, p.y > 1050 && p.x >= 425);
-            if (wantF || wantS) {
-              const correct = (wantF && it.o.floats) || (wantS && !it.o.floats);
-              if (correct) {
-                it.state = 'sorted'; sorted++;
-                const dock = wantF ? [PT(1050, 130) + (sorted * 34) % 190, PT(372, 1158)] : [PT(1050, 520) + (sorted * 34) % 190, PT(600, 1158)];
-                g.setAttribute('transform', `translate(${dock[0]},${dock[1]}) scale(0.8)`);
-                sfx.good(); say('Oui ! ' + T(it.o.fr, it.o.en) + T(it.o.floats ? ' flotte !' : ' coule !', it.o.floats ? ' floats!' : ' sinks!'));
-                if (sorted >= roundItems.length) { roundLive = false; if (Rounds.gem()) setTimeout(zoneComplete, 900); else setTimeout(nextRound, 1100); }
-              } else { Rounds.miss(); sfx.bad(); say('Regarde ce qui se passe dans l’eau !', 'Watch what happens in the water!'); backToWater(it); }
-              return;
-            }
-            backToWater(it); return;
-          }
-          if (p.y > WATER_Y - 60 && PT(p.x < 950, p.y < 1040)) {
-            if (D() >= 4 && !it.pred) { askPrediction(it, p); return; }
-            plunge(it, p);
-          } else {
-            g.animate([{ transform: `translate(${p.x}px,${p.y}px)` }, { transform: `translate(${it.home[0]}px,${it.home[1]}px)` }], { duration: 420, easing: 'cubic-bezier(0.34,1.56,0.64,1)' }).onfinish = () => g.setAttribute('transform', `translate(${it.home[0]},${it.home[1]})`);
-          }
-        }
-      });
+  function bobAtSurface(g, x) {
+    return g.animate([
+      { transform: `translate(${x}px,${WATER_Y - 4}px) rotate(-5deg)` },
+      { transform: `translate(${x}px,${WATER_Y + 5}px) rotate(5deg)` },
+      { transform: `translate(${x}px,${WATER_Y - 4}px) rotate(-5deg)` }
+    ], { duration: 2000, iterations: Infinity });
+  }
+  const btnLayer = S('g', {}, svg);
+  function bigBtn(x, y, fr2, en2, col, cb) {
+    const g = S('g', { transform: `translate(${x},${y})`, class: 'grab' }, btnLayer);
+    S('rect', { x: -128, y: -52, width: 256, height: 104, rx: 30, fill: '#fff', stroke: col, 'stroke-width': 8 }, g);
+    S('text', { x: 0, y: 15, 'text-anchor': 'middle', 'font-size': 40, 'font-weight': 800, fill: col, 'font-family': 'inherit', text: T(fr2, en2) }, g);
+    fxPop(g);
+    g.addEventListener('pointerdown', ev => { ev.stopPropagation(); cb(); });
+    return g;
+  }
+  const BX1 = PT(540, 228), BX2 = PT(960, 622), BY = PT(315, 500);
+  let items = [], phase = 'pick', tries = 0;
+  function plunge(it, after) {
+    phase = 'anim';
+    const x = PT(rnd(480, 1020), rnd(180, 670));
+    const [hx, hy] = it.home;
+    sfx.whoosh();
+    tween(750, k => { const e = easeOut(k); it.g.setAttribute('transform', `translate(${hx + (x - hx) * e},${hy + (WATER_Y - 40 - hy) * e - Math.sin(k * Math.PI) * 150})`); }, () => {
+      rings(x, WATER_Y); sfx.splash();
+      if (it.o.floats) it.anim = bobAtSurface(it.g, x);
+      else {
+        it.g.animate([{ transform: `translate(${x}px,${WATER_Y}px)` }, { transform: `translate(${x + rnd(-20, 20)}px,${PT(700, 1050)}px) rotate(20deg)` }], { duration: 1100, easing: 'ease-in', fill: 'forwards' });
+        for (let b = 0; b < 5; b++) { const bb = S('circle', { cx: x + rnd(-14, 14), cy: WATER_Y + 40 + b * 40, r: rnd(3, 7), fill: 'rgba(255,255,255,0.7)' }, svg); bb.animate([{ opacity: 0.8, transform: 'translateY(0)' }, { opacity: 0, transform: 'translateY(-70px)' }], { duration: 900, delay: b * 120 }).onfinish = () => bb.remove(); }
+      }
+      if (d >= 5 && it.o.dens) {
+        const lab = S('g', { transform: `translate(${x},${WATER_Y - 64})` }, svg);
+        S('rect', { x: -84, y: -24, width: 168, height: 40, rx: 20, fill: '#fff', stroke: '#2EC4B6', 'stroke-width': 4 }, lab);
+        S('text', { x: 0, y: 5, 'text-anchor': 'middle', 'font-size': 22, 'font-weight': 800, fill: '#2B2D42', 'font-family': 'inherit', text: T('densité ' + it.o.dens, 'density ' + it.o.dens.replace(',', '.')) }, lab);
+        fxPop(lab); setTimeout(() => lab.remove(), 2800);
+      }
+      setTimeout(after, 1500);
     });
-    if (D() >= 4) mission('Mode scientifique : annonce ton HYPOTHÈSE (flotte ou coule ?), puis jette l\u2019objet pour vérifier !', 'Scientist mode: state your HYPOTHESIS (float or sink?), then drop the object to check!', ZONE_ICONS.splash);
-    else mission("Jette les objets dans l'eau, puis range-les : FLOTTE ou COULE !", 'Drop the objects in the water, then sort them: FLOATS or SINKS!', ZONE_ICONS.splash);
-    roundLive = true;
   }
-  function backToWater(it) {
-    const x = PT(rnd(400, 850), rnd(160, 690));
-    if (it.o.floats) { it.anim = bobAtSurface(it.g, x); }
-    else it.g.setAttribute('transform', `translate(${x},${PT(690, 990)})`);
+  function finishItem(it) {
+    setTimeout(() => { if (Rounds.gem()) setTimeout(zoneComplete, 900); else { phase = 'pick'; sayPick(); } }, 1300);
   }
-  nextRound();
+  function judge(saidFloat, it) {
+    const ok = saidFloat === it.o.floats;
+    if (ok) {
+      btnLayer.innerHTML = '';
+      sfx.good(); confetti(14);
+      say('Oui ! ' + it.o.fr + (it.o.floats ? ' flotte !' : ' coule !'), 'Yes! ' + it.o.en + (it.o.floats ? ' floats!' : ' sinks!'));
+      finishItem(it);
+    } else {
+      tries++;
+      Rounds.miss(); sfx.bad();
+      if (tries >= 2) {
+        btnLayer.innerHTML = '';
+        say('Regarde : ' + it.o.fr + (it.o.floats ? ' reste SUR l’eau : il flotte !' : ' est tombé AU FOND : il coule !'), 'Look: ' + it.o.en + (it.o.floats ? ' stays ON the water: it floats!' : ' sank to the BOTTOM: it sinks!'), 0.8);
+        finishItem(it);
+      } else say('Regarde bien l’eau... est-il resté en haut ou tombé au fond ?', 'Look at the water... did it stay on top or fall to the bottom?', 0.8);
+    }
+  }
+  function askAnswer(it) {
+    phase = 'answer'; tries = 0;
+    bigBtn(BX1, BY, 'FLOTTE !', 'FLOATS!', '#1C7ED6', () => { if (phase === 'answer') judge(true, it); });
+    bigBtn(BX2, BY, 'COULE !', 'SINKS!', '#30346B', () => { if (phase === 'answer') judge(false, it); });
+    say('Alors, ' + it.o.fr + '... il FLOTTE ou il COULE ?', 'So, ' + it.o.en + '... does it FLOAT or SINK?');
+  }
+  function askPredict(it) {
+    phase = 'predict';
+    const title = S('g', { transform: `translate(${PT(750, 425)},${BY - 95})` }, btnLayer);
+    S('rect', { x: -210, y: -30, width: 420, height: 54, rx: 27, fill: '#FFF8E1', stroke: '#FFD23F', 'stroke-width': 5 }, title);
+    S('text', { x: 0, y: 8, 'text-anchor': 'middle', 'font-size': 27, 'font-weight': 800, fill: '#B4654A', 'font-family': 'inherit', text: T('🧪 Ton HYPOTHÈSE d’abord !', '🧪 Your HYPOTHESIS first!') }, title);
+    const go = pred => {
+      btnLayer.innerHTML = '';
+      plunge(it, () => {
+        const ok = pred === it.o.floats;
+        if (ok) { sfx.good(); confetti(16); say('Hypothèse JUSTE, petit scientifique ! ' + it.o.fr + (it.o.floats ? ' flotte !' : ' coule !'), 'RIGHT hypothesis, little scientist! ' + it.o.en + (it.o.floats ? ' floats!' : ' sinks!')); }
+        else { Rounds.miss(); sfx.bad(); say('Hypothèse fausse... et c’est comme ça que les scientifiques apprennent ! ' + it.o.fr + (it.o.floats ? ' flotte.' : ' coule.'), 'Wrong hypothesis... and that is how scientists learn! ' + it.o.en + (it.o.floats ? ' floats.' : ' sinks.')); }
+        finishItem(it);
+      });
+    };
+    bigBtn(BX1, BY, 'FLOTTE ?', 'FLOATS?', '#1C7ED6', () => { if (phase === 'predict') go(true); });
+    bigBtn(BX2, BY, 'COULE ?', 'SINKS?', '#30346B', () => { if (phase === 'predict') go(false); });
+    say('Hypothèse de scientifique : ' + it.o.fr + '... flotte ou coule ? Choisis AVANT de voir !', 'Scientist hypothesis: ' + it.o.en + '... float or sink? Choose BEFORE you see!');
+  }
+  function sayPick() {
+    say(d >= 4 ? 'Choisis un objet et fais ton hypothèse !' : 'Touche un objet pour le jeter dans l’eau !',
+        d >= 4 ? 'Pick an object and make your hypothesis!' : 'Tap an object to toss it into the water!');
+  }
+  const roundItems = shuffle(OBJECTS).slice(0, 5);
+  roundItems.forEach((o, i) => {
+    const hx = PT(260 + i * 240, 120 + i * 155), hy = PT(205, 380);
+    const g = S('g', { transform: `translate(${hx},${hy})`, class: 'grab' }, svg);
+    S('circle', { r: PT(46, 60), fill: 'rgba(255,255,255,0.001)' }, g);
+    const art = S('g', { transform: PT('scale(1.1)', 'scale(1.4)') }, g);
+    o.draw(art);
+    fxPop(g);
+    const it = { g, o, home: [hx, hy], used: false };
+    items.push(it);
+    g.addEventListener('pointerdown', () => {
+      if (phase !== 'pick' || it.used) return;
+      it.used = true;
+      say(it.o.fr, it.o.en);
+      if (d >= 4) askPredict(it);
+      else plunge(it, () => askAnswer(it));
+    });
+  });
+  if (d >= 4) mission('Mode scientifique : touche un objet, annonce ton HYPOTHÈSE (flotte ou coule ?), puis vérifie !', 'Scientist mode: tap an object, state your HYPOTHESIS (float or sink?), then check!', ZONE_ICONS.splash);
+  else mission('Touche un objet : il saute dans l’eau ! Puis réponds : il FLOTTE ou il COULE ?', 'Tap an object: it jumps into the water! Then answer: does it FLOAT or SINK?', ZONE_ICONS.splash);
+  handHint(svg, PT(260, 120), PT(205, 380));
+  sayPick();
 };
 
 /* ================= Z6 — JARDIN DE NANA (plant needs) ================= */
@@ -1623,7 +1687,7 @@ ZONE_BUILDERS.garden = function (host) {
   function grow() {
     if (water >= needW && sun >= needS) {
       stage = Math.min(3, stage + 1);
-      water = 0; sun = 0; meters(); drawPlant();
+      water = 0; sun = 0; meters(); drawPlant(); needBubble();
       sfx.good(); confetti(12);
       if (stage >= 3) {
         roundLive = false;
@@ -1632,35 +1696,58 @@ ZONE_BUILDERS.garden = function (host) {
       } else say('Ça pousse ! Continue !', "It's growing! Keep going!");
     }
   }
-  // drag cloud over plant → rain
-  let cloudPos = { x: 260, y: 150 };
-  makeDraggable(cloudO, svg, {
-    move: p => { cloudPos = p; cloudO.setAttribute('transform', `translate(${p.x},${p.y}) scale(1.15)`); },
-    end: p => {
-      if (gardenMode === 'grow' && Math.abs(p.x - PLX) < 180 && p.y < GND - 80) {
-        if (water >= needW) { sfx.bad(); Rounds.miss(); say('Stop ! Trop d’eau noie la plante !', 'Stop! Too much water drowns the plant!'); }
-        else {
-          for (let i = 0; i < 10; i++) { const dr = S('path', { d: `M ${p.x + rnd(-70, 70)} ${p.y + 40} l 0 26`, stroke: '#4CC9F0', 'stroke-width': 5, 'stroke-linecap': 'round' }, svg); dr.animate([{ transform: 'translateY(0)', opacity: 1 }, { transform: `translateY(${GND - 40 - p.y}px)`, opacity: 0.2 }], { duration: 600, delay: i * 55 }).onfinish = () => dr.remove(); }
-          sfx.splash(); water++; meters(); say('Glou glou !', 'Splash splash!'); setTimeout(grow, 700);
-        }
-      }
-      cloudO.animate([{ transform: `translate(${p.x}px,${p.y}px) scale(1.15)` }, { transform: `translate(${CLHOME[0]}px,${CLHOME[1]}px) scale(1.15)` }], { duration: 500, easing: 'ease-out' }).onfinish = () => cloudO.setAttribute('transform', `translate(${CLHOME[0]},${CLHOME[1]}) scale(1.15)`);
-    }
-  });
-  makeDraggable(sunO, svg, {
-    move: p => sunO.setAttribute('transform', `translate(${p.x},${p.y})`),
-    end: p => {
-      if (gardenMode === 'grow' && Math.abs(p.x - PLX) < 200 && p.y < GND - 80) {
-        if (sun >= needS) { sfx.bad(); Rounds.miss(); say('Trop de soleil brûle les feuilles !', 'Too much sun burns the leaves!'); }
-        else { const flash = S('circle', { cx: PLX, cy: GND - 180, r: 10, fill: 'rgba(255,210,63,0.5)' }, svg); flash.animate([{ transform: 'scale(1)', opacity: 0.8 }, { transform: 'scale(30)', opacity: 0 }], { duration: 650 }).onfinish = () => flash.remove(); sun++; meters(); sfx.tap(); say('Du bon soleil !', 'Lovely sunshine!'); setTimeout(grow, 650); }
-      }
-      sunO.animate([{ transform: `translate(${p.x}px,${p.y}px)` }, { transform: `translate(${SUNHOME[0]}px,${SUNHOME[1]}px)` }], { duration: 500, easing: 'ease-out' }).onfinish = () => sunO.setAttribute('transform', `translate(${SUNHOME[0]},${SUNHOME[1]})`);
-    }
-  });
+  // phone-first: the cloud and the sun are BIG BUTTONS — tap them to care for the plant
+  const ringC = S('circle', { cx: CLHOME[0], cy: CLHOME[1], r: 95, fill: 'none', stroke: '#4CC9F0', 'stroke-width': 6, 'stroke-dasharray': '16 12', opacity: 0.9 }, svg);
+  const ringS = S('circle', { cx: SUNHOME[0], cy: SUNHOME[1], r: 95, fill: 'none', stroke: '#FFD23F', 'stroke-width': 6, 'stroke-dasharray': '16 12', opacity: 0.9 }, svg);
+  [ringC, ringS].forEach(rg2 => { try { rg2.style.transformBox = 'fill-box'; rg2.style.transformOrigin = 'center'; rg2.animate([{ transform: 'rotate(0deg)' }, { transform: 'rotate(360deg)' }], { duration: 11000, iterations: Infinity }); } catch (e) {} });
+  // what does the plant need? a thought bubble says it
+  const needG = S('g', { transform: `translate(${PLX + 130},${GND - 300})` }, svg);
+  function needBubble() {
+    needG.innerHTML = '';
+    if (gardenMode !== 'grow') return;
+    const wantsWater = water < needW, wantsSun = sun < needS;
+    if (!wantsWater && !wantsSun) return;
+    S('ellipse', { cx: 0, cy: 0, rx: 62, ry: 50, fill: '#fff', stroke: '#C9D3EE', 'stroke-width': 4 }, needG);
+    S('circle', { cx: -46, cy: 40, r: 10, fill: '#fff', stroke: '#C9D3EE', 'stroke-width': 3 }, needG);
+    S('circle', { cx: -62, cy: 58, r: 5, fill: '#fff', stroke: '#C9D3EE', 'stroke-width': 2.5 }, needG);
+    if (wantsWater) S('path', { d: 'M 0 -26 Q 18 0 18 12 A 18 18 0 1 1 -18 12 Q -18 0 0 -26 Z', fill: '#4CC9F0', stroke: '#1C7ED6', 'stroke-width': 3.5 }, needG);
+    else { S('circle', { r: 16, fill: '#FFD23F', stroke: '#E58E09', 'stroke-width': 3 }, needG); for (let i = 0; i < 8; i++) S('rect', { x: -2.4, y: -30, width: 4.8, height: 9, rx: 2.4, fill: '#FFD23F', transform: `rotate(${i * 45})` }, needG); }
+    fxPop(needG);
+  }
+  let busy = false;
+  function giveWater() {
+    if (gardenMode !== 'grow' || !roundLive || busy) return;
+    if (water >= needW) { sfx.bad(); Rounds.miss(); fxWobble(cloudO); say('Stop ! Trop d’eau noie la plante ! Regarde la bulle : que veut-elle ?', 'Stop! Too much water drowns the plant! Check the bubble: what does it want?'); return; }
+    busy = true; sfx.tap();
+    cloudO.animate([
+      { transform: `translate(${CLHOME[0]}px,${CLHOME[1]}px) scale(1.15)` },
+      { transform: `translate(${PLX}px,${GND - 330}px) scale(1.15)` },
+      { transform: `translate(${PLX}px,${GND - 330}px) scale(1.15)` },
+      { transform: `translate(${CLHOME[0]}px,${CLHOME[1]}px) scale(1.15)` }
+    ], { duration: 2100, easing: 'ease-in-out' });
+    setTimeout(() => {
+      for (let i = 0; i < 10; i++) { const dr = S('path', { d: `M ${PLX + rnd(-70, 70)} ${GND - 280} l 0 26`, stroke: '#4CC9F0', 'stroke-width': 5, 'stroke-linecap': 'round' }, svg); dr.animate([{ transform: 'translateY(0)', opacity: 1 }, { transform: `translateY(${210}px)`, opacity: 0.2 }], { duration: 600, delay: i * 50 }).onfinish = () => dr.remove(); }
+      sfx.splash(); water++; meters(); needBubble(); say('Glou glou ! La plante boit !', 'Splash splash! The plant drinks!');
+      setTimeout(() => { busy = false; grow(); }, 800);
+    }, 800);
+  }
+  function giveSun() {
+    if (gardenMode !== 'grow' || !roundLive || busy) return;
+    if (sun >= needS) { sfx.bad(); Rounds.miss(); fxWobble(sunO); say('Trop de soleil brûle les feuilles ! Regarde la bulle !', 'Too much sun burns the leaves! Check the bubble!'); return; }
+    busy = true; sfx.tap();
+    const flash = S('circle', { cx: PLX, cy: GND - 180, r: 10, fill: 'rgba(255,210,63,0.5)' }, svg);
+    flash.animate([{ transform: 'scale(1)', opacity: 0.8 }, { transform: 'scale(30)', opacity: 0 }], { duration: 900 }).onfinish = () => flash.remove();
+    fxPop(sunO);
+    setTimeout(() => { sun++; meters(); needBubble(); say('Du bon soleil ! Les feuilles sourient !', 'Lovely sunshine! The leaves smile!'); setTimeout(() => { busy = false; grow(); }, 700); }, 500);
+  }
+  cloudO.addEventListener('pointerdown', giveWater);
+  ringC.addEventListener('pointerdown', giveWater);
+  sunO.addEventListener('pointerdown', giveSun);
+  ringS.addEventListener('pointerdown', giveSun);
   // --- CE1+: between growing rounds, LABEL the plant organs (CM: by their function) ---
   let gardenMode = 'grow';
   function partRound() {
-    gardenMode = 'parts'; roundLive = false;
+    gardenMode = 'parts'; roundLive = false; needG.innerHTML = '';
     plantG.innerHTML = '';
     const dg = S('g', {}, plantG);
     // underground roots (the soil starts at y=0 of plantG)
@@ -1700,8 +1787,9 @@ ZONE_BUILDERS.garden = function (host) {
     gardenMode = 'grow';
     stage = 0; water = 0; sun = 0; plantKind = ri(0, 2);
     needW = 2 + Math.min(2, Math.floor(D() / 2)); needS = needW;
-    drawPlant(); meters();
-    mission('Fais pousser ' + PLANTS[plantKind].fr + ' : apporte le nuage et le soleil, sans exagérer !', 'Grow ' + PLANTS[plantKind].en + ': bring the cloud and the sun — not too much!', ZONE_ICONS.garden);
+    drawPlant(); meters(); needBubble();
+    mission('Fais pousser ' + PLANTS[plantKind].fr + ' : la bulle montre ce qu\u2019elle veut. Touche le NUAGE pour l\u2019eau, le SOLEIL pour la lumière !', 'Grow ' + PLANTS[plantKind].en + ': the bubble shows what it wants. Tap the CLOUD for water, the SUN for light!', ZONE_ICONS.garden);
+    handHint(svg, CLHOME[0], CLHOME[1]);
     roundLive = true;
   }
   window.__GARDEN_TEST__ = { partRound };
@@ -3806,6 +3894,7 @@ document.addEventListener('pointerdown', () => {
 });
 buildHudIcons();
 buildGradeDock();
+$('ver-tag').textContent = 'v' + APP_VERSION;
 updateStarPill();
 showMap();
 window.__WORLD__ = { ZONES, ZONE_BUILDERS, enterZone, showMap, save, Rounds, QUIZ_TOPICS, CURRICULUM, Academy, ML_LESSONS, GRIOT_STORIES, THEMES_DATA, Themes };
