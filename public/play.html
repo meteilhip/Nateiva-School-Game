@@ -259,6 +259,7 @@ function S(tag, attrs = {}, parent = null) {
   const el = document.createElementNS(NS, tag);
   for (const k in attrs) {
     if (k === 'text') el.textContent = attrs[k];
+    else if (attrs[k] === '' && k === 'transform') continue;
     else el.setAttribute(k, attrs[k]);
   }
   if (parent) parent.appendChild(el);
@@ -379,18 +380,35 @@ const sfx = {
 let voices = [];
 function loadVoices() { voices = speechSynthesis.getVoices(); }
 if ('speechSynthesis' in window) { loadVoices(); speechSynthesis.onvoiceschanged = loadVoices; }
-function say(fr, en, rate) {
+let ttsUnlocked = false;
+function unlockTTS() {
+  if (ttsUnlocked || !('speechSynthesis' in window)) return;
+  ttsUnlocked = true;
+  try { const u = new SpeechSynthesisUtterance('.'); u.volume = 0; u.rate = 5; speechSynthesis.speak(u); } catch (e) {}
+}
+function say(fr, en, rate, forceLang) {
   if (!save.sound || !('speechSynthesis' in window)) return;
   const text = T(fr, en == null ? fr : en);
-  speechSynthesis.cancel();
-  const u = new SpeechSynthesisUtterance(text);
-  u.lang = isEN() ? 'en-US' : 'fr-FR';
-  u.rate = rate || (D() <= 1 ? 0.82 : 0.95);
-  u.pitch = 1.06;
-  const pool = voices.filter(v => v.lang && v.lang.toLowerCase().startsWith(isEN() ? 'en' : 'fr'));
-  const best = pool.find(v => /natural|neural|premium|google/i.test(v.name)) || pool[0];
-  if (best) u.voice = best;
-  speechSynthesis.speak(u);
+  try { speechSynthesis.cancel(); } catch (e) {}
+  clearTimeout(say._t);
+  // Android Chrome swallows an utterance spoken right after cancel(): re-queue after a beat,
+  // split long texts into sentences (long utterances get cut on mobile), pin lang + best voice.
+  say._t = setTimeout(() => {
+    const lang = forceLang || (isEN() ? 'en-US' : 'fr-FR');
+    const pool = voices.filter(v => v.lang && v.lang.toLowerCase().startsWith(lang.slice(0, 2).toLowerCase()));
+    const best = pool.find(v => /natural|neural|premium|google/i.test(v.name)) || pool[0];
+    const parts = String(text).match(/[^.!?]+[.!?]*/g) || [text];
+    parts.forEach(ptxt => {
+      ptxt = ptxt.trim();
+      if (!ptxt) return;
+      const u = new SpeechSynthesisUtterance(ptxt);
+      u.lang = lang;
+      u.rate = rate || (D() <= 1 ? 0.82 : 0.95);
+      u.pitch = 1.06;
+      if (best) u.voice = best;
+      try { speechSynthesis.speak(u); } catch (e) {}
+    });
+  }, 90);
 }
 
 /* ================= DRAWN-ART LIBRARY (no emoji sprites) ================= */
@@ -612,52 +630,76 @@ function updateStarPill() {
 
 /* ================= WORLD MAP (the island) ================= */
 const ZONES = [
-  { key: 'bubbles', fr: 'Lagune aux Bulles', en: 'Bubble Lagoon', color: '#4CC9F0', mx: 270, my: 650, px: 240, py: 230,
+  { key: 'bubbles', fr: 'Lagune aux Bulles', en: 'Bubble Lagoon', color: '#4CC9F0', mx: 200, my: 300, px: 240, py: 230,
+    lv: [['Compte 1 à 8', 'Count 1 to 8'], ['Fais la somme !', 'Make the sum!'], ['Sommes 12 à 25', 'Sums 12 to 25']],
     subject: { fr: 'MATHS', dens: '1', en: 'MATH', color: '#FF9F1C' },
     topics: ['maths', 'math', 'compter', 'counting', 'nombres', 'numbers', 'addition', 'somme', 'sums', 'calcul', 'compléments', 'bonds'] },
-  { key: 'orchard', fr: 'Verger de Momo', en: "Momo's Orchard", color: '#FF9F1C', mx: 450, my: 520, px: 610, py: 230,
+  { key: 'orchard', fr: 'Verger de Momo', en: "Momo's Orchard", color: '#FF9F1C', mx: 420, my: 300, px: 610, py: 230,
+    lv: [['Compte les fruits', 'Count the fruits'], ['Additions', 'Addition'], ['× et ÷ partage', '× and ÷ sharing']],
     subject: { fr: 'MATHS', dens: '1', en: 'MATH', color: '#FF9F1C' },
     topics: ['maths', 'math', 'addition', 'multiplication', 'division', 'partage', 'share', 'times', 'tables', 'calcul', 'opérations', 'operations', 'multiplier', 'diviser'] },
-  { key: 'river', fr: 'Rivière de Fela', en: "Fela's River", color: '#57CC57', mx: 330, my: 390, px: 610, py: 405,
+  { key: 'river', fr: 'Rivière de Fela', en: "Fela's River", color: '#57CC57', mx: 640, my: 300, px: 610, py: 405,
+    lv: [['Premiers sons', 'First sounds'], ['Syllabes', 'Syllables'], ['Mots 3 syllabes', '3-syllable words']],
     subject: { fr: 'LECTURE & SONS', dens: '1', en: 'READING & PHONICS', color: '#4CC9F0' },
     topics: ['lecture', 'reading', 'syllabes', 'syllables', 'sons', 'sounds', 'phonics', 'lettres', 'letters', 'mots', 'words', 'français', 'french', 'anglais', 'english', 'prononciation', 'pronunciation'] },
-  { key: 'chess', fr: 'Échecs Magiques', en: 'Magic Chess', color: '#8E44AD', mx: 215, my: 478, px: 240, py: 405,
+  { key: 'parrot', fr: 'Perroquet Coco', en: 'Coco the Parrot', color: '#0CA678', mx: 860, my: 300, px: 0, py: 0,
+    lv: [['Écoute et montre', 'Listen and point'], ['Paires de sons', 'Sound pairs'], ['Paires FR + EN', 'FR + EN pairs']],
+    subject: { fr: 'PRONONCIATION', en: 'PRONUNCIATION', color: '#0CA678' },
+    topics: ['prononciation', 'pronunciation', 'parler', 'speak', 'speaking', 'écouter', 'listen', 'sons', 'sounds', 'oral', 'répéter', 'repeat', 'accent', 'perroquet', 'parrot', 'voix', 'voice'] },
+  { key: 'chess', fr: 'Échecs Magiques', en: 'Magic Chess', color: '#8E44AD', mx: 1080, my: 300, px: 240, py: 405,
+    lv: [['Pion et tour', 'Pawn and rook'], ['Fou et cavalier', 'Bishop and knight'], ['Dame et roi', 'Queen and king']],
     subject: { fr: 'STRATÉGIE', en: 'STRATEGY', color: '#8E44AD' },
     topics: ['échecs', 'echecs', 'chess', 'stratégie', 'strategy', 'pion', 'pawn', 'tour', 'rook', 'fou', 'bishop', 'cavalier', 'knight', 'dame', 'queen', 'roi', 'king', 'réfléchir', 'think', 'logique', 'logic'] },
-  { key: 'paint', fr: 'Studio de Zara', en: "Zara's Studio", color: '#9B5DE5', mx: 540, my: 310, px: 240, py: 580,
+  { key: 'paint', fr: 'Studio de Zara', en: "Zara's Studio", color: '#9B5DE5', mx: 1300, my: 300, px: 240, py: 580,
+    lv: [['Couleurs du corps', 'Body colors'], ['Formes', 'Shapes'], ['Fractions 3/5', 'Fractions 3/5']],
     subject: { fr: 'FORMES & COULEURS', dens: '1', en: 'SHAPES & COLORS', color: '#9B5DE5' },
     topics: ['formes', 'shapes', 'couleurs', 'colors', 'géométrie', 'geometry', 'triangle', 'cercle', 'circle', 'carré', 'square', 'vocabulaire', 'vocabulary', 'corps', 'body', 'art'] },
-  { key: 'splash', fr: 'Lagon Splash', en: 'Splash Lagoon', color: '#1C7ED6', mx: 960, my: 310, px: 610, py: 580,
+  { key: 'splash', fr: 'Lagon Splash', en: 'Splash Lagoon', color: '#1C7ED6', mx: 1300, my: 472, px: 610, py: 580,
+    lv: [['Regarde et trie', 'Watch and sort'], ['Flotte ou coule', 'Float or sink'], ['Hypothèse + densité', 'Hypothesis + density']],
     subject: { fr: 'SCIENCES', dens: '1', en: 'SCIENCE', color: '#2EC4B6' },
     topics: ['sciences', 'science', 'flotte', 'coule', 'float', 'sink', 'densité', 'density', 'archimède', 'archimedes', 'eau', 'water', 'physique', 'physics', 'expérience', 'experiment'] },
-  { key: 'garden', fr: 'Jardin de Nana', en: "Nana's Garden", color: '#3FA34D', mx: 1170, my: 390, px: 610, py: 755,
+  { key: 'garden', fr: 'Jardin de Nana', en: "Nana's Garden", color: '#3FA34D', mx: 1080, my: 472, px: 610, py: 755,
+    lv: [['Eau et soleil', 'Water and sun'], ['Organes de la plante', 'Plant organs'], ['Rôle des organes', 'Organ functions']],
     subject: { fr: 'SCIENCES', dens: '1', en: 'SCIENCE', color: '#2EC4B6' },
     topics: ['sciences', 'science', 'plantes', 'plants', 'jardin', 'garden', 'photosynthèse', 'photosynthesis', 'germination', 'nature', 'biologie', 'biology', 'eau', 'soleil', 'sun'] },
-  { key: 'safari', fr: 'Safari Ballon', en: 'Balloon Safari', color: '#E5252A', mx: 1160, my: 650, px: 240, py: 755,
+  { key: 'safari', fr: 'Safari Ballon', en: 'Balloon Safari', color: '#E5252A', mx: 860, my: 472, px: 240, py: 755,
+    lv: [['10 grands pays', '10 big countries'], ['Formes + régions', 'Shapes + regions'], ['Capitales expertes', 'Expert capitals']],
     subject: { fr: 'GÉOGRAPHIE', dens: '1', en: 'GEOGRAPHY', color: '#E5252A' },
     topics: ['géographie', 'geography', 'pays', 'countries', 'afrique', 'africa', 'capitales', 'capitals', 'drapeaux', 'flags', 'cartes', 'maps', 'monde', 'world', 'cameroun', 'cameroon'] },
-  { key: 'theatre', fr: 'Théâtre Kalulu', en: 'Kalulu Theatre', color: '#F25CA2', mx: 730, my: 650, px: 240, py: 930,
+  { key: 'theatre', fr: 'Théâtre Kalulu', en: 'Kalulu Theatre', color: '#F25CA2', mx: 640, my: 472, px: 240, py: 930,
+    lv: [['2 images', '2 pictures'], ['3 images', '3 pictures'], ['Histoires complètes', 'Full stories']],
     subject: { fr: 'COMPRÉHENSION', dens: '1', en: 'COMPREHENSION', color: '#F25CA2' },
     topics: ['compréhension', 'comprehension', 'histoires', 'stories', 'contes', 'tales', 'écouter', 'listening', 'trivia', 'questions', 'fables', 'lecture', 'reading'] },
-  { key: 'builder', fr: 'Chantier de Tibo', en: "Tibo's Building Site", color: '#B4654A', mx: 750, my: 285, px: 610, py: 930,
+  { key: 'builder', fr: 'Chantier de Tibo', en: "Tibo's Building Site", color: '#B4654A', mx: 420, my: 472, px: 610, py: 930,
+    lv: [['3 pièces', '3 pieces'], ['4 pièces', '4 pieces'], ['5 pièces', '5 pieces']],
     subject: { fr: 'CONSTRUCTION', dens: '1', en: 'BUILDING', color: '#B4654A' },
     topics: ['construction', 'building', 'build', 'bâtir', 'maison', 'house', 'pont', 'bridge', 'fusée', 'rocket', 'blocs', 'blocks', 'ingénieur', 'engineer', 'projet', 'project', 'chantier', 'robot', 'bateau', 'boat'] },
-  { key: 'seek', fr: 'Cherche & Trouve', en: 'Seek & Find', color: '#FFB703', mx: 1280, my: 520, px: 610, py: 1105,
+  { key: 'seek', fr: 'Cherche & Trouve', en: 'Seek & Find', color: '#FFB703', mx: 200, my: 472, px: 610, py: 1105,
+    lv: [['Gros et faciles', 'Big and easy'], ['Plus petits', 'Smaller'], ['Pièges sosies', 'Look-alike traps']],
     subject: { fr: 'OBSERVATION', dens: '1', en: 'OBSERVATION', color: '#F3A712' },
     topics: ['observation', 'chercher', 'cherche', 'search', 'trouve', 'find', 'seek', 'caché', 'hidden', 'papillon', 'butterfly', 'attention', 'regarder', 'look'] },
-  { key: 'griot', fr: 'Baobab du Griot', en: "Griot's Baobab", color: '#A0522D', mx: 1035, my: 495, px: 240, py: 1105,
+  { key: 'griot', fr: 'Baobab du Griot', en: "Griot's Baobab", color: '#A0522D', mx: 200, my: 645, px: 240, py: 1105,
+    lv: [['Drapeau, montagne', 'Flag, mountain'], ['Pyramides, Mali', 'Pyramids, Mali'], ['Njoya, Mandela', 'Njoya, Mandela']],
     subject: { fr: 'HISTOIRE', en: 'HISTORY', color: '#A0522D' },
     topics: ['histoire', 'history', 'afrique', 'africa', 'cameroun', 'cameroon', 'griot', 'rois', 'kings', 'reine', 'empire', 'mali', 'égypte', 'egypt', 'pyramides', 'pyramids', 'mandela', 'njoya', 'indépendance', 'independence', 'drapeau', 'flag'] },
-  { key: 'words', fr: 'Fabrique de Mots', en: 'Word Factory', color: '#06B6D4', mx: 950, my: 650, px: 240, py: 1280,
+  { key: 'words', fr: 'Fabrique de Mots', en: 'Word Factory', color: '#06B6D4', mx: 420, my: 645, px: 240, py: 1280,
+    lv: [['Première lettre', 'First letter'], ['Épelle le mot', 'Spell the word'], ['Lettres pièges', 'Trap letters']],
     subject: { fr: 'MOTS & LETTRES', dens: '1', en: 'WORDS & LETTERS', color: '#06B6D4' },
     topics: ['mots', 'words', 'lettres', 'letters', 'orthographe', 'spelling', 'écrire', 'write', 'writing', 'alphabet', 'word game', 'jeu de mots', 'vocabulaire', 'vocabulary', 'épeler', 'spell'] },
-  { key: 'create', fr: 'Atelier Magique', en: 'Magic Workshop', color: '#FF6FB5', mx: 520, my: 650, px: 610, py: 1280,
+  { key: 'create', fr: 'Atelier Magique', en: 'Magic Workshop', color: '#FF6FB5', mx: 640, my: 645, px: 610, py: 1280,
+    lv: [['Crée et compte', 'Create and count'], ['Crée et raconte', 'Create and tell'], ['Crée et raconte', 'Create and tell']],
     subject: { fr: 'CRÉATION', dens: '1', en: 'CREATION', color: '#FF6FB5' },
     topics: ['création', 'creation', 'créer', 'create', 'art', 'dessin', 'drawing', 'imagination', 'atelier', 'studio', 'tableau', 'picture', 'inventer', 'invent', 'libre', 'free'] },
-  { key: 'mathlab', fr: 'Labo des Maths', en: 'Math Lab', color: '#F77F00', mx: 640, my: 468, px: 610, py: 1455,
+  { key: 'themes', fr: 'Imagier Magique', en: 'Magic Picture Book', color: '#D6336C', mx: 860, my: 645, px: 0, py: 0,
+    lv: [['4 images par thème', '4 pictures per theme'], ['FR + EN mélangés', 'FR + EN mixed'], ['Quiz en anglais', 'Quiz in English']],
+    subject: { fr: 'THÉMATIQUES', en: 'THEMES', color: '#D6336C' },
+    topics: ['thème', 'thèmes', 'theme', 'themes', 'imagier', 'vocabulaire', 'vocabulary', 'animaux', 'animals', 'fruits', 'couleurs', 'colors', 'corps', 'body', 'météo', 'weather', 'transports', 'transport', 'famille', 'family', 'école', 'school', 'apprendre', 'learn'] },
+  { key: 'mathlab', fr: 'Labo des Maths', en: 'Math Lab', color: '#F77F00', mx: 1080, my: 645, px: 610, py: 1455,
+    lv: [['Compter en images', 'Counting in pictures'], ['Dizaine amie, tableaux', 'Make-ten, arrays'], ['Fractions, %, racines', 'Fractions, %, roots']],
     subject: { fr: 'MATHS • LEÇONS', en: 'MATH LESSONS', color: '#F77F00' },
     topics: ['leçon', 'leçons', 'lesson', 'lessons', 'maths', 'math', 'comprendre', 'understand', 'méthode', 'method', 'démonstration', 'demo', 'visuel', 'visual', 'addition', 'soustraction', 'multiplication', 'division', 'fractions', 'racine', 'square root', 'pourcentage', 'balance', 'dizaine', 'ten'] },
-  { key: 'academy', fr: 'Académie des Champions', en: 'Champions Academy', color: '#5E60CE', mx: 870, my: 462, px: 240, py: 1455,
+  { key: 'academy', fr: 'Académie des Champions', en: 'Champions Academy', color: '#5E60CE', mx: 1300, my: 645, px: 240, py: 1455,
+    lv: [['Quiz images', 'Picture quiz'], ['Quiz de classe', 'Class quiz'], ['Astuce pas à pas', 'Step-by-step']],
     subject: { fr: 'QUIZ & ASTUCES', dens: '1', en: 'QUIZ & TRICKS', color: '#5E60CE' },
     topics: ['quiz', 'révision', 'revision', 'réviser', 'examen', 'exam', 'test', 'astuce', 'trick', 'école', 'school', 'programme', 'curriculum', 'devoirs', 'homework', 'leçon', 'lesson', 'exercice', 'exercise', 'académie', 'academy'] }
 ];
@@ -713,6 +755,8 @@ const ZONE_ICONS = {
   chess: g => { S('rect', { x: -13, y: -4, width: 26, height: 20, rx: 3, fill: '#8E44AD' }, g); S('path', { d: 'M -13 -4 L -13 -14 L -7 -14 L -7 -9 L -3 -9 L -3 -14 L 3 -14 L 3 -9 L 7 -9 L 7 -14 L 13 -14 L 13 -4 Z', fill: '#8E44AD' }, g); S('rect', { x: -17, y: 14, width: 34, height: 6, rx: 3, fill: '#6C3483' }, g); [[-5, 2], [5, 2]].forEach(([x, y]) => S('circle', { cx: x, cy: y, r: 2.4, fill: '#fff' }, g)); },
   griot: g => { S('rect', { x: -5, y: 0, width: 10, height: 18, rx: 4, fill: 'url(#gWood)' }, g); S('path', { d: 'M 0 2 L -14 -10 M 0 2 L 14 -10 M 0 2 L 0 -16 M 0 2 L -8 -16 M 0 2 L 8 -16', stroke: '#8A5A33', 'stroke-width': 3.4, 'stroke-linecap': 'round' }, g); [[-14, -10], [14, -10], [0, -16], [-8, -16], [8, -16]].forEach(([x, y]) => S('circle', { cx: x, cy: y, r: 6, fill: '#3FA34D' }, g)); },
   mathlab: g => { S('rect', { x: -18, y: -16, width: 36, height: 32, rx: 6, fill: '#2B2D42' }, g); S('text', { x: 0, y: -1, 'text-anchor': 'middle', 'font-size': 13, 'font-weight': 800, fill: '#FFD23F', 'font-family': 'inherit', text: '2+3' }, g); S('text', { x: 0, y: 12, 'text-anchor': 'middle', 'font-size': 13, 'font-weight': 800, fill: '#4CC9F0', 'font-family': 'inherit', text: '=5' }, g); S('rect', { x: -18, y: -16, width: 36, height: 32, rx: 6, fill: 'none', stroke: '#F77F00', 'stroke-width': 3 }, g); },
+  parrot: g => { S('ellipse', { cx: 0, cy: 2, rx: 14, ry: 19, fill: '#0CA678' }, g); S('circle', { cx: 0, cy: -14, r: 11, fill: '#12B886' }, g); S('path', { d: 'M 8 -16 L 20 -12 L 8 -7 Z', fill: '#FF9F1C' }, g); S('circle', { cx: -3, cy: -16, r: 2.6, fill: '#2B2D42' }, g); S('path', { d: 'M -12 0 Q -24 8 -14 18', stroke: '#E5252A', 'stroke-width': 5, fill: 'none', 'stroke-linecap': 'round' }, g); S('path', { d: 'M -4 20 Q 0 30 6 20', stroke: '#0B7A5C', 'stroke-width': 4, fill: 'none' }, g); },
+  themes: g => { S('rect', { x: -18, y: -14, width: 17, height: 17, rx: 4, fill: '#FF9F1C' }, g); S('circle', { cx: 10, cy: -6, r: 9, fill: '#4CC9F0' }, g); S('path', { d: 'M -16 14 L -2 14 L -9 2 Z', fill: '#57CC57' }, g); S('path', { d: 'M 3 16 C -2 10 2 4 8 8 C 14 4 18 10 13 16 Q 8 20 3 16 Z', fill: '#FF4D57' }, g); },
   academy: g => { S('path', { d: 'M -20 -6 L 0 -16 L 20 -6 L 0 4 Z', fill: '#2B2D42' }, g); S('path', { d: 'M -11 -2 L -11 8 Q 0 15 11 8 L 11 -2', fill: '#5E60CE', stroke: '#2B2D42', 'stroke-width': 1.5 }, g); S('path', { d: 'M 14 -8 L 14 6', stroke: '#FFD23F', 'stroke-width': 2.4 }, g); S('circle', { cx: 14, cy: 9, r: 4, fill: '#FFD23F', stroke: '#E58E09', 'stroke-width': 1.5 }, g); },
   create: g => { S('path', { d: 'M -2 16 Q -18 16 -16 0 Q -15 -14 0 -16 Q 16 -17 16 -4 Q 16 4 8 4 Q 0 4 2 10 Q 3 16 -2 16 Z', fill: '#fff', stroke: '#FF6FB5', 'stroke-width': 2.5 }, g); [['#FF4D57', -8, -7], ['#4CC9F0', 1, -10], ['#FFD23F', 9, -3], ['#57CC57', -9, 3]].forEach(([c, x, y]) => S('circle', { cx: x, cy: y, r: 3.2, fill: c }, g)); }
 };
@@ -720,7 +764,7 @@ let leoMapAvatar = null;
 /* ---- PHONE HOME: a premium scrolling adventure trail (big nodes, zero shrink) ---- */
 function buildTrailMap(host) {
   host.classList.add('scroll');
-  const W = 850, rowH = 375, topPad = 640;
+  const W = 850, rowH = 408, topPad = 640;
   const TH = topPad + (ZONES.length - 1) * rowH + 430;
   const svg = S('svg', { class: 'stage trail', viewBox: `0 0 ${W} ${TH}` }, host);
   gradDefs(svg);
@@ -780,6 +824,7 @@ function buildTrailMap(host) {
     S('rect', { x: -subW / 2, y: 168, width: subW, height: 50, rx: 25, fill: z.subject.color, stroke: '#fff', 'stroke-width': 4, class: 'st-pill' }, st);
     S('text', { x: 0, y: 203, 'text-anchor': 'middle', 'font-size': 25, 'font-weight': 800, fill: '#fff', 'font-family': 'inherit', text: T(z.subject.fr, z.subject.en) }, st);
     S('text', { x: 0, y: 258, 'text-anchor': 'middle', 'font-size': 37, 'font-weight': 800, fill: '#2B2D42', stroke: '#FFFFFF', 'stroke-width': 7, 'paint-order': 'stroke', 'font-family': 'inherit', text: T(z.fr, z.en) }, st);
+    if (z.lv) { const band = D() <= 1 ? 0 : D() <= 3 ? 1 : 2; S('text', { x: 0, y: 300, 'text-anchor': 'middle', 'font-size': 26, 'font-weight': 800, fill: '#5E60CE', stroke: '#FFFFFF', 'stroke-width': 6, 'paint-order': 'stroke', 'font-family': 'inherit', text: T(GRADES[save.grade].code + ' \u00B7 ' + z.lv[band][0], GRADES[save.grade].code + ' \u00B7 ' + z.lv[band][1]) }, st); }
     st.addEventListener('click', () => { sfx.boing(); window.__trailScroll = host.scrollTop; enterZone(z.key); });
   });
   requestAnimationFrame(() => { host.scrollTop = window.__trailScroll || 0; });
@@ -821,14 +866,10 @@ function buildMap() {
   // everything that belongs to the island goes into one 'world' group that is
   // uniformly rescaled into the safe visible band (no distortion, no overlap)
   const world = S('g', {}, svg);
-  const icx = W / 2, icy = landscape ? 560 : 850, irx = landscape ? 640 : 400, iry = landscape ? 270 : 690;
+  const icx = W / 2, icy = landscape ? 500 : 850, irx = landscape ? 665 : 400, iry = landscape ? 300 : 690;
   S('ellipse', { cx: icx, cy: icy, rx: irx, ry: iry, fill: 'url(#gSand)', stroke: '#E8B567', 'stroke-width': 6 }, world);
   S('ellipse', { cx: icx, cy: icy - 15, rx: irx - 60, ry: iry - 35, fill: 'url(#gGrass)' }, world);
-  const mnt = landscape ? [660, 372] : [425, 430];
-  S('path', { d: `M ${mnt[0] - 100} ${mnt[1]} L ${mnt[0]} ${mnt[1] - 130} L ${mnt[0] + 100} ${mnt[1]} Z`, fill: '#7A8B99' }, world);
-  S('path', { d: `M ${mnt[0] - 20} ${mnt[1]} L ${mnt[0] + 50} ${mnt[1] - 90} L ${mnt[0] + 130} ${mnt[1]} Z`, fill: '#93A8B8' }, world);
-  S('path', { d: `M ${mnt[0]} ${mnt[1] - 130} L ${mnt[0] + 25} ${mnt[1] - 98} L ${mnt[0] + 42} ${mnt[1] - 118} L ${mnt[0] + 55} ${mnt[1] - 96} L ${mnt[0]} ${mnt[1] - 96} Z`, fill: '#fff' }, world);
-  const treeSpots = landscape ? [[260, 560], [1240, 520], [900, 430], [540, 680]] : [[425, 690], [425, 1040], [425, 1390]];
+  const treeSpots = landscape ? [[95, 620], [1405, 620], [750, 212]] : [[425, 690], [425, 1040], [425, 1390]];
   treeSpots.forEach(([x, y]) => {
     const t = S('g', { transform: `translate(${x},${y})`, style: 'transform-box:fill-box;transform-origin:50% 100%;animation:sway 5s ease-in-out infinite;' }, world);
     S('rect', { x: -7, y: -10, width: 14, height: 52, rx: 6, fill: 'url(#gWood)' }, t);
@@ -860,6 +901,7 @@ function buildMap() {
     S('rect', { x: -subW / 2, y: 64, width: subW, height: 28, rx: 14, fill: z.subject.color, stroke: '#fff', 'stroke-width': 3, class: 'st-pill' }, st);
     S('text', { x: 0, y: 84, 'text-anchor': 'middle', 'font-size': 15, 'font-weight': 800, fill: '#fff', 'font-family': 'inherit', text: T(z.subject.fr, z.subject.en) }, st);
     S('text', { x: 0, y: 114, 'text-anchor': 'middle', 'font-size': 18, 'font-weight': 800, fill: '#2B2D42', 'font-family': 'inherit', text: T(z.fr, z.en) }, st);
+    if (z.lv) { const band = D() <= 1 ? 0 : D() <= 3 ? 1 : 2; S('text', { x: 0, y: 136, 'text-anchor': 'middle', 'font-size': 13.5, 'font-weight': 800, fill: '#5E60CE', 'font-family': 'inherit', text: T(z.lv[band][0], z.lv[band][1]) }, st); }
     st.addEventListener('click', () => { sfx.boing(); enterZone(z.key); });
   });
   leoMapAvatar = drawLeo(world, ZX(ZONES[0]), ZY(ZONES[0]) - 92, 0.62);
@@ -3385,6 +3427,292 @@ ZONE_BUILDERS.chess = function (host) {
   nextRound();
 };
 
+
+/* ================= Z17 — PERROQUET COCO (pronunciation & listening, FR + EN) ================= */
+function drawCoco(parent, x, y, s = 1) {
+  const g = S('g', { transform: `translate(${x},${y}) scale(${s})` }, parent);
+  S('path', { d: 'M -8 60 Q -20 96 -34 100 M 8 60 Q 20 96 34 100 M 0 62 Q 0 100 0 106', stroke: '#E5252A', 'stroke-width': 9, fill: 'none', 'stroke-linecap': 'round' }, g);
+  S('ellipse', { cx: 0, cy: 22, rx: 40, ry: 50, fill: '#12B886', stroke: '#0B7A5C', 'stroke-width': 4 }, g);
+  S('path', { d: 'M -38 10 Q -66 30 -46 62 Q -30 48 -30 26 Z', fill: '#E5252A', stroke: '#B02130', 'stroke-width': 3 }, g);
+  S('path', { d: 'M 38 10 Q 66 30 46 62 Q 30 48 30 26 Z', fill: '#FFD23F', stroke: '#D9A400', 'stroke-width': 3 }, g);
+  S('circle', { cx: 0, cy: -30, r: 30, fill: '#15CA93', stroke: '#0B7A5C', 'stroke-width': 4 }, g);
+  S('path', { d: 'M 10 -36 Q 34 -32 30 -18 Q 16 -14 8 -24 Z', fill: '#FF9F1C', stroke: '#D97800', 'stroke-width': 3 }, g);
+  [[-12, -36]].forEach(([ex, ey]) => { S('circle', { cx: ex, cy: ey, r: 8, fill: '#fff' }, g); S('circle', { cx: ex + 1, cy: ey + 1, r: 3.6, fill: '#2B2D42' }, g); });
+  S('path', { d: 'M -6 -56 Q 0 -72 10 -62 M 2 -58 Q 10 -72 18 -60', stroke: '#E5252A', 'stroke-width': 5, fill: 'none', 'stroke-linecap': 'round' }, g);
+  return g;
+}
+ZONE_BUILDERS.parrot = function (host) {
+  const ST = mkStage(host); const svg = ST.svg, PT = ST.P, SW = ST.W, SH = ST.H;
+  gradDefs(svg);
+  const d = D();
+  S('rect', { width: SW, height: SH, fill: skyFill() }, svg);
+  S('rect', { y: PT(620, 1180), width: SW, height: SH, fill: 'url(#gGrass)' }, svg);
+  // jungle leaves
+  for (let i = 0; i < 7; i++) { const x = PT(i * 240, i * 140), fy = PT(640, 1200); S('path', { d: `M ${x} ${fy} Q ${x + 40} ${fy - 150} ${x + 110} ${fy - 60} Q ${x + 50} ${fy - 20} ${x} ${fy} Z`, fill: i % 2 ? '#3FA34D' : '#57CC57', opacity: 0.85 }, svg); }
+  const coco = drawCoco(svg, PT(750, 425), PT(265, 400), PT(1.15, 1.25));
+  fxBob(coco, 10, 2400);
+  // perch
+  S('rect', { x: PT(600, 275), y: PT(380, 520), width: 300, height: 14, rx: 7, fill: 'url(#gWood)' }, svg);
+  const cardLayer = S('g', {}, svg);
+  const VOW2 = 'AEIOUYÉÈÊÀÂÎÔÛŒ';
+  const EASY_FR = [['LION', 'SOLEIL'], ['CHAT', 'BALLON'], ['MAISON', 'POISSON'], ['FLEUR', 'BANANE'], ['PAPA', 'BATEAU']];
+  const EASY_EN = [['LION', 'SUN'], ['CAT', 'BALL'], ['HOUSE', 'FISH'], ['FLOWER', 'BANANA'], ['DADDY', 'BOAT']];
+  const PAIRS_FR = [
+    ['PAIN', 'BAIN', 'P souffle doucement, B fait vibrer ta gorge !', 'P puffs softly, B makes your throat buzz!'],
+    ['TOUT', 'DOUX', 'T claque sec, D vibre !', 'T snaps, D buzzes!'],
+    ['POULE', 'BOULE', 'P souffle, B vibre — pose ta main sur ton cou !', 'P puffs, B buzzes — hand on your neck!'],
+    ['VERRE', 'FER', 'V fait vibrer les lèvres, F souffle seulement !', 'V buzzes the lips, F only blows!'],
+    ['CADEAU', 'GÂTEAU', 'K claque au fond de la gorge, G vibre !', 'K clicks at the back, G buzzes!'],
+    ['CHOU', 'JOUE', 'CH souffle comme le vent, J vibre comme une abeille !', 'CH blows like wind, J buzzes like a bee!']
+  ];
+  const PAIRS_EN = [
+    ['SHIP', 'SHEEP', 'i est court et rapide, ee est looong !', 'short quick i, looong ee!'],
+    ['CAT', 'CUT', 'a ouvre grand la bouche, u reste petit !', 'a opens wide, u stays small!'],
+    ['PEN', 'PAN', 'e sourit, a ouvre la bouche !', 'e smiles, a opens the mouth!'],
+    ['BAT', 'BAD', 'le T final claque, le D final est doux !', 'final T snaps, final D is soft!'],
+    ['THREE', 'FREE', 'TH : mets la langue entre les dents !', 'TH: put your tongue between your teeth!']
+  ];
+  const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+  let target = null, pairLang = 'fr', roundLive = false, tip = null;
+  function wordCard(x, y, wtext, onTap) {
+    const g = S('g', { transform: `translate(${x},${y})`, class: 'grab' }, cardLayer);
+    const wCard = PT(300, 330), hCard = PT(130, 160);
+    S('rect', { x: -wCard / 2, y: -hCard / 2, width: wCard, height: hCard, rx: 26, fill: '#fff', stroke: '#0CA678', 'stroke-width': 7 }, g);
+    const fs = Math.min(PT(56, 64), wCard / (wtext.length * 0.62));
+    let dx = -((wtext.length - 1) / 2) * (fs * 0.6);
+    wtext.split('').forEach(ch => { S('text', { x: dx, y: fs * 0.35, 'text-anchor': 'middle', 'font-size': fs, 'font-weight': 800, 'font-family': 'inherit', fill: VOW2.includes(ch) ? '#FF4D57' : '#1C7ED6', text: ch }, g); dx += fs * 0.6; });
+    fxPop(g);
+    g.addEventListener('pointerdown', () => onTap(g));
+    return g;
+  }
+  function speakTarget(rate) {
+    say(target, target, rate || (d <= 2 ? 0.72 : 0.86), pairLang === 'en' ? 'en-US' : 'fr-FR');
+  }
+  function micBonus() {
+    if (!SR) return;
+    const mg = S('g', { transform: PT('translate(750,760)', 'translate(425,1380)'), class: 'grab' }, cardLayer);
+    S('circle', { r: PT(52, 62), fill: '#FF6FB5', stroke: '#fff', 'stroke-width': 6 }, mg);
+    S('rect', { x: -10, y: -26, width: 20, height: 34, rx: 10, fill: '#fff' }, mg);
+    S('path', { d: 'M -20 2 Q -20 24 0 24 Q 20 24 20 2 M 0 24 L 0 38 M -14 38 L 14 38', stroke: '#fff', 'stroke-width': 5, fill: 'none', 'stroke-linecap': 'round' }, mg);
+    fxPop(mg);
+    mg.addEventListener('pointerdown', () => {
+      try {
+        const rec = new SR();
+        rec.lang = pairLang === 'en' ? 'en-US' : 'fr-FR';
+        rec.maxAlternatives = 3;
+        say('Je t’écoute ! Répète : ' + target, 'I’m listening! Repeat: ' + target);
+        rec.onresult = ev2 => {
+          const heard = [...ev2.results[0]].map(a => a.transcript.toLowerCase()).join(' ');
+          const norm = s2 => s2.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '');
+          if (norm(heard).includes(norm(target))) { confetti(24); sfx.fanfare(); say('PARFAIT ! Quelle belle prononciation !', 'PERFECT! What beautiful pronunciation!'); }
+          else say('Bien essayé ! Écoute encore : ' + target, 'Nice try! Listen again: ' + target, 0.7, pairLang === 'en' ? 'en-US' : 'fr-FR');
+          mg.remove();
+        };
+        rec.onerror = () => mg.remove();
+        setTimeout(() => rec.start(), 1200);
+      } catch (e) { mg.remove(); }
+    });
+    setTimeout(() => { if (mg.isConnected) mg.remove(); }, 9000);
+  }
+  function nextRound() {
+    cardLayer.innerHTML = '';
+    let pair;
+    if (d <= 1) { pairLang = isEN() ? 'en' : 'fr'; pair = pickFresh('parrot_easy_' + pairLang, pairLang === 'en' ? EASY_EN : EASY_FR, x => x[0]); tip = null; }
+    else if (d <= 3) { pairLang = isEN() ? 'en' : 'fr'; const bank = pairLang === 'en' ? PAIRS_EN : PAIRS_FR; pair = pickFresh('parrot_mid_' + pairLang, bank, x => x[0]); tip = [pair[2], pair[3]]; }
+    else { const useEN = Math.random() < 0.5; pairLang = useEN ? 'en' : 'fr'; const bank = useEN ? PAIRS_EN : PAIRS_FR; pair = pickFresh('parrot_hi_' + pairLang, bank, x => x[0]); tip = [pair[2], pair[3]]; }
+    const words = shuffle([pair[0], pair[1]]);
+    target = pair[ri(0, 1)];
+    words.forEach((wtext, i) => {
+      wordCard(PT(430 + i * 640, 425 + (i - 0.5) * 0), PT(640, 760 + i * 220), wtext, g => {
+        if (!roundLive) return;
+        if (wtext === target) {
+          roundLive = false;
+          sfx.good(); confetti(16); fxPop(g); fxSquish(coco);
+          say('Bravo ! C’était bien ' + target + ' !', 'Great! It was ' + target + '!');
+          if (tip && d >= 2) setTimeout(() => say(tip[0], tip[1], 0.86), 1500);
+          if (d >= 2) micBonus();
+          setTimeout(() => { if (Rounds.gem()) setTimeout(zoneComplete, 800); else nextRound(); }, tip ? 4200 : 1600);
+        } else {
+          Rounds.miss(); sfx.bad(); fxWobble(g);
+          say('Écoute la différence : ' + pair[0] + '... ' + pair[1] + '... Je répète : ' + target + ' !', 'Hear the difference: ' + pair[0] + '... ' + pair[1] + '... Again: ' + target + '!', 0.68, pairLang === 'en' ? 'en-US' : 'fr-FR');
+        }
+      });
+    });
+    // replay button (slow)
+    const rp = S('g', { transform: PT('translate(750,585)', 'translate(425,585)'), class: 'grab' }, cardLayer);
+    S('circle', { r: PT(46, 56), fill: '#FFD23F', stroke: '#E58E09', 'stroke-width': 5 }, rp);
+    S('path', { d: 'M -12 -16 L -12 16 L 16 0 Z', fill: '#7A4E00' }, rp);
+    S('path', { d: 'M -22 22 Q 0 34 22 22', stroke: '#7A4E00', 'stroke-width': 4, fill: 'none', 'stroke-linecap': 'round' }, rp);
+    rp.addEventListener('pointerdown', () => { sfx.tap(); speakTarget(0.62); });
+    mission(d <= 1 ? 'Coco dit un mot : touche le mot que tu entends !' : 'Oreille magique : Coco dit UN des deux mots jumeaux. Touche le bon !',
+      d <= 1 ? 'Coco says a word: tap the word you hear!' : 'Magic ear: Coco says ONE of the twin words. Tap the right one!', ZONE_ICONS.parrot);
+    setTimeout(() => { speakTarget(); roundLive = true; }, 1600);
+  }
+  nextRound();
+};
+
+/* ================= Z18 — IMAGIER MAGIQUE (thematic packs: learn → play → badge) ================= */
+const PICT = {
+  lion: g => drawLeo(g, 0, 6, 0.75),
+  frog: g => drawFrog(g, 0, 8, 0.95),
+  monkey: g => drawMonkey(g, 0, 2, 0.72),
+  fish: g => drawFish(g, 0, 0, 1.6, '#4CC9F0'),
+  cat: g => { S('circle', { r: 40, fill: '#8D99AE', stroke: '#5C6784', 'stroke-width': 4 }, g); [[-26, -30], [26, -30]].forEach(([x, y]) => S('path', { d: `M ${x - 12} ${y + 9} L ${x} ${y - 19} L ${x + 12} ${y + 9} Z`, fill: '#8D99AE', stroke: '#5C6784', 'stroke-width': 3 }, g)); [[-14, -5], [14, -5]].forEach(([x, y]) => { S('circle', { cx: x, cy: y, r: 6, fill: '#fff' }, g); S('circle', { cx: x, cy: y + 1, r: 2.8, fill: '#2B2D42' }, g); }); S('path', { d: 'M -7 12 Q 0 18 7 12', stroke: '#5C6784', 'stroke-width': 3, fill: 'none', 'stroke-linecap': 'round' }, g); },
+  banana: g => { S('path', { d: 'M -44 8 Q 0 52 46 2 Q 54 -8 44 -8 Q 2 28 -32 -4 Q -48 -2 -44 8 Z', fill: '#FFD23F', stroke: '#D9A400', 'stroke-width': 4 }, g); },
+  mango: g => { S('ellipse', { cx: 0, cy: 4, rx: 40, ry: 30, fill: '#FF9F1C', stroke: '#D97800', 'stroke-width': 4 }, g); S('path', { d: 'M 14 -24 Q 28 -42 42 -32', stroke: '#3FA34D', 'stroke-width': 7, fill: 'none', 'stroke-linecap': 'round' }, g); },
+  apple: g => { S('path', { d: 'M 0 -14 C 38 -40 56 10 24 32 C 10 42 -10 42 -24 32 C -56 10 -38 -40 0 -14 Z', fill: '#FF4D57', stroke: '#C42631', 'stroke-width': 4 }, g); S('rect', { x: -3, y: -38, width: 6, height: 18, rx: 3, fill: '#6B421D' }, g); },
+  orange: g => { S('circle', { r: 34, fill: '#FF9F1C', stroke: '#D97800', 'stroke-width': 4 }, g); S('circle', { cx: -10, cy: -12, r: 8, fill: 'rgba(255,255,255,0.4)' }, g); S('ellipse', { cx: 10, cy: -34, rx: 10, ry: 6, fill: '#3FA34D' }, g); },
+  sun2: g => drawSun(g, 0, 0, 0.85),
+  cloud2: g => drawCloud(g, 0, 4, 0.75),
+  rain: g => { drawCloud(g, 0, -12, 0.7); [[-22, 26], [0, 34], [22, 26]].forEach(([x, y]) => S('path', { d: `M ${x} ${y} l 0 16`, stroke: '#4CC9F0', 'stroke-width': 6, 'stroke-linecap': 'round' }, g)); },
+  moon2: g => { S('circle', { r: 36, fill: '#FFF3B0', stroke: '#E8D47E', 'stroke-width': 4 }, g); S('circle', { cx: -16, cy: 0, r: 30, fill: '#E9F5FB' }, g); },
+  star2: g => { const w = S('g', { transform: 'scale(2.6) translate(-12,-12)' }, g); drawStarIcon(w, 1, '#FFD23F'); },
+  tree2: g => { S('rect', { x: -9, y: 4, width: 18, height: 42, rx: 7, fill: 'url(#gWood)' }, g); [[0, -26, 32], [-26, -6, 23], [26, -6, 23]].forEach(([x, y, r]) => S('circle', { cx: x, cy: y, r, fill: '#3FA34D' }, g)); },
+  flower2: g => { [0, 72, 144, 216, 288].forEach(a => S('ellipse', { cx: 0, cy: -22, rx: 13, ry: 23, fill: '#FF9BC0', transform: `rotate(${a})` }, g)); S('circle', { r: 13, fill: '#FFD23F' }, g); },
+  house2: g => { S('rect', { x: -38, y: -6, width: 76, height: 50, rx: 5, fill: '#F2C078', stroke: '#B4654A', 'stroke-width': 4 }, g); S('path', { d: 'M -46 -6 L 46 -6 L 0 -46 Z', fill: '#E5252A' }, g); S('rect', { x: -9, y: 18, width: 18, height: 26, fill: '#8A5A33' }, g); },
+  boat2: g => { S('path', { d: 'M -44 16 L 44 16 L 27 38 L -27 38 Z', fill: '#B4654A', stroke: '#6B421D', 'stroke-width': 3 }, g); S('rect', { x: -2, y: -36, width: 4, height: 52, fill: '#8A5A33' }, g); S('path', { d: 'M 2 -36 L 2 8 L 34 2 Z', fill: '#FF4D57' }, g); },
+  car: g => { S('path', { d: 'M -44 10 L -36 -8 L -12 -18 L 18 -18 L 34 -8 L 44 10 Z', fill: '#4CC9F0', stroke: '#1C7ED6', 'stroke-width': 4 }, g); S('rect', { x: -46, y: 8, width: 92, height: 16, rx: 8, fill: '#1C7ED6' }, g); [[-24, 26], [24, 26]].forEach(([x, y]) => { S('circle', { cx: x, cy: y, r: 11, fill: '#2B2D42' }, g); S('circle', { cx: x, cy: y, r: 5, fill: '#8D99AE' }, g); }); S('rect', { x: -10, y: -14, width: 18, height: 12, rx: 3, fill: '#D6F3FF' }, g); },
+  plane: g => { S('ellipse', { cx: 0, cy: 0, rx: 44, ry: 13, fill: '#E8EAF3', stroke: '#8D99AE', 'stroke-width': 3.5 }, g); S('path', { d: 'M -6 -4 L -30 -30 L -16 -30 L 6 -6 Z', fill: '#FF4D57' }, g); S('path', { d: 'M -6 4 L -30 30 L -16 30 L 6 6 Z', fill: '#FF4D57' }, g); S('path', { d: 'M -40 -4 L -52 -16 L -44 -16 L -34 -6 Z', fill: '#FF4D57' }, g); S('circle', { cx: 26, cy: -3, r: 4, fill: '#4CC9F0' }, g); },
+  bus: g => { S('rect', { x: -44, y: -24, width: 88, height: 42, rx: 9, fill: '#FFD23F', stroke: '#D9A400', 'stroke-width': 4 }, g); [[-28, -10], [-4, -10], [20, -10]].forEach(([x, y]) => S('rect', { x, y, width: 16, height: 14, rx: 3, fill: '#D6F3FF' }, g)); [[-26, 22], [26, 22]].forEach(([x, y]) => S('circle', { cx: x, cy: y, r: 10, fill: '#2B2D42' }, g)); },
+  book: g => { S('path', { d: 'M -44 -22 Q -22 -32 0 -22 L 0 26 Q -22 16 -44 26 Z', fill: '#FFF8E1', stroke: '#B4654A', 'stroke-width': 4 }, g); S('path', { d: 'M 0 -22 Q 22 -32 44 -22 L 44 26 Q 22 16 0 26 Z', fill: '#fff', stroke: '#B4654A', 'stroke-width': 4 }, g); [[-30, -8], [-30, 2], [14, -8], [14, 2]].forEach(([x, y]) => S('rect', { x, y, width: 18, height: 3.4, rx: 1.7, fill: '#C9D3EE' }, g)); },
+  pencil: g => { S('rect', { x: -8, y: -40, width: 16, height: 58, rx: 3, fill: '#FFD23F', stroke: '#D9A400', 'stroke-width': 3, transform: 'rotate(30)' }, g); S('path', { d: 'M -8 18 L 0 38 L 8 18 Z', fill: '#F2C078', stroke: '#B4654A', 'stroke-width': 3, transform: 'rotate(30)' }, g); S('path', { d: 'M -3 30 L 0 38 L 3 30 Z', fill: '#2B2D42', transform: 'rotate(30)' }, g); },
+  bag: g => { S('rect', { x: -32, y: -18, width: 64, height: 52, rx: 12, fill: '#E5252A', stroke: '#9E1C24', 'stroke-width': 4 }, g); S('path', { d: 'M -16 -18 Q 0 -44 16 -18', stroke: '#9E1C24', 'stroke-width': 6, fill: 'none' }, g); S('rect', { x: -14, y: 0, width: 28, height: 20, rx: 6, fill: '#FFD23F' }, g); },
+  chair: g => { S('rect', { x: -26, y: -42, width: 10, height: 70, rx: 4, fill: '#B4654A' }, g); S('rect', { x: -26, y: -2, width: 52, height: 10, rx: 4, fill: '#C68B59' }, g); [[-26, 8], [16, 8]].forEach(([x, y]) => S('rect', { x, y, width: 10, height: 26, rx: 4, fill: '#B4654A' }, g)); S('rect', { x: -26, y: -42, width: 52, height: 10, rx: 4, fill: '#C68B59' }, g); },
+  hand: g => { S('path', { d: 'M -24 36 Q -30 6 -22 -8 Q -18 -14 -14 -8 L -14 6 L -10 -22 Q -6 -28 -2 -22 L -2 4 L 2 -28 Q 6 -34 10 -28 L 10 4 L 16 -18 Q 20 -24 24 -18 L 22 16 Q 20 40 -2 42 Q -18 42 -24 36 Z', fill: '#F2C078', stroke: '#B4654A', 'stroke-width': 3.5 }, g); },
+  eye: g => { S('path', { d: 'M -40 0 Q 0 -34 40 0 Q 0 34 -40 0 Z', fill: '#fff', stroke: '#2B2D42', 'stroke-width': 4 }, g); S('circle', { r: 14, fill: '#8A5A33' }, g); S('circle', { r: 6, fill: '#2B2D42' }, g); S('circle', { cx: -4, cy: -4, r: 2.5, fill: '#fff' }, g); },
+  nose: g => { S('path', { d: 'M -4 -30 Q 2 -6 10 8 Q 16 22 2 24 Q -12 24 -10 14', fill: 'none', stroke: '#B4654A', 'stroke-width': 5, 'stroke-linecap': 'round' }, g); S('circle', { cx: -4, cy: 20, r: 2.6, fill: '#B4654A' }, g); },
+  mouth: g => { S('path', { d: 'M -34 -4 Q -16 -18 0 -6 Q 16 -18 34 -4 Q 20 26 0 26 Q -20 26 -34 -4 Z', fill: '#FF6B81', stroke: '#C42631', 'stroke-width': 4 }, g); S('path', { d: 'M -26 -2 Q 0 6 26 -2', stroke: '#C42631', 'stroke-width': 3, fill: 'none' }, g); },
+  ear: g => { S('path', { d: 'M -8 -32 Q 26 -34 24 -2 Q 22 18 8 26 Q -2 32 -6 22 Q 10 14 10 -2 Q 8 -18 -6 -16 Q -14 -24 -8 -32 Z', fill: '#F2C078', stroke: '#B4654A', 'stroke-width': 4 }, g); },
+  papa: g => { S('circle', { cy: -22, r: 16, fill: '#8A5A33' }, g); S('path', { d: 'M -20 36 Q -22 -4 0 -4 Q 22 -4 20 36 Z', fill: '#1C7ED6' }, g); [[-5, -24], [5, -24]].forEach(([x, y]) => S('circle', { cx: x, cy: y, r: 2.2, fill: '#fff' }, g)); S('path', { d: 'M -6 -16 Q 0 -12 6 -16', stroke: '#fff', 'stroke-width': 2, fill: 'none' }, g); },
+  maman: g => { S('circle', { cy: -22, r: 16, fill: '#8A5A33' }, g); S('path', { d: 'M -24 36 Q -18 -4 0 -4 Q 18 -4 24 36 Z', fill: '#F25CA2' }, g); S('path', { d: 'M -16 -30 Q 0 -44 16 -30 Q 20 -16 14 -12 Q 12 -30 0 -32 Q -12 -30 -14 -12 Q -20 -16 -16 -30 Z', fill: '#5C3A17' }, g); [[-5, -24], [5, -24]].forEach(([x, y]) => S('circle', { cx: x, cy: y, r: 2.2, fill: '#fff' }, g)); },
+  bebe: g => { S('circle', { cy: -10, r: 13, fill: '#C68B59' }, g); S('path', { d: 'M -13 24 Q -14 2 0 2 Q 14 2 13 24 Z', fill: '#57CC57' }, g); S('path', { d: 'M -2 -22 Q 0 -28 4 -24', stroke: '#5C3A17', 'stroke-width': 2.5, fill: 'none' }, g); [[-4, -12], [4, -12]].forEach(([x, y]) => S('circle', { cx: x, cy: y, r: 1.8, fill: '#2B2D42' }, g)); },
+  c_red: g => { S('circle', { r: 34, fill: '#FF4D57', stroke: '#C42631', 'stroke-width': 5 }, g); S('circle', { cx: -10, cy: -11, r: 8, fill: 'rgba(255,255,255,0.5)' }, g); },
+  c_blue: g => { S('circle', { r: 34, fill: '#4CC9F0', stroke: '#1C7ED6', 'stroke-width': 5 }, g); S('circle', { cx: -10, cy: -11, r: 8, fill: 'rgba(255,255,255,0.5)' }, g); },
+  c_yellow: g => { S('circle', { r: 34, fill: '#FFD23F', stroke: '#D9A400', 'stroke-width': 5 }, g); S('circle', { cx: -10, cy: -11, r: 8, fill: 'rgba(255,255,255,0.6)' }, g); },
+  c_green: g => { S('circle', { r: 34, fill: '#57CC57', stroke: '#2E9E5B', 'stroke-width': 5 }, g); S('circle', { cx: -10, cy: -11, r: 8, fill: 'rgba(255,255,255,0.5)' }, g); },
+  c_purple: g => { S('circle', { r: 34, fill: '#9B5DE5', stroke: '#6C3483', 'stroke-width': 5 }, g); S('circle', { cx: -10, cy: -11, r: 8, fill: 'rgba(255,255,255,0.5)' }, g); }
+};
+const THEMES_DATA = [
+  { id: 'animaux', fr: 'Les animaux', en: 'The animals', kw: ['animaux', 'animals', 'animal', 'bêtes'], items: [
+    { fr: 'le lion', en: 'the lion', p: 'lion' }, { fr: 'le chat', en: 'the cat', p: 'cat' }, { fr: 'le poisson', en: 'the fish', p: 'fish' }, { fr: 'la grenouille', en: 'the frog', p: 'frog' }, { fr: 'le singe', en: 'the monkey', p: 'monkey' }] },
+  { id: 'fruits', fr: 'Les fruits', en: 'The fruits', kw: ['fruits', 'fruit', 'manger'], items: [
+    { fr: 'la banane', en: 'the banana', p: 'banana' }, { fr: 'la mangue', en: 'the mango', p: 'mango' }, { fr: 'la pomme', en: 'the apple', p: 'apple' }, { fr: "l'orange", en: 'the orange', p: 'orange' }] },
+  { id: 'couleurs', fr: 'Les couleurs', en: 'The colors', kw: ['couleurs', 'couleur', 'colors', 'colour'], items: [
+    { fr: 'rouge', en: 'red', p: 'c_red' }, { fr: 'bleu', en: 'blue', p: 'c_blue' }, { fr: 'jaune', en: 'yellow', p: 'c_yellow' }, { fr: 'vert', en: 'green', p: 'c_green' }, { fr: 'violet', en: 'purple', p: 'c_purple' }] },
+  { id: 'corps', fr: 'Le corps', en: 'The body', kw: ['corps', 'body', 'main', 'visage', 'face'], items: [
+    { fr: 'la main', en: 'the hand', p: 'hand' }, { fr: "l'œil", en: 'the eye', p: 'eye' }, { fr: 'le nez', en: 'the nose', p: 'nose' }, { fr: 'la bouche', en: 'the mouth', p: 'mouth' }, { fr: "l'oreille", en: 'the ear', p: 'ear' }] },
+  { id: 'meteo', fr: 'La météo et le ciel', en: 'Weather and sky', kw: ['météo', 'meteo', 'weather', 'ciel', 'sky', 'pluie', 'rain'], items: [
+    { fr: 'le soleil', en: 'the sun', p: 'sun2' }, { fr: 'la pluie', en: 'the rain', p: 'rain' }, { fr: 'le nuage', en: 'the cloud', p: 'cloud2' }, { fr: 'la lune', en: 'the moon', p: 'moon2' }, { fr: "l'étoile", en: 'the star', p: 'star2' }] },
+  { id: 'transports', fr: 'Les transports', en: 'Transport', kw: ['transports', 'transport', 'voiture', 'car', 'véhicules', 'vehicles'], items: [
+    { fr: 'la voiture', en: 'the car', p: 'car' }, { fr: 'le bateau', en: 'the boat', p: 'boat2' }, { fr: "l'avion", en: 'the plane', p: 'plane' }, { fr: 'le bus', en: 'the bus', p: 'bus' }] },
+  { id: 'ecole', fr: "L'école", en: 'School', kw: ['école', 'ecole', 'school', 'classe', 'class'], items: [
+    { fr: 'le livre', en: 'the book', p: 'book' }, { fr: 'le crayon', en: 'the pencil', p: 'pencil' }, { fr: 'le sac', en: 'the bag', p: 'bag' }, { fr: 'la chaise', en: 'the chair', p: 'chair' }] },
+  { id: 'famille', fr: 'La famille', en: 'The family', kw: ['famille', 'family', 'papa', 'maman'], items: [
+    { fr: 'le papa', en: 'the daddy', p: 'papa' }, { fr: 'la maman', en: 'the mummy', p: 'maman' }, { fr: 'le bébé', en: 'the baby', p: 'bebe' }, { fr: 'la maison', en: 'the house', p: 'house2' }] }
+];
+const Themes = { pending: null };
+ZONE_BUILDERS.themes = function (host) {
+  const d = D();
+  const wrap = H('div', { class: 'quiz-wrap' }, host);
+  wrap.style.background = 'linear-gradient(160deg,#D6336C 0%,#FF8FAB 100%)';
+  const pending = Themes.pending; Themes.pending = null;
+  function pictSvg(key, size) {
+    const sv = document.createElementNS(NS, 'svg');
+    sv.setAttribute('viewBox', '-60 -60 120 120');
+    sv.style.width = sv.style.height = (size || 120) + 'px';
+    const g = S('g', {}, sv);
+    (PICT[key] || (() => {}))(g);
+    return sv;
+  }
+  function sayDuo(it, slow) {
+    say(it.fr, it.fr, slow ? 0.72 : 0.85, 'fr-FR');
+    setTimeout(() => say(it.en, it.en, slow ? 0.72 : 0.85, 'en-US'), 1600);
+  }
+  function picker() {
+    wrap.innerHTML = '';
+    const p = H('div', { class: 'qz-panel' }, wrap);
+    H('div', { class: 'qz-title', text: '📖 ' + T('Imagier Magique', 'Magic Picture Book') }, p);
+    H('div', { class: 'qz-sub', text: T('Choisis un thème : apprends chaque mot en français ET en anglais, puis gagne ton badge !', 'Pick a theme: learn every word in French AND English, then win your badge!') }, p);
+    const chips = H('div', { class: 'qz-chips' }, p);
+    THEMES_DATA.forEach(th => {
+      const b = H('button', { class: 'qz-chip' }, chips);
+      b.appendChild(pictSvg(th.items[0].p, 34));
+      b.appendChild(document.createTextNode(' ' + ((save.themeBadges || {})[th.id] ? '🏅 ' : '') + T(th.fr, th.en)));
+      b.style.display = 'inline-flex'; b.style.alignItems = 'center'; b.style.gap = '8px';
+      b.addEventListener('click', () => { sfx.boing(); learn(th, 0); });
+    });
+    mission('Bienvenue dans l’Imagier ! Choisis un thème à apprendre !', 'Welcome to the Picture Book! Pick a theme to learn!', ZONE_ICONS.themes);
+  }
+  function learn(th, i) {
+    wrap.innerHTML = '';
+    const it = th.items[i];
+    const p = H('div', { class: 'qz-panel' }, wrap);
+    H('div', { class: 'qz-prog', text: T(th.fr, th.en) + ' — ' + (i + 1) + ' / ' + th.items.length }, p);
+    const artBox = H('div', {}, p); artBox.style.textAlign = 'center'; artBox.style.marginTop = '8px';
+    const sv = pictSvg(it.p, 210); artBox.appendChild(sv);
+    try { sv.animate([{ transform: 'scale(0.4)' }, { transform: 'scale(1)' }], { duration: 450, easing: 'cubic-bezier(0.34,1.56,0.64,1)' }); } catch (e) {}
+    const w1 = H('div', { class: 'qz-q', text: it.fr }, p);
+    const w2 = H('div', { class: 'qz-sub', text: '🇬🇧 ' + it.en }, p);
+    w2.style.fontSize = '1.25rem';
+    const row = H('div', { class: 'qz-btnrow' }, p);
+    const hear = H('button', { class: 'qz-hintbtn', text: '🔊 FR + EN' }, row);
+    const next = H('button', { class: 'qz-next on', text: i + 1 < th.items.length ? '➡ ' + T('Mot suivant', 'Next word') : '🎮 ' + T('Je joue !', 'Let’s play!') }, row);
+    next.style.marginLeft = '10px';
+    hear.addEventListener('click', () => sayDuo(it, true));
+    sayDuo(it);
+    next.addEventListener('click', () => { sfx.tap(); if (i + 1 < th.items.length) learn(th, i + 1); else quiz(th); });
+    if (i === 0) mission('Regarde, écoute, répète : ' + T(th.fr, th.en) + ' en deux langues !', 'Look, listen, repeat: ' + T(th.fr, th.en) + ' in two languages!', ZONE_ICONS.themes);
+  }
+  function quiz(th) {
+    Rounds.start('themes', 5);
+    let qi = 0;
+    const pool = th.items.slice();
+    function round() {
+      wrap.innerHTML = '';
+      const it = pickFresh('theme_q_' + th.id, pool, x => x.p);
+      const others = shuffle(pool.filter(x => x.p !== it.p)).slice(0, 3);
+      while (others.length < 3) { const extra = THEMES_DATA[ri(0, THEMES_DATA.length - 1)].items[0]; if (extra.p !== it.p && !others.includes(extra)) others.push(extra); }
+      const opts = shuffle([it].concat(others));
+      const askEN = d >= 2 && qi % 2 === 1;
+      const p = H('div', { class: 'qz-panel' }, wrap);
+      H('div', { class: 'qz-prog', text: T('Trouve ', 'Find ') + (qi + 1) + ' / 5' }, p);
+      H('div', { class: 'qz-q', text: askEN ? T('Touche en ANGLAIS : ', 'Tap in ENGLISH: ') + it.en : T('Touche : ', 'Tap: ') + T(it.fr, it.en) }, p);
+      const grid = H('div', { class: 'qz-answers' }, p);
+      let done = false;
+      opts.forEach(o => {
+        const b = H('button', { class: 'qz-a' }, grid);
+        b.appendChild(pictSvg(o.p, 104));
+        b.addEventListener('click', () => {
+          if (done) return;
+          if (o.p === it.p) {
+            done = true; b.classList.add('good');
+            say('Bravo ! ' + it.fr + ' ! ' + it.en + ' !', 'Great! ' + it.fr + '! ' + it.en + '!');
+            qi++;
+            setTimeout(() => { if (Rounds.gem()) badge(th); else round(); }, 1100);
+          } else { Rounds.miss(); b.classList.add('bad'); sfx.bad(); say('Ça, c’est ' + o.fr + '... cherche ' + it.fr + ' !', 'That is ' + o.en + '... find ' + it.en + '!'); }
+        });
+      });
+      say(askEN ? it.en : T(it.fr, it.en), askEN ? it.en : null, d <= 1 ? 0.78 : 0.9, askEN ? 'en-US' : null);
+    }
+    round();
+    function badge(th2) {
+      save.themeBadges = save.themeBadges || {}; save.themeBadges[th2.id] = 1; persist();
+      wrap.innerHTML = '';
+      const p = H('div', { class: 'qz-panel' }, wrap);
+      H('div', { class: 'qz-title', text: '🏅 ' + T('BADGE GAGNÉ !', 'BADGE WON!') }, p);
+      H('div', { class: 'qz-q', text: T('Je connais ', 'I know ') + T(th2.fr, th2.en).toUpperCase() + T(' en français ET en anglais !', ' in French AND English!') }, p);
+      const ic = H('div', {}, p); ic.style.textAlign = 'center';
+      th2.items.forEach(o => ic.appendChild(pictSvg(o.p, 74)));
+      const row = H('div', { class: 'qz-btnrow' }, p);
+      const fin = H('button', { class: 'qz-next on', text: '🏁 ' + T('Youpi !', 'Yay!') }, row);
+      sfx.fanfare(); confetti(60);
+      say('BADGE GAGNÉ ! Tu connais ' + th2.fr + ' en français et en anglais ! Champion !', 'BADGE WON! You know ' + th2.en + ' in French and English! Champion!');
+      fin.addEventListener('click', () => zoneComplete());
+    }
+  }
+  pending ? learn(pending, 0) : picker();
+};
+
 /* ================= BOOT ================= */
 function paintLang() {
   const b = $('btn-lang');
@@ -3404,8 +3732,9 @@ function buildGradeDock() {
     b.innerHTML = `${g.code}<small>${g.sub}</small>`;
     b.addEventListener('click', () => {
       save.grade = i; persist(); buildGradeDock(); sfx.tap();
-      say('Classe ' + g.fr + ' !', 'Class ' + g.en + '!');
-      if (activeZone) enterZone(activeZone); 
+      const cur = CURRICULUM[i] || CURRICULUM[0];
+      say('Classe ' + g.fr + ' ! Au programme : ' + cur.m[0] + ' !', 'Class ' + g.en + '! On the program: ' + cur.m[1] + '!');
+      if (activeZone) enterZone(activeZone); else buildMap(); 
     });
   });
 }
@@ -3418,6 +3747,17 @@ function renderSearch(q) {
     T(z.fr, z.en).toLowerCase().includes(q) ||
     T(z.subject.fr, z.subject.en).toLowerCase().includes(q));
   const d = D();
+  const tHits = THEMES_DATA.filter(th => q && (th.kw.some(k => k.includes(q) || q.includes(k)) || T(th.fr, th.en).toLowerCase().includes(q) || th.items.some(it => T(it.fr, it.en).toLowerCase().includes(q))));
+  (q ? tHits : THEMES_DATA.slice(0, 4)).forEach(th => {
+    const card = H('div', { class: 'sr-card' }, box);
+    const sv2 = document.createElementNS(NS, 'svg');
+    sv2.setAttribute('viewBox', '-60 -60 120 120'); sv2.style.width = sv2.style.height = '70px';
+    const gg2 = S('g', {}, sv2); (PICT[th.items[0].p] || (() => {}))(gg2);
+    card.appendChild(sv2);
+    const sub = H('div', { class: 'sr-sub' }, card); sub.textContent = T('THÈME', 'THEME'); sub.style.background = '#D6336C';
+    H('div', { class: 'sr-name', text: ((save.themeBadges || {})[th.id] ? '\uD83C\uDFC5 ' : '') + T(th.fr, th.en) }, card);
+    card.addEventListener('click', () => { $('search-overlay').classList.remove('on'); sfx.boing(); Themes.pending = th; enterZone('themes'); });
+  });
   const qt = QUIZ_TOPICS.filter(t => d >= t.lo && d <= t.hi && q && (t.kw.some(k => k.includes(q) || q.includes(k)) || T(t.f, t.e).toLowerCase().includes(q)));
   qt.forEach(t => {
     const card = H('div', { class: 'sr-card' }, box);
@@ -3454,12 +3794,21 @@ $('search-input').addEventListener('input', ev => renderSearch(ev.target.value))
 $('btn-home').addEventListener('click', () => { sfx.tap(); showMap(); });
 $('btn-lang').addEventListener('click', () => { save.lang = isEN() ? 'fr' : 'en'; persist(); sfx.tap(); paintLang(); say('Bonjour ! On joue en français !', 'Hello! We play in English!'); if (activeZone) enterZone(activeZone); else showMap(); });
 $('btn-sound').addEventListener('click', () => { save.sound = !save.sound; $('btn-sound').style.opacity = save.sound ? 1 : 0.45; sfx.tap(); });
-document.addEventListener('pointerdown', () => { const c = ac(); if (c && c.state === 'suspended') c.resume(); }, { once: true });
+let firstTapDone = false;
+document.addEventListener('pointerdown', () => {
+  const c = ac(); if (c && c.state === 'suspended') c.resume();
+  if (!firstTapDone) {
+    firstTapDone = true;
+    unlockTTS();
+    // speech before the first tap is blocked by mobile browsers: replay the current instruction
+    setTimeout(() => { if (currentMission && !activeZone) say('Bienvenue ! Touche une île pour jouer !', 'Welcome! Tap an island to play!'); else if (currentMission) say(currentMission[0], currentMission[1]); }, 350);
+  }
+});
 buildHudIcons();
 buildGradeDock();
 updateStarPill();
 showMap();
-window.__WORLD__ = { ZONES, ZONE_BUILDERS, enterZone, showMap, save, Rounds, QUIZ_TOPICS, CURRICULUM, Academy, ML_LESSONS, GRIOT_STORIES };
+window.__WORLD__ = { ZONES, ZONE_BUILDERS, enterZone, showMap, save, Rounds, QUIZ_TOPICS, CURRICULUM, Academy, ML_LESSONS, GRIOT_STORIES, THEMES_DATA, Themes };
 })();
 </script>
 </body>

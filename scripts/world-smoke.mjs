@@ -39,7 +39,7 @@ const d = window.document;
   const W = window.__WORLD__;
   if (!W) { console.log('FATAL: world did not boot'); errs.forEach(e => console.log(' ✗ ' + e)); process.exit(1); }
   if (!d.querySelector('#scene-map svg')) errs.push('MAP: no svg built');
-  if (d.querySelectorAll('#scene-map .station').length !== 16) errs.push('MAP: expected 16 stations, got ' + d.querySelectorAll('#scene-map .station').length);
+  if (d.querySelectorAll('#scene-map .station').length !== 18) errs.push('MAP: expected 18 stations, got ' + d.querySelectorAll('#scene-map .station').length);
   for (const grade of [0, 2, 6]) {
     W.save.grade = grade;
     for (const z of W.ZONES) {
@@ -48,7 +48,7 @@ const d = window.document;
       await sleep(120);
       const svg = d.querySelector('#scene-game svg');
       const quizHtml = d.querySelector('#scene-game .quiz-wrap');
-      if (z.key === 'academy' || z.key === 'mathlab' || z.key === 'griot') { if (!quizHtml || !quizHtml.textContent.trim()) errs.push(z.key + '@g' + grade + ': quiz UI empty'); }
+      if (z.key === 'academy' || z.key === 'mathlab' || z.key === 'griot' || z.key === 'themes') { if (!quizHtml || !quizHtml.textContent.trim()) errs.push(z.key + '@g' + grade + ': quiz UI empty'); }
       else if (!svg || svg.childNodes.length < 3) errs.push(z.key + '@g' + grade + ': stage looks empty');
       // off-canvas detector: no element may sit beyond the stage width (depth <= 2)
       if (svg) {

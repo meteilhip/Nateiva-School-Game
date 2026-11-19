@@ -1,5 +1,13 @@
 # Changelog
 
+## v1.25.0 — Voice fixed on phones, Perroquet Coco, Imagier Magique (18 zones)
+- **Voice works on Android/iPhone now**: speech is unlocked on the first tap (mobile browsers block speech before a user gesture), the cancel-then-speak race that silently swallowed utterances on Android is fixed (re-queued after a beat), long texts are split into sentences (mobile cuts long utterances), and the first tap replays the current instruction so no child misses it.
+- **🦜 Perroquet Coco (new zone — PRONONCIATION FR+EN)**: Coco says a word, the child taps the word heard. Maternelle: very different words (pure listening). CP+: minimal pairs (PAIN/BAIN, TOUT/DOUX, CHOU/JOUE…) with articulation coaching ("P souffle, B fait vibrer ta gorge — pose ta main sur ton cou"). CE2+: English pairs too (SHIP/SHEEP, CAT/CUT, THREE/FREE). Slow-replay button; **optional microphone bonus**: the child repeats the word and real speech recognition cheers a good pronunciation (graceful fallback when no mic).
+- **📖 Imagier Magique (new zone — THÉMATIQUES)**: 8 themed packs (animaux, fruits, couleurs, corps, météo, transports, école, famille) with ~30 hand-drawn pictures. Learn phase: big picture + word spoken in FRENCH then ENGLISH; play phase: 5 find-the-picture rounds (English prompts from CP); finish = **badge 🏅 "Je connais les animaux en français ET en anglais"**, saved forever.
+- **Search now shows images**: theme cards with drawn pictures appear in the 🔍 (and 4 suggested themes before typing); typing "fruits", "body", "couleurs"… or even a single word like "banane" opens the right themed lesson.
+- **Per-class differences now visible from the home page**: every island on the trail (and desktop map) shows a level line for the selected class — e.g. Verger de Momo: "MAT · Compte les fruits" vs "CM2 · × et ÷ partage" — and switching class rebuilds the map, announces the class program, changes the sky theme and the in-zone chip.
+- Island regrown to 18 zones with a clean 3-row desktop grid; empty-transform guard; smoke = 18 zones × 3 grades × 2 orientations, ALL CLEAR.
+
 ## v1.24.0 — Premium scrolling trail home, FR|EN switch, anti-repeat engine, per-class look
 - **New phone home — the Adventure Trail**: fitting 16 islands on one screen made everything tiny, so the phone home is now a Duolingo/Candy-Crush-style vertically scrolling golden path: giant 94-unit medallions with gold halo rings, 37pt island names with white outlines, 25pt subject pills, big star rows, swaying trees/flowers and Momo & Fela along the way. Desktop keeps the fitted island.
 - **Visible FR | EN switch**: the globe button is now a pill that shows both languages with the active one highlighted — one tap flips the whole game (and announces it).
