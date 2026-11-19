@@ -1,5 +1,13 @@
 # Changelog
 
+## v1.24.0 — Premium scrolling trail home, FR|EN switch, anti-repeat engine, per-class look
+- **New phone home — the Adventure Trail**: fitting 16 islands on one screen made everything tiny, so the phone home is now a Duolingo/Candy-Crush-style vertically scrolling golden path: giant 94-unit medallions with gold halo rings, 37pt island names with white outlines, 25pt subject pills, big star rows, swaying trees/flowers and Momo & Fela along the way. Desktop keeps the fitted island.
+- **Visible FR | EN switch**: the globe button is now a pill that shows both languages with the active one highlighted — one tap flips the whole game (and announces it).
+- **Anti-repeat engine** (`pickFresh`/`freshQ`, persisted): the river, word factory, seek-and-find, theatre and every Academy topic now rotate through their banks without serving the same item twice until the bank is exhausted; Griot stories show a ✅ once completed.
+- **Bigger banks**: +8 French and +6 English river words (incl. 3-syllable DO-MI-NO, CA-MI-ON, PY-JA-MA), +4 word-factory pictures (ARBRE, BANANE, BATEAU, COEUR with new drawings), 3 new theatre fables (6 total), +12 English-vocab words, +3 school-context comprehension sentences (sur / après avoir / à moins que).
+- **Classes now LOOK different too**: the sky itself changes with the class (bright day MAT–SIL, warm sunset CP–CE1, royal dusk CE2–CM2) in every outdoor zone, and the in-zone chip now reads e.g. "MATHS · CM1" so the tailoring is visible; Théâtre drops to 2 big answer cards at Maternelle.
+- Dual-orientation smoke (desktop + 412×915) still ALL CLEAR across 16 zones × 3 grades.
+
 ## v1.23.0 — Portrait-native rebuild: every zone redesigned for the phone
 The game was unplayable on phones inside zones (landscape 1500x850 stages letterboxed to thumbnails). Full rebuild:
 - **New stage engine (`mkStage`)**: every zone now renders on a portrait-native 850x1500 canvas on phones with `slice` — the game fills the screen edge to edge, no letterboxing, with a `PT(landscape, portrait)` coordinate system per element.
