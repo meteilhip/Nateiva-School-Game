@@ -1,5 +1,12 @@
 # Changelog
 
+## v1.22.0 — Age-differentiation audit: no zone plays the same at 3 and 10
+Audit of all 16 zones found 3 that were too flat across classes; each now has true per-age modes:
+- **Studio de Zara (paint)**: MAT–CP paint the zebra's named body parts in the asked color; CE1–CE2 paint all of a shape; **CM1/CM2 get Magic Fractions — paint exactly k/N of a fence, with a live fraction counter (2/5…) spoken as they go**.
+- **Lagon Splash**: Maternelle gets 3 strongly-contrasted objects; **CE2+ gets Scientist Mode — state your HYPOTHESIS (flotte/coule) BEFORE the drop, then verify** (wrong hypotheses coached, right ones celebrated); CM1/CM2 keep real density readouts.
+- **Jardin de Nana**: MAT–CP grow the plant; **from CE1, growing rounds alternate with "plant organs" rounds — tap les racines/la tige/les feuilles/la fleur; at CM1/CM2 the prompt is by FUNCTION ("touche l'organe qui fabrique la nourriture avec la lumière")**, each answer narrating the organ's role.
+- Smoke test now asserts the fraction task at CM2, runs the organ round at CE1 & CM2, and prints a mission-variety report across MAT/CE1/CM2 for every zone.
+
 ## v1.21.0 — Phone-first + Math Lab + Griot History + Kids Chess (16 zones)
 - **Phone-first pass** (95% of players are on phones): compact HUD/mission-bar/gems/grade-dock at ≤760px, horizontally scrollable class dock (was overflowing on 390px screens), responsive Academy/quiz typography, tighter search grid, and a "🔄 Tourne ton téléphone" hint when opening big playground zones in portrait.
 - **🔬 Labo des Maths (new zone)**: lessons that MOVE — 10 animated step-by-step concept demos with highlights, drawn underlines and flying objects: counting, counting-on, make-a-ten (ten-frame), taking away, multiplication arrays (+ commutativity trick), fair-share division, fractions on a cut orange (+ 3/4 of 8), the 100-grid for percentages, square root as the side of a perfect square, and the equation balance. Filtered per class, narrated FR/EN, replayable step by step.

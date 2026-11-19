@@ -70,6 +70,23 @@ const d = window.document;
       }
     }
   }
+  // differentiation checks: paint fractions at CM, garden organ round at CE1+
+  W.save.grade = 6; W.enterZone('paint'); await sleep(150);
+  if (!/\d\/\d/.test(d.getElementById('mission-text').textContent)) errs.push('paint@g6: no fraction task (' + d.getElementById('mission-text').textContent + ')');
+  W.showMap(); await sleep(30);
+  for (const g of [3, 6]) {
+    W.save.grade = g; W.enterZone('garden'); await sleep(120);
+    try { window.__GARDEN_TEST__.partRound(); await sleep(80); const mt = d.getElementById('mission-text').textContent; if (!/[Tt]ouche|[Tt]ap/.test(mt)) errs.push('garden@g' + g + ': organ round has no tap mission'); } catch (e) { errs.push('garden partRound@g' + g + ' CRASH: ' + e.message); }
+    W.showMap(); await sleep(30);
+  }
+  // differentiation proof: distinct missions across grades per zone
+  const diffReport = [];
+  for (const z of W.ZONES) {
+    const seen = new Set();
+    for (const g of [0, 3, 6]) { W.save.grade = g; try { W.enterZone(z.key); } catch (e) {} await sleep(90); seen.add(d.getElementById('mission-text').textContent.slice(0, 60)); try { W.showMap(); } catch (e) {} await sleep(20); }
+    diffReport.push(z.key + ':' + seen.size);
+  }
+  console.log('MISSION VARIETY (zone:distinct across MAT/CE1/CM2):', diffReport.join(' '));
   // step through every Math Lab lesson at its grades — catch run() crashes
   for (const L of W.ML_LESSONS) {
     for (const g of [L.lo, L.hi]) {

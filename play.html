@@ -1190,6 +1190,20 @@ ZONE_BUILDERS.paint = function (host) {
     }
     return parts;
   };
+  const fractionFence = () => {
+    artG.innerHTML = '';
+    const parts = [];
+    const N = [3, 4, 5, 6][ri(0, 3)];
+    const w = 560 / N;
+    S('rect', { x: -290, y: -60, width: 580, height: 20, rx: 8, fill: '#B07B4C' }, artG);
+    S('rect', { x: -290, y: 100, width: 580, height: 20, rx: 8, fill: '#B07B4C' }, artG);
+    for (let i = 0; i < N; i++) {
+      const x0 = -280 + i * w + 4, x1 = -280 + (i + 1) * w - 4;
+      const el = S('path', { d: `M ${x0} 190 L ${x0} -130 L ${(x0 + x1) / 2} -175 L ${x1} -130 L ${x1} 190 Z`, fill: '#FFFFFF', stroke: '#2B2D42', 'stroke-width': 5, class: 'grab' }, artG);
+      parts.push({ el, name: 'plank' });
+    }
+    return parts;
+  };
   let parts = [];
   function wirePainting(done) {
     parts.forEach(p => {
@@ -1202,6 +1216,7 @@ ZONE_BUILDERS.paint = function (host) {
           fxSquish(p.el);
           sfx.pop();
           task.left--;
+          if (task.onPaint) task.onPaint(task);
           if (task.left <= 0) { taskIdx++; if (taskIdx >= tasks.length) done(); else announceTask(); }
         } else {
           Rounds.miss(); sfx.bad();
@@ -1223,6 +1238,17 @@ ZONE_BUILDERS.paint = function (host) {
       parts = zebraParts();
       const pool = shuffle(parts.filter(p => true)).slice(0, 3);
       tasks = pool.map(p => { const c = POTS[ri(0, POTS.length - 1)]; return { color: c, left: 1, match: q => q === p, fr: 'Peins ' + p.el.dataset.fr + ' en ' + c[0] + ' !', en: 'Paint ' + p.el.dataset.en + ' ' + c[1] + '!' }; });
+    } else if (d >= 5) {
+      // CM1/CM2: paint an exact FRACTION of the fence (visual fractions)
+      parts = fractionFence();
+      const N = parts.length, k = ri(1, N - 1);
+      const c = POTS[ri(0, POTS.length - 1)];
+      const lab = S('text', { x: 0, y: 312, 'text-anchor': 'middle', 'font-size': 46, 'font-weight': 800, fill: '#9B5DE5', 'font-family': 'inherit', text: '0/' + N }, easelG);
+      tasks = [{ color: c, left: k,
+        match: q => q.name === 'plank' && String(q.el.getAttribute('fill')).toUpperCase() === '#FFFFFF',
+        fr: 'Fraction magique : peins ' + k + '/' + N + ' de la barrière en ' + c[0] + ' !',
+        en: 'Magic fraction: paint ' + k + '/' + N + ' of the fence ' + c[1] + '!',
+        onPaint: t => { lab.textContent = (k - t.left) + '/' + N; mlPulse(lab, 1); say((k - t.left) + ' sur ' + N + (t.left <= 0 ? ' : exactement ' + k + '/' + N + ' !' : ''), (k - t.left) + ' out of ' + N + (t.left <= 0 ? ': exactly ' + k + '/' + N + '!' : '')); } }];
     } else {
       parts = shapeMural();
       const kind = ['triangle', 'cercle', 'carré'][ri(0, 2)];
@@ -1275,6 +1301,48 @@ ZONE_BUILDERS.splash = function (host) {
     { fr: "l'ancre", en: 'the anchor', floats: false, draw: g => { S('path', { d: 'M 0 -20 L 0 16 M -16 6 Q 0 26 16 6 M 0 -20 m -6 0 a 6 6 0 1 0 12 0 a 6 6 0 1 0 -12 0', stroke: '#2B2D42', 'stroke-width': 6, fill: 'none', 'stroke-linecap': 'round' }, g); } }
   ];
   let items = [], sorted = 0, roundItems = [], roundLive = false;
+  function plunge(it, p) {
+            // drop in water → physics!
+            it.state = 'tested';
+            rings(p.x, WATER_Y);
+            if (it.o.floats) { sfx.splash(); it.anim = bobAtSurface(it.g, p.x); }
+            else {
+              sfx.splash();
+              it.g.animate([{ transform: `translate(${p.x}px,${WATER_Y}px)` }, { transform: `translate(${p.x + rnd(-20, 20)}px,700px) rotate(20deg)` }], { duration: 1100, easing: 'ease-in', fill: 'forwards' });
+              for (let b = 0; b < 5; b++) { const bb = S('circle', { cx: p.x + rnd(-14, 14), cy: WATER_Y + 40 + b * 40, r: rnd(3, 7), fill: 'rgba(255,255,255,0.7)' }, svg); bb.animate([{ opacity: 0.8, transform: 'translateY(0)' }, { opacity: 0, transform: 'translateY(-70px)' }], { duration: 900, delay: b * 120 }).onfinish = () => bb.remove(); }
+            }
+            if (D() >= 5 && it.o.dens) {
+              const lab = S('g', { transform: `translate(${p.x},${WATER_Y - 64})` }, svg);
+              S('rect', { x: -74, y: -22, width: 148, height: 36, rx: 18, fill: '#fff', stroke: '#2EC4B6', 'stroke-width': 4 }, lab);
+              S('text', { x: 0, y: 4, 'text-anchor': 'middle', 'font-size': 19, 'font-weight': 800, fill: '#2B2D42', 'font-family': 'inherit', text: T('densité ' + it.o.dens, 'density ' + it.o.dens.replace(',', '.')) }, lab);
+              fxPop(lab);
+              setTimeout(() => lab.remove(), 2600);
+              say(T(it.o.fr, it.o.en) + ' : ' + T('densité ' + it.o.dens + '. ', 'density ' + it.o.dens.replace(',', '.') + '. ') + T(it.o.floats ? 'Moins de un : ça flotte !' : 'Plus de un : ça coule !', it.o.floats ? 'Less than one: it floats!' : 'More than one: it sinks!'));
+            } else say(T(it.o.fr, it.o.en) + ' ... ' + T(it.o.floats ? 'ça flotte !' : 'ça coule !', it.o.floats ? 'it floats!' : 'it sinks!'));
+            setTimeout(() => say('Range-' + (isEN() ? 'it' : 'le') + ' sur le bon ponton !', 'Drag it to the right dock!'), it.pred ? 3400 : 1800);
+    if (it.pred) {
+      const right = (it.pred === 'float') === it.o.floats;
+      setTimeout(() => {
+        if (right) { confetti(12); sfx.good(); say('Ton hypothèse était JUSTE, petit scientifique !', 'Your hypothesis was RIGHT, little scientist!'); }
+        else { Rounds.miss(); say('Hypothèse fausse... et c\u2019est comme ça que les scientifiques apprennent !', 'Wrong hypothesis... and that is how scientists learn!'); }
+      }, 1400);
+    }
+  }
+  let predG = null;
+  function askPrediction(it, p) {
+    it.g.setAttribute('transform', `translate(${p.x},${WATER_Y - 74}) scale(1.1)`);
+    if (predG) predG.remove();
+    predG = S('g', {}, svg);
+    say('Hypothèse de scientifique : ' + T(it.o.fr, it.o.en) + '... flotte ou coule ? Choisis AVANT de voir !', 'Scientist hypothesis: ' + T(it.o.fr, it.o.en) + '... float or sink? Choose BEFORE you see!');
+    [['float', 'FLOTTE ?', 'FLOATS?', 560, '#1C7ED6'], ['sink', 'COULE ?', 'SINKS?', 880, '#30346B']].forEach(([kind, f2, e2, x2, col]) => {
+      const b = S('g', { transform: `translate(${x2},242)`, class: 'grab' }, predG);
+      S('rect', { x: -112, y: -46, width: 224, height: 92, rx: 26, fill: '#fff', stroke: col, 'stroke-width': 7 }, b);
+      S('text', { x: 0, y: 13, 'text-anchor': 'middle', 'font-size': 36, 'font-weight': 800, fill: col, 'font-family': 'inherit', text: T(f2, e2) }, b);
+      fxPop(b);
+      b.addEventListener('pointerdown', ev2 => { ev2.stopPropagation(); sfx.tap(); it.pred = kind; if (predG) { predG.remove(); predG = null; } plunge(it, { x: clamp(p.x, 420, 920), y: WATER_Y }); });
+    });
+  }
+
   function bobAtSurface(g, x) {
     const anim = g.animate([
       { transform: `translate(${x}px,${WATER_Y - 4}px) rotate(-5deg)` },
@@ -1291,7 +1359,7 @@ ZONE_BUILDERS.splash = function (host) {
   }
   function nextRound() {
     items.forEach(it => it.g.remove()); items = []; sorted = 0;
-    roundItems = shuffle(OBJECTS).slice(0, 4);
+    roundItems = shuffle(OBJECTS).slice(0, D() === 0 ? 3 : 4);
     roundItems.forEach((o, i) => {
       const hx = 70 + (i % 2) * 170, hy = (i < 2 ? 230 : 360);
       const g = S('g', { transform: `translate(${hx},${hy})` }, svg);
@@ -1322,31 +1390,16 @@ ZONE_BUILDERS.splash = function (host) {
             backToWater(it); return;
           }
           if (p.y > WATER_Y - 60 && p.x < 950) {
-            // drop in water → physics!
-            it.state = 'tested';
-            rings(p.x, WATER_Y);
-            if (it.o.floats) { sfx.splash(); it.anim = bobAtSurface(g, p.x); }
-            else {
-              sfx.splash();
-              g.animate([{ transform: `translate(${p.x}px,${WATER_Y}px)` }, { transform: `translate(${p.x + rnd(-20, 20)}px,700px) rotate(20deg)` }], { duration: 1100, easing: 'ease-in', fill: 'forwards' });
-              for (let b = 0; b < 5; b++) { const bb = S('circle', { cx: p.x + rnd(-14, 14), cy: WATER_Y + 40 + b * 40, r: rnd(3, 7), fill: 'rgba(255,255,255,0.7)' }, svg); bb.animate([{ opacity: 0.8, transform: 'translateY(0)' }, { opacity: 0, transform: 'translateY(-70px)' }], { duration: 900, delay: b * 120 }).onfinish = () => bb.remove(); }
-            }
-            if (D() >= 5 && it.o.dens) {
-              const lab = S('g', { transform: `translate(${p.x},${WATER_Y - 64})` }, svg);
-              S('rect', { x: -74, y: -22, width: 148, height: 36, rx: 18, fill: '#fff', stroke: '#2EC4B6', 'stroke-width': 4 }, lab);
-              S('text', { x: 0, y: 4, 'text-anchor': 'middle', 'font-size': 19, 'font-weight': 800, fill: '#2B2D42', 'font-family': 'inherit', text: T('densité ' + it.o.dens, 'density ' + it.o.dens.replace(',', '.')) }, lab);
-              fxPop(lab);
-              setTimeout(() => lab.remove(), 2600);
-              say(T(it.o.fr, it.o.en) + ' : ' + T('densité ' + it.o.dens + '. ', 'density ' + it.o.dens.replace(',', '.') + '. ') + T(it.o.floats ? 'Moins de un : ça flotte !' : 'Plus de un : ça coule !', it.o.floats ? 'Less than one: it floats!' : 'More than one: it sinks!'));
-            } else say(T(it.o.fr, it.o.en) + ' ... ' + T(it.o.floats ? 'ça flotte !' : 'ça coule !', it.o.floats ? 'it floats!' : 'it sinks!'));
-            setTimeout(() => say('Range-' + (isEN() ? 'it' : 'le') + ' sur le bon ponton !', 'Drag it to the right dock!'), 1800);
+            if (D() >= 4 && !it.pred) { askPrediction(it, p); return; }
+            plunge(it, p);
           } else {
             g.animate([{ transform: `translate(${p.x}px,${p.y}px)` }, { transform: `translate(${it.home[0]}px,${it.home[1]}px)` }], { duration: 420, easing: 'cubic-bezier(0.34,1.56,0.64,1)' }).onfinish = () => g.setAttribute('transform', `translate(${it.home[0]},${it.home[1]})`);
           }
         }
       });
     });
-    mission("Jette les objets dans l'eau, puis range-les : FLOTTE ou COULE !", 'Drop the objects in the water, then sort them: FLOATS or SINKS!', ZONE_ICONS.splash);
+    if (D() >= 4) mission('Mode scientifique : annonce ton HYPOTHÈSE (flotte ou coule ?), puis jette l\u2019objet pour vérifier !', 'Scientist mode: state your HYPOTHESIS (float or sink?), then drop the object to check!', ZONE_ICONS.splash);
+    else mission("Jette les objets dans l'eau, puis range-les : FLOTTE ou COULE !", 'Drop the objects in the water, then sort them: FLOATS or SINKS!', ZONE_ICONS.splash);
     roundLive = true;
   }
   function backToWater(it) {
@@ -1424,7 +1477,7 @@ ZONE_BUILDERS.garden = function (host) {
   makeDraggable(cloudO, svg, {
     move: p => { cloudPos = p; cloudO.setAttribute('transform', `translate(${p.x},${p.y}) scale(1.15)`); },
     end: p => {
-      if (Math.abs(p.x - 750) < 180 && p.y < 520) {
+      if (gardenMode === 'grow' && Math.abs(p.x - 750) < 180 && p.y < 520) {
         if (water >= needW) { sfx.bad(); Rounds.miss(); say('Stop ! Trop d’eau noie la plante !', 'Stop! Too much water drowns the plant!'); }
         else {
           for (let i = 0; i < 10; i++) { const dr = S('path', { d: `M ${p.x + rnd(-70, 70)} ${p.y + 40} l 0 26`, stroke: '#4CC9F0', 'stroke-width': 5, 'stroke-linecap': 'round' }, svg); dr.animate([{ transform: 'translateY(0)', opacity: 1 }, { transform: `translateY(${560 - p.y}px)`, opacity: 0.2 }], { duration: 600, delay: i * 55 }).onfinish = () => dr.remove(); }
@@ -1437,20 +1490,61 @@ ZONE_BUILDERS.garden = function (host) {
   makeDraggable(sunO, svg, {
     move: p => sunO.setAttribute('transform', `translate(${p.x},${p.y})`),
     end: p => {
-      if (Math.abs(p.x - 750) < 200 && p.y < 520) {
+      if (gardenMode === 'grow' && Math.abs(p.x - 750) < 200 && p.y < 520) {
         if (sun >= needS) { sfx.bad(); Rounds.miss(); say('Trop de soleil brûle les feuilles !', 'Too much sun burns the leaves!'); }
         else { const flash = S('circle', { cx: 750, cy: 420, r: 10, fill: 'rgba(255,210,63,0.5)' }, svg); flash.animate([{ transform: 'scale(1)', opacity: 0.8 }, { transform: 'scale(30)', opacity: 0 }], { duration: 650 }).onfinish = () => flash.remove(); sun++; meters(); sfx.tap(); say('Du bon soleil !', 'Lovely sunshine!'); setTimeout(grow, 650); }
       }
       sunO.animate([{ transform: `translate(${p.x}px,${p.y}px)` }, { transform: 'translate(1280px,150px)' }], { duration: 500, easing: 'ease-out' }).onfinish = () => sunO.setAttribute('transform', 'translate(1280,150)');
     }
   });
+  // --- CE1+: between growing rounds, LABEL the plant organs (CM: by their function) ---
+  let gardenMode = 'grow';
+  function partRound() {
+    gardenMode = 'parts'; roundLive = false;
+    plantG.innerHTML = '';
+    const dg = S('g', {}, plantG);
+    // underground roots (the soil starts at y=0 of plantG)
+    const roots = S('g', { class: 'grab' }, dg);
+    S('path', { d: 'M 0 0 L 0 50 M 0 14 L -42 62 M 0 14 L 42 62 M 0 32 L -22 86 M 0 32 L 22 86', stroke: '#B07B4C', 'stroke-width': 9, fill: 'none', 'stroke-linecap': 'round' }, roots);
+    S('rect', { x: -70, y: 2, width: 140, height: 95, fill: 'rgba(0,0,0,0.001)' }, roots);
+    const stem = S('g', { class: 'grab' }, dg);
+    S('path', { d: 'M 0 0 Q -6 -90 0 -180', stroke: '#3FA34D', 'stroke-width': 13, fill: 'none', 'stroke-linecap': 'round' }, stem);
+    S('rect', { x: -22, y: -180, width: 44, height: 180, fill: 'rgba(0,0,0,0.001)' }, stem);
+    const leaves = S('g', { class: 'grab' }, dg);
+    S('path', { d: 'M -2 -100 Q -62 -118 -74 -84 Q -40 -62 -2 -100 Z M 2 -130 Q 62 -148 74 -114 Q 40 -92 2 -130 Z', fill: '#57CC57', stroke: '#2C6B2A', 'stroke-width': 4 }, leaves);
+    const flower = S('g', { class: 'grab' }, dg);
+    for (let i = 0; i < 6; i++) S('ellipse', { cx: 0, cy: -228, rx: 15, ry: 26, fill: '#F25CA2', transform: `rotate(${i * 60} 0 -202)` }, flower);
+    S('circle', { cx: 0, cy: -202, r: 15, fill: '#FFD23F' }, flower);
+    fxPop(dg);
+    const ORGANS = [
+      { el: roots, fr: 'les racines', en: 'the roots', roleF: 'Les racines boivent l\u2019eau et les sels du sol.', roleE: 'The roots drink water and minerals from the soil.', qF: 'Touche l\u2019organe qui BOIT l\u2019eau du sol !', qE: 'Tap the organ that DRINKS water from the soil!' },
+      { el: stem, fr: 'la tige', en: 'the stem', roleF: 'La tige transporte la sève et porte la plante.', roleE: 'The stem carries the sap and holds the plant up.', qF: 'Touche l\u2019organe qui TRANSPORTE la sève !', qE: 'Tap the organ that CARRIES the sap!' },
+      { el: leaves, fr: 'les feuilles', en: 'the leaves', roleF: 'Les feuilles fabriquent la nourriture avec la lumière : la photosynthèse !', roleE: 'The leaves make food with light: photosynthesis!', qF: 'Touche l\u2019organe qui FABRIQUE la nourriture avec la lumière !', qE: 'Tap the organ that MAKES food with light!' },
+      { el: flower, fr: 'la fleur', en: 'the flower', roleF: 'La fleur prépare les graines et les fruits.', roleE: 'The flower prepares the seeds and fruits.', qF: 'Touche l\u2019organe qui PRÉPARE les graines !', qE: 'Tap the organ that PREPARES the seeds!' }
+    ];
+    const target = ORGANS[ri(0, 3)];
+    const byRole = D() >= 5;
+    mission(byRole ? target.qF : 'La plante savante : touche ' + target.fr + ' !', byRole ? target.qE : 'The clever plant: tap ' + target.en + '!', ZONE_ICONS.garden);
+    let done = false;
+    ORGANS.forEach(o => o.el.addEventListener('pointerdown', () => {
+      if (done) return;
+      if (o === target) {
+        done = true; sfx.good(); confetti(14); fxPop(o.el);
+        say('Bravo ! ' + target.fr.charAt(0).toUpperCase() + target.fr.slice(1) + ' ! ' + target.roleF, 'Great! ' + target.en + '! ' + target.roleE);
+        setTimeout(() => { if (Rounds.gem()) setTimeout(zoneComplete, 900); else nextRound(); }, 1600);
+      } else { Rounds.miss(); sfx.bad(); fxWobble(o.el); say('Ça, c\u2019est ' + o.fr + ' : ' + o.roleF, 'That is ' + o.en + ': ' + o.roleE); }
+    }));
+  }
   function nextRound() {
+    if (D() >= 3 && Rounds.idx % 2 === 1) { partRound(); return; }
+    gardenMode = 'grow';
     stage = 0; water = 0; sun = 0; plantKind = ri(0, 2);
     needW = 2 + Math.min(2, Math.floor(D() / 2)); needS = needW;
     drawPlant(); meters();
     mission('Fais pousser ' + PLANTS[plantKind].fr + ' : apporte le nuage et le soleil, sans exagérer !', 'Grow ' + PLANTS[plantKind].en + ': bring the cloud and the sun — not too much!', ZONE_ICONS.garden);
     roundLive = true;
   }
+  window.__GARDEN_TEST__ = { partRound };
   nextRound();
 };
 
