@@ -158,6 +158,56 @@ html,body{ width:100%; height:100%; overflow:hidden; font-family:'Baloo 2','Fred
 .qz-sheet-row summary{ cursor:pointer; color:#B4654A; font-weight:800; }
 .qz-sheet-row ol{ margin-left:22px; margin-top:6px; line-height:1.5; }
 .qz-score{ text-align:center; font-size:1.3rem; font-weight:800; color:#2B2D42; margin-top:8px; }
+
+/* ---------- Phone-first (95% of kids play on phones) ---------- */
+#grade-dock{ max-width:96vw; overflow-x:auto; scrollbar-width:none; }
+#grade-dock::-webkit-scrollbar{ display:none; }
+@media(max-width:760px){
+  .hbtn{ width:46px; height:46px; border-width:2.5px; }
+  .hbtn svg{ width:24px; height:24px; }
+  #hud{ padding:8px 8px; gap:7px; }
+  #star-pill{ padding:5px 12px; font-size:1.05rem; }
+  #star-pill svg{ width:21px; height:21px; }
+  .gpill{ min-width:46px; padding:5px 8px; font-size:0.72rem; }
+  #grade-dock{ bottom:8px; gap:5px; padding:6px 8px; }
+  #mission-bar{ top:60px; padding:8px 10px; gap:8px; border-radius:20px; border-width:3px; }
+  #mission-icon{ width:38px; height:38px; }
+  #mission-trick,#mission-speaker{ width:36px; height:36px; font-size:1.15rem; }
+  #round-gems{ top:11px; gap:6px; } .gem{ width:17px; height:17px; }
+  .quiz-wrap{ padding:112px 8px 16px; }
+  .qz-panel{ padding:13px 12px; border-radius:20px; border-width:4px; }
+  .qz-title{ font-size:1.18rem; } .qz-q{ font-size:1.12rem; }
+  .qz-a{ font-size:1.02rem; padding:12px 8px; border-radius:16px; border-width:3px; }
+  .qz-answers{ grid-template-columns:repeat(auto-fit,minmax(128px,1fr)); gap:9px; }
+  .qz-chip{ font-size:0.86rem; padding:8px 12px; }
+  .qz-cur{ font-size:0.84rem; }
+  .qz-search{ font-size:0.95rem; padding:9px 16px; }
+  .qz-steps{ padding:10px 12px; }
+  .qz-steps ol{ margin-left:18px; font-size:0.92rem; }
+  .qz-next{ font-size:1rem; padding:10px 26px; }
+  .qz-hintbtn{ font-size:0.9rem; padding:8px 16px; }
+  .qz-sheet-row{ font-size:0.92rem; padding:9px 11px; }
+  #search-overlay{ padding:56px 8px 8px; }
+  #search-results{ grid-template-columns:repeat(auto-fill,minmax(136px,1fr)); gap:8px; }
+  .sr-card svg{ width:52px; height:52px; }
+  .sr-name{ font-size:0.86rem; }
+  #search-input{ font-size:1rem; padding:9px 16px; }
+  #cheer-inner{ padding:20px 22px; }
+  #cheer-title{ font-size:1.3rem; }
+  #cheer-art{ width:110px; height:110px; }
+}
+/* rotate hint for big playground zones on portrait phones */
+#rotate-hint{ position:absolute; left:50%; bottom:78px; transform:translateX(-50%); z-index:45; background:rgba(43,45,66,0.9); color:#fff; font-weight:800; padding:10px 20px; border-radius:999px; font-size:0.92rem; display:none; align-items:center; gap:8px; box-shadow:var(--shadow); pointer-events:none; white-space:nowrap; }
+#rotate-hint.on{ display:flex; animation:popIn 0.4s cubic-bezier(0.34,1.56,0.64,1); }
+/* ---------- Math Lab lesson player ---------- */
+.ml-stage{ width:100%; border:4px solid #FFD23F; border-radius:20px; background:linear-gradient(180deg,#FFFFFF,#F2F7FF); margin-top:12px; display:block; }
+.ml-step{ margin-top:12px; background:#FFF8E1; border:3px solid #FFD23F; border-radius:16px; padding:11px 15px; font-weight:800; color:#2B2D42; font-size:1.1rem; line-height:1.4; text-align:center; }
+@media(max-width:760px){ .ml-step{ font-size:0.95rem; padding:9px 11px; } }
+/* ---------- Griot story player ---------- */
+.gr-art{ width:min(340px,70%); margin:10px auto 0; display:block; }
+.gr-text{ margin-top:12px; font-size:1.22rem; font-weight:800; color:#2B2D42; line-height:1.5; text-align:center; }
+.gr-page{ text-align:center; color:#A0522D; font-weight:800; margin-top:8px; }
+@media(max-width:760px){ .gr-text{ font-size:1.02rem; } }
 </style>
 </head>
 <body>
@@ -174,6 +224,7 @@ html,body{ width:100%; height:100%; overflow:hidden; font-family:'Baloo 2','Fred
     <div id="star-pill"><span id="star-art"></span><span id="star-count">0</span></div>
   </div>
   <div id="grade-dock"></div>
+  <div id="rotate-hint"></div>
   <div id="confetti-layer"></div>
   <div id="search-overlay">
     <div id="search-panel">
@@ -513,7 +564,7 @@ function updateStarPill() {
 
 /* ================= WORLD MAP (the island) ================= */
 const ZONES = [
-  { key: 'bubbles', fr: 'Lagune aux Bulles', en: 'Bubble Lagoon', color: '#4CC9F0', mx: 250, my: 620, px: 235, py: 1270,
+  { key: 'bubbles', fr: 'Lagune aux Bulles', en: 'Bubble Lagoon', color: '#4CC9F0', mx: 270, my: 650, px: 235, py: 1270,
     subject: { fr: 'MATHS', dens: '1', en: 'MATH', color: '#FF9F1C' },
     topics: ['maths', 'math', 'compter', 'counting', 'nombres', 'numbers', 'addition', 'somme', 'sums', 'calcul', 'compléments', 'bonds'] },
   { key: 'orchard', fr: 'Verger de Momo', en: "Momo's Orchard", color: '#FF9F1C', mx: 450, my: 520, px: 575, py: 1175,
@@ -522,6 +573,9 @@ const ZONES = [
   { key: 'river', fr: 'Rivière de Fela', en: "Fela's River", color: '#57CC57', mx: 330, my: 390, px: 235, py: 1080,
     subject: { fr: 'LECTURE & SONS', dens: '1', en: 'READING & PHONICS', color: '#4CC9F0' },
     topics: ['lecture', 'reading', 'syllabes', 'syllables', 'sons', 'sounds', 'phonics', 'lettres', 'letters', 'mots', 'words', 'français', 'french', 'anglais', 'english', 'prononciation', 'pronunciation'] },
+  { key: 'chess', fr: 'Échecs Magiques', en: 'Magic Chess', color: '#8E44AD', mx: 215, my: 478, px: 420, py: 112,
+    subject: { fr: 'STRATÉGIE', en: 'STRATEGY', color: '#8E44AD' },
+    topics: ['échecs', 'echecs', 'chess', 'stratégie', 'strategy', 'pion', 'pawn', 'tour', 'rook', 'fou', 'bishop', 'cavalier', 'knight', 'dame', 'queen', 'roi', 'king', 'réfléchir', 'think', 'logique', 'logic'] },
   { key: 'paint', fr: 'Studio de Zara', en: "Zara's Studio", color: '#9B5DE5', mx: 540, my: 310, px: 575, py: 985,
     subject: { fr: 'FORMES & COULEURS', dens: '1', en: 'SHAPES & COLORS', color: '#9B5DE5' },
     topics: ['formes', 'shapes', 'couleurs', 'colors', 'géométrie', 'geometry', 'triangle', 'cercle', 'circle', 'carré', 'square', 'vocabulaire', 'vocabulary', 'corps', 'body', 'art'] },
@@ -531,7 +585,7 @@ const ZONES = [
   { key: 'garden', fr: 'Jardin de Nana', en: "Nana's Garden", color: '#3FA34D', mx: 1170, my: 390, px: 235, py: 700,
     subject: { fr: 'SCIENCES', dens: '1', en: 'SCIENCE', color: '#2EC4B6' },
     topics: ['sciences', 'science', 'plantes', 'plants', 'jardin', 'garden', 'photosynthèse', 'photosynthesis', 'germination', 'nature', 'biologie', 'biology', 'eau', 'soleil', 'sun'] },
-  { key: 'safari', fr: 'Safari Ballon', en: 'Balloon Safari', color: '#E5252A', mx: 1130, my: 620, px: 235, py: 510,
+  { key: 'safari', fr: 'Safari Ballon', en: 'Balloon Safari', color: '#E5252A', mx: 1160, my: 650, px: 235, py: 510,
     subject: { fr: 'GÉOGRAPHIE', dens: '1', en: 'GEOGRAPHY', color: '#E5252A' },
     topics: ['géographie', 'geography', 'pays', 'countries', 'afrique', 'africa', 'capitales', 'capitals', 'drapeaux', 'flags', 'cartes', 'maps', 'monde', 'world', 'cameroun', 'cameroon'] },
   { key: 'theatre', fr: 'Théâtre Kalulu', en: 'Kalulu Theatre', color: '#F25CA2', mx: 730, my: 650, px: 575, py: 415,
@@ -543,12 +597,18 @@ const ZONES = [
   { key: 'seek', fr: 'Cherche & Trouve', en: 'Seek & Find', color: '#FFB703', mx: 1280, my: 520, px: 575, py: 605,
     subject: { fr: 'OBSERVATION', dens: '1', en: 'OBSERVATION', color: '#F3A712' },
     topics: ['observation', 'chercher', 'cherche', 'search', 'trouve', 'find', 'seek', 'caché', 'hidden', 'papillon', 'butterfly', 'attention', 'regarder', 'look'] },
+  { key: 'griot', fr: 'Baobab du Griot', en: "Griot's Baobab", color: '#A0522D', mx: 1035, my: 495, px: 420, py: 655,
+    subject: { fr: 'HISTOIRE', en: 'HISTORY', color: '#A0522D' },
+    topics: ['histoire', 'history', 'afrique', 'africa', 'cameroun', 'cameroon', 'griot', 'rois', 'kings', 'reine', 'empire', 'mali', 'égypte', 'egypt', 'pyramides', 'pyramids', 'mandela', 'njoya', 'indépendance', 'independence', 'drapeau', 'flag'] },
   { key: 'words', fr: 'Fabrique de Mots', en: 'Word Factory', color: '#06B6D4', mx: 950, my: 650, px: 575, py: 225,
     subject: { fr: 'MOTS & LETTRES', dens: '1', en: 'WORDS & LETTERS', color: '#06B6D4' },
     topics: ['mots', 'words', 'lettres', 'letters', 'orthographe', 'spelling', 'écrire', 'write', 'writing', 'alphabet', 'word game', 'jeu de mots', 'vocabulaire', 'vocabulary', 'épeler', 'spell'] },
   { key: 'create', fr: 'Atelier Magique', en: 'Magic Workshop', color: '#FF6FB5', mx: 520, my: 650, px: 300, py: 215,
     subject: { fr: 'CRÉATION', dens: '1', en: 'CREATION', color: '#FF6FB5' },
     topics: ['création', 'creation', 'créer', 'create', 'art', 'dessin', 'drawing', 'imagination', 'atelier', 'studio', 'tableau', 'picture', 'inventer', 'invent', 'libre', 'free'] },
+  { key: 'mathlab', fr: 'Labo des Maths', en: 'Math Lab', color: '#F77F00', mx: 640, my: 468, px: 420, py: 1368,
+    subject: { fr: 'MATHS • LEÇONS', en: 'MATH LESSONS', color: '#F77F00' },
+    topics: ['leçon', 'leçons', 'lesson', 'lessons', 'maths', 'math', 'comprendre', 'understand', 'méthode', 'method', 'démonstration', 'demo', 'visuel', 'visual', 'addition', 'soustraction', 'multiplication', 'division', 'fractions', 'racine', 'square root', 'pourcentage', 'balance', 'dizaine', 'ten'] },
   { key: 'academy', fr: 'Académie des Champions', en: 'Champions Academy', color: '#5E60CE', mx: 870, my: 462, px: 420, py: 893,
     subject: { fr: 'QUIZ & ASTUCES', dens: '1', en: 'QUIZ & TRICKS', color: '#5E60CE' },
     topics: ['quiz', 'révision', 'revision', 'réviser', 'examen', 'exam', 'test', 'astuce', 'trick', 'école', 'school', 'programme', 'curriculum', 'devoirs', 'homework', 'leçon', 'lesson', 'exercice', 'exercise', 'académie', 'academy'] }
@@ -580,6 +640,12 @@ const TRICKS = {
   words: d => d <= 2 ? ['Astuce : dis le mot à voix haute et écoute le premier son !', 'Trick: say the word out loud and listen for the first sound!']
     : ['Astuce : découpe le mot en syllabes et écris-les une par une : MAI-SON !', 'Trick: break the word into syllables and spell them one at a time!'],
   create: () => ['Astuce d\u2019artiste : en création, il n\u2019y a pas d\u2019erreur, seulement des idées ! Raconte ton tableau à la fin.', 'Artist trick: in creation there are no mistakes, only ideas! Tell the story of your picture at the end.'],
+  chess: d => d <= 2 ? ['Astuce : chaque pièce bouge à sa façon. La tour glisse tout droit, comme un petit train !', 'Trick: every piece moves its own way. The rook slides straight, like a little train!']
+    : ['Astuce de maître : avant de jouer, regarde TOUTES les cases où ta pièce peut aller !', 'Master trick: before you move, look at ALL the squares your piece can reach!'],
+  mathlab: d => d <= 2 ? ['Astuce : regarde les objets bouger, puis compte avec eux à voix haute !', 'Trick: watch the objects move, then count along out loud!']
+    : ['Astuce : regarde chaque étape bouger, puis refais-la dans ta tête. Une méthode vue est une méthode retenue !', 'Trick: watch each step move, then replay it in your head. A method you SEE is a method you KEEP!'],
+  griot: d => d <= 2 ? ['Astuce : écoute bien l’histoire, la réponse est DANS les phrases !', 'Trick: listen carefully, the answer is INSIDE the sentences!']
+    : ['Astuce de griot : pose-toi les 4 questions magiques : QUI ? OÙ ? QUAND ? POURQUOI ?', 'Griot trick: ask the 4 magic questions: WHO? WHERE? WHEN? WHY?'],
   academy: d => d <= 2 ? ['Astuce de champion : \u00e9coute bien la question, puis regarde chaque r\u00e9ponse avant de choisir !', 'Champion trick: listen to the question, then look at every answer before you choose!']
     : ['Astuce de champion : lis la question deux fois, \u00e9limine les r\u00e9ponses impossibles, puis v\u00e9rifie avec l\u2019astuce pas \u00e0 pas !', 'Champion trick: read the question twice, cross out impossible answers, then check with the step-by-step trick!']
 };
@@ -596,6 +662,9 @@ const ZONE_ICONS = {
   builder: g => { S('rect', { x: -14, y: -2, width: 28, height: 20, rx: 3, fill: '#F2C078', stroke: '#B4654A', 'stroke-width': 2.5 }, g); S('path', { d: 'M -18 -2 L 0 -20 L 18 -2 Z', fill: '#E5252A' }, g); S('rect', { x: -4, y: 7, width: 8, height: 11, fill: '#8A5A33' }, g); },
   seek: g => { S('circle', { cx: -4, cy: -4, r: 11, fill: 'none', stroke: '#F3A712', 'stroke-width': 4 }, g); S('path', { d: 'M 4 4 L 15 15', stroke: '#F3A712', 'stroke-width': 5, 'stroke-linecap': 'round' }, g); S('path', { d: 'M -8 -6 Q -4 -12 0 -6 Q -4 0 -8 -6 Z M 0 -6 Q 4 -12 8 -6 Q 4 0 0 -6 Z', fill: '#9B5DE5', transform: 'scale(0.7) translate(-5,-4)' }, g); },
   words: g => { [['A', -10, -8, '#FF4D57'], ['B', 10, -8, '#4CC9F0'], ['C', 0, 10, '#57CC57']].forEach(([L, x, y, c]) => { S('rect', { x: x - 9, y: y - 9, width: 18, height: 18, rx: 4, fill: '#fff', stroke: c, 'stroke-width': 2.5 }, g); S('text', { x, y: y + 5.5, 'text-anchor': 'middle', 'font-size': 13, 'font-weight': 800, fill: c, 'font-family': 'inherit', text: L }, g); }); },
+  chess: g => { S('rect', { x: -13, y: -4, width: 26, height: 20, rx: 3, fill: '#8E44AD' }, g); S('path', { d: 'M -13 -4 L -13 -14 L -7 -14 L -7 -9 L -3 -9 L -3 -14 L 3 -14 L 3 -9 L 7 -9 L 7 -14 L 13 -14 L 13 -4 Z', fill: '#8E44AD' }, g); S('rect', { x: -17, y: 14, width: 34, height: 6, rx: 3, fill: '#6C3483' }, g); [[-5, 2], [5, 2]].forEach(([x, y]) => S('circle', { cx: x, cy: y, r: 2.4, fill: '#fff' }, g)); },
+  griot: g => { S('rect', { x: -5, y: 0, width: 10, height: 18, rx: 4, fill: 'url(#gWood)' }, g); S('path', { d: 'M 0 2 L -14 -10 M 0 2 L 14 -10 M 0 2 L 0 -16 M 0 2 L -8 -16 M 0 2 L 8 -16', stroke: '#8A5A33', 'stroke-width': 3.4, 'stroke-linecap': 'round' }, g); [[-14, -10], [14, -10], [0, -16], [-8, -16], [8, -16]].forEach(([x, y]) => S('circle', { cx: x, cy: y, r: 6, fill: '#3FA34D' }, g)); },
+  mathlab: g => { S('rect', { x: -18, y: -16, width: 36, height: 32, rx: 6, fill: '#2B2D42' }, g); S('text', { x: 0, y: -1, 'text-anchor': 'middle', 'font-size': 13, 'font-weight': 800, fill: '#FFD23F', 'font-family': 'inherit', text: '2+3' }, g); S('text', { x: 0, y: 12, 'text-anchor': 'middle', 'font-size': 13, 'font-weight': 800, fill: '#4CC9F0', 'font-family': 'inherit', text: '=5' }, g); S('rect', { x: -18, y: -16, width: 36, height: 32, rx: 6, fill: 'none', stroke: '#F77F00', 'stroke-width': 3 }, g); },
   academy: g => { S('path', { d: 'M -20 -6 L 0 -16 L 20 -6 L 0 4 Z', fill: '#2B2D42' }, g); S('path', { d: 'M -11 -2 L -11 8 Q 0 15 11 8 L 11 -2', fill: '#5E60CE', stroke: '#2B2D42', 'stroke-width': 1.5 }, g); S('path', { d: 'M 14 -8 L 14 6', stroke: '#FFD23F', 'stroke-width': 2.4 }, g); S('circle', { cx: 14, cy: 9, r: 4, fill: '#FFD23F', stroke: '#E58E09', 'stroke-width': 1.5 }, g); },
   create: g => { S('path', { d: 'M -2 16 Q -18 16 -16 0 Q -15 -14 0 -16 Q 16 -17 16 -4 Q 16 4 8 4 Q 0 4 2 10 Q 3 16 -2 16 Z', fill: '#fff', stroke: '#FF6FB5', 'stroke-width': 2.5 }, g); [['#FF4D57', -8, -7], ['#4CC9F0', 1, -10], ['#FFD23F', 9, -3], ['#57CC57', -9, 3]].forEach(([c, x, y]) => S('circle', { cx: x, cy: y, r: 3.2, fill: c }, g)); }
 };
@@ -698,6 +767,7 @@ const ZONE_BUILDERS = {};
 let activeZone = null;
 function showMap() {
   activeZone = null;
+  $('rotate-hint').classList.remove('on');
   $('grade-dock').style.display = 'flex';
   speechSynthesis && speechSynthesis.cancel();
   $('mission-bar').classList.remove('on');
@@ -721,6 +791,14 @@ function enterZone(key) {
   chip.style.background = z.subject.color;
   currentTrick = TRICKS[key] ? TRICKS[key](D()) : null;
   ZONE_BUILDERS[key](host);
+  // phone-first: suggest landscape for the big SVG playgrounds
+  const htmlZones = { academy: 1, mathlab: 1, griot: 1 };
+  if (innerHeight > innerWidth * 1.15 && !htmlZones[key]) {
+    const rh = $('rotate-hint');
+    rh.textContent = T('🔄 Tourne ton téléphone pour jouer en grand !', '🔄 Turn your phone sideways to play big!');
+    rh.classList.add('on');
+    clearTimeout(rh._t); rh._t = setTimeout(() => rh.classList.remove('on'), 3400);
+  } else $('rotate-hint').classList.remove('on');
 }
 $('mission-trick').addEventListener('click', ev => {
   ev.stopPropagation();
@@ -1827,6 +1905,38 @@ ZONE_BUILDERS.words = function (host) {
   };
   const VOW = 'AEIOUY';
   let word = '', filled = [], roundLive = false;
+  if (D() === 0) {
+    // Maternelle toddler word game: tap the FIRST letter of the picture word
+    const used = [];
+    function babyRound() {
+      tileG.innerHTML = ''; slotG.innerHTML = ''; picG.innerHTML = '';
+      let bank = BANK[isEN() ? 'en' : 'fr'].filter(w => !used.includes(w.w));
+      if (!bank.length) bank = BANK[isEN() ? 'en' : 'fr'];
+      const it = bank[ri(0, bank.length - 1)];
+      used.push(it.w);
+      const art = S('g', {}, picG); MINIS[it.m](art); fxPop(picG);
+      S('text', { x: 0, y: 160, 'text-anchor': 'middle', 'font-size': 52, 'font-weight': 800, fill: '#2B2D42', 'font-family': 'inherit', text: it.w }, picG);
+      const first = it.w[0];
+      const alpha = 'ABCDEFGHIJLMNOPRSTUV'.split('').filter(c => c !== first);
+      const opts = shuffle([first, alpha[ri(0, 9)], alpha[ri(10, alpha.length - 1)]]);
+      opts.forEach((ch, i) => {
+        const x = 880 + (i - 1) * 190;
+        const cell = S('g', { transform: `translate(${x},420)`, class: 'grab' }, tileG);
+        S('rect', { x: -75, y: -75, width: 150, height: 150, rx: 28, fill: '#fff', stroke: VOW.includes(ch) ? '#FF4D57' : '#1C7ED6', 'stroke-width': 7 }, cell);
+        S('text', { x: 0, y: 36, 'text-anchor': 'middle', 'font-size': 100, 'font-weight': 800, fill: VOW.includes(ch) ? '#FF4D57' : '#1C7ED6', 'font-family': 'inherit', text: ch }, cell);
+        cell.addEventListener('pointerdown', () => {
+          if (ch === first) {
+            sfx.good(); fxPop(cell);
+            say(ch + ' ! ' + it.w + ' commence par ' + ch + ' !', ch + '! ' + it.w + ' starts with ' + ch + '!');
+            setTimeout(() => { if (Rounds.gem()) setTimeout(zoneComplete, 800); else babyRound(); }, 1100);
+          } else { Rounds.miss(); sfx.bad(); fxWobble(cell); say('Écoute bien : ' + it.w + ' !', 'Listen again: ' + it.w + '!', 0.78); }
+        });
+      });
+      mission('Touche la PREMIÈRE lettre de : ' + it.w + ' !', 'Tap the FIRST letter of: ' + it.w + '!', ZONE_ICONS.words);
+    }
+    babyRound();
+    return;
+  }
   function buildSlots() {
     slotG.innerHTML = '';
     const w = 86;
@@ -2276,6 +2386,53 @@ const QUIZ_TOPICS = [
       ['La plante fabrique du sucre pour elle…', '…et rejette de l’OXYGÈNE pour nous !', 'C’est pour ça que les forêts sont les poumons de la planète.'],
       ['The plant makes sugar for itself…', '…and releases OXYGEN for us!', 'That’s why forests are the lungs of the planet.']);
   } },
+  { id: 'phrases', f: 'Comprendre les phrases', e: 'Sentence understanding', sub: 'l', lo: 1, hi: 6, kw: ['compréhension', 'comprehension', 'phrase', 'phrases', 'sentence', 'sentences', 'lire', 'read', 'écouter', 'listen', 'consigne', 'instructions', 'école', 'school'], gen(d) {
+    const LOW = [
+      { qf: 'Écoute : « Amina met son cahier dans son sac. » Où est le cahier ?', qe: 'Listen: “Amina puts her notebook in her bag.” Where is the notebook?',
+        ch: [['dans le sac', 'in the bag'], ['sous la table', 'under the table'], ['dans la rivière', 'in the river'], ['sur le toit', 'on the roof']], ci: 0,
+        sf: ['Relis la phrase : « DANS son sac ».', 'Le petit mot « dans » dit OÙ est une chose.', 'Réponse : dans le sac !'],
+        se: ['Read again: “IN her bag”.', 'The little word “in” tells WHERE something is.', 'Answer: in the bag!'] },
+      { qf: 'Le maître dit : « Levez la main pour parler. » Que faut-il faire pour parler ?', qe: 'The teacher says: “Raise your hand to speak.” What must you do to speak?',
+        ch: [['lever la main', 'raise your hand'], ['crier très fort', 'shout loudly'], ['sortir de la classe', 'leave the class'], ['fermer les yeux', 'close your eyes']], ci: 0,
+        sf: ['Relis : « LEVEZ LA MAIN pour parler ».', 'L’action demandée est juste avant « pour ».', 'Réponse : lever la main !'],
+        se: ['Read again: “RAISE YOUR HAND to speak”.', 'The action asked for comes right before “to speak”.', 'Answer: raise your hand!'] },
+      { qf: 'Écoute : « Pendant la récréation, Kofi joue au ballon. » QUAND joue-t-il ?', qe: 'Listen: “During break time, Kofi plays ball.” WHEN does he play?',
+        ch: [['pendant la récréation', 'during break time'], ['pendant la nuit', 'at night'], ['pendant la leçon', 'during the lesson'], ['pendant les vacances', 'during the holidays']], ci: 0,
+        sf: ['Le mot « pendant » répond à la question QUAND.', 'Relis : « PENDANT LA RÉCRÉATION, Kofi joue ».', 'Réponse : pendant la récréation !'],
+        se: ['The word “during” answers the question WHEN.', 'Read again: “DURING BREAK TIME, Kofi plays”.', 'Answer: during break time!'] }
+    ];
+    const MID = [
+      { qf: '« Avant la leçon, le maître ramasse les ardoises, puis il distribue les cahiers. » Que fait-il EN PREMIER ?', qe: '“Before the lesson, the teacher collects the slates, then hands out the notebooks.” What does he do FIRST?',
+        ch: [['il ramasse les ardoises', 'he collects the slates'], ['il distribue les cahiers', 'he hands out notebooks'], ['il efface le tableau', 'he cleans the board'], ['il ferme la porte', 'he closes the door']], ci: 0,
+        sf: ['Cherche les mots de l’ordre : « avant… puis… ».', '« Puis » veut dire APRÈS : les cahiers viennent en deuxième.', 'En premier : il ramasse les ardoises !'],
+        se: ['Look for the order words: “before… then…”.', '“Then” means AFTER: the notebooks come second.', 'First: he collects the slates!'] },
+      { qf: '« Fatou n’a pas pu lire au tableau parce qu’elle avait oublié ses lunettes. » POURQUOI n’a-t-elle pas pu lire ?', qe: '“Fatou could not read the board because she had forgotten her glasses.” WHY couldn’t she read?',
+        ch: [['elle avait oublié ses lunettes', 'she forgot her glasses'], ['elle était en retard', 'she was late'], ['le tableau était effacé', 'the board was erased'], ['elle n’aime pas lire', 'she doesn’t like reading']], ci: 0,
+        sf: ['« Parce que » annonce toujours la CAUSE.', 'Relis ce qui vient après : « parce qu’elle avait OUBLIÉ SES LUNETTES ».', 'Réponse : les lunettes oubliées !'],
+        se: ['“Because” always introduces the CAUSE.', 'Read what follows it: “because she had FORGOTTEN HER GLASSES”.', 'Answer: the forgotten glasses!'] },
+      { qf: '« Tous les élèves sortent en récréation, sauf Paul qui finit son dessin. » Qui reste en classe ?', qe: '“All the pupils go out to break, except Paul who is finishing his drawing.” Who stays in class?',
+        ch: [['Paul', 'Paul'], ['tous les élèves', 'all the pupils'], ['le maître', 'the teacher'], ['personne', 'nobody']], ci: 0,
+        sf: ['Le mot « sauf » veut dire : lui, NON.', 'Tous sortent… SAUF Paul → Paul ne sort pas.', 'C’est donc Paul qui reste !'],
+        se: ['The word “except” means: not him.', 'Everyone goes out… EXCEPT Paul → Paul does not go out.', 'So Paul stays!'] }
+    ];
+    const HIGH = [
+      { qf: '« Bien qu’il ait très peu dormi, Issa a gagné la course de l’école. » Que comprends-tu ?', qe: '“Although he slept very little, Issa won the school race.” What do you understand?',
+        ch: [['il a gagné malgré la fatigue', 'he won despite being tired'], ['il a perdu la course', 'he lost the race'], ['il a bien dormi', 'he slept well'], ['la course est annulée', 'the race was cancelled']], ci: 0,
+        sf: ['« Bien que » veut dire MALGRÉ : une difficulté n’a pas empêché la suite.', 'Difficulté : peu dormi. Résultat : il a GAGNÉ.', 'Donc : il a gagné malgré la fatigue !'],
+        se: ['“Although” means DESPITE: a difficulty did not stop the result.', 'Difficulty: little sleep. Result: he WON.', 'So: he won despite being tired!'] },
+      { qf: '« La maîtresse rendra les copies dès qu’elle aura fini de les corriger. » QUAND rendra-t-elle les copies ?', qe: '“The teacher will hand back the tests as soon as she finishes marking them.” WHEN will she hand them back?',
+        ch: [['juste après la correction', 'right after the marking'], ['avant de corriger', 'before marking'], ['jamais', 'never'], ['pendant la récréation', 'during break']], ci: 0,
+        sf: ['« Dès que » = JUSTE APRÈS, sans attendre.', 'Action 1 : finir de corriger. Action 2 : rendre les copies.', 'Réponse : juste après la correction !'],
+        se: ['“As soon as” = RIGHT AFTER, no waiting.', 'Action 1: finish marking. Action 2: hand back.', 'Answer: right after the marking!'] },
+      { qf: '« Si tu montres ton travail au maître avant la cloche, tu pourras choisir la prochaine histoire. » Que faut-il faire pour choisir l’histoire ?', qe: '“If you show your work to the teacher before the bell, you may choose the next story.” What must you do to choose the story?',
+        ch: [['montrer son travail avant la cloche', 'show your work before the bell'], ['sonner la cloche', 'ring the bell'], ['choisir une histoire tout de suite', 'choose a story right away'], ['attendre la fin de la journée', 'wait until the end of the day']], ci: 0,
+        sf: ['« Si » annonce une CONDITION : ce qu’il faut faire d’abord.', 'Condition : montrer son travail AVANT la cloche.', 'Alors seulement : choisir l’histoire !'],
+        se: ['“If” introduces a CONDITION: what must happen first.', 'Condition: show your work BEFORE the bell.', 'Only then: choose the story!'] }
+    ];
+    const bank = d <= 2 ? LOW : d <= 4 ? MID : HIGH;
+    const it = bank[ri(0, bank.length - 1)];
+    return listQ(it.qf, it.qe, it.ch, it.ci, it.sf, it.se);
+  } },
   { id: 'capitales', f: "Capitales d'Afrique", e: 'African capitals', sub: 'g', lo: 2, hi: 6, kw: ['capitale', 'capitales', 'capital', 'capitals', 'pays', 'countries', 'afrique', 'africa'], gen(d) {
     const DATA = window.AFRICA_MAP || [];
     if (!DATA.length) return nQ('2 + 2 = ?', '2 + 2 = ?', 4, ['...'], ['...']);
@@ -2410,6 +2567,546 @@ ZONE_BUILDERS.academy = function (host) {
   pending ? playTopic(pending) : picker();
 };
 
+
+/* ================= Z14 — LABO DES MATHS (lessons that MOVE: highlight, underline, motion) ================= */
+function mlFly(el, x0, y0, x1, y1, dur = 700) {
+  el.setAttribute('transform', `translate(${x1},${y1})`);
+  try { el.animate([{ transform: `translate(${x0}px,${y0}px)` }, { transform: `translate(${x1}px,${y1}px)` }], { duration: dur, easing: 'cubic-bezier(0.3,1.2,0.5,1)' }); } catch (e) {}
+}
+function mlPulse(el, n = 3) { try { el.animate([{ opacity: 1 }, { opacity: 0.22 }, { opacity: 1 }], { duration: 480, iterations: n }); } catch (e) {} }
+function mlTxt(sv, x, y, txt, size = 44, fill = '#2B2D42') { return S('text', { x, y, 'text-anchor': 'middle', 'font-size': size, 'font-weight': 800, 'font-family': 'inherit', fill, text: txt }, sv); }
+function mlUnder(sv, x, y, w, color = '#FF4D57') {
+  const r = S('rect', { x: x - w / 2, y, width: w, height: 8, rx: 4, fill: color }, sv);
+  r.style.transformBox = 'fill-box'; r.style.transformOrigin = 'left';
+  try { r.animate([{ transform: 'scaleX(0)' }, { transform: 'scaleX(1)' }], { duration: 550, easing: 'ease-out' }); } catch (e) {}
+  return r;
+}
+function mlHalo(sv, x, y, rx, ry) {
+  const e = S('ellipse', { cx: x, cy: y, rx, ry: ry == null ? rx : ry, fill: 'none', stroke: '#FFD23F', 'stroke-width': 7 }, sv);
+  mlPulse(e, 4); return e;
+}
+function mlBall(sv, color = '#FF9F1C', r = 20) {
+  const g = S('g', {}, sv);
+  S('circle', { r, fill: color, stroke: 'rgba(0,0,0,0.18)', 'stroke-width': 2.5 }, g);
+  S('circle', { cx: -r * 0.3, cy: -r * 0.35, r: r * 0.28, fill: 'rgba(255,255,255,0.55)' }, g);
+  return g;
+}
+const ML_LESSONS = [
+  { id: 'ml1', f: 'Compter : un par un', e: 'Counting: one by one', lo: 0, hi: 1, make(sv) {
+    S('rect', { x: 280, y: 300, width: 340, height: 110, rx: 20, fill: '#C68B59', stroke: '#8A5A33', 'stroke-width': 5 }, sv);
+    const numEl = mlTxt(sv, 450, 120, '', 88, '#F77F00');
+    const steps = [{ f: 'Voici un panier vide. On va compter des mangues, une par une !', e: 'Here is an empty basket. We will count mangoes, one by one!', run() { mlHalo(sv, 450, 350, 200, 80); } }];
+    const WORDS_F = ['UN !', 'DEUX !', 'TROIS !', 'QUATRE !', 'CINQ !'], WORDS_E = ['ONE!', 'TWO!', 'THREE!', 'FOUR!', 'FIVE!'];
+    for (let i = 1; i <= 5; i++) steps.push({ f: WORDS_F[i - 1] + ' Une mangue tombe dans le panier.', e: WORDS_E[i - 1] + ' A mango drops into the basket.', run() {
+      const b = mlBall(sv, '#FF9F1C', 26); mlFly(b, 450, -40, 320 + (i - 1) * 65, 340, 650);
+      numEl.textContent = i; mlPulse(numEl, 2);
+    } });
+    steps.push({ f: 'Le DERNIER nombre dit la quantité : il y a 5 mangues !', e: 'The LAST number tells how many: there are 5 mangoes!', run() { mlUnder(sv, 450, 140, 110, '#F77F00'); mlHalo(sv, 450, 350, 210, 85); } });
+    return steps;
+  } },
+  { id: 'ml2', f: 'Addition : compter en avant', e: 'Addition: counting on', lo: 1, hi: 2, make(sv) {
+    const t1 = mlTxt(sv, 310, 110, '3', 72), tp = mlTxt(sv, 380, 110, '+', 60, '#8A93AD'), t2 = mlTxt(sv, 450, 110, '2', 72, '#2E9E5B'), te = mlTxt(sv, 520, 110, '=', 60, '#8A93AD'), tq = mlTxt(sv, 600, 110, '?', 72, '#FF4D57');
+    for (let i = 0; i < 3; i++) { const b = mlBall(sv, '#FF4D57', 26); b.setAttribute('transform', `translate(${260 + i * 75},300)`); }
+    const cnt = mlTxt(sv, 450, 420, '', 56, '#2E9E5B');
+    return [
+      { f: 'On calcule 3 + 2. Voici déjà 3 pommes rouges.', e: 'We solve 3 + 2. Here are 3 red apples already.', run() { mlHalo(sv, 335, 300, 150, 60); mlPulse(t1); } },
+      { f: 'Astuce : garde le 3 dans ta tête, puis compte EN AVANT.', e: 'Trick: keep the 3 in your head, then count ON.', run() { mlHalo(sv, 310, 92, 48, 52); } },
+      { f: 'QUATRE !', e: 'FOUR!', run() { const b = mlBall(sv, '#57CC57', 26); mlFly(b, 450, -40, 500, 300); cnt.textContent = '4 !'; mlPulse(cnt, 2); } },
+      { f: 'CINQ !', e: 'FIVE!', run() { const b = mlBall(sv, '#57CC57', 26); mlFly(b, 450, -40, 575, 300); cnt.textContent = '5 !'; mlPulse(cnt, 2); } },
+      { f: '3 + 2 = 5 ! Compter en avant marche à tous les coups.', e: '3 + 2 = 5! Counting on works every single time.', run() { tq.textContent = '5'; tq.setAttribute('fill', '#2E9E5B'); mlPulse(tq, 3); mlUnder(sv, 455, 132, 340); } }
+    ];
+  } },
+  { id: 'ml3', f: 'Addition : la dizaine amie (8 + 5)', e: 'Addition: make a ten (8 + 5)', lo: 2, hi: 4, make(sv) {
+    mlTxt(sv, 450, 70, '8 + 5 = ?', 60);
+    const cells = [];
+    for (let i = 0; i < 10; i++) {
+      const x = 160 + (i % 5) * 84, y = i < 5 ? 190 : 274;
+      cells.push([x, y]);
+      S('rect', { x: x - 38, y: y - 38, width: 76, height: 76, rx: 10, fill: '#fff', stroke: '#1C7ED6', 'stroke-width': 4 }, sv);
+    }
+    for (let i = 0; i < 8; i++) { const b = mlBall(sv, '#4CC9F0', 24); b.setAttribute('transform', `translate(${cells[i][0]},${cells[i][1]})`); }
+    const reds = [];
+    for (let i = 0; i < 5; i++) { const b = mlBall(sv, '#FF4D57', 24); b.setAttribute('transform', `translate(${640 + (i % 3) * 62},${200 + Math.floor(i / 3) * 62})`); reds.push(b); }
+    return [
+      { f: 'La boîte de 10 contient déjà 8 billes bleues. À côté : 5 billes rouges.', e: 'The ten-frame already holds 8 blue marbles. Beside it: 5 red marbles.', run() { mlHalo(sv, 364, 232, 250, 130); } },
+      { f: 'Regarde : il reste 2 places vides pour faire une dizaine complète !', e: 'Look: 2 empty spaces are left to make a full ten!', run() { mlHalo(sv, cells[8][0], cells[8][1], 42); mlHalo(sv, cells[9][0], cells[9][1], 42); } },
+      { f: 'Prends 2 rouges au 5 et remplis la boîte : 8 + 2 = 10 !', e: 'Take 2 reds from the 5 and fill the box: 8 + 2 = 10!', run() { mlFly(reds[0], 640, 200, cells[8][0], cells[8][1], 800); mlFly(reds[1], 702, 200, cells[9][0], cells[9][1], 800); mlTxt(sv, 700, 330, '8 + 2 = 10', 40, '#1C7ED6'); mlUnder(sv, 700, 348, 190, '#1C7ED6'); } },
+      { f: 'Il reste 3 billes rouges dehors.', e: '3 red marbles are left outside.', run() { mlHalo(sv, 690, 235, 110, 80); } },
+      { f: '10 + 3 = 13. Donc 8 + 5 = 13 ! La dizaine amie rend tout facile.', e: '10 + 3 = 13. So 8 + 5 = 13! Making a ten makes everything easy.', run() { mlTxt(sv, 450, 420, '10 + 3 = 13', 56, '#2E9E5B'); mlUnder(sv, 450, 438, 300, '#2E9E5B'); } }
+    ];
+  } },
+  { id: 'ml4', f: 'Soustraction : enlever (12 − 4)', e: 'Subtraction: taking away (12 − 4)', lo: 2, hi: 3, make(sv) {
+    mlTxt(sv, 450, 70, '12 − 4 = ?', 60);
+    const fish = [];
+    for (let i = 0; i < 12; i++) {
+      const x = 180 + (i % 6) * 110, y = i < 6 ? 210 : 320;
+      const g = S('g', { transform: `translate(${x},${y})` }, sv);
+      drawFish(g, 0, 0, 1.1, i % 2 ? '#4CC9F0' : '#FF9F1C');
+      fish.push([g, x, y]);
+    }
+    const cnt = mlTxt(sv, 450, 425, '', 56, '#FF4D57');
+    const steps = [{ f: 'Voici 12 poissons. 4 vont nager loin : on les ENLÈVE.', e: 'Here are 12 fish. 4 will swim away: we TAKE them away.', run() {} }];
+    const CF = ['ONZE !', 'DIX !', 'NEUF !', 'HUIT !'], CE = ['ELEVEN!', 'TEN!', 'NINE!', 'EIGHT!'];
+    for (let i = 0; i < 4; i++) steps.push({ f: 'Un poisson s’en va... ' + CF[i], e: 'One fish swims off... ' + CE[i], run() {
+      const [g, x, y] = fish[11 - i];
+      mlFly(g, x, y, x + 420, y - 30, 900); g.style.opacity = 0.15;
+      cnt.textContent = (11 - i) + ' !'; mlPulse(cnt, 2);
+    } });
+    steps.push({ f: 'Il reste 8 poissons : 12 − 4 = 8 !', e: '8 fish are left: 12 − 4 = 8!', run() { mlTxt(sv, 450, 160, '12 − 4 = 8', 54, '#2E9E5B'); mlUnder(sv, 450, 178, 280, '#2E9E5B'); } });
+    return steps;
+  } },
+  { id: 'ml5', f: 'Multiplication : le tableau magique (3 × 4)', e: 'Multiplication: the magic array (3 × 4)', lo: 3, hi: 4, make(sv) {
+    mlTxt(sv, 450, 70, '3 × 4 = ?', 60);
+    const cum = mlTxt(sv, 760, 250, '', 46, '#9B5DE5');
+    function row(r) { for (let c = 0; c < 4; c++) { const b = mlBall(sv, '#FFD23F', 26); mlFly(b, 450, -40, 270 + c * 90, 170 + r * 95, 500 + c * 90); } }
+    return [
+      { f: '3 × 4 veut dire : 3 RANGÉES de 4.', e: '3 × 4 means: 3 ROWS of 4.', run() {} },
+      { f: 'Rangée 1 : quatre billes. 4 !', e: 'Row 1: four marbles. 4!', run() { row(0); cum.textContent = '4'; mlPulse(cum, 2); } },
+      { f: 'Rangée 2 : 4 + 4 = 8 !', e: 'Row 2: 4 + 4 = 8!', run() { row(1); cum.textContent = '4+4=8'; mlPulse(cum, 2); } },
+      { f: 'Rangée 3 : 8 + 4 = 12 !', e: 'Row 3: 8 + 4 = 12!', run() { row(2); cum.textContent = '8+4=12'; mlPulse(cum, 2); } },
+      { f: 'La multiplication est une addition répétée : 3 × 4 = 12 !', e: 'Multiplication is repeated addition: 3 × 4 = 12!', run() { mlTxt(sv, 450, 430, '3 × 4 = 12', 54, '#2E9E5B'); mlUnder(sv, 450, 446, 270, '#2E9E5B'); } },
+      { f: 'Astuce bonus : penche la tête ! 4 COLONNES de 3... c’est pareil : 4 × 3 = 12.', e: 'Bonus trick: tilt your head! 4 COLUMNS of 3... same thing: 4 × 3 = 12.', run() { for (let c = 0; c < 4; c++) mlHalo(sv, 270 + c * 90, 265, 40, 135); } }
+    ];
+  } },
+  { id: 'ml6', f: 'Division : le partage équitable (12 ÷ 3)', e: 'Division: fair sharing (12 ÷ 3)', lo: 4, hi: 5, make(sv) {
+    mlTxt(sv, 450, 64, '12 ÷ 3 = ?', 58);
+    const pile = [];
+    for (let i = 0; i < 12; i++) { const b = mlBall(sv, '#FF9F1C', 20); const x = 130 + (i % 3) * 48, y = 150 + Math.floor(i / 3) * 48; b.setAttribute('transform', `translate(${x},${y})`); pile.push([b, x, y]); }
+    const bx = [420, 610, 800], counts = [];
+    bx.forEach(x => { S('rect', { x: x - 72, y: 330, width: 144, height: 76, rx: 14, fill: '#C68B59', stroke: '#8A5A33', 'stroke-width': 4 }, sv); counts.push(mlTxt(sv, x, 440, '0', 34, '#8A5A33')); });
+    let dealt = 0;
+    function deal() { for (let b2 = 0; b2 < 3; b2++) { const [el, x, y] = pile[dealt]; mlFly(el, x, y, bx[b2] - 40 + Math.floor(dealt / 3) * 27, 362, 700 + b2 * 150); counts[b2].textContent = Math.floor(dealt / 3) + 1; dealt++; } counts.forEach(c => mlPulse(c, 1)); }
+    return [
+      { f: '12 oranges à partager entre 3 paniers, PART ÉGALE pour chacun !', e: '12 oranges to share between 3 baskets, an EQUAL share for each!', run() {} },
+      { f: 'Une pour chacun ! 1... 1... 1.', e: 'One for each! 1... 1... 1.', run() { deal(); } },
+      { f: 'Encore un tour ! 2 partout.', e: 'Another round! 2 everywhere.', run() { deal(); } },
+      { f: 'Troisième tour : 3 partout.', e: 'Third round: 3 everywhere.', run() { deal(); } },
+      { f: 'Dernier tour : 4 partout, et plus rien dans la pile !', e: 'Last round: 4 everywhere, and the pile is empty!', run() { deal(); } },
+      { f: 'Chaque panier a 4 oranges : 12 ÷ 3 = 4 ! Vérifie : 3 × 4 = 12.', e: 'Each basket holds 4 oranges: 12 ÷ 3 = 4! Check: 3 × 4 = 12.', run() { mlTxt(sv, 450, 130, '12 ÷ 3 = 4', 50, '#2E9E5B'); mlUnder(sv, 450, 148, 250, '#2E9E5B'); counts.forEach((c, i) => mlHalo(sv, bx[i], 368, 85, 55)); } }
+    ];
+  } },
+  { id: 'ml7', f: 'Fractions : partager une orange (3/4)', e: 'Fractions: sharing an orange (3/4)', lo: 5, hi: 6, make(sv) {
+    const cx = 250, cy = 240, R = 115;
+    S('circle', { cx, cy, r: R, fill: '#FF9F1C', stroke: '#D97800', 'stroke-width': 6 }, sv);
+    function wedge(a0, a1, fill) { const x0 = cx + R * Math.cos(a0), y0 = cy + R * Math.sin(a0), x1 = cx + R * Math.cos(a1), y1 = cy + R * Math.sin(a1); const p = S('path', { d: `M ${cx} ${cy} L ${x0} ${y0} A ${R} ${R} 0 0 1 ${x1} ${y1} Z`, fill, stroke: '#D97800', 'stroke-width': 4 }, sv); mlPulse(p, 2); return p; }
+    const num = mlTxt(sv, 620, 190, '', 76, '#E5252A'), bar = S('rect', { x: 560, y: 215, width: 120, height: 9, rx: 4, fill: '#2B2D42', opacity: 0 }, sv), den = mlTxt(sv, 620, 300, '', 76, '#1C7ED6');
+    return [
+      { f: 'Une belle orange ronde. On veut en prendre TROIS QUARTS : 3/4.', e: 'A lovely round orange. We want THREE QUARTERS of it: 3/4.', run() {} },
+      { f: 'Coupe-la en 4 parts ÉGALES. Chaque part est un quart : 1/4.', e: 'Cut it into 4 EQUAL parts. Each part is one quarter: 1/4.', run() { S('path', { d: `M ${cx - R} ${cy} L ${cx + R} ${cy} M ${cx} ${cy - R} L ${cx} ${cy + R}`, stroke: '#fff', 'stroke-width': 7 }, sv); den.textContent = '4'; bar.setAttribute('opacity', 1); mlPulse(den, 2); } },
+      { f: 'Prends une part... 1/4 !', e: 'Take one part... 1/4!', run() { wedge(-Math.PI / 2, 0, '#E5252A'); num.textContent = '1'; mlPulse(num, 2); } },
+      { f: 'Encore deux : 2/4... puis 3/4 !', e: 'Two more: 2/4... then 3/4!', run() { wedge(0, Math.PI / 2, '#E5252A'); wedge(Math.PI / 2, Math.PI, '#E5252A'); num.textContent = '3'; mlPulse(num, 2); } },
+      { f: 'EN HAUT : ce qu’on prend (3). EN BAS : le nombre de parts (4). C’est ça, une fraction !', e: 'ON TOP: what we take (3). BELOW: the number of parts (4). That is a fraction!', run() { mlHalo(sv, 620, 170, 60, 55); mlHalo(sv, 620, 280, 60, 55); mlUnder(sv, 620, 320, 130, '#1C7ED6'); } },
+      { f: 'Astuce : 3/4 de 8 mangues ? Fais 4 groupes de 2, prends 3 groupes : 6 mangues !', e: 'Trick: 3/4 of 8 mangoes? Make 4 groups of 2, take 3 groups: 6 mangoes!', run() {
+        for (let g2 = 0; g2 < 4; g2++) { S('rect', { x: 120 + g2 * 180, y: 380, width: 140, height: 66, rx: 12, fill: 'none', stroke: g2 < 3 ? '#2E9E5B' : '#C9D3EE', 'stroke-width': 5 }, sv); for (let k = 0; k < 2; k++) { const b = mlBall(sv, '#FF9F1C', 18); b.setAttribute('transform', `translate(${155 + g2 * 180 + k * 70},413)`); } }
+        mlTxt(sv, 795, 350, '= 6 !', 42, '#2E9E5B');
+      } }
+    ];
+  } },
+  { id: 'ml8', f: 'Pourcentages : la grille de 100 (25 %)', e: 'Percentages: the 100 grid (25%)', lo: 6, hi: 6, make(sv) {
+    const cells = [];
+    for (let r = 0; r < 10; r++) for (let c = 0; c < 10; c++) { const e = S('rect', { x: 150 + c * 27, y: 95 + r * 27, width: 24, height: 24, rx: 4, fill: '#fff', stroke: '#C9D3EE', 'stroke-width': 2 }, sv); cells.push(e); }
+    return [
+      { f: 'Voici une grille de 100 cases : la grille entière = 100 %.', e: 'Here is a grid of 100 squares: the whole grid = 100%.', run() { mlHalo(sv, 285, 230, 160, 160); } },
+      { f: 'Colorions 25 cases... 25 sur 100 : c’est 25 % = 25/100 !', e: 'Let us color 25 squares... 25 out of 100: that is 25% = 25/100!', run() {
+        let n = 0;
+        for (let r = 0; r < 5; r++) for (let c = 0; c < 5; c++) { const e = cells[r * 10 + c]; e.setAttribute('fill', '#9B5DE5'); try { e.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 240, delay: n * 35, fill: 'backwards' }); } catch (er) {} n++; }
+        mlTxt(sv, 650, 160, '25 % = 25/100', 42, '#9B5DE5'); mlUnder(sv, 650, 178, 260, '#9B5DE5');
+      } },
+      { f: 'Regarde bien : les 25 cases font exactement UN QUART de la grille. 25 % = 1/4 !', e: 'Look closely: those 25 squares are exactly ONE QUARTER of the grid. 25% = 1/4!', run() { mlHalo(sv, 217, 162, 78, 78); mlTxt(sv, 650, 240, '25 % = 1/4', 42, '#2B2D42'); } },
+      { f: 'Alors 25 % de 80 F ? Divise par 4 : 80 ÷ 4 = 20 F !', e: 'So 25% of 80 F? Divide by 4: 80 ÷ 4 = 20 F!', run() {
+        for (let s2 = 0; s2 < 4; s2++) S('rect', { x: 500 + s2 * 95, y: 300, width: 88, height: 56, rx: 10, fill: s2 === 0 ? '#2E9E5B' : '#E3E8F7', stroke: '#8A93AD', 'stroke-width': 3 }, sv);
+        mlTxt(sv, 545, 338, '20 F', 28, '#fff'); mlTxt(sv, 690, 410, '25 % de 80 F = 20 F', 40, '#2E9E5B'); mlUnder(sv, 690, 428, 330, '#2E9E5B');
+      } },
+      { f: 'Les pourcentages magiques : 50 % = moitié (÷2), 25 % = quart (÷4), 10 % = ÷10 !', e: 'Magic percentages: 50% = half (÷2), 25% = quarter (÷4), 10% = ÷10!', run() { mlTxt(sv, 285, 440, '50% ÷2   25% ÷4   10% ÷10', 30, '#9B5DE5'); } }
+    ];
+  } },
+  { id: 'ml9', f: 'Racine carrée : le carré parfait (√16)', e: 'Square root: the perfect square (√16)', lo: 6, hi: 6, make(sv) {
+    mlTxt(sv, 450, 60, '√16 = ?', 58);
+    const tiles = [];
+    for (let i = 0; i < 16; i++) { const x = rnd(120, 780), y = rnd(120, 400); const e = S('g', { transform: `translate(${x},${y})` }, sv); S('rect', { x: -26, y: -26, width: 52, height: 52, rx: 8, fill: '#4CC9F0', stroke: '#1C7ED6', 'stroke-width': 3 }, e); tiles.push([e, x, y]); }
+    return [
+      { f: '16 carreaux en désordre. La racine carrée pose UNE question : quel carré parfait peut-on construire ?', e: '16 scattered tiles. The square root asks ONE question: what perfect square can we build?', run() {} },
+      { f: 'Range les 16 carreaux en carré... 4 rangées de 4 !', e: 'Arrange the 16 tiles into a square... 4 rows of 4!', run() { tiles.forEach(([e, x, y], i) => mlFly(e, x, y, 320 + (i % 4) * 62, 140 + Math.floor(i / 4) * 62, 600 + i * 55)); } },
+      { f: 'Compte le CÔTÉ du carré : 1, 2, 3, 4 !', e: 'Count the SIDE of the square: 1, 2, 3, 4!', run() { mlHalo(sv, 413, 326, 150, 38); mlTxt(sv, 650, 340, '→ 4', 48, '#E5252A'); } },
+      { f: '√16 = 4 ! La racine carrée, c’est le CÔTÉ du carré parfait.', e: '√16 = 4! The square root is the SIDE of the perfect square.', run() { mlTxt(sv, 450, 430, '√16 = 4', 52, '#2E9E5B'); mlUnder(sv, 450, 446, 190, '#2E9E5B'); } },
+      { f: 'Astuce : √25 ? Imagine un carré 5 × 5 → √25 = 5. √36 ? 6 × 6 → 6 !', e: 'Trick: √25? Picture a 5 × 5 square → √25 = 5. √36? 6 × 6 → 6!', run() { mlTxt(sv, 720, 150, '√25 = 5', 34, '#9B5DE5'); mlTxt(sv, 720, 195, '√36 = 6', 34, '#9B5DE5'); } }
+    ];
+  } },
+  { id: 'ml10', f: 'Équations : la balance magique (x + 3 = 10)', e: 'Equations: the magic balance (x + 3 = 10)', lo: 6, hi: 6, make(sv) {
+    mlTxt(sv, 450, 56, 'x + 3 = 10', 54);
+    S('path', { d: 'M 450 330 L 410 400 L 490 400 Z', fill: '#8A5A33' }, sv);
+    S('rect', { x: 160, y: 310, width: 580, height: 16, rx: 8, fill: '#B4654A' }, sv);
+    S('rect', { x: 190, y: 326, width: 180, height: 60, rx: 12, fill: '#E3E8F7', stroke: '#8A93AD', 'stroke-width': 4 }, sv);
+    S('rect', { x: 530, y: 326, width: 180, height: 60, rx: 12, fill: '#E3E8F7', stroke: '#8A93AD', 'stroke-width': 4 }, sv);
+    const xbox = S('g', { transform: 'translate(235,280)' }, sv);
+    S('rect', { x: -34, y: -30, width: 68, height: 60, rx: 10, fill: '#9B5DE5', stroke: '#6C3483', 'stroke-width': 4 }, xbox);
+    S('text', { x: 0, y: 14, 'text-anchor': 'middle', 'font-size': 40, 'font-weight': 800, fill: '#fff', 'font-family': 'inherit', text: 'x' }, xbox);
+    const lg = [], rg = [];
+    for (let i = 0; i < 3; i++) { const b = mlBall(sv, '#FFD23F', 15); b.setAttribute('transform', `translate(${300 + i * 34},288)`); lg.push(b); }
+    for (let i = 0; i < 10; i++) { const b = mlBall(sv, '#FFD23F', 15); b.setAttribute('transform', `translate(${552 + (i % 5) * 34},${258 + Math.floor(i / 5) * 36})`); rg.push(b); }
+    return [
+      { f: 'Une équation est une BALANCE équilibrée : à gauche « x + 3 », à droite « 10 ».', e: 'An equation is a balanced SCALE: on the left “x + 3”, on the right “10”.', run() { mlHalo(sv, 280, 290, 130, 70); mlHalo(sv, 620, 285, 120, 75); } },
+      { f: 'Règle d’or : ce que tu fais d’un côté, fais-le AUSSI de l’autre !', e: 'Golden rule: whatever you do to one side, do to the OTHER too!', run() { mlPulse(xbox, 3); } },
+      { f: 'Enlève 3 pièces de CHAQUE côté...', e: 'Take 3 coins off EACH side...', run() { lg.forEach((b, i) => { mlFly(b, 300 + i * 34, 288, 150, 120, 700); b.style.opacity = 0.15; }); for (let i = 0; i < 3; i++) { const b = rg[9 - i]; mlFly(b, 552 + ((9 - i) % 5) * 34, 258 + Math.floor((9 - i) / 5) * 36, 800, 120, 700); b.style.opacity = 0.15; } mlTxt(sv, 450, 150, '− 3        − 3', 36, '#E5252A'); } },
+      { f: 'La balance reste équilibrée : x tout seul = 7 pièces !', e: 'The scale stays balanced: x alone = 7 coins!', run() { mlHalo(sv, 603, 270, 110, 65); mlTxt(sv, 450, 430, 'x = 7', 52, '#2E9E5B'); mlUnder(sv, 450, 446, 140, '#2E9E5B'); } },
+      { f: 'Vérifie toujours : 7 + 3 = 10 ✓ C’est gagné !', e: 'Always check: 7 + 3 = 10 ✓ You win!', run() { mlTxt(sv, 700, 430, '7 + 3 = 10 ✓', 36, '#9B5DE5'); } }
+    ];
+  } }
+];
+ZONE_BUILDERS.mathlab = function (host) {
+  const d = D();
+  Rounds.start('mathlab', 2);
+  const wrap = H('div', { class: 'quiz-wrap' }, host);
+  wrap.style.background = 'linear-gradient(160deg,#F77F00 0%,#FFB703 100%)';
+  const lessons = ML_LESSONS.filter(L => d >= L.lo && d <= L.hi);
+  function picker() {
+    wrap.innerHTML = '';
+    const p = H('div', { class: 'qz-panel' }, wrap);
+    H('div', { class: 'qz-title', text: '🔬 ' + T('Labo des Maths', 'Math Lab') }, p);
+    H('div', { class: 'qz-sub', text: T('Des leçons qui BOUGENT : regarde chaque méthode se construire sous tes yeux !', 'Lessons that MOVE: watch every method build itself before your eyes!') }, p);
+    const chips = H('div', { class: 'qz-chips' }, p);
+    lessons.forEach(L => {
+      const b = H('button', { class: 'qz-chip' }, chips);
+      b.innerHTML = '<span class="dot" style="background:#F77F00"></span>' + T(L.f, L.e);
+      b.addEventListener('click', () => { sfx.boing(); play(L); });
+    });
+    mission('Choisis une leçon : je montre la méthode en mouvement, étape par étape !', 'Pick a lesson: I show the method in motion, step by step!', ZONE_ICONS.mathlab);
+  }
+  function play(L) {
+    wrap.innerHTML = '';
+    const p = H('div', { class: 'qz-panel' }, wrap);
+    H('div', { class: 'qz-prog', text: T(L.f, L.e) }, p);
+    const sv = S('svg', { viewBox: '0 0 900 460', class: 'ml-stage' });
+    p.appendChild(sv);
+    const stepDiv = H('div', { class: 'ml-step' }, p);
+    const row = H('div', { class: 'qz-btnrow' }, p);
+    const back = H('button', { class: 'qz-hintbtn', text: '🔁 ' + T('Revoir', 'Replay') }, row);
+    const next = H('button', { class: 'qz-next on' }, row);
+    next.style.marginLeft = '10px';
+    let steps = L.make(sv, d), si = -1;
+    function show() {
+      si++;
+      if (si >= steps.length) {
+        sfx.fanfare(); confetti(40);
+        const complete = Rounds.gem();
+        if (complete || lessons.length < 2) setTimeout(zoneComplete, 900); else picker();
+        return;
+      }
+      const st = steps[si];
+      stepDiv.textContent = T(st.f, st.e);
+      say(st.f, st.e, d <= 2 ? 0.8 : 0.9);
+      try { st.run(); } catch (e) {}
+      next.textContent = si + 1 >= steps.length ? '🏁 ' + T('Leçon terminée !', 'Lesson done!') : '▶ ' + T('Étape suivante', 'Next step');
+    }
+    back.addEventListener('click', () => { sfx.tap(); sv.innerHTML = ''; steps = L.make(sv, d); si = -1; show(); });
+    next.addEventListener('click', () => { sfx.tap(); show(); });
+    show();
+  }
+  picker();
+};
+
+
+/* ================= Z15 — BAOBAB DU GRIOT (African & Cameroon history + comprehension) ================= */
+const GRIOT_ART = {
+  flagcm: sv => { S('rect', { x: -120, y: -75, width: 80, height: 150, fill: '#007A5E' }, sv); S('rect', { x: -40, y: -75, width: 80, height: 150, fill: '#CE1126' }, sv); S('rect', { x: 40, y: -75, width: 80, height: 150, fill: '#FCD116' }, sv); S('path', { d: 'M 0 -28 L 8 -8 L 30 -8 L 13 6 L 19 28 L 0 15 L -19 28 L -13 6 L -30 -8 L -8 -8 Z', fill: '#FCD116', stroke: '#B8930B', 'stroke-width': 2 }, sv); S('rect', { x: -122, y: -77, width: 244, height: 154, fill: 'none', stroke: '#2B2D42', 'stroke-width': 5, rx: 6 }, sv); },
+  africa: sv => { S('circle', { cx: 85, cy: -60, r: 26, fill: '#FFD23F' }, sv); S('path', { d: 'M -70 -85 Q 10 -105 45 -75 Q 70 -45 55 -5 Q 85 20 70 55 L 25 90 Q -5 100 -20 70 Q -55 50 -65 5 Q -105 -15 -95 -40 Q -100 -65 -70 -85 Z', fill: '#E8A33D', stroke: '#B4654A', 'stroke-width': 5 }, sv); S('circle', { cx: -15, cy: 0, r: 7, fill: '#E5252A' }, sv); },
+  mount: sv => { S('rect', { x: -150, y: 55, width: 300, height: 45, fill: '#8ED081' }, sv); S('path', { d: 'M -110 60 L -10 -70 L 95 60 Z', fill: '#6B7B8C' }, sv); S('path', { d: 'M -10 -70 L 12 -40 L 28 -58 L 44 -34 L 60 60 L 95 60 Z', fill: '#58687A' }, sv); [[-10, -92], [8, -104], [-26, -100]].forEach(([x, y]) => S('circle', { cx: x, cy: y, r: 11, fill: 'rgba(200,200,210,0.85)' }, sv)); S('path', { d: 'M -32 -42 L -10 -70 L 14 -42 Q -10 -30 -32 -42 Z', fill: '#fff' }, sv); },
+  pyramid: sv => { S('rect', { x: -150, y: 55, width: 300, height: 45, fill: '#F2D59B' }, sv); S('circle', { cx: 100, cy: -65, r: 24, fill: '#FFD23F' }, sv); S('path', { d: 'M -115 58 L -40 -62 L 40 58 Z', fill: '#D9A05B', stroke: '#B4654A', 'stroke-width': 4 }, sv); S('path', { d: 'M -40 -62 L 40 58 L -8 58 Z', fill: '#C68B59' }, sv); S('path', { d: 'M 25 58 L 75 -12 L 125 58 Z', fill: '#D9A05B', stroke: '#B4654A', 'stroke-width': 4 }, sv); },
+  mali: sv => { S('path', { d: 'M -60 -40 L -60 -70 L -40 -52 L -20 -75 L 0 -52 L 20 -75 L 40 -52 L 60 -70 L 60 -40 Z', fill: '#FFD23F', stroke: '#B8930B', 'stroke-width': 4 }, sv); S('rect', { x: -60, y: -40, width: 120, height: 26, rx: 8, fill: '#FFD23F', stroke: '#B8930B', 'stroke-width': 4 }, sv); [[-55, 45], [0, 58], [55, 45]].forEach(([x, y]) => { S('ellipse', { cx: x, cy: y, rx: 30, ry: 12, fill: '#FFD23F', stroke: '#B8930B', 'stroke-width': 3 }, sv); S('ellipse', { cx: x, cy: y - 9, rx: 30, ry: 12, fill: '#FFE37A', stroke: '#B8930B', 'stroke-width': 3 }, sv); }); },
+  indep: sv => { S('rect', { x: -130, y: -70, width: 50, height: 95, fill: '#007A5E' }, sv); S('rect', { x: -80, y: -70, width: 50, height: 95, fill: '#CE1126' }, sv); S('rect', { x: -30, y: -70, width: 50, height: 95, fill: '#FCD116' }, sv); S('rect', { x: -133, y: -73, width: 156, height: 101, fill: 'none', stroke: '#2B2D42', 'stroke-width': 4, rx: 4 }, sv); S('text', { x: 75, y: -20, 'text-anchor': 'middle', 'font-size': 46, 'font-weight': 800, fill: '#2B2D42', 'font-family': 'inherit', text: '1960' }, sv); S('path', { d: 'M 40 50 Q 70 20 100 50 Q 85 58 75 54 Q 70 72 52 70 Q 44 60 40 50 Z', fill: '#fff', stroke: '#8A93AD', 'stroke-width': 3 }, sv); },
+  njoya: sv => { S('path', { d: 'M -110 -20 Q -60 -45 -5 -20 L -5 60 Q -60 40 -110 60 Z', fill: '#FFF8E1', stroke: '#B4654A', 'stroke-width': 4 }, sv); S('path', { d: 'M -5 -20 Q 50 -45 100 -20 L 100 60 Q 50 40 -5 60 Z', fill: '#fff', stroke: '#B4654A', 'stroke-width': 4 }, sv); [['ᚠ', -75, 5], ['ᚱ', -45, 25], ['ᛇ', 30, 5], ['ᛚ', 65, 25]].forEach(([t, x, y]) => S('text', { x, y, 'text-anchor': 'middle', 'font-size': 26, 'font-weight': 800, fill: '#8E44AD', 'font-family': 'inherit', text: t }, sv)); S('path', { d: 'M 70 -80 L 95 -55 L 85 -45 L 60 -70 Z M 60 -70 L 52 -48 L 74 -56 Z', fill: '#F3A712', stroke: '#B4654A', 'stroke-width': 2.5 }, sv); },
+  mandela: sv => { S('rect', { x: -150, y: 35, width: 300, height: 10, fill: '#007A4D' }, sv); S('rect', { x: -150, y: 45, width: 300, height: 10, fill: '#FFB612' }, sv); S('rect', { x: -150, y: 55, width: 300, height: 10, fill: '#DE3831' }, sv); S('circle', { cx: 0, cy: -25, r: 48, fill: '#FFD23F', stroke: '#F3A712', 'stroke-width': 5 }, sv); for (let i = 0; i < 8; i++) S('rect', { x: -4, y: -105, width: 8, height: 20, rx: 4, fill: '#FFD23F', transform: `rotate(${i * 45} 0 -25)` }, sv); S('path', { d: 'M -95 10 A 16 16 0 1 1 -63 10 M 63 10 A 16 16 0 1 0 95 10', fill: 'none', stroke: '#5C6784', 'stroke-width': 9, 'stroke-linecap': 'round' }, sv); },
+  kingdoms: sv => { S('path', { d: 'M 0 -80 Q 55 -60 50 10 Q 45 70 0 85 Q -45 70 -50 10 Q -55 -60 0 -80 Z', fill: '#B4654A', stroke: '#6B421D', 'stroke-width': 5 }, sv); S('path', { d: 'M -22 -20 Q -12 -32 -2 -20 M 2 -20 Q 12 -32 22 -20', stroke: '#FFD23F', 'stroke-width': 5, fill: 'none', 'stroke-linecap': 'round' }, sv); S('path', { d: 'M -14 25 Q 0 36 14 25', stroke: '#FFD23F', 'stroke-width': 5, fill: 'none', 'stroke-linecap': 'round' }, sv); S('path', { d: 'M -95 80 L -65 -75 M 65 -75 L 95 80', stroke: '#8A5A33', 'stroke-width': 7, 'stroke-linecap': 'round' }, sv); S('path', { d: 'M -65 -75 L -78 -45 L -52 -45 Z M 65 -75 L 52 -45 L 78 -45 Z', fill: '#8D99AE', stroke: '#5C6784', 'stroke-width': 3 }, sv); }
+};
+const GRIOT_STORIES = [
+  { id: 'drapeau', lo: 0, hi: 2, f: 'Le drapeau du Cameroun', e: 'The flag of Cameroon', art: 'flagcm',
+    panels: [
+      ['Le drapeau du Cameroun a trois couleurs : le vert, le rouge et le jaune.', 'The flag of Cameroon has three colors: green, red and yellow.'],
+      ['Le vert, c’est la grande forêt. Le jaune, c’est le soleil et la savane. Le rouge, c’est l’unité : tous ensemble !', 'Green is the great forest. Yellow is the sun and the savanna. Red is unity: all together!'],
+      ['Au milieu brille une étoile d’or. On l’appelle l’étoile de l’unité.', 'In the middle shines a golden star. It is called the star of unity.']
+    ],
+    qs: [
+      { qf: 'Combien de couleurs a le drapeau du Cameroun ?', qe: 'How many colors does the flag of Cameroon have?', ch: [['trois', 'three'], ['deux', 'two'], ['cinq', 'five'], ['dix', 'ten']], ci: 0, sf: ['Relis la première phrase : vert, rouge, jaune.', 'Compte-les sur tes doigts : 1, 2, 3 !'], se: ['Reread the first sentence: green, red, yellow.', 'Count them on your fingers: 1, 2, 3!'] },
+      { qf: 'Que représente le VERT ?', qe: 'What does GREEN stand for?', ch: [['la forêt', 'the forest'], ['la mer', 'the sea'], ['la nuit', 'the night'], ['le feu', 'fire']], ci: 0, sf: ['L’histoire dit : « Le vert, c’est la grande forêt. »', 'Le Cameroun a d’immenses forêts vertes !'], se: ['The story says: “Green is the great forest.”', 'Cameroon has huge green forests!'] },
+      { qf: 'Qu’y a-t-il au milieu du drapeau ?', qe: 'What is in the middle of the flag?', ch: [['une étoile d’or', 'a golden star'], ['un lion', 'a lion'], ['une lune', 'a moon'], ['un ballon', 'a ball']], ci: 0, sf: ['La dernière phrase dit : « Au milieu brille une étoile d’or. »', 'C’est l’étoile de l’unité !'], se: ['The last sentence says: “In the middle shines a golden star.”', 'It is the star of unity!'] }
+    ] },
+  { id: 'afriquegeante', lo: 0, hi: 2, f: 'L’Afrique, continent géant', e: 'Africa, the giant continent', art: 'africa',
+    panels: [
+      ['L’Afrique est un continent géant. Elle compte 54 pays !', 'Africa is a giant continent. It has 54 countries!'],
+      ['On y trouve le Sahara, le plus grand désert chaud du monde, et le fleuve Nil, long comme un serpent géant.', 'It holds the Sahara, the biggest hot desert in the world, and the Nile river, long like a giant snake.'],
+      ['Des millions d’enfants, comme toi, y vont à l’école chaque matin.', 'Millions of children, just like you, go to school there every morning.']
+    ],
+    qs: [
+      { qf: 'Combien de pays compte l’Afrique ?', qe: 'How many countries does Africa have?', ch: [['54', '54'], ['3', '3'], ['12', '12'], ['100', '100']], ci: 0, sf: ['Relis : « Elle compte 54 pays ! »'], se: ['Reread: “It has 54 countries!”'] },
+      { qf: 'Comment s’appelle le plus grand désert chaud du monde ?', qe: 'What is the biggest hot desert in the world called?', ch: [['le Sahara', 'the Sahara'], ['le Nil', 'the Nile'], ['le Kilimandjaro', 'Kilimanjaro'], ['la savane', 'the savanna']], ci: 0, sf: ['L’histoire dit : « le Sahara, le plus grand désert chaud du monde ».'], se: ['The story says: “the Sahara, the biggest hot desert in the world”.'] },
+      { qf: 'Le Nil est…', qe: 'The Nile is…', ch: [['un très long fleuve', 'a very long river'], ['une montagne', 'a mountain'], ['un animal', 'an animal'], ['une ville', 'a city']], ci: 0, sf: ['Relis : « le fleuve Nil, long comme un serpent géant ».', 'Un fleuve, c’est de l’eau qui coule vers la mer !'], se: ['Reread: “the Nile river, long like a giant snake”.', 'A river is water flowing to the sea!'] }
+    ] },
+  { id: 'montcameroun', lo: 1, hi: 3, f: 'Le mont Cameroun', e: 'Mount Cameroon', art: 'mount',
+    panels: [
+      ['Le mont Cameroun est la plus haute montagne du Cameroun. Il touche presque les nuages !', 'Mount Cameroon is the highest mountain in Cameroon. It almost touches the clouds!'],
+      ['C’est un volcan ! Les anciens l’appellent le « Char des Dieux ».', 'It is a volcano! The elders call it the “Chariot of the Gods”.'],
+      ['Chaque année, des coureurs très courageux grimpent jusqu’à son sommet lors d’une grande course.', 'Every year, very brave runners race all the way to its summit.']
+    ],
+    qs: [
+      { qf: 'Qu’est-ce que le mont Cameroun ?', qe: 'What is Mount Cameroon?', ch: [['la plus haute montagne du Cameroun', 'the highest mountain in Cameroon'], ['un fleuve', 'a river'], ['une forêt', 'a forest'], ['une île', 'an island']], ci: 0, sf: ['La première phrase le dit mot pour mot !'], se: ['The first sentence says it word for word!'] },
+      { qf: 'Quel est son surnom ?', qe: 'What is its nickname?', ch: [['le Char des Dieux', 'the Chariot of the Gods'], ['le Toit du Monde', 'the Roof of the World'], ['la Dent du Lion', 'the Lion’s Tooth'], ['l’Étoile Verte', 'the Green Star']], ci: 0, sf: ['Relis la deuxième phrase : « Char des Dieux ».', 'C’est parce que c’est un volcan puissant !'], se: ['Reread the second sentence: “Chariot of the Gods”.', 'Because it is a mighty volcano!'] },
+      { qf: 'Que se passe-t-il chaque année ?', qe: 'What happens every year?', ch: [['une grande course jusqu’au sommet', 'a big race to the summit'], ['une fête des poissons', 'a fish festival'], ['il neige partout', 'it snows everywhere'], ['rien du tout', 'nothing at all']], ci: 0, sf: ['La dernière phrase parle des coureurs courageux.', '« Chaque année » te dit QUAND !'], se: ['The last sentence talks about the brave runners.', '“Every year” tells you WHEN!'] }
+    ] },
+  { id: 'pyramides', lo: 3, hi: 4, f: 'Les pyramides d’Égypte', e: 'The pyramids of Egypt', art: 'pyramid',
+    panels: [
+      ['Il y a plus de 4000 ans, en Égypte, au bord du fleuve Nil, vivaient des rois appelés pharaons.', 'More than 4000 years ago, in Egypt, beside the Nile river, lived kings called pharaohs.'],
+      ['Pour eux, on a bâti les pyramides : des montagnes de pierre parfaites, construites sans machines modernes !', 'For them, the pyramids were built: perfect stone mountains, raised without modern machines!'],
+      ['La plus célèbre est la pyramide de Khéops. Elle est encore debout aujourd’hui, et c’est en Afrique !', 'The most famous is the pyramid of Khufu. It still stands today, and it is in Africa!']
+    ],
+    qs: [
+      { qf: 'Comment appelait-on les rois d’Égypte ?', qe: 'What were the kings of Egypt called?', ch: [['les pharaons', 'pharaohs'], ['les griots', 'griots'], ['les sultans', 'sultans'], ['les pilotes', 'pilots']], ci: 0, sf: ['Relis : « des rois appelés pharaons ».'], se: ['Reread: “kings called pharaohs”.'] },
+      { qf: 'Au bord de quel fleuve les pyramides ont-elles été bâties ?', qe: 'Beside which river were the pyramids built?', ch: [['le Nil', 'the Nile'], ['la Sanaga', 'the Sanaga'], ['le Congo', 'the Congo'], ['le Niger', 'the Niger']], ci: 0, sf: ['La première phrase dit : « au bord du fleuve Nil ».'], se: ['The first sentence says: “beside the Nile river”.'] },
+      { qf: 'Les pyramides se trouvent…', qe: 'The pyramids are located…', ch: [['en Afrique', 'in Africa'], ['en Europe', 'in Europe'], ['sur la Lune', 'on the Moon'], ['en Amérique', 'in America']], ci: 0, sf: ['La dernière phrase le crie : « c’est en Afrique ! »', 'L’Égypte est un pays d’Afrique du Nord.'], se: ['The last sentence shouts it: “it is in Africa!”', 'Egypt is a country in North Africa.'] }
+    ] },
+  { id: 'mansa', lo: 3, hi: 5, f: 'Mansa Moussa et l’empire du Mali', e: 'Mansa Musa and the Mali empire', art: 'mali',
+    panels: [
+      ['Il y a 700 ans, l’empire du Mali brillait en Afrique de l’Ouest. Son roi s’appelait Mansa Moussa.', '700 years ago, the Mali empire shone in West Africa. Its king was called Mansa Musa.'],
+      ['Mansa Moussa possédait tant d’or qu’on dit qu’il fut l’homme le plus riche de tous les temps !', 'Mansa Musa owned so much gold that he is said to be the richest man of all time!'],
+      ['Dans sa ville de Tombouctou, il fit construire des écoles et des bibliothèques pleines de livres précieux.', 'In his city of Timbuktu, he built schools and libraries full of precious books.']
+    ],
+    qs: [
+      { qf: 'Qui était Mansa Moussa ?', qe: 'Who was Mansa Musa?', ch: [['le roi de l’empire du Mali', 'the king of the Mali empire'], ['un footballeur', 'a footballer'], ['un pharaon d’Égypte', 'a pharaoh of Egypt'], ['un navigateur', 'a sailor']], ci: 0, sf: ['Relis : « Son roi s’appelait Mansa Moussa ».'], se: ['Reread: “Its king was called Mansa Musa”.'] },
+      { qf: 'Pourquoi dit-on qu’il fut l’homme le plus riche de tous les temps ?', qe: 'Why is he called the richest man of all time?', ch: [['à cause de son or', 'because of his gold'], ['à cause de ses chevaux', 'because of his horses'], ['à cause de ses chansons', 'because of his songs'], ['à cause de la pluie', 'because of the rain']], ci: 0, sf: ['« tant d’OR » : c’est la cause.', 'Cherche le mot-clé dans la phrase 2 !'], se: ['“so much GOLD”: that is the cause.', 'Find the key word in sentence 2!'] },
+      { qf: 'Que trouvait-on à Tombouctou ?', qe: 'What could you find in Timbuktu?', ch: [['des écoles et des bibliothèques', 'schools and libraries'], ['des pistes de ski', 'ski slopes'], ['des sous-marins', 'submarines'], ['des volcans', 'volcanoes']], ci: 0, sf: ['La phrase 3 dit : « des écoles et des bibliothèques pleines de livres ».', 'Le savoir était un trésor, comme l’or !'], se: ['Sentence 3 says: “schools and libraries full of books”.', 'Knowledge was a treasure, like gold!'] }
+    ] },
+  { id: 'independance', lo: 3, hi: 5, f: 'Le Cameroun devient indépendant', e: 'Cameroon becomes independent', art: 'indep',
+    panels: [
+      ['Le 1er janvier 1960, le Cameroun est devenu un pays libre et indépendant.', 'On January 1st, 1960, Cameroon became a free and independent country.'],
+      ['En 1961, deux parties du pays se sont réunies pour ne former qu’un seul Cameroun.', 'In 1961, two parts of the country reunited to form one single Cameroon.'],
+      ['C’est pour cela que le Cameroun parle deux langues officielles : le français ET l’anglais. Sa capitale est Yaoundé.', 'That is why Cameroon speaks two official languages: French AND English. Its capital is Yaoundé.']
+    ],
+    qs: [
+      { qf: 'En quelle année le Cameroun est-il devenu indépendant ?', qe: 'In which year did Cameroon become independent?', ch: [['1960', '1960'], ['2020', '2020'], ['1800', '1800'], ['1999', '1999']], ci: 0, sf: ['Relis : « Le 1er janvier 1960… ».', 'Astuce : la date est au tout début de l’histoire.'], se: ['Reread: “On January 1st, 1960…”.', 'Trick: the date is at the very start of the story.'] },
+      { qf: 'Pourquoi le Cameroun parle-t-il français ET anglais ?', qe: 'Why does Cameroon speak French AND English?', ch: [['parce que deux parties du pays se sont réunies', 'because two parts of the country reunited'], ['parce que c’est plus joli', 'because it sounds nicer'], ['à cause de la pluie', 'because of the rain'], ['personne ne sait', 'nobody knows']], ci: 0, sf: ['« C’est pour cela que… » : la cause est juste avant, en 1961.', 'Deux parties réunies → deux langues gardées !'], se: ['“That is why…”: the cause comes just before, in 1961.', 'Two parts reunited → two languages kept!'] },
+      { qf: 'Quelle est la capitale du Cameroun ?', qe: 'What is the capital of Cameroon?', ch: [['Yaoundé', 'Yaoundé'], ['Douala', 'Douala'], ['Dakar', 'Dakar'], ['Nairobi', 'Nairobi']], ci: 0, sf: ['La dernière phrase le dit : « Sa capitale est Yaoundé ».', 'Douala est la grande ville du port, mais la capitale est Yaoundé !'], se: ['The last sentence says it: “Its capital is Yaoundé”.', 'Douala is the big port city, but the capital is Yaoundé!'] }
+    ] },
+  { id: 'njoya', lo: 4, hi: 6, f: 'Le sultan Njoya invente une écriture', e: 'Sultan Njoya invents a script', art: 'njoya',
+    panels: [
+      ['Il y a un peu plus de 100 ans, le sultan Njoya régnait sur le royaume Bamoun, à Foumban, au Cameroun.', 'A little over 100 years ago, Sultan Njoya ruled the Bamun kingdom, in Foumban, Cameroon.'],
+      ['Il inventa une écriture pour sa langue : le shümom. Des centaines de signes, dessinés par son peuple et lui !', 'He invented a script for his language: Shümom. Hundreds of signs, designed by him and his people!'],
+      ['Il fit aussi bâtir un grand palais et des écoles. On visite encore son palais aujourd’hui.', 'He also built a great palace and schools. His palace can still be visited today.']
+    ],
+    qs: [
+      { qf: 'Sur quel royaume régnait le sultan Njoya ?', qe: 'Which kingdom did Sultan Njoya rule?', ch: [['le royaume Bamoun', 'the Bamun kingdom'], ['l’empire romain', 'the Roman empire'], ['le royaume de France', 'the kingdom of France'], ['l’empire du Japon', 'the empire of Japan']], ci: 0, sf: ['Relis la première phrase : « le royaume Bamoun, à Foumban ».'], se: ['Reread the first sentence: “the Bamun kingdom, in Foumban”.'] },
+      { qf: 'Qu’a inventé le sultan Njoya ?', qe: 'What did Sultan Njoya invent?', ch: [['une écriture : le shümom', 'a script: Shümom'], ['le téléphone', 'the telephone'], ['l’avion', 'the airplane'], ['le football', 'football']], ci: 0, sf: ['Phrase 2 : « Il inventa une écriture… le shümom ».', 'Inventer une écriture, c’est offrir la lecture à tout un peuple !'], se: ['Sentence 2: “He invented a script… Shümom”.', 'Inventing a script gives reading to a whole people!'] },
+      { qf: 'Que peut-on encore visiter aujourd’hui ?', qe: 'What can still be visited today?', ch: [['son palais à Foumban', 'his palace in Foumban'], ['son bateau', 'his boat'], ['sa fusée', 'his rocket'], ['son château en Espagne', 'his castle in Spain']], ci: 0, sf: ['La dernière phrase répond : « On visite encore son palais ».', '« Aujourd’hui » = de nos jours !'], se: ['The last sentence answers: “His palace can still be visited”.', '“Today” = in our times!'] }
+    ] },
+  { id: 'mandela', lo: 4, hi: 6, f: 'Nelson Mandela, le géant de la liberté', e: 'Nelson Mandela, the giant of freedom', art: 'mandela',
+    panels: [
+      ['En Afrique du Sud, les gens étaient autrefois séparés par la couleur de leur peau. C’était injuste.', 'In South Africa, people were once separated by the color of their skin. It was unfair.'],
+      ['Nelson Mandela s’est battu pour l’égalité. On l’a mis en prison pendant 27 ans, mais il n’a jamais abandonné.', 'Nelson Mandela fought for equality. He was kept in prison for 27 years, but he never gave up.'],
+      ['Libéré, il a pardonné. En 1994, il est devenu président, et son pays s’est réuni. Il a reçu le prix Nobel de la paix.', 'Once free, he forgave. In 1994 he became president, and his country came together. He received the Nobel Peace Prize.']
+    ],
+    qs: [
+      { qf: 'Pour quoi Nelson Mandela s’est-il battu ?', qe: 'What did Nelson Mandela fight for?', ch: [['l’égalité entre tous', 'equality for all'], ['gagner une course', 'winning a race'], ['devenir riche', 'becoming rich'], ['construire des pyramides', 'building pyramids']], ci: 0, sf: ['Phrase 2 : « il s’est battu pour l’ÉGALITÉ ».', 'L’égalité : les mêmes droits pour tous.'], se: ['Sentence 2: “he fought for EQUALITY”.', 'Equality: the same rights for everyone.'] },
+      { qf: 'Combien d’années a-t-il passées en prison ?', qe: 'How many years did he spend in prison?', ch: [['27 ans', '27 years'], ['2 jours', '2 days'], ['100 ans', '100 years'], ['6 mois', '6 months']], ci: 0, sf: ['Le nombre est écrit dans la phrase 2 : 27 ans.', 'Et pourtant : « il n’a jamais abandonné » !'], se: ['The number is written in sentence 2: 27 years.', 'And still: “he never gave up”!'] },
+      { qf: 'Que s’est-il passé en 1994 ?', qe: 'What happened in 1994?', ch: [['il est devenu président', 'he became president'], ['il est entré en prison', 'he went to prison'], ['il a inventé une écriture', 'he invented a script'], ['il a gagné la coupe du monde', 'he won the World Cup']], ci: 0, sf: ['Cherche la date 1994 dans le texte : « il est devenu président ».', 'Astuce : une date est toujours collée à son événement.'], se: ['Find the date 1994 in the text: “he became president”.', 'Trick: a date always sits next to its event.'] }
+    ] },
+  { id: 'royaumes', lo: 5, hi: 6, f: 'Les grands royaumes d’Afrique', e: 'The great kingdoms of Africa', art: 'kingdoms',
+    panels: [
+      ['Bien avant les pays d’aujourd’hui, l’Afrique avait de puissants empires : le Ghana, le Mali, puis le Songhaï.', 'Long before today’s countries, Africa had mighty empires: Ghana, Mali, then Songhai.'],
+      ['Au Cameroun, il y a plus de 1000 ans, le peuple Sao fabriquait déjà de magnifiques statues de bronze près du lac Tchad.', 'In Cameroon, more than 1000 years ago, the Sao people were already crafting beautiful bronze statues near Lake Chad.'],
+      ['Les chefferies bamiléké et le royaume Bamoun existent encore : leurs rois, leurs masques et leurs fêtes font la fierté du pays.', 'The Bamileke chiefdoms and the Bamun kingdom still exist: their kings, masks and festivals are the pride of the country.']
+    ],
+    qs: [
+      { qf: 'Cite un grand empire d’Afrique de l’Ouest.', qe: 'Name a great West African empire.', ch: [['l’empire du Mali', 'the Mali empire'], ['l’empire romain', 'the Roman empire'], ['l’empire inca', 'the Inca empire'], ['l’empire mongol', 'the Mongol empire']], ci: 0, sf: ['Phrase 1 : « le Ghana, le Mali, puis le Songhaï ».', 'Trois empires africains à retenir !'], se: ['Sentence 1: “Ghana, Mali, then Songhai”.', 'Three African empires to remember!'] },
+      { qf: 'Que fabriquait le peuple Sao ?', qe: 'What did the Sao people craft?', ch: [['des statues de bronze', 'bronze statues'], ['des voitures', 'cars'], ['des ordinateurs', 'computers'], ['des bateaux à vapeur', 'steamboats']], ci: 0, sf: ['Phrase 2 : « de magnifiques statues de bronze ».', 'Près du lac Tchad, il y a plus de 1000 ans !'], se: ['Sentence 2: “beautiful bronze statues”.', 'Near Lake Chad, more than 1000 years ago!'] },
+      { qf: 'Quels royaumes du Cameroun existent encore aujourd’hui ?', qe: 'Which Cameroonian kingdoms still exist today?', ch: [['les chefferies bamiléké et le royaume Bamoun', 'the Bamileke chiefdoms and the Bamun kingdom'], ['l’empire Songhaï', 'the Songhai empire'], ['le royaume des pharaons', 'the pharaohs’ kingdom'], ['aucun', 'none']], ci: 0, sf: ['La phrase 3 dit : « existent ENCORE ».', 'Leurs masques et leurs fêtes font la fierté du pays !'], se: ['Sentence 3 says: “STILL exist”.', 'Their masks and festivals are the country’s pride!'] }
+    ] }
+];
+ZONE_BUILDERS.griot = function (host) {
+  const d = D();
+  Rounds.start('griot', 3);
+  const wrap = H('div', { class: 'quiz-wrap' }, host);
+  wrap.style.background = 'linear-gradient(160deg,#8C4A22 0%,#D9A05B 100%)';
+  const stories = GRIOT_STORIES.filter(s => d >= s.lo && d <= s.hi);
+  function picker() {
+    wrap.innerHTML = '';
+    const p = H('div', { class: 'qz-panel' }, wrap);
+    H('div', { class: 'qz-title', text: '🌳 ' + T('Le Baobab du Griot', 'The Griot’s Baobab') }, p);
+    H('div', { class: 'qz-sub', text: T('Histoires vraies d’Afrique et du Cameroun — écoute, lis, puis réponds !', 'True stories of Africa and Cameroon — listen, read, then answer!') }, p);
+    const chips = H('div', { class: 'qz-chips' }, p);
+    stories.forEach(st => {
+      const b = H('button', { class: 'qz-chip' }, chips);
+      b.innerHTML = '<span class="dot" style="background:#A0522D"></span>' + T(st.f, st.e);
+      b.addEventListener('click', () => { sfx.boing(); play(st); });
+    });
+    mission('Assieds-toi sous le baobab ! Choisis une histoire d’Afrique ou du Cameroun.', 'Sit under the baobab! Pick a story of Africa or Cameroon.', ZONE_ICONS.griot);
+  }
+  function play(st) {
+    let pi = 0;
+    function panel() {
+      wrap.innerHTML = '';
+      const p = H('div', { class: 'qz-panel' }, wrap);
+      H('div', { class: 'qz-title', text: T(st.f, st.e) }, p);
+      const sv = S('svg', { viewBox: '-150 -115 300 230', class: 'gr-art' });
+      p.appendChild(sv);
+      (GRIOT_ART[st.art] || (() => {}))(sv);
+      H('div', { class: 'gr-text', text: T(st.panels[pi][0], st.panels[pi][1]) }, p);
+      H('div', { class: 'gr-page', text: '📖 ' + (pi + 1) + ' / ' + st.panels.length }, p);
+      const row = H('div', { class: 'qz-btnrow' }, p);
+      const hear = H('button', { class: 'qz-hintbtn', text: '🔊 ' + T('Réécouter', 'Hear again') }, row);
+      const next = H('button', { class: 'qz-next on', text: pi + 1 < st.panels.length ? '➡ ' + T('La suite', 'What happens next') : '❓ ' + T('Les questions !', 'The questions!') }, row);
+      next.style.marginLeft = '10px';
+      hear.addEventListener('click', () => { sfx.tap(); say(st.panels[pi][0], st.panels[pi][1], d <= 2 ? 0.78 : 0.88); });
+      say(st.panels[pi][0], st.panels[pi][1], d <= 2 ? 0.78 : 0.88);
+      next.addEventListener('click', () => { sfx.tap(); pi++; if (pi < st.panels.length) panel(); else question(0); });
+    }
+    function question(qi) {
+      const q = st.qs[qi];
+      const order = shuffle(q.ch.map((_, i) => i));
+      wrap.innerHTML = '';
+      const p = H('div', { class: 'qz-panel' }, wrap);
+      H('div', { class: 'qz-prog', text: T('Question ', 'Question ') + (qi + 1) + ' / ' + st.qs.length + ' — ' + T(st.f, st.e) }, p);
+      H('div', { class: 'qz-q', text: T(q.qf, q.qe) }, p);
+      const grid = H('div', { class: 'qz-answers' }, p);
+      const steps = H('div', { class: 'qz-steps' }, p);
+      steps.innerHTML = '<h4>💡 ' + T('Relis avec moi', 'Reread with me') + '</h4><ol>' + (isEN() ? q.se : q.sf).map(s2 => '<li>' + s2 + '</li>').join('') + '</ol>';
+      const row = H('div', { class: 'qz-btnrow' }, p);
+      const next = H('button', { class: 'qz-next', text: qi + 1 < st.qs.length ? T('Question suivante ➡', 'Next question ➡') : '🏁 ' + T('Fin de l’histoire', 'End of the story') }, row);
+      let answered = false;
+      const btns = [];
+      order.forEach(oi => {
+        const b = H('button', { class: 'qz-a', text: T(q.ch[oi][0], q.ch[oi][1]) }, grid);
+        btns.push(b);
+        b.addEventListener('click', () => {
+          if (answered) return; answered = true;
+          btns.forEach(x => x.disabled = true);
+          const ok = oi === q.ci;
+          b.classList.add(ok ? 'good' : 'bad');
+          btns[order.indexOf(q.ci)].classList.add('good');
+          if (ok) { Rounds.gem(); say(['Bravo !', 'Exact !', 'Quelle mémoire !'][ri(0, 2)], ['Great!', 'Correct!', 'What a memory!'][ri(0, 2)]); }
+          else { Rounds.miss(); sfx.bad(); steps.classList.add('on'); say('Regarde : la réponse était dans l’histoire !', 'Look: the answer was in the story!'); }
+          next.classList.add('on');
+        });
+      });
+      say(q.qf, q.qe, d <= 2 ? 0.8 : 0.9);
+      next.addEventListener('click', () => { sfx.tap(); if (qi + 1 < st.qs.length) question(qi + 1); else zoneComplete(); });
+    }
+    panel();
+  }
+  picker();
+};
+
+
+/* ================= Z16 — ÉCHECS MAGIQUES (kids chess: learn how pieces move) ================= */
+ZONE_BUILDERS.chess = function (host) {
+  const svg = S('svg', { class: 'stage', viewBox: '0 0 1500 850', preserveAspectRatio: (innerWidth >= innerHeight * 1.02 ? 'xMidYMid slice' : 'xMidYMid meet') }, host);
+  gradDefs(svg);
+  const d = D();
+  S('rect', { width: 1500, height: 850, fill: '#3B2353' }, svg);
+  // castle backdrop
+  [[150, 0.9], [1290, 0.9]].forEach(([x, s]) => {
+    const c = S('g', { transform: `translate(${x},620) scale(${s})` }, svg);
+    S('rect', { x: -70, y: -180, width: 140, height: 220, rx: 8, fill: '#54386F' }, c);
+    S('path', { d: 'M -70 -180 L -70 -210 L -46 -210 L -46 -190 L -24 -190 L -24 -210 L 0 -210 L 0 -190 L 24 -190 L 24 -210 L 46 -210 L 46 -190 L 70 -190 L 70 -180 Z', fill: '#54386F' }, c);
+    S('rect', { x: -18, y: -80, width: 36, height: 120, rx: 16, fill: '#3B2353' }, c);
+    S('circle', { cx: 0, cy: -140, r: 14, fill: '#FFD23F', opacity: 0.85 }, c);
+  });
+  for (let i = 0; i < 26; i++) S('circle', { cx: rnd(20, 1480), cy: rnd(20, 240), r: rnd(1.4, 3.4), fill: '#FFF3B0', opacity: rnd(0.4, 0.95) }, svg);
+  // 6x6 board
+  const N = 6, CELL = 92, BX = 474, BY = 168;
+  S('rect', { x: BX - 20, y: BY - 20, width: N * CELL + 40, height: N * CELL + 40, rx: 22, fill: '#6B421D', stroke: '#FFD23F', 'stroke-width': 6 }, svg);
+  for (let r = 0; r < N; r++) for (let c = 0; c < N; c++)
+    S('rect', { x: BX + c * CELL, y: BY + r * CELL, width: CELL, height: CELL, fill: (r + c) % 2 ? '#B5835A' : '#F6E7C8' }, svg);
+  const boardFx = S('g', {}, svg);   // dots + star
+  const pieceLayer = S('g', {}, svg);
+  const hitLayer = S('g', {}, svg);
+  const cx = c => BX + c * CELL + CELL / 2, cy = r => BY + r * CELL + CELL / 2;
+  const inB = (c, r) => c >= 0 && c < N && r >= 0 && r < N;
+  function ray(c, r, dirs, max) {
+    const out = [];
+    dirs.forEach(([dc, dr]) => { for (let k = 1; k <= (max || N); k++) { const nc = c + dc * k, nr = r + dr * k; if (!inB(nc, nr)) break; out.push([nc, nr]); } });
+    return out;
+  }
+  function body(g, color) {
+    S('ellipse', { cx: 0, cy: 34, rx: 26, ry: 10, fill: 'rgba(0,0,0,0.25)' }, g);
+    S('path', { d: 'M -22 32 Q -26 6 -10 -6 L 10 -6 Q 26 6 22 32 Z', fill: color, stroke: '#4B2E63', 'stroke-width': 3.5 }, g);
+  }
+  function face(g, y = -16) { [[-7, y], [7, y]].forEach(([x, yy]) => { S('circle', { cx: x, cy: yy, r: 4.4, fill: '#fff' }, g); S('circle', { cx: x, cy: yy + 1, r: 2.1, fill: '#2B2D42' }, g); }); S('path', { d: `M -5 ${y + 9} Q 0 ${y + 13} 5 ${y + 9}`, stroke: '#2B2D42', 'stroke-width': 2.2, fill: 'none', 'stroke-linecap': 'round' }, g); }
+  const PIECES = {
+    pawn: { fr: 'le pion', en: 'the pawn', ruleF: 'Le pion avance d’UNE case, tout droit vers l’avant.', ruleE: 'The pawn moves ONE square, straight ahead.',
+      moves: (c, r) => ray(c, r, [[0, -1]], 1),
+      draw: g => { body(g, '#FFF4D6'); S('circle', { cx: 0, cy: -18, r: 15, fill: '#FFF4D6', stroke: '#4B2E63', 'stroke-width': 3.5 }, g); face(g, -20); } },
+    rook: { fr: 'la tour', en: 'the rook', ruleF: 'La tour glisse TOUT DROIT : en avant, en arrière, à gauche, à droite.', ruleE: 'The rook slides STRAIGHT: forward, backward, left, right.',
+      moves: (c, r) => ray(c, r, [[1, 0], [-1, 0], [0, 1], [0, -1]]),
+      draw: g => { body(g, '#9BE0E8'); S('path', { d: 'M -17 -6 L -17 -30 L -9 -30 L -9 -22 L -4 -22 L -4 -30 L 4 -30 L 4 -22 L 9 -22 L 9 -30 L 17 -30 L 17 -6 Z', fill: '#9BE0E8', stroke: '#4B2E63', 'stroke-width': 3.5 }, g); face(g, -12); } },
+    bishop: { fr: 'le fou', en: 'the bishop', ruleF: 'Le fou glisse en DIAGONALE, comme un toboggan.', ruleE: 'The bishop slides DIAGONALLY, like a slide.',
+      moves: (c, r) => ray(c, r, [[1, 1], [1, -1], [-1, 1], [-1, -1]]),
+      draw: g => { body(g, '#C8F7C5'); S('ellipse', { cx: 0, cy: -18, rx: 13, ry: 17, fill: '#C8F7C5', stroke: '#4B2E63', 'stroke-width': 3.5 }, g); S('path', { d: 'M -8 -26 L 8 -12', stroke: '#4B2E63', 'stroke-width': 3 }, g); S('circle', { cx: 0, cy: -38, r: 5, fill: '#C8F7C5', stroke: '#4B2E63', 'stroke-width': 3 }, g); face(g, -16); } },
+    knight: { fr: 'le cavalier', en: 'the knight', ruleF: 'Le cavalier saute en L : deux cases, puis une sur le côté. Il saute par-dessus tout !', ruleE: 'The knight jumps in an L: two squares, then one sideways. It leaps over everything!',
+      moves: (c, r) => [[1, 2], [2, 1], [-1, 2], [-2, 1], [1, -2], [2, -1], [-1, -2], [-2, -1]].map(([a, b]) => [c + a, r + b]).filter(([a, b]) => inB(a, b)),
+      draw: g => { body(g, '#FFD8A8'); S('path', { d: 'M -14 -4 Q -18 -26 -2 -34 Q 2 -44 10 -40 L 12 -32 Q 22 -28 18 -16 Q 14 -8 4 -8 Z', fill: '#FFD8A8', stroke: '#4B2E63', 'stroke-width': 3.5 }, g); S('path', { d: 'M -2 -34 L -6 -42 L 2 -38 Z', fill: '#4B2E63' }, g); S('circle', { cx: 6, cy: -28, r: 3, fill: '#2B2D42' }, g); } },
+    queen: { fr: 'la dame', en: 'the queen', ruleF: 'La dame est la plus forte : tout droit ET en diagonale, aussi loin qu’elle veut !', ruleE: 'The queen is the strongest: straight AND diagonal, as far as she wants!',
+      moves: (c, r) => ray(c, r, [[1, 0], [-1, 0], [0, 1], [0, -1], [1, 1], [1, -1], [-1, 1], [-1, -1]]),
+      draw: g => { body(g, '#F8C8DC'); S('circle', { cx: 0, cy: -16, r: 14, fill: '#F8C8DC', stroke: '#4B2E63', 'stroke-width': 3.5 }, g); S('path', { d: 'M -16 -24 L -12 -40 L -4 -28 L 0 -44 L 4 -28 L 12 -40 L 16 -24 Z', fill: '#FFD23F', stroke: '#B8930B', 'stroke-width': 2.5 }, g); face(g, -16); } },
+    king: { fr: 'le roi', en: 'the king', ruleF: 'Le roi est prudent : UNE seule case, dans n’importe quelle direction.', ruleE: 'The king is careful: just ONE square, in any direction.',
+      moves: (c, r) => ray(c, r, [[1, 0], [-1, 0], [0, 1], [0, -1], [1, 1], [1, -1], [-1, 1], [-1, -1]], 1),
+      draw: g => { body(g, '#D7C5F2'); S('circle', { cx: 0, cy: -16, r: 14, fill: '#D7C5F2', stroke: '#4B2E63', 'stroke-width': 3.5 }, g); S('rect', { x: -10, y: -34, width: 20, height: 8, rx: 3, fill: '#FFD23F', stroke: '#B8930B', 'stroke-width': 2 }, g); S('path', { d: 'M 0 -48 L 0 -34 M -6 -42 L 6 -42', stroke: '#FFD23F', 'stroke-width': 4, 'stroke-linecap': 'round' }, g); face(g, -16); } }
+  };
+  const bandSet = d <= 1 ? ['pawn', 'rook'] : d === 2 ? ['pawn', 'rook', 'bishop'] : d === 3 ? ['rook', 'bishop', 'knight'] : d === 4 ? ['bishop', 'knight', 'queen'] : ['knight', 'queen', 'king', 'bishop'];
+  let cur = null, roundLive = false;
+  function clearFx() { boardFx.innerHTML = ''; hitLayer.innerHTML = ''; pieceLayer.innerHTML = ''; }
+  function nextRound() {
+    clearFx();
+    const key = bandSet[ri(0, bandSet.length - 1)];
+    const P = PIECES[key];
+    let c, r, legal;
+    do { c = ri(0, N - 1); r = key === 'pawn' ? ri(1, N - 1) : ri(0, N - 1); legal = P.moves(c, r); } while (!legal.length);
+    const [sc, sr] = legal[ri(0, legal.length - 1)];
+    cur = { key, P, c, r, sc, sr, legal };
+    // piece
+    const pg = S('g', { transform: `translate(${cx(c)},${cy(r)})` }, pieceLayer);
+    P.draw(pg); fxPop(pg); fxBob(pg, 5, 1800);
+    cur.pg = pg;
+    // star target
+    const stg = S('g', { transform: `translate(${cx(sc)},${cy(sr)})` }, boardFx);
+    const sw = S('g', { transform: 'scale(1.6) translate(-12,-12)' }, stg);
+    drawStarIcon(sw, 1, '#FFD23F');
+    fxPop(stg); fxBob(stg, 6, 1500);
+    // helper dots for the littlest players
+    if (d <= 1) cur.legal.forEach(([lc, lr]) => { if (lc !== sc || lr !== sr) S('circle', { cx: cx(lc), cy: cy(lr), r: 11, fill: 'rgba(87,204,87,0.85)', stroke: '#fff', 'stroke-width': 3 }, boardFx); });
+    // hit cells
+    for (let rr = 0; rr < N; rr++) for (let cc2 = 0; cc2 < N; cc2++) {
+      const h = S('rect', { x: BX + cc2 * CELL, y: BY + rr * CELL, width: CELL, height: CELL, fill: 'rgba(0,0,0,0)', class: 'grab' }, hitLayer);
+      h.addEventListener('pointerdown', () => tap(cc2, rr));
+    }
+    mission(P.fr.charAt(0).toUpperCase() + P.fr.slice(1) + ' veut l’étoile ! ' + P.ruleF + ' Touche la bonne case !',
+      P.en.charAt(0).toUpperCase() + P.en.slice(1) + ' wants the star! ' + P.ruleE + ' Tap the right square!', ZONE_ICONS.chess);
+    roundLive = true;
+  }
+  function tap(c2, r2) {
+    if (!roundLive || !cur) return;
+    if (c2 === cur.c && r2 === cur.r) return;
+    const isLegal = cur.legal.some(([lc, lr]) => lc === c2 && lr === r2);
+    const isStar = c2 === cur.sc && r2 === cur.sr;
+    if (isStar) {
+      roundLive = false;
+      sfx.whoosh();
+      const x0 = cx(cur.c), y0 = cy(cur.r), x1 = cx(c2), y1 = cy(r2);
+      tween(700, k => { const e = easeOut(k); cur.pg.setAttribute('transform', `translate(${x0 + (x1 - x0) * e},${y0 + (y1 - y0) * e - Math.sin(k * Math.PI) * 44})`); }, () => {
+        sfx.good(); confetti(18);
+        say('Bravo ! ' + cur.P.fr + ' attrape l’étoile !', 'Great! ' + cur.P.en + ' catches the star!');
+        setTimeout(() => { if (Rounds.gem()) setTimeout(zoneComplete, 800); else nextRound(); }, 900);
+      });
+    } else if (isLegal) {
+      sfx.tap();
+      const m = S('circle', { cx: cx(c2), cy: cy(r2), r: 14, fill: 'rgba(76,201,240,0.8)' }, boardFx);
+      setTimeout(() => m.remove(), 900);
+      say('Oui, ' + cur.P.fr + ' peut aller là... mais l’étoile est ailleurs !', 'Yes, ' + cur.P.en + ' can go there... but the star is elsewhere!');
+    } else {
+      Rounds.miss(); sfx.bad(); fxWobble(cur.pg);
+      say('Non ! ' + cur.P.ruleF, 'No! ' + cur.P.ruleE, d <= 2 ? 0.78 : 0.88);
+    }
+  }
+  nextRound();
+};
+
 /* ================= BOOT ================= */
 function buildHudIcons() {
   $('btn-home').appendChild(iconSvg(svg => { S('path', { d: 'M 3 11 L 12 3 L 21 11 M 6 10 L 6 20 L 18 20 L 18 10', stroke: '#fff', 'stroke-width': 2.6, fill: 'none', 'stroke-linecap': 'round', 'stroke-linejoin': 'round' }, svg); }));
@@ -2479,7 +3176,7 @@ buildHudIcons();
 buildGradeDock();
 updateStarPill();
 showMap();
-window.__WORLD__ = { ZONES, ZONE_BUILDERS, enterZone, showMap, save, Rounds, QUIZ_TOPICS, CURRICULUM, Academy };
+window.__WORLD__ = { ZONES, ZONE_BUILDERS, enterZone, showMap, save, Rounds, QUIZ_TOPICS, CURRICULUM, Academy, ML_LESSONS, GRIOT_STORIES };
 })();
 </script>
 </body>

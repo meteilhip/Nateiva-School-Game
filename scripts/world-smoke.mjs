@@ -34,7 +34,7 @@ const d = window.document;
   const W = window.__WORLD__;
   if (!W) { console.log('FATAL: world did not boot'); errs.forEach(e => console.log(' ✗ ' + e)); process.exit(1); }
   if (!d.querySelector('#scene-map svg')) errs.push('MAP: no svg built');
-  if (d.querySelectorAll('#scene-map .station').length !== 13) errs.push('MAP: expected 13 stations, got ' + d.querySelectorAll('#scene-map .station').length);
+  if (d.querySelectorAll('#scene-map .station').length !== 16) errs.push('MAP: expected 16 stations, got ' + d.querySelectorAll('#scene-map .station').length);
   for (const grade of [0, 2, 6]) {
     W.save.grade = grade;
     for (const z of W.ZONES) {
@@ -43,7 +43,7 @@ const d = window.document;
       await sleep(120);
       const svg = d.querySelector('#scene-game svg');
       const quizHtml = d.querySelector('#scene-game .quiz-wrap');
-      if (z.key === 'academy') { if (!quizHtml || !quizHtml.textContent.trim()) errs.push('academy@g' + grade + ': quiz UI empty'); }
+      if (z.key === 'academy' || z.key === 'mathlab' || z.key === 'griot') { if (!quizHtml || !quizHtml.textContent.trim()) errs.push(z.key + '@g' + grade + ': quiz UI empty'); }
       else if (!svg || svg.childNodes.length < 3) errs.push(z.key + '@g' + grade + ': stage looks empty');
       const mt = d.getElementById('mission-text').textContent;
       if (z.key !== 'theatre' && !mt) errs.push(z.key + '@g' + grade + ': no mission set');
@@ -69,6 +69,28 @@ const d = window.document;
         } catch (e) { errs.push('quiz ' + t.id + '@g' + g + ' GEN CRASH: ' + (e.stack || e.message).split('\n')[0]); break; }
       }
     }
+  }
+  // step through every Math Lab lesson at its grades — catch run() crashes
+  for (const L of W.ML_LESSONS) {
+    for (const g of [L.lo, L.hi]) {
+      W.save.grade = g;
+      try {
+        const sv = d.createElementNS('http://www.w3.org/2000/svg', 'svg');
+        const steps = L.make(sv, g);
+        if (!Array.isArray(steps) || steps.length < 3) { errs.push('mathlab ' + L.id + ': too few steps'); continue; }
+        steps.forEach((st2, i) => { if (!st2.f || !st2.e) errs.push('mathlab ' + L.id + ' step' + i + ': missing text'); try { st2.run(); } catch (e) { errs.push('mathlab ' + L.id + ' step' + i + ' RUN CRASH: ' + e.message); } });
+      } catch (e) { errs.push('mathlab ' + L.id + ' MAKE CRASH: ' + e.message); }
+    }
+  }
+  // griot stories shape check
+  for (const st2 of W.GRIOT_STORIES) {
+    if (!st2.panels || st2.panels.length < 2) errs.push('griot ' + st2.id + ': too few panels');
+    if (!st2.qs || st2.qs.length !== 3) errs.push('griot ' + st2.id + ': needs 3 questions');
+    (st2.qs || []).forEach((q, i) => {
+      if (!(q.ci >= 0 && q.ci < q.ch.length)) errs.push('griot ' + st2.id + ' q' + i + ': ci out of range');
+      if (q.ch.some(c => !c[0] || !c[1])) errs.push('griot ' + st2.id + ' q' + i + ': empty choice');
+      if (!q.sf || !q.sf.length || !q.se || !q.se.length) errs.push('griot ' + st2.id + ' q' + i + ': missing steps');
+    });
   }
   // theatre needs longer (timed narration) — let timers run briefly at g0
   W.save.grade = 0; W.enterZone('theatre'); await sleep(400);

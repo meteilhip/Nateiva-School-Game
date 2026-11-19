@@ -1,5 +1,14 @@
 # Changelog
 
+## v1.21.0 — Phone-first + Math Lab + Griot History + Kids Chess (16 zones)
+- **Phone-first pass** (95% of players are on phones): compact HUD/mission-bar/gems/grade-dock at ≤760px, horizontally scrollable class dock (was overflowing on 390px screens), responsive Academy/quiz typography, tighter search grid, and a "🔄 Tourne ton téléphone" hint when opening big playground zones in portrait.
+- **🔬 Labo des Maths (new zone)**: lessons that MOVE — 10 animated step-by-step concept demos with highlights, drawn underlines and flying objects: counting, counting-on, make-a-ten (ten-frame), taking away, multiplication arrays (+ commutativity trick), fair-share division, fractions on a cut orange (+ 3/4 of 8), the 100-grid for percentages, square root as the side of a perfect square, and the equation balance. Filtered per class, narrated FR/EN, replayable step by step.
+- **🌳 Baobab du Griot (new zone)**: African & Cameroon history as read-and-listen stories with per-story comprehension questions and "reread with me" coaching — flag of Cameroon, the giant continent, Mount Cameroon, pyramids of Egypt, Mansa Musa & Timbuktu, 1960 independence & bilingualism, Sultan Njoya's Shümom script, Nelson Mandela, the great kingdoms (Ghana/Mali/Songhai, Sao bronzes, Bamun & Bamileke). Banded MAT→CM2.
+- **♟️ Échecs Magiques (new zone)**: kids chess on a 6×6 castle board with cartoon pieces — tap where the piece can catch the star; move rules spoken; green helper dots at Maternelle; piece set grows with class (pawn/rook → bishop → knight → queen/king); legal-but-wrong taps teach gently without penalty.
+- **Sentence comprehension in school context**: new Academy topic "Comprendre les phrases" — 9 banded school-scene items (dans/pendant/avant-puis/parce que/sauf/bien que/dès que/si) with step-by-step rereading tricks, FR/EN.
+- **Toddler word game**: Fabrique de Mots at Maternelle becomes tap-the-first-letter with giant letters and pictures.
+- World smoke extended: 16 stations, all Math Lab steps executed, all Griot stories validated.
+
 ## v1.20.0 — Curriculum Engine, Real Africa & Quiz Academy
 - **Layout engine**: the island map now computes the truly visible band under `slice` cropping plus the HUD/grade-dock overlays and uniformly fits the whole island inside it — the title is never cut, the grade pills never cover station labels/stars, and the sun no longer collides with the star counter.
 - **Real Africa**: Balloon Safari now flies over the TRUE 49-country map (real cartography, shared `africa-data.js`), with region-colored countries, shape-recognition clue cards, capital-only mode for CM1/CM2, star markers on found countries and a 3-miss hint glow.
