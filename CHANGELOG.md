@@ -1,5 +1,12 @@
 # Changelog
 
+## v1.28.0 — Activity doors in every playground + 3 new playgrounds (21 zones)
+- **Choose your game**: 12 playgrounds now open on premium glassy "activity doors" — big cards with icons, a ⭐ on activities already played, and a 🎮 button in-game to switch anytime. Verger: Compter/Additions/Multiplier/Partager · Bulles: Attrape/Sommes · Studio: Zèbre/Formes/Fractions · Splash: Observe/Scientifique · Jardin: Fais pousser/Docteur des plantes · Safari: Pays/Capitales · Échecs: one door per piece + Tous mélangés · Mots: Première lettre/Épelle · Chantier: choose your structure (maison/fusée/pont/robot/bateau) · plus the new zones below. Doors unlock with the class level.
+- **🎵 Studio Rythmo (new)** — after the top-rated kids' music apps: a glowing xylophone with real notes (DO-RÉ-MI, dual-oscillator WebAudio) for free play, and "Répète la mélodie" — a Simon-style memory game whose melodies grow with the class.
+- **🏥 Clinique Câlins (new)** — Toca-style pet care: choose Biscuit the puppy, Plume the kitten or Cotton the bunny, then wash the mud spots, feed exactly N treats (counting aloud), and bandage the blinking ouchie — hearts everywhere.
+- **🧩 Puzzles de l'Île (new)** — Busy-Shapes-style shape sorter (3→6 silhouettes by age) and REAL picture jigsaws cut with clip-paths (2→4 slices by class) from the Imagier drawings.
+- Island regrown to 21 zones (3×7 desktop grid, trail auto-extends); smoke suite now opens EVERY door of every playground at MAT and CM2 in both orientations — ALL CLEAR.
+
 ## v1.27.0 — Glass mission bar, native female narrator, working microphone, EXAM mode
 - **Mission bar fixed in ALL 18 games**: the long class chip was crushing the text into a huge half-screen column (missing flex/min-width). Now a slim translucent glass strip (backdrop blur), chip ellipsised, text capped at 3 lines — and after ~5s it folds into a small pill so nothing ever hides the game (tap the pill to re-read/re-hear).
 - **Narration: native female voice**: every installed voice is scored (native fr-FR/en-US +, known female voices — Amélie/Denise/Julie… and Samantha/Jenny/Aria… +, neural/Google +, male −) and the best is cached per language; brighter pitch.

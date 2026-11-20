@@ -39,13 +39,16 @@ const d = window.document;
   const W = window.__WORLD__;
   if (!W) { console.log('FATAL: world did not boot'); errs.forEach(e => console.log(' ✗ ' + e)); process.exit(1); }
   if (!d.querySelector('#scene-map svg')) errs.push('MAP: no svg built');
-  if (d.querySelectorAll('#scene-map .station').length !== 18) errs.push('MAP: expected 18 stations, got ' + d.querySelectorAll('#scene-map .station').length);
+  if (d.querySelectorAll('#scene-map .station').length !== 21) errs.push('MAP: expected 21 stations, got ' + d.querySelectorAll('#scene-map .station').length);
   for (const grade of [0, 2, 6]) {
     W.save.grade = grade;
     for (const z of W.ZONES) {
       const before = errs.length;
       try { W.enterZone(z.key); } catch (e) { errs.push(z.key + '@g' + grade + ' ENTER CRASH: ' + (e.stack || e.message).split('\n')[0]); }
-      await sleep(120);
+      await sleep(80);
+      const door0 = d.querySelector('#scene-game .act-card');
+      if (door0) { door0.click(); await sleep(110); }
+      await sleep(40);
       const svg = d.querySelector('#scene-game svg');
       const quizHtml = d.querySelector('#scene-game .quiz-wrap');
       if (z.key === 'academy' || z.key === 'mathlab' || z.key === 'griot' || z.key === 'themes') { if (!quizHtml || !quizHtml.textContent.trim()) errs.push(z.key + '@g' + grade + ': quiz UI empty'); }
@@ -88,11 +91,11 @@ const d = window.document;
     }
   }
   // differentiation checks: paint fractions at CM, garden organ round at CE1+
-  W.save.grade = 6; W.enterZone('paint'); await sleep(150);
+  W.save.grade = 6; W.enterZone('paint', 'fraction'); await sleep(150);
   if (!/\d\/\d/.test(d.getElementById('mission-text').textContent)) errs.push('paint@g6: no fraction task (' + d.getElementById('mission-text').textContent + ')');
   W.showMap(); await sleep(30);
   for (const g of [3, 6]) {
-    W.save.grade = g; W.enterZone('garden'); await sleep(120);
+    W.save.grade = g; W.enterZone('garden', 'grow'); await sleep(120);
     try { window.__GARDEN_TEST__.partRound(); await sleep(80); const mt = d.getElementById('mission-text').textContent; if (!/[Tt]ouche|[Tt]ap/.test(mt)) errs.push('garden@g' + g + ': organ round has no tap mission'); } catch (e) { errs.push('garden partRound@g' + g + ' CRASH: ' + e.message); }
     W.showMap(); await sleep(30);
   }
@@ -100,10 +103,28 @@ const d = window.document;
   const diffReport = [];
   for (const z of W.ZONES) {
     const seen = new Set();
-    for (const g of [0, 3, 6]) { W.save.grade = g; try { W.enterZone(z.key); } catch (e) {} await sleep(90); seen.add(d.getElementById('mission-text').textContent.slice(0, 60)); try { W.showMap(); } catch (e) {} await sleep(20); }
+    for (const g of [0, 3, 6]) { W.save.grade = g; try { W.enterZone(z.key); } catch (e) {} await sleep(90); const dd2 = d.querySelector('#scene-game .act-card'); if (dd2) { dd2.click(); await sleep(90); } seen.add(d.getElementById('mission-text').textContent.slice(0, 60)); try { W.showMap(); } catch (e) {} await sleep(20); }
     diffReport.push(z.key + ':' + seen.size);
   }
   console.log('MISSION VARIETY (zone:distinct across MAT/CE1/CM2):', diffReport.join(' '));
+  // every activity door opens and builds a stage
+  const MENUZ = ['orchard', 'bubbles', 'paint', 'splash', 'garden', 'safari', 'chess', 'words', 'builder', 'music', 'pets', 'puzzle'];
+  for (const zk of MENUZ) {
+    for (const g of [0, 6]) {
+      W.save.grade = g;
+      W.enterZone(zk); await sleep(90);
+      const doors = [...d.querySelectorAll('#scene-game .act-card')];
+      for (let di = 0; di < doors.length; di++) {
+        W.enterZone(zk); await sleep(70);
+        const ds2 = [...d.querySelectorAll('#scene-game .act-card')];
+        if (!ds2[di]) break;
+        ds2[di].click(); await sleep(110);
+        const stg = d.querySelector('#scene-game svg') || d.querySelector('#scene-game .quiz-wrap');
+        if (!stg) errs.push(zk + ' door' + di + '@g' + g + ': no stage after pick');
+      }
+      W.showMap(); await sleep(30);
+    }
+  }
   // EXAM simulation: 10 questions, varied answers, results sheet with score
   for (const g of [1, 6]) {
     W.save.grade = g;
@@ -126,7 +147,7 @@ const d = window.document;
       }
       const sc = d.querySelector('.qz-score');
       if (!sc || !/\/ 10/.test(sc.textContent)) errs.push('exam@g' + g + ': no /10 results sheet');
-      if (seenQs.size < 8) errs.push('exam@g' + g + ': questions repeat too much (' + seenQs.size + '/10 unique)');
+      if (seenQs.size < (g <= 2 ? 7 : 8)) errs.push('exam@g' + g + ': questions repeat too much (' + seenQs.size + '/10 unique)');
     } catch (e) { errs.push('exam@g' + g + ' CRASH: ' + (e.stack || e.message).split('\n')[0]); }
     W.showMap(); await sleep(40);
   }

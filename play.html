@@ -223,6 +223,22 @@ html,body{ width:100%; height:100%; overflow:hidden; font-family:'Baloo 2','Fred
 .langbtn span.on{ opacity:1; transform:scale(1.18); text-shadow:0 1px 3px rgba(0,0,0,0.35); }
 .langbtn .lsep{ opacity:0.55; }
 @media(max-width:760px){ .hbtn.langbtn{ min-width:78px; padding:0 11px; font-size:0.95rem; } }
+
+/* ---------- Activity doors: pick your game inside a playground ---------- */
+.act-menu{ position:absolute; inset:0; overflow:auto; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:16px; padding:120px 14px 30px; }
+.act-title{ font-size:1.6rem; font-weight:800; color:#fff; text-shadow:0 3px 8px rgba(0,0,0,0.35); text-align:center; }
+.act-sub{ font-weight:800; color:rgba(255,255,255,0.92); margin-top:-8px; }
+.act-grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:14px; width:min(640px,96%); }
+.act-card{ background:rgba(255,255,255,0.92); backdrop-filter:blur(8px); border:4px solid #fff; border-radius:26px; padding:16px 10px 14px; text-align:center; cursor:pointer; box-shadow:0 12px 30px rgba(0,0,0,0.25); transition:transform 0.18s cubic-bezier(0.34,1.56,0.64,1); position:relative; font-family:inherit; }
+.act-card:active{ transform:scale(0.94); }
+.act-card:hover{ transform:scale(1.05); }
+.act-ic{ width:74px; height:74px; margin:0 auto; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:2.3rem; color:#fff; box-shadow:inset 0 -5px 10px rgba(0,0,0,0.18); }
+.act-name{ margin-top:9px; font-weight:800; font-size:1.05rem; color:#2B2D42; }
+.act-done{ position:absolute; top:-10px; right:-6px; font-size:1.3rem; filter:drop-shadow(0 2px 3px rgba(0,0,0,0.3)); }
+#act-fab{ position:absolute; left:10px; bottom:10px; z-index:40; width:52px; height:52px; border-radius:50%; background:rgba(255,255,255,0.92); border:3px solid #FFD23F; box-shadow:var(--shadow); display:none; align-items:center; justify-content:center; font-size:1.5rem; cursor:pointer; }
+#act-fab.on{ display:flex; }
+#act-fab:active{ transform:scale(0.9); }
+@media(max-width:760px){ .act-grid{ grid-template-columns:repeat(2,1fr); gap:11px; } .act-ic{ width:64px; height:64px; font-size:2rem; } .act-name{ font-size:0.95rem; } .act-title{ font-size:1.3rem; } }
 </style>
 </head>
 <body>
@@ -241,6 +257,7 @@ html,body{ width:100%; height:100%; overflow:hidden; font-family:'Baloo 2','Fred
   <div id="grade-dock"></div>
   <div id="rotate-hint"></div>
   <div id="ver-tag"></div>
+  <div id="act-fab">🎮</div>
   <div id="confetti-layer"></div>
   <div id="search-overlay">
     <div id="search-panel">
@@ -573,7 +590,7 @@ function iconSvg(builder, vb = '0 0 24 24') {
   return svg;
 }
 
-const APP_VERSION = '1.27.0';
+const APP_VERSION = '1.28.0';
 // animated pointing hand: shows toddlers WHAT to touch (MAT/SIL only)
 function handHint(svg, x, y) {
   if (D() > 1) return;
@@ -704,75 +721,87 @@ function updateStarPill() {
 
 /* ================= WORLD MAP (the island) ================= */
 const ZONES = [
-  { key: 'bubbles', fr: 'Lagune aux Bulles', en: 'Bubble Lagoon', color: '#4CC9F0', mx: 200, my: 300, px: 240, py: 230,
+  { key: 'bubbles', fr: 'Lagune aux Bulles', en: 'Bubble Lagoon', color: '#4CC9F0', mx: 150, my: 295, px: 240, py: 230,
     lv: [['Compte 1 à 8', 'Count 1 to 8'], ['Fais la somme !', 'Make the sum!'], ['Sommes 12 à 25', 'Sums 12 to 25']],
     subject: { fr: 'MATHS', dens: '1', en: 'MATH', color: '#FF9F1C' },
     topics: ['maths', 'math', 'compter', 'counting', 'nombres', 'numbers', 'addition', 'somme', 'sums', 'calcul', 'compléments', 'bonds'] },
-  { key: 'orchard', fr: 'Verger de Momo', en: "Momo's Orchard", color: '#FF9F1C', mx: 420, my: 300, px: 610, py: 230,
+  { key: 'orchard', fr: 'Verger de Momo', en: "Momo's Orchard", color: '#FF9F1C', mx: 350, my: 295, px: 610, py: 230,
     lv: [['Compte les fruits', 'Count the fruits'], ['Additions', 'Addition'], ['× et ÷ partage', '× and ÷ sharing']],
     subject: { fr: 'MATHS', dens: '1', en: 'MATH', color: '#FF9F1C' },
     topics: ['maths', 'math', 'addition', 'multiplication', 'division', 'partage', 'share', 'times', 'tables', 'calcul', 'opérations', 'operations', 'multiplier', 'diviser'] },
-  { key: 'river', fr: 'Rivière de Fela', en: "Fela's River", color: '#57CC57', mx: 640, my: 300, px: 610, py: 405,
+  { key: 'river', fr: 'Rivière de Fela', en: "Fela's River", color: '#57CC57', mx: 550, my: 295, px: 610, py: 405,
     lv: [['Premiers sons', 'First sounds'], ['Syllabes', 'Syllables'], ['Mots 3 syllabes', '3-syllable words']],
     subject: { fr: 'LECTURE & SONS', dens: '1', en: 'READING & PHONICS', color: '#4CC9F0' },
     topics: ['lecture', 'reading', 'syllabes', 'syllables', 'sons', 'sounds', 'phonics', 'lettres', 'letters', 'mots', 'words', 'français', 'french', 'anglais', 'english', 'prononciation', 'pronunciation'] },
-  { key: 'parrot', fr: 'Perroquet Coco', en: 'Coco the Parrot', color: '#0CA678', mx: 860, my: 300, px: 0, py: 0,
+  { key: 'parrot', fr: 'Perroquet Coco', en: 'Coco the Parrot', color: '#0CA678', mx: 750, my: 295, px: 0, py: 0,
     lv: [['Écoute et montre', 'Listen and point'], ['Paires de sons', 'Sound pairs'], ['Paires FR + EN', 'FR + EN pairs']],
     subject: { fr: 'PRONONCIATION', en: 'PRONUNCIATION', color: '#0CA678' },
     topics: ['prononciation', 'pronunciation', 'parler', 'speak', 'speaking', 'écouter', 'listen', 'sons', 'sounds', 'oral', 'répéter', 'repeat', 'accent', 'perroquet', 'parrot', 'voix', 'voice'] },
-  { key: 'chess', fr: 'Échecs Magiques', en: 'Magic Chess', color: '#8E44AD', mx: 1080, my: 300, px: 240, py: 405,
+  { key: 'music', fr: 'Studio Rythmo', en: 'Rhythm Studio', color: '#E64980', mx: 950, my: 295, px: 0, py: 0,
+    lv: [['Xylophone libre', 'Free xylophone'], ['Mélodies de 3 notes', '3-note melodies'], ['Mélodies de 5 notes', '5-note melodies']],
+    subject: { fr: 'MUSIQUE', en: 'MUSIC', color: '#E64980' },
+    topics: ['musique', 'music', 'xylophone', 'piano', 'notes', 'mélodie', 'melody', 'chanson', 'song', 'rythme', 'rhythm', 'sons', 'jouer', 'play'] },
+  { key: 'chess', fr: 'Échecs Magiques', en: 'Magic Chess', color: '#8E44AD', mx: 1150, my: 295, px: 240, py: 405,
     lv: [['Pion et tour', 'Pawn and rook'], ['Fou et cavalier', 'Bishop and knight'], ['Dame et roi', 'Queen and king']],
     subject: { fr: 'STRATÉGIE', en: 'STRATEGY', color: '#8E44AD' },
     topics: ['échecs', 'echecs', 'chess', 'stratégie', 'strategy', 'pion', 'pawn', 'tour', 'rook', 'fou', 'bishop', 'cavalier', 'knight', 'dame', 'queen', 'roi', 'king', 'réfléchir', 'think', 'logique', 'logic'] },
-  { key: 'paint', fr: 'Studio de Zara', en: "Zara's Studio", color: '#9B5DE5', mx: 1300, my: 300, px: 240, py: 580,
+  { key: 'paint', fr: 'Studio de Zara', en: "Zara's Studio", color: '#9B5DE5', mx: 1350, my: 295, px: 240, py: 580,
     lv: [['Couleurs du corps', 'Body colors'], ['Formes', 'Shapes'], ['Fractions 3/5', 'Fractions 3/5']],
     subject: { fr: 'FORMES & COULEURS', dens: '1', en: 'SHAPES & COLORS', color: '#9B5DE5' },
     topics: ['formes', 'shapes', 'couleurs', 'colors', 'géométrie', 'geometry', 'triangle', 'cercle', 'circle', 'carré', 'square', 'vocabulaire', 'vocabulary', 'corps', 'body', 'art'] },
-  { key: 'splash', fr: 'Lagon Splash', en: 'Splash Lagoon', color: '#1C7ED6', mx: 1300, my: 472, px: 610, py: 580,
+  { key: 'splash', fr: 'Lagon Splash', en: 'Splash Lagoon', color: '#1C7ED6', mx: 1350, my: 470, px: 610, py: 580,
     lv: [['Regarde et trie', 'Watch and sort'], ['Flotte ou coule', 'Float or sink'], ['Hypothèse + densité', 'Hypothesis + density']],
     subject: { fr: 'SCIENCES', dens: '1', en: 'SCIENCE', color: '#2EC4B6' },
     topics: ['sciences', 'science', 'flotte', 'coule', 'float', 'sink', 'densité', 'density', 'archimède', 'archimedes', 'eau', 'water', 'physique', 'physics', 'expérience', 'experiment'] },
-  { key: 'garden', fr: 'Jardin de Nana', en: "Nana's Garden", color: '#3FA34D', mx: 1080, my: 472, px: 610, py: 755,
+  { key: 'garden', fr: 'Jardin de Nana', en: "Nana's Garden", color: '#3FA34D', mx: 1150, my: 470, px: 610, py: 755,
     lv: [['Eau et soleil', 'Water and sun'], ['Organes de la plante', 'Plant organs'], ['Rôle des organes', 'Organ functions']],
     subject: { fr: 'SCIENCES', dens: '1', en: 'SCIENCE', color: '#2EC4B6' },
     topics: ['sciences', 'science', 'plantes', 'plants', 'jardin', 'garden', 'photosynthèse', 'photosynthesis', 'germination', 'nature', 'biologie', 'biology', 'eau', 'soleil', 'sun'] },
-  { key: 'safari', fr: 'Safari Ballon', en: 'Balloon Safari', color: '#E5252A', mx: 860, my: 472, px: 240, py: 755,
+  { key: 'safari', fr: 'Safari Ballon', en: 'Balloon Safari', color: '#E5252A', mx: 950, my: 470, px: 240, py: 755,
     lv: [['10 grands pays', '10 big countries'], ['Formes + régions', 'Shapes + regions'], ['Capitales expertes', 'Expert capitals']],
     subject: { fr: 'GÉOGRAPHIE', dens: '1', en: 'GEOGRAPHY', color: '#E5252A' },
     topics: ['géographie', 'geography', 'pays', 'countries', 'afrique', 'africa', 'capitales', 'capitals', 'drapeaux', 'flags', 'cartes', 'maps', 'monde', 'world', 'cameroun', 'cameroon'] },
-  { key: 'theatre', fr: 'Théâtre Kalulu', en: 'Kalulu Theatre', color: '#F25CA2', mx: 640, my: 472, px: 240, py: 930,
+  { key: 'pets', fr: 'Clinique Câlins', en: 'Cuddle Clinic', color: '#F76707', mx: 750, my: 470, px: 0, py: 0,
+    lv: [['Soigne et compte 1-3', 'Care and count 1-3'], ['Soigne et compte 2-5', 'Care and count 2-5'], ['Soins en série', 'Care missions']],
+    subject: { fr: 'SOINS & CŒUR', en: 'CARE & HEART', color: '#F76707' },
+    topics: ['animaux', 'animals', 'soigner', 'care', 'vétérinaire', 'vet', 'docteur', 'doctor', 'chiot', 'puppy', 'chaton', 'kitten', 'lapin', 'bunny', 'nourrir', 'feed', 'laver', 'wash', 'câlin', 'cuddle'] },
+  { key: 'theatre', fr: 'Théâtre Kalulu', en: 'Kalulu Theatre', color: '#F25CA2', mx: 550, my: 470, px: 240, py: 930,
     lv: [['2 images', '2 pictures'], ['3 images', '3 pictures'], ['Histoires complètes', 'Full stories']],
     subject: { fr: 'COMPRÉHENSION', dens: '1', en: 'COMPREHENSION', color: '#F25CA2' },
     topics: ['compréhension', 'comprehension', 'histoires', 'stories', 'contes', 'tales', 'écouter', 'listening', 'trivia', 'questions', 'fables', 'lecture', 'reading'] },
-  { key: 'builder', fr: 'Chantier de Tibo', en: "Tibo's Building Site", color: '#B4654A', mx: 420, my: 472, px: 610, py: 930,
+  { key: 'builder', fr: 'Chantier de Tibo', en: "Tibo's Building Site", color: '#B4654A', mx: 350, my: 470, px: 610, py: 930,
     lv: [['3 pièces', '3 pieces'], ['4 pièces', '4 pieces'], ['5 pièces', '5 pieces']],
     subject: { fr: 'CONSTRUCTION', dens: '1', en: 'BUILDING', color: '#B4654A' },
     topics: ['construction', 'building', 'build', 'bâtir', 'maison', 'house', 'pont', 'bridge', 'fusée', 'rocket', 'blocs', 'blocks', 'ingénieur', 'engineer', 'projet', 'project', 'chantier', 'robot', 'bateau', 'boat'] },
-  { key: 'seek', fr: 'Cherche & Trouve', en: 'Seek & Find', color: '#FFB703', mx: 200, my: 472, px: 610, py: 1105,
+  { key: 'seek', fr: 'Cherche & Trouve', en: 'Seek & Find', color: '#FFB703', mx: 150, my: 470, px: 610, py: 1105,
     lv: [['Gros et faciles', 'Big and easy'], ['Plus petits', 'Smaller'], ['Pièges sosies', 'Look-alike traps']],
     subject: { fr: 'OBSERVATION', dens: '1', en: 'OBSERVATION', color: '#F3A712' },
     topics: ['observation', 'chercher', 'cherche', 'search', 'trouve', 'find', 'seek', 'caché', 'hidden', 'papillon', 'butterfly', 'attention', 'regarder', 'look'] },
-  { key: 'griot', fr: 'Baobab du Griot', en: "Griot's Baobab", color: '#A0522D', mx: 200, my: 645, px: 240, py: 1105,
+  { key: 'griot', fr: 'Baobab du Griot', en: "Griot's Baobab", color: '#A0522D', mx: 150, my: 645, px: 240, py: 1105,
     lv: [['Drapeau, montagne', 'Flag, mountain'], ['Pyramides, Mali', 'Pyramids, Mali'], ['Njoya, Mandela', 'Njoya, Mandela']],
     subject: { fr: 'HISTOIRE', en: 'HISTORY', color: '#A0522D' },
     topics: ['histoire', 'history', 'afrique', 'africa', 'cameroun', 'cameroon', 'griot', 'rois', 'kings', 'reine', 'empire', 'mali', 'égypte', 'egypt', 'pyramides', 'pyramids', 'mandela', 'njoya', 'indépendance', 'independence', 'drapeau', 'flag'] },
-  { key: 'words', fr: 'Fabrique de Mots', en: 'Word Factory', color: '#06B6D4', mx: 420, my: 645, px: 240, py: 1280,
+  { key: 'words', fr: 'Fabrique de Mots', en: 'Word Factory', color: '#06B6D4', mx: 350, my: 645, px: 240, py: 1280,
     lv: [['Première lettre', 'First letter'], ['Épelle le mot', 'Spell the word'], ['Lettres pièges', 'Trap letters']],
     subject: { fr: 'MOTS & LETTRES', dens: '1', en: 'WORDS & LETTERS', color: '#06B6D4' },
     topics: ['mots', 'words', 'lettres', 'letters', 'orthographe', 'spelling', 'écrire', 'write', 'writing', 'alphabet', 'word game', 'jeu de mots', 'vocabulaire', 'vocabulary', 'épeler', 'spell'] },
-  { key: 'create', fr: 'Atelier Magique', en: 'Magic Workshop', color: '#FF6FB5', mx: 640, my: 645, px: 610, py: 1280,
+  { key: 'puzzle', fr: "Puzzles de l'Île", en: 'Island Puzzles', color: '#3B5BDB', mx: 550, my: 645, px: 0, py: 0,
+    lv: [['3 formes faciles', '3 easy shapes'], ['Puzzles 3 pièces', '3-piece jigsaws'], ['Puzzles 4 pièces', '4-piece jigsaws']],
+    subject: { fr: 'PUZZLE & LOGIQUE', en: 'PUZZLE & LOGIC', color: '#3B5BDB' },
+    topics: ['puzzle', 'puzzles', 'formes', 'shapes', 'logique', 'logic', 'encastrement', 'jigsaw', 'pièces', 'pieces', 'assembler', 'match', 'réfléchir'] },
+  { key: 'create', fr: 'Atelier Magique', en: 'Magic Workshop', color: '#FF6FB5', mx: 750, my: 645, px: 610, py: 1280,
     lv: [['Crée et compte', 'Create and count'], ['Crée et raconte', 'Create and tell'], ['Crée et raconte', 'Create and tell']],
     subject: { fr: 'CRÉATION', dens: '1', en: 'CREATION', color: '#FF6FB5' },
     topics: ['création', 'creation', 'créer', 'create', 'art', 'dessin', 'drawing', 'imagination', 'atelier', 'studio', 'tableau', 'picture', 'inventer', 'invent', 'libre', 'free'] },
-  { key: 'themes', fr: 'Imagier Magique', en: 'Magic Picture Book', color: '#D6336C', mx: 860, my: 645, px: 0, py: 0,
+  { key: 'themes', fr: 'Imagier Magique', en: 'Magic Picture Book', color: '#D6336C', mx: 950, my: 645, px: 0, py: 0,
     lv: [['4 images par thème', '4 pictures per theme'], ['FR + EN mélangés', 'FR + EN mixed'], ['Quiz en anglais', 'Quiz in English']],
     subject: { fr: 'THÉMATIQUES', en: 'THEMES', color: '#D6336C' },
     topics: ['thème', 'thèmes', 'theme', 'themes', 'imagier', 'vocabulaire', 'vocabulary', 'animaux', 'animals', 'fruits', 'couleurs', 'colors', 'corps', 'body', 'météo', 'weather', 'transports', 'transport', 'famille', 'family', 'école', 'school', 'apprendre', 'learn'] },
-  { key: 'mathlab', fr: 'Labo des Maths', en: 'Math Lab', color: '#F77F00', mx: 1080, my: 645, px: 610, py: 1455,
+  { key: 'mathlab', fr: 'Labo des Maths', en: 'Math Lab', color: '#F77F00', mx: 1150, my: 645, px: 610, py: 1455,
     lv: [['Compter en images', 'Counting in pictures'], ['Dizaine amie, tableaux', 'Make-ten, arrays'], ['Fractions, %, racines', 'Fractions, %, roots']],
     subject: { fr: 'MATHS • LEÇONS', en: 'MATH LESSONS', color: '#F77F00' },
     topics: ['leçon', 'leçons', 'lesson', 'lessons', 'maths', 'math', 'comprendre', 'understand', 'méthode', 'method', 'démonstration', 'demo', 'visuel', 'visual', 'addition', 'soustraction', 'multiplication', 'division', 'fractions', 'racine', 'square root', 'pourcentage', 'balance', 'dizaine', 'ten'] },
-  { key: 'academy', fr: 'Académie des Champions', en: 'Champions Academy', color: '#5E60CE', mx: 1300, my: 645, px: 240, py: 1455,
+  { key: 'academy', fr: 'Académie des Champions', en: 'Champions Academy', color: '#5E60CE', mx: 1350, my: 645, px: 240, py: 1455,
     lv: [['Quiz images', 'Picture quiz'], ['Quiz de classe', 'Class quiz'], ['Astuce pas à pas', 'Step-by-step']],
     subject: { fr: 'QUIZ & ASTUCES', dens: '1', en: 'QUIZ & TRICKS', color: '#5E60CE' },
     topics: ['quiz', 'révision', 'revision', 'réviser', 'examen', 'exam', 'test', 'astuce', 'trick', 'école', 'school', 'programme', 'curriculum', 'devoirs', 'homework', 'leçon', 'lesson', 'exercice', 'exercise', 'académie', 'academy'] }
@@ -810,6 +839,11 @@ const TRICKS = {
     : ['Astuce : regarde chaque étape bouger, puis refais-la dans ta tête. Une méthode vue est une méthode retenue !', 'Trick: watch each step move, then replay it in your head. A method you SEE is a method you KEEP!'],
   griot: d => d <= 2 ? ['Astuce : écoute bien l’histoire, la réponse est DANS les phrases !', 'Trick: listen carefully, the answer is INSIDE the sentences!']
     : ['Astuce de griot : pose-toi les 4 questions magiques : QUI ? OÙ ? QUAND ? POURQUOI ?', 'Griot trick: ask the 4 magic questions: WHO? WHERE? WHEN? WHY?'],
+  music: d => d <= 2 ? ['Astuce : chaque couleur chante sa note ! Écoute bien, puis rejoue les couleurs dans le même ordre.', 'Trick: every color sings its note! Listen well, then replay the colors in the same order.']
+    : ['Astuce de musicien : chante la mélodie dans ta tête pendant qu\u2019elle joue — tes doigts s\u2019en souviendront !', 'Musician trick: sing the melody in your head while it plays — your fingers will remember it!'],
+  pets: () => ['Astuce de docteur : regarde ce que montre la bulle, compte à voix haute, et termine toujours par un câlin !', 'Doctor trick: look at the bubble, count out loud, and always finish with a cuddle!'],
+  puzzle: d => d <= 2 ? ['Astuce : regarde la FORME du trou. Rond, pointu ou étoilé ? Touche la pièce pareille !', 'Trick: look at the SHAPE of the hole. Round, pointy or starry? Tap the matching piece!']
+    : ['Astuce de puzzle : commence par les coins et les bords de l\u2019image, le milieu devient facile !', 'Puzzle trick: start with the picture\u2019s corners and edges, the middle becomes easy!'],
   academy: d => d <= 2 ? ['Astuce de champion : \u00e9coute bien la question, puis regarde chaque r\u00e9ponse avant de choisir !', 'Champion trick: listen to the question, then look at every answer before you choose!']
     : ['Astuce de champion : lis la question deux fois, \u00e9limine les r\u00e9ponses impossibles, puis v\u00e9rifie avec l\u2019astuce pas \u00e0 pas !', 'Champion trick: read the question twice, cross out impossible answers, then check with the step-by-step trick!']
 };
@@ -831,6 +865,9 @@ const ZONE_ICONS = {
   mathlab: g => { S('rect', { x: -18, y: -16, width: 36, height: 32, rx: 6, fill: '#2B2D42' }, g); S('text', { x: 0, y: -1, 'text-anchor': 'middle', 'font-size': 13, 'font-weight': 800, fill: '#FFD23F', 'font-family': 'inherit', text: '2+3' }, g); S('text', { x: 0, y: 12, 'text-anchor': 'middle', 'font-size': 13, 'font-weight': 800, fill: '#4CC9F0', 'font-family': 'inherit', text: '=5' }, g); S('rect', { x: -18, y: -16, width: 36, height: 32, rx: 6, fill: 'none', stroke: '#F77F00', 'stroke-width': 3 }, g); },
   parrot: g => { S('ellipse', { cx: 0, cy: 2, rx: 14, ry: 19, fill: '#0CA678' }, g); S('circle', { cx: 0, cy: -14, r: 11, fill: '#12B886' }, g); S('path', { d: 'M 8 -16 L 20 -12 L 8 -7 Z', fill: '#FF9F1C' }, g); S('circle', { cx: -3, cy: -16, r: 2.6, fill: '#2B2D42' }, g); S('path', { d: 'M -12 0 Q -24 8 -14 18', stroke: '#E5252A', 'stroke-width': 5, fill: 'none', 'stroke-linecap': 'round' }, g); S('path', { d: 'M -4 20 Q 0 30 6 20', stroke: '#0B7A5C', 'stroke-width': 4, fill: 'none' }, g); },
   themes: g => { S('rect', { x: -18, y: -14, width: 17, height: 17, rx: 4, fill: '#FF9F1C' }, g); S('circle', { cx: 10, cy: -6, r: 9, fill: '#4CC9F0' }, g); S('path', { d: 'M -16 14 L -2 14 L -9 2 Z', fill: '#57CC57' }, g); S('path', { d: 'M 3 16 C -2 10 2 4 8 8 C 14 4 18 10 13 16 Q 8 20 3 16 Z', fill: '#FF4D57' }, g); },
+  music: g => { [['#FF4D57', -15], ['#FF9F1C', -5], ['#FFD23F', 5], ['#57CC57', 15]].forEach(([c, x], i) => S('rect', { x: x - 4, y: -16 + i * 2, width: 8, height: 32 - i * 4, rx: 4, fill: c, stroke: '#2B2D42', 'stroke-width': 1.6 }, g)); S('circle', { cx: -22, cy: -14, r: 4, fill: '#2B2D42' }, g); S('path', { d: 'M -18 -14 L -18 -30 L -6 -33 L -6 -17', stroke: '#2B2D42', 'stroke-width': 3, fill: 'none' }, g); S('circle', { cx: -10, cy: -17, r: 4, fill: '#2B2D42' }, g); },
+  pets: g => { S('circle', { cy: -2, r: 15, fill: '#C68B59' }, g); [[-12, -14], [12, -14]].forEach(([x, y]) => S('ellipse', { cx: x, cy: y, rx: 6, ry: 9, fill: '#8A5A33', transform: `rotate(${x < 0 ? -25 : 25} ${x} ${y})` }, g)); [[-5, -4], [5, -4]].forEach(([x, y]) => S('circle', { cx: x, cy: y, r: 2, fill: '#2B2D42' }, g)); S('circle', { cy: 2, r: 2.4, fill: '#2B2D42' }, g); S('path', { d: 'M 6 16 C 2 11 6 6 11 9 C 16 6 20 11 16 16 Q 11 19 6 16 Z', fill: '#FF4D57' }, g); },
+  puzzle: g => { S('path', { d: 'M -18 -18 L 0 -18 Q -4 -26 2 -28 Q 8 -26 4 -18 L 18 -18 L 18 -2 Q 26 -6 28 0 Q 26 6 18 2 L 18 18 L -18 18 Z', fill: '#3B5BDB', stroke: '#2B3A8C', 'stroke-width': 2.5 }, g); S('circle', { cx: -6, cy: 0, r: 3, fill: '#fff', opacity: 0.8 }, g); },
   academy: g => { S('path', { d: 'M -20 -6 L 0 -16 L 20 -6 L 0 4 Z', fill: '#2B2D42' }, g); S('path', { d: 'M -11 -2 L -11 8 Q 0 15 11 8 L 11 -2', fill: '#5E60CE', stroke: '#2B2D42', 'stroke-width': 1.5 }, g); S('path', { d: 'M 14 -8 L 14 6', stroke: '#FFD23F', 'stroke-width': 2.4 }, g); S('circle', { cx: 14, cy: 9, r: 4, fill: '#FFD23F', stroke: '#E58E09', 'stroke-width': 1.5 }, g); },
   create: g => { S('path', { d: 'M -2 16 Q -18 16 -16 0 Q -15 -14 0 -16 Q 16 -17 16 -4 Q 16 4 8 4 Q 0 4 2 10 Q 3 16 -2 16 Z', fill: '#fff', stroke: '#FF6FB5', 'stroke-width': 2.5 }, g); [['#FF4D57', -8, -7], ['#4CC9F0', 1, -10], ['#FFD23F', 9, -3], ['#57CC57', -9, 3]].forEach(([c, x, y]) => S('circle', { cx: x, cy: y, r: 3.2, fill: c }, g)); }
 };
@@ -974,7 +1011,7 @@ function buildMap() {
     const subW = Math.max(118, T(z.subject.fr, z.subject.en).length * 11 + 26);
     S('rect', { x: -subW / 2, y: 64, width: subW, height: 28, rx: 14, fill: z.subject.color, stroke: '#fff', 'stroke-width': 3, class: 'st-pill' }, st);
     S('text', { x: 0, y: 84, 'text-anchor': 'middle', 'font-size': 15, 'font-weight': 800, fill: '#fff', 'font-family': 'inherit', text: T(z.subject.fr, z.subject.en) }, st);
-    S('text', { x: 0, y: 114, 'text-anchor': 'middle', 'font-size': 18, 'font-weight': 800, fill: '#2B2D42', 'font-family': 'inherit', text: T(z.fr, z.en) }, st);
+    S('text', { x: 0, y: 114, 'text-anchor': 'middle', 'font-size': 16.5, 'font-weight': 800, fill: '#2B2D42', 'font-family': 'inherit', text: T(z.fr, z.en) }, st);
     if (z.lv) { const band = D() <= 1 ? 0 : D() <= 3 ? 1 : 2; S('text', { x: 0, y: 136, 'text-anchor': 'middle', 'font-size': 13.5, 'font-weight': 800, fill: '#5E60CE', 'font-family': 'inherit', text: T(z.lv[band][0], z.lv[band][1]) }, st); }
     st.addEventListener('click', () => { sfx.boing(); enterZone(z.key); });
   });
@@ -1006,6 +1043,8 @@ const ZONE_BUILDERS = {};
 let activeZone = null;
 function showMap() {
   activeZone = null;
+  ZoneAct.cur = null;
+  $('act-fab').classList.remove('on');
   $('rotate-hint').classList.remove('on');
   $('grade-dock').style.display = 'flex';
   speechSynthesis && speechSynthesis.cancel();
@@ -1017,7 +1056,86 @@ function showMap() {
   say('Choisis ton île !', 'Pick your adventure!');
 }
 let currentTrick = null;
-function enterZone(key) {
+const ZoneAct = { cur: null };
+const ZONE_MENUS = {
+  orchard: d => [
+    { id: 'count', fr: 'Compter', en: 'Counting', ic: '1·2·3' },
+    d >= 1 && { id: 'add', fr: 'Additions', en: 'Addition', ic: '+' },
+    d >= 3 && { id: 'mult', fr: 'Multiplier', en: 'Multiply', ic: '×' },
+    d >= 4 && { id: 'share', fr: 'Partager', en: 'Share', ic: '÷' }
+  ].filter(Boolean),
+  bubbles: d => [
+    { id: 'catch', fr: 'Attrape et compte', en: 'Catch and count', ic: '🐠' },
+    d >= 2 && { id: 'sum', fr: 'Bulles à sommes', en: 'Sum bubbles', ic: '∑' }
+  ].filter(Boolean),
+  paint: d => [
+    { id: 'zebra', fr: 'Le zèbre', en: 'The zebra', ic: '🦓' },
+    d >= 1 && { id: 'shapes', fr: 'Les formes', en: 'The shapes', ic: '▲' },
+    d >= 4 && { id: 'fraction', fr: 'Fractions', en: 'Fractions', ic: '¾' }
+  ].filter(Boolean),
+  splash: d => [
+    { id: 'observe', fr: 'Observe et réponds', en: 'Watch and answer', ic: '👁' },
+    d >= 2 && { id: 'hypo', fr: 'Mode scientifique', en: 'Scientist mode', ic: '🧪' }
+  ].filter(Boolean),
+  garden: d => [
+    { id: 'grow', fr: 'Fais pousser', en: 'Grow it', ic: '🌱' },
+    d >= 2 && { id: 'organs', fr: 'Docteur des plantes', en: 'Plant doctor', ic: '🌿' }
+  ].filter(Boolean),
+  safari: d => [
+    { id: 'lands', fr: 'Trouve les pays', en: 'Find the countries', ic: '🌍' },
+    d >= 2 && { id: 'capitals', fr: 'Les capitales', en: 'The capitals', ic: '🏛' }
+  ].filter(Boolean),
+  chess: d => {
+    const base = d <= 1 ? ['pawn', 'rook'] : d === 2 ? ['pawn', 'rook', 'bishop'] : d === 3 ? ['rook', 'bishop', 'knight'] : d === 4 ? ['bishop', 'knight', 'queen'] : ['knight', 'queen', 'king', 'bishop'];
+    const names = { pawn: ['Le pion', 'The pawn', '♟'], rook: ['La tour', 'The rook', '♜'], bishop: ['Le fou', 'The bishop', '♝'], knight: ['Le cavalier', 'The knight', '♞'], queen: ['La dame', 'The queen', '♛'], king: ['Le roi', 'The king', '♚'] };
+    return base.map(k2 => ({ id: k2, fr: names[k2][0], en: names[k2][1], ic: names[k2][2] })).concat([{ id: 'all', fr: 'Tous mélangés !', en: 'All mixed!', ic: '🏰' }]);
+  },
+  words: d => [
+    { id: 'first', fr: 'Première lettre', en: 'First letter', ic: 'A' },
+    d >= 1 && { id: 'spell', fr: 'Épelle le mot', en: 'Spell the word', ic: 'ABC' }
+  ].filter(Boolean),
+  builder: () => [
+    { id: 's1', fr: 'La maison', en: 'The house', ic: '🏠' },
+    { id: 's2', fr: 'La fusée', en: 'The rocket', ic: '🚀' },
+    { id: 's3', fr: 'Le pont', en: 'The bridge', ic: '🌉' },
+    { id: 's4', fr: 'Le robot', en: 'The robot', ic: '🤖' },
+    { id: 's5', fr: 'Le bateau', en: 'The boat', ic: '⛵' }
+  ],
+  music: d => [
+    { id: 'xylo', fr: 'Xylophone libre', en: 'Free xylophone', ic: '🎵' },
+    { id: 'melody', fr: 'Répète la mélodie', en: 'Repeat the melody', ic: '🎶' }
+  ],
+  pets: () => [
+    { id: 'puppy', fr: 'Chiot Biscuit', en: 'Biscuit the puppy', ic: '🐶' },
+    { id: 'kitten', fr: 'Chaton Plume', en: 'Plume the kitten', ic: '🐱' },
+    { id: 'bunny', fr: 'Lapinou Coton', en: 'Cotton the bunny', ic: '🐰' }
+  ],
+  puzzle: d => [
+    { id: 'formes', fr: 'Formes magiques', en: 'Magic shapes', ic: '⭐' },
+    d >= 1 && { id: 'images', fr: 'Puzzles images', en: 'Picture jigsaws', ic: '🧩' }
+  ].filter(Boolean)
+};
+function showActMenu(host, z, acts) {
+  const wrap = H('div', { class: 'act-menu' }, host);
+  wrap.style.background = `linear-gradient(165deg, ${z.subject.color} 0%, rgba(43,45,66,0.92) 130%)`;
+  H('div', { class: 'act-title', text: T(z.fr, z.en) }, wrap);
+  H('div', { class: 'act-sub', text: T('Choisis ton jeu !', 'Pick your game!') }, wrap);
+  const grid = H('div', { class: 'act-grid' }, wrap);
+  acts.forEach(a => {
+    const card = H('button', { class: 'act-card' }, grid);
+    const ic = H('div', { class: 'act-ic', text: a.ic }, card);
+    ic.style.background = `linear-gradient(145deg, ${z.color}, ${z.subject.color})`;
+    H('div', { class: 'act-name', text: T(a.fr, a.en) }, card);
+    if ((save.acts || {})[z.key + ':' + a.id]) H('div', { class: 'act-done', text: '⭐' }, card);
+    card.addEventListener('click', () => {
+      sfx.boing();
+      save.acts = save.acts || {}; save.acts[z.key + ':' + a.id] = 1; persist();
+      enterZone(z.key, a.id);
+    });
+  });
+  mission('Choisis ton jeu dans ' + z.fr + ' !', 'Pick your game in ' + z.en + '!', ZONE_ICONS[z.key]);
+}
+function enterZone(key, act) {
   activeZone = key;
   $('grade-dock').style.display = 'none';
   const host = $('scene-game'); host.innerHTML = '';
@@ -1029,6 +1147,17 @@ function enterZone(key) {
   chip.textContent = T(z.subject.fr, z.subject.en) + ' \u00B7 ' + (GRADES[save.grade] ? GRADES[save.grade].code : '');
   chip.style.background = z.subject.color;
   currentTrick = TRICKS[key] ? TRICKS[key](D()) : null;
+  const menu = ZONE_MENUS[key] ? ZONE_MENUS[key](D()) : null;
+  const fab = $('act-fab');
+  if (menu && menu.length > 1 && !act) {
+    ZoneAct.cur = null;
+    fab.classList.remove('on');
+    showActMenu(host, z, menu);
+    $('rotate-hint').classList.remove('on');
+    return;
+  }
+  ZoneAct.cur = act || null;
+  fab.classList.toggle('on', !!(menu && menu.length > 1));
   ZONE_BUILDERS[key](host);
   $('rotate-hint').classList.remove('on'); // zones are portrait-native since v1.23
 }
@@ -1132,7 +1261,7 @@ ZONE_BUILDERS.bubbles = function (host) {
   function nextRound() {
     caught = 0; sum = 0; netShow(); layer.innerHTML = ''; alive = [];
     const d = D();
-    sumMode = d >= 3;
+    sumMode = ZoneAct.cur ? ZoneAct.cur === 'sum' : d >= 3;
     if (sumMode) {
       target = d >= 5 ? ri(12, 25) : ri(6, 12);
       bigNum.textContent = target; drawDots(0);
@@ -1262,12 +1391,13 @@ ZONE_BUILDERS.orchard = function (host) {
     basketLayer.innerHTML = ''; fruitLayer.innerHTML = '';
     baskets = []; fruits = []; fruitDef = FRUITS[ri(0, FRUITS.length - 1)];
     const d = D();
-    if (d <= 1) { mode = 'count'; needPer = [ri(2, d === 0 ? 5 : 8)]; baskets = [drawBasket(PT(750, 425), PT(640, 1250), needPer[0], needPer[0])];
+    const am = ZoneAct.cur;
+    if (am === 'count' || (!am && d <= 1)) { mode = 'count'; needPer = [ri(2, d === 0 ? 5 : 8)]; baskets = [drawBasket(PT(750, 425), PT(640, 1250), needPer[0], needPer[0])];
       mission('Donne ' + needPer[0] + ' fruits à Momo !', 'Give Momo ' + needPer[0] + ' fruits!', ZONE_ICONS.orchard);
-    } else if (d <= 3) { mode = 'add'; const a = ri(2, 6), b = ri(2, 6); needPer = [a, b];
+    } else if (am === 'add' || (!am && d <= 3)) { mode = 'add'; const a = ri(2, 6), b = ri(2, 6); needPer = [a, b];
       baskets = [drawBasket(PT(620, 240), PT(640, 1250), a, a), drawBasket(PT(900, 610), PT(640, 1250), b, b)];
       mission(`${a} + ${b} = ? Remplis les paniers : ${a} et ${b} fruits !`, `${a} + ${b} = ? Fill the baskets: ${a} and ${b} fruits!`, ZONE_ICONS.orchard);
-    } else if (d <= 5) { mode = 'mult'; const n = ri(2, 3), k = ri(3, 5); needPer = Array(n).fill(k);
+    } else if (am === 'mult' || (!am && d <= 5)) { mode = 'mult'; const n = ri(2, 3), k = ri(3, 5); needPer = Array(n).fill(k);
       baskets = needPer.map((kk, i) => drawBasket(PT(600 + i * 240, 425 + (i - (needPer.length - 1) / 2) * 250), PT(640, 1250), kk, kk));
       mission(`${n} × ${k} = ? Remplis ${n} paniers de ${k} fruits !`, `${n} × ${k} = ? Fill ${n} baskets of ${k} fruits!`, ZONE_ICONS.orchard);
     } else { mode = 'share'; const n = ri(2, 3), per = ri(3, 4); needPer = Array(n).fill(per);
@@ -1502,11 +1632,12 @@ ZONE_BUILDERS.paint = function (host) {
     selected = null;
     const d = D();
     buildPots();
-    if (d <= 2) {
+    const am = ZoneAct.cur;
+    if (am === 'zebra' || (!am && d <= 2)) {
       parts = zebraParts();
       const pool = shuffle(parts.filter(p => true)).slice(0, 3);
       tasks = pool.map(p => { const c = POTS[ri(0, POTS.length - 1)]; return { color: c, left: 1, match: q => q === p, fr: 'Peins ' + p.el.dataset.fr + ' en ' + c[0] + ' !', en: 'Paint ' + p.el.dataset.en + ' ' + c[1] + '!' }; });
-    } else if (d >= 5) {
+    } else if (am === 'fraction' || (!am && d >= 5)) {
       // CM1/CM2: paint an exact FRACTION of the fence (visual fractions)
       parts = fractionFence();
       const N = parts.length, k = ri(1, N - 1);
@@ -1669,11 +1800,12 @@ ZONE_BUILDERS.splash = function (host) {
       if (phase !== 'pick' || it.used) return;
       it.used = true;
       say(it.o.fr, it.o.en);
-      if (d >= 4) askPredict(it);
+      const hypo = ZoneAct.cur ? ZoneAct.cur === 'hypo' : d >= 4;
+      if (hypo) askPredict(it);
       else plunge(it, () => askAnswer(it));
     });
   });
-  if (d >= 4) mission('Mode scientifique : touche un objet, annonce ton HYPOTHÈSE (flotte ou coule ?), puis vérifie !', 'Scientist mode: tap an object, state your HYPOTHESIS (float or sink?), then check!', ZONE_ICONS.splash);
+  if (ZoneAct.cur ? ZoneAct.cur === 'hypo' : d >= 4) mission('Mode scientifique : touche un objet, annonce ton HYPOTHÈSE (flotte ou coule ?), puis vérifie !', 'Scientist mode: tap an object, state your HYPOTHESIS (float or sink?), then check!', ZONE_ICONS.splash);
   else mission('Touche un objet : il saute dans l’eau ! Puis réponds : il FLOTTE ou il COULE ?', 'Tap an object: it jumps into the water! Then answer: does it FLOAT or SINK?', ZONE_ICONS.splash);
   handHint(svg, PT(260, 120), PT(205, 380));
   sayPick();
@@ -1830,7 +1962,7 @@ ZONE_BUILDERS.garden = function (host) {
     }));
   }
   function nextRound() {
-    if (D() >= 3 && Rounds.idx % 2 === 1) { partRound(); return; }
+    if (ZoneAct.cur === 'organs' || (ZoneAct.cur !== 'grow' && D() >= 3 && Rounds.idx % 2 === 1)) { partRound(); return; }
     gardenMode = 'grow';
     stage = 0; water = 0; sun = 0; plantKind = ri(0, 2);
     needW = 2 + Math.min(2, Math.floor(D() / 2)); needS = needW;
@@ -1878,12 +2010,13 @@ ZONE_BUILDERS.safari = function (host) {
   const clueCard = S('g', { transform: PT('translate(170,600)', 'translate(425,1330)') }, svg);
   const EASY = ['ma', 'eg', 'ng', 'cm', 'za', 'cd', 'ke', 'sn', 'dz', 'mg'];
   const MID = EASY.concat(['tz', 'gh', 'ci', 'ml', 'ne', 'td', 'sd', 'et', 'ug', 'zm', 'zw', 'ao', 'mz', 'ly', 'tn', 'bf']);
-  function pool() { const d = D(); const ids = d <= 1 ? EASY : (d <= 3 ? MID : DATA.map(c => c.id)); return DATA.filter(c => ids.includes(c.id) && !found.includes(c.id)); }
+  const capMode = () => ZoneAct.cur ? ZoneAct.cur === 'capitals' : D() >= 4;
+  function pool() { const d = D(); const ids = (capMode() && d >= 2) || d > 3 ? DATA.map(c => c.id) : (d <= 1 ? EASY : MID); return DATA.filter(c => ids.includes(c.id) && !found.includes(c.id)); }
   function showClue() {
     clueCard.innerHTML = '';
     const d = D();
     S('rect', { x: -108, y: -92, width: 216, height: 196, rx: 22, fill: '#fff', stroke: '#FFD23F', 'stroke-width': 6 }, clueCard);
-    if (d <= 4) {
+    if (!capMode() || d <= 4) {
       let bb; try { bb = els[target.id].getBBox(); } catch (e) { bb = { x: 0, y: 0, width: 20, height: 20 }; }
       const sc = Math.min(112 / Math.max(1, bb.width), 112 / Math.max(1, bb.height));
       const mini = S('g', { transform: `translate(0,-30) scale(${sc}) translate(${-(bb.x + bb.width / 2)},${-(bb.y + bb.height / 2)})` }, clueCard);
@@ -1891,10 +2024,10 @@ ZONE_BUILDERS.safari = function (host) {
     } else {
       S('text', { x: 0, y: -8, 'text-anchor': 'middle', 'font-size': 86, 'font-weight': 800, fill: '#C9D3EE', 'font-family': 'inherit', text: '?' }, clueCard);
     }
-    const lbl = d >= 4 ? T('Capitale : ' + target.cap, 'Capital: ' + target.cap) : T(target.fr, target.en);
+    const lbl = capMode() ? T('Capitale : ' + target.cap, 'Capital: ' + target.cap) : T(target.fr, target.en);
     S('text', { x: 0, y: 52, 'text-anchor': 'middle', 'font-size': 20, 'font-weight': 800, fill: '#2B2D42', 'font-family': 'inherit', text: d < 1 ? '' : lbl }, clueCard);
     if (d >= 2 && d <= 3) S('text', { x: 0, y: 82, 'text-anchor': 'middle', 'font-size': 14, 'font-weight': 700, fill: '#8A93AD', 'font-family': 'inherit', text: T('Région : ', 'Region: ') + target.region }, clueCard);
-    else if (d >= 4) S('text', { x: 0, y: 82, 'text-anchor': 'middle', 'font-size': 14, 'font-weight': 700, fill: '#8A93AD', 'font-family': 'inherit', text: T('Quel pays ?', 'Which country?') }, clueCard);
+    else if (capMode()) S('text', { x: 0, y: 82, 'text-anchor': 'middle', 'font-size': 14, 'font-weight': 700, fill: '#8A93AD', 'font-family': 'inherit', text: T('Quel pays ?', 'Which country?') }, clueCard);
     fxPop(clueCard);
   }
   function flyTo(x, y, cb) {
@@ -1931,8 +2064,8 @@ ZONE_BUILDERS.safari = function (host) {
       } else {
         Rounds.miss(); sfx.bad(); tries++;
         fxWobble(els[hit.id]);
-        say('Ici c’est ' + hit.fr + ', en ' + hit.region + ' ! Cherche ' + (D() >= 4 ? 'le pays de ' + target.cap : target.fr) + ' !',
-            'This is ' + hit.en + ', in ' + hit.region + '! Look for ' + (D() >= 4 ? 'the country of ' + target.cap : target.en) + '!');
+        say('Ici c’est ' + hit.fr + ', en ' + hit.region + ' ! Cherche ' + (capMode() ? 'le pays de ' + target.cap : target.fr) + ' !',
+            'This is ' + hit.en + ', in ' + hit.region + '! Look for ' + (capMode() ? 'the country of ' + target.cap : target.en) + '!');
         if (tries >= 3) hintTarget();
         roundLive = true;
       }
@@ -1944,7 +2077,7 @@ ZONE_BUILDERS.safari = function (host) {
     target = po[ri(0, po.length - 1)] || DATA[ri(0, DATA.length - 1)];
     showClue();
     const d = D();
-    if (d >= 4) mission('Vole vers le pays dont la capitale est ' + target.cap + ' !', 'Fly to the country whose capital is ' + target.cap + '!', ZONE_ICONS.safari);
+    if (capMode()) mission('Vole vers le pays dont la capitale est ' + target.cap + ' !', 'Fly to the country whose capital is ' + target.cap + '!', ZONE_ICONS.safari);
     else mission('Vole avec Léo vers ' + target.fr + ' ! Regarde sa forme !', 'Fly with Leo to ' + target.en + '! Look at its shape!', ZONE_ICONS.safari);
     roundLive = true;
   }
@@ -2174,6 +2307,7 @@ ZONE_BUILDERS.builder = function (host) {
   }
   const center = p => p.t === 'r' ? [p.x + p.w / 2, p.y + p.h / 2] : (p.t === 'c' ? [p.x, p.y] : [(p.pts[0][0] + p.pts[1][0] + p.pts[2][0]) / 3, (p.pts[0][1] + p.pts[1][1] + p.pts[2][1]) / 3]);
   let structIdx = -1, placed = 0, parts = [], roundLive = false;
+  if (ZoneAct.cur && /^s\d$/.test(ZoneAct.cur)) structIdx = parseInt(ZoneAct.cur.slice(1), 10) - 2;
   function nextRound() {
     blueprintG.innerHTML = ''; trayG.innerHTML = ''; fxG.innerHTML = '';
     structIdx = (structIdx + 1) % STRUCTURES.length;
@@ -2347,7 +2481,7 @@ ZONE_BUILDERS.words = function (host) {
   };
   const VOW = 'AEIOUY';
   let word = '', filled = [], roundLive = false;
-  if (D() === 0) {
+  if (ZoneAct.cur === 'first' || (!ZoneAct.cur && D() === 0)) {
     // Maternelle toddler word game: tap the FIRST letter of the picture word
     const used = [];
     function babyRound() {
@@ -3032,10 +3166,15 @@ ZONE_BUILDERS.academy = function (host) {
     const order = ['m', 'l', 's', 'g', 'm', 'l', 's', 'g', 'm', 'l'];
     const records = [];
     let qi = 0;
+    const usedT = {};
     function ask() {
       wrap.innerHTML = '';
-      const pool2 = topics.filter(t2 => t2.sub === order[qi % order.length]);
-      const t = (pool2.length ? pool2 : topics)[ri(0, (pool2.length ? pool2 : topics).length - 1)];
+      let pool2 = topics.filter(t2 => t2.sub === order[qi % order.length]);
+      if (!pool2.length) pool2 = topics;
+      const minUse = Math.min(...pool2.map(t2 => usedT[t2.id] || 0));
+      pool2 = pool2.filter(t2 => (usedT[t2.id] || 0) === minUse);
+      const t = pool2[ri(0, pool2.length - 1)];
+      usedT[t.id] = (usedT[t.id] || 0) + 1;
       const q = freshQ(t.id, d, t.gen);
       const p = H('div', { class: 'qz-panel' }, wrap);
       H('div', { class: 'qz-prog', text: '📝 ' + T('Examen ', 'Exam ') + gradeName + ' — ' + (qi + 1) + ' / ' + QN }, p);
@@ -3580,7 +3719,8 @@ ZONE_BUILDERS.chess = function (host) {
       moves: (c, r) => ray(c, r, [[1, 0], [-1, 0], [0, 1], [0, -1], [1, 1], [1, -1], [-1, 1], [-1, -1]], 1),
       draw: g => { body(g, '#D7C5F2'); S('circle', { cx: 0, cy: -16, r: 14, fill: '#D7C5F2', stroke: '#4B2E63', 'stroke-width': 3.5 }, g); S('rect', { x: -10, y: -34, width: 20, height: 8, rx: 3, fill: '#FFD23F', stroke: '#B8930B', 'stroke-width': 2 }, g); S('path', { d: 'M 0 -48 L 0 -34 M -6 -42 L 6 -42', stroke: '#FFD23F', 'stroke-width': 4, 'stroke-linecap': 'round' }, g); face(g, -16); } }
   };
-  const bandSet = d <= 1 ? ['pawn', 'rook'] : d === 2 ? ['pawn', 'rook', 'bishop'] : d === 3 ? ['rook', 'bishop', 'knight'] : d === 4 ? ['bishop', 'knight', 'queen'] : ['knight', 'queen', 'king', 'bishop'];
+  let bandSet = d <= 1 ? ['pawn', 'rook'] : d === 2 ? ['pawn', 'rook', 'bishop'] : d === 3 ? ['rook', 'bishop', 'knight'] : d === 4 ? ['bishop', 'knight', 'queen'] : ['knight', 'queen', 'king', 'bishop'];
+  if (ZoneAct.cur && ZoneAct.cur !== 'all' && PIECES[ZoneAct.cur]) bandSet = [ZoneAct.cur];
   let cur = null, roundLive = false;
   function clearFx() { boardFx.innerHTML = ''; hitLayer.innerHTML = ''; pieceLayer.innerHTML = ''; }
   function nextRound() {
@@ -3956,6 +4096,327 @@ ZONE_BUILDERS.themes = function (host) {
   pending ? learn(pending, 0) : picker();
 };
 
+
+/* ================= Z19 — STUDIO RYTHMO (music: free xylophone + melody memory) ================= */
+ZONE_BUILDERS.music = function (host) {
+  const ST = mkStage(host); const svg = ST.svg, PT = ST.P, SW = ST.W, SH = ST.H;
+  gradDefs(svg);
+  const d = D();
+  S('rect', { width: SW, height: SH, fill: '#2A1B3D' }, svg);
+  for (let i = 0; i < 24; i++) S('circle', { cx: rnd(20, SW - 20), cy: rnd(20, SH), r: rnd(1.4, 3), fill: '#FFF3B0', opacity: rnd(0.25, 0.8) }, svg);
+  [[PT(260, 170), '#E64980'], [PT(1240, 680), '#4CC9F0']].forEach(([x, c]) => { const sp = S('path', { d: `M ${x} 0 L ${x - 150} ${SH} L ${x + 150} ${SH} Z`, fill: c, opacity: 0.14 }, svg); sp.animate([{ opacity: 0.08 }, { opacity: 0.2 }, { opacity: 0.08 }], { duration: 3200, iterations: Infinity }); });
+  const NOTES = [262, 294, 330, 349, 392, 440, 494, 523];
+  const NAMES = ['DO', 'RÉ', 'MI', 'FA', 'SOL', 'LA', 'SI', 'DO'];
+  const BARC = ['#FF4D57', '#FF9F1C', '#FFD23F', '#57CC57', '#2EC4B6', '#4CC9F0', '#9B5DE5', '#F25CA2'];
+  function note(freq, dur = 0.45) {
+    try {
+    const c = ac(); if (!c) return;
+    const o = c.createOscillator(), g2 = c.createGain(), o2 = c.createOscillator(), g3 = c.createGain();
+    o.type = 'triangle'; o.frequency.value = freq;
+    o2.type = 'sine'; o2.frequency.value = freq * 2; g3.gain.value = 0.08;
+    g2.gain.setValueAtTime(0.0001, c.currentTime);
+    g2.gain.exponentialRampToValueAtTime(0.5, c.currentTime + 0.015);
+    g2.gain.exponentialRampToValueAtTime(0.0001, c.currentTime + dur);
+    o.connect(g2).connect(c.destination); o2.connect(g3).connect(g2);
+    o.start(); o2.start(); o.stop(c.currentTime + dur + 0.05); o2.stop(c.currentTime + dur + 0.05);
+    } catch (e) {}
+  }
+  const nBars = d <= 1 ? 5 : 8;
+  const bars = [];
+  const BW = PT(130, 88), GAP = PT(18, 8);
+  const totalW = nBars * BW + (nBars - 1) * GAP;
+  const x0 = (SW - totalW) / 2 + BW / 2;
+  const BARY = PT(560, 960);
+  for (let i = 0; i < nBars; i++) {
+    const h = PT(300, 420) - i * PT(18, 24);
+    const g = S('g', { transform: `translate(${x0 + i * (BW + GAP)},${BARY})`, class: 'grab' }, svg);
+    S('rect', { x: -BW / 2, y: -h / 2 + 6, width: BW, height: h, rx: 18, fill: 'rgba(0,0,0,0.3)' }, g);
+    const bar = S('rect', { x: -BW / 2, y: -h / 2, width: BW, height: h, rx: 18, fill: BARC[i], stroke: '#fff', 'stroke-width': 5 }, g);
+    S('text', { y: h / 2 - 22, 'text-anchor': 'middle', 'font-size': PT(30, 34), 'font-weight': 800, fill: '#fff', 'font-family': 'inherit', text: NAMES[i] }, g);
+    bars.push({ g, bar, i });
+    g.addEventListener('pointerdown', () => tapBar(i, true));
+  }
+  function flash(i, dur = 320) {
+    const b = bars[i]; if (!b) return;
+    note(NOTES[b.i], 0.5);
+    try { b.bar.animate([{ transform: 'scale(1)', filter: 'brightness(1)' }, { transform: 'scale(1.1)', filter: 'brightness(1.6)' }, { transform: 'scale(1)', filter: 'brightness(1)' }], { duration: dur }); } catch (e) {}
+    b.bar.style.transformBox = 'fill-box'; b.bar.style.transformOrigin = 'center';
+    for (let k = 0; k < 3; k++) { const sp2 = S('circle', { cx: x0 + i * (BW + GAP) + rnd(-30, 30), cy: BARY - 120 + rnd(-30, 10), r: rnd(3, 7), fill: BARC[i] }, svg); sp2.animate([{ opacity: 1, transform: 'translateY(0)' }, { opacity: 0, transform: 'translateY(-70px)' }], { duration: 700 }).onfinish = () => sp2.remove(); }
+  }
+  let mode = ZoneAct.cur || 'xylo', seq = [], inputIdx = 0, listening = false, taps = 0;
+  function tapBar(i, user) {
+    if (user && mode === 'melody' && !listening) return;
+    flash(i);
+    if (mode === 'xylo' && user) {
+      taps++;
+      if (taps % 8 === 0) { confetti(16); sfx.good(); if (Rounds.gem()) { setTimeout(zoneComplete, 900); } else say(['Quelle musique !', 'Bravo maestro !', 'Encore !'][ri(0, 2)], ['What music!', 'Bravo maestro!', 'More!'][ri(0, 2)]); }
+    } else if (mode === 'melody' && user && listening) {
+      if (i === seq[inputIdx]) {
+        inputIdx++;
+        if (inputIdx >= seq.length) {
+          listening = false;
+          sfx.good(); confetti(18);
+          say('Mélodie parfaite !', 'Perfect melody!');
+          setTimeout(() => { if (Rounds.gem()) setTimeout(zoneComplete, 900); else melodyRound(); }, 1200);
+        }
+      } else {
+        listening = false;
+        Rounds.miss(); sfx.bad();
+        say('Presque ! Écoute encore la mélodie...', 'Almost! Listen to the melody again...');
+        setTimeout(() => playSeq(), 1400);
+      }
+    }
+  }
+  function playSeq() {
+    listening = false; inputIdx = 0;
+    seq.forEach((n2, k) => setTimeout(() => flash(n2, 400), 600 + k * 620));
+    setTimeout(() => { listening = true; say('À toi !', 'Your turn!'); }, 600 + seq.length * 620 + 200);
+  }
+  function melodyRound() {
+    const len = 2 + Math.min(3, Math.floor(d / 2)) + (Rounds.idx >= 3 ? 1 : 0);
+    seq = [];
+    for (let k = 0; k < len; k++) seq.push(ri(0, nBars - 1));
+    mission('Écoute la mélodie de ' + len + ' notes, puis rejoue-la !', 'Listen to the ' + len + '-note melody, then play it back!', ZONE_ICONS.music);
+    playSeq();
+  }
+  if (mode === 'melody') melodyRound();
+  else {
+    mission('Le xylophone magique ! Joue ta musique : chaque couleur chante !', 'The magic xylophone! Play your music: every color sings!', ZONE_ICONS.music);
+    Rounds.start('music', 3);
+    handHint(svg, x0, BARY - 100);
+  }
+};
+
+/* ================= Z20 — CLINIQUE CÂLINS (pet care: wash, feed, heal) ================= */
+ZONE_BUILDERS.pets = function (host) {
+  const ST = mkStage(host); const svg = ST.svg, PT = ST.P, SW = ST.W, SH = ST.H;
+  gradDefs(svg);
+  const d = D();
+  S('rect', { width: SW, height: SH, fill: '#FFF1E6' }, svg);
+  S('rect', { y: PT(620, 1120), width: SW, height: SH, fill: '#FFD8BE' }, svg);
+  for (let i = 0; i < 6; i++) { const hgt = S('path', { d: 'M 6 16 C 2 11 6 6 11 9 C 16 6 20 11 16 16 Q 11 19 6 16 Z', fill: '#FFC9C9', transform: `translate(${rnd(30, SW - 50)},${rnd(40, PT(200, 330))}) scale(${rnd(1, 2)})` }, svg); hgt.animate([{ opacity: 0.4 }, { opacity: 1 }, { opacity: 0.4 }], { duration: rnd(2200, 4000), iterations: Infinity }); }
+  const PX = PT(750, 425), PY = PT(430, 760);
+  const petG = S('g', { transform: `translate(${PX},${PY}) scale(${PT(1.5, 1.7)})` }, svg);
+  const fxLayer = S('g', {}, svg);
+  const kind = ZoneAct.cur || 'puppy';
+  function drawPet(g) {
+    if (kind === 'kitten') {
+      S('ellipse', { cy: 55, rx: 52, ry: 42, fill: '#B8C0CC', stroke: '#8D99AE', 'stroke-width': 4 }, g);
+      S('circle', { r: 48, fill: '#C9D0DA', stroke: '#8D99AE', 'stroke-width': 4 }, g);
+      [[-32, -36], [32, -36]].forEach(([x, y]) => S('path', { d: `M ${x - 15} ${y + 12} L ${x} ${y - 24} L ${x + 15} ${y + 12} Z`, fill: '#C9D0DA', stroke: '#8D99AE', 'stroke-width': 3.5 }, g));
+      S('path', { d: 'M 48 60 Q 85 50 80 18', stroke: '#8D99AE', 'stroke-width': 9, fill: 'none', 'stroke-linecap': 'round' }, g);
+    } else if (kind === 'bunny') {
+      S('ellipse', { cy: 58, rx: 50, ry: 44, fill: '#FFFFFF', stroke: '#C9D3EE', 'stroke-width': 4 }, g);
+      S('circle', { r: 46, fill: '#FFFFFF', stroke: '#C9D3EE', 'stroke-width': 4 }, g);
+      [[-22, -60], [22, -60]].forEach(([x, y]) => { S('ellipse', { cx: x, cy: y, rx: 13, ry: 36, fill: '#fff', stroke: '#C9D3EE', 'stroke-width': 3.5 }, g); S('ellipse', { cx: x, cy: y, rx: 6, ry: 24, fill: '#FFC9D8' }, g); });
+    } else {
+      S('ellipse', { cy: 56, rx: 54, ry: 44, fill: '#D9A05B', stroke: '#B07B4C', 'stroke-width': 4 }, g);
+      S('circle', { r: 48, fill: '#E8B778', stroke: '#B07B4C', 'stroke-width': 4 }, g);
+      [[-38, -30], [38, -30]].forEach(([x, y]) => S('ellipse', { cx: x, cy: y, rx: 14, ry: 24, fill: '#B07B4C', transform: `rotate(${x < 0 ? -28 : 28} ${x} ${y})` }, g));
+      S('path', { d: 'M -8 26 Q 0 36 8 26 L 4 40 Q 0 46 -4 40 Z', fill: '#FF8FA3' }, g);
+    }
+    [[-16, -8], [16, -8]].forEach(([x, y]) => { S('circle', { cx: x, cy: y, r: 7, fill: '#fff' }, g); S('circle', { cx: x, cy: y + 1.5, r: 3.4, fill: '#2B2D42' }, g); });
+    S('circle', { cy: 8, r: 6, fill: '#2B2D42' }, g);
+    S('path', { d: 'M -8 18 Q 0 25 8 18', stroke: '#2B2D42', 'stroke-width': 3, fill: 'none', 'stroke-linecap': 'round' }, g);
+  }
+  drawPet(petG); fxBob(petG, 7, 2400);
+  const NAME = { puppy: ['Biscuit', 'Biscuit'], kitten: ['Plume', 'Plume'], bunny: ['Coton', 'Cotton'] }[kind];
+  function hearts(n2) {
+    for (let i = 0; i < n2; i++) {
+      const h2 = S('path', { d: 'M 0 10 C -16 -2 -9 -16 0 -8 C 9 -16 16 -2 0 10 Z', fill: '#FF4D57', transform: `translate(${PX + rnd(-80, 80)},${PY - 60})` }, fxLayer);
+      h2.animate([{ opacity: 1, transform: `translate(${PX + rnd(-80, 80)}px,${PY - 60}px) scale(1)` }, { opacity: 0, transform: `translate(${PX + rnd(-100, 100)}px,${PY - 220}px) scale(1.8)` }], { duration: 1400, delay: i * 140 }).onfinish = () => h2.remove();
+    }
+  }
+  let careLive = false;
+  function careDone() {
+    careLive = false;
+    hearts(6); sfx.good(); fxSquish(petG);
+    say(NAME[0] + ' est si content ! Merci docteur !', NAME[1] + ' is so happy! Thank you doctor!');
+    setTimeout(() => { fxLayer.innerHTML = ''; if (Rounds.gem()) setTimeout(zoneComplete, 900); else nextCare(); }, 1600);
+  }
+  function careWash() {
+    const n2 = 3 + Math.min(3, d);
+    let left = n2;
+    for (let i = 0; i < n2; i++) {
+      const a = (i / n2) * Math.PI * 2 + rnd(-0.3, 0.3);
+      const mx2 = PX + Math.cos(a) * PT(80, 95), my2 = PY + Math.sin(a) * PT(70, 85);
+      const mud = S('g', { transform: `translate(${mx2},${my2})`, class: 'grab' }, fxLayer);
+      S('ellipse', { rx: PT(26, 32), ry: PT(18, 22), fill: '#8A5A33', opacity: 0.85 }, mud);
+      S('ellipse', { cx: 8, cy: -5, rx: 8, ry: 5, fill: '#6B421D' }, mud);
+      mud.addEventListener('pointerdown', () => {
+        if (!careLive || mud.dataset.gone) return;
+        mud.dataset.gone = '1';
+        sfx.splash();
+        for (let k = 0; k < 5; k++) { const bub = S('circle', { cx: mx2 + rnd(-16, 16), cy: my2 + rnd(-12, 12), r: rnd(5, 10), fill: 'rgba(180,230,255,0.9)', stroke: '#fff', 'stroke-width': 2 }, fxLayer); bub.animate([{ opacity: 1 }, { opacity: 0, transform: 'translateY(-40px)' }], { duration: 700 }).onfinish = () => bub.remove(); }
+        mud.remove();
+        left--;
+        say(String(n2 - left), String(n2 - left));
+        if (!left) careDone();
+      });
+    }
+    mission(NAME[0] + ' est tout sale ! Lave les ' + n2 + ' taches de boue !', NAME[1] + ' is all muddy! Wash the ' + n2 + ' mud spots!', ZONE_ICONS.pets);
+    handHint(svg, PX + 80, PY);
+  }
+  function careFeed() {
+    const n2 = 2 + Math.min(4, d);
+    const FOOD = { puppy: ['🦴', 'os', 'bones'], kitten: ['🐟', 'poissons', 'fish'], bunny: ['🥕', 'carottes', 'carrots'] }[kind];
+    let fed = 0;
+    for (let i = 0; i < n2 + 2; i++) {
+      const fx2 = PT(260 + i * 165, 110 + (i % 4) * 160), fy2 = PT(760, 1240 + Math.floor(i / 4) * 150);
+      const f2 = S('g', { transform: `translate(${fx2},${fy2})`, class: 'grab' }, fxLayer);
+      S('circle', { r: PT(52, 62), fill: '#fff', stroke: '#F76707', 'stroke-width': 5 }, f2);
+      S('text', { y: PT(16, 20), 'text-anchor': 'middle', 'font-size': PT(50, 58), 'font-family': 'inherit', text: FOOD[0] }, f2);
+      f2.addEventListener('pointerdown', () => {
+        if (!careLive || f2.dataset.gone || fed >= n2) return;
+        f2.dataset.gone = '1';
+        const m3 = /translate\(([-\d.]+),([-\d.]+)\)/.exec(f2.getAttribute('transform'));
+        tween(500, k => { const e = easeOut(k); f2.setAttribute('transform', `translate(${fx2 + (PX - fx2) * e},${fy2 + (PY + 20 - fy2) * e - Math.sin(k * Math.PI) * 120})`); }, () => { f2.remove(); fxSquish(petG); sfx.pop(); fed++; say(String(fed), String(fed)); if (fed >= n2) careDone(); });
+      });
+    }
+    mission('Donne exactement ' + n2 + ' ' + FOOD[1] + ' à ' + NAME[0] + ' — compte bien !', 'Feed ' + NAME[1] + ' exactly ' + n2 + ' ' + FOOD[2] + ' — count carefully!', ZONE_ICONS.pets);
+    handHint(svg, PT(260, 110), PT(760, 1240));
+  }
+  function careHeal() {
+    const a = rnd(0, Math.PI * 2);
+    const hx2 = PX + Math.cos(a) * PT(70, 85), hy2 = PY + Math.sin(a) * PT(62, 76);
+    const owie = S('g', { transform: `translate(${hx2},${hy2})`, class: 'grab' }, fxLayer);
+    const ring2 = S('circle', { r: PT(26, 32), fill: 'rgba(229,37,42,0.35)', stroke: '#E5252A', 'stroke-width': 4 }, owie);
+    mlPulse(ring2, 30);
+    owie.addEventListener('pointerdown', () => {
+      if (!careLive || owie.dataset.gone) return;
+      owie.dataset.gone = '1';
+      owie.innerHTML = '';
+      S('rect', { x: -30, y: -12, width: 60, height: 24, rx: 10, fill: '#FFE8CC', stroke: '#F3A712', 'stroke-width': 3, transform: 'rotate(-18)' }, owie);
+      [[-12, 0], [0, 0], [12, 0]].forEach(([x, y]) => S('circle', { cx: x, cy: y, r: 2, fill: '#F3A712', transform: 'rotate(-18)' }, owie));
+      sfx.good();
+      say('Le pansement magique ! Bisou pour guérir !', 'The magic plaster! A kiss to make it better!');
+      careDone();
+    });
+    mission(NAME[0] + ' a un petit bobo qui clignote... pose le pansement dessus !', NAME[1] + ' has a little ouchie blinking... put the plaster on it!', ZONE_ICONS.pets);
+    handHint(svg, hx2, hy2);
+  }
+  const CARES = [careWash, careFeed, careHeal];
+  let careIdx = ri(0, 2);
+  function nextCare() {
+    fxLayer.innerHTML = '';
+    careIdx = (careIdx + 1) % CARES.length;
+    careLive = true;
+    CARES[careIdx]();
+  }
+  careLive = true;
+  CARES[careIdx]();
+};
+
+/* ================= Z21 — PUZZLES DE L'ÎLE (shape sorter + picture jigsaws) ================= */
+ZONE_BUILDERS.puzzle = function (host) {
+  const ST = mkStage(host); const svg = ST.svg, PT = ST.P, SW = ST.W, SH = ST.H;
+  gradDefs(svg);
+  const d = D();
+  S('rect', { width: SW, height: SH, fill: '#E7F0FF' }, svg);
+  for (let i = 0; i < 8; i++) S('circle', { cx: rnd(30, SW - 30), cy: rnd(30, SH - 30), r: rnd(16, 40), fill: ['#D8E6FF', '#CFE0FF', '#E2ECFF'][i % 3] }, svg);
+  const boardG = S('g', {}, svg);
+  const pieceG = S('g', {}, svg);
+  const mode = ZoneAct.cur === 'images' && d >= 1 ? 'images' : 'formes';
+  const SHAPES = {
+    circle: { fr: 'le rond', en: 'the circle', c: '#FF4D57', draw: (g, s2) => S('circle', { r: 44 * s2, fill: 'inherit' }, g) },
+    square: { fr: 'le carré', en: 'the square', c: '#4CC9F0', draw: (g, s2) => S('rect', { x: -40 * s2, y: -40 * s2, width: 80 * s2, height: 80 * s2, rx: 10 * s2, fill: 'inherit' }, g) },
+    triangle: { fr: 'le triangle', en: 'the triangle', c: '#57CC57', draw: (g, s2) => S('path', { d: `M 0 ${-46 * s2} L ${46 * s2} ${38 * s2} L ${-46 * s2} ${38 * s2} Z`, fill: 'inherit' }, g) },
+    star: { fr: "l'étoile", en: 'the star', c: '#FFD23F', draw: (g, s2) => S('path', { d: 'M 0 -46 L 13 -14 L 46 -12 L 20 9 L 29 44 L 0 24 L -29 44 L -20 9 L -46 -12 L -13 -14 Z', fill: 'inherit', transform: `scale(${s2})` }, g) },
+    heart: { fr: 'le cœur', en: 'the heart', c: '#F25CA2', draw: (g, s2) => S('path', { d: 'M 0 38 C -52 4 -34 -40 0 -16 C 34 -40 52 4 0 38 Z', fill: 'inherit', transform: `scale(${s2})` }, g) },
+    moon: { fr: 'la lune', en: 'the moon', c: '#9B5DE5', draw: (g, s2) => S('path', { d: 'M 10 -42 A 44 44 0 1 0 10 42 A 34 34 0 1 1 10 -42 Z', fill: 'inherit', transform: `scale(${s2})` }, g) }
+  };
+  function shapeEl(key2, fill, s2, parent) {
+    const w2 = S('g', { fill }, parent);
+    SHAPES[key2].draw(w2, s2);
+    return w2;
+  }
+  function formesRound() {
+    boardG.innerHTML = ''; pieceG.innerHTML = '';
+    const n2 = 3 + Math.min(3, d);
+    const keys2 = shuffle(Object.keys(SHAPES)).slice(0, n2);
+    const holes = [];
+    S('rect', { x: PT(330, 95), y: PT(190, 440), width: PT(840, 660), height: PT(330, 520), rx: 30, fill: '#C68B59', stroke: '#8A5A33', 'stroke-width': 8 }, boardG);
+    keys2.forEach((k2, i) => {
+      const cols = n2 <= 3 ? 3 : 3;
+      const hx2 = PT(460 + (i % 3) * 290, 205 + (i % 3) * 215), hy2 = PT(280 + Math.floor(i / 3) * 160, 560 + Math.floor(i / 3) * 230);
+      const hole = S('g', { transform: `translate(${hx2},${hy2})` }, boardG);
+      shapeEl(k2, 'rgba(0,0,0,0.35)', PT(1, 1.15), hole);
+      holes.push({ k: k2, x: hx2, y: hy2, filled: false, hole });
+    });
+    let placed = 0;
+    shuffle(keys2).forEach((k2, i) => {
+      const px2 = PT(300 + i * 180, 120 + (i % 3) * 230), py2 = PT(680, 1180 + Math.floor(i / 3) * 190);
+      const pc = S('g', { transform: `translate(${px2},${py2})`, class: 'grab' }, pieceG);
+      S('circle', { r: PT(62, 76), fill: 'rgba(255,255,255,0.001)' }, pc);
+      shapeEl(k2, SHAPES[k2].c, PT(1, 1.15), pc);
+      S('g', { fill: 'rgba(255,255,255,0.35)' }, pc);
+      pc.addEventListener('pointerdown', () => {
+        if (pc.dataset.gone) return;
+        const h2 = holes.find(o => o.k === k2 && !o.filled);
+        if (!h2) return;
+        pc.dataset.gone = '1'; h2.filled = true;
+        sfx.whoosh();
+        tween(520, kk => { const e = easeOut(kk); pc.setAttribute('transform', `translate(${px2 + (h2.x - px2) * e},${py2 + (h2.y - py2) * e - Math.sin(kk * Math.PI) * 130})`); }, () => {
+          sfx.pop(); fxPop(pc);
+          say(T(SHAPES[k2].fr, SHAPES[k2].en) + ' !', null);
+          placed++;
+          if (placed >= n2) { sfx.good(); confetti(16); setTimeout(() => { if (Rounds.gem()) setTimeout(zoneComplete, 900); else formesRound(); }, 1100); }
+        });
+      });
+    });
+    mission('Chaque forme cherche sa maison ! Touche les pièces pour les ranger !', 'Every shape is looking for its home! Tap the pieces to place them!', ZONE_ICONS.puzzle);
+    handHint(svg, PT(300, 120), PT(680, 1180));
+  }
+  const JIG_PICS = ['lion', 'car', 'house2', 'boat2', 'plane', 'flower2'];
+  let jigClip = 0;
+  function imagesRound() {
+    boardG.innerHTML = ''; pieceG.innerHTML = '';
+    const pk = pickFresh('puzzle_img', JIG_PICS, x => x);
+    const nSlices = d <= 2 ? 2 : d <= 4 ? 3 : 4;
+    const FW = PT(560, 620), FH = PT(380, 430);
+    const FX = PT(750, 425), FY = PT(330, 620);
+    S('rect', { x: FX - FW / 2 - 16, y: FY - FH / 2 - 16, width: FW + 32, height: FH + 32, rx: 24, fill: '#fff', stroke: '#3B5BDB', 'stroke-width': 7 }, boardG);
+    const sliceW = FW / nSlices;
+    for (let i = 1; i < nSlices; i++) S('path', { d: `M ${FX - FW / 2 + i * sliceW} ${FY - FH / 2} L ${FX - FW / 2 + i * sliceW} ${FY + FH / 2}`, stroke: '#C9D3EE', 'stroke-width': 3, 'stroke-dasharray': '10 8' }, boardG);
+    const defs = S('defs', {}, svg);
+    let placed = 0;
+    const slots = [];
+    shuffle([...Array(nSlices).keys()]).forEach((si, j) => {
+      const cid = 'jig' + (jigClip++);
+      const cp = S('clipPath', { id: cid }, defs);
+      S('rect', { x: -FW / 2 + si * sliceW, y: -FH / 2, width: sliceW, height: FH }, cp);
+      const tx = FX, ty = FY;
+      const px2 = PT(260 + j * 250, 140 + j * 190), py2 = PT(700, 1230);
+      const pc = S('g', { transform: `translate(${px2},${py2})`, class: 'grab' }, pieceG);
+      const inner = S('g', { 'clip-path': 'url(#' + cid + ')' }, pc);
+      S('rect', { x: -FW / 2 + si * sliceW, y: -FH / 2, width: sliceW, height: FH, fill: '#F6F9FF' }, inner);
+      const art = S('g', { transform: `scale(${PT(2.6, 2.9)})` }, inner);
+      (PICT[pk] || (() => {}))(art);
+      S('rect', { x: -FW / 2 + si * sliceW, y: -FH / 2, width: sliceW, height: FH, fill: 'none', stroke: '#3B5BDB', 'stroke-width': 5, rx: 6 }, pc);
+      S('rect', { x: -FW / 2 + si * sliceW, y: -FH / 2, width: sliceW, height: FH, fill: 'rgba(255,255,255,0.001)' }, pc);
+      pc.addEventListener('pointerdown', () => {
+        if (pc.dataset.gone) return;
+        pc.dataset.gone = '1';
+        sfx.whoosh();
+        tween(540, kk => { const e = easeOut(kk); pc.setAttribute('transform', `translate(${px2 + (tx - px2) * e},${py2 + (ty - py2) * e - Math.sin(kk * Math.PI) * 140})`); }, () => {
+          sfx.pop();
+          placed++;
+          say(placed + ' !', placed + '!');
+          if (placed >= nSlices) {
+            sfx.good(); confetti(20); fxPop(boardG);
+            say('Puzzle terminé ! Quelle belle image !', 'Puzzle finished! What a lovely picture!');
+            setTimeout(() => { if (Rounds.gem()) setTimeout(zoneComplete, 900); else imagesRound(); }, 1500);
+          }
+        });
+      });
+      slots.push(pc);
+    });
+    mission('Reconstruis l’image : touche les morceaux du puzzle !', 'Rebuild the picture: tap the puzzle pieces!', ZONE_ICONS.puzzle);
+    handHint(svg, PT(260, 140), PT(700, 1230));
+  }
+  if (mode === 'images') imagesRound(); else formesRound();
+};
+
 /* ================= BOOT ================= */
 function paintLang() {
   const b = $('btn-lang');
@@ -4050,6 +4511,7 @@ document.addEventListener('pointerdown', () => {
 buildHudIcons();
 buildGradeDock();
 $('ver-tag').textContent = 'v' + APP_VERSION;
+$('act-fab').addEventListener('click', () => { if (activeZone) { sfx.tap(); enterZone(activeZone); } });
 updateStarPill();
 showMap();
 window.__WORLD__ = { ZONES, ZONE_BUILDERS, enterZone, showMap, save, Rounds, QUIZ_TOPICS, CURRICULUM, Academy, ML_LESSONS, GRIOT_STORIES, THEMES_DATA, Themes };
