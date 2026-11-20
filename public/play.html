@@ -51,16 +51,20 @@ html,body{ width:100%; height:100%; overflow:hidden; font-family:'Baloo 2','Fred
 .gpill.on small{ opacity:0.92; }
 
 /* ---------- Big friendly banner ---------- */
-#mission-bar{ position:absolute; top:76px; left:50%; transform:translateX(-50%) scale(0); width:min(720px,92%); z-index:35; background:#fff; border:4px solid var(--yellow); border-radius:26px; padding:10px 18px; box-shadow:var(--shadow); display:flex; align-items:center; gap:14px; transition:transform 0.4s cubic-bezier(0.34,1.56,0.64,1); cursor:pointer; }
+#mission-bar{ position:absolute; top:76px; left:50%; transform:translateX(-50%) scale(0); width:min(720px,94%); z-index:35; background:rgba(255,255,255,0.82); backdrop-filter:blur(10px); -webkit-backdrop-filter:blur(10px); border:3px solid rgba(255,210,63,0.95); border-radius:26px; padding:9px 14px; box-shadow:0 10px 26px rgba(43,45,66,0.22); display:flex; align-items:center; gap:10px; transition:transform 0.4s cubic-bezier(0.34,1.56,0.64,1), width 0.3s, padding 0.3s; cursor:pointer; }
 #mission-bar.on{ transform:translateX(-50%) scale(1); }
-#mission-icon{ width:56px; height:56px; flex:0 0 auto; }
-#mission-text{ font-size:1.22rem; font-weight:800; color:var(--ink); line-height:1.15; }
+#mission-icon{ width:48px; height:48px; flex:0 0 auto; }
+#mission-text{ flex:1 1 auto; min-width:0; font-size:1.1rem; font-weight:800; color:var(--ink); line-height:1.22; display:-webkit-box; -webkit-line-clamp:3; -webkit-box-orient:vertical; overflow:hidden; }
+/* after a few seconds the bar folds into a small pill so the game is never hidden */
+#mission-bar.mini{ width:auto; padding:6px 10px; gap:7px; }
+#mission-bar.mini #mission-text, #mission-bar.mini #mission-subject{ display:none; }
+#mission-bar.mini #mission-icon{ width:34px; height:34px; }
 #mission-speaker{ margin-left:auto; flex:0 0 auto; width:44px; height:44px; }
 #mission-subject{ flex:0 0 auto; padding:7px 13px; border-radius:999px; color:#fff; font-weight:900; font-size:0.86rem; letter-spacing:0.04em; border:3px solid #fff; box-shadow:0 4px 10px rgba(0,0,0,0.18); white-space:nowrap; }
 #mission-trick{ flex:0 0 auto; width:44px; height:44px; margin-left:auto; display:flex; align-items:center; justify-content:center; font-size:1.5rem; background:#FFF8E1; border:3px solid #FFD23F; border-radius:50%; cursor:pointer; transition:transform 0.2s; animation:bob 2.4s ease-in-out infinite; }
 #mission-trick:active{ transform:scale(0.85); }
 #mission-speaker{ margin-left:0; }
-@media(max-width:760px){ #mission-subject{ font-size:0.7rem; padding:5px 9px; } #mission-text{ font-size:0.98rem; } }
+@media(max-width:760px){ #mission-subject{ font-size:0.62rem; padding:4px 8px; border-width:2px; max-width:34%; overflow:hidden; text-overflow:ellipsis; } #mission-text{ font-size:0.92rem; line-height:1.22; } }
 
 /* ---------- Progress gems ---------- */
 #round-gems{ position:absolute; top:18px; left:50%; transform:translateX(-50%); display:flex; gap:8px; z-index:36; }
@@ -171,7 +175,7 @@ html,body{ width:100%; height:100%; overflow:hidden; font-family:'Baloo 2','Fred
   .gpill{ min-width:46px; padding:5px 8px; font-size:0.72rem; }
   #grade-dock{ bottom:8px; gap:5px; padding:6px 8px; }
   #mission-bar{ top:60px; padding:8px 10px; gap:8px; border-radius:20px; border-width:3px; }
-  #mission-icon{ width:38px; height:38px; }
+  #mission-icon{ width:34px; height:34px; }
   #mission-trick,#mission-speaker{ width:36px; height:36px; font-size:1.15rem; }
   #round-gems{ top:11px; gap:6px; } .gem{ width:17px; height:17px; }
   .quiz-wrap{ padding:112px 8px 16px; }
@@ -246,7 +250,7 @@ html,body{ width:100%; height:100%; overflow:hidden; font-family:'Baloo 2','Fred
   </div>
   <div id="cheer-card"><div id="cheer-inner"><div id="cheer-art"></div><div id="cheer-title"></div><div id="cheer-stars"></div><button id="cheer-btn"></button></div></div>
 </div>
-<script src="africa-data.js?v=126"></script>
+<script src="africa-data.js?v=127"></script>
 <script>
 (() => {
 'use strict';
@@ -386,7 +390,31 @@ const sfx = {
   whoosh: () => tone(900, 0.18, 'sine', 0.06)
 };
 let voices = [];
-function loadVoices() { voices = speechSynthesis.getVoices(); }
+const _voiceCache = {};
+function loadVoices() { voices = speechSynthesis.getVoices(); _voiceCache.fr = null; _voiceCache.en = null; }
+// native female narrator: score every installed voice, keep the best per language
+const FEMALE_FR = /amélie|amelie|audrey|céline|celine|denise|julie|virginie|marie|charlotte|hortense|éloïse|eloise|vivienne|léa|chantal|female|femme/i;
+const FEMALE_EN = /samantha|jenny|aria|joanna|zira|victoria|karen|moira|serena|tessa|allison|ava|susan|emma|olivia|libby|sonia|female/i;
+function bestVoice(lang2) {
+  const key = lang2.slice(0, 2).toLowerCase();
+  if (_voiceCache[key]) return _voiceCache[key];
+  const femRe = key === 'en' ? FEMALE_EN : FEMALE_FR;
+  const native = key === 'en' ? 'en-us' : 'fr-fr';
+  let best = null, bestScore = -1e9;
+  (voices || []).forEach(v => {
+    if (!v.lang || v.lang.toLowerCase().slice(0, 2) !== key) return;
+    let s2 = 0;
+    const L = v.lang.toLowerCase().replace('_', '-');
+    if (L.startsWith(native)) s2 += 6; else s2 += 2;
+    if (femRe.test(v.name)) s2 += 8;
+    if (/natural|neural|premium|enhanced|google|online/i.test(v.name)) s2 += 4;
+    if (/male|homme|david|thomas|paul|henri|nicolas|daniel|george|ryan/i.test(v.name) && !femRe.test(v.name)) s2 -= 7;
+    if (/compact|eloquence|novelty/i.test(v.name)) s2 -= 4;
+    if (s2 > bestScore) { bestScore = s2; best = v; }
+  });
+  _voiceCache[key] = best;
+  return best;
+}
 if ('speechSynthesis' in window) { loadVoices(); speechSynthesis.onvoiceschanged = loadVoices; }
 let ttsUnlocked = false;
 function unlockTTS() {
@@ -403,8 +431,7 @@ function say(fr, en, rate, forceLang) {
   // split long texts into sentences (long utterances get cut on mobile), pin lang + best voice.
   say._t = setTimeout(() => {
     const lang = forceLang || (isEN() ? 'en-US' : 'fr-FR');
-    const pool = voices.filter(v => v.lang && v.lang.toLowerCase().startsWith(lang.slice(0, 2).toLowerCase()));
-    const best = pool.find(v => /natural|neural|premium|google/i.test(v.name)) || pool[0];
+    const best = bestVoice(lang);
     const parts = String(text).match(/[^.!?]+[.!?]*/g) || [text];
     parts.forEach(ptxt => {
       ptxt = ptxt.trim();
@@ -412,7 +439,8 @@ function say(fr, en, rate, forceLang) {
       const u = new SpeechSynthesisUtterance(ptxt);
       u.lang = lang;
       u.rate = rate || (D() <= 1 ? 0.82 : 0.95);
-      u.pitch = 1.06;
+      u.pitch = 1.1;
+      u.volume = 1;
       if (best) u.voice = best;
       try { speechSynthesis.speak(u); } catch (e) {}
     });
@@ -545,7 +573,7 @@ function iconSvg(builder, vb = '0 0 24 24') {
   return svg;
 }
 
-const APP_VERSION = '1.26.0';
+const APP_VERSION = '1.27.0';
 // animated pointing hand: shows toddlers WHAT to touch (MAT/SIL only)
 function handHint(svg, x, y) {
   if (D() > 1) return;
@@ -607,14 +635,26 @@ function mission(fr, en, iconBuilder) {
     S('path', { d: 'M 7 10 L 10 10 L 13 7 L 13 17 L 10 14 L 7 14 Z', fill: '#7A4E00' }, svg);
     S('path', { d: 'M 15.5 9.5 Q 18 12 15.5 14.5', stroke: '#7A4E00', 'stroke-width': 1.6, fill: 'none', 'stroke-linecap': 'round' }, svg);
   }));
-  $('mission-bar').classList.add('on');
+  const mb = $('mission-bar');
+  mb.classList.add('on'); mb.classList.remove('mini');
+  clearTimeout(mission._mini);
+  mission._mini = setTimeout(() => mb.classList.add('mini'), 5200);
   const z = activeZone && ZONES.find(zz => zz.key === activeZone);
   if (z && Rounds.idx === 0 && !Rounds._subjectSaid) {
     Rounds._subjectSaid = true;
     say(T(z.subject.fr, z.subject.en).toLowerCase().replace(/&/g, T('et', 'and')) + ' ! ' + fr, T(z.subject.fr, z.subject.en).toLowerCase() + '! ' + (en == null ? fr : en));
   } else say(fr, en);
 }
-$('mission-bar') && $('mission-bar').addEventListener('click', () => { if (currentMission) say(currentMission[0], currentMission[1]); sfx.tap(); });
+$('mission-bar') && $('mission-bar').addEventListener('click', () => {
+  const mb = $('mission-bar');
+  if (mb.classList.contains('mini')) {
+    mb.classList.remove('mini');
+    clearTimeout(mission._mini);
+    mission._mini = setTimeout(() => mb.classList.add('mini'), 5200);
+  }
+  if (currentMission) say(currentMission[0], currentMission[1]);
+  sfx.tap();
+});
 
 const Rounds = {
   total: 5, idx: 0, mistakes: 0, zone: null,
@@ -645,11 +685,16 @@ function zoneComplete() {
   const art = $('cheer-art'); art.innerHTML = '';
   art.appendChild(iconSvg(svg => { drawLeo(svg, 0, 6, 0.95); }, '-75 -75 150 150'));
   $('cheer-title').textContent = T('BRAVO ! Zone réussie !', 'AMAZING! Zone complete!');
+  const zObj = ZONES.find(x => x.key === z);
+  let sub2 = document.getElementById('cheer-lesson');
+  if (!sub2) { sub2 = document.createElement('div'); sub2.id = 'cheer-lesson'; sub2.style.cssText = 'margin-top:6px;font-weight:800;color:#2E9E5B;font-size:1.02rem;'; $('cheer-title').after(sub2); }
+  if (zObj && zObj.lv) { const band = D() <= 1 ? 0 : D() <= 3 ? 1 : 2; sub2.textContent = '\u2705 ' + T('Leçon maîtrisée : ', 'Lesson mastered: ') + T(zObj.lv[band][0], zObj.lv[band][1]); } else sub2.textContent = '';
   const cs = $('cheer-stars'); cs.innerHTML = '';
   for (let i = 0; i < 3; i++) cs.appendChild(iconSvg(svg => drawStarIcon(svg, 1.9, i < stars ? '#FFD23F' : '#E3E6F0'), '0 0 46 46'));
   $('cheer-btn').textContent = T("Retour à l'île", 'Back to the island');
   $('cheer-card').classList.add('on');
-  say('Bravo ! Tu as gagné ' + stars + ' étoiles !', 'Amazing! You earned ' + stars + ' stars!');
+  const lvTxt = zObj && zObj.lv ? T(zObj.lv[D() <= 1 ? 0 : D() <= 3 ? 1 : 2][0], zObj.lv[D() <= 1 ? 0 : D() <= 3 ? 1 : 2][1]) : '';
+  say('Bravo ! Tu as gagné ' + stars + ' étoiles !' + (lvTxt ? ' Leçon maîtrisée : ' + lvTxt + ' !' : ''), 'Amazing! You earned ' + stars + ' stars!' + (lvTxt ? ' Lesson mastered: ' + lvTxt + '!' : ''));
 }
 $('cheer-btn').addEventListener('click', () => { $('cheer-card').classList.remove('on'); showMap(); });
 function updateStarPill() {
@@ -1582,8 +1627,9 @@ ZONE_BUILDERS.splash = function (host) {
   }
   function askAnswer(it) {
     phase = 'answer'; tries = 0;
-    bigBtn(BX1, BY, 'FLOTTE !', 'FLOATS!', '#1C7ED6', () => { if (phase === 'answer') judge(true, it); });
-    bigBtn(BX2, BY, 'COULE !', 'SINKS!', '#30346B', () => { if (phase === 'answer') judge(false, it); });
+    const flip = Math.random() < 0.5;
+    bigBtn(flip ? BX2 : BX1, BY, 'FLOTTE !', 'FLOATS!', '#1C7ED6', () => { if (phase === 'answer') judge(true, it); });
+    bigBtn(flip ? BX1 : BX2, BY, 'COULE !', 'SINKS!', '#30346B', () => { if (phase === 'answer') judge(false, it); });
     say('Alors, ' + it.o.fr + '... il FLOTTE ou il COULE ?', 'So, ' + it.o.en + '... does it FLOAT or SINK?');
   }
   function askPredict(it) {
@@ -1600,8 +1646,9 @@ ZONE_BUILDERS.splash = function (host) {
         finishItem(it);
       });
     };
-    bigBtn(BX1, BY, 'FLOTTE ?', 'FLOATS?', '#1C7ED6', () => { if (phase === 'predict') go(true); });
-    bigBtn(BX2, BY, 'COULE ?', 'SINKS?', '#30346B', () => { if (phase === 'predict') go(false); });
+    const flip = Math.random() < 0.5;
+    bigBtn(flip ? BX2 : BX1, BY, 'FLOTTE ?', 'FLOATS?', '#1C7ED6', () => { if (phase === 'predict') go(true); });
+    bigBtn(flip ? BX1 : BX2, BY, 'COULE ?', 'SINKS?', '#30346B', () => { if (phase === 'predict') go(false); });
     say('Hypothèse de scientifique : ' + it.o.fr + '... flotte ou coule ? Choisis AVANT de voir !', 'Scientist hypothesis: ' + it.o.en + '... float or sink? Choose BEFORE you see!');
   }
   function sayPick() {
@@ -2886,6 +2933,13 @@ ZONE_BUILDERS.academy = function (host) {
     const cb = H('div', { class: 'qz-cur' }, p);
     cb.innerHTML = '<b>' + T('Programme de ta classe :', 'Your class program:') + '</b><br>' +
       '🔢 ' + T(cur.m[0], cur.m[1]) + '<br>📖 ' + T(cur.l[0], cur.l[1]) + '<br>🔬 ' + T(cur.s[0], cur.s[1]) + '<br>🌍 ' + T(cur.g[0], cur.g[1]);
+    const exRow = H('div', { class: 'qz-btnrow' }, p);
+    const exBtn = H('button', { class: 'qz-next on', text: '\uD83D\uDCDD ' + T('EXAMEN BLANC \u2014 10 questions', 'MOCK EXAM \u2014 10 questions') }, exRow);
+    exBtn.style.background = 'linear-gradient(145deg,#5E60CE,#4EA8DE)';
+    exBtn.addEventListener('click', () => { sfx.boing(); playExam(); });
+    const best0 = (save.examBest || {})[save.grade];
+    if (best0 != null) H('div', { class: 'qz-sub', text: '\uD83C\uDFC6 ' + T('Meilleur score ', 'Best score ') + gradeName + ' : ' + best0 + ' / 10' }, p);
+    H('div', { class: 'qz-sub', text: T('\u2014 ou prépare l\u2019examen sujet par sujet \u2014', '\u2014 or prep the exam topic by topic \u2014') }, p);
     const inp = H('input', { class: 'qz-search', type: 'text', autocomplete: 'off', spellcheck: 'false' }, p);
     inp.placeholder = T('Recherche un sujet : fractions, conjugaison, capitales…', 'Search a topic: fractions, conjugation, capitals…');
     const chips = H('div', { class: 'qz-chips' }, p);
@@ -2972,6 +3026,75 @@ ZONE_BUILDERS.academy = function (host) {
     ask();
   }
 
+  function playExam() {
+    const QN = 10;
+    Rounds.start('academy', QN);
+    const order = ['m', 'l', 's', 'g', 'm', 'l', 's', 'g', 'm', 'l'];
+    const records = [];
+    let qi = 0;
+    function ask() {
+      wrap.innerHTML = '';
+      const pool2 = topics.filter(t2 => t2.sub === order[qi % order.length]);
+      const t = (pool2.length ? pool2 : topics)[ri(0, (pool2.length ? pool2 : topics).length - 1)];
+      const q = freshQ(t.id, d, t.gen);
+      const p = H('div', { class: 'qz-panel' }, wrap);
+      H('div', { class: 'qz-prog', text: '📝 ' + T('Examen ', 'Exam ') + gradeName + ' — ' + (qi + 1) + ' / ' + QN }, p);
+      H('div', { class: 'qz-q', text: T(q.qf, q.qe) }, p);
+      if (q.dots) H('div', { class: 'qz-dots', text: q.dots }, p);
+      const grid = H('div', { class: 'qz-answers' }, p);
+      const row = H('div', { class: 'qz-btnrow' }, p);
+      const next = H('button', { class: 'qz-next', text: qi + 1 < QN ? T('Question suivante ➡', 'Next question ➡') : '🏁 ' + T('Voir mes résultats', 'See my results') }, row);
+      let answered = false;
+      const btns = [];
+      q.ch.forEach(([cf, ce], i) => {
+        const b = H('button', { class: 'qz-a', text: T(cf, ce) }, grid);
+        btns.push(b);
+        b.addEventListener('click', () => {
+          if (answered) return; answered = true;
+          btns.forEach(x => x.disabled = true);
+          const ok = i === q.ci;
+          b.classList.add(ok ? 'good' : 'bad');
+          btns[q.ci].classList.add('good');
+          records.push({ q, pick: i, ok });
+          if (ok) Rounds.gem(); else { Rounds.miss(); sfx.bad(); }
+          next.classList.add('on');
+        });
+      });
+      if (d <= 2) say(q.qf, q.qe, 0.84);
+      next.addEventListener('click', () => { sfx.tap(); qi++; if (qi < QN) ask(); else results(); });
+    }
+    function results() {
+      const score = records.filter(r => r.ok).length;
+      save.examBest = save.examBest || {};
+      const isRecord = score > (save.examBest[save.grade] || -1);
+      if (isRecord) save.examBest[save.grade] = score;
+      persist();
+      wrap.innerHTML = '';
+      const p = H('div', { class: 'qz-panel' }, wrap);
+      const mention = score >= 9 ? ['🏆 EXCELLENT !', '🏆 EXCELLENT!'] : score >= 7 ? ['🌟 TRÈS BIEN !', '🌟 VERY GOOD!'] : score >= 5 ? ['👍 BIEN — continue !', '👍 GOOD — keep going!'] : ['💪 Entraîne-toi et reviens !', '💪 Practise and come back!'];
+      H('div', { class: 'qz-title', text: '📝 ' + T('Résultats — Examen ', 'Results — Exam ') + gradeName }, p);
+      H('div', { class: 'qz-score', text: score + ' / 10 — ' + T(mention[0], mention[1]) + (isRecord && score > 0 ? ' 🆕' : '') }, p);
+      records.forEach((r, i2) => {
+        const row2 = H('div', { class: 'qz-sheet-row ' + (r.ok ? 'ok' : 'ko') }, p);
+        const yours = T(r.q.ch[r.pick][0], r.q.ch[r.pick][1]);
+        const good = T(r.q.ch[r.q.ci][0], r.q.ch[r.q.ci][1]);
+        row2.innerHTML = '<div>' + (r.ok ? '✅' : '❌') + ' <b>Q' + (i2 + 1) + '.</b> ' + T(r.q.qf, r.q.qe) + '</div>' +
+          '<div>' + T('Ta réponse : ', 'Your answer: ') + '<b>' + yours + '</b>' + (r.ok ? '' : ' — ' + T('Bonne réponse : ', 'Correct answer: ') + '<b>' + good + '</b>') + '</div>' +
+          '<details' + (r.ok ? '' : ' open') + '><summary>💡 ' + T('Astuce pas à pas', 'Step-by-step trick') + '</summary><ol>' + (isEN() ? r.q.se : r.q.sf).map(s3 => '<li>' + s3 + '</li>').join('') + '</ol></details>';
+      });
+      const row3 = H('div', { class: 'qz-btnrow' }, p);
+      const again = H('button', { class: 'qz-next on', text: '🔁 ' + T('Repasser l’examen', 'Retake the exam') }, row3);
+      const fin = H('button', { class: 'qz-next on', text: '🏁 ' + T('Terminer', 'Finish') }, row3);
+      again.style.marginRight = '10px';
+      again.addEventListener('click', () => playExam());
+      fin.addEventListener('click', () => zoneComplete());
+      if (score >= 9) { confetti(80); sfx.fanfare(); }
+      say(T('Ton score : ', 'Your score: ') + score + T(' sur dix ! ', ' out of ten! '));
+    }
+    say('Examen blanc, classe ' + gradeName + ' ! Dix questions, pas d’astuce pendant l’examen. Concentre-toi... c’est parti !', 'Mock exam, class ' + gradeName + '! Ten questions, no hints during the exam. Focus... here we go!');
+    ask();
+  }
+  Academy._exam = playExam;
   pending ? playTopic(pending) : picker();
 };
 
@@ -3576,31 +3699,61 @@ ZONE_BUILDERS.parrot = function (host) {
   function speakTarget(rate) {
     say(target, target, rate || (d <= 2 ? 0.72 : 0.86), pairLang === 'en' ? 'en-US' : 'fr-FR');
   }
-  function micBonus() {
+  function micBonus(proceed) {
     if (!SR) return;
-    const mg = S('g', { transform: PT('translate(750,760)', 'translate(425,1380)'), class: 'grab' }, cardLayer);
-    S('circle', { r: PT(52, 62), fill: '#FF6FB5', stroke: '#fff', 'stroke-width': 6 }, mg);
-    S('rect', { x: -10, y: -26, width: 20, height: 34, rx: 10, fill: '#fff' }, mg);
-    S('path', { d: 'M -20 2 Q -20 24 0 24 Q 20 24 20 2 M 0 24 L 0 38 M -14 38 L 14 38', stroke: '#fff', 'stroke-width': 5, fill: 'none', 'stroke-linecap': 'round' }, mg);
+    const mg = S('g', { transform: PT('translate(600,760)', 'translate(300,1380)'), class: 'grab' }, cardLayer);
+    const ring = S('circle', { r: PT(56, 68), fill: '#FF6FB5', stroke: '#fff', 'stroke-width': 6 }, mg);
+    S('rect', { x: -10, y: -28, width: 20, height: 34, rx: 10, fill: '#fff' }, mg);
+    S('path', { d: 'M -20 0 Q -20 22 0 22 Q 20 22 20 0 M 0 22 L 0 36 M -14 36 L 14 36', stroke: '#fff', 'stroke-width': 5, fill: 'none', 'stroke-linecap': 'round' }, mg);
+    const lbl = S('text', { y: PT(98, 112), 'text-anchor': 'middle', 'font-size': PT(25, 30), 'font-weight': 800, fill: '#C2255C', stroke: '#fff', 'stroke-width': 5, 'paint-order': 'stroke', 'font-family': 'inherit', text: T('Touche et RÉPÈTE : ' + target, 'Tap and REPEAT: ' + target) }, mg);
     fxPop(mg);
-    mg.addEventListener('pointerdown', () => {
-      try {
-        const rec = new SR();
-        rec.lang = pairLang === 'en' ? 'en-US' : 'fr-FR';
-        rec.maxAlternatives = 3;
-        say('Je t’écoute ! Répète : ' + target, 'I’m listening! Repeat: ' + target);
-        rec.onresult = ev2 => {
-          const heard = [...ev2.results[0]].map(a => a.transcript.toLowerCase()).join(' ');
-          const norm = s2 => s2.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '');
-          if (norm(heard).includes(norm(target))) { confetti(24); sfx.fanfare(); say('PARFAIT ! Quelle belle prononciation !', 'PERFECT! What beautiful pronunciation!'); }
-          else say('Bien essayé ! Écoute encore : ' + target, 'Nice try! Listen again: ' + target, 0.7, pairLang === 'en' ? 'en-US' : 'fr-FR');
-          mg.remove();
-        };
-        rec.onerror = () => mg.remove();
-        setTimeout(() => rec.start(), 1200);
-      } catch (e) { mg.remove(); }
+    let tries2 = 0, busyMic = false;
+    const norm = s2 => String(s2).toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[^a-z]/g, '');
+    function retry(fr3, en3) {
+      tries2++;
+      if (tries2 >= 3 || !mg.isConnected) { say('Bien essayé ! On continue !', 'Nice try! Let’s keep going!'); setTimeout(proceed, 1500); return; }
+      ring.setAttribute('fill', '#FF6FB5');
+      lbl.textContent = T('Encore ! Touche et répète : ' + target, 'Again! Tap and repeat: ' + target);
+      say(fr3, en3, 0.72, pairLang === 'en' ? 'en-US' : 'fr-FR');
+    }
+    mg.addEventListener('pointerdown', ev3 => {
+      ev3.stopPropagation();
+      if (busyMic) return;
+      let rec;
+      try { rec = new SR(); } catch (e) { mg.remove(); proceed(); return; }
+      busyMic = true;
+      try { speechSynthesis.cancel(); } catch (e) {}
+      rec.lang = pairLang === 'en' ? 'en-US' : 'fr-FR';
+      rec.interimResults = false; rec.maxAlternatives = 5;
+      ring.setAttribute('fill', '#E5252A');
+      lbl.textContent = T('🔴 PARLE maintenant !', '🔴 SPEAK now!');
+      mlPulse(ring, 6);
+      sfx.tap();
+      let got = false;
+      rec.onresult = ev2 => {
+        got = true;
+        const t2 = norm(target);
+        let ok = false;
+        try { [...ev2.results[0]].forEach(a => { const h = norm(a.transcript); if (h.includes(t2) || (t2.includes(h) && h.length >= Math.max(2, t2.length - 2))) ok = true; }); } catch (e) {}
+        if (ok) { confetti(28); sfx.fanfare(); say('PARFAIT ! Ta prononciation est excellente !', 'PERFECT! Your pronunciation is excellent!'); setTimeout(proceed, 2200); }
+        else retry('J’ai entendu autre chose... Écoute et réessaie : ' + target, 'I heard something else... Listen and try again: ' + target);
+      };
+      rec.onerror = e2 => {
+        busyMic = false;
+        const code = e2 && e2.error;
+        if (code === 'not-allowed' || code === 'service-not-allowed') { say('Autorise le micro dans ton navigateur, puis réessaie !', 'Allow the microphone in your browser, then try again!'); setTimeout(proceed, 2500); }
+        else if (code === 'no-speech') retry('Je ne t’ai pas entendu... parle fort, tout près du téléphone !', 'I didn’t hear you... speak up, close to the phone!');
+      };
+      rec.onend = () => { busyMic = false; if (mg.isConnected && ring.getAttribute('fill') === '#E5252A') ring.setAttribute('fill', '#FF6FB5'); };
+      // start MUST happen inside the tap gesture or mobile browsers block it
+      try { rec.start(); } catch (e) { busyMic = false; retry('Réessaie !', 'Try again!'); }
     });
-    setTimeout(() => { if (mg.isConnected) mg.remove(); }, 9000);
+    // a child who prefers not to speak can just continue
+    const cb2 = S('g', { transform: PT('translate(930,760)', 'translate(560,1380)'), class: 'grab' }, cardLayer);
+    S('circle', { r: PT(48, 58), fill: '#57CC57', stroke: '#fff', 'stroke-width': 6 }, cb2);
+    S('path', { d: 'M -14 0 L 10 0 M 0 -12 L 14 0 L 0 12', stroke: '#fff', 'stroke-width': 7, fill: 'none', 'stroke-linecap': 'round', 'stroke-linejoin': 'round' }, cb2);
+    cb2.addEventListener('pointerdown', ev4 => { ev4.stopPropagation(); sfx.tap(); proceed(); });
+    setTimeout(() => { if (mg.isConnected) proceed(); }, 18000);
   }
   function nextRound() {
     cardLayer.innerHTML = '';
@@ -3618,8 +3771,10 @@ ZONE_BUILDERS.parrot = function (host) {
           sfx.good(); confetti(16); fxPop(g); fxSquish(coco);
           say('Bravo ! C’était bien ' + target + ' !', 'Great! It was ' + target + '!');
           if (tip && d >= 2) setTimeout(() => say(tip[0], tip[1], 0.86), 1500);
-          if (d >= 2) micBonus();
-          setTimeout(() => { if (Rounds.gem()) setTimeout(zoneComplete, 800); else nextRound(); }, tip ? 4200 : 1600);
+          let advanced = false;
+          const proceed = () => { if (advanced) return; advanced = true; if (Rounds.gem()) setTimeout(zoneComplete, 800); else nextRound(); };
+          if (d >= 2 && SR) setTimeout(() => micBonus(proceed), tip ? 3400 : 1400);
+          else setTimeout(proceed, tip ? 4200 : 1600);
         } else {
           Rounds.miss(); sfx.bad(); fxWobble(g);
           say('Écoute la différence : ' + pair[0] + '... ' + pair[1] + '... Je répète : ' + target + ' !', 'Hear the difference: ' + pair[0] + '... ' + pair[1] + '... Again: ' + target + '!', 0.68, pairLang === 'en' ? 'en-US' : 'fr-FR');

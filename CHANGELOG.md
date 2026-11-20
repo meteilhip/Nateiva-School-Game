@@ -1,5 +1,14 @@
 # Changelog
 
+## v1.27.0 — Glass mission bar, native female narrator, working microphone, EXAM mode
+- **Mission bar fixed in ALL 18 games**: the long class chip was crushing the text into a huge half-screen column (missing flex/min-width). Now a slim translucent glass strip (backdrop blur), chip ellipsised, text capped at 3 lines — and after ~5s it folds into a small pill so nothing ever hides the game (tap the pill to re-read/re-hear).
+- **Narration: native female voice**: every installed voice is scored (native fr-FR/en-US +, known female voices — Amélie/Denise/Julie… and Samantha/Jenny/Aria… +, neural/Google +, male −) and the best is cached per language; brighter pitch.
+- **Microphone actually works**: recognition now starts synchronously inside the tap (mobile browsers block it otherwise), speech is silenced while listening, red "PARLE !" state, up to 3 retries with coaching ("parle plus fort, tout près du téléphone"), friendly permission message, and a green continue button — the round now WAITS for the mic instead of racing past it.
+- **📝 EXAMEN BLANC per class**: in the Académie — 10 mixed questions (maths, lecture/compréhension, sciences, géographie) at the class level, no hints during the exam, results sheet with ✓/✗, corrections with step-by-step astuces, mention (🏆 Excellent / 🌟 Très bien / 👍 Bien / 💪), and best score saved per class shown in the picker. Topic quizzes are labelled as exam prep.
+- **Answers can't sit in the same place**: FLOTTE/COULE and hypothesis buttons swap sides randomly each round (all quiz-type zones already shuffle).
+- **Goal → result**: the victory card now names the mastered lesson ("✅ Leçon maîtrisée : × et ÷ partage") and says it aloud.
+- Smoke suite now simulates the full exam (10 varied answers, asserts a /10 results sheet and ≥8 unique questions) at SIL and CM2, both orientations ALL CLEAR.
+
 ## v1.26.0 — Tap-first rebuild of the 4 reported zones + visible version
 User-reported: Verger, Formes & Couleurs, Lagon Splash and Jardin de Nana unusable/confusing on phone. Root cause: precision drag-to-target mechanics — wrong pattern for toddlers on touch screens (top kids apps are tap-first). Rebuilt:
 - **Tap gesture everywhere**: a short press with no movement is now a TAP (makeDraggable gained a tap handler); dragging still works for desktop kids.

@@ -104,6 +104,32 @@ const d = window.document;
     diffReport.push(z.key + ':' + seen.size);
   }
   console.log('MISSION VARIETY (zone:distinct across MAT/CE1/CM2):', diffReport.join(' '));
+  // EXAM simulation: 10 questions, varied answers, results sheet with score
+  for (const g of [1, 6]) {
+    W.save.grade = g;
+    W.enterZone('academy'); await sleep(150);
+    try {
+      W.Academy._exam();
+      await sleep(150);
+      const seenQs = new Set();
+      for (let k = 0; k < 10; k++) {
+        const btns = [...d.querySelectorAll('.qz-a:not(:disabled)')];
+        if (!btns.length) { errs.push('exam@g' + g + ': no answers at Q' + (k + 1)); break; }
+        const qTxt = d.querySelector('.qz-q') ? d.querySelector('.qz-q').textContent : '';
+        seenQs.add(qTxt);
+        btns[k % btns.length].click();
+        await sleep(60);
+        const nx = d.querySelector('.qz-next.on');
+        if (!nx) { errs.push('exam@g' + g + ': next missing at Q' + (k + 1)); break; }
+        nx.click();
+        await sleep(90);
+      }
+      const sc = d.querySelector('.qz-score');
+      if (!sc || !/\/ 10/.test(sc.textContent)) errs.push('exam@g' + g + ': no /10 results sheet');
+      if (seenQs.size < 8) errs.push('exam@g' + g + ': questions repeat too much (' + seenQs.size + '/10 unique)');
+    } catch (e) { errs.push('exam@g' + g + ' CRASH: ' + (e.stack || e.message).split('\n')[0]); }
+    W.showMap(); await sleep(40);
+  }
   // step through every Math Lab lesson at its grades — catch run() crashes
   for (const L of W.ML_LESSONS) {
     for (const g of [L.lo, L.hi]) {
