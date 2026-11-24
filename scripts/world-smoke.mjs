@@ -108,7 +108,7 @@ const d = window.document;
   }
   console.log('MISSION VARIETY (zone:distinct across MAT/CE1/CM2):', diffReport.join(' '));
   // every activity door opens and builds a stage
-  const MENUZ = ['orchard', 'bubbles', 'paint', 'splash', 'garden', 'safari', 'chess', 'words', 'builder', 'music', 'pets', 'puzzle'];
+  const MENUZ = ['orchard', 'bubbles', 'paint', 'splash', 'garden', 'safari', 'chess', 'words', 'builder', 'music', 'pets', 'puzzle', 'parrot'];
   for (const zk of MENUZ) {
     for (const g of [0, 6]) {
       W.save.grade = g;

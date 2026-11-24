@@ -590,7 +590,7 @@ function iconSvg(builder, vb = '0 0 24 24') {
   return svg;
 }
 
-const APP_VERSION = '1.28.0';
+const APP_VERSION = '1.29.0';
 // animated pointing hand: shows toddlers WHAT to touch (MAT/SIL only)
 function handHint(svg, x, y) {
   if (D() > 1) return;
@@ -734,7 +734,7 @@ const ZONES = [
     subject: { fr: 'LECTURE & SONS', dens: '1', en: 'READING & PHONICS', color: '#4CC9F0' },
     topics: ['lecture', 'reading', 'syllabes', 'syllables', 'sons', 'sounds', 'phonics', 'lettres', 'letters', 'mots', 'words', 'français', 'french', 'anglais', 'english', 'prononciation', 'pronunciation'] },
   { key: 'parrot', fr: 'Perroquet Coco', en: 'Coco the Parrot', color: '#0CA678', mx: 750, my: 295, px: 0, py: 0,
-    lv: [['Écoute et montre', 'Listen and point'], ['Paires de sons', 'Sound pairs'], ['Paires FR + EN', 'FR + EN pairs']],
+    lv: [['Écoute et montre', 'Listen and point'], ['Sons + lecture syllabes', 'Sounds + syllable reading'], ['Lecture FR+EN au micro', 'FR+EN reading with mic']],
     subject: { fr: 'PRONONCIATION', en: 'PRONUNCIATION', color: '#0CA678' },
     topics: ['prononciation', 'pronunciation', 'parler', 'speak', 'speaking', 'écouter', 'listen', 'sons', 'sounds', 'oral', 'répéter', 'repeat', 'accent', 'perroquet', 'parrot', 'voix', 'voice'] },
   { key: 'music', fr: 'Studio Rythmo', en: 'Rhythm Studio', color: '#E64980', mx: 950, my: 295, px: 0, py: 0,
@@ -1101,6 +1101,14 @@ const ZONE_MENUS = {
     { id: 's4', fr: 'Le robot', en: 'The robot', ic: '🤖' },
     { id: 's5', fr: 'Le bateau', en: 'The boat', ic: '⛵' }
   ],
+  parrot: d => {
+    const acts = [
+      { id: 'ecoute', fr: 'Oreille magique', en: 'Magic ear', ic: '\uD83D\uDC42' },
+      { id: 'lire', fr: 'Lis avec Coco', en: 'Read with Coco', ic: '\uD83D\uDCD6' }
+    ];
+    if (window.SpeechRecognition || window.webkitSpeechRecognition) acts.push({ id: 'repete', fr: 'Répète au micro', en: 'Repeat on the mic', ic: '\uD83C\uDFA4' });
+    return acts;
+  },
   music: d => [
     { id: 'xylo', fr: 'Xylophone libre', en: 'Free xylophone', ic: '🎵' },
     { id: 'melody', fr: 'Répète la mélodie', en: 'Repeat the melody', ic: '🎶' }
@@ -1190,8 +1198,24 @@ ZONE_BUILDERS.bubbles = function (host) {
   const bigNum = S('text', { x: 0, y: -8, 'text-anchor': 'middle', 'font-size': 86, 'font-weight': 800, fill: '#1C7ED6', 'font-family': 'inherit', text: '3' }, board);
   const dotsG = S('g', {}, board);
   const netG = S('g', { transform: 'translate(0,70)' }, board);
-  const COLORS = ['#FF4D57', '#FFD23F', '#9B5DE5', '#FF9F1C', '#4CC9F0', '#57CC57'];
+  const COLORS = [['#FF4D57', 'rouge', 'red'], ['#FFD23F', 'jaune', 'yellow'], ['#4CC9F0', 'bleu', 'blue'], ['#57CC57', 'vert', 'green'], ['#9B5DE5', 'violet', 'purple'], ['#FF9F1C', 'orange', 'orange']];
+  function drawStarfish(g, s2, color) {
+    const w2 = S('g', { transform: `scale(${s2})` }, g);
+    S('path', { d: 'M 0 -34 L 10 -10 L 34 -8 L 15 7 L 22 32 L 0 18 L -22 32 L -15 7 L -34 -8 L -10 -10 Z', fill: color || '#FF9BC0', stroke: 'rgba(0,0,0,0.18)', 'stroke-width': 3, 'stroke-linejoin': 'round' }, w2);
+    [[-6, -6], [6, -6]].forEach(([x, y]) => { S('circle', { cx: x, cy: y, r: 3.4, fill: '#fff' }, w2); S('circle', { cx: x, cy: y + 0.8, r: 1.6, fill: '#2B2D42' }, w2); });
+    S('path', { d: 'M -4 3 Q 0 7 4 3', stroke: '#2B2D42', 'stroke-width': 2, fill: 'none', 'stroke-linecap': 'round' }, w2);
+    return w2;
+  }
+  function drawJelly(g, s2, color) {
+    const w2 = S('g', { transform: `scale(${s2})` }, g);
+    S('path', { d: 'M -28 2 A 28 26 0 0 1 28 2 L 22 8 L 14 2 L 6 8 L -2 2 L -10 8 L -18 2 L -28 2 Z', fill: color || '#C9B6F5', stroke: 'rgba(0,0,0,0.15)', 'stroke-width': 3 }, w2);
+    [[-14, 8], [-4, 10], [6, 10], [16, 8]].forEach(([x, y], i) => S('path', { d: `M ${x} ${y} q ${i % 2 ? 6 : -6} 14 0 26`, stroke: color || '#C9B6F5', 'stroke-width': 4, fill: 'none', 'stroke-linecap': 'round' }, w2));
+    [[-9, -8], [3, -8]].forEach(([x, y]) => { S('circle', { cx: x, cy: y, r: 3.2, fill: '#fff' }, w2); S('circle', { cx: x, cy: y + 0.8, r: 1.5, fill: '#2B2D42' }, w2); });
+    return w2;
+  }
+  const KINDS = { fish: ['le poisson', 'the fish'], star: ["l'étoile de mer", 'the starfish'], jelly: ['la méduse', 'the jellyfish'] };
   let need = 0, caught = 0, sumMode = false, target = 0, sum = 0, alive = [], spawnTimer = null, roundLive = false;
+  let wantKind = 'fish', wantColor = null;
 
   function drawDots(n) {
     dotsG.innerHTML = '';
@@ -1199,7 +1223,11 @@ ZONE_BUILDERS.bubbles = function (host) {
   }
   function netShow() {
     netG.innerHTML = '';
-    for (let i = 0; i < caught; i++) drawFish(netG, -60 + (i % 4) * 40, 48 + Math.floor(i / 4) * 30, 0.42, COLORS[i % COLORS.length]);
+    for (let i = 0; i < caught; i++) {
+      const c2 = wantColor ? wantColor[0] : COLORS[i % COLORS.length][0];
+      if (wantKind === 'star') { const sg2 = S('g', { transform: `translate(${-60 + (i % 4) * 40},${48 + Math.floor(i / 4) * 30})` }, netG); drawStarfish(sg2, 0.55, c2); }
+      else drawFish(netG, -60 + (i % 4) * 40, 48 + Math.floor(i / 4) * 30, 0.42, c2);
+    }
   }
   function spawnBubble() {
     if (!roundLive || activeZone !== 'bubbles') return;
@@ -1208,10 +1236,22 @@ ZONE_BUILDERS.bubbles = function (host) {
     const g = S('g', { transform: `translate(${x},${SH + 60 + r})`, class: 'grab' }, layer);
     S('circle', { r: r, fill: 'url(#gBubble)', stroke: 'rgba(190,235,255,0.9)', 'stroke-width': 3 }, g);
     S('ellipse', { cx: -r * 0.35, cy: -r * 0.4, rx: r * 0.22, ry: r * 0.13, fill: 'rgba(255,255,255,0.9)', transform: 'rotate(-25)' }, g);
+    let kind2 = null, color2 = null;
     if (sumMode) S('text', { x: 0, y: PT(14, 18), 'text-anchor': 'middle', 'font-size': PT(44, 58), 'font-weight': 800, fill: '#0B4F8A', 'font-family': 'inherit', text: String(val) }, g);
-    else drawFish(g, 0, 0, PT(0.7, 0.95), COLORS[ri(0, COLORS.length - 1)]);
+    else {
+      const match = Math.random() < 0.52;
+      if (match) { kind2 = wantKind; color2 = wantColor ? wantColor[0] : COLORS[ri(0, COLORS.length - 1)][0]; }
+      else if (wantColor) {
+        if (Math.random() < 0.55) { kind2 = wantKind; let c3; do { c3 = COLORS[ri(0, COLORS.length - 1)]; } while (c3 === wantColor); color2 = c3[0]; }
+        else { kind2 = Math.random() < 0.5 ? 'star' : 'jelly'; color2 = COLORS[ri(0, COLORS.length - 1)][0]; }
+      } else { kind2 = wantKind === 'fish' ? (Math.random() < 0.5 ? 'star' : 'jelly') : 'fish'; color2 = COLORS[ri(0, COLORS.length - 1)][0]; }
+      const art2 = S('g', { transform: `translate(0,${kind2 === 'jelly' ? -6 : 0})` }, g);
+      if (kind2 === 'star') drawStarfish(art2, PT(1.05, 1.35), color2);
+      else if (kind2 === 'jelly') drawJelly(art2, PT(1.05, 1.35), color2);
+      else drawFish(art2, 0, 0, PT(0.7, 0.95), color2);
+    }
     const speed = rnd(34, 52) - D() * 1.5;
-    const ob = { g, x, y: SH + 60 + r, val, popped: false };
+    const ob = { g, x, y: SH + 60 + r, val, kind: kind2, color: color2, popped: false };
     alive.push(ob);
     const drift = rnd(-30, 30);
     const dur = ((SH + 180) / speed) * 1000;
@@ -1244,11 +1284,20 @@ ZONE_BUILDERS.bubbles = function (host) {
       else if (sum > target) { sfx.bad(); Rounds.miss(); say('Oh ! Trop ! On recommence.', 'Oops! Too much! Try again.'); sum = 0; bigNum.textContent = target; }
       else { bigNum.textContent = (target - sum); say(String(target - sum), String(target - sum)); }
     } else {
-      caught++;
-      netShow();
-      say(String(caught), String(caught));
-      if (caught === need) finishRound();
-      else if (caught > need) { /* cannot exceed: finish already called */ }
+      const okKind = ob.kind === wantKind;
+      const okColor = !wantColor || ob.color === wantColor[0];
+      if (okKind && okColor) {
+        caught++;
+        netShow();
+        say(String(caught), String(caught));
+        if (caught === need) finishRound();
+      } else {
+        Rounds.miss(); sfx.bad();
+        const kn = KINDS[ob.kind] || KINDS.fish;
+        const cn = COLORS.find(c3 => c3[0] === ob.color);
+        if (!okKind) say('Ça, c\u2019est ' + kn[0] + ' ! Cherche ' + KINDS[wantKind][0] + (wantColor ? ' ' + wantColor[1] : '') + ' !', 'That is ' + kn[1] + '! Look for ' + KINDS[wantKind][1] + (wantColor ? ' in ' + wantColor[2] : '') + '!');
+        else say('Celui-là est ' + (cn ? cn[1] : 'd\u2019une autre couleur') + '... cherche ' + KINDS[wantKind][0] + ' ' + wantColor[1] + ' !', 'That one is ' + (cn ? cn[2] : 'another color') + '... look for the ' + wantColor[2] + ' ' + KINDS[wantKind][1].replace('the ', '') + '!');
+      }
     }
   }
   function finishRound() {
@@ -1267,9 +1316,20 @@ ZONE_BUILDERS.bubbles = function (host) {
       bigNum.textContent = target; drawDots(0);
       mission('Attrape des bulles pour faire ' + target + ' !', 'Pop bubbles to make ' + target + '!', g => { ZONE_ICONS.bubbles(g); });
     } else {
-      need = d === 0 ? ri(2, 5) : (d === 1 ? ri(3, 8) : ri(5, 10));
+      need = d === 0 ? ri(2, 4) : (d === 1 ? ri(3, 6) : ri(4, 8));
+      wantKind = (d >= 3 && Math.random() < 0.35) ? 'star' : 'fish';
+      wantColor = d >= 1 ? COLORS[ri(0, COLORS.length - 1)] : null;
       bigNum.textContent = need; drawDots(need);
-      mission('Attrape ' + need + ' poissons !', 'Catch ' + need + ' fish!', g => { ZONE_ICONS.bubbles(g); });
+      let pv = board.querySelector('.pv'); if (pv) pv.remove();
+      pv = S('g', { class: 'pv', transform: 'translate(55,-50)' }, board);
+      S('circle', { r: 31, fill: '#fff', stroke: wantColor ? wantColor[0] : '#4CC9F0', 'stroke-width': 5 }, pv);
+      const pa = S('g', {}, pv);
+      if (wantKind === 'star') drawStarfish(pa, 0.72, wantColor ? wantColor[0] : '#FF9BC0');
+      else drawFish(pa, 0, 0, 0.5, wantColor ? wantColor[0] : '#4CC9F0');
+      mlPulse(pv, 3);
+      const whatF = (wantKind === 'star' ? 'étoiles de mer' : 'poissons') + (wantColor ? ' ' + wantColor[1] + (wantColor[1].endsWith('e') ? 's' : 's') : '');
+      const whatE = (wantColor ? wantColor[2] + ' ' : '') + (wantKind === 'star' ? 'starfish' : 'fish');
+      mission('Attrape ' + need + ' ' + whatF + ' \u2014 et SEULEMENT ceux-là !', 'Catch ' + need + ' ' + whatE + ' \u2014 and ONLY those!', g => { ZONE_ICONS.bubbles(g); });
     }
     roundLive = true;
     clearInterval(spawnTimer);
@@ -3798,140 +3858,290 @@ ZONE_BUILDERS.parrot = function (host) {
   const d = D();
   S('rect', { width: SW, height: SH, fill: skyFill() }, svg);
   S('rect', { y: PT(620, 1180), width: SW, height: SH, fill: 'url(#gGrass)' }, svg);
-  // jungle leaves
   for (let i = 0; i < 7; i++) { const x = PT(i * 240, i * 140), fy = PT(640, 1200); S('path', { d: `M ${x} ${fy} Q ${x + 40} ${fy - 150} ${x + 110} ${fy - 60} Q ${x + 50} ${fy - 20} ${x} ${fy} Z`, fill: i % 2 ? '#3FA34D' : '#57CC57', opacity: 0.85 }, svg); }
-  const coco = drawCoco(svg, PT(750, 425), PT(265, 400), PT(1.15, 1.25));
+  const coco = drawCoco(svg, PT(750, 425), PT(250, 380), PT(1.1, 1.2));
   fxBob(coco, 10, 2400);
-  // perch
-  S('rect', { x: PT(600, 275), y: PT(380, 520), width: 300, height: 14, rx: 7, fill: 'url(#gWood)' }, svg);
+  S('rect', { x: PT(600, 275), y: PT(365, 500), width: 300, height: 14, rx: 7, fill: 'url(#gWood)' }, svg);
+  const waveG = S('g', { transform: PT('translate(810,230)', 'translate(485,360)') }, svg);
+  function speakWaves() {
+    waveG.innerHTML = '';
+    for (let i = 0; i < 3; i++) {
+      const w2 = S('path', { d: `M 0 0 A ${16 + i * 14} ${16 + i * 14} 0 0 1 0 ${-(16 + i * 14)}`, fill: 'none', stroke: '#0CA678', 'stroke-width': 5, 'stroke-linecap': 'round', transform: 'rotate(45)' }, waveG);
+      try { w2.animate([{ opacity: 0 }, { opacity: 1 }, { opacity: 0 }], { duration: 900, delay: i * 180, iterations: 3 }); } catch (e) {}
+    }
+    setTimeout(() => { waveG.innerHTML = ''; }, 3000);
+  }
   const cardLayer = S('g', {}, svg);
   const VOW2 = 'AEIOUYÉÈÊÀÂÎÔÛŒ';
-  const EASY_FR = [['LION', 'SOLEIL'], ['CHAT', 'BALLON'], ['MAISON', 'POISSON'], ['FLEUR', 'BANANE'], ['PAPA', 'BATEAU']];
-  const EASY_EN = [['LION', 'SUN'], ['CAT', 'BALL'], ['HOUSE', 'FISH'], ['FLOWER', 'BANANA'], ['DADDY', 'BOAT']];
-  const PAIRS_FR = [
-    ['PAIN', 'BAIN', 'P souffle doucement, B fait vibrer ta gorge !', 'P puffs softly, B makes your throat buzz!'],
-    ['TOUT', 'DOUX', 'T claque sec, D vibre !', 'T snaps, D buzzes!'],
-    ['POULE', 'BOULE', 'P souffle, B vibre — pose ta main sur ton cou !', 'P puffs, B buzzes — hand on your neck!'],
-    ['VERRE', 'FER', 'V fait vibrer les lèvres, F souffle seulement !', 'V buzzes the lips, F only blows!'],
-    ['CADEAU', 'GÂTEAU', 'K claque au fond de la gorge, G vibre !', 'K clicks at the back, G buzzes!'],
-    ['CHOU', 'JOUE', 'CH souffle comme le vent, J vibre comme une abeille !', 'CH blows like wind, J buzzes like a bee!']
-  ];
-  const PAIRS_EN = [
-    ['SHIP', 'SHEEP', 'i est court et rapide, ee est looong !', 'short quick i, looong ee!'],
-    ['CAT', 'CUT', 'a ouvre grand la bouche, u reste petit !', 'a opens wide, u stays small!'],
-    ['PEN', 'PAN', 'e sourit, a ouvre la bouche !', 'e smiles, a opens the mouth!'],
-    ['BAT', 'BAD', 'le T final claque, le D final est doux !', 'final T snaps, final D is soft!'],
-    ['THREE', 'FREE', 'TH : mets la langue entre les dents !', 'TH: put your tongue between your teeth!']
-  ];
   const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
-  let target = null, pairLang = 'fr', roundLive = false, tip = null;
-  function wordCard(x, y, wtext, onTap) {
-    const g = S('g', { transform: `translate(${x},${y})`, class: 'grab' }, cardLayer);
-    const wCard = PT(300, 330), hCard = PT(130, 160);
-    S('rect', { x: -wCard / 2, y: -hCard / 2, width: wCard, height: hCard, rx: 26, fill: '#fff', stroke: '#0CA678', 'stroke-width': 7 }, g);
-    const fs = Math.min(PT(56, 64), wCard / (wtext.length * 0.62));
+  const norm = s2 => String(s2).toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[^a-z]/g, '');
+  function colorWord(g, wtext, fs, y0) {
     let dx = -((wtext.length - 1) / 2) * (fs * 0.6);
-    wtext.split('').forEach(ch => { S('text', { x: dx, y: fs * 0.35, 'text-anchor': 'middle', 'font-size': fs, 'font-weight': 800, 'font-family': 'inherit', fill: VOW2.includes(ch) ? '#FF4D57' : '#1C7ED6', text: ch }, g); dx += fs * 0.6; });
-    fxPop(g);
-    g.addEventListener('pointerdown', () => onTap(g));
-    return g;
+    wtext.split('').forEach(ch => { S('text', { x: dx, y: y0, 'text-anchor': 'middle', 'font-size': fs, 'font-weight': 800, 'font-family': 'inherit', fill: VOW2.includes(ch) ? '#FF4D57' : '#1C7ED6', text: ch }, g); dx += fs * 0.6; });
   }
-  function speakTarget(rate) {
-    say(target, target, rate || (d <= 2 ? 0.72 : 0.86), pairLang === 'en' ? 'en-US' : 'fr-FR');
-  }
-  function micBonus(proceed) {
-    if (!SR) return;
-    const mg = S('g', { transform: PT('translate(600,760)', 'translate(300,1380)'), class: 'grab' }, cardLayer);
-    const ring = S('circle', { r: PT(56, 68), fill: '#FF6FB5', stroke: '#fff', 'stroke-width': 6 }, mg);
-    S('rect', { x: -10, y: -28, width: 20, height: 34, rx: 10, fill: '#fff' }, mg);
-    S('path', { d: 'M -20 0 Q -20 22 0 22 Q 20 22 20 0 M 0 22 L 0 36 M -14 36 L 14 36', stroke: '#fff', 'stroke-width': 5, fill: 'none', 'stroke-linecap': 'round' }, mg);
-    const lbl = S('text', { y: PT(98, 112), 'text-anchor': 'middle', 'font-size': PT(25, 30), 'font-weight': 800, fill: '#C2255C', stroke: '#fff', 'stroke-width': 5, 'paint-order': 'stroke', 'font-family': 'inherit', text: T('Touche et RÉPÈTE : ' + target, 'Tap and REPEAT: ' + target) }, mg);
-    fxPop(mg);
-    let tries2 = 0, busyMic = false;
-    const norm = s2 => String(s2).toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[^a-z]/g, '');
-    function retry(fr3, en3) {
-      tries2++;
-      if (tries2 >= 3 || !mg.isConnected) { say('Bien essayé ! On continue !', 'Nice try! Let’s keep going!'); setTimeout(proceed, 1500); return; }
-      ring.setAttribute('fill', '#FF6FB5');
-      lbl.textContent = T('Encore ! Touche et répète : ' + target, 'Again! Tap and repeat: ' + target);
-      say(fr3, en3, 0.72, pairLang === 'en' ? 'en-US' : 'fr-FR');
-    }
-    mg.addEventListener('pointerdown', ev3 => {
-      ev3.stopPropagation();
-      if (busyMic) return;
-      let rec;
-      try { rec = new SR(); } catch (e) { mg.remove(); proceed(); return; }
-      busyMic = true;
-      try { speechSynthesis.cancel(); } catch (e) {}
-      rec.lang = pairLang === 'en' ? 'en-US' : 'fr-FR';
-      rec.interimResults = false; rec.maxAlternatives = 5;
-      ring.setAttribute('fill', '#E5252A');
-      lbl.textContent = T('🔴 PARLE maintenant !', '🔴 SPEAK now!');
-      mlPulse(ring, 6);
-      sfx.tap();
-      let got = false;
-      rec.onresult = ev2 => {
-        got = true;
-        const t2 = norm(target);
-        let ok = false;
-        try { [...ev2.results[0]].forEach(a => { const h = norm(a.transcript); if (h.includes(t2) || (t2.includes(h) && h.length >= Math.max(2, t2.length - 2))) ok = true; }); } catch (e) {}
-        if (ok) { confetti(28); sfx.fanfare(); say('PARFAIT ! Ta prononciation est excellente !', 'PERFECT! Your pronunciation is excellent!'); setTimeout(proceed, 2200); }
-        else retry('J’ai entendu autre chose... Écoute et réessaie : ' + target, 'I heard something else... Listen and try again: ' + target);
-      };
-      rec.onerror = e2 => {
-        busyMic = false;
-        const code = e2 && e2.error;
-        if (code === 'not-allowed' || code === 'service-not-allowed') { say('Autorise le micro dans ton navigateur, puis réessaie !', 'Allow the microphone in your browser, then try again!'); setTimeout(proceed, 2500); }
-        else if (code === 'no-speech') retry('Je ne t’ai pas entendu... parle fort, tout près du téléphone !', 'I didn’t hear you... speak up, close to the phone!');
-      };
-      rec.onend = () => { busyMic = false; if (mg.isConnected && ring.getAttribute('fill') === '#E5252A') ring.setAttribute('fill', '#FF6FB5'); };
-      // start MUST happen inside the tap gesture or mobile browsers block it
-      try { rec.start(); } catch (e) { busyMic = false; retry('Réessaie !', 'Try again!'); }
-    });
-    // a child who prefers not to speak can just continue
-    const cb2 = S('g', { transform: PT('translate(930,760)', 'translate(560,1380)'), class: 'grab' }, cardLayer);
-    S('circle', { r: PT(48, 58), fill: '#57CC57', stroke: '#fff', 'stroke-width': 6 }, cb2);
-    S('path', { d: 'M -14 0 L 10 0 M 0 -12 L 14 0 L 0 12', stroke: '#fff', 'stroke-width': 7, fill: 'none', 'stroke-linecap': 'round', 'stroke-linejoin': 'round' }, cb2);
-    cb2.addEventListener('pointerdown', ev4 => { ev4.stopPropagation(); sfx.tap(); proceed(); });
-    setTimeout(() => { if (mg.isConnected) proceed(); }, 18000);
-  }
-  function nextRound() {
-    cardLayer.innerHTML = '';
-    let pair;
-    if (d <= 1) { pairLang = isEN() ? 'en' : 'fr'; pair = pickFresh('parrot_easy_' + pairLang, pairLang === 'en' ? EASY_EN : EASY_FR, x => x[0]); tip = null; }
-    else if (d <= 3) { pairLang = isEN() ? 'en' : 'fr'; const bank = pairLang === 'en' ? PAIRS_EN : PAIRS_FR; pair = pickFresh('parrot_mid_' + pairLang, bank, x => x[0]); tip = [pair[2], pair[3]]; }
-    else { const useEN = Math.random() < 0.5; pairLang = useEN ? 'en' : 'fr'; const bank = useEN ? PAIRS_EN : PAIRS_FR; pair = pickFresh('parrot_hi_' + pairLang, bank, x => x[0]); tip = [pair[2], pair[3]]; }
-    const words = shuffle([pair[0], pair[1]]);
-    target = pair[ri(0, 1)];
-    words.forEach((wtext, i) => {
-      wordCard(PT(430 + i * 640, 425 + (i - 0.5) * 0), PT(640, 760 + i * 220), wtext, g => {
-        if (!roundLive) return;
-        if (wtext === target) {
-          roundLive = false;
-          sfx.good(); confetti(16); fxPop(g); fxSquish(coco);
-          say('Bravo ! C’était bien ' + target + ' !', 'Great! It was ' + target + '!');
-          if (tip && d >= 2) setTimeout(() => say(tip[0], tip[1], 0.86), 1500);
-          let advanced = false;
-          const proceed = () => { if (advanced) return; advanced = true; if (Rounds.gem()) setTimeout(zoneComplete, 800); else nextRound(); };
-          if (d >= 2 && SR) setTimeout(() => micBonus(proceed), tip ? 3400 : 1400);
-          else setTimeout(proceed, tip ? 4200 : 1600);
-        } else {
-          Rounds.miss(); sfx.bad(); fxWobble(g);
-          say('Écoute la différence : ' + pair[0] + '... ' + pair[1] + '... Je répète : ' + target + ' !', 'Hear the difference: ' + pair[0] + '... ' + pair[1] + '... Again: ' + target + '!', 0.68, pairLang === 'en' ? 'en-US' : 'fr-FR');
-        }
-      });
-    });
-    // replay button (slow)
-    const rp = S('g', { transform: PT('translate(750,585)', 'translate(425,585)'), class: 'grab' }, cardLayer);
+  function replayBtn(x, y, cb) {
+    const rp = S('g', { transform: `translate(${x},${y})`, class: 'grab' }, cardLayer);
     S('circle', { r: PT(46, 56), fill: '#FFD23F', stroke: '#E58E09', 'stroke-width': 5 }, rp);
     S('path', { d: 'M -12 -16 L -12 16 L 16 0 Z', fill: '#7A4E00' }, rp);
     S('path', { d: 'M -22 22 Q 0 34 22 22', stroke: '#7A4E00', 'stroke-width': 4, fill: 'none', 'stroke-linecap': 'round' }, rp);
-    rp.addEventListener('pointerdown', () => { sfx.tap(); speakTarget(0.62); });
-    mission(d <= 1 ? 'Coco dit un mot : touche le mot que tu entends !' : 'Oreille magique : Coco dit UN des deux mots jumeaux. Touche le bon !',
-      d <= 1 ? 'Coco says a word: tap the word you hear!' : 'Magic ear: Coco says ONE of the twin words. Tap the right one!', ZONE_ICONS.parrot);
-    setTimeout(() => { speakTarget(); roundLive = true; }, 1600);
+    rp.addEventListener('pointerdown', () => { sfx.tap(); speakWaves(); cb(); });
+    return rp;
   }
-  nextRound();
+  function startRec(lang2, onResult) {
+    let rec;
+    try { rec = new SR(); } catch (e) { onResult(null, 'init'); return null; }
+    rec.lang = lang2; rec.interimResults = false; rec.maxAlternatives = 5;
+    try { speechSynthesis.cancel(); } catch (e) {}
+    let got = false;
+    rec.onresult = ev2 => { got = true; const alts = []; try { [...ev2.results[0]].forEach(a => alts.push(a.transcript)); } catch (e) {} onResult(alts, null); };
+    rec.onerror = e2 => { onResult(null, (e2 && e2.error) || 'error'); };
+    rec.onend = () => { if (!got) onResult(null, 'no-speech-end'); got = true; };
+    try { rec.start(); } catch (e) { onResult(null, 'start'); return null; }
+    return rec;
+  }
+  function matches(alts, targetWord) {
+    const t2 = norm(targetWord);
+    return (alts || []).some(a => { const h = norm(a); return h.includes(t2) || (t2.includes(h) && h.length >= Math.max(2, t2.length - 2)); });
+  }
+  const mode = ZoneAct.cur || 'ecoute';
+
+  /* ---------- door 1: OREILLE MAGIQUE (listen & find, minimal pairs) ---------- */
+  function buildEcoute() {
+    const EASY_FR = [['LION', 'SOLEIL'], ['CHAT', 'BALLON'], ['MAISON', 'POISSON'], ['FLEUR', 'BANANE'], ['PAPA', 'BATEAU']];
+    const EASY_EN = [['LION', 'SUN'], ['CAT', 'BALL'], ['HOUSE', 'FISH'], ['FLOWER', 'BANANA'], ['DADDY', 'BOAT']];
+    const PAIRS_FR = [
+      ['PAIN', 'BAIN', 'P souffle doucement, B fait vibrer ta gorge !', 'P puffs softly, B makes your throat buzz!'],
+      ['TOUT', 'DOUX', 'T claque sec, D vibre !', 'T snaps, D buzzes!'],
+      ['POULE', 'BOULE', 'P souffle, B vibre — pose ta main sur ton cou !', 'P puffs, B buzzes — hand on your neck!'],
+      ['VERRE', 'FER', 'V fait vibrer les lèvres, F souffle seulement !', 'V buzzes the lips, F only blows!'],
+      ['CADEAU', 'GÂTEAU', 'K claque au fond de la gorge, G vibre !', 'K clicks at the back, G buzzes!'],
+      ['CHOU', 'JOUE', 'CH souffle comme le vent, J vibre comme une abeille !', 'CH blows like wind, J buzzes like a bee!']
+    ];
+    const PAIRS_EN = [
+      ['SHIP', 'SHEEP', 'i est court et rapide, ee est looong !', 'short quick i, looong ee!'],
+      ['CAT', 'CUT', 'a ouvre grand la bouche, u reste petit !', 'a opens wide, u stays small!'],
+      ['PEN', 'PAN', 'e sourit, a ouvre la bouche !', 'e smiles, a opens the mouth!'],
+      ['BAT', 'BAD', 'le T final claque, le D final est doux !', 'final T snaps, final D is soft!'],
+      ['THREE', 'FREE', 'TH : mets la langue entre les dents !', 'TH: put your tongue between your teeth!']
+    ];
+    let target = null, pairLang = 'fr', tip = null, roundLive = false, replayT = null;
+    function speakTarget(rate) { speakWaves(); say(target, target, rate || (d <= 2 ? 0.72 : 0.86), pairLang === 'en' ? 'en-US' : 'fr-FR'); }
+    function nextRound() {
+      clearInterval(replayT);
+      cardLayer.innerHTML = '';
+      let pair;
+      if (d <= 1) { pairLang = isEN() ? 'en' : 'fr'; pair = pickFresh('parrot_easy_' + pairLang, pairLang === 'en' ? EASY_EN : EASY_FR, x => x[0]); tip = null; }
+      else if (d <= 3) { pairLang = isEN() ? 'en' : 'fr'; pair = pickFresh('parrot_mid_' + pairLang, pairLang === 'en' ? PAIRS_EN : PAIRS_FR, x => x[0]); tip = [pair[2], pair[3]]; }
+      else { const useEN = Math.random() < 0.5; pairLang = useEN ? 'en' : 'fr'; pair = pickFresh('parrot_hi_' + pairLang, useEN ? PAIRS_EN : PAIRS_FR, x => x[0]); tip = [pair[2], pair[3]]; }
+      const words = shuffle([pair[0], pair[1]]);
+      target = pair[ri(0, 1)];
+      const cards = [];
+      words.forEach((wtext, i) => {
+        const x = PT(430 + i * 640, 425), y = PT(640, 750 + i * 230);
+        const g = S('g', { transform: `translate(${x},${y})`, class: 'grab' }, cardLayer);
+        const wCard = PT(300, 340), hCard = PT(130, 165);
+        const bgR = S('rect', { x: -wCard / 2, y: -hCard / 2, width: wCard, height: hCard, rx: 26, fill: '#fff', stroke: '#0CA678', 'stroke-width': 7 }, g);
+        const fs = Math.min(PT(56, 66), wCard / (wtext.length * 0.62));
+        colorWord(g, wtext, fs, fs * 0.35);
+        fxPop(g);
+        cards.push({ g, bgR, wtext });
+        g.addEventListener('pointerdown', () => {
+          sfx.tap();
+          if (!roundLive) { speakTarget(); return; }
+          if (wtext === target) {
+            roundLive = false;
+            clearInterval(replayT);
+            bgR.setAttribute('stroke', '#FFD23F'); bgR.setAttribute('stroke-width', 11); bgR.setAttribute('fill', '#FFF8E1');
+            fxPop(g);
+            cards.forEach(c2 => { if (c2.wtext !== target) c2.g.style.opacity = 0.25; });
+            sfx.good(); confetti(16); fxSquish(coco);
+            say('Bravo ! C’était bien ' + target + ' !', 'Great! It was ' + target + '!');
+            let advanced = false;
+            const proceed = () => { if (advanced) return; advanced = true; if (Rounds.gem()) setTimeout(zoneComplete, 800); else nextRound(); };
+            if (tip) setTimeout(() => say(tip[0], tip[1], 0.86), 1400);
+            if (d >= 2 && SR) micBonus(target, pairLang, proceed);
+            else setTimeout(proceed, tip ? 4000 : 1600);
+          } else {
+            Rounds.miss(); fxWobble(g);
+            bgR.setAttribute('stroke', '#E5252A');
+            setTimeout(() => bgR.setAttribute('stroke', '#0CA678'), 900);
+            sfx.bad();
+            say('Écoute la différence : ' + pair[0] + '... ' + pair[1] + '... Je répète : ' + target + ' !', 'Hear the difference: ' + pair[0] + '... ' + pair[1] + '... Again: ' + target + '!', 0.68, pairLang === 'en' ? 'en-US' : 'fr-FR');
+          }
+        });
+      });
+      replayBtn(PT(750, 425), PT(585, 565), () => speakTarget(0.62));
+      mission(d <= 1 ? 'Coco dit un mot : touche le mot que tu entends !' : 'Oreille magique : Coco dit UN des deux mots jumeaux. Touche le bon !',
+        d <= 1 ? 'Coco says a word: tap the word you hear!' : 'Magic ear: Coco says ONE of the twin words. Tap the right one!', ZONE_ICONS.parrot);
+      roundLive = true;
+      setTimeout(() => speakTarget(), 1400);
+      replayT = setInterval(() => { if (activeZone !== 'parrot' || !roundLive) { clearInterval(replayT); return; } speakTarget(); }, 8000);
+    }
+    function micBonus(targetWord, lang2, proceed) {
+      const mg = S('g', { transform: PT('translate(600,760)', 'translate(300,1380)'), class: 'grab' }, cardLayer);
+      const ring = S('circle', { r: PT(56, 68), fill: '#FF6FB5', stroke: '#fff', 'stroke-width': 6 }, mg);
+      S('rect', { x: -10, y: -28, width: 20, height: 34, rx: 10, fill: '#fff' }, mg);
+      S('path', { d: 'M -20 0 Q -20 22 0 22 Q 20 22 20 0 M 0 22 L 0 36 M -14 36 L 14 36', stroke: '#fff', 'stroke-width': 5, fill: 'none', 'stroke-linecap': 'round' }, mg);
+      const lbl = S('text', { y: PT(98, 112), 'text-anchor': 'middle', 'font-size': PT(25, 30), 'font-weight': 800, fill: '#C2255C', stroke: '#fff', 'stroke-width': 5, 'paint-order': 'stroke', 'font-family': 'inherit', text: T('Touche et RÉPÈTE : ' + targetWord, 'Tap and REPEAT: ' + targetWord) }, mg);
+      fxPop(mg);
+      let tries2 = 0, busyMic = false;
+      mg.addEventListener('pointerdown', ev3 => {
+        ev3.stopPropagation();
+        if (busyMic) return;
+        busyMic = true;
+        ring.setAttribute('fill', '#E5252A');
+        lbl.textContent = T('🔴 PARLE maintenant !', '🔴 SPEAK now!');
+        mlPulse(ring, 6); sfx.tap();
+        startRec(lang2 === 'en' ? 'en-US' : 'fr-FR', (alts, err) => {
+          busyMic = false;
+          if (err === 'not-allowed' || err === 'service-not-allowed') { say('Autorise le micro dans ton navigateur, puis réessaie !', 'Allow the microphone in your browser, then try again!'); setTimeout(proceed, 2200); return; }
+          if (alts && matches(alts, targetWord)) { confetti(28); sfx.fanfare(); say('PARFAIT ! Ta prononciation est excellente !', 'PERFECT! Your pronunciation is excellent!'); setTimeout(proceed, 2000); return; }
+          tries2++;
+          if (tries2 >= 3 || !mg.isConnected) { say('Bien essayé ! On continue !', 'Nice try! Keep going!'); setTimeout(proceed, 1400); return; }
+          ring.setAttribute('fill', '#FF6FB5');
+          lbl.textContent = T('Encore ! Touche et répète : ' + targetWord, 'Again! Tap and repeat: ' + targetWord);
+          say(err === 'no-speech-end' || err === 'no-speech' ? 'Je ne t’ai pas entendu... parle fort, tout près du téléphone !' : 'J’ai entendu autre chose... réessaie : ' + targetWord, 'Speak up, close to the phone, and try again: ' + targetWord, 0.72, lang2 === 'en' ? 'en-US' : 'fr-FR');
+        });
+      });
+      const cb2 = S('g', { transform: PT('translate(930,760)', 'translate(560,1380)'), class: 'grab' }, cardLayer);
+      S('circle', { r: PT(48, 58), fill: '#57CC57', stroke: '#fff', 'stroke-width': 6 }, cb2);
+      S('path', { d: 'M -14 0 L 10 0 M 0 -12 L 14 0 L 0 12', stroke: '#fff', 'stroke-width': 7, fill: 'none', 'stroke-linecap': 'round', 'stroke-linejoin': 'round' }, cb2);
+      cb2.addEventListener('pointerdown', ev4 => { ev4.stopPropagation(); sfx.tap(); proceed(); });
+      setTimeout(() => { if (mg.isConnected) proceed(); }, 18000);
+    }
+    nextRound();
+  }
+
+  /* ---------- door 2: LIS AVEC COCO (premium syllable-karaoke reading tool) ---------- */
+  function buildLire() {
+    const READ_FR = [['BA', 'NANE'], ['MA', 'MAN'], ['VÉ', 'LO'], ['MO', 'TO'], ['SA', 'VON'], ['TO', 'MATE'], ['PA', 'PA'], ['LU', 'NE'], ['BA', 'TEAU'], ['DO', 'MI', 'NO'], ['CA', 'MI', 'ON'], ['PY', 'JA', 'MA'], ['TA', 'BLEAU'], ['KA', 'RA', 'TÉ']];
+    const READ_EN = [['C', 'A', 'T'], ['S', 'U', 'N'], ['D', 'O', 'G'], ['B', 'E', 'D'], ['H', 'A', 'T'], ['C', 'U', 'P'], ['P', 'E', 'N'], ['F', 'O', 'X'], ['B', 'U', 'S'], ['M', 'A', 'P']];
+    let roundLive = false;
+    function nextRound() {
+      cardLayer.innerHTML = '';
+      roundLive = false;
+      const useEN = d >= 4 && Math.random() < 0.5;
+      const bank = useEN ? READ_EN : READ_FR.filter(w2 => d >= 2 || w2.length === 2);
+      const syls = pickFresh('read_' + (useEN ? 'en' : 'fr'), bank, x => x.join('-'));
+      const word = syls.join('');
+      const lang2 = useEN ? 'en-US' : 'fr-FR';
+      const n2 = syls.length;
+      const TW = Math.min(PT(230, 210), PT(700, 640) / n2 - 14);
+      const x0 = PT(750, 425) - ((n2 - 1) / 2) * (TW + 14);
+      const TY = PT(620, 700);
+      const tiles = [];
+      syls.forEach((syl, i) => {
+        const g = S('g', { transform: `translate(${x0 + i * (TW + 14)},${TY})`, class: 'grab' }, cardLayer);
+        const bg = S('rect', { x: -TW / 2, y: PT(-62, -72), width: TW, height: PT(124, 144), rx: 22, fill: '#fff', stroke: '#0CA678', 'stroke-width': 6 }, g);
+        const fs = Math.min(PT(58, 66), (TW - 20) / (syl.length * 0.62));
+        colorWord(g, syl, fs, fs * 0.35);
+        tiles.push({ g, bg, syl, done: false });
+        g.addEventListener('pointerdown', () => tapTile(i));
+      });
+      let nextIdx = 0, fails = 0, missed = false;
+      function lightTile(i, color2) { tiles[i].bg.setAttribute('fill', color2); fxPop(tiles[i].g); }
+      function demo(cb) {
+        syls.forEach((syl, i) => setTimeout(() => {
+          if (activeZone !== 'parrot') return;
+          tiles[i].bg.setAttribute('fill', '#FFF8E1'); tiles[i].bg.setAttribute('stroke', '#FFD23F');
+          fxPop(tiles[i].g);
+          speakWaves();
+          say(syl, syl, 0.62, lang2);
+          setTimeout(() => { tiles[i].bg.setAttribute('fill', '#fff'); tiles[i].bg.setAttribute('stroke', '#0CA678'); }, 850);
+        }, 700 + i * 1050));
+        setTimeout(() => { if (activeZone !== 'parrot') return; speakWaves(); say(word + ' !', word + '!', 0.78, lang2); tiles.forEach(t2 => fxPop(t2.g)); cb && cb(); }, 700 + n2 * 1050 + 500);
+      }
+      function tapTile(i) {
+        if (!roundLive || tiles[i].done) return;
+        sfx.tap();
+        say(tiles[i].syl, tiles[i].syl, 0.66, lang2);
+        if (i === nextIdx) {
+          tiles[i].done = true;
+          lightTile(i, '#D3F9D8'); tiles[i].bg.setAttribute('stroke', '#2E9E5B');
+          nextIdx++;
+          if (nextIdx >= n2) {
+            roundLive = false;
+            setTimeout(() => {
+              speakWaves();
+              say('Tu as lu : ' + word + ' ! Quelle lecture !', 'You read: ' + word + '! What reading!', 0.8, lang2);
+              sfx.good(); confetti(18); fxSquish(coco);
+              setTimeout(() => { if (Rounds.gem()) setTimeout(zoneComplete, 800); else nextRound(); }, 1800);
+            }, 500);
+          }
+        } else {
+          fails++;
+          fxWobble(tiles[i].g);
+          if (fails >= 2) { mlPulse(tiles[nextIdx].bg, 3); if (!missed && d >= 2) { missed = true; Rounds.miss(); } }
+          say('Commence par la syllabe qui vient en premier !', 'Start with the part that comes first!', 0.8);
+        }
+      }
+      replayBtn(PT(750, 425), PT(430, 505), () => { say(word, word, 0.66, lang2); });
+      mission(useEN ? 'Lecture anglaise : écoute, puis touche les lettres DANS L’ORDRE pour lire ' + word + ' !' : 'Écoute chaque syllabe s’allumer, puis touche-les DANS L’ORDRE pour lire le mot !',
+        useEN ? 'English reading: listen, then tap the letters IN ORDER to read ' + word + '!' : 'Watch each syllable light up, then tap them IN ORDER to read the word!', ZONE_ICONS.parrot);
+      if (d <= 3) demo(() => { roundLive = true; say('À toi de lire !', 'Your turn to read!'); });
+      else { speakWaves(); setTimeout(() => say(word, word, 0.72, lang2), 900); roundLive = true; }
+    }
+    nextRound();
+  }
+
+  /* ---------- door 3: RÉPÈTE AU MICRO (pronunciation practice) ---------- */
+  function buildRepete() {
+    const BANK_FR = ['BANANE', 'SOLEIL', 'MAISON', 'POISSON', 'CADEAU', 'TABLEAU', 'CHAPEAU', 'ÉCOLE'];
+    const BANK_EN = ['SUN', 'CAT', 'HOUSE', 'WATER', 'SCHOOL', 'YELLOW', 'MONKEY', 'FLOWER'];
+    let word = '', lang2 = 'fr-FR', busyMic = false, tries2 = 0;
+    function nextRound() {
+      cardLayer.innerHTML = '';
+      tries2 = 0; busyMic = false;
+      const useEN = isEN() || (d >= 3 && Math.random() < 0.5);
+      word = pickFresh('repete_' + (useEN ? 'en' : 'fr'), useEN ? BANK_EN : BANK_FR, x => x);
+      lang2 = useEN ? 'en-US' : 'fr-FR';
+      const wg = S('g', { transform: PT('translate(750,400)', 'translate(425,560)') }, cardLayer);
+      S('rect', { x: PT(-260, -300), y: -80, width: PT(520, 600), height: 160, rx: 30, fill: '#fff', stroke: '#0CA678', 'stroke-width': 7 }, wg);
+      colorWord(wg, word, Math.min(PT(72, 80), PT(480, 560) / (word.length * 0.62)), 24);
+      fxPop(wg);
+      const mg = S('g', { transform: PT('translate(750,640)', 'translate(425,980)'), class: 'grab' }, cardLayer);
+      const ring = S('circle', { r: PT(78, 100), fill: '#FF6FB5', stroke: '#fff', 'stroke-width': 8 }, mg);
+      S('rect', { x: -15, y: -42, width: 30, height: 52, rx: 15, fill: '#fff' }, mg);
+      S('path', { d: 'M -30 0 Q -30 34 0 34 Q 30 34 30 0 M 0 34 L 0 54 M -20 54 L 20 54', stroke: '#fff', 'stroke-width': 7, fill: 'none', 'stroke-linecap': 'round' }, mg);
+      const lbl = S('text', { y: PT(130, 160), 'text-anchor': 'middle', 'font-size': PT(28, 34), 'font-weight': 800, fill: '#C2255C', stroke: '#fff', 'stroke-width': 6, 'paint-order': 'stroke', 'font-family': 'inherit', text: T('Touche le micro et dis : ' + word, 'Tap the mic and say: ' + word) }, mg);
+      fxPop(mg); fxBob(mg, 7, 2000);
+      mg.addEventListener('pointerdown', () => {
+        if (busyMic) return;
+        busyMic = true;
+        ring.setAttribute('fill', '#E5252A');
+        lbl.textContent = T('🔴 PARLE maintenant !', '🔴 SPEAK now!');
+        mlPulse(ring, 6); sfx.tap();
+        startRec(lang2, (alts, err) => {
+          busyMic = false;
+          ring.setAttribute('fill', '#FF6FB5');
+          if (err === 'not-allowed' || err === 'service-not-allowed') { say('Autorise le micro dans ton navigateur pour jouer !', 'Allow the microphone in your browser to play!'); return; }
+          if (alts && matches(alts, word)) {
+            sfx.fanfare(); confetti(26); fxSquish(coco);
+            say('PARFAIT ! ' + word + ' ! Quelle belle voix !', 'PERFECT! ' + word + '! What a lovely voice!');
+            setTimeout(() => { if (Rounds.gem()) setTimeout(zoneComplete, 800); else nextRound(); }, 1800);
+            return;
+          }
+          tries2++;
+          if (tries2 >= 3) {
+            say('Bien essayé ! Écoute encore et on passe au mot suivant : ' + word + ' !', 'Nice try! Listen once more, then the next word: ' + word + '!', 0.7, lang2);
+            setTimeout(() => { if (Rounds.gem()) setTimeout(zoneComplete, 800); else nextRound(); }, 2600);
+          } else {
+            lbl.textContent = T('Encore ! Dis : ' + word, 'Again! Say: ' + word);
+            say('Écoute bien : ' + word + '... à toi !', 'Listen: ' + word + '... your turn!', 0.66, lang2);
+          }
+        });
+      });
+      replayBtn(PT(1050, 400), PT(680, 560), () => say(word, word, 0.62, lang2));
+      mission('Coco t’écoute ! Regarde le mot, touche le micro, et dis-le bien fort !', 'Coco is listening! Look at the word, tap the mic, and say it loud!', ZONE_ICONS.parrot);
+      speakWaves();
+      setTimeout(() => say(word, word, 0.7, lang2), 1200);
+    }
+    nextRound();
+  }
+
+  if (mode === 'lire') buildLire();
+  else if (mode === 'repete' && SR) buildRepete();
+  else buildEcoute();
 };
 
 /* ================= Z18 — IMAGIER MAGIQUE (thematic packs: learn → play → badge) ================= */

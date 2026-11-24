@@ -1,5 +1,14 @@
 # Changelog
 
+## v1.29.0 — 2026-11-24
+- **Lagon des Bulles / « Attrape » rebuilt as a selective-attention game**: bubbles now carry colored fish, starfish and jellyfish (new cartoon creatures with faces). MAT catches fish vs. other sea animals; SIL+ catches fish of a SPECIFIC color; CE2+ sometimes hunts starfish. Wrong catch = gentle teaching ("Ça, c'est une méduse !"), board shows a pulsing picture of the exact target, net fills with what you caught.
+- **Perroquet Coco fully overhauled — 3 activity doors**:
+  - 👂 *Oreille magique* (glitch-fixed): cards respond INSTANTLY (dead-window removed — tapping before Coco speaks replays the word instead of doing nothing), Coco shows animated sound waves while speaking, the word auto-replays every 8s until answered, correct card glows gold while the other fades, wrong answer replays both words slowly.
+  - 📖 *Lis avec Coco* (NEW premium learn-to-read tool): syllable karaoke — each syllable tile lights up as Coco reads it, then the child taps the tiles IN ORDER to read the word aloud; FR syllable words (BA-NANE, DO-MI-NO…) and EN letter-blending words (C-A-T) at CM1+; demo mode for younger kids, decode-from-audio for older ones.
+  - 🎤 *Répète au micro* (NEW, shown when the mic is supported): see the word, hear it, tap the big mic and say it — speech recognition praises or coaches ("Écoute bien… à toi !"), FR + EN banks.
+- Mic engine hardened: synchronous start on tap, explicit permission message, 3 coached attempts then friendly continue.
+- Smoke suite now crawls Coco's doors too; both orientations pass (21 zones × 3 grades).
+
 ## v1.28.0 — Activity doors in every playground + 3 new playgrounds (21 zones)
 - **Choose your game**: 12 playgrounds now open on premium glassy "activity doors" — big cards with icons, a ⭐ on activities already played, and a 🎮 button in-game to switch anytime. Verger: Compter/Additions/Multiplier/Partager · Bulles: Attrape/Sommes · Studio: Zèbre/Formes/Fractions · Splash: Observe/Scientifique · Jardin: Fais pousser/Docteur des plantes · Safari: Pays/Capitales · Échecs: one door per piece + Tous mélangés · Mots: Première lettre/Épelle · Chantier: choose your structure (maison/fusée/pont/robot/bateau) · plus the new zones below. Doors unlock with the class level.
 - **🎵 Studio Rythmo (new)** — after the top-rated kids' music apps: a glowing xylophone with real notes (DO-RÉ-MI, dual-oscillator WebAudio) for free play, and "Répète la mélodie" — a Simon-style memory game whose melodies grow with the class.
