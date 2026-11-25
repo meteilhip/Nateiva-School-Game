@@ -1,6 +1,6 @@
 {
  "summary": {
-  "date": "2026-11-18T16:40:57.845Z",
+  "date": "2026-11-25T20:28:46.792Z",
   "totalRuns": 154,
   "passed": 154,
   "failed": 0,
@@ -325,7 +325,7 @@
    "clicked": 14,
    "picts": 11,
    "decorated": 11,
-   "speaks": 9
+   "speaks": 11
   },
   {
    "grade": "SIL",
@@ -336,7 +336,7 @@
    "clicked": 14,
    "picts": 15,
    "decorated": 15,
-   "speaks": 12
+   "speaks": 11
   },
   {
    "grade": "SIL",
@@ -347,7 +347,7 @@
    "clicked": 14,
    "picts": 10,
    "decorated": 10,
-   "speaks": 12
+   "speaks": 11
   },
   {
    "grade": "SIL",
@@ -380,7 +380,7 @@
    "clicked": 14,
    "picts": 14,
    "decorated": 14,
-   "speaks": 12
+   "speaks": 13
   },
   {
    "grade": "SIL",
@@ -391,7 +391,7 @@
    "clicked": 14,
    "picts": 17,
    "decorated": 17,
-   "speaks": 13
+   "speaks": 12
   },
   {
    "grade": "SIL",
@@ -413,7 +413,7 @@
    "clicked": 14,
    "picts": 18,
    "decorated": 18,
-   "speaks": 12
+   "speaks": 13
   },
   {
    "grade": "SIL",
@@ -435,7 +435,7 @@
    "clicked": 14,
    "picts": 16,
    "decorated": 16,
-   "speaks": 12
+   "speaks": 11
   },
   {
    "grade": "SIL",
@@ -488,9 +488,9 @@
    "issues": [],
    "buttons": 34,
    "clicked": 14,
-   "picts": 14,
-   "decorated": 14,
-   "speaks": 10
+   "picts": 16,
+   "decorated": 16,
+   "speaks": 11
   },
   {
    "grade": "CP",
@@ -501,7 +501,7 @@
    "clicked": 14,
    "picts": 18,
    "decorated": 18,
-   "speaks": 13
+   "speaks": 12
   },
   {
    "grade": "CP",
@@ -523,7 +523,7 @@
    "clicked": 14,
    "picts": 18,
    "decorated": 18,
-   "speaks": 12
+   "speaks": 13
   },
   {
    "grade": "CP",
@@ -534,7 +534,7 @@
    "clicked": 14,
    "picts": 18,
    "decorated": 18,
-   "speaks": 13
+   "speaks": 12
   },
   {
    "grade": "CP",
@@ -556,7 +556,7 @@
    "clicked": 14,
    "picts": 18,
    "decorated": 18,
-   "speaks": 12
+   "speaks": 13
   },
   {
    "grade": "CP",
@@ -567,7 +567,7 @@
    "clicked": 14,
    "picts": 11,
    "decorated": 11,
-   "speaks": 10
+   "speaks": 9
   },
   {
    "grade": "CP",
@@ -600,7 +600,7 @@
    "clicked": 14,
    "picts": 18,
    "decorated": 18,
-   "speaks": 14
+   "speaks": 13
   },
   {
    "grade": "CP",
@@ -611,7 +611,7 @@
    "clicked": 14,
    "picts": 14,
    "decorated": 14,
-   "speaks": 12
+   "speaks": 13
   },
   {
    "grade": "CP",
@@ -622,7 +622,7 @@
    "clicked": 14,
    "picts": 14,
    "decorated": 14,
-   "speaks": 13
+   "speaks": 12
   },
   {
    "grade": "CP",
@@ -644,7 +644,7 @@
    "clicked": 14,
    "picts": 18,
    "decorated": 18,
-   "speaks": 13
+   "speaks": 12
   },
   {
    "grade": "CP",
@@ -809,7 +809,7 @@
    "clicked": 14,
    "picts": 11,
    "decorated": 11,
-   "speaks": 9
+   "speaks": 10
   },
   {
    "grade": "CE",
@@ -820,7 +820,7 @@
    "clicked": 14,
    "picts": 15,
    "decorated": 15,
-   "speaks": 11
+   "speaks": 12
   },
   {
    "grade": "CE",
@@ -831,7 +831,7 @@
    "clicked": 14,
    "picts": 10,
    "decorated": 10,
-   "speaks": 12
+   "speaks": 10
   },
   {
    "grade": "CE",
@@ -842,7 +842,7 @@
    "clicked": 14,
    "picts": 18,
    "decorated": 18,
-   "speaks": 13
+   "speaks": 14
   },
   {
    "grade": "CE",
@@ -853,7 +853,7 @@
    "clicked": 14,
    "picts": 14,
    "decorated": 14,
-   "speaks": 13
+   "speaks": 12
   },
   {
    "grade": "CE",
@@ -875,7 +875,7 @@
    "clicked": 14,
    "picts": 17,
    "decorated": 17,
-   "speaks": 12
+   "speaks": 13
   },
   {
    "grade": "CE",
@@ -886,7 +886,7 @@
    "clicked": 14,
    "picts": 18,
    "decorated": 18,
-   "speaks": 12
+   "speaks": 13
   },
   {
    "grade": "CE",
@@ -897,7 +897,7 @@
    "clicked": 14,
    "picts": 18,
    "decorated": 18,
-   "speaks": 13
+   "speaks": 12
   },
   {
    "grade": "CE",
@@ -1051,7 +1051,7 @@
    "clicked": 14,
    "picts": 11,
    "decorated": 11,
-   "speaks": 10
+   "speaks": 9
   },
   {
    "grade": "CE2",
@@ -1073,7 +1073,7 @@
    "clicked": 14,
    "picts": 10,
    "decorated": 10,
-   "speaks": 11
+   "speaks": 12
   },
   {
    "grade": "CE2",
@@ -1159,8 +1159,8 @@
    "issues": [],
    "buttons": 34,
    "clicked": 14,
-   "picts": 14,
-   "decorated": 14,
+   "picts": 16,
+   "decorated": 16,
    "speaks": 11
   },
   {
@@ -1181,8 +1181,8 @@
    "issues": [],
    "buttons": 33,
    "clicked": 14,
-   "picts": 14,
-   "decorated": 14,
+   "picts": 15,
+   "decorated": 15,
    "speaks": 11
   },
   {
@@ -1293,7 +1293,7 @@
    "clicked": 14,
    "picts": 11,
    "decorated": 11,
-   "speaks": 10
+   "speaks": 9
   },
   {
    "grade": "CM1",
@@ -1315,7 +1315,7 @@
    "clicked": 14,
    "picts": 10,
    "decorated": 10,
-   "speaks": 10
+   "speaks": 13
   },
   {
    "grade": "CM1",
@@ -1535,7 +1535,7 @@
    "clicked": 14,
    "picts": 11,
    "decorated": 11,
-   "speaks": 10
+   "speaks": 9
   },
   {
    "grade": "CM",
@@ -1557,7 +1557,7 @@
    "clicked": 14,
    "picts": 10,
    "decorated": 10,
-   "speaks": 10
+   "speaks": 12
   },
   {
    "grade": "CM",
@@ -1612,7 +1612,7 @@
    "clicked": 14,
    "picts": 18,
    "decorated": 18,
-   "speaks": 13
+   "speaks": 12
   },
   {
    "grade": "CM",
@@ -1643,8 +1643,8 @@
    "issues": [],
    "buttons": 34,
    "clicked": 14,
-   "picts": 14,
-   "decorated": 14,
+   "picts": 16,
+   "decorated": 16,
    "speaks": 11
   },
   {
@@ -1698,8 +1698,8 @@
    "issues": [],
    "buttons": 34,
    "clicked": 14,
-   "picts": 14,
-   "decorated": 14,
+   "picts": 16,
+   "decorated": 16,
    "speaks": 10
   }
  ]

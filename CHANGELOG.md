@@ -1,5 +1,22 @@
 # Changelog
 
+## v1.31.0 — 2026-11-25
+- **REA Top-Game Analysis & Curriculum Differentiation**: Conducted comprehensive Reverse-Engineering Analysis (documented in `GAME_DESIGN_RESEARCH.md`) of market-defining educational applications (Khan Academy Kids, Duolingo ABC, Prodigy Math, DragonBox, Toca Boca / PhET, Seterra, and Kahoot!) to systematically eliminate cross-age repetition and cognitive mismatch.
+- **Differentiated Games Per Class (Portal Hub & Filter Matrix)**:
+  - Added `CLASS_GAMES` matrix filtering the portal game roster by developmental level: MAT (10 games), SIL (12 games), CP (13 games), CE1 (14 games), CE2 (15 games), CM1 (16 games), CM2 (16 games).
+  - Toddlers in Maternelle focus on audio-first phonics, story exploration, 1-10 counting tricks, ecosystem, tangram, and botany; advanced physics (12V Ohm's law, pH acid/base chemistry, high-voltage circuits) is strictly reserved for CM1/CM2 exam candidates.
+  - Added `🎒 Jeux de ma Classe (<span id="tab-class-code">MAT</span>)` active filter tab to `#category-tabs`, alongside `🌟 Tous les 22 Jeux` for complete overview.
+  - Each portal card now dynamically displays a `.card-grade-badge` indicating class curriculum membership.
+  - Class selector announcements speak the exact count of developmentally tailored games unlocked (e.g. 10 tailored games for Maternelle).
+- **3-Phase Activity Arc Within Each Game**:
+  - Every game features three distinct, non-repetitive learning phases:
+    1. **Mode 1 — Découverte Interactive 3D (Concrete Discovery)**: Step-by-step visual manipulatables, Ten-Frame counting tokens, Khan Kids explainer chips, slow audio decomposition, and guided rule demonstration (+50 XP).
+    2. **Mode 2 — Duel Arcade Rapide (Speed Practice)**: Timed speed practice, missing syllable/element hunt, 1.5x score multipliers, and fast-paced arcade challenges (+75 XP).
+    3. **Mode 3 — Défi du Boss & Maîtrise 👑 (Boss Challenge & Concept Mastery)**: Higher-order mastery challenge (algebraic pan balance, monster king phonics, capital/flag map synthesis, high-voltage oscilloscope, boss QCM) awarding celebratory fanfare, golden chest, and +100 XP.
+- **Adventure Trail (Nateiva World) Zone Differentiation**:
+  - Differentiated missions by grade level across all 21 zones (`play.html`), preventing cross-zone timer bleeding and ensuring distinct missions for toddlers vs older students.
+  - Verified with 100% pass across both landscape and portrait orientation smoke tests (21 zones × 3 grades).
+
 ## v1.30.0 — 2026-11-24
 - **Mastery curriculum loop (Duolingo/Khan-style)**: every island is now a subject curriculum. An activity's star ⭐ is earned only by FINISHING its 5 exercises (not just opening it). Master every activity of an island → animated **crown 👑** on the trail. Activity menus show "Maîtrise les 3 leçons ! (1/3 ⭐)".
 - **Class progression**: progress pill on the map ("CP : 12/21 îles 👑"); mastering all 21 islands triggers the class-complete celebration and a big pulsing **"🎓 CLASSE TERMINÉE ! Passe en CE1 →"** button that moves the child up a class (switching earlier via the class pills still works). Crowns are per-class — a new class starts a fresh quest.

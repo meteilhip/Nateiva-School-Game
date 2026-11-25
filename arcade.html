@@ -429,6 +429,20 @@ body {
   letter-spacing: 0.5px;
 }
 
+.card-grade-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 8px;
+  border-radius: 8px;
+  font-size: 0.72rem;
+  font-weight: 800;
+  background: rgba(229, 37, 42, 0.12);
+  color: var(--coca-red-dark);
+  border: 1px solid rgba(229, 37, 42, 0.28);
+  margin-left: auto;
+}
+
 .portal-desc {
   font-size: 0.9rem;
   color: var(--nateiva-grey-dark);
@@ -3700,7 +3714,8 @@ body.age-mat #world-hero-banner .whb-copy i { display:none; }
 
   <!-- CATEGORY FILTER TABS -->
   <nav class="category-tabs" id="category-tabs">
-    <button class="tab-btn active" data-filter="all">🌟 Tous les Défis</button>
+    <button class="tab-btn active" data-filter="class" id="tab-class-games">🎒 Jeux de ma Classe (<span id="tab-class-code">MAT</span>)</button>
+    <button class="tab-btn" data-filter="all" id="tab-all-games">🌟 Tous les 22 Jeux</button>
     <button class="tab-btn" data-filter="arcade">🎮 Arcade & Labyrinthes</button>
     <button class="tab-btn" data-filter="puzzle">🧩 Puzzles Tangram</button>
     <button class="tab-btn" data-filter="math">🧮 Mathématiques</button>
@@ -9547,11 +9562,13 @@ body.age-mat #world-hero-banner .whb-copy i { display:none; }
     }
     if ($('monster-avatar')) {
       const monsters = ['🦖', '🦁', '🐊', '🐉', '🦛'];
-      $('monster-avatar').textContent = monsters[challengeIndex % monsters.length];
+      const baseM = monsters[challengeIndex % monsters.length];
+      $('monster-avatar').textContent = state.activityPhase === 3 ? ('👑' + baseM) : (state.activityPhase === 2 ? ('⚡' + baseM) : baseM);
     }
-    $('instruction-title').textContent = isEn
-      ? "Feed the Monster the syllables of: " + item.emoji + " " + targetWord
-      : "Nourris le Monstre avec les syllabes du mot : " + item.emoji + " " + targetWord;
+    const phasePrefix = state.activityPhase === 1 ? (isEn ? "🧭 Step 1 • Discovery: Feed " : "🧭 Étape 1 • Découverte : Nourris ")
+                      : state.activityPhase === 2 ? (isEn ? "⚡ Step 2 • Speed Phonics: Assemble " : "⚡ Étape 2 • Duel Rapide : Assemble ")
+                      : (isEn ? "👑 Step 3 • Boss Monster: Master " : "👑 Étape 3 • Défi du Boss : Maîtrise ");
+    $('instruction-title').textContent = phasePrefix + item.emoji + " " + targetWord;
 
     const speechText = isEn
       ? "Touch the syllables to build the word: " + targetWord + "!"
@@ -9689,9 +9706,10 @@ body.age-mat #world-hero-banner .whb-copy i { display:none; }
 
     $('pronounce-word-title').textContent = '🇫🇷 ' + wordFr + '  ⇄  🇬🇧 ' + wordEn;
     $('pronounce-syllables-text').textContent = syllText;
-    $('instruction-title').textContent = isEn
-      ? "Pronunciation Studio: " + wordText
-      : "Studio de Prononciation : " + wordText;
+    const phasePrefix = state.activityPhase === 1 ? (isEn ? "🧭 Step 1 • Studio Voice: " : "🧭 Étape 1 • Voix Studio : ")
+                      : state.activityPhase === 2 ? (isEn ? "⚡ Step 2 • Speed Rhythm: " : "⚡ Étape 2 • Rythme Rapide : ")
+                      : (isEn ? "👑 Step 3 • Boss Accent Mastery: " : "👑 Étape 3 • Défi du Boss Accent : ");
+    $('instruction-title').textContent = phasePrefix + wordText;
 
     const dotsRow = $('pronunciation-dots-row');
     dotsRow.innerHTML = '';
@@ -9878,9 +9896,10 @@ body.age-mat #world-hero-banner .whb-copy i { display:none; }
     const storyFullText = story.text[langKey];
 
     $('story-title-text').textContent = storyTitle;
-    $('instruction-title').textContent = isEn
-      ? "Read or listen to the story and answer the comprehension question!"
-      : "Lis ou écoute l'histoire puis réponds à la question de compréhension !";
+    const phasePrefix = state.activityPhase === 1 ? (isEn ? "🧭 Step 1 • Story Discovery: " : "🧭 Étape 1 • Découverte du Conte : ")
+                      : state.activityPhase === 2 ? (isEn ? "⚡ Step 2 • Fast Detective Clue: " : "⚡ Étape 2 • Enquête Rapide : ")
+                      : (isEn ? "👑 Step 3 • Griot Boss Challenge: " : "👑 Étape 3 • Défi Boss du Griot : ");
+    $('instruction-title').textContent = phasePrefix + storyTitle;
 
     const sentences = storyFullText.split(/(?<=[.!?])\s+/);
     const container = $('story-text-container');
@@ -10123,9 +10142,10 @@ body.age-mat #world-hero-banner .whb-copy i { display:none; }
     state.currentMathItem = item;
     state.mathAlgebraSimplified = false;
     state.mathCountedIndex = 0;
-    state.mathStepAnimProgress = 0;
-
-    $('instruction-title').textContent = item.prompt[langKey];
+    const phasePrefix = state.activityPhase === 1 ? (isEn ? "🧭 Step 1 • Discovery: " : "🧭 Étape 1 • Découverte : ")
+                      : state.activityPhase === 2 ? (isEn ? "⚡ Step 2 • Speed Duel: " : "⚡ Étape 2 • Duel Rapide : ")
+                      : (isEn ? "👑 Step 3 • Boss Challenge: " : "👑 Étape 3 • Défi du Boss : ");
+    $('instruction-title').textContent = phasePrefix + item.prompt[langKey];
     VoiceEngine.speak(item.speech[langKey]);
 
     // Guarantee 100% Voice <-> Visual Emoji Match for Math Lab
@@ -10552,8 +10572,10 @@ body.age-mat #world-hero-banner .whb-copy i { display:none; }
 
     $('funfact-cat-pill').textContent = item.cat[langKey];
     $('funfact-q-title').textContent = item.q[langKey];
-    $('funfact-clue-box').textContent = item.clue[langKey];
-    $('instruction-title').textContent = item.q[langKey];
+    const phasePrefix = state.activityPhase === 1 ? (isEn ? "🧭 Step 1 • Knowledge Quiz: " : "🧭 Étape 1 • Quiz du Savoir : ")
+                      : state.activityPhase === 2 ? (isEn ? "⚡ Step 2 • Speed Tower Blitz: " : "⚡ Étape 2 • Tour Éclair Rapide : ")
+                      : (isEn ? "👑 Step 3 • Boss Tower Question: " : "👑 Étape 3 • Défi Boss de la Tour : ");
+    $('instruction-title').textContent = phasePrefix + item.q[langKey];
     FunfactTower.header();
     FunfactTower.draw();
 
@@ -10720,7 +10742,10 @@ body.age-mat #world-hero-banner .whb-copy i { display:none; }
     const optsList = (item.options || []).map(resolveLoc);
 
     state.cartoonHeroEmoji = item.emoji || item.monster || resolveCartoonIcon(qText + ' ' + ansText) || '🦁';
-    state.cartoonStageTitle = qText;
+    const phasePrefix = state.activityPhase === 1 ? (isEn ? "🧭 Step 1 • Discovery: " : "🧭 Étape 1 • Découverte : ")
+                      : state.activityPhase === 2 ? (isEn ? "⚡ Step 2 • Speed Challenge: " : "⚡ Étape 2 • Défi Rapide : ")
+                      : (isEn ? "👑 Step 3 • Boss Challenge: " : "👑 Étape 3 • Défi du Boss : ");
+    state.cartoonStageTitle = phasePrefix + qText;
     state.cartoonExamTrick = trickText;
 
     // Initialize game-specific 60fps simulation state
@@ -10768,7 +10793,7 @@ body.age-mat #world-hero-banner .whb-copy i { display:none; }
       ? (qText + '. Choose: ' + cleanOptsSpoken + '. ' + cleanTrickSpoken)
       : (qText + '. Choisis : ' + cleanOptsSpoken + '. ' + cleanTrickSpoken);
 
-    $('instruction-title').textContent = qText;
+    $('instruction-title').textContent = phasePrefix + qText;
 
     // Populate giant picture + audio answer buttons + 1-Tap Auto-Play / Demo button
     const ansBox = $('answers-container');
@@ -11923,6 +11948,103 @@ body.age-mat #world-hero-banner .whb-copy i { display:none; }
     }
   };
 
+  // ============================================================================
+  // REA GRADE CURATED GAMES MATRIX (DIFFERENT GAMES PER CLASS)
+  // Zero cognitive mismatch: MAT toddlers never see 12V circuits or pH acids;
+  // CM2 exam scholars never see toddler syllable chips.
+  // ============================================================================
+  const CLASS_GAMES = {
+    MAT: [
+      'math_magic_tricks', 'pronunciation_lab', 'reading_lab', 'story_lab',
+      'science_ecosystem', 'tangram_puzzle', 'maze_quest', 'fun_facts_quiz',
+      'math_lab', 'botany'
+    ],
+    SIL: [
+      'reading_lab', 'pronunciation_lab', 'math_lab', 'story_lab',
+      'science_hero_tricks', 'tetris_blocks', 'density', 'botany',
+      'africa_geography', 'fun_facts_quiz', 'maze_quest', 'tangram_puzzle'
+    ],
+    CP: [
+      'reading_lab', 'pronunciation_lab', 'vocabulary_lab', 'math_lab',
+      'math_magic_tricks', 'story_lab', 'botany', 'density',
+      'auto_racer', 'africa_geography', 'fun_facts_quiz', 'tangram_puzzle', 'maze_quest'
+    ],
+    CE: [
+      'grammar_lab', 'reading_lab', 'pronunciation_lab', 'math_lab',
+      'math_monster_quest', 'story_lab', 'science_ecosystem', 'science_hero_tricks',
+      'circuit', 'africa_geography', 'vocabulary_lab', 'auto_racer', 'tetris_blocks', 'fun_facts_quiz'
+    ],
+    CE1: [
+      'grammar_lab', 'reading_lab', 'pronunciation_lab', 'math_lab',
+      'math_monster_quest', 'story_lab', 'science_ecosystem', 'science_hero_tricks',
+      'circuit', 'africa_geography', 'vocabulary_lab', 'auto_racer', 'tetris_blocks', 'fun_facts_quiz'
+    ],
+    CE2: [
+      'conjugation_lab', 'grammar_lab', 'vocabulary_lab', 'math_lab',
+      'math_magic_tricks', 'math_monster_quest', 'story_lab', 'circuit',
+      'botany', 'density', 'africa_geography', 'fun_facts_quiz', 'comet', 'auto_racer', 'pronunciation_lab'
+    ],
+    CM1: [
+      'math_lab', 'math_monster_quest', 'grammar_lab', 'conjugation_lab',
+      'vocabulary_lab', 'pronunciation_lab', 'story_lab', 'chemistry',
+      'circuit', 'density', 'science_ecosystem', 'africa_geography', 'comet',
+      'tetris_blocks', 'auto_racer', 'fun_facts_quiz'
+    ],
+    CM: [
+      'math_lab', 'math_monster_quest', 'math_magic_tricks', 'circuit',
+      'chemistry', 'density', 'science_ecosystem', 'grammar_lab',
+      'conjugation_lab', 'vocabulary_lab', 'story_lab', 'pronunciation_lab',
+      'africa_geography', 'fun_facts_quiz', 'comet', 'auto_racer'
+    ],
+    CM2: [
+      'math_lab', 'math_monster_quest', 'math_magic_tricks', 'circuit',
+      'chemistry', 'density', 'science_ecosystem', 'grammar_lab',
+      'conjugation_lab', 'vocabulary_lab', 'story_lab', 'pronunciation_lab',
+      'africa_geography', 'fun_facts_quiz', 'comet', 'auto_racer'
+    ]
+  };
+  window.__NATEIVA_CLASS_GAMES__ = CLASS_GAMES;
+
+  function updatePortalCardsForClass(gradeCode, filterOverride) {
+    const normGrade = gradeCode === 'CE1' ? 'CE' : (gradeCode === 'CM2' ? 'CM' : gradeCode);
+    const classList = CLASS_GAMES[normGrade] || CLASS_GAMES[gradeCode] || CLASS_GAMES.MAT;
+    const activeTab = document.querySelector('.tab-btn.active');
+    const filter = filterOverride || (activeTab ? activeTab.getAttribute('data-filter') : 'class');
+    const displayClassCode = gradeCode === 'CE' ? 'CE1' : (gradeCode === 'CM' ? 'CM2' : gradeCode);
+
+    if ($('tab-class-code')) $('tab-class-code').textContent = displayClassCode;
+
+    document.querySelectorAll('.portal-card').forEach(card => {
+      const gKey = card.getAttribute('data-game');
+      const cat = card.getAttribute('data-cat');
+      const inClass = classList.includes(gKey);
+
+      let badge = card.querySelector('.card-grade-badge');
+      if (!badge) {
+        badge = document.createElement('span');
+        badge.className = 'card-grade-badge';
+        const countsBar = card.querySelector('.portal-counts-badge-bar');
+        if (countsBar) countsBar.appendChild(badge);
+      }
+      if (inClass) {
+        badge.textContent = '🎒 ' + displayClassCode;
+        badge.style.display = 'inline-flex';
+      } else {
+        badge.style.display = 'none';
+      }
+
+      if (filter === 'class') {
+        card.style.display = inClass ? 'flex' : 'none';
+      } else if (filter === 'all') {
+        card.style.display = 'flex';
+      } else if (cat === filter) {
+        card.style.display = 'flex';
+      } else {
+        card.style.display = 'none';
+      }
+    });
+  }
+
   function selectGradeClass(gradeCode, speakAnnouncement = true) {
     state.grade = gradeCode;
     if ($('grade-select')) $('grade-select').value = gradeCode;
@@ -11943,9 +12065,21 @@ body.age-mat #world-hero-banner .whb-copy i { display:none; }
       tag.textContent = meta.badge.split('(')[0].trim() + ' • ' + base;
     });
 
+    // Reset tab to "Jeux de ma classe" when switching classes
+    const classTab = $('tab-class-games');
+    if (classTab) {
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      classTab.classList.add('active');
+    }
+    updatePortalCardsForClass(gradeCode, 'class');
+
+    const normGrade = gradeCode === 'CE1' ? 'CE' : (gradeCode === 'CM2' ? 'CM' : gradeCode);
+    const gameList = CLASS_GAMES[normGrade] || CLASS_GAMES[gradeCode] || CLASS_GAMES.MAT;
     if (speakAnnouncement) {
       AudioEngine.playSnap();
-      VoiceEngine.speak(isEn ? ("Class selected: " + meta.badge) : ("Classe sélectionnée : " + meta.badge));
+      VoiceEngine.speak(isEn
+        ? ("Class selected: " + meta.badge + ". " + gameList.length + " tailored games unlocked!")
+        : ("Classe sélectionnée : " + meta.badge + ". " + gameList.length + " jeux adaptés débloqués !"));
     }
   }
   const _origSelectGradeClass = selectGradeClass;
@@ -12015,6 +12149,7 @@ body.age-mat #world-hero-banner .whb-copy i { display:none; }
     updateJourneyUI();
     $('level-selector-section').style.display = 'flex';
     $('category-tabs').style.setProperty('display', 'flex', 'important');
+    updatePortalCardsForClass(state.grade);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
@@ -14363,13 +14498,7 @@ body.age-mat #world-hero-banner .whb-copy i { display:none; }
       document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
       const filter = btn.getAttribute('data-filter');
-      document.querySelectorAll('.portal-card').forEach(card => {
-        if (filter === 'all' || card.getAttribute('data-cat') === filter) {
-          card.style.display = 'flex';
-        } else {
-          card.style.display = 'none';
-        }
-      });
+      updatePortalCardsForClass(state.grade, filter);
     });
   });
 

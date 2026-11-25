@@ -1532,7 +1532,8 @@ ZONE_BUILDERS.orchard = function (host) {
     const d = D();
     const am = ZoneAct.cur;
     if (am === 'count' || (!am && d <= 1)) { mode = 'count'; needPer = [Math.min(9, ri(2, d === 0 ? 4 : 6) + Rounds.ramp())]; baskets = [drawBasket(PT(750, 425), PT(640, 1250), needPer[0], needPer[0])];
-      mission('Donne ' + needPer[0] + ' fruits à Momo !', 'Give Momo ' + needPer[0] + ' fruits!', ZONE_ICONS.orchard);
+      if (d === 0) mission('Verger des tout-petits : cueille ' + needPer[0] + ' fruits pour Momo !', 'Toddler orchard: pick ' + needPer[0] + ' fruits for Momo!', ZONE_ICONS.orchard);
+      else mission('Verger SIL : compte et donne ' + needPer[0] + ' fruits mûrs à Momo !', 'SIL orchard: count and give Momo ' + needPer[0] + ' ripe fruits!', ZONE_ICONS.orchard);
     } else if (am === 'add' || (!am && d <= 3)) { mode = 'add'; const a = ri(2, 4 + Rounds.ramp(2)), b = ri(2, 4 + Rounds.ramp(2)); needPer = [a, b];
       baskets = [drawBasket(PT(620, 240), PT(640, 1250), a, a), drawBasket(PT(900, 610), PT(640, 1250), b, b)];
       mission(`${a} + ${b} = ? Remplis les paniers : ${a} et ${b} fruits !`, `${a} + ${b} = ? Fill the baskets: ${a} and ${b} fruits!`, ZONE_ICONS.orchard);
@@ -1944,8 +1945,10 @@ ZONE_BUILDERS.splash = function (host) {
       else plunge(it, () => askAnswer(it));
     });
   });
-  if (ZoneAct.cur ? ZoneAct.cur === 'hypo' : d >= 4) mission('Mode scientifique : touche un objet, annonce ton HYPOTHÈSE (flotte ou coule ?), puis vérifie !', 'Scientist mode: tap an object, state your HYPOTHESIS (float or sink?), then check!', ZONE_ICONS.splash);
-  else mission('Touche un objet : il saute dans l’eau ! Puis réponds : il FLOTTE ou il COULE ?', 'Tap an object: it jumps into the water! Then answer: does it FLOAT or SINK?', ZONE_ICONS.splash);
+  if (ZoneAct.cur === 'hypo' || (!ZoneAct.cur && d >= 4)) mission('Mode scientifique : touche un objet, annonce ton HYPOTHÈSE (flotte ou coule ?), puis vérifie la DENSITÉ !', 'Scientist mode: tap an object, state your HYPOTHESIS (float or sink?), then verify DENSITY!', ZONE_ICONS.splash);
+  else if (d <= 1) mission('Lagon des tout-petits : touche un jouet, regarde : il FLOTTE ou il COULE ?', 'Toddler lagoon: tap a toy, watch: does it FLOAT or SINK?', ZONE_ICONS.splash);
+  else if (d <= 3) mission('Expérience du lagon : touche un objet, observe bien : il FLOTTE ou il COULE ?', 'Lagoon experiment: tap an object, watch closely: does it FLOAT or SINK?', ZONE_ICONS.splash);
+  else mission('Observation avancée CM : touche un objet et analyse sa flottabilité !', 'Advanced CM observation: tap an object and analyze buoyancy!', ZONE_ICONS.splash);
   handHint(svg, PT(260, 120), PT(205, 380));
   sayPick();
 };
@@ -2343,6 +2346,7 @@ ZONE_BUILDERS.theatre = function (host) {
     curtR.animate([{ transform: 'translateX(0)' }, { transform: 'translateX(70px)' }], { duration: 900, fill: 'forwards', easing: 'ease-out' });
   }
   function playLine() {
+    if (activeZone !== 'theatre') return;
     if (lineIdx >= story.lines.length) { askQuestion(); return; }
     const L = story.lines[lineIdx];
     L.act && L.act();
@@ -2352,6 +2356,7 @@ ZONE_BUILDERS.theatre = function (host) {
     setTimeout(playLine, ms);
   }
   function askQuestion() {
+    if (activeZone !== 'theatre') return;
     mission(story.q.fr, story.q.en, ZONE_ICONS.theatre);
     answerG.innerHTML = '';
     let panelSet = story.panels;
@@ -2374,9 +2379,11 @@ ZONE_BUILDERS.theatre = function (host) {
     placeActors();
     save.thIdx = (save.thIdx || 0) + 1; persist();
     story = STORIES[save.thIdx % STORIES.length];
-    lineIdx = 0;
-    mission('Regarde bien le spectacle !', 'Watch the show closely!', ZONE_ICONS.theatre);
-    setTimeout(() => { openCurtains(); setTimeout(playLine, 1000); }, 600);
+    const d = D();
+    if (d <= 1) mission('Théâtre des petits : regarde bien le spectacle de Kalulu !', 'Toddler theatre: watch the Kalulu show closely!', ZONE_ICONS.theatre);
+    else if (d <= 3) mission('Théâtre de Kalulu : écoute l\u2019histoire et retiens les actions !', 'Kalulu Theatre: listen to the story and remember the actions!', ZONE_ICONS.theatre);
+    else mission('Grand Théâtre du Griot : analyse le récit et retiens la morale !', 'Great Griot Theatre: analyze the narrative and moral!', ZONE_ICONS.theatre);
+    setTimeout(() => { if (activeZone !== 'theatre') return; openCurtains(); setTimeout(() => { if (activeZone === 'theatre') playLine(); }, 1000); }, 600);
   }
   nextRound();
 };
@@ -2489,7 +2496,9 @@ ZONE_BUILDERS.builder = function (host) {
         }
       });
     });
-    mission('Construis ' + st.fr + ' : pose chaque pièce sur le plan en pointillés !', 'Build ' + st.en + ': drop each piece onto the dotted blueprint!', ZONE_ICONS.builder);
+    if (d <= 1) mission('Chantier des petits : pose chaque gros bloc pour bâtir ' + st.fr + ' !', 'Toddler building: drop each big block to build ' + st.en + '!', ZONE_ICONS.builder);
+    else if (d <= 3) mission('Chantier de Tibo : construis ' + st.fr + ' sur le plan en pointillés !', 'Tibo\u2019s Site: build ' + st.en + ' on the dotted blueprint!', ZONE_ICONS.builder);
+    else mission('Projet d\u2019architecte CM : bâtis ' + st.fr + ' avec précision structurelle !', 'Architect project CM: build ' + st.en + ' with structural precision!', ZONE_ICONS.builder);
     roundLive = true;
   }
   function finishStructure(st) {
@@ -2814,7 +2823,10 @@ ZONE_BUILDERS.create = function (host) {
     });
     if (totalPlaced >= 4 && !doneShown) { doneBtn.setAttribute('opacity', 1); fxPop(doneBtn); }
   });
-  mission('Crée TON tableau magique : choisis des tampons, touche la scène pour les poser ! 4 ou plus, puis la coche verte !', 'Create YOUR magic picture: pick stamps, tap the scene to place them! 4 or more, then the green check!', ZONE_ICONS.create);
+  const d = D();
+  if (d <= 1) mission('Atelier des tout-petits : dépose les jolis animaux dans la savane !', 'Toddler studio: place the pretty animals in the savanna!', ZONE_ICONS.create);
+  else if (d <= 3) mission('Atelier magique : choisis des tampons et compose ta scène africaine !', 'Magic workshop: pick stamps and compose your African scene!', ZONE_ICONS.create);
+  else mission('Grand atelier d\u2019art CM : crée une belle fresque culturelle d\u2019Afrique !', 'Grand art studio CM: create a beautiful African cultural mural!', ZONE_ICONS.create);
 };
 
 
@@ -3228,8 +3240,9 @@ ZONE_BUILDERS.academy = function (host) {
     }
     inp.addEventListener('input', ev => renderChips(ev.target.value));
     renderChips(filter || '');
-    if (filter) inp.value = filter;
-    mission('Bienvenue à l’Académie ! Choisis un sujet de ta classe et gagne ton quiz !', 'Welcome to the Academy! Pick a topic from your class and win your quiz!', ZONE_ICONS.academy);
+    if (d <= 1) mission('Académie d\u2019éveil : quiz tout doux en images pour les petits champions !', 'Early Academy: gentle picture quiz for little champions!', ZONE_ICONS.academy);
+    else if (d <= 3) mission('Académie des champions : quiz de révision CE1 en lecture et calcul !', 'Champions Academy: CE1 revision quiz in reading and math!', ZONE_ICONS.academy);
+    else mission('Académie d\u2019élite : Grand Examen Blanc de préparation au concours !', 'Elite Academy: Great Mock Exam for diploma preparation!', ZONE_ICONS.academy);
   }
 
   function playTopic(t) {
@@ -3579,7 +3592,9 @@ ZONE_BUILDERS.mathlab = function (host) {
       b.innerHTML = '<span class="dot" style="background:#F77F00"></span>' + T(L.f, L.e);
       b.addEventListener('click', () => { sfx.boing(); play(L); });
     });
-    mission('Choisis une leçon : je montre la méthode en mouvement, étape par étape !', 'Pick a lesson: I show the method in motion, step by step!', ZONE_ICONS.mathlab);
+    if (d <= 1) mission('Labo des petits : découvre les nombres et les boîtes de 10 en images !', 'Little ones\u2019 lab: discover numbers and ten-frames in pictures!', ZONE_ICONS.mathlab);
+    else if (d <= 3) mission('Labo des maths : apprends les tables de multiplication et les grilles !', 'Math lab: learn multiplication tables and visual arrays!', ZONE_ICONS.mathlab);
+    else mission('Labo d\u2019algèbre : maîtrise les fractions, pourcentages et la balance ax+b !', 'Algebra lab: master fractions, percentages and the ax+b scale!', ZONE_ICONS.mathlab);
   }
   function play(L) {
     wrap.innerHTML = '';
@@ -3745,7 +3760,9 @@ ZONE_BUILDERS.griot = function (host) {
       b.innerHTML = '<span class="dot" style="background:#A0522D"></span>' + ((save.griotDone || {})[st.id] ? '\u2705 ' : '') + T(st.f, st.e);
       b.addEventListener('click', () => { sfx.boing(); play(st); });
     });
-    mission('Assieds-toi sous le baobab ! Choisis une histoire d’Afrique ou du Cameroun.', 'Sit under the baobab! Pick a story of Africa or Cameroon.', ZONE_ICONS.griot);
+    if (d <= 1) mission('Sous le baobab : écoute la douce légende des animaux d\u2019Afrique !', 'Under the baobab: listen to the sweet legend of African animals!', ZONE_ICONS.griot);
+    else if (d <= 3) mission('Histoire du Griot : découvre les pyramides, les pharaons et les rois !', 'Griot\u2019s Tale: discover pyramids, pharaohs and kings!', ZONE_ICONS.griot);
+    else mission('Grand récit historique : l\u2019épopée de Soundiata, Mandela et l\u2019Indépendance !', 'Historical epic: the saga of Sundiata, Mandela and Independence!', ZONE_ICONS.griot);
   }
   function play(st) {
     let pi = 0;
@@ -4313,7 +4330,9 @@ ZONE_BUILDERS.themes = function (host) {
       b.style.display = 'inline-flex'; b.style.alignItems = 'center'; b.style.gap = '8px';
       b.addEventListener('click', () => { sfx.boing(); learn(th, 0); });
     });
-    mission('Bienvenue dans l’Imagier ! Choisis un thème à apprendre !', 'Welcome to the Picture Book! Pick a theme to learn!', ZONE_ICONS.themes);
+    if (d <= 1) mission('Imagier des petits : touche chaque dessin pour écouter son nom !', 'Toddler picture book: tap each drawing to hear its name!', ZONE_ICONS.themes);
+    else if (d <= 3) mission('Imagier bilingue : découvre les mots en français et en anglais !', 'Bilingual picture book: discover words in French and English!', ZONE_ICONS.themes);
+    else mission('Lexique d\u2019anglais approfondi : retiens l\u2019orthographe et gagne ton badge !', 'Advanced English lexicon: learn spelling and win your badge!', ZONE_ICONS.themes);
   }
   function learn(th, i) {
     wrap.innerHTML = '';
@@ -4470,7 +4489,9 @@ ZONE_BUILDERS.music = function (host) {
   }
   if (mode === 'melody') melodyRound();
   else {
-    mission('Le xylophone magique ! Joue ta musique : chaque couleur chante !', 'The magic xylophone! Play your music: every color sings!', ZONE_ICONS.music);
+    if (d <= 1) mission('Xylophone des tout-petits : touche chaque lame magique pour chanter !', 'Toddler xylophone: tap each magical bar to sing!', ZONE_ICONS.music);
+    else if (d <= 3) mission('Xylophone CE1 : joue les notes de musique DO, RÉ, MI, FA, SOL !', 'CE1 xylophone: play musical notes DO, RE, MI, FA, SOL!', ZONE_ICONS.music);
+    else mission('Studio Musical CM2 : joue la gamme musicale complète de 8 notes !', 'Music Studio CM2: play the full 8-note musical scale!', ZONE_ICONS.music);
     Rounds.start('music', 3);
     handHint(svg, x0, BARY - 100);
   }
@@ -4653,7 +4674,9 @@ ZONE_BUILDERS.puzzle = function (host) {
         });
       });
     });
-    mission('Chaque forme cherche sa maison ! Touche les pièces pour les ranger !', 'Every shape is looking for its home! Tap the pieces to place them!', ZONE_ICONS.puzzle);
+    if (d <= 1) mission('Formes des tout-petits : range chaque silhouette dans sa maison !', 'Toddler shapes: put each silhouette in its home!', ZONE_ICONS.puzzle);
+    else if (d <= 3) mission('Puzzles de géométrie : associe chaque forme colorée à son ombre !', 'Geometry puzzles: match each colored shape to its shadow!', ZONE_ICONS.puzzle);
+    else mission('Tangram des maîtres : reconstitue la figure avec les pièces géométriques !', 'Master tangram: assemble the figure with geometric pieces!', ZONE_ICONS.puzzle);
     handHint(svg, PT(300, 120), PT(680, 1180));
   }
   const JIG_PICS = ['lion', 'car', 'house2', 'boat2', 'plane', 'flower2'];
