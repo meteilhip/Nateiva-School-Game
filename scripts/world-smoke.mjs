@@ -173,6 +173,43 @@ const d = window.document;
       if (!q.sf || !q.sf.length || !q.se || !q.se.length) errs.push('griot ' + st2.id + ' q' + i + ': missing steps');
     });
   }
+  // ---- SAGE Q&A: every sample question + country lookups must answer ----
+  {
+    const QS = ['pourquoi il pleut', 'why does the sun shine', 'que mange le lion', 'comment poussent les plantes',
+      'pourquoi le bateau flotte', "c'est quoi une fraction", 'pourquoi on dort', 'capitale du cameroun',
+      'nigeria', 'kenya', 'pourquoi le ciel est bleu', 'what is a syllable', 'multiplication', 'kilimandjaro'];
+    for (const q of QS) {
+      const a = W.sageAnswer(q);
+      if (!a) { errs.push('sage: no answer for "' + q + '"'); continue; }
+      if (!a.a || !a.a[0] || !a.a[1] || a.a[0].length < 20) errs.push('sage "' + q + '": bad answer shape');
+      if (a.z && !W.ZONES.find(z => z.key === a.z)) errs.push('sage "' + q + '": unknown zone ' + a.z);
+    }
+    const cm = W.sageAnswer('capitale du cameroun');
+    if (!cm || !/Yaound/.test(cm.a[0])) errs.push('sage: cameroun capital wrong: ' + (cm && cm.a[0]));
+    if (W.sageAnswer('xyzqwk blorp')) errs.push('sage: answered gibberish');
+    // the search panel renders the sage card + chips without crashing
+    try { W.renderSearch(''); W.renderSearch('pourquoi il pleut ?'); } catch (e) { errs.push('sage render CRASH: ' + e.message); }
+  }
+  // ---- MASTERY: complete every activity -> 21 crowns -> next-class button -> grade switch ----
+  {
+    W.save.grade = 1;
+    const M = W.Mastery;
+    if (typeof W.Rounds.ramp !== 'function' || W.Rounds.ramp.call({ idx: 4 }) !== 2) errs.push('mastery: Rounds.ramp broken');
+    W.save.acts = {};
+    if (M.classCount() !== 0) errs.push('mastery: expected 0 crowns after reset, got ' + M.classCount());
+    for (const z of W.ZONES) for (const a of M.zoneActs(z.key)) M.mark(z.key, a.id);
+    if (!M.classDone()) errs.push('mastery: classDone false after marking all (' + M.classCount() + '/' + W.ZONES.length + ')');
+    W.save.grade = 0; // marks were for g1: crowns must be per-class
+    if (M.classCount() !== 0) errs.push('mastery: crowns leaked across grades (' + M.classCount() + ' at g0)');
+    W.save.grade = 1;
+    W.showMap(); await sleep(60);
+    const mapTxt = d.getElementById('scene-map').textContent;
+    if (!/TERMIN|COMPLETE|Passe en|Move up/.test(mapTxt)) errs.push('mastery: class-complete banner missing on map');
+    const g0 = W.save.grade;
+    W.nextClass(); await sleep(60);
+    if (W.save.grade !== g0 + 1) errs.push('mastery: nextClass did not advance grade');
+    W.save.acts = {}; W.save.grade = 0; // clean state for theatre step
+  }
   // theatre needs longer (timed narration) — let timers run briefly at g0
   W.save.grade = 0; W.enterZone('theatre'); await sleep(400);
   console.log(errs.length ? `WORLD SMOKE${PORTRAIT ? ' [PORTRAIT 412x915]' : ''}: ${errs.length} issues` : 'WORLD SMOKE' + (PORTRAIT ? ' [PORTRAIT 412x915]' : ' [LANDSCAPE]') + ': ALL CLEAR ✅ (' + W.ZONES.length + ' zones × 3 grades)');

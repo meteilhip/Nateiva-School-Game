@@ -1,5 +1,12 @@
 # Changelog
 
+## v1.30.0 — 2026-11-24
+- **Mastery curriculum loop (Duolingo/Khan-style)**: every island is now a subject curriculum. An activity's star ⭐ is earned only by FINISHING its 5 exercises (not just opening it). Master every activity of an island → animated **crown 👑** on the trail. Activity menus show "Maîtrise les 3 leçons ! (1/3 ⭐)".
+- **Class progression**: progress pill on the map ("CP : 12/21 îles 👑"); mastering all 21 islands triggers the class-complete celebration and a big pulsing **"🎓 CLASSE TERMINÉE ! Passe en CE1 →"** button that moves the child up a class (switching earlier via the class pills still works). Crowns are per-class — a new class starts a fresh quest.
+- **Gradual difficulty inside every activity**: exercises ramp up as the child succeeds (more fish to catch & faster bubbles, bigger sums in the orchard, extra decoy letters in word-building, more mud spots at the pet clinic, more jigsaw pieces), and exercise 5 is announced as "⭐ DÉFI FINAL" everywhere — a mastery check before the star.
+- **🦉 Sage the owl — ask anything**: the search panel now answers questions! 8 tap-ready question chips for non-readers, free typing for readers ("pourquoi il pleut ?", "why does the sun shine?"), 50+ curated bilingual kid-level answers (animals, space, body, plants, water cycle, math concepts, reading, African geography/culture, machines) + live answers for all 49 African countries (flag, capital, region). Every answer is spoken aloud and ends with a "🎮 Joue pour apprendre !" button that jumps to the island teaching that topic.
+- Smoke suite extended: Sage must answer 14 reference questions (gibberish must fail), mastery must crown per-class and the next-class button must advance the grade. Both orientations pass.
+
 ## v1.29.0 — 2026-11-24
 - **Lagon des Bulles / « Attrape » rebuilt as a selective-attention game**: bubbles now carry colored fish, starfish and jellyfish (new cartoon creatures with faces). MAT catches fish vs. other sea animals; SIL+ catches fish of a SPECIFIC color; CE2+ sometimes hunts starfish. Wrong catch = gentle teaching ("Ça, c'est une méduse !"), board shows a pulsing picture of the exact target, net fills with what you caught.
 - **Perroquet Coco fully overhauled — 3 activity doors**:

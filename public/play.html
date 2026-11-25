@@ -116,6 +116,13 @@ html,body{ width:100%; height:100%; overflow:hidden; font-family:'Baloo 2','Fred
 #search-head{ display:flex; gap:10px; }
 #search-input{ flex:1; font-family:inherit; font-size:1.3rem; font-weight:800; color:var(--ink); border:4px solid #C9D3EE; border-radius:999px; padding:12px 22px; outline:none; }
 #search-input:focus{ border-color:#2EC4B6; }
+.sage-chips{ display:flex; flex-wrap:wrap; gap:8px; margin:10px 2px; }
+.sage-chip{ font-family:inherit; font-weight:800; font-size:0.95rem; color:#4A3AA8; background:#EFEAFF; border:3px solid #C9B6F5; border-radius:999px; padding:8px 14px; cursor:pointer; }
+.sage-chip:active{ transform:scale(0.94); }
+.sage-card{ display:flex; gap:12px; align-items:center; background:linear-gradient(135deg,#FFF8E1,#FFEFF4); border:4px solid #FFD23F; border-radius:24px; padding:14px; margin:10px 0; }
+.sage-card .sage-a{ flex:1; min-width:0; font-weight:800; font-size:1.08rem; color:#2B2D42; line-height:1.35; }
+.sage-card button{ font-family:inherit; font-weight:800; font-size:0.95rem; color:#fff; background:linear-gradient(135deg,#FF2A32,#E5252A); border:3px solid #fff; border-radius:999px; padding:10px 14px; cursor:pointer; box-shadow:0 6px 14px rgba(229,37,42,0.35); }
+@media (max-width:700px){ .sage-card{ flex-wrap:wrap; } .sage-card button{ width:100%; } }
 #search-close{ width:56px; border-radius:50%; border:4px solid #fff; background:linear-gradient(145deg,#FF4D57,#E5252A); color:#fff; font-size:1.2rem; cursor:pointer; }
 #search-results{ display:grid; grid-template-columns:repeat(auto-fill,minmax(210px,1fr)); gap:12px; margin-top:16px; }
 .sr-card{ border:4px solid #E3E8F7; border-radius:22px; padding:14px 10px; text-align:center; cursor:pointer; background:#FBFCFF; transition:transform 0.2s cubic-bezier(0.34,1.56,0.64,1), border-color 0.2s; }
@@ -472,6 +479,7 @@ function gradDefs(svg) {
     stops.forEach(([o, c]) => S('stop', { offset: o, 'stop-color': c }, g));
   };
   mk('gSky', [[0, '#8EDBFF'], [0.6, '#C8F0FF'], [1, '#FFF3D6']]);
+  mk('gMang', [[0, '#FF2A32'], [1, '#E5252A']], 0, 0, 1, 1);
   mk('gSkySunset', [[0, '#FFC97A'], [0.55, '#FFE1B0'], [1, '#FFF3D6']]);
   mk('gSkyDusk', [[0, '#9BA8F5'], [0.55, '#CFC4F5'], [1, '#FFE9D6']]);
   mk('gSea', [[0, '#49C6F5'], [1, '#1C7ED6']]);
@@ -590,7 +598,7 @@ function iconSvg(builder, vb = '0 0 24 24') {
   return svg;
 }
 
-const APP_VERSION = '1.29.0';
+const APP_VERSION = '1.30.0';
 // animated pointing hand: shows toddlers WHAT to touch (MAT/SIL only)
 function handHint(svg, x, y) {
   if (D() > 1) return;
@@ -642,6 +650,10 @@ function confetti(n = 36) {
 }
 let currentMission = null;
 function mission(fr, en, iconBuilder) {
+  if (activeZone && Rounds.zone === activeZone && Rounds.isFinal()) {
+    fr = '\u2B50 DÉFI FINAL : ' + fr;
+    en = '\u2B50 FINAL CHALLENGE: ' + en;
+  }
   currentMission = [fr, en];
   $('mission-text').textContent = T(fr, en);
   const ic = $('mission-icon'); ic.innerHTML = '';
@@ -689,13 +701,29 @@ const Rounds = {
     confetti(14);
     return this.idx >= this.total;
   },
-  stars() { return this.mistakes <= 1 ? 3 : (this.mistakes <= 3 ? 2 : 1); }
+  stars() { return this.mistakes <= 1 ? 3 : (this.mistakes <= 3 ? 2 : 1); },
+  isFinal() { return this.idx === this.total - 1; },
+  ramp(step = 1) { return Math.floor(this.idx * step / 2); } // 0,0,1,1,2 across the 5 exercises
+};
+/* ---- Mastery: every activity completed = a lesson mastered; all activities of an island = crown; all 21 crowns = class complete ---- */
+const Mastery = {
+  key(zKey, actId) { return 'g' + save.grade + ':' + zKey + ':' + (actId || 'main'); },
+  mark(zKey, actId) { save.acts = save.acts || {}; save.acts[this.key(zKey, actId)] = 1; persist(); },
+  has(zKey, actId) { const a = save.acts || {}; return !!(a[this.key(zKey, actId)] || a[zKey + ':' + (actId || 'main')]); },
+  zoneActs(zKey) { const m = ZONE_MENUS[zKey]; const acts = m ? m(D()) : null; return (acts && acts.length) ? acts : [{ id: 'main' }]; },
+  zoneDone(zKey) { return this.zoneActs(zKey).every(a => this.has(zKey, a.id)); },
+  classCount() { return ZONES.filter(z => this.zoneDone(z.key)).length; },
+  classDone() { return this.classCount() >= ZONES.length; }
 };
 function zoneComplete() {
   const stars = Rounds.stars();
   const z = Rounds.zone;
   save.stars[z] = Math.max(save.stars[z] || 0, stars);
   save.done[z] = (save.done[z] || 0) + 1;
+  const wasZoneDone = Mastery.zoneDone(z);
+  Mastery.mark(z, ZoneAct.cur);
+  const newCrown = !wasZoneDone && Mastery.zoneDone(z);
+  const classNow = Mastery.classDone();
   persist();
   updateStarPill();
   sfx.fanfare(); confetti(70);
@@ -706,12 +734,16 @@ function zoneComplete() {
   let sub2 = document.getElementById('cheer-lesson');
   if (!sub2) { sub2 = document.createElement('div'); sub2.id = 'cheer-lesson'; sub2.style.cssText = 'margin-top:6px;font-weight:800;color:#2E9E5B;font-size:1.02rem;'; $('cheer-title').after(sub2); }
   if (zObj && zObj.lv) { const band = D() <= 1 ? 0 : D() <= 3 ? 1 : 2; sub2.textContent = '\u2705 ' + T('Leçon maîtrisée : ', 'Lesson mastered: ') + T(zObj.lv[band][0], zObj.lv[band][1]); } else sub2.textContent = '';
+  if (classNow) { $('cheer-title').textContent = '\uD83C\uDF93 ' + T('CLASSE ' + GRADES[save.grade].code + ' TERMINÉE !', GRADES[save.grade].code + ' CLASS COMPLETE!'); sub2.textContent = '\uD83D\uDC51 ' + T('Tu as maîtrisé les 21 îles ! Une surprise t\u2019attend sur la carte...', 'You mastered all 21 islands! A surprise awaits on the map...'); }
+  else if (newCrown) { sub2.textContent = '\uD83D\uDC51 ' + T('ÎLE MAÎTRISÉE ! Toutes les activités réussies !', 'ISLAND MASTERED! All activities complete!') + ' (' + Mastery.classCount() + '/' + ZONES.length + ')'; }
   const cs = $('cheer-stars'); cs.innerHTML = '';
   for (let i = 0; i < 3; i++) cs.appendChild(iconSvg(svg => drawStarIcon(svg, 1.9, i < stars ? '#FFD23F' : '#E3E6F0'), '0 0 46 46'));
   $('cheer-btn').textContent = T("Retour à l'île", 'Back to the island');
   $('cheer-card').classList.add('on');
   const lvTxt = zObj && zObj.lv ? T(zObj.lv[D() <= 1 ? 0 : D() <= 3 ? 1 : 2][0], zObj.lv[D() <= 1 ? 0 : D() <= 3 ? 1 : 2][1]) : '';
-  say('Bravo ! Tu as gagné ' + stars + ' étoiles !' + (lvTxt ? ' Leçon maîtrisée : ' + lvTxt + ' !' : ''), 'Amazing! You earned ' + stars + ' stars!' + (lvTxt ? ' Lesson mastered: ' + lvTxt + '!' : ''));
+  if (classNow) say('INCROYABLE ! Tu as terminé toute la classe ' + GRADES[save.grade].code + ' ! Retourne sur la carte pour ta surprise !', 'INCREDIBLE! You finished the whole ' + GRADES[save.grade].code + ' class! Go back to the map for your surprise!');
+  else if (newCrown) say('Bravo ! Île maîtrisée, tu gagnes une couronne ! ' + Mastery.classCount() + ' îles sur ' + ZONES.length + ' !', 'Amazing! Island mastered, you win a crown! ' + Mastery.classCount() + ' islands out of ' + ZONES.length + '!');
+  else say('Bravo ! Tu as gagné ' + stars + ' étoiles !' + (lvTxt ? ' Leçon maîtrisée : ' + lvTxt + ' !' : ''), 'Amazing! You earned ' + stars + ' stars!' + (lvTxt ? ' Lesson mastered: ' + lvTxt + '!' : ''));
 }
 $('cheer-btn').addEventListener('click', () => { $('cheer-card').classList.remove('on'); showMap(); });
 function updateStarPill() {
@@ -873,6 +905,22 @@ const ZONE_ICONS = {
 };
 let leoMapAvatar = null;
 /* ---- PHONE HOME: a premium scrolling adventure trail (big nodes, zero shrink) ---- */
+function drawCrown(parent, x, y, s2) {
+  const g = S('g', { transform: `translate(${x},${y}) scale(${s2})` }, parent);
+  S('path', { d: 'M -26 10 L -30 -14 L -14 -2 L 0 -20 L 14 -2 L 30 -14 L 26 10 Z', fill: '#FFD23F', stroke: '#E58E09', 'stroke-width': 3.5, 'stroke-linejoin': 'round' }, g);
+  S('rect', { x: -26, y: 10, width: 52, height: 8, rx: 4, fill: '#E58E09' }, g);
+  [[-15, 2], [0, -4], [15, 2]].forEach(([cx, cy]) => S('circle', { cx, cy, r: 3.4, fill: '#FF4D57', stroke: '#fff', 'stroke-width': 1.4 }, g));
+  return g;
+}
+function nextClass() {
+  if (save.grade >= GRADES.length - 1) { say('Tu as déjà atteint la plus grande classe ! Quel champion !', 'You already reached the top class! What a champion!'); return; }
+  save.grade++;
+  persist();
+  sfx.fanfare(); confetti(80);
+  buildGradeDock();
+  showMap();
+  say('Bienvenue en classe ' + GRADES[save.grade].code + ' ! De nouvelles leçons t\u2019attendent sur chaque île !', 'Welcome to ' + GRADES[save.grade].code + '! New lessons await on every island!');
+}
 function buildTrailMap(host) {
   host.classList.add('scroll');
   const W = 850, rowH = 408, topPad = 640;
@@ -900,6 +948,20 @@ function buildTrailMap(host) {
   S('text', { x: 0, y: 36, 'text-anchor': 'middle', 'font-size': 24, 'font-weight': 700, fill: '#8A93AD', 'font-family': 'inherit', text: T("Suis le chemin, touche une île !", 'Follow the path, tap an island!') }, tg);
   leoMapAvatar = drawLeo(svg, 128, 180, 1.05);
   fxBob(leoMapAvatar, 14, 2400);
+  // class mastery progress pill
+  const mc = Mastery.classCount();
+  const pg = S('g', { transform: `translate(${W / 2},446)` }, svg);
+  S('rect', { x: -195, y: -34, width: 390, height: 68, rx: 34, fill: 'rgba(255,255,255,0.95)', stroke: mc >= ZONES.length ? '#FFD23F' : '#C9D3EE', 'stroke-width': 5 }, pg);
+  drawCrown(pg, -150, -2, 0.78);
+  S('text', { x: 18, y: 11, 'text-anchor': 'middle', 'font-size': 30, 'font-weight': 800, fill: '#2B2D42', 'font-family': 'inherit', text: GRADES[save.grade].code + ' : ' + mc + ' / ' + ZONES.length + ' ' + T('îles', 'islands') }, pg);
+  if (mc >= ZONES.length && save.grade < GRADES.length - 1) {
+    const nb = S('g', { transform: `translate(${W / 2},540)`, class: 'grab' }, svg);
+    S('rect', { x: -255, y: -46, width: 510, height: 92, rx: 46, fill: 'url(#gMang)', stroke: '#fff', 'stroke-width': 6, filter: 'drop-shadow(0 10px 18px rgba(229,37,42,0.4))' }, nb);
+    S('text', { x: 0, y: -4, 'text-anchor': 'middle', 'font-size': 33, 'font-weight': 800, fill: '#fff', 'font-family': 'inherit', text: '\uD83C\uDF93 ' + T('CLASSE TERMINÉE !', 'CLASS COMPLETE!') }, nb);
+    S('text', { x: 0, y: 30, 'text-anchor': 'middle', 'font-size': 25, 'font-weight': 800, fill: '#FFE9A8', 'font-family': 'inherit', text: T('Passe en ' + GRADES[save.grade + 1].code + ' \u2192', 'Move up to ' + GRADES[save.grade + 1].code + ' \u2192') }, nb);
+    mlPulse(nb, 10);
+    nb.addEventListener('click', () => { sfx.boing(); nextClass(); });
+  }
   // the winding golden path
   const XS = [238, 612];
   let pd = '';
@@ -931,6 +993,9 @@ function buildTrailMap(host) {
     const icg = S('g', { transform: 'scale(1.8)' }, ring); (ZONE_ICONS[z.key] || (() => {}))(icg);
     const starRow = S('g', { transform: 'translate(-57,116)' }, st);
     for (let k = 0; k < 3; k++) { const sg2 = S('g', { transform: `translate(${k * 41},0)` }, starRow); drawStarIcon(sg2, 1.55, (save.stars[z.key] || 0) > k ? '#FFD23F' : '#E6E9F5'); }
+    const zActs = Mastery.zoneActs(z.key), zDone = zActs.filter(a => Mastery.has(z.key, a.id)).length;
+    if (Mastery.zoneDone(z.key)) { const cw = drawCrown(st, 0, -118, 1.15); fxBob(cw, 6, 2600); }
+    else if (zActs.length > 1) S('text', { x: 78, y: -78, 'font-size': 27, 'font-weight': 800, fill: '#5E60CE', stroke: '#fff', 'stroke-width': 6, 'paint-order': 'stroke', 'font-family': 'inherit', text: zDone + '/' + zActs.length + ' \u2B50' }, st);
     const subW = Math.max(190, T(z.subject.fr, z.subject.en).length * 17 + 44);
     S('rect', { x: -subW / 2, y: 168, width: subW, height: 50, rx: 25, fill: z.subject.color, stroke: '#fff', 'stroke-width': 4, class: 'st-pill' }, st);
     S('text', { x: 0, y: 203, 'text-anchor': 'middle', 'font-size': 25, 'font-weight': 800, fill: '#fff', 'font-family': 'inherit', text: T(z.subject.fr, z.subject.en) }, st);
@@ -998,6 +1063,19 @@ function buildMap() {
   S('rect', { x: -bw / 2, y: -44, width: bw, height: 84, rx: 42, fill: '#fff', stroke: '#FFD23F', 'stroke-width': 6, filter: 'drop-shadow(0 8px 14px rgba(43,45,66,0.25))' }, tg);
   S('text', { x: 0, y: 2, 'text-anchor': 'middle', 'font-size': landscape ? 38 : 32, 'font-weight': 800, fill: '#2B2D42', 'font-family': 'inherit', text: 'NATEIVA WORLD' }, tg);
   S('text', { x: 0, y: 29, 'text-anchor': 'middle', 'font-size': landscape ? 17 : 15, 'font-weight': 700, fill: '#8A93AD', 'font-family': 'inherit', text: T("Touche une île d'aventure !", 'Tap an adventure spot!') }, tg);
+  const mcL = Mastery.classCount();
+  const pgl = S('g', { transform: `translate(${bw / 2 + 120},0)` }, tg);
+  S('rect', { x: -104, y: -30, width: 208, height: 60, rx: 30, fill: 'rgba(255,255,255,0.95)', stroke: mcL >= ZONES.length ? '#FFD23F' : '#C9D3EE', 'stroke-width': 4 }, pgl);
+  drawCrown(pgl, -72, 0, 0.5);
+  S('text', { x: 14, y: 8, 'text-anchor': 'middle', 'font-size': 22, 'font-weight': 800, fill: '#2B2D42', 'font-family': 'inherit', text: mcL + ' / ' + ZONES.length }, pgl);
+  if (mcL >= ZONES.length && save.grade < GRADES.length - 1) {
+    const nbl = S('g', { transform: `translate(0,${titleCy + 92})`, class: 'grab' }, svg);
+    nbl.setAttribute('transform', `translate(${W / 2},${titleCy + 92})`);
+    S('rect', { x: -210, y: -34, width: 420, height: 68, rx: 34, fill: 'url(#gMang)', stroke: '#fff', 'stroke-width': 5 }, nbl);
+    S('text', { x: 0, y: 9, 'text-anchor': 'middle', 'font-size': 26, 'font-weight': 800, fill: '#fff', 'font-family': 'inherit', text: '\uD83C\uDF93 ' + T('Passe en ' + GRADES[save.grade + 1].code + ' \u2192', 'Move up to ' + GRADES[save.grade + 1].code + ' \u2192') }, nbl);
+    mlPulse(nbl, 10);
+    nbl.addEventListener('click', () => { sfx.boing(); nextClass(); });
+  }
   // stations with SUBJECT pills
   ZONES.forEach(z => {
     const st = S('g', { class: 'station', transform: `translate(${ZX(z)},${ZY(z)})` }, world);
@@ -1007,6 +1085,7 @@ function buildMap() {
     const icg = S('g', {}, ring); (ZONE_ICONS[z.key] || (() => {}))(icg);
     const starRow = S('g', { transform: 'translate(-33,46)' }, ring);
     for (let i = 0; i < 3; i++) { const sg2 = S('g', { transform: `translate(${i * 24},0)` }, starRow); drawStarIcon(sg2, 0.95, (save.stars[z.key] || 0) > i ? '#FFD23F' : '#E6E9F5'); }
+    if (Mastery.zoneDone(z.key)) { const cw = drawCrown(st, 0, -66, 0.68); fxBob(cw, 4, 2600); }
     // subject pill (kids always know the school subject)
     const subW = Math.max(118, T(z.subject.fr, z.subject.en).length * 11 + 26);
     S('rect', { x: -subW / 2, y: 64, width: subW, height: 28, rx: 14, fill: z.subject.color, stroke: '#fff', 'stroke-width': 3, class: 'st-pill' }, st);
@@ -1127,17 +1206,17 @@ function showActMenu(host, z, acts) {
   const wrap = H('div', { class: 'act-menu' }, host);
   wrap.style.background = `linear-gradient(165deg, ${z.subject.color} 0%, rgba(43,45,66,0.92) 130%)`;
   H('div', { class: 'act-title', text: T(z.fr, z.en) }, wrap);
-  H('div', { class: 'act-sub', text: T('Choisis ton jeu !', 'Pick your game!') }, wrap);
+  const nd = acts.filter(a => Mastery.has(z.key, a.id)).length;
+  H('div', { class: 'act-sub', text: (nd >= acts.length ? '\uD83D\uDC51 ' : '') + T('Maîtrise les ' + acts.length + ' leçons ! (' + nd + '/' + acts.length + ' ⭐)', 'Master all ' + acts.length + ' lessons! (' + nd + '/' + acts.length + ' ⭐)') }, wrap);
   const grid = H('div', { class: 'act-grid' }, wrap);
   acts.forEach(a => {
     const card = H('button', { class: 'act-card' }, grid);
     const ic = H('div', { class: 'act-ic', text: a.ic }, card);
     ic.style.background = `linear-gradient(145deg, ${z.color}, ${z.subject.color})`;
     H('div', { class: 'act-name', text: T(a.fr, a.en) }, card);
-    if ((save.acts || {})[z.key + ':' + a.id]) H('div', { class: 'act-done', text: '⭐' }, card);
+    if (Mastery.has(z.key, a.id)) H('div', { class: 'act-done', text: '⭐' }, card);
     card.addEventListener('click', () => {
       sfx.boing();
-      save.acts = save.acts || {}; save.acts[z.key + ':' + a.id] = 1; persist();
       enterZone(z.key, a.id);
     });
   });
@@ -1312,11 +1391,11 @@ ZONE_BUILDERS.bubbles = function (host) {
     const d = D();
     sumMode = ZoneAct.cur ? ZoneAct.cur === 'sum' : d >= 3;
     if (sumMode) {
-      target = d >= 5 ? ri(12, 25) : ri(6, 12);
+      target = (d >= 5 ? ri(12, 20) : ri(6, 10)) + Rounds.ramp(2);
       bigNum.textContent = target; drawDots(0);
       mission('Attrape des bulles pour faire ' + target + ' !', 'Pop bubbles to make ' + target + '!', g => { ZONE_ICONS.bubbles(g); });
     } else {
-      need = d === 0 ? ri(2, 4) : (d === 1 ? ri(3, 6) : ri(4, 8));
+      need = (d === 0 ? ri(2, 3) : (d === 1 ? ri(3, 5) : ri(4, 6))) + Rounds.ramp();
       wantKind = (d >= 3 && Math.random() < 0.35) ? 'star' : 'fish';
       wantColor = d >= 1 ? COLORS[ri(0, COLORS.length - 1)] : null;
       bigNum.textContent = need; drawDots(need);
@@ -1333,7 +1412,7 @@ ZONE_BUILDERS.bubbles = function (host) {
     }
     roundLive = true;
     clearInterval(spawnTimer);
-    spawnTimer = setInterval(spawnBubble, Math.max(520, 900 - D() * 60));
+    spawnTimer = setInterval(spawnBubble, Math.max(430, 900 - D() * 60 - Rounds.idx * 45));
     for (let i = 0; i < 4; i++) setTimeout(spawnBubble, i * 180);
   }
   nextRound();
@@ -1452,12 +1531,12 @@ ZONE_BUILDERS.orchard = function (host) {
     baskets = []; fruits = []; fruitDef = FRUITS[ri(0, FRUITS.length - 1)];
     const d = D();
     const am = ZoneAct.cur;
-    if (am === 'count' || (!am && d <= 1)) { mode = 'count'; needPer = [ri(2, d === 0 ? 5 : 8)]; baskets = [drawBasket(PT(750, 425), PT(640, 1250), needPer[0], needPer[0])];
+    if (am === 'count' || (!am && d <= 1)) { mode = 'count'; needPer = [Math.min(9, ri(2, d === 0 ? 4 : 6) + Rounds.ramp())]; baskets = [drawBasket(PT(750, 425), PT(640, 1250), needPer[0], needPer[0])];
       mission('Donne ' + needPer[0] + ' fruits à Momo !', 'Give Momo ' + needPer[0] + ' fruits!', ZONE_ICONS.orchard);
-    } else if (am === 'add' || (!am && d <= 3)) { mode = 'add'; const a = ri(2, 6), b = ri(2, 6); needPer = [a, b];
+    } else if (am === 'add' || (!am && d <= 3)) { mode = 'add'; const a = ri(2, 4 + Rounds.ramp(2)), b = ri(2, 4 + Rounds.ramp(2)); needPer = [a, b];
       baskets = [drawBasket(PT(620, 240), PT(640, 1250), a, a), drawBasket(PT(900, 610), PT(640, 1250), b, b)];
       mission(`${a} + ${b} = ? Remplis les paniers : ${a} et ${b} fruits !`, `${a} + ${b} = ? Fill the baskets: ${a} and ${b} fruits!`, ZONE_ICONS.orchard);
-    } else if (am === 'mult' || (!am && d <= 5)) { mode = 'mult'; const n = ri(2, 3), k = ri(3, 5); needPer = Array(n).fill(k);
+    } else if (am === 'mult' || (!am && d <= 5)) { mode = 'mult'; const n = ri(2, 2 + (Rounds.idx >= 2 ? 1 : 0)), k = ri(3, 4 + Rounds.ramp()); needPer = Array(n).fill(k);
       baskets = needPer.map((kk, i) => drawBasket(PT(600 + i * 240, 425 + (i - (needPer.length - 1) / 2) * 250), PT(640, 1250), kk, kk));
       mission(`${n} × ${k} = ? Remplis ${n} paniers de ${k} fruits !`, `${n} × ${k} = ? Fill ${n} baskets of ${k} fruits!`, ZONE_ICONS.orchard);
     } else { mode = 'share'; const n = ri(2, 3), per = ri(3, 4); needPer = Array(n).fill(per);
@@ -2587,7 +2666,7 @@ ZONE_BUILDERS.words = function (host) {
     tileG.innerHTML = '';
     const d = D();
     const letters = word.split('').map((ch, i) => ({ ch, forIdx: i })).filter((o, i) => !filled[i]);
-    const decoyCount = d <= 1 ? 0 : (d <= 3 ? 2 : 4);
+    const decoyCount = (d <= 1 ? 0 : (d <= 3 ? 1 : 3)) + Rounds.ramp();
     const alpha = 'ABCDEFGHIJLMNOPRSTUV';
     for (let i = 0; i < decoyCount; i++) letters.push({ ch: alpha[ri(0, alpha.length - 1)], forIdx: -1 });
     shuffle(letters).forEach((L, i) => {
@@ -4445,7 +4524,7 @@ ZONE_BUILDERS.pets = function (host) {
     setTimeout(() => { fxLayer.innerHTML = ''; if (Rounds.gem()) setTimeout(zoneComplete, 900); else nextCare(); }, 1600);
   }
   function careWash() {
-    const n2 = 3 + Math.min(3, d);
+    const n2 = 3 + Math.min(3, d) + (Rounds.idx >= 3 ? 1 : 0);
     let left = n2;
     for (let i = 0; i < n2; i++) {
       const a = (i / n2) * Math.PI * 2 + rnd(-0.3, 0.3);
@@ -4542,7 +4621,7 @@ ZONE_BUILDERS.puzzle = function (host) {
   }
   function formesRound() {
     boardG.innerHTML = ''; pieceG.innerHTML = '';
-    const n2 = 3 + Math.min(3, d);
+    const n2 = 3 + Math.min(3, d) + (Rounds.idx >= 3 ? 1 : 0);
     const keys2 = shuffle(Object.keys(SHAPES)).slice(0, n2);
     const holes = [];
     S('rect', { x: PT(330, 95), y: PT(190, 440), width: PT(840, 660), height: PT(330, 520), rx: 30, fill: '#C68B59', stroke: '#8A5A33', 'stroke-width': 8 }, boardG);
@@ -4582,7 +4661,7 @@ ZONE_BUILDERS.puzzle = function (host) {
   function imagesRound() {
     boardG.innerHTML = ''; pieceG.innerHTML = '';
     const pk = pickFresh('puzzle_img', JIG_PICS, x => x);
-    const nSlices = d <= 2 ? 2 : d <= 4 ? 3 : 4;
+    const nSlices = Math.min(4, (d <= 2 ? 2 : d <= 4 ? 3 : 4) + (Rounds.idx >= 3 ? 1 : 0));
     const FW = PT(560, 620), FH = PT(380, 430);
     const FX = PT(750, 425), FY = PT(330, 620);
     S('rect', { x: FX - FW / 2 - 16, y: FY - FH / 2 - 16, width: FW + 32, height: FH + 32, rx: 24, fill: '#fff', stroke: '#3B5BDB', 'stroke-width': 7 }, boardG);
@@ -4653,9 +4732,131 @@ function buildGradeDock() {
   });
 }
 // ---- SEARCH a subject or topic (CE1+ typists; bilingual keywords) ----
+/* ---- SAGE LE HIBOU : ask any question, get a spoken kid-level answer ---- */
+function drawOwl(g, s2) {
+  const w2 = S('g', { transform: `scale(${s2 || 1})` }, g);
+  S('path', { d: 'M -20 -34 L -10 -22 M 20 -34 L 10 -22', stroke: '#7A4E00', 'stroke-width': 6, 'stroke-linecap': 'round' }, w2);
+  S('ellipse', { cx: 0, cy: 4, rx: 30, ry: 34, fill: '#A9744F', stroke: '#7A4E00', 'stroke-width': 3.5 }, w2);
+  S('ellipse', { cx: 0, cy: 14, rx: 19, ry: 21, fill: '#E8C9A8' }, w2);
+  [[-11, -8], [11, -8]].forEach(([x, y]) => { S('circle', { cx: x, cy: y, r: 10, fill: '#fff', stroke: '#7A4E00', 'stroke-width': 2.5 }, w2); S('circle', { cx: x, cy: y + 1, r: 4.5, fill: '#2B2D42' }, w2); S('circle', { cx: x + 1.6, cy: y - 1, r: 1.6, fill: '#fff' }, w2); });
+  S('path', { d: 'M -4 0 L 4 0 L 0 8 Z', fill: '#FF9F1C', stroke: '#E58E09', 'stroke-width': 2 }, w2);
+  S('path', { d: 'M -26 28 L -20 36 M 0 30 L 0 38 M 26 28 L 20 36', stroke: '#FF9F1C', 'stroke-width': 4, 'stroke-linecap': 'round' }, w2);
+  return w2;
+}
+const SAGE_SAMPLES = [
+  ["Pourquoi le soleil brille ?", "Why does the sun shine?"],
+  ["Pourquoi il pleut ?", "Why does it rain?"],
+  ["Que mange le lion ?", "What does the lion eat?"],
+  ["Comment poussent les plantes ?", "How do plants grow?"],
+  ["Capitale du Cameroun ?", "Capital of Cameroon?"],
+  ["Pourquoi le bateau flotte ?", "Why does a boat float?"],
+  ["Une fraction c'est quoi ?", "What is a fraction?"],
+  ["Pourquoi on dort ?", "Why do we sleep?"]
+];
+const SAGE_QA = [
+  { kw: ['soleil brille', 'sun shine', 'soleil chaud', 'sun hot', 'etoile soleil'], a: ["Le soleil est une étoile géante, une boule de feu ! Il brille car il brûle du gaz très très chaud, et sa lumière voyage jusqu'à nous.", "The sun is a giant star, a ball of fire! It shines because it burns very hot gas, and its light travels all the way to us."], p: 'sun2', z: 'academy' },
+  { kw: ['pleut', 'pluie', 'rain'], a: ["Le soleil chauffe l'eau des rivières, elle monte au ciel en vapeur, forme des nuages... et quand le nuage est trop lourd, les gouttes tombent : il pleut !", "The sun heats river water, it rises as vapor, forms clouds... and when a cloud gets too heavy, the drops fall: it rains!"], p: 'rain', z: 'garden' },
+  { kw: ['arc en ciel', 'rainbow'], a: ["L'arc-en-ciel apparaît quand le soleil brille à travers les gouttes de pluie : la lumière se sépare en 7 couleurs !", "A rainbow appears when sunlight shines through raindrops: the light splits into 7 colors!"], p: 'cloud2', z: 'paint' },
+  { kw: ['tonnerre', 'thunder', 'eclair', 'lightning', 'orage', 'storm'], a: ["L'éclair est une étincelle électrique géante dans le nuage, et le tonnerre est le bruit de l'air qui explose autour d'elle. Compte les secondes pour savoir si l'orage est loin !", "Lightning is a giant electric spark in the cloud, and thunder is the sound of air exploding around it. Count the seconds to know how far the storm is!"], p: 'cloud2', z: 'academy' },
+  { kw: ['nuage', 'cloud'], a: ["Un nuage est fait de millions de minuscules gouttes d'eau qui flottent dans le ciel, comme la vapeur au-dessus de la marmite !", "A cloud is made of millions of tiny water drops floating in the sky, like steam above a cooking pot!"], p: 'cloud2', z: 'garden' },
+  { kw: ['vent', 'wind'], a: ["Le vent, c'est l'air qui bouge ! Le soleil chauffe l'air, l'air chaud monte et l'air frais court prendre sa place : ça fait du vent.", "Wind is moving air! The sun heats the air, warm air rises and cool air rushes in to take its place: that makes wind."], p: null, z: 'academy' },
+  { kw: ['lune', 'moon'], a: ["La lune est notre voisine dans l'espace ! Elle ne brille pas toute seule : elle renvoie la lumière du soleil comme un miroir.", "The moon is our neighbor in space! It doesn't shine by itself: it reflects the sun's light like a mirror."], p: 'moon2', z: 'academy' },
+  { kw: ['etoile', 'stars', 'star '], a: ["Les étoiles sont des soleils très très lointains. Il y en a plus dans le ciel que de grains de sable sur toutes les plages !", "Stars are suns very very far away. There are more of them in the sky than grains of sand on all the beaches!"], p: 'star2', z: 'academy' },
+  { kw: ['planete', 'planet', 'terre tourne', 'earth turn', 'jour nuit', 'day night', 'nuit jour'], a: ["La Terre est une planète qui tourne comme une toupie : quand notre côté regarde le soleil c'est le jour, quand il se cache c'est la nuit !", "Earth is a planet spinning like a top: when our side faces the sun it's daytime, when it turns away it's night!"], p: 'sun2', z: 'academy' },
+  { kw: ['lion', 'lions'], a: ["Le lion est le roi de la savane ! Il mange de la viande : c'est un carnivore. La lionne chasse en équipe, et son rugissement s'entend à 8 kilomètres !", "The lion is the king of the savanna! It eats meat: it's a carnivore. Lionesses hunt as a team, and a roar can be heard 8 kilometers away!"], p: 'lion', z: 'safari' },
+  { kw: ['elephant'], a: ["L'éléphant est le plus gros animal de la terre ferme ! Sa trompe lui sert de main, de douche et de trompette. Il adore les feuilles et les fruits.", "The elephant is the biggest land animal! Its trunk works as a hand, a shower and a trumpet. It loves leaves and fruit."], p: null, z: 'safari' },
+  { kw: ['girafe', 'giraffe'], a: ["La girafe a un cou immense pour manger les feuilles tout en haut des arbres... mais elle a le même nombre d'os dans le cou que toi : sept !", "The giraffe has a huge neck to eat leaves at the top of trees... but it has the same number of neck bones as you: seven!"], p: null, z: 'safari' },
+  { kw: ['zebre', 'zebra', 'rayures', 'stripes'], a: ["Chaque zèbre a des rayures uniques, comme tes empreintes de doigts ! Les rayures embrouillent les lions quand le troupeau court.", "Every zebra has unique stripes, like your fingerprints! The stripes confuse lions when the herd runs."], p: null, z: 'paint' },
+  { kw: ['crocodile'], a: ["Le crocodile vit dans les fleuves d'Afrique depuis le temps des dinosaures ! Il nage sans bruit et peut rester une heure sous l'eau.", "Crocodiles have lived in African rivers since dinosaur times! They swim silently and can stay underwater for an hour."], p: null, z: 'safari' },
+  { kw: ['oiseau vole', 'birds fly', 'oiseaux volent', 'bird fly', 'comment vole'], a: ["Les oiseaux volent grâce à leurs ailes et à leurs os très légers, creux comme des pailles ! En battant des ailes, ils s'appuient sur l'air.", "Birds fly thanks to their wings and their super-light bones, hollow like straws! By flapping, they push against the air."], p: null, z: 'safari' },
+  { kw: ['abeille', 'bees', 'miel', 'honey'], a: ["Les abeilles butinent le nectar des fleurs et le transforment en miel dans la ruche. En volant de fleur en fleur, elles aident aussi les fruits à pousser !", "Bees collect nectar from flowers and turn it into honey in the hive. Flying flower to flower, they also help fruit grow!"], p: 'flower2', z: 'garden' },
+  { kw: ['poisson respire', 'fish breathe', 'poissons respirent', 'sous l eau'], a: ["Les poissons respirent sous l'eau grâce à leurs branchies : elles attrapent l'air minuscule caché dans l'eau !", "Fish breathe underwater with their gills: they catch the tiny air hidden inside the water!"], p: 'fish', z: 'bubbles' },
+  { kw: ['coeur', 'heart'], a: ["Ton cœur est une pompe magique, grosse comme ton poing ! Il pousse le sang dans tout ton corps, toc-toc, plus de 100 000 fois par jour.", "Your heart is a magic pump the size of your fist! It pushes blood all around your body, thump-thump, over 100,000 times a day."], p: null, z: 'academy' },
+  { kw: ['dents', 'teeth', 'brosser'], a: ["Tes dents coupent et écrasent les aliments. Il faut les brosser matin et soir, car les microbes adorent le sucre resté dessus !", "Your teeth cut and crush food. Brush them morning and night, because germs love the sugar left on them!"], p: 'mouth', z: 'academy' },
+  { kw: ['os ', 'bones', 'squelette', 'skeleton'], a: ["Ton squelette compte 206 os ! Ils tiennent ton corps debout comme les poteaux d'une maison, et le lait les rend costauds.", "Your skeleton has 206 bones! They hold your body up like the posts of a house, and milk makes them strong."], p: null, z: 'academy' },
+  { kw: ['respire', 'breathe', 'poumons', 'lungs'], a: ["Tu respires avec tes poumons : ils se gonflent comme des ballons pour attraper l'oxygène de l'air, le carburant de ton corps !", "You breathe with your lungs: they inflate like balloons to catch oxygen from the air, your body's fuel!"], p: 'nose', z: 'academy' },
+  { kw: ['dort', 'sleep', 'dormir', 'sommeil'], a: ["On dort pour que le cerveau range tout ce qu'il a appris et que le corps répare ses forces. Les enfants champions dorment 10 heures !", "We sleep so the brain can tidy up everything it learned and the body can rebuild its strength. Champion kids sleep 10 hours!"], p: 'moon2', z: 'academy' },
+  { kw: ['laver les mains', 'wash hands', 'lave les mains', 'microbes', 'germs'], a: ["Les microbes sont si petits qu'on ne les voit pas, mais le savon les fait glisser de tes mains ! Lave-les avant de manger : adieu les maladies.", "Germs are too small to see, but soap makes them slide off your hands! Wash before eating: goodbye sickness."], p: 'hand', z: 'academy' },
+  { kw: ['manger', 'legumes', 'vegetables', 'bien manger', 'healthy food'], a: ["Ton corps est comme une voiture : il lui faut du bon carburant ! Fruits, légumes, eau et un peu de tout : c'est le menu des champions.", "Your body is like a car: it needs good fuel! Fruits, vegetables, water and a bit of everything: that's the champions' menu."], p: 'mango', z: 'orchard' },
+  { kw: ['plantes poussent', 'plants grow', 'poussent', 'pousser', 'pousse', 'planter', 'graine', 'seed', 'germination'], a: ["Une graine plantée boit l'eau, pousse ses racines vers le bas, puis sa tige vers le soleil. Eau + soleil + patience = une plante !", "A planted seed drinks water, grows roots downward, then a stem toward the sun. Water + sun + patience = a plant!"], p: 'tree2', z: 'garden' },
+  { kw: ['photosynthese', 'photosynthesis', 'feuilles vertes', 'leaves green'], a: ["Les feuilles sont de petites usines : avec la lumière du soleil, l'eau et l'air, elles fabriquent la nourriture de la plante. Ça s'appelle la photosynthèse !", "Leaves are tiny factories: with sunlight, water and air, they make the plant's food. That's called photosynthesis!"], p: 'flower2', z: 'garden' },
+  { kw: ['racines', 'roots'], a: ["Les racines sont les pailles de la plante : cachées sous la terre, elles boivent l'eau et tiennent la plante debout même dans le vent !", "Roots are the plant's straws: hidden underground, they drink water and hold the plant steady even in the wind!"], p: 'tree2', z: 'garden' },
+  { kw: ['flotte', 'float', 'coule', 'sink', 'bateau'], a: ["Un bateau flotte car il est large et plein d'air : il pousse beaucoup d'eau sous lui, et l'eau le pousse vers le haut ! C'est la poussée d'Archimède.", "A boat floats because it is wide and full of air: it pushes lots of water under it, and the water pushes it up! That's Archimedes' buoyancy."], p: 'boat2', z: 'splash' },
+  { kw: ['electricite', 'electricity', 'lampe allume', 'ampoule', 'bulb', 'circuit'], a: ["L'électricité est un courant minuscule qui court dans les fils comme l'eau dans un tuyau. Quand le circuit est fermé, la lampe s'allume !", "Electricity is a tiny current running through wires like water in a pipe. When the circuit is closed, the lamp lights up!"], p: null, z: 'builder' },
+  { kw: ['aimant', 'magnet'], a: ["Un aimant attire le fer sans le toucher, grâce à une force invisible ! La Terre est un aimant géant : c'est elle qui guide la boussole.", "A magnet pulls iron without touching it, with an invisible force! Earth is a giant magnet: that's what guides the compass."], p: null, z: 'builder' },
+  { kw: ['addition', 'additionner', 'plus '], a: ["Additionner, c'est mettre ensemble ! 3 mangues + 2 mangues = 5 mangues. Astuce : pars du plus grand nombre et compte sur tes doigts.", "Adding means putting together! 3 mangoes + 2 mangoes = 5 mangoes. Trick: start from the bigger number and count on your fingers."], p: 'mango', z: 'orchard' },
+  { kw: ['multiplication', 'multiplier', 'fois ', 'times table', 'table de'], a: ["Multiplier, c'est additionner plusieurs fois le même nombre ! 3 × 4, c'est 3 paniers de 4 fruits : 4 + 4 + 4 = 12.", "Multiplying is adding the same number several times! 3 × 4 is 3 baskets of 4 fruits: 4 + 4 + 4 = 12."], p: 'banana', z: 'orchard' },
+  { kw: ['division', 'diviser', 'partage', 'share'], a: ["Diviser, c'est partager en parts égales ! 12 bonbons pour 3 amis : chacun en reçoit 4. Tout le monde a pareil !", "Dividing means sharing into equal parts! 12 sweets for 3 friends: each one gets 4. Everyone has the same!"], p: null, z: 'orchard' },
+  { kw: ['fraction'], a: ["Une fraction est un morceau de quelque chose ! Coupe une orange en 4 parts égales : chaque part est un quart, 1/4. Deux parts font la moitié !", "A fraction is a piece of something! Cut an orange into 4 equal parts: each part is a quarter, 1/4. Two parts make a half!"], p: 'orange', z: 'paint' },
+  { kw: ['zero'], a: ["Zéro veut dire RIEN... mais c'est un super-héros des maths : il transforme 1 en 10 et 10 en 100 !", "Zero means NOTHING... but it's a math superhero: it turns 1 into 10 and 10 into 100!"], p: null, z: 'mathlab' },
+  { kw: ['triangle', 'carre', 'square', 'cercle', 'circle', 'formes', 'shapes'], a: ["Le cercle est tout rond, le triangle a 3 côtés, le carré a 4 côtés égaux. Les formes sont partout : regarde les toits, les roues, les fenêtres !", "A circle is round, a triangle has 3 sides, a square has 4 equal sides. Shapes are everywhere: look at roofs, wheels, windows!"], p: null, z: 'puzzle' },
+  { kw: ['syllabe', 'syllable'], a: ["Une syllabe est un morceau de mot qu'on dit d'un coup ! BA-NANE : 2 syllabes. Frappe dans tes mains en parlant pour les compter !", "A syllable is a chunk of a word you say in one beat! BA-NA-NA: 3 syllables. Clap your hands while speaking to count them!"], p: 'banana', z: 'parrot' },
+  { kw: ['voyelle', 'vowel'], a: ["Les voyelles sont A, E, I, O, U, Y : les lettres qui chantent ! Toutes les autres sont des consonnes, et ensemble elles fabriquent les mots.", "The vowels are A, E, I, O, U, Y: the singing letters! All the others are consonants, and together they build words."], p: 'book', z: 'river' },
+  { kw: ['alphabet', 'lettres', 'letters'], a: ["L'alphabet a 26 lettres, de A à Z. Avec seulement 26 lettres, on peut écrire tous les mots du monde !", "The alphabet has 26 letters, from A to Z. With only 26 letters, you can write every word in the world!"], p: 'book', z: 'words' },
+  { kw: ['afrique grand pays', 'biggest country africa', 'plus grand pays'], a: ["Le plus grand pays d'Afrique est l'Algérie ! Et l'Afrique compte 54 pays : c'est le continent au plus grand désert chaud, le Sahara.", "Africa's biggest country is Algeria! Africa has 54 countries: it's the continent with the biggest hot desert, the Sahara."], p: null, z: 'safari' },
+  { kw: ['nil', 'nile', 'fleuve'], a: ["Le Nil est l'un des plus longs fleuves du monde : 6 650 km ! Il traverse l'Afrique et a nourri l'Égypte des pharaons.", "The Nile is one of the longest rivers in the world: 6,650 km! It crosses Africa and fed the Egypt of the pharaohs."], p: null, z: 'safari' },
+  { kw: ['kilimandjaro', 'kilimanjaro', 'montagne afrique', 'mountain africa'], a: ["Le Kilimandjaro est la plus haute montagne d'Afrique : presque 6 000 mètres ! Son sommet porte de la neige, même au soleil de la Tanzanie.", "Kilimanjaro is Africa's highest mountain: almost 6,000 meters! Its peak wears snow, even under Tanzania's sun."], p: null, z: 'safari' },
+  { kw: ['sahara', 'desert'], a: ["Le Sahara est le plus grand désert chaud du monde, grand comme un océan de sable ! Les chameaux y marchent des jours sans boire.", "The Sahara is the world's biggest hot desert, as big as an ocean of sand! Camels walk there for days without drinking."], p: null, z: 'safari' },
+  { kw: ['ocean', 'mer ', 'sea '], a: ["Les océans couvrent presque trois quarts de la Terre ! L'Afrique touche l'océan Atlantique d'un côté et l'océan Indien de l'autre.", "Oceans cover almost three quarters of the Earth! Africa touches the Atlantic Ocean on one side and the Indian Ocean on the other."], p: 'boat2', z: 'safari' },
+  { kw: ['griot'], a: ["Le griot est le conteur et le musicien de l'Afrique de l'Ouest : il garde l'histoire du village dans sa mémoire et la chante de génération en génération !", "The griot is West Africa's storyteller and musician: he keeps the village's history in his memory and sings it from generation to generation!"], p: null, z: 'griot' },
+  { kw: ['tam tam', 'djembe', 'tambour', 'drum'], a: ["Le djembé et le tam-tam parlent avec les mains ! Avant le téléphone, les tambours envoyaient des messages de village en village.", "The djembe and the talking drum speak with hands! Before telephones, drums sent messages from village to village."], p: null, z: 'music' },
+  { kw: ['pourquoi ecole', 'why school', 'aller a l ecole'], a: ["L'école te donne des super-pouvoirs : lire, compter, comprendre le monde ! Chaque leçon est une clé qui ouvre une nouvelle porte.", "School gives you superpowers: reading, counting, understanding the world! Every lesson is a key that opens a new door."], p: 'book', z: 'academy' },
+  { kw: ['dinosaure', 'dinosaur'], a: ["Les dinosaures ont vécu il y a plus de 65 millions d'années, bien avant les humains ! On les connaît grâce à leurs os devenus pierre : les fossiles.", "Dinosaurs lived more than 65 million years ago, long before humans! We know them thanks to their bones turned to stone: fossils."], p: null, z: 'academy' },
+  { kw: ['pourquoi ciel bleu', 'sky blue', 'ciel est bleu'], a: ["La lumière du soleil contient toutes les couleurs. En traversant l'air, c'est le bleu qui rebondit partout dans le ciel : voilà pourquoi on le voit bleu !", "Sunlight holds every color. Passing through the air, blue bounces around the sky the most: that's why we see it blue!"], p: 'cloud2', z: 'academy' },
+  { kw: ['camion', 'voiture avance', 'car move', 'moteur', 'engine'], a: ["Une voiture avance grâce à son moteur : il brûle du carburant ou utilise une batterie pour faire tourner les roues, comme tes jambes sur un vélo !", "A car moves thanks to its engine: it burns fuel or uses a battery to spin the wheels, like your legs on a bicycle!"], p: 'car', z: 'builder' },
+  { kw: ['avion vole', 'plane fly', 'avion'], a: ["L'avion vole grâce à ses ailes : en roulant très vite, l'air passe dessus et dessous et le soulève comme un cerf-volant géant !", "A plane flies thanks to its wings: rolling very fast, air flows over and under them and lifts it like a giant kite!"], p: 'plane', z: 'builder' },
+  { kw: ['echecs', 'chess'], a: ["Les échecs sont un jeu de rois venu d'il y a 1 500 ans ! Chaque pièce a son déplacement secret, et le but est d'attraper le roi adverse.", "Chess is a game of kings from 1,500 years ago! Each piece has its secret move, and the goal is to catch the other king."], p: null, z: 'chess' }
+];
+function sageNorm(s2) { return String(s2).toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, ''); }
+function sageAnswer(q) {
+  const nq = ' ' + sageNorm(q).replace(/[^a-z0-9 ]/g, ' ').replace(/\s+/g, ' ').trim() + ' ';
+  if (nq.trim().length < 3) return null;
+  for (const c of (window.AFRICA_MAP || [])) {
+    const nf = ' ' + sageNorm(c.fr) + ' ', ne = ' ' + sageNorm(c.en) + ' ';
+    if (nq.includes(nf) || nq.includes(ne)) {
+      return { a: [c.flag + ' ' + c.fr + ' : la capitale est ' + c.cap + ' ! C\u2019est un pays de la région ' + c.region + '.', c.flag + ' ' + c.en + ': the capital is ' + c.cap + '! It is a country of the ' + c.region + ' region.'], p: null, z: 'safari' };
+    }
+  }
+  let best = null, bestScore = 0;
+  for (const e of SAGE_QA) {
+    let sc = 0;
+    for (const k of e.kw) {
+      const nk = sageNorm(k);
+      if (nk.length <= 5 ? nq.includes(' ' + nk.trim() + ' ') : nq.includes(nk)) sc += nk.length;
+    }
+    if (sc > bestScore) { bestScore = sc; best = e; }
+  }
+  return best;
+}
 function renderSearch(q) {
   q = (q || '').trim().toLowerCase();
   const box = $('search-results'); box.innerHTML = '';
+  if (!q) {
+    renderSearch._said = null;
+    const qrow = H('div', { class: 'sage-chips' }, box);
+    H('div', { text: '\uD83E\uDD89 ' + T('Pose ta question à Sage le hibou :', 'Ask Sage the owl your question:'), style: 'width:100%;font-weight:800;color:#4A3AA8;font-size:1.02rem;' }, qrow);
+    SAGE_SAMPLES.forEach(s2 => {
+      const ch = H('button', { class: 'sage-chip', text: T(s2[0], s2[1]) }, qrow);
+      ch.addEventListener('click', () => { sfx.tap(); $('search-input').value = T(s2[0], s2[1]); renderSearch(T(s2[0], s2[1])); });
+    });
+  } else {
+    const ans = sageAnswer(q);
+    if (ans) {
+      const card = H('div', { class: 'sage-card' }, box);
+      const sv3 = document.createElementNS(NS, 'svg');
+      sv3.setAttribute('viewBox', '-45 -45 90 96'); sv3.style.cssText = 'width:76px;height:76px;flex:0 0 76px;';
+      const og = S('g', {}, sv3);
+      if (ans.p && PICT[ans.p]) PICT[ans.p](og); else drawOwl(og, 1.1);
+      card.appendChild(sv3);
+      const at = H('div', { class: 'sage-a' }, card);
+      at.textContent = T(ans.a[0], ans.a[1]);
+      if (ans.z) {
+        const pb = H('button', { text: '\uD83C\uDFAE ' + T('Joue pour apprendre !', 'Play to learn!') }, card);
+        pb.addEventListener('click', () => { $('search-overlay').classList.remove('on'); sfx.boing(); enterZone(ans.z); });
+      }
+      if (renderSearch._said !== ans) { renderSearch._said = ans; say(ans.a[0], ans.a[1], 0.88); }
+    } else renderSearch._said = null;
+  }
   const hits = ZONES.filter(z => !q ||
     z.topics.some(t => t.includes(q) || q.includes(t)) ||
     T(z.fr, z.en).toLowerCase().includes(q) ||
@@ -4696,9 +4897,9 @@ $('btn-search').addEventListener('click', () => {
   sfx.tap();
   $('search-overlay').classList.add('on');
   $('search-input').value = '';
-  $('search-input').placeholder = T('Tape une matière : maths, sciences, pays, syllabes…', 'Type a subject: math, science, countries, syllables…');
+  $('search-input').placeholder = T('Une matière… ou une question : pourquoi il pleut ?', 'A subject… or a question: why does it rain?');
   renderSearch('');
-  say('Tape une matière ou un sujet, ou touche une carte !', 'Type a subject or topic, or tap a card!');
+  say('Tape une matière, ou pose une question à Sage le hibou : il sait presque tout !', 'Type a subject, or ask Sage the owl a question: he knows almost everything!');
   setTimeout(() => $('search-input').focus(), 150);
 });
 $('search-close').addEventListener('click', () => $('search-overlay').classList.remove('on'));
@@ -4724,7 +4925,7 @@ $('ver-tag').textContent = 'v' + APP_VERSION;
 $('act-fab').addEventListener('click', () => { if (activeZone) { sfx.tap(); enterZone(activeZone); } });
 updateStarPill();
 showMap();
-window.__WORLD__ = { ZONES, ZONE_BUILDERS, enterZone, showMap, save, Rounds, QUIZ_TOPICS, CURRICULUM, Academy, ML_LESSONS, GRIOT_STORIES, THEMES_DATA, Themes };
+window.__WORLD__ = { ZONES, ZONE_BUILDERS, enterZone, showMap, save, Rounds, QUIZ_TOPICS, CURRICULUM, Academy, ML_LESSONS, GRIOT_STORIES, THEMES_DATA, Themes, sageAnswer, Mastery, nextClass, renderSearch };
 })();
 </script>
 </body>
