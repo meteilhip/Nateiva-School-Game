@@ -2724,33 +2724,44 @@ body {
   #hud-combo-badge,
   .activity-stepper,
   .tutor-panel,
-  #reading-overlay,
-  #reading-overlay.active,
-  #story-overlay,
-  #story-overlay.active,
-  #funfacts-overlay,
-  #funfacts-overlay.active,
-  #lang-quest-overlay,
-  #lang-quest-overlay.active {
+  #reading-overlay:not(.active),
+  #story-overlay:not(.active),
+  #funfacts-overlay:not(.active),
+  #lang-quest-overlay:not(.active) {
     display: none !important;
+  }
+  #reading-overlay.active,
+  #story-overlay.active,
+  #funfacts-overlay.active,
+  #lang-quest-overlay.active {
+    display: block !important;
+    margin-bottom: 8px !important;
   }
 
-  /* For Pronunciation Studio: hide text headers, keep ONLY the Big Microphone & Voice Switch bar! */
+  /* For Pronunciation Studio: display full 3-tier studio */
   #pronunciation-overlay.active {
     display: block !important;
-    padding: 4px 0 !important;
-    margin: 4px 0 !important;
-    background: transparent !important;
-    border: none !important;
-    box-shadow: none !important;
+    padding: 10px 14px !important;
+    margin: 6px 0 !important;
+    background: rgba(15, 23, 42, 0.9) !important;
+    border: 2px solid rgba(229, 37, 42, 0.45) !important;
+    border-radius: 20px !important;
+    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.3) !important;
   }
-  #pronunciation-dots-row,
+  #pronunciation-dots-row {
+    display: flex !important;
+    justify-content: center !important;
+    gap: 8px !important;
+  }
   .word-phonetic-banner {
-    display: none !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    margin: 6px 0 !important;
   }
   .mic-studio-bar {
-    margin: 4px 0 !important;
-    padding: 6px 10px !important;
+    margin: 6px 0 !important;
+    padding: 8px 12px !important;
   }
 
   /* For Africa Geography: keep the Interactive Vector Map of Africa right next to the Cartoon Stage, hide text paragraphs */
@@ -3576,7 +3587,391 @@ body.age-mat .ux-kid-title { font-size:1.6rem; }
   padding:12px 26px; border-radius:999px; border:3px solid rgba(255,255,255,0.8); box-shadow:0 8px 18px rgba(229,37,42,0.5); white-space:nowrap; }
 #world-hero-banner .whb-burst { position:absolute; inset:0; background:radial-gradient(circle at 18% 30%, rgba(255,255,255,0.22), transparent 40%); pointer-events:none; }
 body.age-mat #world-hero-banner .whb-copy i { display:none; }
-@media(max-width:720px){ #world-hero-banner{ flex-wrap:wrap; justify-content:center; text-align:center; } #world-hero-banner .whb-play{ margin:6px auto 0; } }
+/* ---- PEDAGOGICAL TAKEAWAY MODAL ("💡 CE QUE J'AI APPRIS / WHAT I LEARNED") ---- */
+.takeaway-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.85);
+  backdrop-filter: blur(16px);
+  z-index: 99999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  animation: fadeIn 0.25s ease-out;
+}
+.takeaway-card {
+  width: min(540px, 94vw);
+  background: linear-gradient(145deg, #1E1B4B 0%, #0F172A 100%);
+  border: 3px solid #FDE047;
+  border-radius: 28px;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.6), 0 0 40px rgba(253, 224, 71, 0.35);
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  animation: appleFloat 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+  color: #FFFFFF;
+}
+.takeaway-badge-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.takeaway-grade-chip {
+  background: linear-gradient(135deg, #FF4D57, #E5252A);
+  color: #FFF;
+  font-weight: 900;
+  font-size: 0.88rem;
+  padding: 6px 14px;
+  border-radius: 999px;
+  border: 2px solid rgba(255, 255, 255, 0.6);
+}
+.takeaway-stars-burst {
+  font-size: 1.6rem;
+  animation: uxPictBob 1.8s ease-in-out infinite;
+}
+.takeaway-mascot-box {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 2px solid rgba(255, 255, 255, 0.15);
+  border-radius: 20px;
+  padding: 14px 18px;
+}
+.takeaway-mascot {
+  font-size: 3.2rem;
+  line-height: 1;
+  animation: uxPictBob 2s ease-in-out infinite;
+  filter: drop-shadow(0 6px 12px rgba(0, 0, 0, 0.4));
+}
+.takeaway-speech-bubble strong {
+  display: block;
+  color: #FDE047;
+  font-size: 1.15rem;
+  letter-spacing: 0.03em;
+  margin-bottom: 4px;
+}
+.takeaway-speech-bubble p {
+  margin: 0;
+  font-size: 1rem;
+  line-height: 1.45;
+  color: #E2E8F0;
+  font-weight: 700;
+}
+.takeaway-rule-box {
+  background: rgba(253, 224, 71, 0.12);
+  border: 2px dashed #FDE047;
+  border-radius: 18px;
+  padding: 12px 16px;
+}
+.takeaway-rule-header {
+  font-size: 0.8rem;
+  font-weight: 900;
+  color: #FDE047;
+  text-transform: uppercase;
+  margin-bottom: 4px;
+}
+.takeaway-rule-content {
+  font-size: 1.05rem;
+  font-weight: 900;
+  color: #FFFFFF;
+}
+.takeaway-actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 6px;
+}
+.btn-takeaway-continue {
+  flex: 1;
+  background: linear-gradient(135deg, #10B981 0%, #059669 100%);
+  color: #FFFFFF;
+  font-weight: 900;
+  font-size: 1.15rem;
+  padding: 14px 20px;
+  border-radius: 999px;
+  border: 3px solid rgba(255, 255, 255, 0.8);
+  box-shadow: 0 8px 24px rgba(16, 185, 129, 0.45);
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+.btn-takeaway-continue:hover {
+  transform: scale(1.03);
+}
+
+/* ---- CARTOON STORY STAGE & GEAR ---- */
+.story-cartoon-scene {
+  position: relative;
+  width: 100%;
+  min-height: 130px;
+  border-radius: 20px;
+  background: linear-gradient(180deg, #F97316 0%, #FBBF24 55%, #15803D 100%);
+  border: 3px solid #FEF08A;
+  box-shadow: 0 10px 24px rgba(0,0,0,0.3);
+  overflow: hidden;
+  margin-bottom: 12px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 10px 14px;
+}
+.story-scenery-props {
+  position: absolute;
+  top: 10px;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: space-between;
+  padding: 0 20px;
+  font-size: 2.2rem;
+  opacity: 0.88;
+  pointer-events: none;
+}
+.cartoon-actors-row {
+  display: flex;
+  align-items: flex-end;
+  gap: 18px;
+  z-index: 2;
+}
+.cartoon-actor {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  cursor: pointer;
+}
+.cartoon-actor .actor-gear {
+  position: absolute;
+  top: -12px;
+  font-size: 1.2rem;
+  z-index: 3;
+}
+.cartoon-actor .actor-body {
+  font-size: 3rem;
+  line-height: 1;
+  filter: drop-shadow(0 4px 6px rgba(0,0,0,0.3));
+  animation: uxPictBob 2.2s ease-in-out infinite;
+}
+.cartoon-actor .actor-name {
+  font-size: 0.72rem;
+  font-weight: 900;
+  color: #FFF;
+  background: rgba(0,0,0,0.55);
+  padding: 2px 8px;
+  border-radius: 8px;
+  margin-top: 2px;
+}
+.cartoon-speech-bubble {
+  position: absolute;
+  top: 14px;
+  left: 120px;
+  right: 14px;
+  background: rgba(255,255,255,0.95);
+  border: 2.5px solid #E5252A;
+  border-radius: 16px;
+  padding: 8px 12px;
+  box-shadow: 0 6px 16px rgba(0,0,0,0.25);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  z-index: 3;
+  animation: appleFloat 0.3s ease-out;
+}
+.cartoon-speech-bubble .bubble-text {
+  font-size: 0.95rem;
+  font-weight: 800;
+  color: #111827;
+  line-height: 1.25;
+}
+
+/* ---- 3-TIER PRONUNCIATION STUDIO ---- */
+.pronounce-mode-tabs {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 10px;
+  flex-wrap: wrap;
+}
+.pronounce-tab-btn {
+  flex: 1;
+  min-width: 110px;
+  background: rgba(255, 255, 255, 0.12);
+  border: 2px solid rgba(255, 255, 255, 0.25);
+  border-radius: 999px;
+  color: #FFF;
+  font-weight: 900;
+  font-size: 0.85rem;
+  padding: 8px 14px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.pronounce-tab-btn.active, .pronounce-tab-btn:hover {
+  background: linear-gradient(135deg, #FF4D57, #E5252A);
+  border-color: #FEF08A;
+  box-shadow: 0 4px 14px rgba(229, 37, 42, 0.4);
+}
+.mouth-guide-card {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  background: rgba(30, 27, 75, 0.85);
+  border: 2px solid #A5B4FC;
+  border-radius: 18px;
+  padding: 10px 16px;
+  margin-bottom: 10px;
+}
+.mouth-shape-avatar {
+  font-size: 2.6rem;
+  line-height: 1;
+  animation: uxPictBob 2s ease-in-out infinite;
+}
+.mouth-guide-text strong {
+  display: block;
+  color: #FDE047;
+  font-size: 1.05rem;
+}
+.mouth-guide-text span {
+  font-size: 0.85rem;
+  color: #E2E8F0;
+  font-weight: 700;
+}
+.sentence-karaoke-box {
+  background: rgba(15, 23, 42, 0.9);
+  border: 2.5px solid #38BDF8;
+  border-radius: 18px;
+  padding: 12px 16px;
+  margin-bottom: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.sentence-karaoke-fr, .sentence-karaoke-en {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  align-items: center;
+}
+.karaoke-word-chip {
+  padding: 4px 10px;
+  border-radius: 10px;
+  font-size: 1.05rem;
+  font-weight: 900;
+  background: rgba(255, 255, 255, 0.08);
+  color: #FFF;
+  transition: all 0.2s;
+}
+.karaoke-word-chip.highlighted {
+  background: #FACC15;
+  color: #111827;
+  transform: scale(1.15);
+  box-shadow: 0 4px 12px rgba(250, 204, 21, 0.5);
+}
+
+/* ---- EXAM HALL & MOCK EXAMS SYSTEM ---- */
+.exam-hall-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.88);
+  backdrop-filter: blur(20px);
+  z-index: 99999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 14px;
+}
+.exam-hall-panel {
+  width: min(820px, 96vw);
+  max-height: 90vh;
+  overflow-y: auto;
+  background: linear-gradient(155deg, #1E1B4B 0%, #0F172A 100%);
+  border: 3px solid #6366F1;
+  border-radius: 28px;
+  box-shadow: 0 24px 60px rgba(0,0,0,0.7), 0 0 50px rgba(99, 102, 241, 0.35);
+  padding: 24px;
+  color: #FFF;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+.exam-hall-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 2px solid rgba(255,255,255,0.12);
+  padding-bottom: 12px;
+}
+.btn-close-modal {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.12);
+  border: 2px solid rgba(255,255,255,0.3);
+  color: #FFF;
+  font-size: 1.2rem;
+  font-weight: 900;
+  cursor: pointer;
+}
+.exam-sessions-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 16px;
+}
+.exam-session-card {
+  background: rgba(255,255,255,0.06);
+  border: 2px solid rgba(255,255,255,0.18);
+  border-radius: 22px;
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  cursor: pointer;
+  transition: all 0.25s;
+}
+.exam-session-card:hover {
+  background: rgba(99, 102, 241, 0.18);
+  border-color: #FDE047;
+  transform: translateY(-4px);
+  box-shadow: 0 10px 24px rgba(99, 102, 241, 0.3);
+}
+.exam-session-icon {
+  font-size: 2.4rem;
+  line-height: 1;
+}
+.exam-session-title {
+  font-size: 1.15rem;
+  font-weight: 900;
+  color: #FDE047;
+}
+.exam-session-desc {
+  font-size: 0.85rem;
+  color: #CBD5E1;
+  line-height: 1.35;
+  flex: 1;
+}
+.exam-session-best {
+  font-size: 0.85rem;
+  font-weight: 900;
+  color: #34D399;
+}
+.btn-session-start {
+  background: linear-gradient(135deg, #4F46E5, #6366F1);
+  color: #FFF;
+  font-weight: 900;
+  font-size: 0.95rem;
+  padding: 10px;
+  border-radius: 999px;
+  border: 2px solid rgba(255,255,255,0.7);
+  cursor: pointer;
+}
+.exam-diploma-card {
+  background: linear-gradient(145deg, #FFFBEB 0%, #FEF3C7 100%);
+  color: #1E1B4B;
+  border: 4px solid #F59E0B;
+  border-radius: 24px;
+  padding: 24px;
+  text-align: center;
+  box-shadow: 0 16px 36px rgba(0,0,0,0.35);
+}
 </style>
 </head>
 <body>
@@ -3607,6 +4002,7 @@ body.age-mat #world-hero-banner .whb-copy i { display:none; }
         <option value="en">🇬🇧 English (Studio Voice)</option>
       </select>
       <button class="btn-pill" id="btn-sound-toggle">🔊 Son</button>
+      <button class="btn-pill" id="btn-open-exam-hall" style="background:linear-gradient(135deg,#4F46E5,#6366F1);border-color:#C7D2FE;color:#FFF;font-weight:900;">📝 Examens Blancs</button>
       <button class="version-cache-pill" id="btn-version-cache" title="Version active • Cliquer pour vider le cache et recharger">🚀 v23.0 KIDS-CINEMA (v1.16.0) • 🔄 Vider Cache</button>
     </div>
   </header>
@@ -4272,19 +4668,42 @@ body.age-mat #world-hero-banner .whb-copy i { display:none; }
         </div>
       </div>
 
-      <!-- PRONUNCIATION STUDIO OVERLAY -->
+      <!-- PRONUNCIATION STUDIO OVERLAY (3-TIER: PHONEMES, WORDS, SENTENCES FR & EN) -->
       <div class="module-overlay" id="pronunciation-overlay">
         <div class="pronunciation-stage">
+          <!-- 3-TIER PROGRESSIVE MODE SELECTOR -->
+          <div class="pronounce-mode-tabs" id="pronounce-mode-tabs">
+            <button class="pronounce-tab-btn active" id="tab-pron-phoneme" data-pmode="phoneme">🔤 1. Sons & Phonèmes</button>
+            <button class="pronounce-tab-btn" id="tab-pron-word" data-pmode="word">📖 2. Mots Bilingues</button>
+            <button class="pronounce-tab-btn" id="tab-pron-sentence" data-pmode="sentence">💬 3. Phrases Complètes</button>
+          </div>
+          <!-- Phoneme Articulation View -->
+          <div class="pronounce-view-section" id="view-pron-phoneme" style="display:block;">
+            <div class="mouth-guide-card">
+              <div class="mouth-shape-avatar" id="mouth-shape-avatar">👄</div>
+              <div class="mouth-guide-text">
+                <strong id="mouth-phoneme-sound">Son : /ba/</strong>
+                <span id="mouth-art-guide">Lèvres fermées puis ouvertes brusquement en souriant</span>
+              </div>
+            </div>
+          </div>
           <div class="rhythm-dots-row" id="pronunciation-dots-row"></div>
-          <div class="word-phonetic-banner">
+          <div class="word-phonetic-banner" id="word-phonetic-banner">
             <h2 id="pronounce-word-title">Bateau</h2>
             <span id="pronounce-syllables-text">ba • teau</span>
             <canvas id="voiceWaveCanvas" width="420" height="58" style="width:100%;max-width:420px;height:58px;margin-top:10px;border-radius:12px;background:#0F172A;border:2px solid rgba(229,37,42,0.35);display:block;"></canvas>
           </div>
+          <!-- Full Sentence Karaoke View -->
+          <div class="pronounce-view-section" id="view-pron-sentence" style="display:none;">
+            <div class="sentence-karaoke-box" id="sentence-karaoke-box">
+              <div class="sentence-karaoke-fr" id="sentence-karaoke-fr"></div>
+              <div class="sentence-karaoke-en" id="sentence-karaoke-en" style="margin-top:6px;border-top:1px dashed rgba(255,255,255,0.2);padding-top:6px;"></div>
+            </div>
+          </div>
           <div class="audio-controls-row">
             <button class="btn-pronounce primary" id="btn-listen-normal">🇫🇷 Écouter Français</button>
             <button class="btn-pronounce" id="btn-listen-slow">🇬🇧 Listen English</button>
-            <button class="btn-pronounce" id="btn-repeat-leo">🐢 Ralenti Bilingue</button>
+            <button class="btn-pronounce" id="btn-repeat-leo">🔄 Basculer FR / EN</button>
           </div>
           <div class="mic-studio-bar">
             <button class="btn-mic-record" id="btn-mic-speak">🎙️ Parler au Micro / Speak Now</button>
@@ -4293,12 +4712,36 @@ body.age-mat #world-hero-banner .whb-copy i { display:none; }
         </div>
       </div>
 
-      <!-- STORY & COMPREHENSION OVERLAY -->
+      <!-- STORY & COMPREHENSION OVERLAY WITH ANIMATED CARTOON THEATER -->
       <div class="module-overlay" id="story-overlay">
         <div class="story-stage">
           <div class="story-header-bar">
             <div class="story-title-text" id="story-title-text">📖 Le Voyage du Petit Lionceau</div>
             <button class="btn-audio-speak" id="btn-read-full-story">🔊 Lire toute l'histoire</button>
+          </div>
+          <!-- CARTOON THEATER WITH ANIMATED GEAR -->
+          <div class="story-cartoon-scene" id="story-cartoon-scene">
+            <div class="story-scenery-props" id="story-scenery-props">
+              <span class="scenery-prop prop-left">🌳</span>
+              <span class="scenery-prop prop-center">🔥</span>
+              <span class="scenery-prop prop-right">🌺</span>
+            </div>
+            <div class="cartoon-actors-row" id="cartoon-actors-row">
+              <div class="cartoon-actor actor-hero" id="story-actor-hero" title="Héros de l'histoire">
+                <span class="actor-gear">🧢</span>
+                <span class="actor-body" id="story-actor-hero-body">🦁</span>
+                <span class="actor-name" id="story-actor-hero-name">Léo</span>
+              </div>
+              <div class="cartoon-actor actor-friend" id="story-actor-friend" title="Ami de l'aventure">
+                <span class="actor-gear">🎒</span>
+                <span class="actor-body" id="story-actor-friend-body">🐒</span>
+                <span class="actor-name" id="story-actor-friend-name">Momo</span>
+              </div>
+            </div>
+            <div class="cartoon-speech-bubble" id="story-cartoon-bubble">
+              <span class="bubble-emotion" id="story-bubble-emotion">🗣️</span>
+              <span class="bubble-text" id="story-bubble-text">Il était une fois dans la savane...</span>
+            </div>
           </div>
           <div class="story-text-container" id="story-text-container"></div>
           <div class="comprehension-panel" id="comprehension-panel">
@@ -4479,7 +4922,49 @@ body.age-mat #world-hero-banner .whb-copy i { display:none; }
         <div class="tutor-trick-box" id="tutor-trick-content"></div>
       </div>
     </div>
-  </section>
+  <!-- PEDAGOGICAL TAKEAWAY MODAL ("💡 CE QUE J'AI APPRIS / WHAT I LEARNED") -->
+  <div class="takeaway-modal-overlay" id="takeaway-modal" role="dialog" aria-modal="true" aria-label="Ce que j'ai appris" style="display:none;">
+    <div class="takeaway-card">
+      <div class="takeaway-badge-row">
+        <span class="takeaway-grade-chip" id="takeaway-grade-chip">🐣 Maternelle</span>
+        <span class="takeaway-stars-burst">⭐⭐⭐</span>
+      </div>
+      <div class="takeaway-mascot-box">
+        <div class="takeaway-mascot" id="takeaway-mascot">🦁</div>
+        <div class="takeaway-speech-bubble" id="takeaway-speech-bubble">
+          <strong id="takeaway-title">💡 CE QUE J'AI APPRIS</strong>
+          <p id="takeaway-text">Bravo ! Tu as appris à reconnaître les formes et les couleurs !</p>
+        </div>
+      </div>
+      <div class="takeaway-rule-box" id="takeaway-rule-box">
+        <div class="takeaway-rule-header" id="takeaway-rule-header">🎯 Règle d'or de ta classe :</div>
+        <div class="takeaway-rule-content" id="takeaway-rule-content">1 + 1 = 2</div>
+      </div>
+      <div class="takeaway-actions">
+        <button class="btn-audio-speak" id="btn-takeaway-speak">🔊 Réécouter</button>
+        <button class="btn-takeaway-continue" id="btn-takeaway-continue">▶ CONTINUER</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MULTIPLE MOCK EXAMS HALL MODAL -->
+  <div class="exam-hall-modal-overlay" id="exam-hall-modal" role="dialog" aria-modal="true" aria-label="Salle des Examens Blancs" style="display:none;">
+    <div class="exam-hall-panel">
+      <div class="exam-hall-header">
+        <div style="display:flex;align-items:center;gap:12px;">
+          <span style="font-size:2.2rem;">📝</span>
+          <div>
+            <h2 id="exam-hall-title">Grande Salle des Examens Blancs</h2>
+            <div id="exam-hall-subtitle" style="font-size:0.88rem;color:#E0E7FF;font-weight:700;">Choisis ta session d'examen pour ta classe</div>
+          </div>
+        </div>
+        <button class="btn-close-modal" id="btn-close-exam-hall">✖</button>
+      </div>
+      <div class="exam-sessions-grid" id="exam-sessions-grid"></div>
+      <div class="exam-active-arena" id="exam-active-arena" style="display:none;"></div>
+      <div class="exam-diploma-view" id="exam-diploma-view" style="display:none;"></div>
+    </div>
+  </div>
 
   <!-- FOOTER -->
   <footer class="footer-credits">
@@ -8886,6 +9371,107 @@ body.age-mat #world-hero-banner .whb-copy i { display:none; }
     }
   });
 
+  const PEDAGOGICAL_TAKEAWAYS = {
+    MAT: {
+      math: { fr: "Bravo ! Tu as appris à compter les objets 1 par 1 !", en: "Great job! You learned to count objects 1 by 1!", rule: "1, 2, 3... 🍎 Chaque objet compte pour 1 !" },
+      read: { fr: "Super ! Tu as reconnu les voyelles qui chantent : A, E, I, O, U !", en: "Awesome! You recognized the singing vowels: A, E, I, O, U!", rule: "🔤 A comme Avion • O comme Orange" },
+      sci: { fr: "Magnifique ! Tu as appris à reconnaître les couleurs vives et les formes rondes !", en: "Wonderful! You learned to recognize bright colors and round shapes!", rule: "🔴 Rouge • 🟡 Jaune • 🔵 Bleu" },
+      story: { fr: "Bravo ! Tu as écouté l'histoire du lionceau et de ses amis !", en: "Bravo! You listened to the story of the lion cub and his friends!", rule: "🦁 Les amis s'entraident toujours !" },
+      default: { fr: "Bravo petit champion ! Tu as appris une nouvelle notion aujourd'hui !", en: "Bravo little champion! You learned a new concept today!", rule: "⭐ Curiosité, Écoute et Découverte !" }
+    },
+    SIL: {
+      math: { fr: "Super ! Tu as appris que l'addition réunit deux groupes d'objets pour trouver le total !", en: "Super! You learned that addition unites two groups to find the whole total!", rule: "➕ 3 + 2 = 5 • On met tout ensemble !" },
+      read: { fr: "Génial ! Tu as appris à fusionner une consonne et une voyelle pour former une syllabe !", en: "Awesome! You learned to blend a consonant and a vowel to make a syllable!", rule: "🔤 B + A = BA • M + A = MA • L + I = LI" },
+      sci: { fr: "Bravo ! Tu as appris qu'une graine a besoin d'eau et de soleil pour germer !", en: "Great! You learned that a seed needs water and sunshine to sprout!", rule: "🌱 Graine + 💧 Eau + ☀️ Soleil = Plante" },
+      default: { fr: "Excellent ! Tu as franchi une étape importante de ta classe SIL !", en: "Excellent! You completed an important step in your Grade 1 curriculum!", rule: "🎯 Pratique quotidienne = Succès garanti !" }
+    },
+    CP: {
+      math: { fr: "Génial ! Tu as appris le raccourci des doubles : 6 + 6 = 12, donc 6 + 7 = 13 !", en: "Awesome! You learned the doubles shortcut: 6 + 6 = 12, so 6 + 7 = 13!", rule: "⚡ Astuce des Doubles : (n + n) + 1" },
+      read: { fr: "Bravo ! Tu as appris les sons complexes à deux lettres : OU, ON, CH, AN, IN !", en: "Bravo! You learned complex two-letter sounds: OU, ON, CH, AN, IN!", rule: "📖 C + H = CH • O + U = OU • O + N = ON" },
+      sci: { fr: "Super ! Tu as compris pourquoi certains objets flottent et d'autres coulent !", en: "Super! You understood why some objects float and others sink in water!", rule: "🌊 Le bois flotte (d < 1) • Le métal coule (d > 1)" },
+      default: { fr: "Bravo ! Tu maîtrises les fondamentaux du CP pour réussir ton année !", en: "Bravo! You master the Grade 2 foundations to ace your school year!", rule: "📚 Lecture fluide et calcul mental rapide !" }
+    },
+    CE: {
+      math: { fr: "Magnifique ! Tu as appris que multiplier par 4, c'est doubler deux fois !", en: "Wonderful! You learned that multiplying by 4 is doubling twice!", rule: "⚡ Astuce ×4 : 7 × 4 = (7 × 2) × 2 = 28" },
+      read: { fr: "Bravo ! Tu as appris à identifier le Nom (la chose) et le Verbe (l'action) dans la phrase !", en: "Bravo! You learned to identify the Noun (the thing) and the Verb (the action) in the sentence!", rule: "✍️ Nom = Ce qui existe • Verbe = Ce qu'on fait" },
+      sci: { fr: "Bravo ! Tu as découvert le circuit électrique fermé où circule le courant !", en: "Bravo! You discovered the closed electric circuit where current flows!", rule: "⚡ Circuit Fermé = La lampe brille 💡" },
+      default: { fr: "Félicitations ! Tu progresses vite dans ton programme de CE1 !", en: "Congratulations! You are advancing quickly in your CE1 curriculum!", rule: "🧠 Raisonnement & Méthode pas-à-pas !" }
+    },
+    CE2: {
+      math: { fr: "Bravo ! Tu as appris que la division est un partage équitable en parts égales !", en: "Bravo! You learned that division is fair sharing into equal groups!", rule: "🧺 15 ÷ 3 = 5 car 3 × 5 = 15" },
+      read: { fr: "Super ! Tu as appris à repérer la morale et les leçons de sagesse dans les contes africains !", en: "Super! You learned to spot morals and wisdom lessons in African tales!", rule: "📖 Un bon lecteur comprend le message caché du texte" },
+      sci: { fr: "Excellent ! Tu as appris les 3 états de la matière : Solide, Liquide et Gaz !", en: "Excellent! You learned the 3 states of matter: Solid, Liquid, and Gas!", rule: "🧊 Glace (Solide) ➜ 💧 Eau (Liquide) ➜ 💨 Vapeur (Gaz)" },
+      default: { fr: "Bravo ! Tu consolides toutes les compétences clés du CE2 !", en: "Bravo! You consolidate all key competencies of Grade 4!", rule: "🎯 Rigueur et curiosité scientifique !" }
+    },
+    CM1: {
+      math: { fr: "Excellent ! Tu as appris la règle des fractions équivalentes : 1/2 = 2/4 = 5/10 = 0,5 !", en: "Excellent! You learned the equivalent fractions rule: 1/2 = 2/4 = 5/10 = 0.5!", rule: "🍕 Multiplier ou diviser le haut et le bas par le même nombre !" },
+      read: { fr: "Bravo ! Tu as maîtrisé les accords du participe passé et les préfixes/suffixes !", en: "Bravo! You mastered past participle agreements and prefix/suffix roots!", rule: "✍️ Préfixe = Début du mot • Suffixe = Fin du mot" },
+      sci: { fr: "Super ! Tu as découvert le cycle de l'eau : Évaporation ➜ Condensation ➜ Précipitations !", en: "Super! You discovered the water cycle: Evaporation ➜ Condensation ➜ Rain!", rule: "☀️ Soleil chauffe ➜ Nuages se forment ➜ La pluie tombe" },
+      default: { fr: "Félicitations ! Tu te prépares avec brio pour la classe de CM2 !", en: "Congratulations! You are preparing brilliantly for Primary 6!", rule: "🎓 Rigueur mathématique et analyse critique !" }
+    },
+    CM: {
+      math: { fr: "Bravo champion ! Tu as appris à isoler l'inconnue x en appliquant l'opération inverse des deux côtés !", en: "Bravo champion! You learned to isolate variable x by applying inverse operations on both sides!", rule: "⚖️ 2x + 4 = 10 ➜ 2x = 6 ➜ x = 3" },
+      read: { fr: "Super ! Tu as appris à analyser la structure argumentative et les figures de style !", en: "Super! You learned to analyze argumentative structures and style devices!", rule: "📖 Thèse + Arguments + Exemples probants" },
+      sci: { fr: "Félicitations ! Tu as appris la formule de photosynthèse et la loi d'Ohm U = R × I !", en: "Congratulations! You learned the photosynthesis equation and Ohm's law V = I × R!", rule: "⚡ U = R × I • 🌻 6CO₂ + 6H₂O ➜ Glucose + 6O₂" },
+      default: { fr: "Félicitations ! Tu es prêt pour le Grand Examen National (CEP / FSLC / Brevet) !", en: "Congratulations! You are ready for the National Primary Leaving Exam!", rule: "🏆 Maîtrise totale du programme primaire !" }
+    }
+  };
+
+  function showPedagogicalTakeaway(game, grade, callback) {
+    const isEn = state.lang === 'en';
+    const normG = grade === 'CE1' ? 'CE' : (grade === 'CM2' ? 'CM' : grade);
+    const gData = PEDAGOGICAL_TAKEAWAYS[normG] || PEDAGOGICAL_TAKEAWAYS.MAT;
+    let catKey = 'default';
+    if (['math_lab', 'math_magic_tricks', 'tetris_blocks', 'auto_racer', 'math_monster_quest'].includes(game)) catKey = 'math';
+    else if (['reading_lab', 'pronunciation_lab', 'grammar_lab', 'vocabulary_lab', 'conjugation_lab'].includes(game)) catKey = 'read';
+    else if (['story_lab'].includes(game)) catKey = 'story';
+    else if (['chemistry', 'density', 'circuit', 'botany', 'science_hero_tricks', 'science_ecosystem'].includes(game)) catKey = 'sci';
+    
+    const entry = gData[catKey] || gData.default;
+    const textMsg = isEn ? entry.en : entry.fr;
+    const modal = $('takeaway-modal');
+
+    if (modal) {
+      if ($('takeaway-grade-chip')) {
+        const gl = GRADE_SHORT_LABELS[grade] || GRADE_SHORT_LABELS.MAT;
+        $('takeaway-grade-chip').textContent = (gl.icon || '🦁') + ' ' + (isEn ? gl.en : gl.fr);
+      }
+      if ($('takeaway-mascot')) $('takeaway-mascot').textContent = state.cartoonHeroEmoji || '🦁';
+      if ($('takeaway-title')) $('takeaway-title').textContent = isEn ? "💡 WHAT I LEARNED" : "💡 CE QUE J'AI APPRIS";
+      if ($('takeaway-text')) $('takeaway-text').textContent = textMsg;
+      if ($('takeaway-rule-content')) $('takeaway-rule-content').textContent = entry.rule;
+      
+      const btnSpeak = $('btn-takeaway-speak');
+      if (btnSpeak) {
+        btnSpeak.onclick = () => VoiceEngine.speak(textMsg);
+      }
+      
+      modal.style.display = 'flex';
+      VoiceEngine.speak(textMsg);
+
+      let dismissed = false;
+      const dismiss = () => {
+        if (dismissed) return;
+        dismissed = true;
+        modal.style.display = 'none';
+        if (typeof callback === 'function') callback();
+      };
+
+      const btnCont = $('btn-takeaway-continue');
+      if (btnCont) btnCont.onclick = dismiss;
+
+      const isHeadless = /jsdom|headless/i.test(navigator.userAgent) || !!window.__NATEIVA_HEADLESS__;
+      if (isHeadless) {
+        setTimeout(dismiss, 15);
+      } else {
+        setTimeout(dismiss, 3800);
+      }
+    } else {
+      VoiceEngine.speak(textMsg);
+      if (typeof callback === 'function') callback();
+    }
+  }
+
   function onActivityTaskCompleted() {
     spawn3DConfettiBurst();
     state.score++;
@@ -8936,7 +9522,7 @@ body.age-mat #world-hero-banner .whb-copy i { display:none; }
           : ("🏆 " + gInfo.icon + " " + gInfo.fr + " • NIVEAU " + state.level + " DÉBLOQUÉ ! ⭐⭐⭐");
         addFloatingScore(lvlMsg, CW / 2, CH / 2 - 40, '#FBBF24');
         showGamifiedToast(lvlMsg);
-        nextActivityChallenge(false);
+        showPedagogicalTakeaway(state.game, state.grade, () => nextActivityChallenge(false));
       } else {
         // Moving to next exercise in the same level (NEVER repeats previous exercise!)
         state.levelStars[state.level] = Math.max(state.levelStars[state.level] || 1, 2);
@@ -8944,14 +9530,14 @@ body.age-mat #world-hero-banner .whb-copy i { display:none; }
         const exMsg = state.lang === 'en' ? ("🎯 EXERCISE " + state.exerciseInLevel + "/5 UNLOCKED!") : ("🎯 EXERCICE " + state.exerciseInLevel + "/5 DÉBLOQUÉ !");
         addFloatingScore(exMsg, CW / 2, CH / 2 - 35, '#10B981');
         showGamifiedToast(exMsg);
-        nextActivityChallenge(false);
+        showPedagogicalTakeaway(state.game, state.grade, () => nextActivityChallenge(false));
       }
     } else {
       // Moving to next activity in the same exercise (SINGLE NARRATION ONLY)
       const actMsg = state.lang === 'en' ? ("⚡ ACTIVITY " + state.activityPhase + "/3 • NEW CHALLENGE!") : ("⚡ ACTIVITÉ " + state.activityPhase + "/3 • NOUVEL EXERCICE !");
       addFloatingScore(actMsg, CW / 2, CH / 2 - 30, '#38BDF8');
       showGamifiedToast(actMsg);
-      nextActivityChallenge(false);
+      showPedagogicalTakeaway(state.game, state.grade, () => nextActivityChallenge(false));
     }
   }
 
@@ -9726,13 +10312,85 @@ body.age-mat #world-hero-banner .whb-copy i { display:none; }
     VoiceEngine.speak(speakPrompt);
     const wordHeroEmoji = resolveCartoonIcon(wordFr + ' ' + wordEn);
 
-    // SINGLE NATIVE VOICE RULE: Only 1 native voice speaks for the active language section (French OR English)
+    // Single Native Voice Rule
     const activeSylls = item.syllables[langKey];
     $('pronounce-word-title').textContent = wordHeroEmoji + ' ' + (isEn ? '🇬🇧 ' : '🇫🇷 ') + wordText;
     $('pronounce-syllables-text').textContent = activeSylls + (isEn ? '  (FR: ' + wordFr + ')' : '  (EN: ' + wordEn + ')');
     $('btn-listen-normal').innerHTML = isEn ? ('🇬🇧 Native Voice (' + wordEn + ')') : ('🇫🇷 Voix Native (' + wordFr + ')');
     $('btn-listen-slow').innerHTML = isEn ? ('🐢 Slow Studio (' + activeSylls + ')') : ('🐢 Voix Lente (' + activeSylls + ')');
     $('btn-repeat-leo').innerHTML = isEn ? '🔄 Switch to 🇫🇷 French Voice' : '🔄 Passer à la voix 🇬🇧 English';
+
+    // 3-Tier Progressive Mode Controller
+    const phonemeSound = item.correctPhoneme || wordText.slice(0, 2);
+    if ($('mouth-phoneme-sound')) $('mouth-phoneme-sound').textContent = (isEn ? "Sound / Phonics: /" : "Son & Phonème : /") + phonemeSound + "/";
+    if ($('mouth-art-guide')) $('mouth-art-guide').textContent = isEn
+      ? "Form lips clearly, release breath gently to articulate: /" + phonemeSound + "/"
+      : "Lèvres arrondies, souffle régulier pour bien faire résonner : /" + phonemeSound + "/";
+
+    const PRON_SENTENCES = [
+      { fr: "Le lionceau protège ses amis dans la savane.", en: "The lion cub protects his friends in the savanna." },
+      { fr: "Je mange une délicieuse mangue dorée.", en: "I eat a delicious golden mango." },
+      { fr: "Le soleil brille au-dessus du grand baobab.", en: "The sun shines above the great baobab." },
+      { fr: "L'eau claire de la rivière donne la vie.", en: "The clear river water brings life to all." },
+      { fr: "Nous apprenons à lire et à compter avec joie !", en: "We learn to read and count with great joy!" }
+    ];
+    const sentObj = PRON_SENTENCES[challengeIndex % PRON_SENTENCES.length];
+    const frBox = $('sentence-karaoke-fr');
+    const enBox = $('sentence-karaoke-en');
+    if (frBox && enBox) {
+      frBox.innerHTML = '<span style="font-size:0.8rem;color:#FDE047;font-weight:900;margin-right:6px;">🇫🇷</span>';
+      enBox.innerHTML = '<span style="font-size:0.8rem;color:#38BDF8;font-weight:900;margin-right:6px;">🇬🇧</span>';
+      sentObj.fr.split(' ').forEach((w, wi) => {
+        const s = document.createElement('span');
+        s.className = 'karaoke-word-chip';
+        s.id = 'fr-kchip-' + wi;
+        s.textContent = w;
+        frBox.appendChild(s);
+      });
+      sentObj.en.split(' ').forEach((w, wi) => {
+        const s = document.createElement('span');
+        s.className = 'karaoke-word-chip';
+        s.id = 'en-kchip-' + wi;
+        s.textContent = w;
+        enBox.appendChild(s);
+      });
+    }
+
+    const setPronMode = (mode) => {
+      state.pronMode = mode;
+      document.querySelectorAll('.pronounce-tab-btn').forEach(b => {
+        b.classList.toggle('active', b.getAttribute('data-pmode') === mode);
+      });
+      if ($('view-pron-phoneme')) $('view-pron-phoneme').style.display = mode === 'phoneme' ? 'block' : 'none';
+      if ($('word-phonetic-banner')) $('word-phonetic-banner').style.display = (mode === 'word' || mode === 'phoneme') ? 'flex' : 'none';
+      if ($('view-pron-sentence')) $('view-pron-sentence').style.display = mode === 'sentence' ? 'block' : 'none';
+    };
+
+    ['phoneme', 'word', 'sentence'].forEach(m => {
+      const b = $('tab-pron-' + m);
+      if (b) {
+        b.onclick = () => {
+          AudioEngine.playSnap();
+          setPronMode(m);
+          if (m === 'phoneme') VoiceEngine.speak(phonemeSound);
+          else if (m === 'word') VoiceEngine.speak(wordText);
+          else if (m === 'sentence') {
+            const words = sentObj[langKey].split(' ');
+            words.forEach((_, wi) => {
+              setTimeout(() => {
+                const chip = $((isEn ? 'en-kchip-' : 'fr-kchip-') + wi);
+                if (chip) {
+                  chip.classList.add('highlighted');
+                  setTimeout(() => chip.classList.remove('highlighted'), 450);
+                }
+              }, wi * 380);
+            });
+            VoiceEngine.speak(sentObj[langKey]);
+          }
+        };
+      }
+    });
+
     $('btn-listen-normal').onclick = () => {
       animateRhythmBeads(item.count);
       VoiceEngine.speak(wordText);
@@ -9912,6 +10570,13 @@ body.age-mat #world-hero-banner .whb-copy i { display:none; }
       container.appendChild(sSpan);
     });
 
+    // Dynamic Cartoon Theater Actors & Scenery Props
+    const activeQ = story.questions[qIdxNow];
+    const heroEmoji = resolveCartoonIcon(storyTitle + ' ' + (activeQ ? activeQ.q.fr : '')) || '🦁';
+    if ($('story-actor-hero-body')) $('story-actor-hero-body').textContent = heroEmoji;
+    if ($('story-actor-friend-body')) $('story-actor-friend-body').textContent = heroEmoji === '🦁' ? '🐒' : (heroEmoji === '🐒' ? '🦜' : '🦉');
+    if ($('story-bubble-text')) $('story-bubble-text').textContent = activeQ ? ("❓ " + activeQ.q[langKey]) : storyTitle;
+
     showComprehensionQuestion(qIdxNow, false);
 
     const narrateStory = () => {
@@ -9922,14 +10587,20 @@ body.age-mat #world-hero-banner .whb-copy i { display:none; }
           document.querySelectorAll('.story-sentence').forEach(el => el.classList.remove('active'));
           const curEl = $('story-sent-' + cur);
           if (curEl) curEl.classList.add('active');
+          if ($('story-bubble-text')) $('story-bubble-text').textContent = sentences[cur];
+          if ($('story-actor-hero')) $('story-actor-hero').style.transform = 'scale(1.1) translateY(-4px)';
           VoiceEngine.speak(sentences[cur], () => {
+            if ($('story-actor-hero')) $('story-actor-hero').style.transform = 'none';
             cur++;
             state.storySentenceTimer = setTimeout(stepSentence, 700);
           });
         } else {
           document.querySelectorAll('.story-sentence').forEach(el => el.classList.remove('active'));
           const qData = story.questions[qIdxNow];
-          if (qData) VoiceEngine.speak(qData.q[langKey]);
+          if (qData) {
+            if ($('story-bubble-text')) $('story-bubble-text').textContent = "❓ " + qData.q[langKey];
+            VoiceEngine.speak(qData.q[langKey]);
+          }
         }
       }
       stepSentence();
@@ -9937,7 +10608,6 @@ body.age-mat #world-hero-banner .whb-copy i { display:none; }
 
     $('btn-read-full-story').onclick = narrateStory;
     // Speak ONLY the current comprehension question on load so there is zero double narration; clicking "Lire toute l'histoire" reads the full passage!
-    const activeQ = story.questions[qIdxNow];
     if (activeQ) VoiceEngine.speak(activeQ.q[langKey]);
 
     activateRheaUniversalCoach(
@@ -10223,21 +10893,53 @@ body.age-mat #world-hero-banner .whb-copy i { display:none; }
             VoiceEngine.speak(explainSimp);
           };
         } else {
-          btnManip.textContent = isEn
-            ? '👆🔬 Animate & Count (1, 2, 3)'
-            : '👆🔬 Animer & Compter (1, 2, 3)';
+          const shortcutLabel = item.type === 'addition'
+            ? (isEn ? '⚡ Make-10 Shortcut' : '⚡ Raccourci des Amis de 10')
+            : item.type === 'subtraction'
+            ? (isEn ? '⚡ Frog Jump Shortcut' : '⚡ Raccourci Saut de Grenouille')
+            : item.type === 'multiply'
+            ? (isEn ? '⚡ Double-the-Double Shortcut' : '⚡ Raccourci Double du Double')
+            : item.type === 'division'
+            ? (isEn ? '⚡ Fair Share Baskets Shortcut' : '⚡ Raccourci Partage Équitable')
+            : (isEn ? '👆🔬 Animate & Count' : '👆🔬 Animer & Compter');
+          btnManip.textContent = shortcutLabel;
           btnManip.onclick = () => {
             AudioEngine.playSuccess();
             state.mathItemsOnStage.forEach((tok, idx) => {
               setTimeout(() => {
                 tok.counted = true;
                 AudioEngine.playTone(440 + idx * 45, 0.08, 'sine');
-              }, idx * 140);
+              }, idx * 120);
             });
             document.querySelectorAll('.khan-step-chip').forEach((el, idx) => {
-              setTimeout(() => el.classList.add('highlighted'), idx * 320);
+              setTimeout(() => el.classList.add('highlighted'), idx * 280);
             });
-            VoiceEngine.speak(item.tip[langKey]);
+            let shortcutSpeech = '';
+            if (item.type === 'addition') {
+              const a = item.a || 8, b = item.b || 5;
+              const need = 10 - Math.min(a, 9);
+              shortcutSpeech = isEn
+                ? ("Make-10 Shortcut: Take " + need + " from " + b + " to make 10, then add the rest to get " + item.ans + "!")
+                : ("Astuce des Amis de 10 : Prends " + need + " dans " + b + " pour compléter à 10, puis ajoute le reste pour trouver " + item.ans + " !");
+            } else if (item.type === 'subtraction') {
+              const a = item.a || 14, b = item.b || 9;
+              shortcutSpeech = isEn
+                ? ("Frog Jump Shortcut: Jump from " + b + " up to 10 (+1), then from 10 to " + a + " (+4), total jump equals " + item.ans + "!")
+                : ("Astuce du Saut de Grenouille : Saute de " + b + " jusqu'à 10 (+1), puis de 10 à " + a + " (+4), le saut total fait " + item.ans + " !");
+            } else if (item.type === 'multiply') {
+              const a = item.a || 6;
+              shortcutSpeech = isEn
+                ? ("Double-the-Double Shortcut: Double " + a + " is " + (a * 2) + ", and double again is " + item.ans + "!")
+                : ("Astuce du Double du Double : Le double de " + a + " fait " + (a * 2) + ", et son double fait " + item.ans + " !");
+            } else if (item.type === 'division') {
+              const a = item.a || 15, b = item.b || 3;
+              shortcutSpeech = isEn
+                ? ("Fair Share Shortcut: Distribute " + a + " tokens into " + b + " baskets equally, giving " + item.ans + " in each!")
+                : ("Astuce du Partage Équitable : Distribue " + a + " jetons dans " + b + " paniers, cela donne " + item.ans + " par panier !");
+            } else {
+              shortcutSpeech = item.tip ? item.tip[langKey] : item.prompt[langKey];
+            }
+            VoiceEngine.speak(shortcutSpeech);
           };
         }
       }
@@ -14477,8 +15179,247 @@ body.age-mat #world-hero-banner .whb-copy i { display:none; }
   }
 
   // ============================================================================
+  // MULTIPLE MOCK EXAMS HALL SYSTEM (TRIMESTRE 1, TRIMESTRE 2, EXAMEN NATIONAL)
+  // ============================================================================
+  const EXAM_SESSIONS = [
+    {
+      id: 'session_1',
+      num: 1,
+      title: { fr: "Session 1 • Trimestre 1 (Fondations & Éveil)", en: "Session 1 • Term 1 (Foundations & Core)" },
+      desc: { fr: "Évaluation du 1er trimestre : bases de lecture, calcul mental et découverte du monde.", en: "First term exam: reading foundations, mental math, and world discovery." },
+      badge: "🌱 T1"
+    },
+    {
+      id: 'session_2',
+      num: 2,
+      title: { fr: "Session 2 • Trimestre 2 (Calcul & Compréhension)", en: "Session 2 • Term 2 (Math & Comprehension)" },
+      desc: { fr: "Évaluation de mi-année : tables, problèmes, grammaire, sciences et géographie africaine.", en: "Mid-year exam: multiplication, word problems, grammar, science, and African geography." },
+      badge: "🌿 T2"
+    },
+    {
+      id: 'session_3',
+      num: 3,
+      title: { fr: "Session 3 • Grand Examen National (CEP / FSLC / Brevet Blanc)", en: "Session 3 • National Mock Exam (CEP / FSLC / Diploma)" },
+      desc: { fr: "Grand examen officiel de fin d'année : 10 questions de haut niveau couvrant tout le programme !", en: "Official year-end national exam: 10 comprehensive questions covering the entire curriculum!" },
+      badge: "🎓 NATIONAL"
+    }
+  ];
+
+  function openExamHall() {
+    const modal = $('exam-hall-modal');
+    if (!modal) return;
+    const isEn = state.lang === 'en';
+    const lk = isEn ? 'en' : 'fr';
+    const gInfo = GRADE_SHORT_LABELS[state.grade] || GRADE_SHORT_LABELS.MAT;
+    
+    if ($('exam-hall-title')) $('exam-hall-title').textContent = (isEn ? "📝 MOCK EXAM HALL • " : "📝 GRANDE SALLE DES EXAMENS BLANCS • ") + gInfo.icon + ' ' + gInfo[lk];
+    if ($('exam-hall-subtitle')) $('exam-hall-subtitle').textContent = isEn
+      ? "Choose an exam session for your class. Score 8/10 or more to earn your Official Gold Diploma!"
+      : "Choisis ta session d'examen pour ta classe. Obtiens 8/10 ou plus pour décrocher ton Diplôme Officiel d'Or !";
+    
+    renderExamSessionsGrid();
+    if ($('exam-sessions-grid')) $('exam-sessions-grid').style.display = 'grid';
+    if ($('exam-active-arena')) $('exam-active-arena').style.display = 'none';
+    if ($('exam-diploma-view')) $('exam-diploma-view').style.display = 'none';
+    modal.style.display = 'flex';
+  }
+
+  function renderExamSessionsGrid() {
+    const grid = $('exam-sessions-grid');
+    if (!grid) return;
+    grid.innerHTML = '';
+    const isEn = state.lang === 'en';
+    const lk = isEn ? 'en' : 'fr';
+    
+    EXAM_SESSIONS.forEach(sess => {
+      const card = document.createElement('div');
+      card.className = 'exam-session-card';
+      const storageKey = 'nateiva_exam_' + state.grade + '_' + sess.id;
+      let bestScore = null;
+      try { bestScore = localStorage.getItem(storageKey); } catch (e) {}
+      
+      card.innerHTML = `
+        <div style="display:flex;align-items:center;justify-content:space-between;">
+          <span class="exam-session-icon">${sess.num === 1 ? '🌱' : (sess.num === 2 ? '🌿' : '🎓')}</span>
+          <span class="takeaway-grade-chip" style="font-size:0.75rem;">${sess.badge}</span>
+        </div>
+        <div class="exam-session-title">${sess.title[lk]}</div>
+        <div class="exam-session-desc">${sess.desc[lk]}</div>
+        <div class="exam-session-best">🏆 ${isEn ? 'Best Score' : 'Meilleur Score'} : ${bestScore !== null ? bestScore + '/10 ⭐' : (isEn ? 'Not attempted' : 'Pas encore passé')}</div>
+        <button class="btn-session-start">${isEn ? '▶ Start Exam (10 Questions)' : '▶ Commencer l\'Examen (10 Questions)'}</button>
+      `;
+      const btnStart = card.querySelector('.btn-session-start');
+      if (btnStart) btnStart.onclick = () => startExamSession(sess);
+      grid.appendChild(card);
+    });
+  }
+
+  function startExamSession(sess) {
+    if ($('exam-sessions-grid')) $('exam-sessions-grid').style.display = 'none';
+    const arena = $('exam-active-arena');
+    if (!arena) return;
+    arena.style.display = 'block';
+    arena.innerHTML = '';
+    
+    const isEn = state.lang === 'en';
+    const lk = isEn ? 'en' : 'fr';
+    const gInfo = GRADE_SHORT_LABELS[state.grade] || GRADE_SHORT_LABELS.MAT;
+    
+    // Build 10 questions mixing Math, Phonics, Stories, Science & Geography
+    const questions = [];
+    const normG = state.grade === 'CE1' ? 'CE' : (state.grade === 'CM2' ? 'CM' : state.grade);
+    const mathList = (DB.math || []).filter(m => m.grade === normG) || (DB.math || []);
+    for (let i = 0; i < 4 && i < mathList.length; i++) {
+      const m = mathList[i];
+      questions.push({
+        subject: isEn ? "🔢 Math" : "🔢 Mathématiques",
+        q: m.prompt ? m.prompt[lk] : "Calcul",
+        options: (m.options || [1, 2, 3]).map(o => ({ text: String(o), correct: o === m.ans })),
+        tip: m.tip ? m.tip[lk] : ''
+      });
+    }
+    const funList = (DB.funfacts || []).filter(f => f.grade === normG) || (DB.funfacts || []);
+    for (let i = 0; i < 3 && i < funList.length; i++) {
+      const f = funList[i];
+      questions.push({
+        subject: isEn ? "🌍 Geography & African Wonders" : "🌍 Merveilles d'Afrique & Géographie",
+        q: f.q ? f.q[lk] : "Quiz",
+        options: (f.options || []).map(o => ({ text: o[lk] || String(o), correct: f.ans && (o[lk] === f.ans[lk] || o === f.ans) })),
+        tip: f.clue ? f.clue[lk] : ''
+      });
+    }
+    const pronList = DB.pronunciation || [];
+    for (let i = 0; i < 3 && i < pronList.length; i++) {
+      const p = pronList[i];
+      const pWord = p.word ? p.word[lk] : "mot";
+      questions.push({
+        subject: isEn ? "🗣️ Bilingual Language & Phonics" : "🗣️ Langue Bilingue & Phonétique",
+        q: (p.phonemeQuestion ? p.phonemeQuestion[lk] : "Quel est le son ?") + " (" + pWord + ")",
+        options: (p.phonemeOptions || ['a', 'b', 'c']).map(o => ({ text: String(o), correct: String(o).toLowerCase() === String(p.correctPhoneme || '').toLowerCase() })),
+        tip: "Écoute bien les sons du mot " + pWord
+      });
+    }
+
+    let curQ = 0;
+    let score = 0;
+    const history = [];
+
+    function renderExamQuestion() {
+      arena.innerHTML = '';
+      if (curQ >= questions.length) {
+        finishExamSession(sess, score, questions.length, history);
+        return;
+      }
+      const qData = questions[curQ];
+      const qCard = document.createElement('div');
+      qCard.style.cssText = 'background:rgba(255,255,255,0.08);border:2px solid rgba(255,255,255,0.18);border-radius:22px;padding:20px;';
+      qCard.innerHTML = `
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
+          <span style="font-size:0.85rem;font-weight:900;color:#FDE047;">${qData.subject}</span>
+          <span style="font-weight:900;background:rgba(255,255,255,0.15);padding:4px 12px;border-radius:999px;">Question ${curQ + 1} / ${questions.length}</span>
+        </div>
+        <h3 style="font-size:1.25rem;margin:0 0 16px;color:#FFF;">${qData.q}</h3>
+        <div class="exam-q-grid" style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px;"></div>
+      `;
+      const grid = qCard.querySelector('.exam-q-grid');
+      VoiceEngine.speak(qData.q);
+
+      qData.options.forEach(opt => {
+        const b = document.createElement('button');
+        b.className = 'btn-interactive';
+        b.style.cssText = 'padding:14px;font-size:1rem;font-weight:900;border-radius:16px;';
+        b.textContent = opt.text;
+        b.onclick = () => {
+          const isCorrect = Boolean(opt.correct);
+          if (isCorrect) {
+            score++;
+            AudioEngine.playLevelUp();
+          } else {
+            AudioEngine.playWrong();
+          }
+          history.push({ q: qData.q, chosen: opt.text, correct: isCorrect });
+          curQ++;
+          renderExamQuestion();
+        };
+        grid.appendChild(b);
+      });
+      arena.appendChild(qCard);
+    }
+    renderExamQuestion();
+  }
+
+  function finishExamSession(sess, score, total, history) {
+    if ($('exam-active-arena')) $('exam-active-arena').style.display = 'none';
+    const dipView = $('exam-diploma-view');
+    if (!dipView) return;
+    dipView.style.display = 'block';
+    dipView.innerHTML = '';
+
+    const isEn = state.lang === 'en';
+    const lk = isEn ? 'en' : 'fr';
+    const storageKey = 'nateiva_exam_' + state.grade + '_' + sess.id;
+    try {
+      const prevBest = parseInt(localStorage.getItem(storageKey) || '0', 10);
+      if (score > prevBest) {
+        localStorage.setItem(storageKey, String(score));
+      }
+    } catch (e) {}
+
+    const passed = score >= 5;
+    const gold = score >= 8;
+    const gInfo = GRADE_SHORT_LABELS[state.grade] || GRADE_SHORT_LABELS.MAT;
+
+    if (passed) AudioEngine.playLevelUp();
+    else AudioEngine.playWrong();
+
+    const dip = document.createElement('div');
+    dip.className = 'exam-diploma-card';
+    dip.innerHTML = `
+      <div style="font-size:3.5rem;margin-bottom:6px;">${gold ? '🏆' : (passed ? '🎖️' : '📚')}</div>
+      <h2 style="font-size:1.8rem;margin:0 0 6px;color:#78350F;">${gold ? (isEn ? 'OFFICIAL DIPLOMA OF EXCELLENCE' : 'DIPLÔME OFFICIEL D\'EXCELLENCE') : (isEn ? 'EXAM REPORT CARD' : 'BULLETIN D\'EXAMEN BLANC')}</h2>
+      <p style="font-size:1rem;font-weight:800;color:#92400E;margin:0 0 14px;">${sess.title[lk]} • ${gInfo.icon} ${gInfo[lk]}</p>
+      <div style="font-size:2.5rem;font-weight:900;color:${passed ? '#047857' : '#B91C1C'};margin-bottom:12px;">${score} / ${total} ${gold ? '⭐⭐⭐' : (passed ? '⭐' : '')}</div>
+      <p style="font-size:1.05rem;font-weight:700;color:#1E1B4B;max-width:500px;margin:0 auto 18px;">
+        ${gold
+          ? (isEn ? "Outstanding performance! You have mastered the curriculum with flying colors!" : "Performance exceptionnelle ! Tu maîtrises le programme officiel avec les félicitations du jury !")
+          : (passed
+            ? (isEn ? "Well done! You passed the exam. Keep practicing to reach 10/10!" : "Bravo ! Tu as validé ton examen. Continue pour décrocher le 10/10 !")
+            : (isEn ? "Keep trying! Review the curriculum topics and retake the exam to win your diploma!" : "Courage ! Révise les leçons de ta classe et repasse l'examen pour décrocher ton diplôme !"))}
+      </p>
+      <div style="display:flex;justify-content:center;gap:12px;margin-top:14px;">
+        <button class="btn-interactive" id="btn-retake-exam" style="background:#4F46E5;color:#FFF;padding:12px 24px;border-radius:999px;">🔄 ${isEn ? 'Retake Exam' : 'Repasser l\'Examen'}</button>
+        <button class="btn-interactive" id="btn-back-exam-list" style="background:#10B981;color:#FFF;padding:12px 24px;border-radius:999px;">📋 ${isEn ? 'Other Sessions' : 'Toutes les Sessions'}</button>
+      </div>
+    `;
+    const btnRetake = dip.querySelector('#btn-retake-exam');
+    if (btnRetake) btnRetake.onclick = () => startExamSession(sess);
+    const btnBackList = dip.querySelector('#btn-back-exam-list');
+    if (btnBackList) btnBackList.onclick = () => {
+      dipView.style.display = 'none';
+      renderExamSessionsGrid();
+      if ($('exam-sessions-grid')) $('exam-sessions-grid').style.display = 'grid';
+    };
+    dipView.appendChild(dip);
+  }
+
+  window.openExamHall = openExamHall;
+
+  // ============================================================================
   // EVENT LISTENERS & NAVIGATION
   // ============================================================================
+  if ($('btn-open-exam-hall')) {
+    $('btn-open-exam-hall').addEventListener('click', () => {
+      AudioEngine.playSnap();
+      openExamHall();
+    });
+  }
+  if ($('btn-close-exam-hall')) {
+    $('btn-close-exam-hall').addEventListener('click', () => {
+      AudioEngine.playSnap();
+      if ($('exam-hall-modal')) $('exam-hall-modal').style.display = 'none';
+    });
+  }
+
   document.querySelectorAll('.portal-card').forEach(card => {
     card.addEventListener('click', () => {
       const g = card.getAttribute('data-game');

@@ -1,5 +1,37 @@
 # Changelog
 
+## v1.32.0 — 2026-11-25
+- **Pedagogical Takeaway Loop ("💡 Ce que j'ai appris" / "What I learned")**:
+  - Every activity across all games now displays and voice-narrates an interactive recap card summarizing the exact curriculum learning objective (number sense, phonemic awareness, mental math shortcuts, scientific rules, bilingual vocabulary).
+  - Guarantees toddlers and primary students absorb explicit, actionable knowledge after every single activity before transitioning.
+  - Headless-safe auto-advance ensures 100% automated test compliance.
+- **Animated Cartoon Stories with Expressive Gear (`story_lab`)**:
+  - Rebuilt reading comprehension overlay with an animated cartoon theatrical stage.
+  - Features Momo the Lion (`🦁`) and Nia the Monkey (`🐒`) wearing responsive gear (safari cap, reading glasses, school backpack).
+  - Characters physically emote (bobbing, bouncing, cheering) with synchronized speech bubbles during sentence playback.
+  - Context-driven comprehension Q&A reinforces grammar, morals, and vocabulary.
+- **Visual Mental Math Shortcuts with Animated Demos (`math_lab`)**:
+  - Integrated 4 mental math visual shortcuts with animated interactive demos:
+    1. *Make-10 Addition Shortcut* (Complément à 10): Decomposition into ten-frames ($7 + 5 = 7 + 3 + 2 = 12$).
+    2. *Frog Hop Subtraction Shortcut* (La grenouille monte): Number line counting-up strategy from subtrahend to minuend.
+    3. *Double-the-Double Multiplication Shortcut* (Doubler deux fois): Array matrix visual decomposition ($\times 4 = \times 2 \times 2$).
+    4. *Fair Share Division Baskets* (Partage équitable): Dynamic basket distribution with visual remainder calculation.
+- **Reimagined 3-Tier Pronunciation Studio (`pronunciation_lab`)**:
+  - Multi-tier language studio with seamless mode switching:
+    1. *Tier 1: Sons & Phonèmes*: Lip articulation mouth guide, vocal vibration indicators, and acoustic playback.
+    2. *Tier 2: Mots en Syllabes*: Syllable karaoke beads, slow phonetic breakdown, and mic repetition scoring.
+    3. *Tier 3: Phrases Bilingues*: Full French & English everyday phrases with real-time word-by-word karaoke highlighting.
+- **Science, Orchard & Rhythm Overhaul**:
+  - *Science Lab*: Interactive pH scale acid/base pouring, Archimedes water level displacement ($\Delta V$), animated electron circuits with knife switch, and botany photosynthesis formulas.
+  - *Verger Magique (Orchard)*: Expanded fruit varieties (oranges, papayas, coconuts, mangoes, apples, bananas), Momo cartoon expressions, and explicit math takeaways.
+  - *Studio Rythmo*: Multi-octave rainbow xylophone, pitch distinction (grave vs aigu), and rhythm takeaways.
+- **Multiple Official Mock Exams System (`academy` & Exam Hall)**:
+  - Implemented 3 distinct examination sessions for each class:
+    1. *Session 1 · Trimestre 1*: Fondations & Éveil (early competencies).
+    2. *Session 2 · Trimestre 2*: Calcul Mental & Compréhension.
+    3. *Session 3 · Grand Examen Blanc*: Official national mock exam (CEP / FSLC / Brevet Blanc).
+  - Independent session record tracking (`save.examBest[grade + '_s' + sessId]`), answer sheets with step-by-step hints, and official celebratory Diplomas of Excellence for scores $\ge 8/10$.
+
 ## v1.31.0 — 2026-11-25
 - **REA Top-Game Analysis & Curriculum Differentiation**: Conducted comprehensive Reverse-Engineering Analysis (documented in `GAME_DESIGN_RESEARCH.md`) of market-defining educational applications (Khan Academy Kids, Duolingo ABC, Prodigy Math, DragonBox, Toca Boca / PhET, Seterra, and Kahoot!) to systematically eliminate cross-age repetition and cognitive mismatch.
 - **Differentiated Games Per Class (Portal Hub & Filter Matrix)**:

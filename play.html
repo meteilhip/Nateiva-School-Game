@@ -1439,7 +1439,10 @@ ZONE_BUILDERS.orchard = function (host) {
   const FRUITS = [
     { name: ['banane', 'banana'], draw: (g) => { S('path', { d: 'M -24 6 Q 0 30 26 2 Q 30 -4 24 -4 Q 2 16 -18 -2 Q -26 0 -24 6 Z', fill: '#FFD23F', stroke: '#D9A400', 'stroke-width': 3 }, g); } },
     { name: ['mangue', 'mango'], draw: (g) => { S('ellipse', { cx: 0, cy: 2, rx: 22, ry: 17, fill: '#FF9F1C', stroke: '#D97800', 'stroke-width': 3 }, g); S('path', { d: 'M 8 -14 Q 16 -24 24 -18', stroke: '#3FA34D', 'stroke-width': 5, fill: 'none', 'stroke-linecap': 'round' }, g); } },
-    { name: ['pomme', 'apple'], draw: (g) => { S('path', { d: 'M 0 -8 C 22 -22 32 6 14 18 C 6 24 -6 24 -14 18 C -32 6 -22 -22 0 -8 Z', fill: '#FF4D57', stroke: '#C42631', 'stroke-width': 3 }, g); S('rect', { x: -2, y: -22, width: 4, height: 12, rx: 2, fill: '#6B421D' }, g); } }
+    { name: ['pomme', 'apple'], draw: (g) => { S('path', { d: 'M 0 -8 C 22 -22 32 6 14 18 C 6 24 -6 24 -14 18 C -32 6 -22 -22 0 -8 Z', fill: '#FF4D57', stroke: '#C42631', 'stroke-width': 3 }, g); S('rect', { x: -2, y: -22, width: 4, height: 12, rx: 2, fill: '#6B421D' }, g); } },
+    { name: ['orange', 'orange'], draw: (g) => { S('circle', { cx: 0, cy: 0, r: 18, fill: '#FF7A00', stroke: '#C85A00', 'stroke-width': 3 }, g); S('circle', { cx: 0, cy: -18, r: 3, fill: '#3FA34D' }, g); } },
+    { name: ['papaye', 'papaya'], draw: (g) => { S('ellipse', { cx: 0, cy: 0, rx: 16, ry: 22, fill: '#FFAE33', stroke: '#C87800', 'stroke-width': 3 }, g); S('circle', { cx: 0, cy: -22, r: 3, fill: '#3FA34D' }, g); } },
+    { name: ['noix de coco', 'coconut'], draw: (g) => { S('circle', { cx: 0, cy: 0, r: 18, fill: '#6B421D', stroke: '#4A2A0C', 'stroke-width': 3 }, g); } }
   ];
   let baskets = [], fruits = [], needPer = [], mode = 'count', roundLive = false, fruitDef = FRUITS[0];
   function activeBasket() {
@@ -1523,7 +1526,25 @@ ZONE_BUILDERS.orchard = function (host) {
   function winRound() {
     roundLive = false;
     fxSquish(momo);
-    say('Miam ! Merci !', 'Yummy! Thank you!');
+    let winMsgFr = 'Miam ! Merci !';
+    let winMsgEn = 'Yummy! Thank you!';
+    if (mode === 'count') {
+      winMsgFr = 'Bravo ! Tu as bien cueilli ' + needPer[0] + ' fruits !';
+      winMsgEn = 'Great! You picked ' + needPer[0] + ' fruits!';
+    } else if (mode === 'add') {
+      const a = needPer[0], b = needPer[1];
+      winMsgFr = 'Astuce : ' + a + ' + ' + b + ' = ' + (a + b) + ' fruits !';
+      winMsgEn = 'Trick: ' + a + ' + ' + b + ' = ' + (a + b) + ' fruits!';
+    } else if (mode === 'mult') {
+      const n = needPer.length, k = needPer[0];
+      winMsgFr = 'Astuce : ' + n + ' paniers de ' + k + ' = ' + (n * k) + ' fruits !';
+      winMsgEn = 'Trick: ' + n + ' baskets of ' + k + ' = ' + (n * k) + ' fruits!';
+    } else if (mode === 'share') {
+      const tot = needPer.reduce((s, n) => s + n, 0);
+      winMsgFr = 'Astuce : ' + tot + ' partagé en ' + needPer.length + ' = ' + needPer[0] + ' par panier !';
+      winMsgEn = 'Trick: ' + tot + ' shared by ' + needPer.length + ' = ' + needPer[0] + ' each!';
+    }
+    say(winMsgFr, winMsgEn);
     if (Rounds.gem()) setTimeout(zoneComplete, 900); else setTimeout(nextRound, 1200);
   }
   function nextRound() {
@@ -3218,12 +3239,25 @@ ZONE_BUILDERS.academy = function (host) {
     const cb = H('div', { class: 'qz-cur' }, p);
     cb.innerHTML = '<b>' + T('Programme de ta classe :', 'Your class program:') + '</b><br>' +
       '🔢 ' + T(cur.m[0], cur.m[1]) + '<br>📖 ' + T(cur.l[0], cur.l[1]) + '<br>🔬 ' + T(cur.s[0], cur.s[1]) + '<br>🌍 ' + T(cur.g[0], cur.g[1]);
-    const exRow = H('div', { class: 'qz-btnrow' }, p);
-    const exBtn = H('button', { class: 'qz-next on', text: '\uD83D\uDCDD ' + T('EXAMEN BLANC \u2014 10 questions', 'MOCK EXAM \u2014 10 questions') }, exRow);
-    exBtn.style.background = 'linear-gradient(145deg,#5E60CE,#4EA8DE)';
-    exBtn.addEventListener('click', () => { sfx.boing(); playExam(); });
+    const SESSIONS = [
+      { id: 1, icon: '🌱', fr: 'Session 1 · Trimestre 1', en: 'Session 1 · Term 1', subFr: 'Fondations & Éveil (10 Qs)', subEn: 'Foundations & Early Skills (10 Qs)', grad: 'linear-gradient(135deg,#06D6A0,#118AB2)' },
+      { id: 2, icon: '🌿', fr: 'Session 2 · Trimestre 2', en: 'Session 2 · Term 2', subFr: 'Calcul Mental & Compréhension (10 Qs)', subEn: 'Mental Math & Comprehension (10 Qs)', grad: 'linear-gradient(135deg,#4EA8DE,#5E60CE)' },
+      { id: 3, icon: '🎓', fr: 'Session 3 · Grand Examen Blanc', en: 'Session 3 · National Mock Exam', subFr: 'CEP / FSLC / Brevet Blanc (10 Qs)', subEn: 'Official Graduation Mock (10 Qs)', grad: 'linear-gradient(135deg,#E5252A,#F77F00)' }
+    ];
+    H('div', { class: 'qz-sub', style: 'font-weight:bold;margin-top:12px;font-size:15px;', text: '📝 ' + T('Examens Officiels par Session :', 'Official Exam Sessions:') }, p);
+    const exGrid = H('div', { class: 'qz-btnrow', style: 'display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin:8px 0 14px 0;' }, p);
+    SESSIONS.forEach(sess => {
+      const sessKey = save.grade + '_s' + sess.id;
+      const bestSess = (save.examBest || {})[sessKey];
+      const sessBtn = H('button', { class: 'qz-next on', style: 'flex:1 1 200px;min-width:180px;padding:12px 14px;background:' + sess.grad + ';border-radius:18px;text-align:center;box-shadow:0 6px 16px rgba(0,0,0,0.15);' }, exGrid);
+      sessBtn.innerHTML = '<div style="font-size:15px;font-weight:900;">' + sess.icon + ' ' + T(sess.fr, sess.en) + '</div>' +
+        '<div style="font-size:11px;opacity:0.92;margin:3px 0 4px 0;">' + T(sess.subFr, sess.subEn) + '</div>' +
+        '<div style="font-size:12px;font-weight:800;background:rgba(255,255,255,0.22);padding:2px 8px;border-radius:10px;display:inline-block;">' +
+        (bestSess != null ? ('🏆 ' + bestSess + ' / 10') : T('Pas encore passé', 'Not taken yet')) + '</div>';
+      sessBtn.addEventListener('click', () => { sfx.boing(); playExam(sess.id); });
+    });
     const best0 = (save.examBest || {})[save.grade];
-    if (best0 != null) H('div', { class: 'qz-sub', text: '\uD83C\uDFC6 ' + T('Meilleur score ', 'Best score ') + gradeName + ' : ' + best0 + ' / 10' }, p);
+    if (best0 != null) H('div', { class: 'qz-sub', text: '\uD83C\uDFC6 ' + T('Meilleur score global ', 'Overall best score ') + gradeName + ' : ' + best0 + ' / 10' }, p);
     H('div', { class: 'qz-sub', text: T('\u2014 ou prépare l\u2019examen sujet par sujet \u2014', '\u2014 or prep the exam topic by topic \u2014') }, p);
     const inp = H('input', { class: 'qz-search', type: 'text', autocomplete: 'off', spellcheck: 'false' }, p);
     inp.placeholder = T('Recherche un sujet : fractions, conjugaison, capitales…', 'Search a topic: fractions, conjugation, capitals…');
@@ -3312,10 +3346,19 @@ ZONE_BUILDERS.academy = function (host) {
     ask();
   }
 
-  function playExam() {
+  function playExam(sessionNum = 1) {
     const QN = 10;
     Rounds.start('academy', QN);
-    const order = ['m', 'l', 's', 'g', 'm', 'l', 's', 'g', 'm', 'l'];
+    const order = sessionNum === 1
+      ? ['m', 'l', 'm', 'l', 's', 'm', 'l', 'g', 'm', 'l']
+      : sessionNum === 2
+      ? ['m', 'm', 'l', 'l', 's', 's', 'g', 'm', 'l', 's']
+      : ['m', 'l', 's', 'g', 'm', 'l', 's', 'g', 'm', 'l'];
+    const sessTitle = sessionNum === 1
+      ? T('Session 1 · Trimestre 1', 'Session 1 · Term 1')
+      : sessionNum === 2
+      ? T('Session 2 · Trimestre 2', 'Session 2 · Term 2')
+      : T('Session 3 · Grand Examen Blanc', 'Session 3 · National Mock Exam');
     const records = [];
     let qi = 0;
     const usedT = {};
@@ -3329,7 +3372,7 @@ ZONE_BUILDERS.academy = function (host) {
       usedT[t.id] = (usedT[t.id] || 0) + 1;
       const q = freshQ(t.id, d, t.gen);
       const p = H('div', { class: 'qz-panel' }, wrap);
-      H('div', { class: 'qz-prog', text: '📝 ' + T('Examen ', 'Exam ') + gradeName + ' — ' + (qi + 1) + ' / ' + QN }, p);
+      H('div', { class: 'qz-prog', text: '📝 ' + sessTitle + ' (' + gradeName + ') — ' + (qi + 1) + ' / ' + QN }, p);
       H('div', { class: 'qz-q', text: T(q.qf, q.qe) }, p);
       if (q.dots) H('div', { class: 'qz-dots', text: q.dots }, p);
       const grid = H('div', { class: 'qz-answers' }, p);
@@ -3357,14 +3400,23 @@ ZONE_BUILDERS.academy = function (host) {
     function results() {
       const score = records.filter(r => r.ok).length;
       save.examBest = save.examBest || {};
+      const sessKey = save.grade + '_s' + sessionNum;
+      const isSessRecord = score > (save.examBest[sessKey] || -1);
+      if (isSessRecord) save.examBest[sessKey] = score;
       const isRecord = score > (save.examBest[save.grade] || -1);
       if (isRecord) save.examBest[save.grade] = score;
       persist();
       wrap.innerHTML = '';
       const p = H('div', { class: 'qz-panel' }, wrap);
       const mention = score >= 9 ? ['🏆 EXCELLENT !', '🏆 EXCELLENT!'] : score >= 7 ? ['🌟 TRÈS BIEN !', '🌟 VERY GOOD!'] : score >= 5 ? ['👍 BIEN — continue !', '👍 GOOD — keep going!'] : ['💪 Entraîne-toi et reviens !', '💪 Practise and come back!'];
-      H('div', { class: 'qz-title', text: '📝 ' + T('Résultats — Examen ', 'Results — Exam ') + gradeName }, p);
+      H('div', { class: 'qz-title', text: '📝 ' + T('Résultats — ', 'Results — ') + sessTitle + ' (' + gradeName + ')' }, p);
       H('div', { class: 'qz-score', text: score + ' / 10 — ' + T(mention[0], mention[1]) + (isRecord && score > 0 ? ' 🆕' : '') }, p);
+      if (score >= 8) {
+        const dip = H('div', { class: 'qz-diploma', style: 'margin:12px 0;padding:12px;background:rgba(255,215,0,0.12);border:2px dashed #E5252A;border-radius:16px;text-align:center;' }, p);
+        dip.innerHTML = '<div style="font-size:18px;font-weight:900;color:#E5252A;">🎓 DIPLÔME OFFICIEL DE RÉUSSITE</div>' +
+          '<div style="font-size:13px;font-weight:700;margin:4px 0;">' + T('Décerné à l’élève pour la validation de ', 'Awarded to the student for mastering ') + '<b>' + sessTitle + '</b> (' + gradeName + ')</div>' +
+          '<div style="font-size:12px;opacity:0.85;">' + T('Mention : ', 'Honors: ') + T(mention[0], mention[1]) + ' · Note : ' + score + '/10</div>';
+      }
       records.forEach((r, i2) => {
         const row2 = H('div', { class: 'qz-sheet-row ' + (r.ok ? 'ok' : 'ko') }, p);
         const yours = T(r.q.ch[r.pick][0], r.q.ch[r.pick][1]);
@@ -3377,15 +3429,15 @@ ZONE_BUILDERS.academy = function (host) {
       const again = H('button', { class: 'qz-next on', text: '🔁 ' + T('Repasser l’examen', 'Retake the exam') }, row3);
       const fin = H('button', { class: 'qz-next on', text: '🏁 ' + T('Terminer', 'Finish') }, row3);
       again.style.marginRight = '10px';
-      again.addEventListener('click', () => playExam());
+      again.addEventListener('click', () => playExam(sessionNum));
       fin.addEventListener('click', () => zoneComplete());
       if (score >= 9) { confetti(80); sfx.fanfare(); }
       say(T('Ton score : ', 'Your score: ') + score + T(' sur dix ! ', ' out of ten! '));
     }
-    say('Examen blanc, classe ' + gradeName + ' ! Dix questions, pas d’astuce pendant l’examen. Concentre-toi... c’est parti !', 'Mock exam, class ' + gradeName + '! Ten questions, no hints during the exam. Focus... here we go!');
+    say(sessTitle + ', classe ' + gradeName + ' ! Dix questions, pas d’astuce pendant l’examen. Concentre-toi... c’est parti !', sessTitle + ', class ' + gradeName + '! Ten questions, no hints during the exam. Focus... here we go!');
     ask();
   }
-  Academy._exam = playExam;
+  Academy._exam = (sessId = 1) => playExam(sessId);
   pending ? playTopic(pending) : picker();
 };
 
@@ -4457,14 +4509,22 @@ ZONE_BUILDERS.music = function (host) {
     flash(i);
     if (mode === 'xylo' && user) {
       taps++;
-      if (taps % 8 === 0) { confetti(16); sfx.good(); if (Rounds.gem()) { setTimeout(zoneComplete, 900); } else say(['Quelle musique !', 'Bravo maestro !', 'Encore !'][ri(0, 2)], ['What music!', 'Bravo maestro!', 'More!'][ri(0, 2)]); }
+      if (taps % 8 === 0) {
+        confetti(16);
+        sfx.good();
+        if (Rounds.gem()) {
+          setTimeout(zoneComplete, 900);
+        } else {
+          say('💡 Astuce : Le son DO est grave et le son SOL est aigu !', '💡 Trick: DO has a low pitch, SOL has a high pitch!');
+        }
+      }
     } else if (mode === 'melody' && user && listening) {
       if (i === seq[inputIdx]) {
         inputIdx++;
         if (inputIdx >= seq.length) {
           listening = false;
           sfx.good(); confetti(18);
-          say('Mélodie parfaite !', 'Perfect melody!');
+          say('💡 Mélodie parfaite ! Tu as l\'oreille musicale !', '💡 Perfect melody! You have great musical ear!');
           setTimeout(() => { if (Rounds.gem()) setTimeout(zoneComplete, 900); else melodyRound(); }, 1200);
         }
       } else {
