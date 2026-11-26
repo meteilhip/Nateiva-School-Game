@@ -1,7 +1,7 @@
 // public/sw.js - Nateiva School Game Offline Service Worker
-// v1.16.0 — NETWORK-FIRST for pages so every deploy reaches kids immediately;
+// v1.32.1 — NETWORK-FIRST for pages so every deploy reaches kids immediately;
 // cache-first only for immutable static assets (audio, images, fonts).
-const CACHE_NAME = 'nateiva-school-game-v1-30-0';
+const CACHE_NAME = 'nateiva-school-game-v1-32-1';
 const APP_ROOT = new URL('./', self.location.href).href;
 const PRECACHE_URLS = [
   APP_ROOT,

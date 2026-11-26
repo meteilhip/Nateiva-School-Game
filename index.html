@@ -3972,6 +3972,227 @@ body.age-mat #world-hero-banner .whb-copy i { display:none; }
   text-align: center;
   box-shadow: 0 16px 36px rgba(0,0,0,0.35);
 }
+
+/* ============================================================
+   PHONE SCREEN FULL-FIT & OVERLAP PREVENTION (ALL SCREENS <= 680px)
+   Ensures all cartoon characters, props, speech bubbles, and text
+   fit phone screens with ZERO overlap and pristine layout.
+   ============================================================ */
+@media (max-width: 680px) {
+  /* Prevent horizontal overflow on mobile viewports */
+  html, body {
+    overflow-x: hidden !important;
+    max-width: 100vw !important;
+  }
+  .shell {
+    padding: 6px 6px 20px 6px !important;
+    max-width: 100vw !important;
+    box-sizing: border-box !important;
+  }
+
+  /* Story Cartoon Stage on Phones: Clean relative stacking, NO speech bubble overlap */
+  .story-cartoon-scene {
+    min-height: unset !important;
+    padding: 10px 10px 14px 10px !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: stretch !important;
+    justify-content: flex-start !important;
+    gap: 8px !important;
+    position: relative !important;
+    box-sizing: border-box !important;
+  }
+  .story-scenery-props {
+    position: absolute !important;
+    top: 6px !important;
+    left: 8px !important;
+    right: 8px !important;
+    padding: 0 !important;
+    font-size: 1.35rem !important;
+    opacity: 0.35 !important;
+    pointer-events: none !important;
+    z-index: 1 !important;
+  }
+  .cartoon-speech-bubble {
+    position: relative !important;
+    top: auto !important;
+    left: auto !important;
+    right: auto !important;
+    width: 100% !important;
+    margin: 0 0 6px 0 !important;
+    box-sizing: border-box !important;
+    padding: 8px 10px !important;
+    z-index: 5 !important;
+    font-size: 0.88rem !important;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.18) !important;
+  }
+  .cartoon-speech-bubble .bubble-text {
+    font-size: 0.88rem !important;
+    line-height: 1.3 !important;
+  }
+  .cartoon-actors-row {
+    position: relative !important;
+    width: 100% !important;
+    justify-content: center !important;
+    gap: 32px !important;
+    margin-top: 4px !important;
+    z-index: 4 !important;
+  }
+  .cartoon-actor {
+    flex: 0 0 auto !important;
+  }
+  .cartoon-actor .actor-body {
+    font-size: 2.3rem !important;
+  }
+  .cartoon-actor .actor-gear {
+    font-size: 1.05rem !important;
+    top: -10px !important;
+  }
+  .cartoon-actor .actor-name {
+    font-size: 0.68rem !important;
+    padding: 2px 6px !important;
+  }
+  .story-text-container {
+    padding: 12px 14px !important;
+    font-size: 0.96rem !important;
+    line-height: 1.5 !important;
+  }
+
+  /* 3-Tier Pronunciation Studio on Phones */
+  .pronounce-mode-tabs {
+    gap: 6px !important;
+  }
+  .pronounce-tab-btn {
+    flex: 1 1 30% !important;
+    min-width: 90px !important;
+    padding: 6px 8px !important;
+    font-size: 0.76rem !important;
+  }
+  .mouth-guide-card {
+    flex-direction: row !important;
+    align-items: center !important;
+    gap: 10px !important;
+    padding: 8px 12px !important;
+  }
+  .mouth-shape-avatar {
+    font-size: 2.1rem !important;
+  }
+  .mouth-guide-text strong {
+    font-size: 0.95rem !important;
+  }
+  .mouth-guide-text span {
+    font-size: 0.78rem !important;
+  }
+  .sentence-karaoke-box {
+    padding: 8px 10px !important;
+  }
+  .karaoke-word-chip {
+    font-size: 0.92rem !important;
+    padding: 3px 8px !important;
+  }
+  .audio-controls-row, .mic-studio-bar {
+    flex-direction: column !important;
+    width: 100% !important;
+    gap: 6px !important;
+  }
+  .btn-pronounce, .btn-mic-record {
+    width: 100% !important;
+    justify-content: center !important;
+    padding: 10px 12px !important;
+    font-size: 0.88rem !important;
+  }
+
+  /* Pedagogical Takeaway Modal on Phones */
+  .takeaway-modal-overlay {
+    padding: 8px !important;
+  }
+  .takeaway-card {
+    padding: 18px 14px !important;
+    border-radius: 20px !important;
+    max-width: 96vw !important;
+    max-height: 90vh !important;
+    overflow-y: auto !important;
+    box-sizing: border-box !important;
+  }
+  .takeaway-avatar {
+    font-size: 2.6rem !important;
+    margin-bottom: 6px !important;
+  }
+  .takeaway-title {
+    font-size: 1.15rem !important;
+  }
+  .takeaway-text {
+    font-size: 0.92rem !important;
+    line-height: 1.35 !important;
+  }
+  .btn-takeaway-continue {
+    font-size: 0.98rem !important;
+    padding: 10px 16px !important;
+    width: 100% !important;
+  }
+
+  /* Exam Hall Modal on Phones */
+  .exam-hall-modal-overlay {
+    padding: 8px !important;
+  }
+  .exam-hall-panel {
+    padding: 16px 12px !important;
+    border-radius: 20px !important;
+    max-width: 96vw !important;
+    max-height: 92vh !important;
+    overflow-y: auto !important;
+    box-sizing: border-box !important;
+    gap: 12px !important;
+  }
+  .exam-sessions-grid {
+    grid-template-columns: 1fr !important;
+    gap: 10px !important;
+  }
+  .exam-session-card {
+    padding: 14px 12px !important;
+  }
+
+  /* Africa Geography Map & Card on Phones */
+  .geography-stage {
+    flex-direction: column !important;
+    gap: 10px !important;
+  }
+  .africa-map-box {
+    max-width: 250px !important;
+    margin: 0 auto !important;
+  }
+  .africa-svg-map {
+    width: 100% !important;
+    height: auto !important;
+    max-height: 190px !important;
+  }
+  .geo-info-card {
+    padding: 10px !important;
+  }
+  .geo-flag-emoji {
+    font-size: 2.1rem !important;
+  }
+
+  /* Portal Cards on Narrow Mobile Screens */
+  .portals-grid {
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)) !important;
+    gap: 8px !important;
+  }
+  .portal-card {
+    padding: 10px 8px !important;
+  }
+  .portal-titles h3 {
+    font-size: 0.84rem !important;
+  }
+  .card-grade-badge {
+    font-size: 0.62rem !important;
+    padding: 2px 6px !important;
+  }
+  .card-rea-badge {
+    font-size: 0.68rem !important;
+    padding: 4px 6px !important;
+  }
+}
 </style>
 </head>
 <body>
@@ -4003,7 +4224,7 @@ body.age-mat #world-hero-banner .whb-copy i { display:none; }
       </select>
       <button class="btn-pill" id="btn-sound-toggle">🔊 Son</button>
       <button class="btn-pill" id="btn-open-exam-hall" style="background:linear-gradient(135deg,#4F46E5,#6366F1);border-color:#C7D2FE;color:#FFF;font-weight:900;">📝 Examens Blancs</button>
-      <button class="version-cache-pill" id="btn-version-cache" title="Version active • Cliquer pour vider le cache et recharger">🚀 v23.0 KIDS-CINEMA (v1.16.0) • 🔄 Vider Cache</button>
+      <button class="version-cache-pill" id="btn-version-cache" title="Version active • Cliquer pour vider le cache et recharger">🚀 v1.32.1 (NOUVEAU) • 🔄 Vider Cache</button>
     </div>
   </header>
 
@@ -4144,7 +4365,7 @@ body.age-mat #world-hero-banner .whb-copy i { display:none; }
           <h3>Astuces Maths Cartoon : Doigts, Doubles & Pont de 10</h3>
           <div class="portal-curriculum-tag">Pont de 10 • 10 Doigts ×9 • Doubles • Fractions %</div>
         </div>
-        <span class="card-rea-badge">✨ v23.0 KIDS-CINEMA (v1.16.0) • ▶ JOUER</span>
+        <span class="card-rea-badge">✨ v1.32.1 • ▶ JOUER</span>
       </div>
       <p class="portal-desc">Apprends les astuces cartoon pour calculer instantanément : pont arc-en-ciel de 10, astuce des doigts pour la table de 9, et miroir des doubles !</p>
       <div class="portal-counts-badge-bar">
@@ -4163,7 +4384,7 @@ body.age-mat #world-hero-banner .whb-copy i { display:none; }
           <h3>Astuces Sciences Cartoon : Leviers, Corps, Eau & Lumière</h3>
           <div class="portal-curriculum-tag">Levier Souris-Éléphant • Cycle de l'Eau • Prisme Arc-en-Ciel</div>
         </div>
-        <span class="card-rea-badge">✨ v23.0 KIDS-CINEMA (v1.16.0) • ▶ JOUER</span>
+        <span class="card-rea-badge">✨ v1.32.1 • ▶ JOUER</span>
       </div>
       <p class="portal-desc">Découvre les super-pouvoirs de la science : comment soulever un éléphant avec un levier, le voyage de la goutte d'eau et le prisme de lumière !</p>
       <div class="portal-counts-badge-bar">
@@ -4181,7 +4402,7 @@ body.age-mat #world-hero-banner .whb-copy i { display:none; }
           <h3>Tetris Éducatif : Blocs Mots & Maths</h3>
           <div class="portal-curriculum-tag">Tetris Arcade • Nombres • Syllabes • Auto-Drop</div>
         </div>
-        <span class="card-rea-badge">✨ v23.0 KIDS-CINEMA (v1.16.0) • ▶ JOUER</span>
+        <span class="card-rea-badge">✨ v1.32.1 • ▶ JOUER</span>
       </div>
       <p class="portal-desc">Empile les blocs colorés Tetris de nombres, calculs et syllabes pour compléter les lignes et ouvrir le coffre à récompenses !</p>
       <div class="portal-counts-badge-bar">
@@ -4200,7 +4421,7 @@ body.age-mat #world-hero-banner .whb-copy i { display:none; }
           <h3>Course Auto Turbo : Rallye Savane</h3>
           <div class="portal-curriculum-tag">Course 3 Voies • Auto-Pilote • Récompenses</div>
         </div>
-        <span class="card-rea-badge">✨ v23.0 KIDS-CINEMA (v1.16.0) • ▶ JOUER</span>
+        <span class="card-rea-badge">✨ v1.32.1 • ▶ JOUER</span>
       </div>
       <p class="portal-desc">Pilote le bolide turbo de Léo sur 3 voies ou active l'Auto-Pilote pour franchir le portique de la bonne réponse avec boost nitro !</p>
       <div class="portal-counts-badge-bar">
@@ -4219,7 +4440,7 @@ body.age-mat #world-hero-banner .whb-copy i { display:none; }
           <h3>Prodigy Maths : Monstres & Cristaux</h3>
           <div class="portal-curriculum-tag">Prodigy Math • Sorts Visuels • Coffre Magique</div>
         </div>
-        <span class="card-rea-badge">✨ v23.0 KIDS-CINEMA (v1.16.0) • ▶ JOUER</span>
+        <span class="card-rea-badge">✨ v1.32.1 • ▶ JOUER</span>
       </div>
       <p class="portal-desc">Lance des sorts mathématiques visuels (addition, tables, fractions, algèbre) pour apprivoiser les créatures et gagner des familiers !</p>
       <div class="portal-counts-badge-bar">
@@ -4238,7 +4459,7 @@ body.age-mat #world-hero-banner .whb-copy i { display:none; }
           <h3>Labo Sciences : Écosystème, Aimants & Espace</h3>
           <div class="portal-curriculum-tag">Chaîne Alimentaire • États de l'Eau • Aimants • Planètes</div>
         </div>
-        <span class="card-rea-badge">✨ v23.0 KIDS-CINEMA (v1.16.0) • ▶ JOUER</span>
+        <span class="card-rea-badge">✨ v1.32.1 • ▶ JOUER</span>
       </div>
       <p class="portal-desc">Simule la chaîne alimentaire de la savane, les 3 états de l'eau (0°C/100°C), les pôles d'aimants (N⇄S) et le système solaire !</p>
       <div class="portal-counts-badge-bar">
@@ -4256,7 +4477,7 @@ body.age-mat #world-hero-banner .whb-copy i { display:none; }
           <h3>Grammaire & Syntaxe (FR / EN)</h3>
           <div class="portal-curriculum-tag">Noms • Verbes • Adjectifs • Accords</div>
         </div>
-        <span class="card-rea-badge">✨ v23.0 KIDS-CINEMA (v1.16.0) • ▶ JOUER</span>
+        <span class="card-rea-badge">✨ v1.32.1 • ▶ JOUER</span>
       </div>
       <p class="portal-desc">Maîtrise la grammaire en français et en anglais (articles, pluriels, nature des mots, accords sujet-verbe) avec une seule voix native pure !</p>
       <div class="portal-counts-badge-bar">
@@ -4275,7 +4496,7 @@ body.age-mat #world-hero-banner .whb-copy i { display:none; }
           <h3>Vocabulaire & Mots du Monde (FR / EN)</h3>
           <div class="portal-curriculum-tag">Synonymes • Contraires • Thèmes d'Afrique</div>
         </div>
-        <span class="card-rea-badge">✨ v23.0 KIDS-CINEMA (v1.16.0) • ▶ JOUER</span>
+        <span class="card-rea-badge">✨ v1.32.1 • ▶ JOUER</span>
       </div>
       <p class="portal-desc">Enrichis ton vocabulaire en français et en anglais : synonymes, contraires, objets de l'école, animaux et métiers avec prononciation native !</p>
       <div class="portal-counts-badge-bar">
@@ -4294,7 +4515,7 @@ body.age-mat #world-hero-banner .whb-copy i { display:none; }
           <h3>Conjugaison & Temps (FR / EN)</h3>
           <div class="portal-curriculum-tag">Présent • Passé • Futur • Être/Avoir & To Be</div>
         </div>
-        <span class="card-rea-badge">✨ v23.0 KIDS-CINEMA (v1.16.0) • ▶ JOUER</span>
+        <span class="card-rea-badge">✨ v1.32.1 • ▶ JOUER</span>
       </div>
       <p class="portal-desc">Voyage dans le temps (Passé, Présent, Futur) pour conjuguer les verbes en français et en anglais selon le pronom sujet !</p>
       <div class="portal-counts-badge-bar">
@@ -4313,7 +4534,7 @@ body.age-mat #world-hero-banner .whb-copy i { display:none; }
           <h3>Studio Prononciation (FR ⇄ EN)</h3>
           <div class="portal-curriculum-tag">Anglais & Français • Micro Live • Spectre</div>
         </div>
-        <span class="card-rea-badge">✨ v23.0 KIDS-CINEMA (v1.16.0) • ▶ JOUER</span>
+        <span class="card-rea-badge">✨ v1.32.1 • ▶ JOUER</span>
       </div>
       <p class="portal-desc">Écoute la vraie voix studio française et anglaise, parle dans ton micro pour obtenir ton score de prononciation et suis les billes de rythme !</p>
       <div class="portal-counts-badge-bar">
@@ -4332,7 +4553,7 @@ body.age-mat #world-hero-banner .whb-copy i { display:none; }
           <h3>Mission Atlas : Trouve le Pays d'Afrique !</h3>
           <div class="portal-curriculum-tag">Carte SVG Interactive • Drapeaux • Capitales</div>
         </div>
-        <span class="card-rea-badge">✨ v23.0 KIDS-CINEMA (v1.16.0) • ▶ JOUER</span>
+        <span class="card-rea-badge">✨ v1.32.1 • ▶ JOUER</span>
       </div>
       <p class="portal-desc">Pars en mission Seterra : trouve toi-même le bon pays sur la vraie carte d'Afrique (par nom, drapeau ou capitale), gagne chaque drapeau et remplis ton Atlas personnel des 49 pays !</p>
       <div class="portal-counts-badge-bar">
@@ -4351,7 +4572,7 @@ body.age-mat #world-hero-banner .whb-copy i { display:none; }
           <h3>Tour du Savoir : Quiz & Blocs Empilés</h3>
           <div class="portal-curriculum-tag">Quiz Choix Multiples • Indice 50/50 • Afrique</div>
         </div>
-        <span class="card-rea-badge">✨ v23.0 KIDS-CINEMA (v1.16.0) • ▶ JOUER</span>
+        <span class="card-rea-badge">✨ v1.32.1 • ▶ JOUER</span>
       </div>
       <p class="portal-desc">Chaque bonne réponse devient un bloc qui tombe et rebondit sur ta Tour du Savoir ! Chrono Kahoot, étoiles de vitesse, indice 50/50 et merveilles d'Afrique, animaux, espace et sciences !</p>
       <div class="portal-counts-badge-bar">
@@ -4370,7 +4591,7 @@ body.age-mat #world-hero-banner .whb-copy i { display:none; }
           <h3>Compréhension de Texte & Contes</h3>
           <div class="portal-curriculum-tag">Lecture Karaoké FR/EN • Quiz Compréhension</div>
         </div>
-        <span class="card-rea-badge">✨ v23.0 KIDS-CINEMA (v1.16.0) • ▶ JOUER</span>
+        <span class="card-rea-badge">✨ v1.32.1 • ▶ JOUER</span>
       </div>
       <p class="portal-desc">Écoute et lis des contes africains et scientifiques bilingues avec surlignage phrase par phrase, puis réponds aux questions de compréhension !</p>
       <div class="portal-counts-badge-bar">
@@ -4389,7 +4610,7 @@ body.age-mat #world-hero-banner .whb-copy i { display:none; }
           <h3>Monstre des Syllabes & Lecture</h3>
           <div class="portal-curriculum-tag">Feed The Monster • Voyelles & Consonnes</div>
         </div>
-        <span class="card-rea-badge">✨ v23.0 KIDS-CINEMA (v1.16.0) • ▶ JOUER</span>
+        <span class="card-rea-badge">✨ v1.32.1 • ▶ JOUER</span>
       </div>
       <p class="portal-desc">Nourris le Monstre magique avec les bonnes syllabes colorées (voyelles en rouge, consonnes en bleu) pour former des mots en français et en anglais !</p>
       <div class="portal-counts-badge-bar">
@@ -4408,7 +4629,7 @@ body.age-mat #world-hero-banner .whb-copy i { display:none; }
           <h3>Maths 3D, Fractions & Balance Algébrique</h3>
           <div class="portal-curriculum-tag">Boîtes de 10 • Disque Fractions • Balance 2x+4</div>
         </div>
-        <span class="card-rea-badge">✨ v23.0 KIDS-CINEMA (v1.16.0) • ▶ JOUER</span>
+        <span class="card-rea-badge">✨ v1.32.1 • ▶ JOUER</span>
       </div>
       <p class="portal-desc">Manipule les boîtes de 10, le disque interactif des fractions et la balance algébrique selon ta classe (de la Maternelle au CM2 / Primary 6) !</p>
       <div class="portal-counts-badge-bar">
@@ -4427,7 +4648,7 @@ body.age-mat #world-hero-banner .whb-copy i { display:none; }
           <h3>Labo Chimie & Échelle pH</h3>
           <div class="portal-curriculum-tag">Sciences • Réactions • Indicateur pH 0–14</div>
         </div>
-        <span class="card-rea-badge">✨ v23.0 KIDS-CINEMA (v1.16.0) • ▶ JOUER</span>
+        <span class="card-rea-badge">✨ v1.32.1 • ▶ JOUER</span>
       </div>
       <p class="portal-desc">Verse les éprouvettes dans l'erlenmeyer, observe l'indicateur de pH en direct, les mélanges de couleurs et l'effervescence des bulles de gaz !</p>
       <div class="portal-counts-badge-bar">
@@ -4446,7 +4667,7 @@ body.age-mat #world-hero-banner .whb-copy i { display:none; }
           <h3>Bassin d'Archimède (Flotte/Coule)</h3>
           <div class="portal-curriculum-tag">Physique • Vecteurs Poussée ↑Fa & Poids ↓P</div>
         </div>
-        <span class="card-rea-badge">✨ v23.0 KIDS-CINEMA (v1.16.0) • ▶ JOUER</span>
+        <span class="card-rea-badge">✨ v1.32.1 • ▶ JOUER</span>
       </div>
       <p class="portal-desc">Plonge le bois, la mangue, l'or ou la brique dans l'eau et visualise en direct les vecteurs de la poussée d'Archimède (↑Fa) et du poids (↓P) !</p>
       <div class="portal-counts-badge-bar">
@@ -4465,7 +4686,7 @@ body.age-mat #world-hero-banner .whb-copy i { display:none; }
           <h3>Circuit Électrique 3D & Oscilloscope</h3>
           <div class="portal-curriculum-tag">Loi d'Ohm (U=R×I) • Électrons & Hélice</div>
         </div>
-        <span class="card-rea-badge">✨ v23.0 KIDS-CINEMA (v1.16.0) • ▶ JOUER</span>
+        <span class="card-rea-badge">✨ v1.32.1 • ▶ JOUER</span>
       </div>
       <p class="portal-desc">Ferme l'interrupteur pour observer la circulation des électrons bleus, allumer l'ampoule de 4,5 V et faire tourner l'hélice du moteur électrique !</p>
       <div class="portal-counts-badge-bar">
@@ -4484,7 +4705,7 @@ body.age-mat #world-hero-banner .whb-copy i { display:none; }
           <h3>Jardin Botanique & Photosynthèse</h3>
           <div class="portal-curriculum-tag">Biologie • Racines, Tige & Floraison 21 Jours</div>
         </div>
-        <span class="card-rea-badge">✨ v23.0 KIDS-CINEMA (v1.16.0) • ▶ JOUER</span>
+        <span class="card-rea-badge">✨ v1.32.1 • ▶ JOUER</span>
       </div>
       <p class="portal-desc">Dose la pluie et le soleil pour faire germer le Baobab, le Tournesol, le Cacaoyer et l'Hibiscus en observant les racines pousser sous terre !</p>
       <div class="portal-counts-badge-bar">
@@ -4503,7 +4724,7 @@ body.age-mat #world-hero-banner .whb-copy i { display:none; }
           <h3>Comet Defender : Calcul Spatial</h3>
           <div class="portal-curriculum-tag">TuxMath Arcade • Lasers & Calcul Mental</div>
         </div>
-        <span class="card-rea-badge">✨ v23.0 KIDS-CINEMA (v1.16.0) • ▶ JOUER</span>
+        <span class="card-rea-badge">✨ v1.32.1 • ▶ JOUER</span>
       </div>
       <p class="portal-desc">Pilote le vaisseau spatial et tire au laser sur la comète qui porte la bonne réponse à l'équation affichée sur le tableau de bord !</p>
       <div class="portal-counts-badge-bar">
@@ -4522,7 +4743,7 @@ body.age-mat #world-hero-banner .whb-copy i { display:none; }
           <h3>Tangram Géométrique Magnétique</h3>
           <div class="portal-curriculum-tag">Mathigon Euclid • Polygones & Silhouettes</div>
         </div>
-        <span class="card-rea-badge">✨ v23.0 KIDS-CINEMA (v1.16.0) • ▶ JOUER</span>
+        <span class="card-rea-badge">✨ v1.32.1 • ▶ JOUER</span>
       </div>
       <p class="portal-desc">Assemble la Fusée, le Bateau, le Chat, le Lion et le Papillon en glissant les polygones géométriques avec aimantation de précision !</p>
       <div class="portal-counts-badge-bar">
@@ -4541,7 +4762,7 @@ body.age-mat #world-hero-banner .whb-copy i { display:none; }
           <h3>Donjon Labyrinthe 3D (Vue 3D & Raycast)</h3>
           <div class="portal-curriculum-tag">Blockly Maze • Algorithme & Syllabes</div>
         </div>
-        <span class="card-rea-badge">✨ v23.0 KIDS-CINEMA (v1.16.0) • ▶ JOUER</span>
+        <span class="card-rea-badge">✨ v1.32.1 • ▶ JOUER</span>
       </div>
       <p class="portal-desc">Guide Léo dans les 5 cartes de la Savane (Oasis, Pyramide, Volcan, Jungle) en collectant les syllabes et nombres d'or ou utilise le bouton Auto-Pas !</p>
       <div class="portal-counts-badge-bar">
@@ -4563,7 +4784,7 @@ body.age-mat #world-hero-banner .whb-copy i { display:none; }
         <div class="hud-badge red" id="hud-exercise-badge">🎯 Exercice 1/5 • Niveau 1</div>
       </div>
       <div class="hud-stats">
-        <span class="hud-badge" id="hud-version-pill" style="background:#312E81;color:#FDE047;border:1.5px solid #38BDF8;font-size:0.72rem;padding:4px 8px;">🚀 v23.0 (v1.16.0)</span>
+        <span class="hud-badge" id="hud-version-pill" style="background:#312E81;color:#FDE047;border:1.5px solid #38BDF8;font-size:0.72rem;padding:4px 8px;">🚀 v1.32.1</span>
         <div class="hud-badge" id="hud-reward-chest" title="Coffre à Récompenses Éducatives (Stickers & Trophées)" style="background:#065F46;color:#FEF08A;border:1.5px solid #34D399;cursor:pointer;">🎁 <span id="hud-sticker-count">1</span> <span id="hud-latest-sticker">🦁</span></div>
         <div class="hud-badge">⭐ <span id="hud-score-val">0</span> XP</div>
         <div class="combo-multiplier" id="hud-combo-badge">🔥 COMBO x1</div>
@@ -15478,7 +15699,7 @@ body.age-mat #world-hero-banner .whb-copy i { display:none; }
         sessionStorage.clear();
       } catch (e) {}
       const url = new URL(window.location.href);
-      url.searchParams.set('v', '23.0.' + Date.now());
+      url.searchParams.set('v', '1.32.1.' + Date.now());
       window.location.replace(url.toString());
     });
   }

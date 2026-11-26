@@ -1,5 +1,18 @@
 # Changelog
 
+## v1.32.1 — 2026-11-26
+- **Cache-Buster & Version Display Hardening ("Version did not upgrade" resolution)**:
+  - Bumper service worker cache name to `nateiva-school-game-v1-32-1` in `sw.js` and `public/sw.js`, automatically invalidating and evicting legacy caches.
+  - Hardened `play.html` with synchronized `APP_VERSION = '1.32.1'` and an interactive, visible version pill (`#ver-tag`) allowing one-tap cache clearance and automatic page reload.
+  - Unified all 22 game card badges, top header pills, and HUD badges across `index.html` and `arcade.html` to `🚀 v1.32.1`.
+  - Registered `sw.js` with `.update()` check in `play.html` for instant updates across mobile browsers.
+- **Phone Screen Full-Fit & Overlap Prevention (Mobile-First Viewports $\le 680\text{px}$)**:
+  - Fixed character and text layout in `story_lab`: cartoon speech bubbles now stack cleanly above actors, preventing any overlap between speech text, characters, gear, or background scenery props on narrow mobile screens.
+  - Character actors (`🦁` Momo with safari cap, `🐒` Nia with backpack) scaled and centered for touch screens with responsive sizing.
+  - Pronunciation studio, lip articulation mouth cards, and karaoke word chips dynamically wrap with touch-friendly tap targets.
+  - Pedagogical takeaway cards and Exam Hall dialogs now constrain to `max-height: 90vh` with native smooth scrolling to fit mobile screens in both portrait and landscape.
+  - Africa geography SVG map and info panels re-proportioned for zero text overlap.
+
 ## v1.32.0 — 2026-11-25
 - **Pedagogical Takeaway Loop ("💡 Ce que j'ai appris" / "What I learned")**:
   - Every activity across all games now displays and voice-narrates an interactive recap card summarizing the exact curriculum learning objective (number sense, phonemic awareness, mental math shortcuts, scientific rules, bilingual vocabulary).
