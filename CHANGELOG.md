@@ -1,5 +1,13 @@
 # Changelog
 
+## v1.31.0 — 2026-11-27
+- **Chapter Adventure engine**: every island is now a story-ordered curriculum. Activities became numbered CHAPTERS (Chapitre 1 → 2 → 3…) — each one locked 🔒 until the previous is mastered, the current one glowing with an "À toi !" tag. Finishing a chapter offers "Chapitre suivant ➡" right from the victory card, so the kid rides the adventure without going back to the menu.
+- **🏆 Grand Défi (final chapter)**: once every chapter is mastered, the island's FINAL challenge unlocks — a boss-arena round of 5 grade-tailored questions summing up the island's subject, with Léo cheering, 🔥 streak counter, arena styling, and the island crown 👑 as the prize. The crown now requires the Grand Défi.
+- **Exam center with trials**: the Academy now separates ENTRAÎNEMENT (topic-by-topic prep with step-by-step tricks) from the EXAMEN BLANC. Every exam attempt is logged per class: results show "Essai n°3 : 8/10 — RECORD! 🆕" and the trajectory "4/10 → 6/10 → 8/10 📈", and the Academy home shows the kid's level (💪 Débutant → 👍 En progrès → 🌟 Avancé → 🏆 Expert).
+- **Per-class game identity**: chapter sets AND titles now change with the class (MAT fishes "Attrape les poissons", CP plays "Pêche aux couleurs", CM1 gets "Chasse sous-marine"; "Épelle le mot" becomes "Mots pièges", "Docteur des plantes" becomes "Botaniste expert"…) on top of the per-class content, difficulty ramps and Grand Défi questions.
+- **Arcade juice**: cartoon pop-in with overshoot on every chapter card, quiz panel, answer button and Sage chip (staggered), bouncy hover/press — honors prefers-reduced-motion.
+- Smoke suite: fresh-save lock behavior, Grand Défi full run to the crown, exam-trial logging, and the full door crawl now pre-unlocks chapters. Both orientations pass.
+
 ## v1.30.0 — 2026-11-24
 - **Mastery curriculum loop (Duolingo/Khan-style)**: every island is now a subject curriculum. An activity's star ⭐ is earned only by FINISHING its 5 exercises (not just opening it). Master every activity of an island → animated **crown 👑** on the trail. Activity menus show "Maîtrise les 3 leçons ! (1/3 ⭐)".
 - **Class progression**: progress pill on the map ("CP : 12/21 îles 👑"); mastering all 21 islands triggers the class-complete celebration and a big pulsing **"🎓 CLASSE TERMINÉE ! Passe en CE1 →"** button that moves the child up a class (switching earlier via the class pills still works). Crowns are per-class — a new class starts a fresh quest.

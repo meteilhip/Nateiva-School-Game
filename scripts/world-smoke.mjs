@@ -107,8 +107,9 @@ const d = window.document;
     diffReport.push(z.key + ':' + seen.size);
   }
   console.log('MISSION VARIETY (zone:distinct across MAT/CE1/CM2):', diffReport.join(' '));
-  // every activity door opens and builds a stage
+  // every activity door opens and builds a stage (pre-master everything so all chapters are unlocked for the crawl)
   const MENUZ = ['orchard', 'bubbles', 'paint', 'splash', 'garden', 'safari', 'chess', 'words', 'builder', 'music', 'pets', 'puzzle', 'parrot'];
+  for (const g of [0, 6]) { W.save.grade = g; for (const z of W.ZONES) for (const a of W.Mastery.zoneActs(z.key)) W.Mastery.mark(z.key, a.id); }
   for (const zk of MENUZ) {
     for (const g of [0, 6]) {
       W.save.grade = g;
@@ -147,6 +148,7 @@ const d = window.document;
       }
       const sc = d.querySelector('.qz-score');
       if (!sc || !/\/ 10/.test(sc.textContent)) errs.push('exam@g' + g + ': no /10 results sheet');
+      if (!((W.save.examLog || {})[g] || []).length) errs.push('exam@g' + g + ': trial not logged in examLog');
       if (seenQs.size < (g <= 2 ? 7 : 8)) errs.push('exam@g' + g + ': questions repeat too much (' + seenQs.size + '/10 unique)');
     } catch (e) { errs.push('exam@g' + g + ' CRASH: ' + (e.stack || e.message).split('\n')[0]); }
     W.showMap(); await sleep(40);
@@ -172,6 +174,36 @@ const d = window.document;
       if (q.ch.some(c => !c[0] || !c[1])) errs.push('griot ' + st2.id + ' q' + i + ': empty choice');
       if (!q.sf || !q.sf.length || !q.se || !q.se.length) errs.push('griot ' + st2.id + ' q' + i + ': missing steps');
     });
+  }
+  // ---- CHAPTER LOCKS: with a fresh save, chapter 2 must refuse until chapter 1 is mastered ----
+  {
+    W.save.acts = {}; W.save.grade = 6;
+    W.enterZone('orchard'); await sleep(90);
+    let cards = [...d.querySelectorAll('#scene-game .act-card')];
+    if (cards.length < 3) errs.push('chapters: orchard@g6 expected several chapters, got ' + cards.length);
+    if (!cards.some(c => c.classList.contains('locked'))) errs.push('chapters: no locked chapter on fresh save');
+    if (!cards[cards.length - 1] || !cards[cards.length - 1].textContent.includes('FINAL')) errs.push('chapters: Grand Défi card missing/last');
+    const locked = cards.find(c => c.classList.contains('locked'));
+    if (locked) { locked.click(); await sleep(80); if (!d.querySelector('#scene-game .act-menu')) errs.push('chapters: locked chapter opened anyway'); }
+    cards[0].click(); await sleep(110);
+    if (!d.querySelector('#scene-game svg')) errs.push('chapters: chapter 1 did not open on fresh save');
+    W.showMap(); await sleep(30);
+    // GRAND DÉFI: master the regular chapters, then the final must run as a 5-question themed quiz to the crown
+    for (const a of W.Mastery.zoneActs('orchard')) if (a.id !== '_final') W.Mastery.mark('orchard', a.id);
+    W.enterZone('orchard', '_final'); await sleep(120);
+    let okGD = true;
+    for (let k = 0; k < 5 && okGD; k++) {
+      const ans = [...d.querySelectorAll('#scene-game .qz-a')];
+      if (!ans.length) { errs.push('granddefi: no answers at Q' + (k + 1)); okGD = false; break; }
+      ans[k % ans.length].click(); await sleep(60);
+      const nx = d.querySelector('#scene-game .qz-next.on');
+      if (!nx) { errs.push('granddefi: next missing at Q' + (k + 1)); okGD = false; break; }
+      nx.click(); await sleep(90);
+    }
+    if (okGD && !W.Mastery.has('orchard', '_final')) errs.push('granddefi: final not marked mastered after completion');
+    if (okGD && !W.Mastery.zoneDone('orchard')) errs.push('granddefi: zone not crowned after final');
+    d.getElementById('cheer-card').classList.remove('on');
+    W.save.acts = {}; W.showMap(); await sleep(30);
   }
   // ---- SAGE Q&A: every sample question + country lookups must answer ----
   {

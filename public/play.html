@@ -239,6 +239,24 @@ html,body{ width:100%; height:100%; overflow:hidden; font-family:'Baloo 2','Fred
 .act-card{ background:rgba(255,255,255,0.92); backdrop-filter:blur(8px); border:4px solid #fff; border-radius:26px; padding:16px 10px 14px; text-align:center; cursor:pointer; box-shadow:0 12px 30px rgba(0,0,0,0.25); transition:transform 0.18s cubic-bezier(0.34,1.56,0.64,1); position:relative; font-family:inherit; }
 .act-card:active{ transform:scale(0.94); }
 .act-card:hover{ transform:scale(1.05); }
+@keyframes popIn{ 0%{ transform:scale(0.3) rotate(-6deg); opacity:0; } 70%{ transform:scale(1.08) rotate(2deg); } 100%{ transform:scale(1) rotate(0); opacity:1; } }
+.act-card{ animation:popIn 0.5s cubic-bezier(0.34,1.56,0.64,1) backwards; }
+.act-card:nth-child(1){ animation-delay:0.05s; } .act-card:nth-child(2){ animation-delay:0.14s; } .act-card:nth-child(3){ animation-delay:0.23s; } .act-card:nth-child(4){ animation-delay:0.32s; } .act-card:nth-child(5){ animation-delay:0.41s; } .act-card:nth-child(6){ animation-delay:0.5s; } .act-card:nth-child(7){ animation-delay:0.59s; }
+.qz-panel{ animation:popIn 0.45s cubic-bezier(0.34,1.56,0.64,1) backwards; }
+.qz-a{ animation:popIn 0.4s cubic-bezier(0.34,1.56,0.64,1) backwards; transition:transform 0.15s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.15s; }
+.qz-a:nth-child(1){ animation-delay:0.1s; } .qz-a:nth-child(2){ animation-delay:0.2s; } .qz-a:nth-child(3){ animation-delay:0.3s; } .qz-a:nth-child(4){ animation-delay:0.4s; }
+.qz-a:hover{ transform:scale(1.06) rotate(-1deg); }
+.qz-a:active{ transform:scale(0.92); }
+.qz-a.good{ animation:popIn 0.45s cubic-bezier(0.34,1.56,0.64,1); }
+.sage-card{ animation:popIn 0.5s cubic-bezier(0.34,1.56,0.64,1) backwards; }
+.sage-chip{ animation:popIn 0.4s cubic-bezier(0.34,1.56,0.64,1) backwards; }
+.sage-chip:nth-child(2){ animation-delay:0.06s; } .sage-chip:nth-child(3){ animation-delay:0.12s; } .sage-chip:nth-child(4){ animation-delay:0.18s; } .sage-chip:nth-child(5){ animation-delay:0.24s; } .sage-chip:nth-child(6){ animation-delay:0.3s; } .sage-chip:nth-child(7){ animation-delay:0.36s; } .sage-chip:nth-child(8){ animation-delay:0.42s; } .sage-chip:nth-child(9){ animation-delay:0.48s; }
+@media (prefers-reduced-motion: reduce){ .act-card,.qz-panel,.qz-a,.sage-card,.sage-chip{ animation:none; } }
+.act-card.locked{ filter:grayscale(0.9); opacity:0.55; cursor:not-allowed; }
+.act-card.now{ border-color:#FFD23F; box-shadow:0 0 0 5px rgba(255,210,63,0.55), 0 12px 30px rgba(0,0,0,0.25); animation:appleFloat 2.6s ease-in-out infinite; }
+.act-chap{ position:absolute; top:-13px; left:50%; transform:translateX(-50%); background:#2B2D42; color:#FFD23F; font-weight:800; font-size:0.78rem; padding:3px 12px; border-radius:999px; border:2px solid #FFD23F; white-space:nowrap; }
+.act-lock{ position:absolute; top:8px; right:10px; font-size:1.3rem; }
+.act-now-tag{ position:absolute; bottom:-12px; left:50%; transform:translateX(-50%); background:linear-gradient(135deg,#FF2A32,#E5252A); color:#fff; font-weight:800; font-size:0.78rem; padding:3px 12px; border-radius:999px; border:2px solid #fff; white-space:nowrap; }
 .act-ic{ width:74px; height:74px; margin:0 auto; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:2.3rem; color:#fff; box-shadow:inset 0 -5px 10px rgba(0,0,0,0.18); }
 .act-name{ margin-top:9px; font-weight:800; font-size:1.05rem; color:#2B2D42; }
 .act-done{ position:absolute; top:-10px; right:-6px; font-size:1.3rem; filter:drop-shadow(0 2px 3px rgba(0,0,0,0.3)); }
@@ -598,7 +616,7 @@ function iconSvg(builder, vb = '0 0 24 24') {
   return svg;
 }
 
-const APP_VERSION = '1.30.0';
+const APP_VERSION = '1.31.0';
 // animated pointing hand: shows toddlers WHAT to touch (MAT/SIL only)
 function handHint(svg, x, y) {
   if (D() > 1) return;
@@ -710,7 +728,7 @@ const Mastery = {
   key(zKey, actId) { return 'g' + save.grade + ':' + zKey + ':' + (actId || 'main'); },
   mark(zKey, actId) { save.acts = save.acts || {}; save.acts[this.key(zKey, actId)] = 1; persist(); },
   has(zKey, actId) { const a = save.acts || {}; return !!(a[this.key(zKey, actId)] || a[zKey + ':' + (actId || 'main')]); },
-  zoneActs(zKey) { const m = ZONE_MENUS[zKey]; const acts = m ? m(D()) : null; return (acts && acts.length) ? acts : [{ id: 'main' }]; },
+  zoneActs(zKey) { const m = ZONE_MENUS[zKey]; const acts = m ? m(D()) : null; if (!acts || !acts.length) return [{ id: 'main' }]; return acts.length > 1 ? acts.concat([{ id: '_final', fr: 'Grand Défi', en: 'Grand Challenge', ic: '\uD83C\uDFC6' }]) : acts; },
   zoneDone(zKey) { return this.zoneActs(zKey).every(a => this.has(zKey, a.id)); },
   classCount() { return ZONES.filter(z => this.zoneDone(z.key)).length; },
   classDone() { return this.classCount() >= ZONES.length; }
@@ -738,14 +756,30 @@ function zoneComplete() {
   else if (newCrown) { sub2.textContent = '\uD83D\uDC51 ' + T('ÎLE MAÎTRISÉE ! Toutes les activités réussies !', 'ISLAND MASTERED! All activities complete!') + ' (' + Mastery.classCount() + '/' + ZONES.length + ')'; }
   const cs = $('cheer-stars'); cs.innerHTML = '';
   for (let i = 0; i < 3; i++) cs.appendChild(iconSvg(svg => drawStarIcon(svg, 1.9, i < stars ? '#FFD23F' : '#E3E6F0'), '0 0 46 46'));
-  $('cheer-btn').textContent = T("Retour à l'île", 'Back to the island');
+  zoneComplete._next = null;
+  if (!classNow) {
+    const chaps = Mastery.zoneActs(z);
+    if (chaps.length > 1) {
+      const reg = chaps.filter(a => a.id !== '_final');
+      const nxt = chaps.find(a => !Mastery.has(z, a.id) && (a.id === '_final' ? reg.every(r => Mastery.has(z, r.id)) : (reg.indexOf(a) === 0 || Mastery.has(z, reg[reg.indexOf(a) - 1].id))));
+      if (nxt) zoneComplete._next = { key: z, act: nxt.id, fr: nxt.fr, en: nxt.en, final: nxt.id === '_final', num: chaps.indexOf(nxt) + 1 };
+    }
+  }
+  $('cheer-btn').textContent = zoneComplete._next
+    ? (zoneComplete._next.final ? '\uD83C\uDFC6 ' + T('GRAND DÉFI ➡', 'GRAND CHALLENGE ➡') : T('Chapitre ' + zoneComplete._next.num + ' ➡ ' + zoneComplete._next.fr, 'Chapter ' + zoneComplete._next.num + ' ➡ ' + zoneComplete._next.en))
+    : T("Retour à l'île", 'Back to the island');
   $('cheer-card').classList.add('on');
   const lvTxt = zObj && zObj.lv ? T(zObj.lv[D() <= 1 ? 0 : D() <= 3 ? 1 : 2][0], zObj.lv[D() <= 1 ? 0 : D() <= 3 ? 1 : 2][1]) : '';
   if (classNow) say('INCROYABLE ! Tu as terminé toute la classe ' + GRADES[save.grade].code + ' ! Retourne sur la carte pour ta surprise !', 'INCREDIBLE! You finished the whole ' + GRADES[save.grade].code + ' class! Go back to the map for your surprise!');
   else if (newCrown) say('Bravo ! Île maîtrisée, tu gagnes une couronne ! ' + Mastery.classCount() + ' îles sur ' + ZONES.length + ' !', 'Amazing! Island mastered, you win a crown! ' + Mastery.classCount() + ' islands out of ' + ZONES.length + '!');
   else say('Bravo ! Tu as gagné ' + stars + ' étoiles !' + (lvTxt ? ' Leçon maîtrisée : ' + lvTxt + ' !' : ''), 'Amazing! You earned ' + stars + ' stars!' + (lvTxt ? ' Lesson mastered: ' + lvTxt + '!' : ''));
 }
-$('cheer-btn').addEventListener('click', () => { $('cheer-card').classList.remove('on'); showMap(); });
+$('cheer-btn').addEventListener('click', () => {
+  $('cheer-card').classList.remove('on');
+  const nx = zoneComplete._next;
+  zoneComplete._next = null;
+  if (nx) { sfx.boing(); enterZone(nx.key, nx.act); } else showMap();
+});
 function updateStarPill() {
   let n = 0; Object.values(save.stars).forEach(v => n += v);
   $('star-count').textContent = n;
@@ -1144,8 +1178,8 @@ const ZONE_MENUS = {
     d >= 4 && { id: 'share', fr: 'Partager', en: 'Share', ic: '÷' }
   ].filter(Boolean),
   bubbles: d => [
-    { id: 'catch', fr: 'Attrape et compte', en: 'Catch and count', ic: '🐠' },
-    d >= 2 && { id: 'sum', fr: 'Bulles à sommes', en: 'Sum bubbles', ic: '∑' }
+    { id: 'catch', fr: d <= 0 ? 'Attrape les poissons' : d <= 2 ? 'Pêche aux couleurs' : 'Chasse sous-marine', en: d <= 0 ? 'Catch the fish' : d <= 2 ? 'Color fishing' : 'Deep-sea hunt', ic: '🐠' },
+    d >= 2 && { id: 'sum', fr: d <= 3 ? 'Bulles à sommes' : 'Sommes géantes', en: d <= 3 ? 'Sum bubbles' : 'Giant sums', ic: '∑' }
   ].filter(Boolean),
   paint: d => [
     { id: 'zebra', fr: 'Le zèbre', en: 'The zebra', ic: '🦓' },
@@ -1158,7 +1192,7 @@ const ZONE_MENUS = {
   ].filter(Boolean),
   garden: d => [
     { id: 'grow', fr: 'Fais pousser', en: 'Grow it', ic: '🌱' },
-    d >= 2 && { id: 'organs', fr: 'Docteur des plantes', en: 'Plant doctor', ic: '🌿' }
+    d >= 2 && { id: 'organs', fr: d <= 3 ? 'Docteur des plantes' : 'Botaniste expert', en: d <= 3 ? 'Plant doctor' : 'Expert botanist', ic: '🌿' }
   ].filter(Boolean),
   safari: d => [
     { id: 'lands', fr: 'Trouve les pays', en: 'Find the countries', ic: '🌍' },
@@ -1170,8 +1204,8 @@ const ZONE_MENUS = {
     return base.map(k2 => ({ id: k2, fr: names[k2][0], en: names[k2][1], ic: names[k2][2] })).concat([{ id: 'all', fr: 'Tous mélangés !', en: 'All mixed!', ic: '🏰' }]);
   },
   words: d => [
-    { id: 'first', fr: 'Première lettre', en: 'First letter', ic: 'A' },
-    d >= 1 && { id: 'spell', fr: 'Épelle le mot', en: 'Spell the word', ic: 'ABC' }
+    { id: 'first', fr: d <= 1 ? 'Première lettre' : 'Lettre éclair', en: d <= 1 ? 'First letter' : 'Lightning letter', ic: 'A' },
+    d >= 1 && { id: 'spell', fr: d <= 3 ? 'Épelle le mot' : 'Mots pièges', en: d <= 3 ? 'Spell the word' : 'Tricky words', ic: 'ABC' }
   ].filter(Boolean),
   builder: () => [
     { id: 's1', fr: 'La maison', en: 'The house', ic: '🏠' },
@@ -1190,7 +1224,7 @@ const ZONE_MENUS = {
   },
   music: d => [
     { id: 'xylo', fr: 'Xylophone libre', en: 'Free xylophone', ic: '🎵' },
-    { id: 'melody', fr: 'Répète la mélodie', en: 'Repeat the melody', ic: '🎶' }
+    { id: 'melody', fr: d <= 2 ? 'Répète la mélodie' : 'Mélodies de maestro', en: d <= 2 ? 'Repeat the melody' : 'Maestro melodies', ic: '🎶' }
   ],
   pets: () => [
     { id: 'puppy', fr: 'Chiot Biscuit', en: 'Biscuit the puppy', ic: '🐶' },
@@ -1199,28 +1233,108 @@ const ZONE_MENUS = {
   ],
   puzzle: d => [
     { id: 'formes', fr: 'Formes magiques', en: 'Magic shapes', ic: '⭐' },
-    d >= 1 && { id: 'images', fr: 'Puzzles images', en: 'Picture jigsaws', ic: '🧩' }
+    d >= 1 && { id: 'images', fr: d <= 4 ? 'Puzzles images' : 'Puzzles 4 pièces', en: d <= 4 ? 'Picture jigsaws' : '4-piece jigsaws', ic: '🧩' }
   ].filter(Boolean)
 };
 function showActMenu(host, z, acts) {
+  // the curriculum adventure: ordered chapters, each unlocked by mastering the one before,
+  // crowned by the Grand Défi that sums up the whole lesson
+  const chapters = Mastery.zoneActs(z.key);
   const wrap = H('div', { class: 'act-menu' }, host);
   wrap.style.background = `linear-gradient(165deg, ${z.subject.color} 0%, rgba(43,45,66,0.92) 130%)`;
   H('div', { class: 'act-title', text: T(z.fr, z.en) }, wrap);
-  const nd = acts.filter(a => Mastery.has(z.key, a.id)).length;
-  H('div', { class: 'act-sub', text: (nd >= acts.length ? '\uD83D\uDC51 ' : '') + T('Maîtrise les ' + acts.length + ' leçons ! (' + nd + '/' + acts.length + ' ⭐)', 'Master all ' + acts.length + ' lessons! (' + nd + '/' + acts.length + ' ⭐)') }, wrap);
+  const nd = chapters.filter(a => Mastery.has(z.key, a.id)).length;
+  const regular = chapters.filter(a => a.id !== '_final');
+  const unlocked = a => {
+    if (a.id === '_final') return regular.every(r => Mastery.has(z.key, r.id));
+    const i = regular.indexOf(a);
+    return i === 0 || Mastery.has(z.key, regular[i - 1].id);
+  };
+  const nowChap = chapters.find(a => unlocked(a) && !Mastery.has(z.key, a.id));
+  H('div', { class: 'act-sub', text: nd >= chapters.length ? '\uD83D\uDC51 ' + T('Aventure terminée ! Rejoue tes chapitres préférés !', 'Adventure complete! Replay your favorite chapters!') : T('Ton aventure : ' + nd + '/' + chapters.length + ' chapitres ⭐', 'Your adventure: ' + nd + '/' + chapters.length + ' chapters ⭐') }, wrap);
   const grid = H('div', { class: 'act-grid' }, wrap);
-  acts.forEach(a => {
-    const card = H('button', { class: 'act-card' }, grid);
+  chapters.forEach((a, i) => {
+    const isFinal = a.id === '_final';
+    const open = unlocked(a);
+    const card = H('button', { class: 'act-card' + (open ? '' : ' locked') + (nowChap === a ? ' now' : '') }, grid);
+    H('div', { class: 'act-chap', text: isFinal ? '\uD83C\uDFC6 ' + T('FINAL', 'FINAL') : T('Chapitre ' + (i + 1), 'Chapter ' + (i + 1)) }, card);
     const ic = H('div', { class: 'act-ic', text: a.ic }, card);
-    ic.style.background = `linear-gradient(145deg, ${z.color}, ${z.subject.color})`;
+    ic.style.background = isFinal ? 'linear-gradient(145deg,#FFD23F,#E58E09)' : `linear-gradient(145deg, ${z.color}, ${z.subject.color})`;
     H('div', { class: 'act-name', text: T(a.fr, a.en) }, card);
     if (Mastery.has(z.key, a.id)) H('div', { class: 'act-done', text: '⭐' }, card);
+    if (!open) H('div', { class: 'act-lock', text: '\uD83D\uDD12' }, card);
+    if (nowChap === a) H('div', { class: 'act-now-tag', text: T('À toi !', 'Your turn!') }, card);
     card.addEventListener('click', () => {
+      if (!open) {
+        sfx.bad(); fxWobble(card);
+        const pn = regular.indexOf(a); // 0-based index of a = 1-based number of the previous chapter
+        say(isFinal ? 'Le Grand Défi s\u2019ouvre quand tous les chapitres sont réussis !' : 'Termine d\u2019abord le chapitre ' + pn + ' !',
+          isFinal ? 'The Grand Challenge opens once every chapter is mastered!' : 'Finish chapter ' + pn + ' first!');
+        return;
+      }
       sfx.boing();
       enterZone(z.key, a.id);
     });
   });
-  mission('Choisis ton jeu dans ' + z.fr + ' !', 'Pick your game in ' + z.en + '!', ZONE_ICONS[z.key]);
+  if (nowChap) mission(nowChap.id === '_final' ? 'Tous les chapitres réussis ! Lance le GRAND DÉFI pour gagner ta couronne !' : 'Ton aventure continue : Chapitre ' + (chapters.indexOf(nowChap) + 1) + ' — ' + nowChap.fr + ' !',
+    nowChap.id === '_final' ? 'All chapters done! Take the GRAND CHALLENGE to win your crown!' : 'Your adventure continues: Chapter ' + (chapters.indexOf(nowChap) + 1) + ' — ' + nowChap.en + '!', ZONE_ICONS[z.key]);
+  else mission('Île maîtrisée ! Rejoue le chapitre que tu préfères !', 'Island mastered! Replay any chapter you like!', ZONE_ICONS[z.key]);
+}
+/* ---- GRAND DÉFI: the final chapter that sums up the island's curriculum (5 mixed questions, grade-tailored) ---- */
+function buildGrandDefi(host, z) {
+  const d = D();
+  const subKey = /MATH/.test(z.subject.fr) ? 'm' : /SCIEN|CONSTRUCTION/.test(z.subject.fr) ? 's' : /GÉO|OBSERVATION/.test(z.subject.fr) ? 'g' : 'l';
+  let pool = QUIZ_TOPICS.filter(t => d >= t.lo && d <= t.hi && t.sub === subKey);
+  if (pool.length < 2) pool = QUIZ_TOPICS.filter(t => d >= t.lo && d <= t.hi);
+  const wrap = H('div', { class: 'quiz-wrap' }, host);
+  const QN = 5;
+  let qi = 0, streak = 0; const usedT = {};
+  function ask() {
+    wrap.innerHTML = '';
+    const minUse = Math.min(...pool.map(t2 => usedT[t2.id] || 0));
+    const cand = pool.filter(t2 => (usedT[t2.id] || 0) === minUse);
+    const t = cand[ri(0, cand.length - 1)];
+    usedT[t.id] = (usedT[t.id] || 0) + 1;
+    const q = freshQ(t.id, d, t.gen);
+    const p = H('div', { class: 'qz-panel' }, wrap);
+    p.style.cssText = 'border-color:' + z.color + ';background:linear-gradient(170deg,#FFF8E1 0%,#fff 35%);box-shadow:0 0 0 6px ' + z.color + '44, 0 20px 45px rgba(43,45,66,0.3);';
+    const hero = H('div', {}, p);
+    hero.style.cssText = 'display:flex;align-items:center;gap:10px;justify-content:center;margin-bottom:4px;';
+    const lsv = iconSvg(g2 => drawLeo(g2, 0, 8, 0.72), '-55 -55 110 110'); lsv.style.width = lsv.style.height = '64px';
+    hero.appendChild(lsv);
+    const hs = H('div', { text: streak >= 2 ? '\uD83D\uDD25 ' + T('Série de ' + streak + ' !', 'Streak of ' + streak + '!') : '\uD83C\uDFC6 ' + T('GRAND DÉFI', 'GRAND CHALLENGE') }, hero);
+    hs.style.cssText = 'font-weight:800;font-size:1.25rem;color:' + (streak >= 2 ? '#E5252A' : '#2B2D42') + ';';
+    H('div', { class: 'qz-prog', text: T(z.fr, z.en) + ' — ' + T('Manche ', 'Round ') + (qi + 1) + ' / ' + QN }, p);
+    H('div', { class: 'qz-q', text: T(q.qf, q.qe) }, p);
+    if (q.dots) H('div', { class: 'qz-dots', text: q.dots }, p);
+    const grid = H('div', { class: 'qz-answers' }, p);
+    const row = H('div', { class: 'qz-btnrow' }, p);
+    const next = H('button', { class: 'qz-next', text: qi + 1 < QN ? T('Question suivante ➡', 'Next question ➡') : '\uD83C\uDFC6 ' + T('Gagner ma couronne !', 'Win my crown!') }, row);
+    let answered = false;
+    const btns = [];
+    q.ch.forEach(([cf, ce], i) => {
+      const b = H('button', { class: 'qz-a', text: T(cf, ce) }, grid);
+      btns.push(b);
+      b.addEventListener('click', () => {
+        if (answered) return; answered = true;
+        btns.forEach(x => x.disabled = true);
+        const ok = i === q.ci;
+        b.classList.add(ok ? 'good' : 'bad');
+        btns[q.ci].classList.add('good');
+        if (ok) {
+          streak++;
+          Rounds.gem();
+          if (streak >= 2) say(streak >= 4 ? 'Série de ' + streak + ' ! Tu es en FEU !' : 'Encore une bonne réponse ! Série de ' + streak + ' !', streak >= 4 ? 'Streak of ' + streak + '! You are on FIRE!' : 'Another one! Streak of ' + streak + '!');
+        } else { streak = 0; Rounds.miss(); sfx.bad(); say((isEN() ? q.se : q.sf)[0], null, 0.86); }
+        next.classList.add('on');
+      });
+    });
+    if (d <= 2) say(q.qf, q.qe, 0.84);
+    next.addEventListener('click', () => { sfx.tap(); qi++; if (qi < QN) ask(); else zoneComplete(); });
+  }
+  mission('Le GRAND DÉFI de ' + z.fr + ' : 5 questions qui mélangent tout ce que tu as appris ici !', 'The GRAND CHALLENGE of ' + z.en + ': 5 questions mixing everything you learned here!', ZONE_ICONS[z.key]);
+  say('Grand Défi ! Montre tout ce que tu as appris dans ' + z.fr + '. Cinq questions... bonne chance, champion !', 'Grand Challenge! Show everything you learned in ' + z.en + '. Five questions... good luck, champion!');
+  ask();
 }
 function enterZone(key, act) {
   activeZone = key;
@@ -1245,7 +1359,8 @@ function enterZone(key, act) {
   }
   ZoneAct.cur = act || null;
   fab.classList.toggle('on', !!(menu && menu.length > 1));
-  ZONE_BUILDERS[key](host);
+  if (act === '_final') buildGrandDefi(host, z);
+  else ZONE_BUILDERS[key](host);
   $('rotate-hint').classList.remove('on'); // zones are portrait-native since v1.23
 }
 $('mission-trick').addEventListener('click', ev => {
@@ -3211,8 +3326,14 @@ ZONE_BUILDERS.academy = function (host) {
     exBtn.style.background = 'linear-gradient(145deg,#5E60CE,#4EA8DE)';
     exBtn.addEventListener('click', () => { sfx.boing(); playExam(); });
     const best0 = (save.examBest || {})[save.grade];
-    if (best0 != null) H('div', { class: 'qz-sub', text: '\uD83C\uDFC6 ' + T('Meilleur score ', 'Best score ') + gradeName + ' : ' + best0 + ' / 10' }, p);
-    H('div', { class: 'qz-sub', text: T('\u2014 ou prépare l\u2019examen sujet par sujet \u2014', '\u2014 or prep the exam topic by topic \u2014') }, p);
+    const log0 = ((save.examLog || {})[save.grade] || []);
+    if (log0.length) {
+      const hist = H('div', { class: 'qz-cur' }, p);
+      const lvl = best0 >= 9 ? T('🏆 Expert', '🏆 Expert') : best0 >= 7 ? T('🌟 Avancé', '🌟 Advanced') : best0 >= 5 ? T('👍 En progrès', '👍 Improving') : T('💪 Débutant courageux', '💪 Brave beginner');
+      hist.innerHTML = '<b>' + T('Ton niveau en ' + gradeName + ' : ', 'Your level in ' + gradeName + ': ') + lvl + '</b> — ' + T('meilleur score ', 'best score ') + best0 + '/10<br>' +
+        T('Tes essais : ', 'Your tries: ') + log0.slice(-6).map(s2 => s2 + '/10').join(' \u2192 ') + (log0.length >= 2 && log0[log0.length - 1] > log0[log0.length - 2] ? ' \uD83D\uDCC8' : '');
+    } else if (best0 != null) H('div', { class: 'qz-sub', text: '\uD83C\uDFC6 ' + T('Meilleur score ', 'Best score ') + gradeName + ' : ' + best0 + ' / 10' }, p);
+    H('div', { class: 'qz-sub', text: T('\u2014 ENTRAÎNEMENT : prépare l\u2019examen sujet par sujet, avec les astuces \u2014', '\u2014 TRAINING: prep the exam topic by topic, with the tricks \u2014') }, p);
     const inp = H('input', { class: 'qz-search', type: 'text', autocomplete: 'off', spellcheck: 'false' }, p);
     inp.placeholder = T('Recherche un sujet : fractions, conjugaison, capitales…', 'Search a topic: fractions, conjugation, capitals…');
     const chips = H('div', { class: 'qz-chips' }, p);
@@ -3346,12 +3467,21 @@ ZONE_BUILDERS.academy = function (host) {
       save.examBest = save.examBest || {};
       const isRecord = score > (save.examBest[save.grade] || -1);
       if (isRecord) save.examBest[save.grade] = score;
+      save.examLog = save.examLog || {};
+      const log2 = save.examLog[save.grade] = (save.examLog[save.grade] || []);
+      log2.push(score);
+      if (log2.length > 10) log2.shift();
       persist();
       wrap.innerHTML = '';
       const p = H('div', { class: 'qz-panel' }, wrap);
       const mention = score >= 9 ? ['🏆 EXCELLENT !', '🏆 EXCELLENT!'] : score >= 7 ? ['🌟 TRÈS BIEN !', '🌟 VERY GOOD!'] : score >= 5 ? ['👍 BIEN — continue !', '👍 GOOD — keep going!'] : ['💪 Entraîne-toi et reviens !', '💪 Practise and come back!'];
       H('div', { class: 'qz-title', text: '📝 ' + T('Résultats — Examen ', 'Results — Exam ') + gradeName }, p);
-      H('div', { class: 'qz-score', text: score + ' / 10 — ' + T(mention[0], mention[1]) + (isRecord && score > 0 ? ' 🆕' : '') }, p);
+      H('div', { class: 'qz-score', text: T('Essai n°' + log2.length + ' : ', 'Try #' + log2.length + ': ') + score + ' / 10 — ' + T(mention[0], mention[1]) + (isRecord && score > 0 ? ' \uD83C\uDD95 ' + T('RECORD !', 'RECORD!') : '') }, p);
+      if (log2.length >= 2) {
+        const tr = H('div', { class: 'qz-sub' }, p);
+        const up = score > log2[log2.length - 2];
+        tr.textContent = T('Ta progression : ', 'Your progress: ') + log2.slice(-6).map(s4 => s4 + '/10').join(' \u2192 ') + (up ? ' \uD83D\uDCC8 ' + T('Tu montes !', 'Going up!') : '');
+      }
       records.forEach((r, i2) => {
         const row2 = H('div', { class: 'qz-sheet-row ' + (r.ok ? 'ok' : 'ko') }, p);
         const yours = T(r.q.ch[r.pick][0], r.q.ch[r.pick][1]);
@@ -3369,7 +3499,7 @@ ZONE_BUILDERS.academy = function (host) {
       if (score >= 9) { confetti(80); sfx.fanfare(); }
       say(T('Ton score : ', 'Your score: ') + score + T(' sur dix ! ', ' out of ten! '));
     }
-    say('Examen blanc, classe ' + gradeName + ' ! Dix questions, pas d’astuce pendant l’examen. Concentre-toi... c’est parti !', 'Mock exam, class ' + gradeName + '! Ten questions, no hints during the exam. Focus... here we go!');
+    say('Examen blanc, classe ' + gradeName + ' ! Dix questions, pas d\u2019astuce pendant l\u2019examen. Tu peux le repasser autant de fois que tu veux pour voir ton niveau monter. Concentre-toi... c\u2019est parti !', 'Mock exam, class ' + gradeName + '! Ten questions, no hints during the exam. Retake it as often as you like and watch your level climb. Focus... here we go!');
     ask();
   }
   Academy._exam = playExam;
