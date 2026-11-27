@@ -1,5 +1,13 @@
 # Changelog
 
+## v1.33.0 — 2026-11-27 (merge of the two development lines)
+- **Chapter Adventure engine**: every island is a story-ordered curriculum — numbered chapters (Chapitre 1 → 2 → 3), each locked 🔒 until the previous one is mastered, glowing "À toi !" tag on the current one, and "Chapitre suivant ➡" straight from the victory card.
+- **🏆 Grand Défi (final chapter)**: unlocks when all chapters are mastered — a boss-arena of 5 grade-tailored questions summing up the island's subject, with Léo, 🔥 streak counter and confetti; the island crown 👑 now requires it.
+- **Exam center**: keeps the 3 official sessions (Trimestre 1, Trimestre 2, Grand Examen Blanc CEP/FSLC) + diploma from v1.32, and adds the trial log: "Essai n°3 : 8/10 — RECORD 🆕", trajectory "4/10 → 6/10 → 8/10 📈", and a per-class level (💪 → 👍 → 🌟 → 🏆 Expert) on the Academy home.
+- **Per-class game identity**: chapter sets AND titles change with the class (MAT "Attrape les poissons" → CP "Pêche aux couleurs" → CM "Chasse sous-marine"; "Épelle le mot" → "Mots pièges"…), on top of v1.32's per-class missions and takeaways.
+- **Arcade juice**: cartoon pop-in with overshoot on chapter cards, quiz panels, answers and Sage chips (staggered), bouncy hover/press; honors prefers-reduced-motion.
+- Smoke suite: fresh-save chapter locks, full Grand Défi run to the crown, exam-trial logging; both orientations pass.
+
 ## v1.31.0 — 2026-11-27
 - **Chapter Adventure engine**: every island is now a story-ordered curriculum. Activities became numbered CHAPTERS (Chapitre 1 → 2 → 3…) — each one locked 🔒 until the previous is mastered, the current one glowing with an "À toi !" tag. Finishing a chapter offers "Chapitre suivant ➡" right from the victory card, so the kid rides the adventure without going back to the menu.
 - **🏆 Grand Défi (final chapter)**: once every chapter is mastered, the island's FINAL challenge unlocks — a boss-arena round of 5 grade-tailored questions summing up the island's subject, with Léo cheering, 🔥 streak counter, arena styling, and the island crown 👑 as the prize. The crown now requires the Grand Défi.
@@ -7,6 +15,67 @@
 - **Per-class game identity**: chapter sets AND titles now change with the class (MAT fishes "Attrape les poissons", CP plays "Pêche aux couleurs", CM1 gets "Chasse sous-marine"; "Épelle le mot" becomes "Mots pièges", "Docteur des plantes" becomes "Botaniste expert"…) on top of the per-class content, difficulty ramps and Grand Défi questions.
 - **Arcade juice**: cartoon pop-in with overshoot on every chapter card, quiz panel, answer button and Sage chip (staggered), bouncy hover/press — honors prefers-reduced-motion.
 - Smoke suite: fresh-save lock behavior, Grand Défi full run to the crown, exam-trial logging, and the full door crawl now pre-unlocks chapters. Both orientations pass.
+## v1.32.1 — 2026-11-26
+- **Cache-Buster & Version Display Hardening ("Version did not upgrade" resolution)**:
+  - Bumper service worker cache name to `nateiva-school-game-v1-32-1` in `sw.js` and `public/sw.js`, automatically invalidating and evicting legacy caches.
+  - Hardened `play.html` with synchronized `APP_VERSION = '1.32.1'` and an interactive, visible version pill (`#ver-tag`) allowing one-tap cache clearance and automatic page reload.
+  - Unified all 22 game card badges, top header pills, and HUD badges across `index.html` and `arcade.html` to `🚀 v1.32.1`.
+  - Registered `sw.js` with `.update()` check in `play.html` for instant updates across mobile browsers.
+- **Phone Screen Full-Fit & Overlap Prevention (Mobile-First Viewports $\le 680\text{px}$)**:
+  - Fixed character and text layout in `story_lab`: cartoon speech bubbles now stack cleanly above actors, preventing any overlap between speech text, characters, gear, or background scenery props on narrow mobile screens.
+  - Character actors (`🦁` Momo with safari cap, `🐒` Nia with backpack) scaled and centered for touch screens with responsive sizing.
+  - Pronunciation studio, lip articulation mouth cards, and karaoke word chips dynamically wrap with touch-friendly tap targets.
+  - Pedagogical takeaway cards and Exam Hall dialogs now constrain to `max-height: 90vh` with native smooth scrolling to fit mobile screens in both portrait and landscape.
+  - Africa geography SVG map and info panels re-proportioned for zero text overlap.
+
+## v1.32.0 — 2026-11-25
+- **Pedagogical Takeaway Loop ("💡 Ce que j'ai appris" / "What I learned")**:
+  - Every activity across all games now displays and voice-narrates an interactive recap card summarizing the exact curriculum learning objective (number sense, phonemic awareness, mental math shortcuts, scientific rules, bilingual vocabulary).
+  - Guarantees toddlers and primary students absorb explicit, actionable knowledge after every single activity before transitioning.
+  - Headless-safe auto-advance ensures 100% automated test compliance.
+- **Animated Cartoon Stories with Expressive Gear (`story_lab`)**:
+  - Rebuilt reading comprehension overlay with an animated cartoon theatrical stage.
+  - Features Momo the Lion (`🦁`) and Nia the Monkey (`🐒`) wearing responsive gear (safari cap, reading glasses, school backpack).
+  - Characters physically emote (bobbing, bouncing, cheering) with synchronized speech bubbles during sentence playback.
+  - Context-driven comprehension Q&A reinforces grammar, morals, and vocabulary.
+- **Visual Mental Math Shortcuts with Animated Demos (`math_lab`)**:
+  - Integrated 4 mental math visual shortcuts with animated interactive demos:
+    1. *Make-10 Addition Shortcut* (Complément à 10): Decomposition into ten-frames ($7 + 5 = 7 + 3 + 2 = 12$).
+    2. *Frog Hop Subtraction Shortcut* (La grenouille monte): Number line counting-up strategy from subtrahend to minuend.
+    3. *Double-the-Double Multiplication Shortcut* (Doubler deux fois): Array matrix visual decomposition ($\times 4 = \times 2 \times 2$).
+    4. *Fair Share Division Baskets* (Partage équitable): Dynamic basket distribution with visual remainder calculation.
+- **Reimagined 3-Tier Pronunciation Studio (`pronunciation_lab`)**:
+  - Multi-tier language studio with seamless mode switching:
+    1. *Tier 1: Sons & Phonèmes*: Lip articulation mouth guide, vocal vibration indicators, and acoustic playback.
+    2. *Tier 2: Mots en Syllabes*: Syllable karaoke beads, slow phonetic breakdown, and mic repetition scoring.
+    3. *Tier 3: Phrases Bilingues*: Full French & English everyday phrases with real-time word-by-word karaoke highlighting.
+- **Science, Orchard & Rhythm Overhaul**:
+  - *Science Lab*: Interactive pH scale acid/base pouring, Archimedes water level displacement ($\Delta V$), animated electron circuits with knife switch, and botany photosynthesis formulas.
+  - *Verger Magique (Orchard)*: Expanded fruit varieties (oranges, papayas, coconuts, mangoes, apples, bananas), Momo cartoon expressions, and explicit math takeaways.
+  - *Studio Rythmo*: Multi-octave rainbow xylophone, pitch distinction (grave vs aigu), and rhythm takeaways.
+- **Multiple Official Mock Exams System (`academy` & Exam Hall)**:
+  - Implemented 3 distinct examination sessions for each class:
+    1. *Session 1 · Trimestre 1*: Fondations & Éveil (early competencies).
+    2. *Session 2 · Trimestre 2*: Calcul Mental & Compréhension.
+    3. *Session 3 · Grand Examen Blanc*: Official national mock exam (CEP / FSLC / Brevet Blanc).
+  - Independent session record tracking (`save.examBest[grade + '_s' + sessId]`), answer sheets with step-by-step hints, and official celebratory Diplomas of Excellence for scores $\ge 8/10$.
+
+## v1.31.0 — 2026-11-25
+- **REA Top-Game Analysis & Curriculum Differentiation**: Conducted comprehensive Reverse-Engineering Analysis (documented in `GAME_DESIGN_RESEARCH.md`) of market-defining educational applications (Khan Academy Kids, Duolingo ABC, Prodigy Math, DragonBox, Toca Boca / PhET, Seterra, and Kahoot!) to systematically eliminate cross-age repetition and cognitive mismatch.
+- **Differentiated Games Per Class (Portal Hub & Filter Matrix)**:
+  - Added `CLASS_GAMES` matrix filtering the portal game roster by developmental level: MAT (10 games), SIL (12 games), CP (13 games), CE1 (14 games), CE2 (15 games), CM1 (16 games), CM2 (16 games).
+  - Toddlers in Maternelle focus on audio-first phonics, story exploration, 1-10 counting tricks, ecosystem, tangram, and botany; advanced physics (12V Ohm's law, pH acid/base chemistry, high-voltage circuits) is strictly reserved for CM1/CM2 exam candidates.
+  - Added `🎒 Jeux de ma Classe (<span id="tab-class-code">MAT</span>)` active filter tab to `#category-tabs`, alongside `🌟 Tous les 22 Jeux` for complete overview.
+  - Each portal card now dynamically displays a `.card-grade-badge` indicating class curriculum membership.
+  - Class selector announcements speak the exact count of developmentally tailored games unlocked (e.g. 10 tailored games for Maternelle).
+- **3-Phase Activity Arc Within Each Game**:
+  - Every game features three distinct, non-repetitive learning phases:
+    1. **Mode 1 — Découverte Interactive 3D (Concrete Discovery)**: Step-by-step visual manipulatables, Ten-Frame counting tokens, Khan Kids explainer chips, slow audio decomposition, and guided rule demonstration (+50 XP).
+    2. **Mode 2 — Duel Arcade Rapide (Speed Practice)**: Timed speed practice, missing syllable/element hunt, 1.5x score multipliers, and fast-paced arcade challenges (+75 XP).
+    3. **Mode 3 — Défi du Boss & Maîtrise 👑 (Boss Challenge & Concept Mastery)**: Higher-order mastery challenge (algebraic pan balance, monster king phonics, capital/flag map synthesis, high-voltage oscilloscope, boss QCM) awarding celebratory fanfare, golden chest, and +100 XP.
+- **Adventure Trail (Nateiva World) Zone Differentiation**:
+  - Differentiated missions by grade level across all 21 zones (`play.html`), preventing cross-zone timer bleeding and ensuring distinct missions for toddlers vs older students.
+  - Verified with 100% pass across both landscape and portrait orientation smoke tests (21 zones × 3 grades).
 
 ## v1.30.0 — 2026-11-24
 - **Mastery curriculum loop (Duolingo/Khan-style)**: every island is now a subject curriculum. An activity's star ⭐ is earned only by FINISHING its 5 exercises (not just opening it). Master every activity of an island → animated **crown 👑** on the trail. Activity menus show "Maîtrise les 3 leçons ! (1/3 ⭐)".
